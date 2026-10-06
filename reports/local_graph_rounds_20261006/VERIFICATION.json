@@ -1,0 +1,317 @@
+{
+  "schema": "local_graph_chunk_verification.v1",
+  "date": "2026-10-06",
+  "program": {
+    "path": "build/local_graph_chunk_20261006/Release/gipc.exe",
+    "bytes": 11059200,
+    "sha256": "9ddf16cc8d5efe8292e9d194b1181a1e20ac1d268d3a3331cfbdf0507d5cb70c"
+  },
+  "source_object_link_identity_verified": true,
+  "native_translation_units": 37,
+  "cuda_translation_units": 33,
+  "cpp_translation_units": 4,
+  "unique_native_source_objects": 37,
+  "build_command": "E:/Anaconda/envs/DL/python.exe tools/build_windows.py --kind active --label local_graph_chunk_20261006 --jobs 2",
+  "build_log": {
+    "path": "runs/local_graph_chunk_build.log",
+    "bytes": 309,
+    "sha256": "70376b22525542f2690d28dafbf73ef072f989ac9885226bb683a83af49cda12"
+  },
+  "build_manifest": {
+    "path": "build/local_graph_chunk_20261006/windows_manifest.json",
+    "bytes": 272630,
+    "sha256": "7b7adf596bfb068e55fa214b7359b59f79d2ff6e22fb19a73a1fd2dbf2f10cf4"
+  },
+  "seal_v2": {
+    "path": "build/local_graph_chunk_20261006/local_diagnostic_seal_v2.json",
+    "bytes": 414104,
+    "sha256": "1f7c05620b270eb6c23a4ff45a2001168e24e008181fe79fb77b5566d4488b17"
+  },
+  "seal_current_verification": "passed",
+  "source_object_map": [
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_sim_data.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\abd_sim_data_2af2e89623df3800.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\abd_system_566b541f9b834e09.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\cal_abd_energy.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\cal_abd_energy_4b9755fb4ac53ddd.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\cal_q_tilde.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\cal_q_tilde_6adb0311f26cdf07.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\cal_x_from_q.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\cal_x_from_q_e253453135bad9ba.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\setup_abd_system_gradient_and_hessian.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\setup_abd_system_gradient_and_hessian_5926bcd6814ee7d3.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\step_forward.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\step_forward_2b5573eaabfd5777.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\abd_system\\abd_system_function\\update_velocity.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\update_velocity_f685efa86b9cf73a.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\app\\gl_main.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\gl_main_818161e756db8728.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\collision\\ACCD.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\ACCD_61a51ec29dbb8999.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\collision\\mlbvh.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\mlbvh_e3cf2a698788c01d.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\core\\GIPC.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\GIPC_2f10ac02766cf4af.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\core\\frame_checkpoint.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\frame_checkpoint_7f13b6d5e567ae46.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\core\\gipc_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\gipc_system_63bb5d2210cd639e.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\fem\\device_fem_data.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\device_fem_data_037e415bbbd87423.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\fem\\femEnergy.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\femEnergy_b8ff58b8b9af9723.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\linear_system\\global_linear_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\global_linear_system_fa740f045610a68f.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\linear_system\\global_matrix.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\global_matrix_374dacf4f25aa9f4.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\linear_system\\i_linear_system_solver.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\i_linear_system_solver_f67e402f090a67b6.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\linear_system\\i_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\i_preconditioner_1d10e39e17f95c89.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\linear_system\\linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\linear_subsystem_b2b0e5c0ca33f46a.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\preconditioner\\abd_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\abd_preconditioner_dd31324f591974bd.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\preconditioner\\diag_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\diag_preconditioner_2b0a8bbcad84f90f.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\preconditioner\\fem_mas_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\fem_mas_preconditioner_81cd002e3ed8c374.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\solver\\pcg_solver.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\pcg_solver_553b2b73d22ecfc4.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\subsystem\\abd_linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\abd_linear_subsystem_c6811eeba85df1e4.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\subsystem\\fem_linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\fem_linear_subsystem_00c0616d1a47a088.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\utils\\converter.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\converter_ce477662c3672518.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\linear_system\\utils\\spmv.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\spmv_363663a1f27d015e.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\math\\gpu_eigen_libs.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\gpu_eigen_libs_b4976d1011a83ac6.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\solver\\MASPreconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\MASPreconditioner_f5a5feb07870b705.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\solver\\PCG_SOLVER.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\PCG_SOLVER_f074f0d849cc0895.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\solver\\toi_solver.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\toi_solver_db5693617459e0e8.obj",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\gipc\\statistics.cpp",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\statistics_69731b0a3d2f3911.obj",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\gipc\\utils\\simple_scene_importer.cpp",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\simple_scene_importer_826bc4b412407db5.obj",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\gipc\\utils\\timer.cpp",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\timer_057775de16d4ce4a.obj",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\StiffGIPC\\io\\load_mesh.cpp",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006\\gipc.dir\\Release\\load_mesh_40f592462f471d09.obj",
+      "kind": "ClCompile"
+    }
+  ],
+  "python_cpu_count": 105,
+  "python_cpu": [
+    {
+      "name": "local_contracts",
+      "passed": true,
+      "count": 9,
+      "command": "E:/Anaconda/envs/DL/python.exe tools/local/contracts_test.py",
+      "cwd": ".",
+      "log": {
+        "path": "runs/local_graph_chunk_cpu_local_final.log",
+        "bytes": 112,
+        "sha256": "87c22fd439fd0b6a081d2180e9ea4414a26a28f8b1a24f63e8a87ebcf811daab"
+      }
+    },
+    {
+      "name": "bench_contracts",
+      "passed": true,
+      "count": 20,
+      "command": "E:/Anaconda/envs/DL/python.exe -m unittest contracts_test -q",
+      "cwd": "tools/bench",
+      "log": {
+        "path": "runs/local_graph_chunk_cpu_bench_final.log",
+        "bytes": 102,
+        "sha256": "46ebc46b3838bf97887a1ef377995c07031a695b90584a23a628312da4966c3e"
+      }
+    },
+    {
+      "name": "local_tools",
+      "passed": true,
+      "count": 70,
+      "command": "E:/Anaconda/envs/DL/python.exe -m unittest profiler_windows_contracts_test analyze_profile_contracts_test cpu_fixed_reference_test bvh_rounds_test edge_order_test fixture_windows_contracts_test graph_chunk_rounds_test graph_chunk_cpu_reference_test -q",
+      "cwd": "tools/local",
+      "log": {
+        "path": "runs/local_graph_chunk_cpu_remaining_final.log",
+        "bytes": 102,
+        "sha256": "78dde5a1a750de0e2f370203797426475d01a531de53c01d1bd42300ca7eef81"
+      }
+    },
+    {
+      "name": "quality_contracts",
+      "passed": true,
+      "count": 6,
+      "command": "E:/Anaconda/envs/DL/python.exe tools/diagnostic/quality_contracts_test.py",
+      "cwd": ".",
+      "log": {
+        "path": "runs/local_graph_chunk_cpu_quality_fixture_fix.log",
+        "bytes": 925,
+        "sha256": "b179a088c9c3daf6434245771b2f9001fc98e7c25e209826121c89679fda649f"
+      }
+    }
+  ],
+  "ctest": {
+    "passed": true,
+    "count": 7,
+    "command": [
+      "D:/computer/cmake/bin/ctest.exe",
+      "--test-dir",
+      "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\local_graph_chunk_20261006",
+      "-C",
+      "Release",
+      "--output-on-failure",
+      "-j",
+      "1"
+    ],
+    "invocation": "E:/Anaconda/envs/DL/python.exe -X utf8 runs/local_graph_chunk_ctest.py",
+    "wrapper": {
+      "path": "runs/local_graph_chunk_ctest.py",
+      "bytes": 3493,
+      "sha256": "12fd96676c87c4deb303cb141fe54c24352ba92f5d7bb9e26f970ed83fa680db"
+    },
+    "wrapper_scope": "Local preserved evidence; GPU lock, owned Job, original memory reserve, 120-second deadline, serial CTest.",
+    "log": {
+      "path": "runs/local_graph_chunk_ctest/ctest.log",
+      "bytes": 943,
+      "sha256": "8f1ba62342054da83fed499ec61a3e2775a1f1f65c577e05a6daec472eb607fc"
+    },
+    "receipt": {
+      "path": "runs/local_graph_chunk_ctest/result.json",
+      "bytes": 71492,
+      "sha256": "80058173fc7c1bbd1da922d7801980713cac511e8bebea264f50fbe0ed332764"
+    }
+  },
+  "new_graph_boundary_cases": 28,
+  "guard_results": {
+    "path": "reports/local_graph_rounds_20261006/GUARD_RESULTS.json",
+    "bytes": 38125,
+    "sha256": "b08603aee14a0f59bd4cae13c72c99e6c8089cf2afe0e56e649cd62723ebfaa5"
+  },
+  "diff_check": {
+    "command": "git -c core.whitespace=cr-at-eol diff --check",
+    "passed": true
+  },
+  "limitations": [
+    "Shared WDDM desktop timings are diagnostic.",
+    "Boundary fixture is scripted production-kernel Graph testing, not full A/b/M coverage.",
+    "No new full-system initial-zero-RHS, max<=1, buffer-growth recapture tests.",
+    "No new 100/300-frame quality, accepted-path CCD or total Stiff speed certification.",
+    "Independent CPU reference passes 1e-8; default rho stopping does not certify that true residual."
+  ]
+}

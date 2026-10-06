@@ -19,6 +19,11 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
        !selected("GIPC_FIXED_STUDY_DIRECTIONS",direction,"1,8"))return;
     const std::string prefix=std::string(std::getenv("GIPC_FIXED_STUDY_DIR"))+"/f"+
         std::to_string(frame)+"_n"+std::to_string(direction);
+    if(const char* value=std::getenv("GIPC_FIXED_GRAPH_CHUNK_STUDY");value && std::string(value)=="1")
+    {
+        graph_chunk_study(x,b,max_iter,prefix);
+        return;
+    }
     auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
     const auto saved_info=info;const auto saved_config=m_config;
     std::vector<Float> primary(x.size());

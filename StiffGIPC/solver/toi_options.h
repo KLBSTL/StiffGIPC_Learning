@@ -7,6 +7,7 @@
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
+#include <linear_system/solver/pcg_graph_options.h>
 #include <climits>
 #include <cmath>
 #include <cstdlib>
@@ -196,6 +197,7 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
             {"wide_reason",cholesky?"required_by_cholesky":inverse64?"required_by_inverse64":"requested_or_default"},
             {"inverse64_overridden_by_cholesky",cholesky&&toi_flag_one("GIPC_MAS_INVERSE64")}}}};
     result["configured_pcg_execution"]=std::getenv("GIPC_PCG_EXECUTION")?Json(std::getenv("GIPC_PCG_EXECUTION")):Json("host");
+    result["configured_pcg_graph_chunk"]=pcg_graph_chunk_iterations();
     result["ipc_stopping"]=IpcOptions::read(newton_tol).json();
     result["requested_preconditioner"]=std::getenv("GIPC_PCG_PRECONDITIONER")?Json(std::getenv("GIPC_PCG_PRECONDITIONER")):Json(nullptr);
     result["execution_observed_per_linear_system"]=true;
@@ -207,6 +209,7 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     // This opt-in does not inherit GIPC_ACCEL_SUITE, and MAS cannot use it.
     result["requested_fused_diag_update"]=toi_flag_one("GIPC_PCG_FUSED_DIAG_UPDATE");
     result["fixed_mas_stage_study"]=toi_flag_one("GIPC_FIXED_MAS_STAGE_STUDY");
+    result["fixed_graph_chunk_study"]=toi_flag_one("GIPC_FIXED_GRAPH_CHUNK_STUDY");
     result["legacy_restrict"]="atomic";
     result["legacy_ordered_restrict_available"]=false;
     result["fixed_legacy_restrict_study"]=false;

@@ -1787,6 +1787,8 @@ int main(int argc, char** argv) try
         return gipc::edge_query_order_fixture(output);
     if(const char* output=std::getenv("GIPC_CONTACT_POOL_FIXTURE"))
         return gipc::ipc_contact_pool_fixture(output);
+    if(const char* output=std::getenv("GIPC_PCG_CHUNK_GUARD_FIXTURE"))
+        return gipc::PCGSolver::chunk_guard_fixture(output);
     if(const char* output=std::getenv("GIPC_PCG_GUARD_FIXTURE"))
         return gipc::PCGSolver::guard_fixture(output);
     if(const char* prefix=std::getenv("GIPC_MAS_REPLAY_FIXTURE"))

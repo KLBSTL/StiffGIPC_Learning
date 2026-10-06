@@ -575,4 +575,6 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 
 #include "pcg_graph_impl.inl"
 #include <linear_system/solver/pcg_guard_fixture.inl>
+#include <linear_system/solver/pcg_chunk_fixture.inl>
+#include <linear_system/solver/pcg_chunk_study.inl>
 #include <linear_system/solver/pcg_fixed_study.inl>

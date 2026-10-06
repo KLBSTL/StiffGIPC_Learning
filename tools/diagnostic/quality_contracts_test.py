@@ -30,14 +30,18 @@ def fixture(session,t,seal):
             f.pop('contact_pool')
             for n in f['newton']:n['pcg']['iteration_limit']=False
     else:
-        resolved={'contact_backend':'ipc','dt':.01,'ipc_newton_tol':.01,'pcg_rho_tol':1e-4,'configured_pcg_execution':'conditional_graph',
+        resolved={'contact_backend':'ipc','dt':.01,'ipc_newton_tol':.01,'pcg_rho_tol':1e-4,'configured_pcg_execution':c['execution'],
+            'configured_pcg_graph_chunk':c['pcg_graph_chunk'],'fixed_graph_chunk_study':c['fixed_graph_chunk_study'],
             'mas':{'cholesky':False,'inverse64':False,'wide_apply':False,'restriction_mode':'inactive','factor_action':'inactive'},
             'acceleration_features':{'GIPC_CCD_BVH_REFIT':True,'GIPC_BATCHED_ENERGY':True,'GIPC_ENERGY_REUSE':True},
             'report_components':{'mas_fused_dot_requested':False,'fixed_mas_dot_study':False,'discrete_bvh_refit':True,
                 'discrete_bvh_rebuild_interval':8,'discrete_bvh_validate':False,'contact_pool':c['contact_pool'],'contact_pool_validate':False}}
         dump(run/'resolved_config.json',resolved)
         for f in stats['frames']:
-            f['newton'][0]['pcg'].update(execution='conditional_graph',mas_fused_dot_requested=False)
+            for n in f['newton']:
+                p=n['pcg'];p.update(execution=c['execution'],mas_fused_dot_requested=False)
+                if c['execution']=='conditional_graph':p['graph_chunk_iterations']=c['pcg_graph_chunk']
+                else:p.pop('graph_chunk_iterations',None)
     dump(run/'output/stats.json',stats)
     # Deliberate frozen-bound excess; finite and no element inversion.
     for p in (run/'trace').glob('state_*.bin'):

@@ -1,0 +1,280 @@
+{
+  "short": {
+    "analysis_sha256": "e275c26590c9ce0d5bd76a6000c8f959014621e3dcf22c148bfd3fe6387bb347",
+    "analysis": {
+      "stage": "short",
+      "diagnosis_complete": true,
+      "errors": [],
+      "quality_certified": false,
+      "performance_certified": false,
+      "automatic_next_round": false,
+      "whole_scene_timing_usable": false,
+      "probe": {
+        "correctness_contract_passed": true,
+        "pairs": [
+          {
+            "pair": 1,
+            "host_speedup": 0.7451473896960683,
+            "event_speedup": 0.5291817728018514,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.04198429875828144,
+            "K4_residual": 0.0419842932299118
+          },
+          {
+            "pair": 2,
+            "host_speedup": 2.567193675889328,
+            "event_speedup": 1.8282421084459821,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.041984297513813336,
+            "K4_residual": 0.04198430175455096
+          },
+          {
+            "pair": 3,
+            "host_speedup": 1.0194398260647142,
+            "event_speedup": 1.0215311423977234,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.041984293643956894,
+            "K4_residual": 0.04198429859576773
+          },
+          {
+            "pair": 4,
+            "host_speedup": 0.22989617832024709,
+            "event_speedup": 0.23816525045068376,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.04198429595734398,
+            "K4_residual": 0.041984295217576593
+          },
+          {
+            "pair": 5,
+            "host_speedup": 1.9965696191397657,
+            "event_speedup": 1.9791645077212148,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.041984300811376114,
+            "K4_residual": 0.04198429688874941
+          },
+          {
+            "pair": 6,
+            "host_speedup": 0.19656427613512997,
+            "event_speedup": 0.19908159684127918,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.04198429524147521,
+            "K4_residual": 0.041984295533351805
+          },
+          {
+            "pair": 7,
+            "host_speedup": 0.8403240559257807,
+            "event_speedup": 0.8414354578473635,
+            "K1_iterations": 6,
+            "K4_iterations": 6,
+            "K4_tail_steps": 2,
+            "K1_residual": 0.04198429400903033,
+            "K4_residual": 0.041984291131953684
+          }
+        ],
+        "median_complete_solve_host_speedup": 0.8403240559257807,
+        "median_complete_solve_event_speedup": 0.8414354578473635,
+        "median_complete_solve_host_time_saving": -0.19001710464935462,
+        "all_paired_iterations_equal": true,
+        "local_performance_gate": false,
+        "quality_certified": false,
+        "performance_certified": false,
+        "shared_preparation_cost_remeasured": false,
+        "scope": "Frozen A/b/M PCG replay. Matrix conversion and M preparation are shared prior work; final readback includes GPU waiting, not extra transfer-only cost."
+      },
+      "numerical": {
+        "K1_observed_max_relative_repeat_difference": 1.1841419771596082e-08,
+        "paired_K4_K1_relative_solution_difference": [
+          9.443876987236025e-09,
+          1.2232082527668802e-08,
+          1.0773539890513395e-08,
+          9.764329283452027e-09,
+          9.69389982215266e-09,
+          1.0823076001367781e-08,
+          9.722507629014036e-09
+        ],
+        "within_observed_K1_range_plus_roundoff": false,
+        "scope": "Frozen-system numerical comparison only; observed repeat range is not a material/trajectory quality certificate."
+      }
+    },
+    "medians": {
+      "1": {
+        "solve_host_ms": 0.7971,
+        "solve_event_ms": 0.8061760067939758,
+        "graph_initialization_event_ms": 0.20044800639152527,
+        "graph_replay_event_ms": 0.44416001439094543,
+        "graph_initial_readback_host_ms": 0.1015,
+        "graph_final_readback_host_ms": 0.4633
+      },
+      "4": {
+        "solve_host_ms": 1.1369,
+        "solve_event_ms": 1.1549439430236816,
+        "graph_initialization_event_ms": 0.14950400590896606,
+        "graph_replay_event_ms": 0.8521599769592285,
+        "graph_initial_readback_host_ms": 0.0791,
+        "graph_final_readback_host_ms": 0.8613
+      }
+    },
+    "restoration": {
+      "full_system_restored": true,
+      "primary_restored_bitwise": true,
+      "workspace_restored": true,
+      "production_graph_restored": true,
+      "operator_signature_restored": true,
+      "production_info_restored": true,
+      "solve_context_restored": true,
+      "config_restored": true,
+      "cost_trace_restored": true
+    }
+  },
+  "long_retry": {
+    "analysis_sha256": "8fbc7690ce0685739f8b7308bf943d3fd227ba878a419670200f690620bf8c95",
+    "analysis": {
+      "stage": "long_retry",
+      "diagnosis_complete": true,
+      "errors": [],
+      "quality_certified": false,
+      "performance_certified": false,
+      "automatic_next_round": false,
+      "whole_scene_timing_usable": false,
+      "probe": {
+        "correctness_contract_passed": true,
+        "pairs": [
+          {
+            "pair": 1,
+            "host_speedup": 0.9087441860465116,
+            "event_speedup": 0.9094471337818154,
+            "K1_iterations": 97,
+            "K4_iterations": 97,
+            "K4_tail_steps": 3,
+            "K1_residual": 0.050820985234299475,
+            "K4_residual": 0.05049577130023565
+          },
+          {
+            "pair": 2,
+            "host_speedup": 0.7542927747433572,
+            "event_speedup": 0.7531938871078666,
+            "K1_iterations": 97,
+            "K4_iterations": 97,
+            "K4_tail_steps": 3,
+            "K1_residual": 0.05056278968949029,
+            "K4_residual": 0.0508176857322123
+          },
+          {
+            "pair": 3,
+            "host_speedup": 0.9485987715257213,
+            "event_speedup": 0.9501633413797314,
+            "K1_iterations": 97,
+            "K4_iterations": 97,
+            "K4_tail_steps": 3,
+            "K1_residual": 0.05047139946666727,
+            "K4_residual": 0.050763196903005646
+          },
+          {
+            "pair": 4,
+            "host_speedup": 1.0190343182638442,
+            "event_speedup": 1.0213725333603727,
+            "K1_iterations": 96,
+            "K4_iterations": 96,
+            "K4_tail_steps": 0,
+            "K1_residual": 0.052148959170090214,
+            "K4_residual": 0.051705317246139436
+          },
+          {
+            "pair": 5,
+            "host_speedup": 0.8410107362539618,
+            "event_speedup": 0.8409662476521835,
+            "K1_iterations": 98,
+            "K4_iterations": 97,
+            "K4_tail_steps": 3,
+            "K1_residual": 0.04915286652324328,
+            "K4_residual": 0.051682693256949575
+          },
+          {
+            "pair": 6,
+            "host_speedup": 1.0443762879187233,
+            "event_speedup": 1.0462004984056166,
+            "K1_iterations": 97,
+            "K4_iterations": 96,
+            "K4_tail_steps": 0,
+            "K1_residual": 0.05077094488977718,
+            "K4_residual": 0.051819856340065334
+          },
+          {
+            "pair": 7,
+            "host_speedup": 1.0227965686661715,
+            "event_speedup": 1.021214065308998,
+            "K1_iterations": 97,
+            "K4_iterations": 96,
+            "K4_tail_steps": 0,
+            "K1_residual": 0.050866252922185926,
+            "K4_residual": 0.05222391169053108
+          }
+        ],
+        "median_complete_solve_host_speedup": 0.9485987715257213,
+        "median_complete_solve_event_speedup": 0.9501633413797314,
+        "median_complete_solve_host_time_saving": -0.054186480119097435,
+        "all_paired_iterations_equal": false,
+        "local_performance_gate": false,
+        "quality_certified": false,
+        "performance_certified": false,
+        "shared_preparation_cost_remeasured": false,
+        "scope": "Frozen A/b/M PCG replay. Matrix conversion and M preparation are shared prior work; final readback includes GPU waiting, not extra transfer-only cost."
+      },
+      "numerical": {
+        "K1_observed_max_relative_repeat_difference": 0.0009047596967141404,
+        "paired_K4_K1_relative_solution_difference": [
+          7.551654298018455e-05,
+          5.7078244806879403e-05,
+          4.731338894106479e-05,
+          0.00010605011008995797,
+          0.0005475944412126778,
+          0.00042609160275982027,
+          0.0004525359392304868
+        ],
+        "within_observed_K1_range_plus_roundoff": true,
+        "scope": "Frozen-system numerical comparison only; observed repeat range is not a material/trajectory quality certificate."
+      }
+    },
+    "medians": {
+      "1": {
+        "solve_host_ms": 6.5379,
+        "solve_event_ms": 6.552864074707031,
+        "graph_initialization_event_ms": 0.1013759970664978,
+        "graph_replay_event_ms": 6.261407852172852,
+        "graph_initial_readback_host_ms": 0.0596,
+        "graph_final_readback_host_ms": 6.3297
+      },
+      "4": {
+        "solve_host_ms": 7.2936,
+        "solve_event_ms": 7.307072162628174,
+        "graph_initialization_event_ms": 0.14131200313568115,
+        "graph_replay_event_ms": 6.964128017425537,
+        "graph_initial_readback_host_ms": 0.0589,
+        "graph_final_readback_host_ms": 7.0046
+      }
+    },
+    "restoration": {
+      "full_system_restored": true,
+      "primary_restored_bitwise": true,
+      "workspace_restored": true,
+      "production_graph_restored": true,
+      "operator_signature_restored": true,
+      "production_info_restored": true,
+      "solve_context_restored": true,
+      "config_restored": true,
+      "cost_trace_restored": true
+    }
+  }
+}

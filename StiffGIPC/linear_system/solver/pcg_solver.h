@@ -14,6 +14,7 @@ class PCGSolverConfig
     Float global_tol_rate = 1e-4;
     bool  use_bsr         = true;
     bool conditional_graph = false;
+    int graph_chunk_iterations = 1;
 };
 
 class PCGSolver : public IterativeSolver
@@ -27,6 +28,7 @@ class PCGSolver : public IterativeSolver
     void config(const PCGSolverConfig& config) { this->m_config = config; }
     const auto& config() const { return this->m_config; }
     static int guard_fixture(const char* output);
+    static int chunk_guard_fixture(const char* output);
 
   private:
 
@@ -47,12 +49,16 @@ class PCGSolver : public IterativeSolver
     void release_graph();
     int diagnostic_fixed_iterations = 0;
     int diagnostic_fused_override = -1;
+    bool diagnostic_chunk_timing = false;
     void fail_pcg(int code,Float rho,Float curvature);
     bool check_host_rho(Float rho);
     void operator_audit(cudatool::DenseVectorView<Float> x,
                         cudatool::CDenseVectorView<Float> b,const std::string& prefix);
     void fixed_system_study(cudatool::DenseVectorView<Float> x,
                             cudatool::CDenseVectorView<Float> b, SizeT max_iter, SizeT primary_iter);
+    void graph_chunk_study(cudatool::DenseVectorView<Float> x,
+                           cudatool::CDenseVectorView<Float> b, SizeT max_iter,
+                           const std::string& prefix);
     SizeT pcg_graph(cudatool::DenseVectorView<Float> x,
                     cudatool::CDenseVectorView<Float> b, SizeT max_iter);
 

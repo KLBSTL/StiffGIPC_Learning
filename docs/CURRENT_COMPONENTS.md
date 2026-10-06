@@ -7,7 +7,13 @@
 完整质量协议仍待验证。结果见
 `../reports/STATUS_20261006.md`，第二、三批变更见对应清理文档。
 
-最新多轮又完成24次BVH四臂、2次私有探针；新独立37单元程序`af0822e4…617c`，
+最新批次新增独立K4条件Graph与受保护冻结系统研究，新37单元程序`9ddf16cc…70c`。
+CPU105/CTest7/新增守卫28项通过；短f2与接触长f57各七对完整solve的K1/K4
+配对中位0.8403×/0.9486×，未达收益门槛，K默认1并停止K4性能分支。
+独立CPU参考通过，但默认PCG真残差约4–5%，不能据此认证物理质量。
+详见[最新Graph逐轮报告](../reports/local_graph_rounds_20261006/ROUND_REVIEW.md)。
+
+前一批完成24次BVH四臂、2次私有探针；独立37单元程序`af0822e4…617c`，
 CPU69/CTest6/新查询fixture12项通过。两项性能分支均未达门槛，保持D1S1
 实验组合、raw安全查询及池默认关闭。当前成本与停止决定见
 [逐轮报告](../reports/local_rounds_20261006/ROUND_REVIEW.md)。
@@ -20,6 +26,7 @@ CPU69/CTest6/新查询fixture12项通过。两项性能分支均未达门槛，�
 | 原停止与另行研究的停止规则 | `GIPC_IPC_TERMINATION=legacy`；另有 movement_only/gated/compensated | `solver/ipc_options.h:9–16`；legacy `.01` / min6，PCG rho `1e-4`，研究模式不属于同停止条件执行优化 |
 | AL/Robust TOI | `GIPC_CONTACT_BACKEND=toi_al` 独立启用；policy paper/robust | `solver/toi_solver.cu`、`solver/toi_options.h:61–132`；跨帧接触/λ/γ已存在，不作为新待实现组件 |
 | host / conditional PCG | `GIPC_PCG_EXECUTION=host|conditional_graph`；原生未设置为 host | `core/gipc_system.cu:61`、`linear_system/solver/pcg_graph_impl.inl`；previous-rho、零 RHS、breakdown/上限守卫保留 |
+| guarded PCG Graph分组 | `GIPC_PCG_GRAPH_CHUNK=1|4`，默认1 | `linear_system/solver/pcg_graph_options.h`；4只支持conditional Graph并拒绝diagonal fusion；真实停序守卫通过，但短/长系统性能未达门槛，不推广 |
 | legacy / 稳定 MAS | legacy 默认；Cholesky、wide/inverse64 对照路径保留 | `solver/MASPreconditioner.cu`；稳定 CSR、factor 和六历史 M fixture 仍依赖这些共享结构 |
 | 稳定限制与局部作用 | `serial|warp`；`triangular|factor_inverse` | `solver/mas_restrict_options.h`、`mas_factor_action_options.h`；原生默认 serial、factor_inverse；不可与退休 ordered 混淆 |
 | 用户指定世界刚度默认 | diagonal/movable 条件下 `world_block` | `solver/toi_options.h:119–124`；用户默认选择记录于 `history/reports/active/DEFAULTS_OUTER_RESULTS_20261005.md:3` |
@@ -47,6 +54,9 @@ Step4三轮悬挂池增量中位1.05024×、净省4.783%，没有达到5%组件�
 - 同进程固定系统：`GIPC_FIXED_STUDY_DIR/FRAMES/DIRECTIONS/COMPACT`；
   `GIPC_FIXED_MAS_STAGE_STUDY`、`GIPC_FIXED_RESTRICT_STUDY`、
   `GIPC_FIXED_FACTOR_STUDY`，见 `linear_system/solver/pcg_fixed_study.inl`。
+- 私有K1/K4完整PCG重放：`GIPC_FIXED_GRAPH_CHUNK_STUDY`；独立两缓存、
+  每臂2预热/7正式、完整生产状态恢复、14条解及CPU参考。真实Graph守卫入口
+  `GIPC_PCG_CHUNK_GUARD_FIXTURE`；不是完整轨迹或材料认证。
 - 算子/失败观察：`GIPC_AUDIT_PCG`、`GIPC_AUDIT_GRAPH`、`GIPC_MAS_AUDIT`、
   `GIPC_FAILURE_SYSTEM`、`GIPC_STATE_WINDOW_DIR`、`GIPC_COST_TRACE`。
   它们保留诊断成本和恢复边界，正式计时不能混开。

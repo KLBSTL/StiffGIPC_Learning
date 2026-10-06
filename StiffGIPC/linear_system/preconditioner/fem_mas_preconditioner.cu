@@ -31,6 +31,23 @@ Json MAS_Preconditioner::diagnostic_snapshot(const std::string& prefix) const
     });
     return result;
 }
+std::function<void()> MAS_Preconditioner::checkpoint_scratch() const
+{
+    struct Saved {void* device;std::vector<unsigned char> bytes;};
+    std::vector<Saved> saved;
+    MAS_Prec.diagnostic_buffers([&](const char* name,const void* device,size_t count,size_t item_bytes)
+    {
+        const std::string field(name);
+        if(field!="d_multiLevelR" && field!="d_multiLevelZ" &&
+           field!="d_multiLevelR64" && field!="d_multiLevelZ64")return;
+        Saved value{const_cast<void*>(device),std::vector<unsigned char>(count*item_bytes)};
+        if(!value.bytes.empty())CUDA_SAFE_CALL(cudaMemcpy(value.bytes.data(),device,value.bytes.size(),cudaMemcpyDeviceToHost));
+        saved.push_back(std::move(value));
+    });
+    return [saved=std::move(saved)](){for(const auto& value:saved)
+        if(!value.bytes.empty())CUDA_SAFE_CALL(cudaMemcpy(value.device,value.bytes.data(),value.bytes.size(),cudaMemcpyHostToDevice));};
+}
+
 std::vector<std::uintptr_t> MAS_Preconditioner::graph_signature() const
 {
     auto key = MAS_Prec.graph_signature();

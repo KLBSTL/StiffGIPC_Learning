@@ -221,6 +221,15 @@ Json GlobalLinearSystem::snapshot_system(const std::string& prefix) const
     return result;
 }
 
+std::function<void()> GlobalLinearSystem::checkpoint_preconditioner_scratch() const
+{
+    std::vector<std::function<void()>> restore;
+    for(const auto& preconditioner:m_local_preconditioners)
+        if(auto* mas=dynamic_cast<MAS_Preconditioner*>(preconditioner.get()))
+            restore.push_back(mas->checkpoint_scratch());
+    return [restore=std::move(restore)](){for(const auto& action:restore)action();};
+}
+
 void GlobalLinearSystem::snapshot_solution(const std::string& prefix) const
 {
     std::vector<Float> values(m_x.size());

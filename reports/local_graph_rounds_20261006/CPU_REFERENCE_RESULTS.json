@@ -1,0 +1,84 @@
+{
+  "short": {
+    "status": "completed",
+    "passed": true,
+    "reference": {
+      "relative_l2": 2.8969731881061055e-14,
+      "absolute_l2": 3.8503916283753747e-19,
+      "refinement_evaluations": [
+        {
+          "relative_l2": 2.8969731881061055e-14,
+          "absolute_l2": 3.8503916283753747e-19
+        }
+      ],
+      "residual_passed": true,
+      "lu_nnz": 8472044
+    },
+    "residual_by_arm": {
+      "1": [
+        0.04198429364395714,
+        0.04198430081137601
+      ],
+      "4": [
+        0.04198429113195373,
+        0.04198430175455097
+      ]
+    },
+    "relative_solution_error_by_arm": {
+      "1": [
+        0.006967365374652523,
+        0.00696736676730156
+      ],
+      "4": [
+        0.006967365236598118,
+        0.006967366999826428
+      ]
+    },
+    "wall_seconds": 13.843000000000757,
+    "peak_sampled_rss_mib": 263.64453125,
+    "scope": "Independent reference residual and saved default-solver errors; passed concerns reference/audit completeness, not default-solver tolerance or physical quality.",
+    "default_pcg_true_residual_le_1e_8": false,
+    "physical_quality_certified": false
+  },
+  "long_retry": {
+    "status": "completed",
+    "passed": true,
+    "reference": {
+      "relative_l2": 9.494327048972304e-13,
+      "absolute_l2": 9.434037155159013e-17,
+      "refinement_evaluations": [
+        {
+          "relative_l2": 9.494327048972304e-13,
+          "absolute_l2": 9.434037155159013e-17
+        }
+      ],
+      "residual_passed": true,
+      "lu_nnz": 9543621
+    },
+    "residual_by_arm": {
+      "1": [
+        0.04915286652324292,
+        0.05214895917009161
+      ],
+      "4": [
+        0.05049577130023528,
+        0.052223911690531644
+      ]
+    },
+    "relative_solution_error_by_arm": {
+      "1": [
+        0.006448172067208727,
+        0.00699797099964306
+      ],
+      "4": [
+        0.0067559435095171615,
+        0.007055873191794407
+      ]
+    },
+    "wall_seconds": 13.56300000000192,
+    "peak_sampled_rss_mib": 284.8203125,
+    "scope": "Independent reference residual and saved default-solver errors; passed concerns reference/audit completeness, not default-solver tolerance or physical quality.",
+    "default_pcg_true_residual_le_1e_8": false,
+    "physical_quality_certified": false
+  }
+}

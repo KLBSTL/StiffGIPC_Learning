@@ -45,4 +45,8 @@ Json IterativeSolver::snapshot_system(const std::string& prefix) const
 {
     return m_system->snapshot_system(prefix);
 }
+std::function<void()> IterativeSolver::checkpoint_preconditioner_scratch() const
+{
+    return m_system->checkpoint_preconditioner_scratch();
+}
 }  // namespace gipc

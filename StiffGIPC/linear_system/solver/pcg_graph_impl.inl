@@ -52,6 +52,74 @@ __global__ void graph_p_continue(double* p, const double* z, double* s,
             !converged && s[9] == 0 && s[6] < max_iter-1);
     }
 }
+
+// K4 keeps the original ten logical scalars. Operators in inactive tail steps
+// may overwrite scratch, but may not commit results or touch x/r/p.
+__global__ void chunk_init(double* s)
+{
+    s[10]=(s[0]!=0 && s[9]==0);s[11]=0;s[12]=0;
+}
+__global__ void chunk_alpha(double* s)
+{
+    if(s[10]==0)return;
+    s[1]=s[11];s[8]=s[0];s[3]=0;
+    if(s[9]!=0 || s[0]==0)return;
+    int code=gipc::pcg_rho_error(s[0]);if(!code)code=gipc::pcg_curvature_error(s[1]);
+    if(code){s[9]=code;return;}
+    s[3]=s[0]/s[1];if(!isfinite(s[3])){s[9]=6;s[3]=0;}
+}
+__global__ void chunk_dx_r(double* x,double* r,const double* p,
+                            const double* ap,const double* s,int n)
+{
+    const int i=blockIdx.x*blockDim.x+threadIdx.x;
+    if(i<n && s[10]!=0 && s[9]==0){x[i]+=s[3]*p[i];r[i]-=s[3]*ap[i];}
+}
+__global__ void chunk_beta(double* s,double tol,int fixed_iterations)
+{
+    if(s[10]==0)return;
+    s[2]=s[12];
+    if(s[9]!=0)return;
+    if(fixed_iterations<=0 && fabs(s[8])<=tol*s[7])return;
+    if(int code=gipc::pcg_rho_error(s[2])){s[9]=code;s[0]=s[2];return;}
+    s[4]=s[0]==0?0:s[2]/s[0];s[0]=s[2];
+    if(!isfinite(s[4]))s[9]=7;
+}
+__global__ void chunk_zero_check(const double* r,int n,double* s)
+{
+    const int i=blockIdx.x*blockDim.x+threadIdx.x;
+    if(i<n && s[10]!=0 && s[0]==0 && r[i]!=0)
+        atomicCAS(reinterpret_cast<unsigned long long*>(s+9),__double_as_longlong(0.0),__double_as_longlong(3.0));
+}
+__global__ void chunk_p_update(double* p,const double* z,const double* s,int n)
+{
+    const int i=blockIdx.x*blockDim.x+threadIdx.x;
+    if(i<n && s[10]!=0)p[i]=z[i]+s[4]*p[i];
+}
+__global__ void chunk_finalize(double* s,int max_iter,double tol,int fixed_iterations)
+{
+    if(s[10]==0)return;
+    s[6]+=1;
+    const bool converged=(fixed_iterations>0?s[6]>=fixed_iterations:fabs(s[8])<=tol*s[7]) || (s[0]==0 && s[9]==0);
+    s[5]=converged?1:0;
+    // A separate kernel boundary follows ALL p blocks before closing active.
+    s[10]=!converged && s[9]==0 && s[6]<max_iter-1;
+}
+__global__ void chunk_continue(const double* s,cudaGraphConditionalHandle handle)
+{
+    cudaGraphSetConditional(handle,s[10]!=0);
+}
+
+struct GraphStudyTiming
+{
+    bool enabled;cudaEvent_t events[4]{};
+    explicit GraphStudyTiming(bool value):enabled(value)
+    {if(enabled)for(auto& e:events)CUDA_SAFE_CALL(cudaEventCreate(&e));}
+    ~GraphStudyTiming(){if(enabled)for(auto e:events)cudaEventDestroy(e);}
+    void mark(int i){if(enabled)CUDA_SAFE_CALL(cudaEventRecord(events[i],cudaStreamPerThread));}
+    double elapsed(int first,int last)
+    {if(!enabled)return 0;CUDA_SAFE_CALL(cudaEventSynchronize(events[last]));float ms=0;
+     CUDA_SAFE_CALL(cudaEventElapsedTime(&ms,events[first],events[last]));return ms;}
+};
 }
 
 namespace gipc
@@ -69,6 +137,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
 {
     cost_trace_iteration(-1); // Graph iterations execute on device, not host scopes.
     CostScope cost_graph("graph.entry");
+    const int chunk=m_config.graph_chunk_iterations;
+    if(chunk!=1 && chunk!=4)throw std::runtime_error("PCG Graph chunk must be 1 or 4");
     if(max_iter <= 1 || b.size() > std::numeric_limits<int>::max()
        || max_iter > std::numeric_limits<int>::max())
         return pcg(x,b,max_iter);
@@ -77,7 +147,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     const bool fused_update = (diagnostic_fused_override>=0 ? diagnostic_fused_override==1 :
                               fused_env && std::strcmp(fused_env, "1") == 0)
                               && fused_diag_update_available();
-    graph_scalars.resize(10);
+    if(chunk==4 && fused_update)throw std::runtime_error("K=4 cannot use fused diagonal update");
+    graph_scalars.resize(chunk==4?13:10);
     double* s = graph_scalars.data();
     size_t reduce_bytes = 0;
     CUDA_SAFE_CALL(cub::DeviceReduce::Sum(nullptr, reduce_bytes,
@@ -90,6 +161,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         CUDA_SAFE_CALL(cub::DeviceReduce::Sum(graph_reduce_storage.data(),
             reduce_bytes,partials,result,blocks,cudaStreamPerThread));
     };
+    GraphStudyTiming timing(diagnostic_chunk_timing);
+    timing.mark(0);
     r.buffer_view().copy_from(b.buffer_view());
     // Outside capture: assembly, dynamic allocation and warm-up are complete.
     apply_preconditioner(z,r);
@@ -97,13 +170,22 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     p.copy_from(z);
     graph_init<<<1,1>>>(s);
     graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
+    if(chunk==4)chunk_init<<<1,1>>>(s);
+    timing.mark(1);
     double initial[10];
+    const auto initial_readback_start=std::chrono::steady_clock::now();
     {
     CostScope cost_initial_readback("graph.initial_readback",false);
     CUDA_SAFE_CALL(cudaMemcpy(initial,s,sizeof(initial),cudaMemcpyDeviceToHost));
     }
     auto& stats = Statistics::instance().at_current_frame()["newton"].back()["pcg"];
     stats["execution"]="conditional_graph";stats["rho_initial"]=initial[7];stats["iterations"]=0;
+    stats["graph_chunk_iterations"]=chunk;
+    if(diagnostic_chunk_timing)
+    {
+        stats["graph_initial_readback_host_ms"]=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-initial_readback_start).count();
+        stats["graph_initialization_event_ms"]=timing.elapsed(0,1);
+    }
     if(initial[9]!=0)fail_pcg(static_cast<int>(initial[9]),initial[0],0);
     if(initial[0]==0){stats["zero_residual"]=true;return 0;}
 
@@ -121,6 +203,7 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         key.push_back(reinterpret_cast<std::uintptr_t>(address));
     key.push_back(n); key.push_back(reduce_bytes);
     key.push_back(fused_update);
+    key.push_back(chunk);key.push_back(graph_scalars.size());
     key.push_back(diagnostic_fixed_iterations);
     int device = 0; CUDA_SAFE_CALL(cudaGetDevice(&device)); key.push_back(device);
     if(graph_exec && (key != captured_key || max_iter != captured_max_iter
@@ -153,6 +236,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         CostCaptureGuard no_events_in_capture;
         CUDA_SAFE_CALL(cudaStreamBeginCaptureToGraph(cudaStreamPerThread,
             params.conditional.phGraph_out[0],nullptr,nullptr,0,cudaStreamCaptureModeThreadLocal));
+        if(chunk==1)
+        {
         spmv(p.cview(),Ap.view());
         dot(p.buffer_view().data(),Ap.buffer_view().data(),z.buffer_view().data(),s+1);
         graph_alpha<<<1,1>>>(s);
@@ -169,6 +254,24 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
         graph_p_continue<<<blocks,256>>>(p.buffer_view().data(),z.buffer_view().data(),
             s,n,static_cast<int>(max_iter),m_config.global_tol_rate,diagnostic_fixed_iterations,handle);
+        }
+        else
+        {
+            for(int step=0;step<4;++step)
+            {
+                spmv(p.cview(),Ap.view());
+                dot(p.data(),Ap.data(),z.data(),s+11);
+                chunk_alpha<<<1,1>>>(s);
+                chunk_dx_r<<<blocks,256>>>(x.data(),r.data(),p.data(),Ap.data(),s,n);
+                apply_preconditioner(z,r);
+                dot(r.data(),z.data(),Ap.data(),s+12);
+                chunk_beta<<<1,1>>>(s,m_config.global_tol_rate,diagnostic_fixed_iterations);
+                chunk_zero_check<<<blocks,256>>>(r.data(),n,s);
+                chunk_p_update<<<blocks,256>>>(p.data(),z.data(),s,n);
+                chunk_finalize<<<1,1>>>(s,static_cast<int>(max_iter),m_config.global_tol_rate,diagnostic_fixed_iterations);
+            }
+            chunk_continue<<<1,1>>>(s,handle);
+        }
         CUDA_SAFE_CALL(cudaStreamEndCapture(cudaStreamPerThread,&body));
         }
         CUDA_SAFE_CALL(cudaGraphInstantiate(&graph_exec,graph,nullptr,nullptr,0));
@@ -177,16 +280,26 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         ++captures;
         capture_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-capture_start).count();
     }
+    timing.mark(2);
     {
     CostScope cost_launch("graph.replay");
     CUDA_SAFE_CALL(cudaGraphLaunch(graph_exec,cudaStreamPerThread));
     }
+    timing.mark(3);
     double report[10];
+    const auto final_readback_start=std::chrono::steady_clock::now();
     {
     CostScope cost_final_readback("graph.final_readback",false);
     CUDA_SAFE_CALL(cudaMemcpy(report,s,sizeof(report),cudaMemcpyDeviceToHost));
     }
     stats["execution"] = "conditional_graph";
+    if(diagnostic_chunk_timing)
+    {
+        stats["graph_final_readback_host_ms"]=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-final_readback_start).count();
+        stats["graph_replay_event_ms"]=timing.elapsed(2,3);
+    }
+    stats["graph_body_executions"]=(static_cast<int>(report[6])+chunk-1)/chunk;
+    stats["graph_inactive_tail_steps"]=chunk*((static_cast<int>(report[6])+chunk-1)/chunk)-static_cast<int>(report[6]);
     stats["fused_diag_update"] = fused_update;
     stats["graph_cache_hit"] = cache_hit;
     stats["graph_capture_instantiate_host_ms"]=capture_ms;

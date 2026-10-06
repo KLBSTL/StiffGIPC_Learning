@@ -23,7 +23,7 @@ from config import sha, digest
 TIMEOUT = 120.0
 SAMPLE_INTERVAL = .5
 NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
-KINDS = ('component', 'pcg_guard', 'contact_pool', 'mas_cholesky', 'fixed')
+KINDS = ('component', 'pcg_guard', 'pcg_chunk', 'contact_pool', 'mas_cholesky', 'fixed')
 
 
 def require(value, message):
@@ -73,8 +73,9 @@ def fixture_environment(kind, out, prefix=None, scene=None, mas='legacy', restri
     require(scene is None or scene in ('cloth_fixed_bunny_l', 'bunny_cloth_bunny_l'), 'Unsupported fixed scene')
     env = {k: v for k, v in os.environ.items() if not k.upper().startswith('GIPC_')}
     report = out / 'fixture.json'
-    if kind in ('component', 'pcg_guard', 'contact_pool'):
+    if kind in ('component', 'pcg_guard', 'pcg_chunk', 'contact_pool'):
         key = {'component': 'GIPC_VALIDATE_COMPONENTS', 'pcg_guard': 'GIPC_PCG_GUARD_FIXTURE',
+               'pcg_chunk': 'GIPC_PCG_CHUNK_GUARD_FIXTURE',
                'contact_pool': 'GIPC_CONTACT_POOL_FIXTURE'}[kind]
         env[key] = str(report)
     elif kind == 'mas_cholesky':

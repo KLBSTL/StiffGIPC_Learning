@@ -174,6 +174,9 @@ add_test(NAME edge_query_order_equivalence COMMAND ${CMAKE_COMMAND} -E env
     "GIPC_DISCRETE_BVH_REFIT=0"
     "GIPC_EDGE_ORDER_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/edge_order_fixture.json" $<TARGET_FILE:gipc>)
 set_tests_properties(edge_query_order_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
+add_test(NAME pcg_chunk_stop_equivalence COMMAND ${CMAKE_COMMAND} -E env
+    "GIPC_PCG_CHUNK_GUARD_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/pcg_chunk_guard_fixture.json" $<TARGET_FILE:gipc>)
+set_tests_properties(pcg_chunk_stop_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 
 # Ensure external C libraries use the same dynamic runtime as the executable
 # to avoid LIBCMT/MSVCRT conflicts (MSVC only).

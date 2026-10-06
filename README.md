@@ -2,7 +2,15 @@
 
 IPC + CUDA Graph research code for contact cloth and mixed ABD/FEM scenes.
 
-The latest local rounds completed 24 BVH interaction runs and two private
+The latest local batch implemented guarded four-step conditional PCG Graphs.
+Seven native CTests (including 28 new boundary cases) and 105 Python CPU
+checks passed. Frozen short and contact-long systems completed seven paired
+replays each: K1/K4 medians were 0.8403x and 0.9486x. The candidate did not
+meet the gain threshold; chunk size remains 1 by default and its performance
+branch is stopped. Independent CPU references do not certify cloth quality.
+See the [Graph round review](reports/local_graph_rounds_20261006/ROUND_REVIEW.md).
+
+The preceding local rounds completed 24 BVH interaction runs and two private
 same-state query probes. D1S1 remains the selected execution combination.
 The new optional leaf query order passed 12 analytic GPU cases, but its speed
 potential was too small on fixed cloth and negative on hanging contact cloth;

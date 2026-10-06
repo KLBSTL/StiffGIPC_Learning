@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdint>
 #include <string>
+#include <functional>
 #include <linear_system/linear_system/linear_subsystem.h>
 #include <cuda_tools/cuda_all.h>
 
@@ -65,6 +66,7 @@ class IterativeSolver
     cudatool::LinearSystemContext& ctx() const;
     std::vector<std::uintptr_t> graph_signature() const;
     Json snapshot_system(const std::string& prefix) const;
+    std::function<void()> checkpoint_preconditioner_scratch() const;
 
   private:
     void system(GlobalLinearSystem& system) { m_system = &system; }

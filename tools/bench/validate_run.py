@@ -14,6 +14,20 @@ def validate(run):
     if req['binary']!='active':
         return {'passed':False,'scope':'configuration only','reason':'Frozen program has no resolved config contract'}
     r=read(run/'resolved_config.json')
+    chunk=c.get('pcg_graph_chunk',1)
+    # Old saved requests/results predate the field and represent K=1. New
+    # requests must receive explicit native confirmation, even at the default.
+    chunk_contract='pcg_graph_chunk' in c or 'configured_pcg_graph_chunk' in r
+    check('pcg_graph_chunk.valid',type(chunk) is int and chunk in (1,4),True)
+    check('pcg_graph_chunk.execution',chunk!=4 or c['execution']=='conditional_graph',True)
+    if chunk_contract:
+        actual=r.get('configured_pcg_graph_chunk')
+        check('pcg_graph_chunk.resolved_type',type(actual) is int,True)
+        check('pcg_graph_chunk.resolved',actual,chunk)
+    if 'fixed_graph_chunk_study' in c or 'fixed_graph_chunk_study' in r:
+        actual=r.get('fixed_graph_chunk_study')
+        check('fixed_graph_chunk_study.resolved_type',type(actual) is bool,True)
+        check('fixed_graph_chunk_study.resolved',actual,c.get('fixed_graph_chunk_study',False))
     if 'edge_query_order' in r:
         e=r['edge_query_order']
         check('edge_query_order.requested',e['requested'],c.get('edge_query_order','raw'))
@@ -80,6 +94,14 @@ def validate(run):
             check('full_step_exit_probe_supported',False,True)
     records=[n['pcg'] for f in read(run/'output/stats.json')['frames'] for n in f['newton'] if 'pcg' in n]
     check('observed_execution_modes',sorted({p.get('execution','host') for p in records}),[c['execution']])
+    # Host PCG has no graph body or chunk observation. Its K1-only contract
+    # is checked through the requested/resolved configuration above.
+    graph_records=[p for p in records if p.get('execution','host')=='conditional_graph']
+    if ((chunk_contract and c['execution']=='conditional_graph')
+        or (graph_records and (chunk_contract or any('graph_chunk_iterations' in p for p in graph_records)))):
+        check('pcg_graph_chunk.observed',bool(graph_records) and all(
+            type(p.get('graph_chunk_iterations')) is int and p['graph_chunk_iterations']==chunk
+            for p in graph_records),True)
     check('observed_fused_diag_disabled',any(p.get('fused_diag_update',False) for p in records),False)
     check('iteration_limit_or_breakdown',any(p.get('iteration_limit',False) or p.get('breakdown',False) for p in records),False)
     if 'report_components' in r:

@@ -75,9 +75,13 @@ def driver_model(gpu):
     value=result.stdout.strip().upper();require(value in ('WDDM','TCC'),'Unrecognized Windows GPU driver model')
     return value
 
+def prepare_run_output(out,config):
+    require(not out.exists(),'Run output exists')
+    (out/'output').mkdir(parents=True)
+    if 'fixed' in config['diagnostics']:(out/'fixed').mkdir()
+
 def execute(session,t,identity,gpu):
-    c=expand(t['config']);out=child(session,t['name']);require(not out.exists(),'Run output exists')
-    (out/'output').mkdir(parents=True);proc=None
+    c=expand(t['config']);out=child(session,t['name']);prepare_run_output(out,c);proc=None
     result={'status':'launcher_failed','recorded_frames':0,'heavy_diagnostics':bool(c['diagnostics']),
             'performance_certified':False,'physical_quality_certified':False,'timing_is_diagnostic':True,
             'timing_scope':'Shared Windows desktop diagnostic. Baseline lacks velocity/resolved/breakdown telemetry; no performance certification.'}

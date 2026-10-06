@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = {
     'scene': 'bunny_cloth_bunny_l', 'steps': 35, 'dt': .01, 'timeout_seconds': 120,
-    'backend': 'ipc', 'execution': 'host', 'mas': 'legacy',
+    'backend': 'ipc', 'execution': 'host', 'mas': 'legacy', 'pcg_graph_chunk': 1,
     'ipc_newton_tol': .01, 'toi_remaining_fraction_tol': .01,
     'toi_trial_velocity_tol': .05, 'pcg_rho_tol': 1e-4,
     'refit': False, 'batch': False, 'reuse': False,
@@ -17,6 +17,7 @@ DEFAULT = {
     'fixed_frames': '2,25,34', 'fixed_directions': '1', 'trace_velocity': True,
     'profile': 'none', 'mas_restrict':'serial', 'fixed_restrict_study':False,
     'mas_factor_action':'auto', 'fixed_factor_study':False,
+    'fixed_graph_chunk_study':False,
     'full_step_exit_probe':None,
     'ipc_termination':'legacy', 'ipc_cumulative_tol':None, 'ipc_min_updates':6,
     'ipc_residual_rel_tol':.03, 'ipc_residual_floor':1e-30,
@@ -67,6 +68,11 @@ def expand(data):
     if unknown:
         raise ValueError('Unknown configuration keys: ' + str(unknown))
     c = DEFAULT | PRESETS[preset] | data
+    chunk=c['pcg_graph_chunk']
+    if type(chunk) is not int or chunk not in (1,4):
+        raise ValueError('PCG Graph chunk must be the integer 1 or 4')
+    if chunk==4 and c['execution']!='conditional_graph':
+        raise ValueError('PCG Graph chunk 4 requires conditional_graph execution')
     if c['edge_query_order'] not in ('raw','leaf'):
         raise ValueError('Edge query order must be raw or leaf')
     probe=c['edge_order_probe_frames']
@@ -84,7 +90,7 @@ def expand(data):
                 'spmv_fused_quadratic','fixed_spmv_quadratic_study','bvh_eligibility','bvh_eligibility_validate',
                 'bounded_ccd','bounded_ccd_validate',
                 'contact_pool','contact_pool_validate',
-                'ipc_residual_shadow','ipc_residual_cpu_audit'):
+                'ipc_residual_shadow','ipc_residual_cpu_audit','fixed_graph_chunk_study'):
         if not isinstance(c[key],bool):raise ValueError(key+' requires a boolean')
     interval=c['discrete_bvh_rebuild_interval']
     if isinstance(interval,bool) or not isinstance(interval,int) or not 1<=interval<=1024:
@@ -187,6 +193,13 @@ def expand(data):
         or c['fixed_restrict_study'] or c['fixed_legacy_restrict_study']
         or c['fixed_frames']!=str(c['steps']) or c['fixed_directions']!='1'):
         raise ValueError('SpMV quadratic study requires one final system and no other fixed study')
+    if c['fixed_graph_chunk_study']:
+        other_studies=('fixed_restrict_study','fixed_factor_study','fixed_mas_stage_study',
+                       'fixed_legacy_restrict_study','fixed_mas_dot_study','fixed_spmv_quadratic_study')
+        if ('fixed' not in c['diagnostics'] or c['mas']!='legacy'
+            or c['execution']!='conditional_graph' or c['pcg_graph_chunk']!=1
+            or c['profile']!='none' or any(c[key] for key in other_studies)):
+            raise ValueError('Graph chunk study requires fixed legacy MAS with conditional_graph K1 primary, no other study or profile')
     if c['profile'] not in ('none','graph','node') or (c['profile']!='none' and 'cost' not in c['diagnostics']):
         raise ValueError('Nsight graph/node profiling requires selected cost ranges')
     for key in ('dt', 'ipc_newton_tol', 'toi_remaining_fraction_tol', 'toi_trial_velocity_tol', 'pcg_rho_tol'):
@@ -224,7 +237,7 @@ def matches_requested(saved, requested):
             elif key=='mu_coordinates':expected.pop(key)
     if 'mu_coordinates' not in saved and requested.get('mu_coordinates')=='generalized':
         expected.pop('mu_coordinates')
-    for key in ('edge_query_order','edge_order_probe_frames'):
+    for key in ('edge_query_order','edge_order_probe_frames','pcg_graph_chunk','fixed_graph_chunk_study'):
         if key not in saved and expected[key]==DEFAULT[key]:expected.pop(key)
     return saved==expected
 
@@ -254,6 +267,8 @@ def environment(c, out):
         'GIPC_TOI_REMAINING_FRACTION_TOL': str(c['toi_remaining_fraction_tol']),
         'GIPC_TOI_ROBUST_VELOCITY_TOL': str(c['toi_trial_velocity_tol']),
         'GIPC_CONTACT_BACKEND': c['backend'], 'GIPC_PCG_EXECUTION': c['execution'],
+        'GIPC_PCG_GRAPH_CHUNK': str(c['pcg_graph_chunk']),
+        'GIPC_FIXED_GRAPH_CHUNK_STUDY': str(int(c['fixed_graph_chunk_study'])),
         'GIPC_PCG_PRECONDITIONER': 'mas', 'GIPC_MAS_CHOLESKY': str(int(c['mas'] == 'cholesky')),
         'GIPC_MAS_WIDE_APPLY': '0', 'GIPC_MAS_INVERSE64': '0', 'GIPC_PCG_FUSED_DIAG_UPDATE': '0',
         'GIPC_MAS_RESTRICT_MODE':c['mas_restrict'],

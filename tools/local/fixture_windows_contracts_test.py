@@ -36,6 +36,9 @@ class Contracts(unittest.TestCase):
                 pass
 
     def test_clean_environment_and_native_contracts(self):
+        env, path = f.fixture_environment('pcg_chunk', Path('new'))
+        self.assertEqual(env['GIPC_PCG_CHUNK_GUARD_FIXTURE'], str(Path('new/fixture.json')))
+        self.assertEqual(path, Path('new/fixture.json'))
         with patch.dict(f.os.environ, {'GIPC_STEPS': '999', 'gipc_retired': '1', 'SAFE': 'yes'}, clear=True):
             env, path = f.fixture_environment('contact_pool', Path('new'))
         self.assertEqual({k for k in env if k.upper().startswith('GIPC_')}, {'GIPC_CONTACT_POOL_FIXTURE'})

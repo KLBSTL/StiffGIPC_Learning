@@ -65,6 +65,7 @@ class GlobalLinearSystem
     // Diagnostic only: rebuild at unchanged physics state without another solve.
     Json audit_reassembly(const std::function<void()>& assemble_derivatives);
     Json snapshot_system(const std::string& prefix) const;
+    std::function<void()> checkpoint_preconditioner_scratch() const;
     void snapshot_solution(const std::string& prefix) const;
 
     Json               as_json() const;

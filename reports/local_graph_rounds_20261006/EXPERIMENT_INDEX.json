@@ -1,0 +1,538 @@
+{
+  "schema": "local_graph_chunk_experiments.v1",
+  "date": "2026-10-06",
+  "location": "Local RTX3070 Laptop / WDDM",
+  "autodl_used": false,
+  "hypothesis": "Four guarded PCG iterations per conditional WHILE body",
+  "decision": "Stop K4 performance branch; default remains K1",
+  "quality_certified": false,
+  "whole_scene_speedup_certified": false,
+  "two_times_target_achieved": false,
+  "source_based_on_commit": "c1e98f892ced288e6b76830fc5989f9421ddaa71",
+  "program": {
+    "path": "build/local_graph_chunk_20261006/Release/gipc.exe",
+    "bytes": 11059200,
+    "sha256": "9ddf16cc8d5efe8292e9d194b1181a1e20ac1d268d3a3331cfbdf0507d5cb70c"
+  },
+  "native_source_digest": "69912c815abb51305731ed5d9d6b06b90c9c8b695610bee84ed4bffa95abb8ce",
+  "default_chunk": 1,
+  "physical_and_stopping_parameters_unchanged": true,
+  "plan": {
+    "path": "docs/LOCAL_GRAPH_OPTIMIZATION_PLAN_20261006.md",
+    "bytes": 4385,
+    "sha256": "c850f703c0768b5c1909dba21d2a451b4ab02228c772505c11bffd881972d0a0"
+  },
+  "starts": [
+    {
+      "session": "local_graph_chunk_replay_20261006",
+      "stage": "short",
+      "classification": "tool_failed",
+      "native_status": "failed",
+      "recorded_frames": 1,
+      "requested_task": {
+        "name": "short_probe",
+        "binary": "active",
+        "variant": "K1_private_K4_probe",
+        "scene_key": "fixed",
+        "repeat": 1,
+        "config": {
+          "scene": "cloth_fixed_bunny_l",
+          "steps": 2,
+          "dt": 0.01,
+          "timeout_seconds": 120,
+          "backend": "ipc",
+          "execution": "conditional_graph",
+          "mas": "legacy",
+          "pcg_graph_chunk": 1,
+          "ipc_newton_tol": 0.01,
+          "toi_remaining_fraction_tol": 0.01,
+          "toi_trial_velocity_tol": 0.05,
+          "pcg_rho_tol": 0.0001,
+          "refit": true,
+          "batch": true,
+          "reuse": true,
+          "choose_start": false,
+          "restart_guard": false,
+          "mu_mode": "diagonal",
+          "mu_coordinates": "generalized",
+          "diagnostics": [
+            "fixed"
+          ],
+          "cost_frames": "1-3,24-26,33-35",
+          "fixed_frames": "2",
+          "fixed_directions": "1",
+          "trace_velocity": true,
+          "profile": "none",
+          "mas_restrict": "serial",
+          "fixed_restrict_study": false,
+          "mas_factor_action": "triangular",
+          "fixed_factor_study": false,
+          "fixed_graph_chunk_study": true,
+          "full_step_exit_probe": null,
+          "ipc_termination": "legacy",
+          "ipc_cumulative_tol": 0.01,
+          "ipc_min_updates": 6,
+          "ipc_residual_rel_tol": 0.03,
+          "ipc_residual_floor": 1e-30,
+          "ipc_residual_shadow": false,
+          "ipc_terminal_audit_frame": 0,
+          "ipc_residual_cpu_audit": false,
+          "fixed_mas_stage_study": false,
+          "legacy_restrict": "atomic",
+          "fixed_legacy_restrict_study": false,
+          "cost_events": true,
+          "mas_fused_dot": false,
+          "fixed_mas_dot_study": false,
+          "discrete_bvh_refit": true,
+          "discrete_bvh_rebuild_interval": 8,
+          "discrete_bvh_validate": false,
+          "spmv_fused_quadratic": false,
+          "fixed_spmv_quadratic_study": false,
+          "bvh_eligibility": false,
+          "bvh_eligibility_validate": false,
+          "bounded_ccd": false,
+          "bounded_ccd_validate": false,
+          "contact_pool": false,
+          "contact_pool_validate": false,
+          "edge_query_order": "raw",
+          "edge_order_probe_frames": null
+        }
+      },
+      "seal": {
+        "path": "build/local_graph_chunk_20261006/local_diagnostic_seal.json",
+        "bytes": 414104,
+        "sha256": "bc61e7b96a4d225798c86c9552e7f8b5099127bb63d07cb69a80f1063fbe89fa"
+      },
+      "controller_hashes_at_execution": {
+        "graph_chunk_rounds.py": "119e61285f5d341a166af18feb116e253494e7b91abf106ed47848965b70e3d4",
+        "graph_chunk_rounds_test.py": "b640a53719585a2d7ed8202d39d700c1908f421964d1b5d20b05490528aa34c9"
+      },
+      "reviewed_previous_sha256": null,
+      "reviewed_resource_failure_sha256": null,
+      "analysis": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/analysis.json",
+        "bytes": 272,
+        "sha256": "58410f21ddd8016cc1059497de5285b079bdc45e4dceff4d04b1a022ae8b7779"
+      },
+      "receipt": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/receipt.json",
+        "bytes": 489,
+        "sha256": "6af11e6729ad3122fc2a5a6c04df0397b8888b692945d96ae0e85598e57e26d9"
+      },
+      "evidence": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/short_probe/evidence.json",
+        "bytes": 3022,
+        "sha256": "2b9d5ce1f66a2cffae7640a2d29953a839fe6bf41485f6fe61ba43775be81ae3"
+      },
+      "requested": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/short_probe/requested.json",
+        "bytes": 17336,
+        "sha256": "bba53a62ed9d59dd8612c79f4c5917c689d95c011930d9727f0be2c2b33889fb"
+      },
+      "resolved": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/short_probe/resolved_config.json",
+        "bytes": 3091,
+        "sha256": "0e36b0f164bf462516bd20121a502375ee1b133e0fe2b89dcaaf5ef064ca46b3"
+      },
+      "result": {
+        "path": "runs/local_graph_chunk_replay_20261006/short/short_probe/result.json",
+        "bytes": 29344,
+        "sha256": "b3261a0ccec7b4768048c9ceacf42a95c0458aeaebd9bea4ff61d0892fe403fa"
+      }
+    },
+    {
+      "session": "local_graph_chunk_replay_20261006b",
+      "stage": "short",
+      "classification": "completed_candidate_rejected",
+      "native_status": "completed",
+      "recorded_frames": 2,
+      "requested_task": {
+        "name": "short_probe",
+        "binary": "active",
+        "variant": "K1_private_K4_probe",
+        "scene_key": "fixed",
+        "repeat": 1,
+        "config": {
+          "scene": "cloth_fixed_bunny_l",
+          "steps": 2,
+          "dt": 0.01,
+          "timeout_seconds": 120,
+          "backend": "ipc",
+          "execution": "conditional_graph",
+          "mas": "legacy",
+          "pcg_graph_chunk": 1,
+          "ipc_newton_tol": 0.01,
+          "toi_remaining_fraction_tol": 0.01,
+          "toi_trial_velocity_tol": 0.05,
+          "pcg_rho_tol": 0.0001,
+          "refit": true,
+          "batch": true,
+          "reuse": true,
+          "choose_start": false,
+          "restart_guard": false,
+          "mu_mode": "diagonal",
+          "mu_coordinates": "generalized",
+          "diagnostics": [
+            "fixed"
+          ],
+          "cost_frames": "1-3,24-26,33-35",
+          "fixed_frames": "2",
+          "fixed_directions": "1",
+          "trace_velocity": true,
+          "profile": "none",
+          "mas_restrict": "serial",
+          "fixed_restrict_study": false,
+          "mas_factor_action": "triangular",
+          "fixed_factor_study": false,
+          "fixed_graph_chunk_study": true,
+          "full_step_exit_probe": null,
+          "ipc_termination": "legacy",
+          "ipc_cumulative_tol": 0.01,
+          "ipc_min_updates": 6,
+          "ipc_residual_rel_tol": 0.03,
+          "ipc_residual_floor": 1e-30,
+          "ipc_residual_shadow": false,
+          "ipc_terminal_audit_frame": 0,
+          "ipc_residual_cpu_audit": false,
+          "fixed_mas_stage_study": false,
+          "legacy_restrict": "atomic",
+          "fixed_legacy_restrict_study": false,
+          "cost_events": true,
+          "mas_fused_dot": false,
+          "fixed_mas_dot_study": false,
+          "discrete_bvh_refit": true,
+          "discrete_bvh_rebuild_interval": 8,
+          "discrete_bvh_validate": false,
+          "spmv_fused_quadratic": false,
+          "fixed_spmv_quadratic_study": false,
+          "bvh_eligibility": false,
+          "bvh_eligibility_validate": false,
+          "bounded_ccd": false,
+          "bounded_ccd_validate": false,
+          "contact_pool": false,
+          "contact_pool_validate": false,
+          "edge_query_order": "raw",
+          "edge_order_probe_frames": null
+        }
+      },
+      "seal": {
+        "path": "build/local_graph_chunk_20261006/local_diagnostic_seal_v2.json",
+        "bytes": 414104,
+        "sha256": "1f7c05620b270eb6c23a4ff45a2001168e24e008181fe79fb77b5566d4488b17"
+      },
+      "controller_hashes_at_execution": {
+        "graph_chunk_rounds.py": "119e61285f5d341a166af18feb116e253494e7b91abf106ed47848965b70e3d4",
+        "graph_chunk_rounds_test.py": "b640a53719585a2d7ed8202d39d700c1908f421964d1b5d20b05490528aa34c9"
+      },
+      "reviewed_previous_sha256": null,
+      "reviewed_resource_failure_sha256": null,
+      "analysis": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/analysis.json",
+        "bytes": 3562,
+        "sha256": "e275c26590c9ce0d5bd76a6000c8f959014621e3dcf22c148bfd3fe6387bb347"
+      },
+      "receipt": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/receipt.json",
+        "bytes": 489,
+        "sha256": "f52b3ded51ef8cd96ff65b0811a82f4aa4bcf4bdd677238c5c155128b465f94a"
+      },
+      "evidence": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/short_probe/evidence.json",
+        "bytes": 12956,
+        "sha256": "262f9c28a7da9b4922c6256b4feae6b612458d25ef63479744cf30e049adb51d"
+      },
+      "requested": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/short_probe/requested.json",
+        "bytes": 17343,
+        "sha256": "06abde58d9d35bdaec75875b22c6575cb7668ca96264e1df1ebc764640021af0"
+      },
+      "resolved": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/short_probe/resolved_config.json",
+        "bytes": 3091,
+        "sha256": "0e36b0f164bf462516bd20121a502375ee1b133e0fe2b89dcaaf5ef064ca46b3"
+      },
+      "result": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/short_probe/result.json",
+        "bytes": 39291,
+        "sha256": "34eadbcd1930523943394426acee34c61426c80e443a4ac85d5aede57cee50fd"
+      },
+      "study": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/short_probe/fixed/f2_n1_graph_chunk_study.json",
+        "bytes": 56471,
+        "sha256": "9589f6b29f4fa115525a27c909b352877df2f3712774ad7cd9b3ef4a5012a45c"
+      },
+      "full_pcg_replays": 18,
+      "warmup_replays": 4,
+      "measured_pairs": 7,
+      "candidate_gate_passed": false,
+      "paired_median_host_ratio": 0.8403240559257807,
+      "cpu_reference": {
+        "path": "runs/local_graph_chunk_replay_20261006b/short/cpu_reference.json",
+        "bytes": 22283,
+        "sha256": "4d8a2502d539659687a158ab158d3aa4c688658ae7f90419c19438689c864b87"
+      }
+    },
+    {
+      "session": "local_graph_chunk_replay_20261006b",
+      "stage": "long",
+      "classification": "resource_stopped",
+      "native_status": "memory_budget",
+      "recorded_frames": 24,
+      "requested_task": {
+        "name": "long_probe",
+        "binary": "active",
+        "variant": "K1_private_K4_probe",
+        "scene_key": "fixed",
+        "repeat": 1,
+        "config": {
+          "scene": "cloth_fixed_bunny_l",
+          "steps": 57,
+          "dt": 0.01,
+          "timeout_seconds": 120,
+          "backend": "ipc",
+          "execution": "conditional_graph",
+          "mas": "legacy",
+          "pcg_graph_chunk": 1,
+          "ipc_newton_tol": 0.01,
+          "toi_remaining_fraction_tol": 0.01,
+          "toi_trial_velocity_tol": 0.05,
+          "pcg_rho_tol": 0.0001,
+          "refit": true,
+          "batch": true,
+          "reuse": true,
+          "choose_start": false,
+          "restart_guard": false,
+          "mu_mode": "diagonal",
+          "mu_coordinates": "generalized",
+          "diagnostics": [
+            "fixed"
+          ],
+          "cost_frames": "1-3,24-26,33-35",
+          "fixed_frames": "57",
+          "fixed_directions": "1",
+          "trace_velocity": true,
+          "profile": "none",
+          "mas_restrict": "serial",
+          "fixed_restrict_study": false,
+          "mas_factor_action": "triangular",
+          "fixed_factor_study": false,
+          "fixed_graph_chunk_study": true,
+          "full_step_exit_probe": null,
+          "ipc_termination": "legacy",
+          "ipc_cumulative_tol": 0.01,
+          "ipc_min_updates": 6,
+          "ipc_residual_rel_tol": 0.03,
+          "ipc_residual_floor": 1e-30,
+          "ipc_residual_shadow": false,
+          "ipc_terminal_audit_frame": 0,
+          "ipc_residual_cpu_audit": false,
+          "fixed_mas_stage_study": false,
+          "legacy_restrict": "atomic",
+          "fixed_legacy_restrict_study": false,
+          "cost_events": true,
+          "mas_fused_dot": false,
+          "fixed_mas_dot_study": false,
+          "discrete_bvh_refit": true,
+          "discrete_bvh_rebuild_interval": 8,
+          "discrete_bvh_validate": false,
+          "spmv_fused_quadratic": false,
+          "fixed_spmv_quadratic_study": false,
+          "bvh_eligibility": false,
+          "bvh_eligibility_validate": false,
+          "bounded_ccd": false,
+          "bounded_ccd_validate": false,
+          "contact_pool": false,
+          "contact_pool_validate": false,
+          "edge_query_order": "raw",
+          "edge_order_probe_frames": null
+        }
+      },
+      "seal": {
+        "path": "build/local_graph_chunk_20261006/local_diagnostic_seal_v2.json",
+        "bytes": 414104,
+        "sha256": "1f7c05620b270eb6c23a4ff45a2001168e24e008181fe79fb77b5566d4488b17"
+      },
+      "controller_hashes_at_execution": {
+        "graph_chunk_rounds.py": "119e61285f5d341a166af18feb116e253494e7b91abf106ed47848965b70e3d4",
+        "graph_chunk_rounds_test.py": "b640a53719585a2d7ed8202d39d700c1908f421964d1b5d20b05490528aa34c9"
+      },
+      "reviewed_previous_sha256": "e275c26590c9ce0d5bd76a6000c8f959014621e3dcf22c148bfd3fe6387bb347",
+      "reviewed_resource_failure_sha256": null,
+      "analysis": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/analysis.json",
+        "bytes": 271,
+        "sha256": "4a5bf78a049b25fe51fb525b8f4f8b24d4825562b48d8e47e9192087eb9773a9"
+      },
+      "receipt": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/receipt.json",
+        "bytes": 489,
+        "sha256": "7fa98bbf6d6ac009f794bb8eaedb7002e6afcdd6a6311fca3db9bd0b17d33b16"
+      },
+      "evidence": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/long_probe/evidence.json",
+        "bytes": 10546,
+        "sha256": "7e0d43f20cd3d70ad90b70ee953314ac195586435aed43f983795721396df461"
+      },
+      "requested": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/long_probe/requested.json",
+        "bytes": 17339,
+        "sha256": "cd6359cf7c63f651998f19aa49de6e414320f6ef051565563827bb5f67f26739"
+      },
+      "resolved": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/long_probe/resolved_config.json",
+        "bytes": 3091,
+        "sha256": "0e36b0f164bf462516bd20121a502375ee1b133e0fe2b89dcaaf5ef064ca46b3"
+      },
+      "result": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long/long_probe/result.json",
+        "bytes": 60314,
+        "sha256": "cdaa18c89d92083c283bcf9db4f6448d5e63c4817d1e19e38785f966950be15e"
+      }
+    },
+    {
+      "session": "local_graph_chunk_replay_20261006b",
+      "stage": "long_retry",
+      "classification": "completed_candidate_rejected",
+      "native_status": "completed",
+      "recorded_frames": 57,
+      "requested_task": {
+        "name": "long_retry_probe",
+        "binary": "active",
+        "variant": "K1_private_K4_probe",
+        "scene_key": "fixed",
+        "repeat": 1,
+        "config": {
+          "scene": "cloth_fixed_bunny_l",
+          "steps": 57,
+          "dt": 0.01,
+          "timeout_seconds": 120,
+          "backend": "ipc",
+          "execution": "conditional_graph",
+          "mas": "legacy",
+          "pcg_graph_chunk": 1,
+          "ipc_newton_tol": 0.01,
+          "toi_remaining_fraction_tol": 0.01,
+          "toi_trial_velocity_tol": 0.05,
+          "pcg_rho_tol": 0.0001,
+          "refit": true,
+          "batch": true,
+          "reuse": true,
+          "choose_start": false,
+          "restart_guard": false,
+          "mu_mode": "diagonal",
+          "mu_coordinates": "generalized",
+          "diagnostics": [
+            "fixed"
+          ],
+          "cost_frames": "1-3,24-26,33-35",
+          "fixed_frames": "57",
+          "fixed_directions": "1",
+          "trace_velocity": true,
+          "profile": "none",
+          "mas_restrict": "serial",
+          "fixed_restrict_study": false,
+          "mas_factor_action": "triangular",
+          "fixed_factor_study": false,
+          "fixed_graph_chunk_study": true,
+          "full_step_exit_probe": null,
+          "ipc_termination": "legacy",
+          "ipc_cumulative_tol": 0.01,
+          "ipc_min_updates": 6,
+          "ipc_residual_rel_tol": 0.03,
+          "ipc_residual_floor": 1e-30,
+          "ipc_residual_shadow": false,
+          "ipc_terminal_audit_frame": 0,
+          "ipc_residual_cpu_audit": false,
+          "fixed_mas_stage_study": false,
+          "legacy_restrict": "atomic",
+          "fixed_legacy_restrict_study": false,
+          "cost_events": true,
+          "mas_fused_dot": false,
+          "fixed_mas_dot_study": false,
+          "discrete_bvh_refit": true,
+          "discrete_bvh_rebuild_interval": 8,
+          "discrete_bvh_validate": false,
+          "spmv_fused_quadratic": false,
+          "fixed_spmv_quadratic_study": false,
+          "bvh_eligibility": false,
+          "bvh_eligibility_validate": false,
+          "bounded_ccd": false,
+          "bounded_ccd_validate": false,
+          "contact_pool": false,
+          "contact_pool_validate": false,
+          "edge_query_order": "raw",
+          "edge_order_probe_frames": null
+        }
+      },
+      "seal": {
+        "path": "build/local_graph_chunk_20261006/local_diagnostic_seal_v2.json",
+        "bytes": 414104,
+        "sha256": "1f7c05620b270eb6c23a4ff45a2001168e24e008181fe79fb77b5566d4488b17"
+      },
+      "controller_hashes_at_execution": {
+        "graph_chunk_rounds.py": "810e678c93d5fc77cbded8502177f26f94df350f132bf2b89ca38f013300c30a",
+        "graph_chunk_rounds_test.py": "b640a53719585a2d7ed8202d39d700c1908f421964d1b5d20b05490528aa34c9"
+      },
+      "reviewed_previous_sha256": "e275c26590c9ce0d5bd76a6000c8f959014621e3dcf22c148bfd3fe6387bb347",
+      "reviewed_resource_failure_sha256": "4a5bf78a049b25fe51fb525b8f4f8b24d4825562b48d8e47e9192087eb9773a9",
+      "analysis": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/analysis.json",
+        "bytes": 3579,
+        "sha256": "8fbc7690ce0685739f8b7308bf943d3fd227ba878a419670200f690620bf8c95"
+      },
+      "receipt": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/receipt.json",
+        "bytes": 489,
+        "sha256": "2b6507f97e4c06a755825a0467586419269d29546b488e5efe6d5a33e0e2ebf5"
+      },
+      "evidence": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/long_retry_probe/evidence.json",
+        "bytes": 31000,
+        "sha256": "5da5ea6ea81a9b2265592e334f259be94e10fc82fe8a3934502cc9d934cb0eff"
+      },
+      "requested": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/long_retry_probe/requested.json",
+        "bytes": 17045,
+        "sha256": "b35d93df16401a44c2f1d282b4443c035f372c957fa0f9755f2bf30e0b3c4594"
+      },
+      "resolved": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/long_retry_probe/resolved_config.json",
+        "bytes": 3091,
+        "sha256": "0e36b0f164bf462516bd20121a502375ee1b133e0fe2b89dcaaf5ef064ca46b3"
+      },
+      "result": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/long_retry_probe/result.json",
+        "bytes": 127568,
+        "sha256": "aa405dfb73de85f9399f16c0c4d4ff48fb4f441605cf05692b2261bc619bf2eb"
+      },
+      "study": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/long_retry_probe/fixed/f57_n1_graph_chunk_study.json",
+        "bytes": 56803,
+        "sha256": "091c2589e0ad4c4f90db2e2b8841decc7d1ef931bbcc56bc7ac037d9c088f1b8"
+      },
+      "full_pcg_replays": 18,
+      "warmup_replays": 4,
+      "measured_pairs": 7,
+      "candidate_gate_passed": false,
+      "paired_median_host_ratio": 0.9485987715257213,
+      "cpu_reference": {
+        "path": "runs/local_graph_chunk_replay_20261006b/long_retry/cpu_reference.json",
+        "bytes": 22695,
+        "sha256": "ec635465af84bf6a16f640d5fb1c5fd2dc4f77a5243ff25edb55553cab1039f8"
+      }
+    }
+  ],
+  "current_controller": {
+    "graph_chunk_rounds.py": {
+      "path": "tools/local/graph_chunk_rounds.py",
+      "bytes": 10045,
+      "sha256": "8a3369bec0683c545e0c32e29bf481b213172437180dc38e9a2258dea2b0be0f"
+    },
+    "graph_chunk_rounds_test.py": {
+      "path": "tools/local/graph_chunk_rounds_test.py",
+      "bytes": 5918,
+      "sha256": "ca82ad82ee779a3f1c46da5c19e638729ef0578993f1b7dc79cac43c4ae47d5f"
+    }
+  },
+  "controller_revision_boundary": "After GPU execution, resource-review logic extracted into helper and one CPU test added. Actual execution hashes retained per receipt; native/sealed runner unchanged."
+}

@@ -3,6 +3,7 @@
 #include <gipc/utils/timer.h>
 #include <gipc/utils/json.h>
 #include <fstream>
+#include <linear_system/solver/pcg_graph_options.h>
 
 void GIPC::build_gipc_system(device_TetraData& tet)
 {
@@ -65,6 +66,7 @@ void GIPC::create_LinearSystem(device_TetraData& tet)
             throw std::runtime_error("GIPC_PCG_EXECUTION must be host or conditional_graph");
         cfg.conditional_graph = value == "conditional_graph";
     }
+    cfg.graph_chunk_iterations = gipc::pcg_graph_chunk_iterations();
     auto& pcg           = m_global_linear_system->create<gipc::PCGSolver>(cfg);
 
     std::cout << "- create Preconditioner" << std::endl;

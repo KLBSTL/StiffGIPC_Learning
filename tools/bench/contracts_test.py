@@ -8,7 +8,8 @@ from unittest.mock import patch
 import numpy as np
 import linux_runner as runner
 import pool_analysis as analysis
-from config import expand, digest
+from config import expand, digest, environment, matches_requested
+from validate_run import validate
 from plans import tasks, protocol
 from pool_metrics import pool_evidence, POOL_SUM_FIELDS, POOL_DETAIL_FIELDS
 
@@ -138,5 +139,166 @@ class Contracts(unittest.TestCase):
             runner.verify_stage(root,'guards','m')
             dump(root/'guards_hang_on/result.json',{'status':'failed'})
             with self.assertRaises(ValueError):runner.verify_stage(root,'guards','m')
+
+
+def make_graph_config_run(base,chunk=1):
+    """Only the resolved/observed contract; no native execution or quality claim."""
+    c=expand({'execution':'conditional_graph','pcg_graph_chunk':chunk,'steps':1})
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+    dump(base/'result.json',{'status':'completed','recorded_frames':1})
+    dump(base/'resolved_config.json',{
+        'contact_backend':c['backend'],'dt':c['dt'],'ipc_newton_tol':c['ipc_newton_tol'],
+        'pcg_rho_tol':c['pcg_rho_tol'],'configured_pcg_execution':c['execution'],
+        'configured_pcg_graph_chunk':chunk,
+        'fixed_graph_chunk_study':False,
+        'mas':{'cholesky':False,'inverse64':False,'wide_apply':False},
+        'acceleration_features':{'GIPC_CCD_BVH_REFIT':False,'GIPC_BATCHED_ENERGY':False,'GIPC_ENERGY_REUSE':False}})
+    dump(base/'output/stats.json',{'frames':[{'newton':[{'pcg':{
+        'execution':'conditional_graph','graph_chunk_iterations':chunk,
+        'fused_diag_update':False,'iterations':4}}]}]})
+    return c
+
+
+class GraphConfigContracts(unittest.TestCase):
+    def test_default_and_explicit_graph_chunk(self):
+        c=expand({});self.assertEqual(c['pcg_graph_chunk'],1)
+        self.assertEqual(environment(c,Path('fixture'))['GIPC_PCG_GRAPH_CHUNK'],'1')
+        c=expand({'preset':'graph','pcg_graph_chunk':4})
+        self.assertEqual(c['pcg_graph_chunk'],4)
+        env=environment(c,Path('fixture'))
+        self.assertEqual(env['GIPC_PCG_GRAPH_CHUNK'],'4')
+        self.assertEqual(env['GIPC_PCG_FUSED_DIAG_UPDATE'],'0')
+
+    def test_chunk_type_range_and_execution_rejected(self):
+        for value in (0,2,8,-1,True,False,1.0,4.0,'1','4',None,[],{}):
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                expand({'preset':'graph','pcg_graph_chunk':value})
+        with self.assertRaises(ValueError):expand({'pcg_graph_chunk':4})
+        # Fused diagonal execution remains outside this portable experiment
+        # contract; do not introduce that retired option while adding K=4.
+        with self.assertRaises(ValueError):
+            expand({'preset':'graph','pcg_graph_chunk':4,'fused_diag_update':True})
+
+    def test_ambient_chunk_and_fusion_cannot_leak(self):
+        with patch.dict('os.environ',{'GIPC_PCG_GRAPH_CHUNK':'4','GIPC_PCG_FUSED_DIAG_UPDATE':'1'}):
+            env=environment(expand({}),Path('fixture'))
+        self.assertEqual(env['GIPC_PCG_GRAPH_CHUNK'],'1')
+        self.assertEqual(env['GIPC_PCG_FUSED_DIAG_UPDATE'],'0')
+
+    def test_historical_request_compatibility_does_not_hide_k4(self):
+        old=expand({'preset':'graph'});old.pop('pcg_graph_chunk');old.pop('fixed_graph_chunk_study')
+        self.assertTrue(matches_requested(old,{'preset':'graph'}))
+        self.assertFalse(matches_requested(old,{'preset':'graph','pcg_graph_chunk':4}))
+        current=expand({'preset':'graph','pcg_graph_chunk':4})
+        self.assertFalse(matches_requested(current,{'preset':'graph','pcg_graph_chunk':1}))
+
+    def test_resolved_and_observed_chunk_agree(self):
+        for chunk in (1,4):
+            with self.subTest(chunk=chunk),tempfile.TemporaryDirectory() as name:
+                base=Path(name);make_graph_config_run(base,chunk)
+                self.assertTrue(validate(base)['passed'])
+
+    def test_host_pcg_has_no_graph_observation(self):
+        with tempfile.TemporaryDirectory() as name:
+            base=Path(name);make_graph_config_run(base)
+            requested=runner.read(base/'requested.json')
+            requested['expanded_config']=expand({'execution':'host','steps':1})
+            dump(base/'requested.json',requested)
+            resolved=runner.read(base/'resolved_config.json')
+            resolved['configured_pcg_execution']='host'
+            dump(base/'resolved_config.json',resolved)
+            stats=runner.read(base/'output/stats.json')
+            record=stats['frames'][0]['newton'][0]['pcg']
+            record['execution']='host';record.pop('graph_chunk_iterations')
+            dump(base/'output/stats.json',stats)
+            result=validate(base)
+            self.assertTrue(result['passed'])
+            self.assertNotIn('pcg_graph_chunk.observed',{c['check'] for c in result['checks']})
+            # A forged host/K4 request must still fail without inventing a host
+            # graph statistic; the execution/configuration restriction suffices.
+            requested['expanded_config']['pcg_graph_chunk']=4
+            resolved['configured_pcg_graph_chunk']=4
+            dump(base/'requested.json',requested);dump(base/'resolved_config.json',resolved)
+            self.assertFalse(validate(base)['passed'])
+
+    def test_missing_or_mistyped_resolved_chunk_rejected_for_new_request(self):
+        for value in (None,1,True,4.0,'4'):
+            with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                base=Path(name);make_graph_config_run(base,4)
+                r=runner.read(base/'resolved_config.json')
+                if value is None:r.pop('configured_pcg_graph_chunk')
+                else:r['configured_pcg_graph_chunk']=value
+                dump(base/'resolved_config.json',r)
+                self.assertFalse(validate(base)['passed'])
+        with tempfile.TemporaryDirectory() as name:
+            base=Path(name);make_graph_config_run(base,1)
+            r=runner.read(base/'resolved_config.json');r.pop('configured_pcg_graph_chunk')
+            dump(base/'resolved_config.json',r)
+            self.assertFalse(validate(base)['passed'])
+
+    def test_observed_chunk_and_fusion_cannot_silently_change(self):
+        for value in (None,1,True,4.0,'4'):
+            with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                base=Path(name);make_graph_config_run(base,4)
+                stats=runner.read(base/'output/stats.json');p=stats['frames'][0]['newton'][0]['pcg']
+                if value is None:p.pop('graph_chunk_iterations')
+                else:p['graph_chunk_iterations']=value
+                dump(base/'output/stats.json',stats)
+                self.assertFalse(validate(base)['passed'])
+        with tempfile.TemporaryDirectory() as name:
+            base=Path(name);make_graph_config_run(base,4)
+            stats=runner.read(base/'output/stats.json')
+            stats['frames'][0]['newton'][0]['pcg']['fused_diag_update']=True
+            dump(base/'output/stats.json',stats)
+            self.assertFalse(validate(base)['passed'])
+
+    def test_old_k1_result_not_rewritten_or_rejected(self):
+        with tempfile.TemporaryDirectory() as name:
+            base=Path(name);make_graph_config_run(base,1)
+            request=runner.read(base/'requested.json');request['expanded_config'].pop('pcg_graph_chunk')
+            request['expanded_config'].pop('fixed_graph_chunk_study')
+            resolved=runner.read(base/'resolved_config.json');resolved.pop('configured_pcg_graph_chunk')
+            resolved.pop('fixed_graph_chunk_study')
+            stats=runner.read(base/'output/stats.json');stats['frames'][0]['newton'][0]['pcg'].pop('graph_chunk_iterations')
+            dump(base/'requested.json',request);dump(base/'resolved_config.json',resolved);dump(base/'output/stats.json',stats)
+            before={p:runner.sha(base/p) for p in ('requested.json','resolved_config.json','output/stats.json')}
+            self.assertTrue(validate(base)['passed'])
+            self.assertEqual(before,{p:runner.sha(base/p) for p in before})
+
+    def test_fixed_graph_chunk_study_selector_and_environment(self):
+        for frame in ('2','57'):
+            c=expand({'preset':'graph','diagnostics':['fixed'],'steps':59,
+                      'fixed_frames':frame,'fixed_directions':'1','fixed_graph_chunk_study':True})
+            env=environment(c,Path('fixture'))
+            self.assertEqual(env['GIPC_FIXED_GRAPH_CHUNK_STUDY'],'1')
+            self.assertEqual(env['GIPC_FIXED_STUDY_FRAMES'],frame)
+            self.assertEqual(env['GIPC_FIXED_STUDY_DIRECTIONS'],'1')
+        c=expand({});self.assertIs(c['fixed_graph_chunk_study'],False)
+        self.assertEqual(environment(c,Path('fixture'))['GIPC_FIXED_GRAPH_CHUNK_STUDY'],'0')
+
+    def test_fixed_graph_chunk_study_scope_and_types_rejected(self):
+        base={'preset':'graph','diagnostics':['fixed'],'steps':2,
+              'fixed_frames':'2','fixed_directions':'1','fixed_graph_chunk_study':True}
+        for override in ({'diagnostics':[]},{'execution':'host'},{'pcg_graph_chunk':4},
+                         {'mas':'cholesky'},{'profile':'node','diagnostics':['fixed','cost']},
+                         {'fixed_graph_chunk_study':1},{'fixed_graph_chunk_study':'true'}):
+            with self.subTest(override=override),self.assertRaises(ValueError):expand(base|override)
+        for key in ('fixed_restrict_study','fixed_factor_study','fixed_mas_stage_study',
+                    'fixed_legacy_restrict_study','fixed_mas_dot_study','fixed_spmv_quadratic_study'):
+            with self.subTest(study=key),self.assertRaises(ValueError):expand(base|{key:True})
+
+    def test_fixed_graph_chunk_study_resolved_flag_is_explicit(self):
+        for actual in (None,False,1,'true',True):
+            with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                base=Path(name);make_graph_config_run(base)
+                req=runner.read(base/'requested.json')
+                req['expanded_config']=expand({'preset':'graph','steps':1,'diagnostics':['fixed'],
+                    'fixed_frames':'1','fixed_directions':'1','fixed_graph_chunk_study':True})
+                dump(base/'requested.json',req)
+                resolved=runner.read(base/'resolved_config.json')
+                if actual is None:resolved.pop('fixed_graph_chunk_study')
+                else:resolved['fixed_graph_chunk_study']=actual
+                dump(base/'resolved_config.json',resolved)
+                self.assertEqual(validate(base)['passed'],actual is True)
 
 if __name__=='__main__':unittest.main()

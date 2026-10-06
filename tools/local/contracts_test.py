@@ -17,6 +17,17 @@ from linux_runner import sha,inventory,write_new
 def dump(p,value):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
 
 class Contracts(unittest.TestCase):
+    def test_fixed_export_directory_created_before_launch_and_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out=Path(directory)/'fixed'
+            runner.prepare_run_output(out,{'diagnostics':['fixed']})
+            self.assertTrue((out/'output').is_dir())
+            self.assertTrue((out/'fixed').is_dir())
+            with self.assertRaises(ValueError):runner.prepare_run_output(out,{'diagnostics':['fixed']})
+            normal=Path(directory)/'normal'
+            runner.prepare_run_output(normal,{'diagnostics':[]})
+            self.assertFalse((normal/'fixed').exists())
+
     def test_plan_finite_and_rounds(self):
         self.assertEqual(sum(len(x) for x in plan()['rounds'].values()),13)
         fixed=[x['variant'] for s in ('fixed_r1','fixed_r2','fixed_r3') for x in tasks(s)]
