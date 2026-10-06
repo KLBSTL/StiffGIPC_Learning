@@ -1,0 +1,10 @@
+{
+  "report":"reports/active/ACTIVE_MIGRATION.json",
+  "stop_on_failure":true,
+  "runs":[
+    {"name":"active_ipc_smoke","config":"configs/active/smoke_ipc.json"},
+    {"name":"active_toi_smoke","config":"configs/active/smoke_toi.json"},
+    {"name":"active_toi_smoke_observer","config":{"preset":"toi","steps":3,"timeout_seconds":40,"diagnostics":["cost","operator_probe"],"cost_frames":"1-3"}},
+    {"name":"active_toi_window_r1","config":"configs/active/toi_window.json"}
+  ]
+}

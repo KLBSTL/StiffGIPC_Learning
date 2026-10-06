@@ -1,0 +1,15 @@
+/build/
+/build-*/
+/runs/
+/Output/
+**/__pycache__/
+*.pyc
+*.exe
+*.dll
+*.pdb
+*.tar.gz
+*.zip
+.env
+.env.*
+.ssh/
+*.pem

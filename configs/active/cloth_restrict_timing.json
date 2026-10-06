@@ -1,0 +1,573 @@
+{
+  "report": "reports/active/CLOTH_RESTRICT_TIMING_BATCH.json",
+  "stop_on_failure": false,
+  "runs": [
+    {
+      "name": "cloth_restrict_hang_stiff_r1",
+      "arm": "hang_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_serial_r1",
+      "arm": "hang_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_serial",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_warp_r1",
+      "arm": "hang_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_hang_ipc_warp_r1",
+      "arm": "hang_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "ipc_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_sphere_stiff_r1",
+      "arm": "sphere_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "stiff",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_serial_r1",
+      "arm": "sphere_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_serial",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_warp_r1",
+      "arm": "sphere_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_sphere_ipc_warp_r1",
+      "arm": "sphere_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "ipc_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_bunny_stiff_r1",
+      "arm": "bunny_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "stiff",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_serial_r1",
+      "arm": "bunny_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_serial",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_warp_r1",
+      "arm": "bunny_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_bunny_ipc_warp_r1",
+      "arm": "bunny_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "ipc_warp",
+      "repeat": "r1"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_serial_r2",
+      "arm": "hang_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_serial",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_warp_r2",
+      "arm": "hang_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_hang_ipc_warp_r2",
+      "arm": "hang_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "ipc_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_hang_stiff_r2",
+      "arm": "hang_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_serial_r2",
+      "arm": "sphere_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_serial",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_warp_r2",
+      "arm": "sphere_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_sphere_ipc_warp_r2",
+      "arm": "sphere_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "ipc_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_sphere_stiff_r2",
+      "arm": "sphere_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "stiff",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_serial_r2",
+      "arm": "bunny_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_serial",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_warp_r2",
+      "arm": "bunny_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_bunny_ipc_warp_r2",
+      "arm": "bunny_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "ipc_warp",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_bunny_stiff_r2",
+      "arm": "bunny_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "stiff",
+      "repeat": "r2"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_warp_r3",
+      "arm": "hang_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_hang_ipc_warp_r3",
+      "arm": "hang_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "ipc_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_hang_stiff_r3",
+      "arm": "hang_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_serial_r3",
+      "arm": "hang_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "hang",
+      "variant": "toi_serial",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_warp_r3",
+      "arm": "sphere_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_sphere_ipc_warp_r3",
+      "arm": "sphere_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "ipc_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_sphere_stiff_r3",
+      "arm": "sphere_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "stiff",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_serial_r3",
+      "arm": "sphere_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "sphere",
+      "variant": "toi_serial",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_warp_r3",
+      "arm": "bunny_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_bunny_ipc_warp_r3",
+      "arm": "bunny_ipc_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "backend": "ipc",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "ipc_warp",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_bunny_stiff_r3",
+      "arm": "bunny_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "stiff",
+      "repeat": "r3"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_serial_r3",
+      "arm": "bunny_toi_serial",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false
+      },
+      "scene_key": "bunny",
+      "variant": "toi_serial",
+      "repeat": "r3"
+    }
+  ]
+}

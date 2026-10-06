@@ -1,0 +1,8 @@
+{
+  "name":"autodl_four_arm_v2",
+  "platform":"autodl",
+  "scenes":["cloth_hang_l","cloth_sphere7_l","cloth_table_l","cloth_stack10_l","cloth_fixed_bunny_l","bunny_cloth_bunny_l","boxes1920_cloth_l","cloth_hang_m","cloth_sphere7_m","cloth_table_m","cloth_stack10_m","cloth_fixed_bunny_m","bunny_cloth_bunny_m","boxes1920_cloth_m","cloth_hang_h","cloth_sphere7_h","cloth_table_h","cloth_stack10_h","cloth_fixed_bunny_h","bunny_cloth_bunny_h","boxes1920_cloth_h"],
+  "arms":["base","base_graph","base_toi","base_toi_graph"],
+  "pilot_steps":2,"pilot_timeout":180,"steps":100,"timeout":1200,"repeats":3,"trace_stride":100,
+  "tol":0.01,"pcg_tol":0.0001
+}

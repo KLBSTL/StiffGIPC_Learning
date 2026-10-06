@@ -1,0 +1,16 @@
+{
+  "name": "local_small_v29_default",
+  "platform": "local",
+  "scenes": ["cloth_sphere7_l"],
+  "arms": ["base", "base_graph", "base_toi", "base_toi_graph"],
+  "suite": {"base": 0, "base_graph": 0, "base_toi": 0, "base_toi_graph": 0},
+  "pilot_steps": 2,
+  "pilot_timeout": 180,
+  "steps": 100,
+  "timeout": 600,
+  "repeats": 3,
+  "trace_stride": 1,
+  "tol": 0.01,
+  "pcg_tol": 1e-4,
+  "purpose": "User-requested small local scene at current default solver tolerances; pure Graph, no probes or replay. Keep failures and report raw time ratios separately from trajectory and physics qualification."
+}

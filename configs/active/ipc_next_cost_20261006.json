@@ -1,0 +1,14 @@
+{
+  "report": "reports/active/ipc_next_cost_20261006_batch.json",
+  "stop_on_failure": true,
+  "purpose": "Bounded attribution of the verified ordinary/swept BVH combination. From-zero IPC legacy .01/rho1e-4; no candidate or stopping change. Nsight data is diagnostic and never a speed certification.",
+  "limits": {"runs": 6, "timeout_seconds_per_run": 120, "new_execution_candidates": 1, "candidate_revisions": 1},
+  "runs": [
+    {"name":"ipc_next_cost_20261006_fixed39_off","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","discrete_bvh_refit":true,"steps":39,"trace_velocity":true}},
+    {"name":"ipc_next_cost_20261006_fixed39_cpu","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","discrete_bvh_refit":true,"steps":39,"trace_velocity":true,"diagnostics":["cost"],"cost_frames":"39","cost_events":false}},
+    {"name":"ipc_next_cost_20261006_fixed39_graph_node","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","discrete_bvh_refit":true,"steps":39,"trace_velocity":true,"diagnostics":["cost"],"cost_frames":"39","cost_events":false,"profile":"node"}},
+    {"name":"ipc_next_cost_20261006_fixed39_host_node","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","execution":"host","discrete_bvh_refit":true,"steps":39,"trace_velocity":true,"diagnostics":["cost"],"cost_frames":"39","cost_events":false,"profile":"node"}},
+    {"name":"ipc_next_cost_20261006_fixed57_graph_node","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","discrete_bvh_refit":true,"steps":57,"trace_velocity":true,"diagnostics":["cost"],"cost_frames":"57","cost_events":false,"profile":"node"}},
+    {"name":"ipc_next_cost_20261006_hang41_graph_node","config":{"scene":"cloth_hang_l","preset":"combined","discrete_bvh_refit":true,"steps":41,"trace_velocity":true,"diagnostics":["cost"],"cost_frames":"41","cost_events":false,"profile":"node"}}
+  ]
+}

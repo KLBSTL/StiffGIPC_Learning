@@ -1,0 +1,1522 @@
+{
+  "schema": "contact_pool_quality_review.v1",
+  "date": "2026-10-06",
+  "sources": {
+    "guards_analysis": {
+      "path": "reports/active/ipc_contact_pool_20261006_guards_analysis.json",
+      "sha256": "56ed2ea459133c56c94c6e49bc4b0dac7ebd06a57184ce59d781634fa659bce2"
+    },
+    "screen_batch": {
+      "path": "reports/active/ipc_contact_pool_20261006_screen_batch.json",
+      "sha256": "eea752efc024342db76460fedeec0b1a2aa3e9eccf164d90dd324d035c20560f"
+    },
+    "screen_plan": {
+      "path": "configs/active/ipc_contact_pool_20261006_screen.json",
+      "sha256": "2344e840e84fd9c413893287d39f1316a4050c1a57c55ecbf4daad3604b564a4"
+    },
+    "frozen_quality_protocol": {
+      "path": "reports/active/ipc_revision_20261005_quality_protocol.json",
+      "sha256": "1cfb9045d6988fa606b8bb76afdd71e20661ef602c84296c49cdda9a0d07d78f"
+    }
+  },
+  "native_identity": "faedd6f85f3c97356b2ad4bc607dfff7f0cd9c9ede79c6615336e0a679693b10",
+  "scope": {
+    "read_only_analysis": true,
+    "new_gpu_runs": 0,
+    "solver_or_protocol_modified": false,
+    "independent_cpu_ccd_run": false,
+    "quality_certified": false,
+    "performance_certified": false,
+    "default_promoted": false,
+    "no_new_material_tolerance": true
+  },
+  "original_gates": {
+    "stage_gate_passed": false,
+    "full_performance_gate_passed": false,
+    "quality_certified": false,
+    "performance_certified": false,
+    "default_promoted": false
+  },
+  "guards": [
+    {
+      "name": "ipc_contact_pool_20261006_guards_hang_on_guard",
+      "scene_key": "hang",
+      "variant": "on",
+      "status": "completed",
+      "recorded_frames": 51,
+      "hard_checks_passed": true,
+      "quality_support_passed": true,
+      "quality_support_status": null,
+      "missing_or_failures": [],
+      "whole_work": {
+        "frames": [
+          1,
+          51
+        ],
+        "directions": 297,
+        "pcg_iterations": 9104,
+        "pcg_iterations_per_direction": {
+          "min": 2,
+          "max": 46,
+          "median": 32
+        },
+        "newton_exits": {
+          "movement": 21,
+          "cumulative_toi": 30
+        },
+        "native_candidate_active_frames": [
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ],
+        "newton_active_frames": [
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ]
+      },
+      "selected_work": {
+        "frames": [
+          41,
+          50
+        ],
+        "directions": 86,
+        "pcg_iterations": 2929,
+        "pcg_iterations_per_direction": {
+          "min": 24,
+          "max": 46,
+          "median": 34.5
+        },
+        "newton_exits": {
+          "cumulative_toi": 6,
+          "movement": 4
+        },
+        "native_candidate_active_frames": [
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ],
+        "newton_active_frames": [
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ]
+      },
+      "pcg_failures": 0,
+      "finite_positions": true,
+      "actual_positions": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 52,
+        "actual_frames": 52,
+        "vertices": 1939,
+        "expected_bytes_per_frame": 46536,
+        "problems": []
+      },
+      "actual_velocity": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 52,
+        "actual_frames": 52,
+        "vertices": 1939,
+        "expected_bytes_per_frame": 46536,
+        "problems": []
+      },
+      "tetrahedra_checks": {
+        "fem_nonpositive": 0,
+        "abd_nonpositive_frames": 0
+      },
+      "material_windows": {
+        "whole": {
+          "frames": [
+            1,
+            51
+          ],
+          "max_stretch": 1.1288762409519206,
+          "p99_stretch": 1.032409344128115,
+          "fixed_drift_m": 0.0,
+          "fem_min_J": null,
+          "abd_min_J": null,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0
+        },
+        "selected": {
+          "frames": [
+            41,
+            50
+          ],
+          "max_stretch": 1.0903063119228515,
+          "p99_stretch": 1.0236940619073414,
+          "fixed_drift_m": 0.0,
+          "fem_min_J": null,
+          "abd_min_J": null,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0
+        }
+      },
+      "frozen_material_checks": {
+        "max_stretch": {
+          "actual": 1.1288762409519206,
+          "bound": 1.1288772279548063,
+          "passed": true
+        },
+        "p99_stretch": {
+          "actual": 1.032409344128115,
+          "bound": 1.032410340416372,
+          "passed": true
+        },
+        "fixed_drift_m": {
+          "actual": 0.0,
+          "bound": 1e-10,
+          "passed": true
+        }
+      },
+      "pool_totals": {
+        "attempts": 298,
+        "reused_queries": 295,
+        "old_queries": 3,
+        "validation_calls": 295,
+        "validation_passed": 295,
+        "validation_failed": 0,
+        "pairs_compared": 208711,
+        "nonempty_validation_calls": 82,
+        "production_overflow_queries": 0,
+        "prepare_calls": 594,
+        "capture_passes": 297,
+        "generations": 297,
+        "pool_pairs": 1752199,
+        "vf_pairs": 368920,
+        "ee_pairs": 1383279
+      },
+      "pool_fallback_reasons": {
+        "bounds_not_contained": 3
+      },
+      "same_state_energy_support": {
+        "passed": true,
+        "overflow_queries_excluded": 0,
+        "expected_energy_calls": 295,
+        "tolerance": 1e-10,
+        "tolerance_is_physical_relaxation": false,
+        "records_count": 295,
+        "max_scaled_total_error": 1.6940658945086007e-21,
+        "max_scaled_barrier_error": 2.6469779601696886e-23,
+        "armijo_branch_equal_count": 295,
+        "production_restored_count": 295,
+        "error_denominator": "max(1,abs(candidate_energy),abs(legacy_energy)); this is a scaled error, not a relative error to tiny energy"
+      },
+      "mixed_window_coverage": null
+    },
+    {
+      "name": "ipc_contact_pool_20261006_guards_fixed_on_guard",
+      "scene_key": "fixed",
+      "variant": "on",
+      "status": "completed",
+      "recorded_frames": 59,
+      "hard_checks_passed": true,
+      "quality_support_passed": true,
+      "quality_support_status": null,
+      "missing_or_failures": [],
+      "whole_work": {
+        "frames": [
+          1,
+          59
+        ],
+        "directions": 324,
+        "pcg_iterations": 18990,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 118,
+          "median": 64.0
+        },
+        "newton_exits": {
+          "movement": 22,
+          "cumulative_toi": 37
+        },
+        "native_candidate_active_frames": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "newton_active_frames": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ]
+      },
+      "selected_work": {
+        "frames": [
+          22,
+          59
+        ],
+        "directions": 268,
+        "pcg_iterations": 18112,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 118,
+          "median": 66.5
+        },
+        "newton_exits": {
+          "movement": 1,
+          "cumulative_toi": 37
+        },
+        "native_candidate_active_frames": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "newton_active_frames": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ]
+      },
+      "pcg_failures": 0,
+      "finite_positions": true,
+      "actual_positions": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 60,
+        "actual_frames": 60,
+        "vertices": 24969,
+        "expected_bytes_per_frame": 599256,
+        "problems": []
+      },
+      "actual_velocity": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 60,
+        "actual_frames": 60,
+        "vertices": 24969,
+        "expected_bytes_per_frame": 599256,
+        "problems": []
+      },
+      "tetrahedra_checks": {
+        "fem_nonpositive": 0,
+        "abd_nonpositive_frames": 0
+      },
+      "material_windows": {
+        "whole": {
+          "frames": [
+            1,
+            59
+          ],
+          "max_stretch": 1.0353401864220468,
+          "p99_stretch": 1.0132708174096756,
+          "fixed_drift_m": 3.1031676915590914e-17,
+          "fem_min_J": null,
+          "abd_min_J": 0.9999999999999897,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0
+        },
+        "selected": {
+          "frames": [
+            22,
+            59
+          ],
+          "max_stretch": 1.0353401864220468,
+          "p99_stretch": 1.0132708174096756,
+          "fixed_drift_m": 3.1031676915590914e-17,
+          "fem_min_J": null,
+          "abd_min_J": 0.9999999999999897,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0
+        }
+      },
+      "frozen_material_checks": {
+        "max_stretch": {
+          "actual": 1.0353401864220468,
+          "bound": 1.0361727662908526,
+          "passed": true
+        },
+        "p99_stretch": {
+          "actual": 1.0132708174096756,
+          "bound": 1.0135636480371302,
+          "passed": true
+        },
+        "fixed_drift_m": {
+          "actual": 3.1031676915590914e-17,
+          "bound": 1.0000005721958499e-10,
+          "passed": true
+        }
+      },
+      "pool_totals": {
+        "attempts": 324,
+        "reused_queries": 317,
+        "old_queries": 7,
+        "validation_calls": 317,
+        "validation_passed": 317,
+        "validation_failed": 0,
+        "pairs_compared": 173230,
+        "nonempty_validation_calls": 261,
+        "production_overflow_queries": 0,
+        "prepare_calls": 648,
+        "capture_passes": 324,
+        "generations": 324,
+        "pool_pairs": 14974858,
+        "vf_pairs": 3273211,
+        "ee_pairs": 11701647
+      },
+      "pool_fallback_reasons": {
+        "bounds_not_contained": 7
+      },
+      "same_state_energy_support": {
+        "passed": true,
+        "overflow_queries_excluded": 0,
+        "expected_energy_calls": 317,
+        "tolerance": 1e-10,
+        "tolerance_is_physical_relaxation": false,
+        "records_count": 317,
+        "max_scaled_total_error": 3.3881317890172014e-21,
+        "max_scaled_barrier_error": 8.470329472543003e-22,
+        "armijo_branch_equal_count": 317,
+        "production_restored_count": 317,
+        "error_denominator": "max(1,abs(candidate_energy),abs(legacy_energy)); this is a scaled error, not a relative error to tiny energy"
+      },
+      "mixed_window_coverage": null
+    },
+    {
+      "name": "ipc_contact_pool_20261006_guards_mixed_off_guard",
+      "scene_key": "mixed",
+      "variant": "off",
+      "status": "completed",
+      "recorded_frames": 35,
+      "hard_checks_passed": true,
+      "quality_support_passed": null,
+      "quality_support_status": "pending: no frozen mixed FEM/cloth difference tolerance; same-program comparison reported separately",
+      "missing_or_failures": [],
+      "whole_work": {
+        "frames": [
+          1,
+          35
+        ],
+        "directions": 142,
+        "pcg_iterations": 3658,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 45,
+          "median": 25.0
+        },
+        "newton_exits": {
+          "movement": 24,
+          "cumulative_toi": 11
+        },
+        "native_candidate_active_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "newton_active_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "selected_work": {
+        "frames": [
+          24,
+          35
+        ],
+        "directions": 76,
+        "pcg_iterations": 1979,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 43,
+          "median": 23.0
+        },
+        "newton_exits": {
+          "cumulative_toi": 11,
+          "movement": 1
+        },
+        "native_candidate_active_frames": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "newton_active_frames": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "pcg_failures": 0,
+      "finite_positions": true,
+      "actual_positions": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 36,
+        "actual_frames": 36,
+        "vertices": 39475,
+        "expected_bytes_per_frame": 947400,
+        "problems": []
+      },
+      "actual_velocity": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 36,
+        "actual_frames": 36,
+        "vertices": 39475,
+        "expected_bytes_per_frame": 947400,
+        "problems": []
+      },
+      "tetrahedra_checks": {
+        "fem_nonpositive": 0,
+        "abd_nonpositive_frames": 0
+      },
+      "material_windows": {
+        "whole": {
+          "frames": [
+            1,
+            35
+          ],
+          "max_stretch": 1.0000002121465654,
+          "p99_stretch": 1.0000001028941587,
+          "fixed_drift_m": 0,
+          "fem_min_J": 0.4978689445663494,
+          "abd_min_J": 0.9999999999997637,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0.0
+        },
+        "selected": {
+          "frames": [
+            24,
+            35
+          ],
+          "max_stretch": 1.0000002121465654,
+          "p99_stretch": 1.0000001028941587,
+          "fixed_drift_m": 0,
+          "fem_min_J": 0.4978689445663494,
+          "abd_min_J": 0.9999999999999375,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0.0
+        }
+      },
+      "frozen_material_checks": null,
+      "pool_totals": {
+        "attempts": 0,
+        "reused_queries": 0,
+        "old_queries": 0,
+        "validation_calls": 0,
+        "validation_passed": 0,
+        "validation_failed": 0,
+        "pairs_compared": 0,
+        "nonempty_validation_calls": 0,
+        "production_overflow_queries": 0,
+        "prepare_calls": 0,
+        "capture_passes": 0,
+        "generations": 0,
+        "pool_pairs": 0,
+        "vf_pairs": 0,
+        "ee_pairs": 0
+      },
+      "pool_fallback_reasons": {},
+      "same_state_energy_support": null,
+      "mixed_window_coverage": null
+    },
+    {
+      "name": "ipc_contact_pool_20261006_guards_mixed_on_guard",
+      "scene_key": "mixed",
+      "variant": "on",
+      "status": "completed",
+      "recorded_frames": 35,
+      "hard_checks_passed": true,
+      "quality_support_passed": null,
+      "quality_support_status": "pending: no frozen mixed FEM/cloth difference tolerance; same-program comparison reported separately",
+      "missing_or_failures": [],
+      "whole_work": {
+        "frames": [
+          1,
+          35
+        ],
+        "directions": 142,
+        "pcg_iterations": 3654,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 45,
+          "median": 25.0
+        },
+        "newton_exits": {
+          "movement": 24,
+          "cumulative_toi": 11
+        },
+        "native_candidate_active_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "newton_active_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "selected_work": {
+        "frames": [
+          24,
+          35
+        ],
+        "directions": 76,
+        "pcg_iterations": 1978,
+        "pcg_iterations_per_direction": {
+          "min": 6,
+          "max": 42,
+          "median": 23.0
+        },
+        "newton_exits": {
+          "cumulative_toi": 11,
+          "movement": 1
+        },
+        "native_candidate_active_frames": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "newton_active_frames": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "pcg_failures": 0,
+      "finite_positions": true,
+      "actual_positions": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 36,
+        "actual_frames": 36,
+        "vertices": 39475,
+        "expected_bytes_per_frame": 947400,
+        "problems": []
+      },
+      "actual_velocity": {
+        "available": true,
+        "passed": true,
+        "expected_frames": 36,
+        "actual_frames": 36,
+        "vertices": 39475,
+        "expected_bytes_per_frame": 947400,
+        "problems": []
+      },
+      "tetrahedra_checks": {
+        "fem_nonpositive": 0,
+        "abd_nonpositive_frames": 0
+      },
+      "material_windows": {
+        "whole": {
+          "frames": [
+            1,
+            35
+          ],
+          "max_stretch": 1.0000002120332092,
+          "p99_stretch": 1.0000001028808554,
+          "fixed_drift_m": 0,
+          "fem_min_J": 0.4978688633765478,
+          "abd_min_J": 0.9999999999997637,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0.0
+        },
+        "selected": {
+          "frames": [
+            24,
+            35
+          ],
+          "max_stretch": 1.0000002120332092,
+          "p99_stretch": 1.0000001028808554,
+          "fixed_drift_m": 0,
+          "fem_min_J": 0.4978688633765478,
+          "abd_min_J": 0.9999999999999543,
+          "fem_nonpositive_sum": 0,
+          "fem_negative_volume_peak": 0.0
+        }
+      },
+      "frozen_material_checks": null,
+      "pool_totals": {
+        "attempts": 142,
+        "reused_queries": 105,
+        "old_queries": 37,
+        "validation_calls": 105,
+        "validation_passed": 105,
+        "validation_failed": 0,
+        "pairs_compared": 464172,
+        "nonempty_validation_calls": 105,
+        "production_overflow_queries": 0,
+        "prepare_calls": 284,
+        "capture_passes": 142,
+        "generations": 142,
+        "pool_pairs": 23949616,
+        "vf_pairs": 5865910,
+        "ee_pairs": 18083706
+      },
+      "pool_fallback_reasons": {
+        "bounds_not_contained": 37
+      },
+      "same_state_energy_support": {
+        "passed": true,
+        "overflow_queries_excluded": 0,
+        "expected_energy_calls": 105,
+        "tolerance": 1e-10,
+        "tolerance_is_physical_relaxation": false,
+        "records_count": 105,
+        "max_scaled_total_error": 0.0,
+        "max_scaled_barrier_error": 1.6940658945086007e-21,
+        "armijo_branch_equal_count": 105,
+        "production_restored_count": 105,
+        "error_denominator": "max(1,abs(candidate_energy),abs(legacy_energy)); this is a scaled error, not a relative error to tiny energy"
+      },
+      "mixed_window_coverage": {
+        "middle": {
+          "active_pairs_observed": true,
+          "reused_queries": 5
+        },
+        "late": {
+          "active_pairs_observed": true,
+          "reused_queries": 10
+        }
+      }
+    }
+  ],
+  "same_state_guard_totals": {
+    "attempts": 764,
+    "reused_queries": 717,
+    "old_queries": 47,
+    "validation_calls": 717,
+    "validation_passed": 717,
+    "validation_failed": 0,
+    "pairs_compared": 846113,
+    "production_overflow_queries": 0
+  },
+  "mixed_single_pair": {
+    "initial_inputs_identical": true,
+    "off_name": "ipc_contact_pool_20261006_guards_mixed_off_guard",
+    "on_name": "ipc_contact_pool_20261006_guards_mixed_on_guard",
+    "original_bounded_compatibility_support": false,
+    "original_quality_support_passed": null,
+    "original_worsening_observed": true,
+    "quality_status": "pending",
+    "same_binary_repeatability_envelope_available": false,
+    "single_pair_establishes_repeatability": false,
+    "global_material_extrema": {
+      "max_stretch": {
+        "off": 1.0000002121465654,
+        "on": 1.0000002120332092,
+        "on_minus_off": -1.1335621330488266e-10,
+        "off_extremum_frames": [
+          34
+        ],
+        "on_extremum_frames": [
+          34
+        ]
+      },
+      "p99_stretch": {
+        "off": 1.0000001028941587,
+        "on": 1.0000001028808554,
+        "on_minus_off": -1.33033584148734e-11,
+        "off_extremum_frames": [
+          34
+        ],
+        "on_extremum_frames": [
+          34
+        ]
+      },
+      "fixed_drift_m": {
+        "off": 0,
+        "on": 0,
+        "on_minus_off": 0,
+        "off_extremum_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "on_extremum_frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "fem_min_J": {
+        "off": 0.4978689445663494,
+        "on": 0.4978688633765478,
+        "on_minus_off": -8.118980160398692e-08,
+        "off_extremum_frames": [
+          25
+        ],
+        "on_extremum_frames": [
+          25
+        ]
+      },
+      "abd_min_J": {
+        "off": 0.9999999999997637,
+        "on": 0.9999999999997637,
+        "on_minus_off": 0.0,
+        "off_extremum_frames": [
+          5
+        ],
+        "on_extremum_frames": [
+          3
+        ]
+      },
+      "fem_nonpositive_sum": {
+        "off": 0,
+        "on": 0,
+        "on_minus_off": 0
+      },
+      "fem_negative_volume_peak": {
+        "off": 0.0,
+        "on": 0.0,
+        "on_minus_off": 0.0
+      }
+    },
+    "per_frame_material_differences": {
+      "max_stretch": {
+        "delta_min": -9.297791425666446e-10,
+        "delta_max": 2.8932580775631322e-09,
+        "most_negative": {
+          "frame": 27,
+          "off": 1.0000000068217474,
+          "on": 1.0000000058919682,
+          "on_minus_off": -9.297791425666446e-10,
+          "worsening_observed": false
+        },
+        "most_positive": {
+          "frame": 21,
+          "off": 1.000000015327383,
+          "on": 1.000000018220641,
+          "on_minus_off": 2.8932580775631322e-09,
+          "worsening_observed": true
+        },
+        "worsening_frames": [
+          1,
+          2,
+          3,
+          4,
+          12,
+          13,
+          14,
+          15,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          28,
+          29,
+          30,
+          35
+        ],
+        "worsening_frame_count": 19
+      },
+      "p99_stretch": {
+        "delta_min": -2.838800305937639e-10,
+        "delta_max": 1.1563561219674057e-09,
+        "most_negative": {
+          "frame": 26,
+          "off": 1.0000000043457824,
+          "on": 1.0000000040619024,
+          "on_minus_off": -2.838800305937639e-10,
+          "worsening_observed": false
+        },
+        "most_positive": {
+          "frame": 22,
+          "off": 1.0000000078273736,
+          "on": 1.0000000089837298,
+          "on_minus_off": 1.1563561219674057e-09,
+          "worsening_observed": true
+        },
+        "worsening_frames": [
+          1,
+          2,
+          3,
+          10,
+          15,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29
+        ],
+        "worsening_frame_count": 16
+      },
+      "fixed_drift_m": {
+        "delta_min": 0,
+        "delta_max": 0,
+        "most_negative": {
+          "frame": 1,
+          "off": 0,
+          "on": 0,
+          "on_minus_off": 0,
+          "worsening_observed": false
+        },
+        "most_positive": {
+          "frame": 1,
+          "off": 0,
+          "on": 0,
+          "on_minus_off": 0,
+          "worsening_observed": false
+        },
+        "worsening_frames": [],
+        "worsening_frame_count": 0
+      },
+      "fem_min_J": {
+        "delta_min": -1.5951786829226933e-06,
+        "delta_max": 1.9869872076583306e-06,
+        "most_negative": {
+          "frame": 10,
+          "off": 0.7616461447389214,
+          "on": 0.7616445495602385,
+          "on_minus_off": -1.5951786829226933e-06,
+          "worsening_observed": true
+        },
+        "most_positive": {
+          "frame": 22,
+          "off": 0.7533816445359449,
+          "on": 0.7533836315231526,
+          "on_minus_off": 1.9869872076583306e-06,
+          "worsening_observed": false
+        },
+        "worsening_frames": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          24,
+          25,
+          28,
+          33
+        ],
+        "worsening_frame_count": 18
+      },
+      "fem_nonpositive": {
+        "delta_min": 0,
+        "delta_max": 0,
+        "most_negative": {
+          "frame": 1,
+          "off": 0,
+          "on": 0,
+          "on_minus_off": 0,
+          "worsening_observed": false
+        },
+        "most_positive": {
+          "frame": 1,
+          "off": 0,
+          "on": 0,
+          "on_minus_off": 0,
+          "worsening_observed": false
+        },
+        "worsening_frames": [],
+        "worsening_frame_count": 0
+      },
+      "fem_negative_volume": {
+        "delta_min": 0.0,
+        "delta_max": 0.0,
+        "most_negative": {
+          "frame": 1,
+          "off": 0.0,
+          "on": 0.0,
+          "on_minus_off": 0.0,
+          "worsening_observed": false
+        },
+        "most_positive": {
+          "frame": 1,
+          "off": 0.0,
+          "on": 0.0,
+          "on_minus_off": 0.0,
+          "worsening_observed": false
+        },
+        "worsening_frames": [],
+        "worsening_frame_count": 0
+      },
+      "abd_min_J": {
+        "delta_min": -2.1438406605511773e-13,
+        "delta_max": 1.9739765377835283e-13,
+        "most_negative": {
+          "frame": 3,
+          "off": 0.9999999999999781,
+          "on": 0.9999999999997637,
+          "on_minus_off": -2.1438406605511773e-13,
+          "worsening_observed": true
+        },
+        "most_positive": {
+          "frame": 5,
+          "off": 0.9999999999997637,
+          "on": 0.9999999999999611,
+          "on_minus_off": 1.9739765377835283e-13,
+          "worsening_observed": false
+        },
+        "worsening_frames": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          10,
+          11,
+          15,
+          16,
+          17,
+          18,
+          19,
+          21,
+          22,
+          23,
+          26,
+          27,
+          28,
+          32,
+          33,
+          34
+        ],
+        "worsening_frame_count": 22
+      }
+    },
+    "state_difference": {
+      "position": {
+        "cloth": {
+          "max_frame_rms": 1.093669631654694e-06,
+          "max_vertex": 1.2652164697223528e-06,
+          "frames": 36
+        },
+        "FEM": {
+          "max_frame_rms": 5.337605385548636e-07,
+          "max_vertex": 4.062423631198519e-06,
+          "frames": 36
+        },
+        "ABD": {
+          "max_frame_rms": 5.02844660372422e-08,
+          "max_vertex": 5.028446694449462e-08,
+          "frames": 36
+        }
+      },
+      "velocity": {
+        "cloth": {
+          "max_frame_rms": 7.56574212240947e-06,
+          "max_vertex": 8.978251255068225e-06,
+          "frames": 36
+        },
+        "FEM": {
+          "max_frame_rms": 2.114826264880815e-05,
+          "max_vertex": 0.0002180126405046731,
+          "frames": 36
+        },
+        "ABD": {
+          "max_frame_rms": 3.7463241195123274e-07,
+          "max_vertex": 3.74632419752885e-07,
+          "frames": 36
+        }
+      }
+    },
+    "state_units": {
+      "position": "m",
+      "velocity": "m/s"
+    },
+    "velocities_are_actual_exports": true,
+    "moving_abd_not_a_fixed_drift_test": true,
+    "fixed_drift_zero_is_empty_fixed_set_in_mixed": true,
+    "roundoff_trigger_examples": [
+      {
+        "frame": 1,
+        "metric": "max_stretch",
+        "delta": 8.881784197001252e-16,
+        "off_ulp": 2.220446049250313e-16,
+        "delta_in_off_ulps": 4.0
+      },
+      {
+        "frame": 1,
+        "metric": "p99_stretch",
+        "delta": 4.440892098500626e-16,
+        "off_ulp": 2.220446049250313e-16,
+        "delta_in_off_ulps": 2.0
+      }
+    ],
+    "interpretation": [
+      "The original strict any-positive-worsening gate remains false.",
+      "Some flags are a few ULPs, but FEM minJ frame differences up to about 2e-6 are not merely ULPs.",
+      "Global stretch peaks are slightly lower; global FEM minJ is lower by about 8.12e-8, with zero nonpositive FEM elements and zero negative volume in both runs.",
+      "There is no frozen mixed difference tolerance or same-binary repeat envelope. These single-pair changes are observations, not proof of material degradation or proof of equivalence.",
+      "Mixed ABD is movable. Its on-off position and velocity differences are not fixed-object drift.",
+      "Typed pair and energy/Armijo checks cover observed same states; they do not substitute for independent continuous accepted-path CCD."
+    ]
+  },
+  "screening": {
+    "planned": 12,
+    "attempted": 1,
+    "unattempted": [
+      "ipc_contact_pool_20261006_screen_hang_on_r1",
+      "ipc_contact_pool_20261006_screen_fixed_off_r1",
+      "ipc_contact_pool_20261006_screen_fixed_on_r1",
+      "ipc_contact_pool_20261006_screen_fixed_on_r2",
+      "ipc_contact_pool_20261006_screen_fixed_off_r2",
+      "ipc_contact_pool_20261006_screen_hang_on_r2",
+      "ipc_contact_pool_20261006_screen_hang_off_r2",
+      "ipc_contact_pool_20261006_screen_hang_off_r3",
+      "ipc_contact_pool_20261006_screen_hang_on_r3",
+      "ipc_contact_pool_20261006_screen_fixed_off_r3",
+      "ipc_contact_pool_20261006_screen_fixed_on_r3"
+    ],
+    "complete_paired_runs": 0,
+    "paired_speedup": null,
+    "resource_decision": "pending; no continuation launched by this review",
+    "runs": [
+      {
+        "name": "ipc_contact_pool_20261006_screen_hang_off_r1",
+        "status": "memory_budget",
+        "exit_code": 1,
+        "requested_frames": 51,
+        "recorded_frames": 41,
+        "recorded_solver_seconds": 2.1301987,
+        "timing_scope": "Incomplete prefix only; never used for paired speed",
+        "partial_material": {
+          "max_stretch": 1.128876216106565,
+          "p99_stretch": 1.0324093388205158,
+          "fixed_drift_m": 0.0,
+          "finite": true
+        },
+        "partial_work": {
+          "directions": 224,
+          "pcg": 6466,
+          "pcg_failures": 0,
+          "exits": {
+            "movement": 16,
+            "cumulative_toi": 25
+          }
+        },
+        "completed_contact_window_frames": [
+          41,
+          41
+        ],
+        "required_contact_window_frames": [
+          41,
+          50
+        ],
+        "whole_contact_window_complete": false,
+        "gpu_free_mib_min_observed": 1458.0,
+        "result_identity": {
+          "path": "E:/university_class/ComputerGraphics/GIPC/stiff_toi_cudagraph_20260929/runs/active/ipc_contact_pool_20261006_screen_hang_off_r1/result.json",
+          "sha256": "8efb2a53fb4f3a3eec1f38f141c539a292808d3b0a9f2b970b3fce27a68a99ee"
+        },
+        "requested_identity": {
+          "path": "E:/university_class/ComputerGraphics/GIPC/stiff_toi_cudagraph_20260929/runs/active/ipc_contact_pool_20261006_screen_hang_off_r1/requested.json",
+          "sha256": "5704eab303d9242aa1e81df1cab0a9fa32d6567df5e1d5c0e57c2832aa38435a"
+        },
+        "stats_identity": {
+          "path": "E:/university_class/ComputerGraphics/GIPC/stiff_toi_cudagraph_20260929/runs/active/ipc_contact_pool_20261006_screen_hang_off_r1/output/stats.json",
+          "sha256": "2e9dff8f4dc7d3aac8450bb48265a24ed5c27ec01c0d15eaa652b4092ec11df1"
+        }
+      }
+    ]
+  },
+  "conclusion": "Two cloth guard prefixes satisfy the existing frozen material bounds. Mixed compatibility remains pending under the original gate. No paired performance conclusion and no independent CCD or physical certification."
+}

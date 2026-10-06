@@ -1,0 +1,261 @@
+{
+  "stage": "smoke",
+  "runs": [
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_legacy_host",
+      "scene_key": "hang",
+      "variant": "legacy",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "graph",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_spmv_host",
+      "scene_key": "hang",
+      "variant": "spmv",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "graph",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_compensated_host",
+      "scene_key": "hang",
+      "variant": "compensated",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "toi_compensated",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_both_host",
+      "scene_key": "hang",
+      "variant": "both",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "toi_compensated",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_legacy_host",
+      "scene_key": "fixed_bunny",
+      "variant": "legacy",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "graph",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_spmv_host",
+      "scene_key": "fixed_bunny",
+      "variant": "spmv",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "graph",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_compensated_host",
+      "scene_key": "fixed_bunny",
+      "variant": "compensated",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "toi_compensated",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_both_host",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "execution": "host",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "toi_compensated",
+        "execution": "host",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_legacy_conditional_graph",
+      "scene_key": "hang",
+      "variant": "legacy",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "graph",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_spmv_conditional_graph",
+      "scene_key": "hang",
+      "variant": "spmv",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "graph",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_compensated_conditional_graph",
+      "scene_key": "hang",
+      "variant": "compensated",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "toi_compensated",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_hang_both_conditional_graph",
+      "scene_key": "hang",
+      "variant": "both",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "toi_compensated",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_legacy_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "legacy",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "graph",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_spmv_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "spmv",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "graph",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_compensated_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "compensated",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "toi_compensated",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_both_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "toi_compensated",
+        "execution": "conditional_graph",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": true
+      }
+    }
+  ]
+}

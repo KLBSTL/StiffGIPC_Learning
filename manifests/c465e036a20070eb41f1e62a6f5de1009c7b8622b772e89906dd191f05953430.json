@@ -1,0 +1,2772 @@
+{
+  "implementation_version": "v5-unrestricted-trial",
+  "base_commit": "bb2849a7b292099581907937860d96ecfdf42588",
+  "files": [
+    {
+      "path": "sources/stiff_base/.clang-format",
+      "sha256": "2e0483d8ec39ac1add01d2c0fc803007fa22abaaa7eda3c1d4cdb8ae241c1e8f",
+      "bytes": 2080
+    },
+    {
+      "path": "sources/stiff_base/.editorconfig",
+      "sha256": "90de49e9db49f217be33984c16791b713d142598236c94045213fa4b39f519eb",
+      "bytes": 41
+    },
+    {
+      "path": "sources/stiff_base/.gitignore",
+      "sha256": "60fa3ee849d040d2a11622085100ba366cae439bd4be61532c16b799b041dcee",
+      "bytes": 39
+    },
+    {
+      "path": "sources/stiff_base/AGENTS.md",
+      "sha256": "ae031b73df1a228663bdc03af334d0077dc7ef93b0e996b626058830b1ef8a21",
+      "bytes": 18091
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/tetMesh/abd_sphere.msh",
+      "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209",
+      "bytes": 50518
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/tetMesh/bunny2.msh",
+      "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa",
+      "bytes": 3748616
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/tetMesh/cube.msh",
+      "sha256": "be610c96c51a47e382ee00baea1685775b3a898aa2ccc44f770ab360dcbe2280",
+      "bytes": 246
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/cipc_square2K.obj",
+      "sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865",
+      "bytes": 112113
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/cipc_table.obj",
+      "sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972",
+      "bytes": 483580
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/cloth_high.obj",
+      "sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed",
+      "bytes": 212335
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/square_cloth_10k.obj",
+      "sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3",
+      "bytes": 669929
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/square_cloth_23k.obj",
+      "sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4",
+      "bytes": 1852524
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_129_2m.obj",
+      "sha256": "2d6f67484e5d1f1fc88b0aa63b28a6b005053ccc659c0f9cc46bb62663abf253",
+      "bytes": 938177
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_201_1p6m.obj",
+      "sha256": "cb08afd248b34cae12d2d91802741e05f8f4ab19a3150943b1ef008e23e7d1da",
+      "bytes": 3273527
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_301_1p6m.obj",
+      "sha256": "9312468242565c9abef9bdf912e0c4b2a5ef50da74374ed7b52e06b70c1948fc",
+      "bytes": 7566167
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_33_2m.obj",
+      "sha256": "bc8b2ab47c3ed0d7aab116aa7461058b3941b96ae352c935ff25bc0f75aed3c9",
+      "bytes": 46875
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+      "sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231",
+      "bytes": 193014
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_grid_76_1p6m.obj",
+      "sha256": "638f828c6d2558d5afa08b7c49a79ee1077d9251bfc7c3cf08a06d8bb94e9b8b",
+      "bytes": 445464
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+      "sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7",
+      "bytes": 561043
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide2.obj",
+      "sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644",
+      "bytes": 2393989
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/boxes1920_cloth_h.json",
+      "sha256": "56f6bda4878b8181473724a16081c61dded161d1bff334b548462577a1510088",
+      "bytes": 588960
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/boxes1920_cloth_l.json",
+      "sha256": "a25d32bcaf9e380a5884de3f13cfeefcbb1f338b45c09bcd6ee3f6fdac7c441d",
+      "bytes": 588956
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/boxes1920_cloth_m.json",
+      "sha256": "8b537dd620a0c07677eb59a151b4b4f0189d52d909232c28d5046ca0b60472fc",
+      "bytes": 588941
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/bunny_cloth_bunny_h.json",
+      "sha256": "758db20db0613357263bfc8ab84842ecca88b666e5d5bcb5f0a53001ea1ddc30",
+      "bytes": 3809
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/bunny_cloth_bunny_l.json",
+      "sha256": "12fbca80f65e508713154e30de54723b2beb30b8c6d7875c9d7dcc6f7043d6d9",
+      "bytes": 3806
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/bunny_cloth_bunny_m.json",
+      "sha256": "c0f2902652b0c2affa3d62bc7c74d44fd64c72382088958ba8beed591c5db5fb",
+      "bytes": 3789
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_fixed_bunny_h.json",
+      "sha256": "495f9444a8ffcf18a5b2bac31e085663596fa0913e36a580f2d95904a19b1ee0",
+      "bytes": 4499
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_fixed_bunny_l.json",
+      "sha256": "3ec7bce27b7f297e93b5efe911e84771205f75b6f116b22bc17baa0d17afe3a2",
+      "bytes": 4493
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_fixed_bunny_m.json",
+      "sha256": "4a502ee4a4ff5e7ff2ac3401d9df8e3373389be3eef2a5ce944620ac78fd425a",
+      "bytes": 4610
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_hang_h.json",
+      "sha256": "b842e374df246e6cbf8d0b94b2b5b627a5248dc9da0f666e47e585b108158695",
+      "bytes": 3142
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_hang_l.json",
+      "sha256": "ae6b7015346e9a46162a2e0a874a483fecf48523a52e8ba83caf4244f31ae68b",
+      "bytes": 3241
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_hang_m.json",
+      "sha256": "1277cd3d0efc9cf62ff0915752e11832d0a30a47e540a97769933efc56de9f3a",
+      "bytes": 3141
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_sphere7_h.json",
+      "sha256": "f8d3a19131739b12f77876982b5b56066f31082f1e07789e161c09a6abde8ace",
+      "bytes": 4388
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_sphere7_l.json",
+      "sha256": "959bdc17f67688a3512f8f815da52fd37ee2751e0a202120cd8b7f0cf5964a9a",
+      "bytes": 4382
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_sphere7_m.json",
+      "sha256": "9515bb7af4d9e48e01ce3ed95196ba2acfe3c9c926428adaa33b257719502eac",
+      "bytes": 4500
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_stack10_h.json",
+      "sha256": "6bd19692065ff1ff3301159dc8cb6ab25a5bc4cee5e0fe314dc5588419066c34",
+      "bytes": 15810
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_stack10_l.json",
+      "sha256": "76a5b54416210291259f24c9e42f4024860f1d7c8adca76bdac13639c54045f1",
+      "bytes": 15786
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_stack10_m.json",
+      "sha256": "f47057d574bf4794358a055ea1aaec38975a96a508d0413a72fabdadb87a2901",
+      "bytes": 15851
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_table_h.json",
+      "sha256": "c80ff7dce69950dedbfce3eb49ada42af640dfce7873b1e3f80de5d0a9fe10e3",
+      "bytes": 4479
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_table_l.json",
+      "sha256": "e16b84c3b1552e86e3037ac9d7e76adeed6efa2d2a7f56078ae809649eb9896d",
+      "bytes": 4475
+    },
+    {
+      "path": "sources/stiff_base/Assets/benchmark_scenes/cloth_table_m.json",
+      "sha256": "0daa71806bd8c3e2363bfa1013153e45417ce3c99e8cb97397b764cd9b0f7f28",
+      "bytes": 4591
+    },
+    {
+      "path": "sources/stiff_base/Assets/scene/abd_system_config.json",
+      "sha256": "da1d86488832bc5dba126953f8623bd74a8d68b74e3d799fe41c4673a0dc637b",
+      "bytes": 56
+    },
+    {
+      "path": "sources/stiff_base/Assets/scene/json/wrecking-ball-box.json",
+      "sha256": "9def9fd2c1b68e2a958ad380d939a3ad0ad72ed73ffdcf08d0f704f4dd8478b0",
+      "bytes": 102827
+    },
+    {
+      "path": "sources/stiff_base/Assets/scene/json/wrecking-ball-simple.json",
+      "sha256": "31de033ccf5263d86a21fb85a080215d7391671b07f0d0a9be9d9bb8df94083a",
+      "bytes": 105980
+    },
+    {
+      "path": "sources/stiff_base/Assets/scene/parameterSetting.txt",
+      "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6",
+      "bytes": 793
+    },
+    {
+      "path": "sources/stiff_base/Assets/scene/temp.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sources/stiff_base/Assets/teaser.JPG",
+      "sha256": "b6b5811e4321f0a7cb54aa900a8d56f1c876e4cb907d412309675bbb2e00edf0",
+      "bytes": 265573
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/bunny10.msh",
+      "sha256": "e47e085115a99bfd9449277134bb494337136985d9785e832a86e50c26021d5f",
+      "bytes": 32999837
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/bunny2.msh",
+      "sha256": "819d674817b95011ffd831cdec89f387beee266ee6bbc41040c2f625376151ca",
+      "bytes": 3847753
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/cube.msh",
+      "sha256": "a4ed6661fe833ccd72d04fd74f3230f1dd8421870d2c0698a54a8430bd01d341",
+      "bytes": 266
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/high_mat.msh",
+      "sha256": "04b3e495d0a8948e1827e706ae8201ee314efdae2067e76117ba37cfeeafcebf",
+      "bytes": 6239699
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/wrecking-ball-mesh/cube.obj_.msh",
+      "sha256": "dbf2fef8d6d80437972dc4f2c692c50ddf430849f4dfeb13d3f73b839e8a413e",
+      "bytes": 232
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/ball.obj_.msh",
+      "sha256": "f70daf358b4c60268e9d344dd112626eb3918687bc8546d23383dd901df716fd",
+      "bytes": 347404
+    },
+    {
+      "path": "sources/stiff_base/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/link.obj_.msh",
+      "sha256": "8ad143e0880dc404dcdbcc0c669de0f30e222127b9eef08f1dac349c85e5dd4e",
+      "bytes": 74049
+    },
+    {
+      "path": "sources/stiff_base/Assets/triMesh/cloth_high.obj",
+      "sha256": "0f20741edac2a28cc020c0f9cf044e1f9116ab2b3f7b669e2d5f0f91974d10f3",
+      "bytes": 224752
+    },
+    {
+      "path": "sources/stiff_base/CMakeLists.txt",
+      "sha256": "03975802c239c0a3ce64730cb6a1c1220c1b2a90f8cbe3db68f58fac04cf7252",
+      "bytes": 4394
+    },
+    {
+      "path": "sources/stiff_base/LICENSE",
+      "sha256": "2684de17300e0a434686f1ec7f8af6045207a4b457a3fe04b2b9ce655e7c5d50",
+      "bytes": 17098
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/CMakeLists.txt",
+      "sha256": "4c5b6386752a172088b6ee3a5cfef01d59cf9d47c1db2d243a63cb47c40e4cc2",
+      "bytes": 443
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/CMakeLists.txt",
+      "sha256": "25bbc6dd3e0d2eb6c17e491c9ec5c0fab94b726db24fcf89619980acf40c1238",
+      "bytes": 367
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/cmake/GKlibSystem.cmake",
+      "sha256": "37134ba28ad78ca83ec30271cf9547963e09e0c1e1428ab32073d584b9e452ab",
+      "bytes": 1435
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/CMakeLists.txt",
+      "sha256": "86a9422f1f4885d3674b64630e8da57dbd41d76835d706f21aa6774cc83689f8",
+      "bytes": 5886
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_arch.h",
+      "sha256": "9181bb3a80c4aa41cc4fcb7c7f6ef58bb3c63fb32674dd4dd400c6b27b55aeac",
+      "bytes": 1502
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_defs.h",
+      "sha256": "361175ac86d023d0a431e4d1e2a5e0f325512f6fc8a02fb513e7d57764cf686c",
+      "bytes": 2148
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_externs.h",
+      "sha256": "e45f95384dc05e1f3aa7ff295bf22244f27593ad0c1298c3a3f7d1d1c1fdea65",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_getopt.h",
+      "sha256": "cd21e90789c3c06daf2a1fbc0191dcea44d167648f2a36cdf5b89042fe5afb94",
+      "bytes": 2400
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_macros.h",
+      "sha256": "5f788c6a977af2725aebd64ffb43bf4c656d1eeb55707f17bf42bee27c981940",
+      "bytes": 6447
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkblas.h",
+      "sha256": "510fcde844c96ff41e92ecffd8b59347fabf24519131fae24fa2e01c04fb6449",
+      "bytes": 5897
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkmemory.h",
+      "sha256": "f765fedac4151f5b385acc9d1370c123a4b17df39d27034ae63a5394be7bab18",
+      "bytes": 4331
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkpqueue.h",
+      "sha256": "59914e9359cb21be5cb948788698794284372ebb97e2ad6b357c8bf9a401fb47",
+      "bytes": 12196
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkpqueue2.h",
+      "sha256": "0dce3d223ef9a73016b8b60556d389a338fb822eaf2b9ba50f39a29018ceff88",
+      "bytes": 6047
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkrandom.h",
+      "sha256": "c8f2b3e3138edd6b1b43c330db7ea0a70028e2a01904eac1b73728fa5696af80",
+      "bytes": 3786
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mksort.h",
+      "sha256": "1ffcf7d782ea5187fc985c67ebc8c83addd1c875f6083b514ec1051d5ec9773c",
+      "bytes": 10525
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_mkutils.h",
+      "sha256": "cf79db8c81909ddcc92ec44fef49f723dfd3917540ccb95c83128ecbacea0789",
+      "bytes": 988
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_ms_inttypes.h",
+      "sha256": "9dc1c97981ae7c2cd5786ea68a164ad9fec321991d29ab1cfcdd4bf83d588fdf",
+      "bytes": 8181
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_ms_stat.h",
+      "sha256": "cedfe170fb9eadb48ce0051dbb1f7cc18900f08b027c74f0e6587e684de00d7e",
+      "bytes": 557
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_ms_stdint.h",
+      "sha256": "21582dac040c5f7a8d1f205a41e78b4c91768564ec460192b0b60eabef9a9d9c",
+      "bytes": 7268
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_proto.h",
+      "sha256": "305afdc4c1e7d07bbfb72ed400aa052d295196988663824e5542047b26e4b157",
+      "bytes": 16944
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_struct.h",
+      "sha256": "d7828a03502dd5e83fddde15b705e7a8cd92e907fada439e0c39e236029a0576",
+      "bytes": 10322
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gk_types.h",
+      "sha256": "946a96412d9cf5d5aa6e80768f9db64b8a7c4d1484c56d95bf8f8041bb15142a",
+      "bytes": 1548
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/GKlib.h",
+      "sha256": "b830ec088bb3ae200f49d14bcefb1a94d9eaa34bcb26e38f761b01d003316d6d",
+      "bytes": 1508
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/gkregex.h",
+      "sha256": "0537c6abe40f342133b60ae15f24650034fdf37afa2393b6997f4dce057dbeb9",
+      "bytes": 21823
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/include/win32/adapt.h",
+      "sha256": "80bfa150409259ca86b8e669f2a22f503dfa35a82a9b76e6b3f38a7956cb8584",
+      "bytes": 253
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/LICENSE.txt",
+      "sha256": "b7a2c8e49ab17746e2e9a2eb670c3a190dcb5525f7de606fc31e67b3b4b5c6bd",
+      "bytes": 659
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/b64.c",
+      "sha256": "d1d71c678863942fa03ef284ddbb91adf79bb51ded225b365290a7c7cae66291",
+      "bytes": 3152
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/blas.c",
+      "sha256": "b315b834abe0ecf39a5470c3e007f8522796225849cc6f4388ee5029c7c01e6a",
+      "bytes": 1187
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/cache.c",
+      "sha256": "648d4e07fdfd801c55bca2c6a3ce16ec269c6b6aab85cc1a06fed7074ed7e193",
+      "bytes": 3482
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/csr.c",
+      "sha256": "d59721a97c25b4ca8f0dff077e1d44a530793b6e25257612f17a28e60da3e2bd",
+      "bytes": 109512
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/error.c",
+      "sha256": "88eee0d8a64409b7d94343317c8af87757b981272982a8e6a877bd9e62a65e5f",
+      "bytes": 6157
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/evaluate.c",
+      "sha256": "8601a1f0a83001c63d115e117f4035a874740770be9beefa5da28f2be462e07d",
+      "bytes": 3095
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/fkvkselect.c",
+      "sha256": "ab7476cc2d181ca9535a5270d896b43ebd8cf08b85f27a8be2b6e8c1b5c8498c",
+      "bytes": 3418
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/fs.c",
+      "sha256": "0e4007d4135e100b070f46229d357de8ce193362990d7fefa17c07fde0d144a7",
+      "bytes": 6739
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/getopt.c",
+      "sha256": "9266fb8c28b8fabccf6f7aea50f3cb944f794527479c18710ff960ad35aef7bc",
+      "bytes": 31484
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/gk_util.c",
+      "sha256": "78492919a9833b891762aaa63b2bfe64bddda10eaaa33fb1316349251b66fb2b",
+      "bytes": 2903
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/gkregex.c",
+      "sha256": "51ba681bcfac877beb1ba02b72f389fe63ef5b3ad8b35fa2b7148fb0acf0707c",
+      "bytes": 321869
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/graph.c",
+      "sha256": "adcade791d9d1b86313b6504b9c2c16f4211b7443697add9fe5a07a504a700ab",
+      "bytes": 64665
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/htable.c",
+      "sha256": "62e7a63c8435713bc6e6c5e7fa93a7ded2dff8c98eeaf4ddeb7d3c83aae054e4",
+      "bytes": 7129
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/io.c",
+      "sha256": "5bf8ebd37129366d4699cfe2cec069bb15af8ad9878d8633a08653a26a6af262",
+      "bytes": 19057
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/itemsets.c",
+      "sha256": "d65d6d687d2445632d28ca87d13c4c53c9b525aa33c4da4a6133e2b47d0ff098",
+      "bytes": 7220
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/mcore.c",
+      "sha256": "6fc1a5502281d3cb0044049a51d7781a64a24de84711b0bf5dcd443cf6474366",
+      "bytes": 12339
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/memory.c",
+      "sha256": "8b97b3e59487fef74c31c5029447135d43759efca1f1e8ab9eadb0c87b881704",
+      "bytes": 8882
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/pqueue.c",
+      "sha256": "e89724c61c95e6e275b14ee0ba9f10c0b355c9051001ca09f716530f53a67a63",
+      "bytes": 1172
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/random.c",
+      "sha256": "727b545b7c78e73b4031822526e4d862ee1248d1ffcb0e7ddf60ee1fc59c677d",
+      "bytes": 4206
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/rw.c",
+      "sha256": "8440be768e2e3d650ae511e8cb4a328a2b99aa5cc34fa1b3893d1c2d8e202fd5",
+      "bytes": 3204
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/seq.c",
+      "sha256": "9d0e098f0809034acd316b1c177d117e685b011fc2e608aceb4ecb02f95ebefe",
+      "bytes": 4429
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/sort.c",
+      "sha256": "cc5241c586d0c393dd82446a11bbefc46a1ba32c59cf9256463d8132f62dbecd",
+      "bytes": 14268
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/string.c",
+      "sha256": "98452d2a599209dd717e6b14cea886a83de7c1f58d5e5d0e75253cb0a74f7b60",
+      "bytes": 16162
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/timers.c",
+      "sha256": "723a2b705095e814c0b79c47c8835de7bc9f3f33b106928a8373b1f1d8499470",
+      "bytes": 1231
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/tokenizer.c",
+      "sha256": "51f8e86f35e8a770e280baa1ce8906b41f06550b60936b8dd3559a3f2b02bb0d",
+      "bytes": 2168
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/GKlib/src/win32/adapt.c",
+      "sha256": "bc183f5a6be42f23939a4b57faa651a563b550f16ed2d79546ee03e15e846e0c",
+      "bytes": 174
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/CMakeLists.txt",
+      "sha256": "885ff8761e65e757856bfcc681d73664eea2eed98e7420742a9f9552a7a2f044",
+      "bytes": 331
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/include/CMakeLists.txt",
+      "sha256": "ee6a66abf24d9404d602a17185b6cdd0b0729c36d7962a67153e92079f5a21a1",
+      "bytes": 74
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/include/metis.h",
+      "sha256": "03b5b2d5613e94a262b57b056898568e45cc871a9abd2dff3603cd3e4020d1a8",
+      "bytes": 10880
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/auxapi.c",
+      "sha256": "001d5b14c2945eb79ee46aa5f8599c5666e90ab7702068de4bdb1a50916743af",
+      "bytes": 1168
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/balance.c",
+      "sha256": "0bc7875daf47883fc69188a8c870ad196dec140fbb7730b53cd72bda1a5f4781",
+      "bytes": 16935
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/bucketsort.c",
+      "sha256": "2eccdd4f8dbd29743fd0f516dab1e59c88a424312a28ee9f5a5502097479c41c",
+      "bytes": 1025
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/checkgraph.c",
+      "sha256": "db0630d393358d282fb180741dfaf569ab66a8683868ffdb5e69497d47842be5",
+      "bytes": 7706
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/CMakeLists.txt",
+      "sha256": "7704581d5eb2ad9c533dc2dc7d4ee08f6614998eab7cfc3b20be812303b27307",
+      "bytes": 219
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/coarsen.c",
+      "sha256": "49890e454b20409d999bd1086663b2f2a7e00c5d9740822cf6b017d8e786e767",
+      "bytes": 35662
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/compress.c",
+      "sha256": "2029c0aa710bc5839c8c1b2f5fb2e2763ecb113edc765e94320d78fe80a27de1",
+      "bytes": 6390
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/contig.c",
+      "sha256": "f322e35de73aeb1d91b8938d71dd0902832caeade224f35c453c92ee2983e423",
+      "bytes": 22007
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/debug.c",
+      "sha256": "841b646994ae11d2a61ffacb35f77677b609ee302c3d079b14a14f0de588655e",
+      "bytes": 13004
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/defs.h",
+      "sha256": "2a44073bf56799f528f8c97cea249dcee5c268427cf22464cd60bea2d38b06f3",
+      "bytes": 2075
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/fm.c",
+      "sha256": "3b45abb947c2fa3922d8c7dcbdea5f3198e0863df632a4ab1c85d7348638fdd7",
+      "bytes": 19426
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/fortran.c",
+      "sha256": "761f16f235ad55955b3d53541eb4fe2f67d7ef34e53c68914cc7f25b4e5d0ec9",
+      "bytes": 3560
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/frename.c",
+      "sha256": "1549cffb3b2767a73c6f5c780c5da0f7adb5d5d80fe60a5ddf58026837f555df",
+      "bytes": 3562
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/gklib.c",
+      "sha256": "d47018da038228e9af982c03a9cf7ade0e93ca9dc389552593420f912b62630a",
+      "bytes": 3393
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/gklib_defs.h",
+      "sha256": "27229ce6923b92dece9a42cad15587337f8c84aab04bccaa448cfc8756869d2f",
+      "bytes": 1684
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/gklib_rename.h",
+      "sha256": "eae1a06b2767c66274bc3d2149ef72f9c15552174a65240dffdb10ac92f32b15",
+      "bytes": 4140
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/graph.c",
+      "sha256": "14b3115dc74031c196668e66f3ecdbfb979fc91a5159f15c2ad4e43d6e43d63f",
+      "bytes": 12633
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/initpart.c",
+      "sha256": "a1500455ea68ccf8bec79ee39f9a4c8420af4b7f2c08419340e6c8f4a5e8056a",
+      "bytes": 18838
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/kmetis.c",
+      "sha256": "7f49a03a21fe26c545b48c3428d8b25ba74918cb726edc6a07fb3f2ed0aacb7b",
+      "bytes": 16809
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/kwayfm.c",
+      "sha256": "f55ffbc34df4dd87bc9e4cea5f93f5d988f967cf5fc00c6689f2a6042b239e6f",
+      "bytes": 77470
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/kwayrefine.c",
+      "sha256": "3e2f54a56e6d1dfe978afb18dbd82cdf18a838a6cf1511c822233f3e74cffaec",
+      "bytes": 21188
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/macros.h",
+      "sha256": "bb6010166fa66f9780514eface0b7d55afd8a5777785b9d6e8edd7e942fc34e8",
+      "bytes": 8623
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/mcutil.c",
+      "sha256": "9722bb357da6df383f5a47ecf7bdd36dd739e47917b292ab06570e47a234361e",
+      "bytes": 9139
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/mesh.c",
+      "sha256": "5f1e077c7107b6a855d0b847526a60450e7bffe5596875167e99c2335dfe7558",
+      "bytes": 13070
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/meshpart.c",
+      "sha256": "c49c5da79ccb3e5bd18b6a6394c206418494e83231ed26b2e347f751d08c784c",
+      "bytes": 7888
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/metislib.h",
+      "sha256": "9263c74e9808ea8e84af3120468ef0626a5c4dbb6828b8d5d8169b1cb5aaa3b0",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/minconn.c",
+      "sha256": "9cd85b7e1a9b4f0a0c8e95d3daafd3ceef591e19bd82d799992cb9644203d62e",
+      "bytes": 23977
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/mincover.c",
+      "sha256": "924a8413101113e3b758b3313a6bd2c47608acdbd0de59c64b01056c6b5a33c0",
+      "bytes": 7526
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/mmd.c",
+      "sha256": "4aeeb04fbdd90f50ebcb7c24b7c6cd0af1143d1cbbb791f0d9b979d45bcff2bf",
+      "bytes": 21737
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/ometis.c",
+      "sha256": "3059be6aa0030d84bdb08d64473d77901d621c16ee77d2bcf536fa7fcdd97f84",
+      "bytes": 21515
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/options.c",
+      "sha256": "943aeff2ca01073f2b5d23e41b5ea97f13380fdeed05b412f374f755557f6bba",
+      "bytes": 19098
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/parmetis.c",
+      "sha256": "025be52e1ecdaad28c33ae180ddf3a455d866c88ccdb8434fc6cf5e046feabe5",
+      "bytes": 26970
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/pmetis.c",
+      "sha256": "9ae324386fe50f87636f44cf86d86fdf93002757d718e5f33cd11e26c1af6a81",
+      "bytes": 12760
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/proto.h",
+      "sha256": "94f6ff16f990bce47aed481ca827d3a91c2e28e0d1f2b4912d569b3af6b0aefb",
+      "bytes": 15157
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/refine.c",
+      "sha256": "f3177f2987f765230775ddc09a9865b7569e390efee14e3a801bb1e000c4463d",
+      "bytes": 6090
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/rename.h",
+      "sha256": "b1166f3407a24db47b6c0142e67a19558e10746530774dbef8a69c409604cab4",
+      "bytes": 12230
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/separator.c",
+      "sha256": "e2545c4c51be5421d897a36d26267a0d8f035a0ccb6e04a2d8c0951413a52ea9",
+      "bytes": 5017
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/sfm.c",
+      "sha256": "688d5413d35920a5c84bdb6d6e83052d7f1891ade72c62c253e6e1cf87923af9",
+      "bytes": 20648
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/srefine.c",
+      "sha256": "3bd3e7bba19cd4811564245dd948ee08ce1648ecfaf3983980d3a9428c9d7f59",
+      "bytes": 5077
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/stat.c",
+      "sha256": "d097c203270433748529243495e9c90205079c25dddd3648ef92d58cd0b913ab",
+      "bytes": 5942
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/stdheaders.h",
+      "sha256": "aba5ccefd9d16a008c8ebb0a192924ee8e52a9d790db717e9ca9e38f1f6568be",
+      "bytes": 514
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/struct.h",
+      "sha256": "438f5095476e4dc9839efc73bf87f64b4b346207640d26e50354ab7d9f3358d0",
+      "bytes": 9862
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/timing.c",
+      "sha256": "c38aba5da374b863a53ad21fe69ef7773b41a2d0d726e1fc58431ffb0c8a1fd9",
+      "bytes": 2412
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/util.c",
+      "sha256": "0bfbebc1cb63b33ac8296bfc209dde0b4e1ca639f80df62414d55ffc6fc7fb04",
+      "bytes": 3120
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/libmetis/wspace.c",
+      "sha256": "406eec610526a6288659a352bb35d3c5cdff02024181e195cc8997ccf74a5f5b",
+      "bytes": 7717
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/External/METIS/LICENSE",
+      "sha256": "0ae4ac9049ec1b05c29a2eef542dc9fd674f09d45a65abeb7257fb4862b5f1f8",
+      "bytes": 659
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/CMakeLists.txt",
+      "sha256": "be22645aa7651dafb67a26d1569524485136e62a84e213e4e1ca9835996e8522",
+      "bytes": 1016
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/main.cpp",
+      "sha256": "7bb385a9aac781ae7701eec9e6e4b5fedf3679be402b8fb6a94b2151304dd07c",
+      "bytes": 439
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/mesh.cpp",
+      "sha256": "4ee0f2e8071657b40deaf6815ffb53798ead3704081ba4d33c39d4d0a6c922fb",
+      "bytes": 23400
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/mesh.h",
+      "sha256": "b87aa57416bf4cbe9a6c0ffb726cd0fcf2c02676ba1d6a85103a73d98d531b2a",
+      "bytes": 1840
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/metis_sort.cpp",
+      "sha256": "9f74e512a9ceb01abdd058afdf421953bf01fee58f8aa4a7a37e85d4633cf8dd",
+      "bytes": 15323
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/metis_sort.h",
+      "sha256": "e5facb0a470f852fe93fa4a3a970f905eefea093ce3bc536bdc788f2fe11673a",
+      "bytes": 94
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/node_edge_model.cpp",
+      "sha256": "9d43a9c8844f4d920e18259517e8dd9518847fd4c38816a793043a92de4fa1df",
+      "bytes": 1375
+    },
+    {
+      "path": "sources/stiff_base/MeshProcess/metis_partition/src/node_edge_model.h",
+      "sha256": "fa13c3beaacdada87e6eede0fd0f6560858300e297b0f9507b09741d65b9173c",
+      "bytes": 623
+    },
+    {
+      "path": "sources/stiff_base/README.md",
+      "sha256": "85d629c7d075058c44cae634f7e56289dd6e11e361c27c1203541f97aef7e90f",
+      "bytes": 3878
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_energy.h",
+      "sha256": "5bb0169286de1504c37ca3132e7af0b0d8369c94e0b9c04ef7b3f2745c817a88",
+      "bytes": 1350
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_jacobi_matrix.h",
+      "sha256": "8cb871d0d198c65e3a4897d5545ec34c0a5a9c167b8058f30af3963d2d36cded",
+      "bytes": 5944
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_sim_data.cu",
+      "sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887",
+      "bytes": 4004
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_sim_data.h",
+      "sha256": "39e2ba652d24adc4a1390077af8b8ae77447294529c0fcc223e62e39697bd1aa",
+      "bytes": 6755
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system.cu",
+      "sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad",
+      "bytes": 37967
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system.h",
+      "sha256": "c40d93700d19bc55d8c1e017a36072e95565b0117624633cd230519bcbf81274",
+      "bytes": 11303
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+      "sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9",
+      "bytes": 7065
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+      "sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441",
+      "bytes": 2964
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+      "sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092",
+      "bytes": 7292
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+      "sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407",
+      "bytes": 33832
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+      "sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae",
+      "bytes": 3892
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+      "sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e",
+      "bytes": 1887
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/abd_system_parms.h",
+      "sha256": "30ce99a06878dbcacfdb60a937255d1cd40daaa3a7af5f83a4ad2386ba53e52c",
+      "bytes": 515
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/details/abd_energy.inl",
+      "sha256": "66e6adc346ce17c51092efe35f3ccff7b24648321323d9e5af60f542ea162fcd",
+      "bytes": 75035
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/abd_system/details/abd_jacobi_matrix.inl",
+      "sha256": "422babedb38e18134144247cca64915df3faf926157d4969422fd413ea020e64",
+      "bytes": 8162
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/app/benchmark_scenes.inl",
+      "sha256": "afea8caf40b2f5374d17d31868bb6d3367dc1370992334766ceb5a9eec88aacb",
+      "bytes": 5195
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/app/gl_main.cu",
+      "sha256": "1273570708c222cdc188e9d95ced7f07d36efafabcd9610f2790e2117a4c4896",
+      "bytes": 69126
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/collision/ACCD.cu",
+      "sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea",
+      "bytes": 28249
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/collision/ACCD.cuh",
+      "sha256": "abde8441335005ed875bb77aa171fbbb4b47c694671a2b0f01990ecfe3039127",
+      "bytes": 1804
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/collision/FrictionUtils.cuh",
+      "sha256": "e8c72359674ae1a7ebb34c6349fbc2d1460a1e69fc86db6fe629cce04d2d44a1",
+      "bytes": 17970
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/collision/mlbvh.cu",
+      "sha256": "101e012d36320501b440b1b0224ec3eaffa7f0fc7dd88815024511321d915f75",
+      "bytes": 98032
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/collision/mlbvh.cuh",
+      "sha256": "8e5457d3217cefcf6ad20ec52f1982758992dca4c5b3651a7a68817709ede528",
+      "bytes": 5593
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/body_boundary_type.h",
+      "sha256": "23b94c866964b29f969e243eaf889465bbf3f6d28b2001d0f22eb9ab3359bf1c",
+      "bytes": 103
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/GIPC.cu",
+      "sha256": "0a82376652ffe1387fb033abf2da94cc97932c16c8535203c2f39691c5130cf0",
+      "bytes": 486280
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/GIPC.cuh",
+      "sha256": "f5b9620f947dbfc8762371273495cd9eb9ad4e5d4490ae4f9e308017fb4e4367",
+      "bytes": 8814
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/gipc_path.h",
+      "sha256": "519bbe020dc0f5e6415a9f237d2f90a3694abd57a13afabd695ac2c99bb2e822",
+      "bytes": 337
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/GIPC_PDerivative.cuh",
+      "sha256": "0a044b885ed3f0c9a2e870b05903cb415c2aa0890c4765c7c7479f2d35ce6fe1",
+      "bytes": 221500
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/core/gipc_system.cu",
+      "sha256": "721f13beb35be01907f57f667c22295e5ae689a460c757450e6e35702f63bb27",
+      "bytes": 2364
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_all.h",
+      "sha256": "dfa3e64042343d3fff90411f4c35701c0080852d69e593af670b337791e7eb09",
+      "bytes": 400
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_atomic.h",
+      "sha256": "52754e9df742937f98609c29263387601dba7ccd09e7cc98323e803af6b2994c",
+      "bytes": 766
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_buffer_view.h",
+      "sha256": "4f8d4c2ce51fd2bb800c11b6f5965954ba2b7f6801a72d2d126f357f252ff632",
+      "bytes": 20951
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_cub_wrappers.h",
+      "sha256": "a18c5d5c26aa0b87e9f713e4838b8dbee3ce09fe3e65a62fba836c2c2fd33cf0",
+      "bytes": 8395
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_debug.h",
+      "sha256": "3146663a760b1738a57f6907e45f7ad3ba16956feae0ddbc4d9d0a3868ee0894",
+      "bytes": 1674
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_def.h",
+      "sha256": "d4db23b958cec3de66dd825ae208b9a0628d2c71818f5e46e9cbf9d2103c45c3",
+      "bytes": 736
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_dense_vector.h",
+      "sha256": "286a9b9c53512d03143fd1925a3663611f9e3fc2e4407ecb2baf7632bed1cd02",
+      "bytes": 9991
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_eigen.h",
+      "sha256": "ef3d0ca59e0e5a2dff4125fcfd2cf59d5fb973c8a4a763aeaa131d191201bb60",
+      "bytes": 6795
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_linear_system.h",
+      "sha256": "589182bcbeaf8a0ae0060d45d915961a4e909be3f84561bf42d57b3f694bf7d5",
+      "bytes": 5206
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_tools.h",
+      "sha256": "6448f7db6eca41dff622e10c3315920fb23907185499ead2f1cbacdaaae9679d",
+      "bytes": 2783
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/cuda_tools/cuda_vec_utils.h",
+      "sha256": "f82624dac7fd1ff136b2ac2aa848fdfb5753eeae0b9b3c456b9406951c1f1b77",
+      "bytes": 235
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/fem/device_fem_data.cu",
+      "sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e",
+      "bytes": 3906
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/fem/device_fem_data.cuh",
+      "sha256": "e772fde35c81d1401cba1915a233eeeab8cbbb680b217adf9685f636330c342c",
+      "bytes": 2982
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/fem/fem_parameters.h",
+      "sha256": "fe982f3f334cd76c41576c827c00af814590377d35d61ec329cf962974f2ff10",
+      "bytes": 1210
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/fem/femEnergy.cu",
+      "sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1",
+      "bytes": 111083
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/fem/femEnergy.cuh",
+      "sha256": "76f1895483cc6013fb9fcdf6470d3167b7b728882cbc9ae42a1f903639e0f692",
+      "bytes": 15041
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/abd_fem_count_info.h",
+      "sha256": "ee0e96958fcbed78eb6c1f20e145ae1d294d9e9a71c6f197cafe30b101512f76",
+      "bytes": 1906
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/body_type.h",
+      "sha256": "d69b67728a86bf5063c8e90e220a8a82ec860535e352f613626b1a0095546380",
+      "bytes": 86
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/gipc.h",
+      "sha256": "f4d6cd548ce448d82afecfc80ce1278bbc3165fe462533e3471c40d57fd79554",
+      "bytes": 506
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/statistics.cpp",
+      "sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe",
+      "bytes": 253
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/statistics.h",
+      "sha256": "f80f907893d99bd924ad8136e641a8d806a7b9b803cdc1f80c325862e77bda16",
+      "bytes": 635
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/tet_local_info.h",
+      "sha256": "ab8d4cb8e17e73f687fd26f79d20952f7bcd9c47038985f0614edd1e29c0eaea",
+      "bytes": 3701
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/type_define.h",
+      "sha256": "3477f1aa8c90c4e0a6fd56abd1a11880254ea33178fcd8fb2cadae50b2943dc5",
+      "bytes": 1325
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/cuda_vec_to_eigen.h",
+      "sha256": "3ddc904360b42c8246f197f70cf64e56bb100e8adcfab70e86ad24c82716e720",
+      "bytes": 1908
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/details/cuda_vec_to_eigen.inl",
+      "sha256": "2b3e35068437da45122758deeac4cc51def5a2748e2905cc7a4be04fd2ab34c5",
+      "bytes": 784
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/details/print_buffer.inl",
+      "sha256": "97a1c8848ab964bcc1b0f096b2c43710b3000da517d1a52b740124a26a16771c",
+      "bytes": 2668
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/host_log.h",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/json.h",
+      "sha256": "46ec5962e9e55c72c5baafc2671647eaf218d85789aecc9edc26d4970e9a1432",
+      "bytes": 106
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/math.h",
+      "sha256": "12d3ad4e8a699643e9144999c26a7a2f431b180d44b046eaebc5219b2587cd20",
+      "bytes": 1976
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/details/fast_segmental_reduce.inl",
+      "sha256": "f51d9c1ec462ef41a0e5a616fd31f157e09fde4aafaa9da31e46ea14c1032fc0",
+      "bytes": 10411
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/details/scatter.inl",
+      "sha256": "3de6bdee3d6cc590a0bbdbcee3b82f23fbd9ed25c8a3691a01855ac6093f4eed",
+      "bytes": 1893
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/details/transform.inl",
+      "sha256": "9ecf89bfaf0afb04b3490d25cbdd5bf9f262df24413e604671ab960187d42ee8",
+      "bytes": 2602
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/details/unique_reduce.inl",
+      "sha256": "d81c8f24d807de3e9178eee3a335f827200663066f06fb7f0dfe4bbc5c2a31f8",
+      "bytes": 3397
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/fast_segmental_reduce.h",
+      "sha256": "d7431a06935d85e7d7f41e978852908eab324a86da811204cc10326b8b2b5f54",
+      "bytes": 1345
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/scatter.h",
+      "sha256": "d75b4b38cfc3ebd2cc4a586352e524b6f12bf170cb8e079116b084a2ec300ed6",
+      "bytes": 436
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/transform.h",
+      "sha256": "34ebafa04a596a112db8a25c6ea31ee8fe2eaed99fdc03956b11dac3300c9d3a",
+      "bytes": 623
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/parallel_algorithm/unique_reduce.h",
+      "sha256": "07b1cbecbbecc142108692d785cf0bb935b01a7b1041ea03a2e534004bcf4ea2",
+      "bytes": 838
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/print_buffer.h",
+      "sha256": "2839ce6aee5f3f792bac5c2d810a5058380f740dec834213659cba4624ed78da",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+      "sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8",
+      "bytes": 4880
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/simple_scene_importer.h",
+      "sha256": "77b379470dc2c1eac17e18c9f03e899ebaf06a87a64d9286b28dabe7729fffc5",
+      "bytes": 1108
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/timer.cpp",
+      "sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e",
+      "bytes": 9233
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/gipc/utils/timer.h",
+      "sha256": "580be914d34d1a782bfccfd91c75e17879fc3f993ed5b4b5e110116d2e207743",
+      "bytes": 3467
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/io/load_mesh.cpp",
+      "sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6",
+      "bytes": 46570
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/io/load_mesh.h",
+      "sha256": "431848e78803854bf01567dbfbc5cb4e9d97ba514e3ee54f6f10ec063fdaa73f",
+      "bytes": 6558
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+      "sha256": "db5ef8a3be5aba7ba8c4f4d8a3190bb09c65ba24c95a62fa9f8816b5fdc07f50",
+      "bytes": 6752
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/global_linear_system.h",
+      "sha256": "5372c57ecab24e4a770c70c91ed4b3708c4d355d5bde9b2ccc78758b64bf81d6",
+      "bytes": 3596
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/global_matrix.cu",
+      "sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e",
+      "bytes": 1760
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/global_matrix.h",
+      "sha256": "5407c30d009e21c40136091ebc30c975edba4a4b7194499c259f826081bc06d4",
+      "bytes": 11403
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+      "sha256": "0992e5887e63009b644d2850933ebd2297fdabf5fb31687cbec556360ca76658",
+      "bytes": 824
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/i_linear_system_solver.h",
+      "sha256": "c6fa5bf2d76bb5029d3e820ec9f83312e42f599edb2e0506bd70997899d021f5",
+      "bytes": 2358
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+      "sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1",
+      "bytes": 4360
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/i_preconditioner.h",
+      "sha256": "f09b2061928c5b45967abbd14157d57ae50db046495a08e6221ea4d02bca3b17",
+      "bytes": 3259
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+      "sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca",
+      "bytes": 1966
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/linear_system/linear_subsystem.h",
+      "sha256": "e72517bc23c4c4668dadadae155c3aa9981c2a6543f87d47dbfcf81270be7a09",
+      "bytes": 5380
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+      "sha256": "e1cd83f0074abdd0f4680f6bfc013715db6a820259a8a805cafce976f03b0a4d",
+      "bytes": 1860
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/abd_preconditioner.h",
+      "sha256": "551a79cea46c7efb2e879466a65f8d212cb793f6ff9dfa120d25bc6fd1342f53",
+      "bytes": 625
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+      "sha256": "83ae9b6928471da1473fca9d2bff720b89bc9c842a47b357449a1c8a7ac4ce59",
+      "bytes": 3404
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/diag_preconditioner.h",
+      "sha256": "0780985e1e62261b7959f20f72a625c172251162592b5ce373a3e35ebf3c49a9",
+      "bytes": 533
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+      "sha256": "c700847fbd5faad5ad88580a9265167b4fa5b56780d929e9de565ea824da59aa",
+      "bytes": 1640
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h",
+      "sha256": "8626ea5a3426a0c63d3adb583e9ba5295fed5269df9eb34447594375cd5927a8",
+      "bytes": 1071
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/solver/pcg_solver.cu",
+      "sha256": "0390b6b789213159b0d2bb1cc49487c001fed00f1fdeebbf67c520cdfd326347",
+      "bytes": 7137
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/solver/pcg_solver.h",
+      "sha256": "69d408e2d6414691e6c73624e5ab8ed345ac3f49aa8de7f73dd404271b8dcaaa",
+      "bytes": 1237
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+      "sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29",
+      "bytes": 2966
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.h",
+      "sha256": "0140d341440ae99c1dc51705dd0fe622dfb3c16da71550753ef3392fadc607f9",
+      "bytes": 945
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+      "sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4",
+      "bytes": 4774
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.h",
+      "sha256": "888e7d5225a78ff2ebbf6da188f652622604900ad0107ed088b7cc0516c82445",
+      "bytes": 1139
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/utils/converter.cu",
+      "sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c",
+      "bytes": 14031
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/utils/converter.h",
+      "sha256": "1312437621380de2eb95818a39eb086992705f4c666a229e88924ab6237e7a62",
+      "bytes": 1333
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/utils/spmv.cu",
+      "sha256": "be5629ce3c25790d39913939bf934c04e6a1ebb9d89439a55ce7011b5c6d142d",
+      "bytes": 4357
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/linear_system/utils/spmv.h",
+      "sha256": "67fdc573f54a3b0b0e09ff260682979cfc93dd2b1c92374c219cd4a1e5f01479",
+      "bytes": 714
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/math/eigen_data.h",
+      "sha256": "032609328e1d102de120da80cd92224355e983969cc9262c4a05a128590ec40b",
+      "bytes": 2351
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/math/givens.hpp",
+      "sha256": "ec06b4bebbd04042ce0dcfc0617748cca46139ea4039d0537da829be5ae717d0",
+      "bytes": 7002
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/math/gpu_eigen_libs.cu",
+      "sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da",
+      "bytes": 53228
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/math/gpu_eigen_libs.cuh",
+      "sha256": "224e70a52712f26a55c465f98cb9ddcc8108e680d61b2c97c0bfb85b4e2cc08a",
+      "bytes": 15577
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/math/QRSVD.hpp",
+      "sha256": "623976e7481e6a66f5627a0ce8ee6cfd5a4197c543bc6f7f38941def9c986e09",
+      "bytes": 10177
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/solver/MASPreconditioner.cu",
+      "sha256": "1364bdb7082c7f9755ac59292d828a2a9f39d4d141b489065ddfb9fe58a1c335",
+      "bytes": 87320
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/solver/MASPreconditioner.cuh",
+      "sha256": "845bc4c9362b35aaafcfad7b902c2d1f93f8bd8a8af83362772035ecf183ba84",
+      "bytes": 5778
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/solver/PCG_SOLVER.cu",
+      "sha256": "946e0407d13459fa62cfd5c83d99185a09acb79390c97a36bbbde5cc731fc21f",
+      "bytes": 1267
+    },
+    {
+      "path": "sources/stiff_base/StiffGIPC/solver/PCG_SOLVER.cuh",
+      "sha256": "8c73f99b35e01c2d0a6ca5e8bac80088ca9778c88f4d721b5f810bbc74c9353b",
+      "bytes": 904
+    },
+    {
+      "path": "sources/stiff_fused/.clang-format",
+      "sha256": "2e0483d8ec39ac1add01d2c0fc803007fa22abaaa7eda3c1d4cdb8ae241c1e8f",
+      "bytes": 2080
+    },
+    {
+      "path": "sources/stiff_fused/.editorconfig",
+      "sha256": "90de49e9db49f217be33984c16791b713d142598236c94045213fa4b39f519eb",
+      "bytes": 41
+    },
+    {
+      "path": "sources/stiff_fused/.gitignore",
+      "sha256": "60fa3ee849d040d2a11622085100ba366cae439bd4be61532c16b799b041dcee",
+      "bytes": 39
+    },
+    {
+      "path": "sources/stiff_fused/AGENTS.md",
+      "sha256": "ae031b73df1a228663bdc03af334d0077dc7ef93b0e996b626058830b1ef8a21",
+      "bytes": 18091
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/tetMesh/abd_sphere.msh",
+      "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209",
+      "bytes": 50518
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/tetMesh/bunny2.msh",
+      "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa",
+      "bytes": 3748616
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/tetMesh/cube.msh",
+      "sha256": "be610c96c51a47e382ee00baea1685775b3a898aa2ccc44f770ab360dcbe2280",
+      "bytes": 246
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/cipc_square2K.obj",
+      "sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865",
+      "bytes": 112113
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/cipc_table.obj",
+      "sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972",
+      "bytes": 483580
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/cloth_high.obj",
+      "sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed",
+      "bytes": 212335
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/square_cloth_10k.obj",
+      "sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3",
+      "bytes": 669929
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/square_cloth_23k.obj",
+      "sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4",
+      "bytes": 1852524
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_129_2m.obj",
+      "sha256": "2d6f67484e5d1f1fc88b0aa63b28a6b005053ccc659c0f9cc46bb62663abf253",
+      "bytes": 938177
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_201_1p6m.obj",
+      "sha256": "cb08afd248b34cae12d2d91802741e05f8f4ab19a3150943b1ef008e23e7d1da",
+      "bytes": 3273527
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_301_1p6m.obj",
+      "sha256": "9312468242565c9abef9bdf912e0c4b2a5ef50da74374ed7b52e06b70c1948fc",
+      "bytes": 7566167
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_33_2m.obj",
+      "sha256": "bc8b2ab47c3ed0d7aab116aa7461058b3941b96ae352c935ff25bc0f75aed3c9",
+      "bytes": 46875
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+      "sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231",
+      "bytes": 193014
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_grid_76_1p6m.obj",
+      "sha256": "638f828c6d2558d5afa08b7c49a79ee1077d9251bfc7c3cf08a06d8bb94e9b8b",
+      "bytes": 445464
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+      "sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7",
+      "bytes": 561043
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide2.obj",
+      "sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644",
+      "bytes": 2393989
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/boxes1920_cloth_h.json",
+      "sha256": "56f6bda4878b8181473724a16081c61dded161d1bff334b548462577a1510088",
+      "bytes": 588960
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/boxes1920_cloth_l.json",
+      "sha256": "a25d32bcaf9e380a5884de3f13cfeefcbb1f338b45c09bcd6ee3f6fdac7c441d",
+      "bytes": 588956
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/boxes1920_cloth_m.json",
+      "sha256": "8b537dd620a0c07677eb59a151b4b4f0189d52d909232c28d5046ca0b60472fc",
+      "bytes": 588941
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/bunny_cloth_bunny_h.json",
+      "sha256": "758db20db0613357263bfc8ab84842ecca88b666e5d5bcb5f0a53001ea1ddc30",
+      "bytes": 3809
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/bunny_cloth_bunny_l.json",
+      "sha256": "12fbca80f65e508713154e30de54723b2beb30b8c6d7875c9d7dcc6f7043d6d9",
+      "bytes": 3806
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/bunny_cloth_bunny_m.json",
+      "sha256": "c0f2902652b0c2affa3d62bc7c74d44fd64c72382088958ba8beed591c5db5fb",
+      "bytes": 3789
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_fixed_bunny_h.json",
+      "sha256": "495f9444a8ffcf18a5b2bac31e085663596fa0913e36a580f2d95904a19b1ee0",
+      "bytes": 4499
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_fixed_bunny_l.json",
+      "sha256": "3ec7bce27b7f297e93b5efe911e84771205f75b6f116b22bc17baa0d17afe3a2",
+      "bytes": 4493
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_fixed_bunny_m.json",
+      "sha256": "4a502ee4a4ff5e7ff2ac3401d9df8e3373389be3eef2a5ce944620ac78fd425a",
+      "bytes": 4610
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_hang_h.json",
+      "sha256": "b842e374df246e6cbf8d0b94b2b5b627a5248dc9da0f666e47e585b108158695",
+      "bytes": 3142
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_hang_l.json",
+      "sha256": "ae6b7015346e9a46162a2e0a874a483fecf48523a52e8ba83caf4244f31ae68b",
+      "bytes": 3241
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_hang_m.json",
+      "sha256": "1277cd3d0efc9cf62ff0915752e11832d0a30a47e540a97769933efc56de9f3a",
+      "bytes": 3141
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_sphere7_h.json",
+      "sha256": "f8d3a19131739b12f77876982b5b56066f31082f1e07789e161c09a6abde8ace",
+      "bytes": 4388
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_sphere7_l.json",
+      "sha256": "959bdc17f67688a3512f8f815da52fd37ee2751e0a202120cd8b7f0cf5964a9a",
+      "bytes": 4382
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_sphere7_m.json",
+      "sha256": "9515bb7af4d9e48e01ce3ed95196ba2acfe3c9c926428adaa33b257719502eac",
+      "bytes": 4500
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_stack10_h.json",
+      "sha256": "6bd19692065ff1ff3301159dc8cb6ab25a5bc4cee5e0fe314dc5588419066c34",
+      "bytes": 15810
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_stack10_l.json",
+      "sha256": "76a5b54416210291259f24c9e42f4024860f1d7c8adca76bdac13639c54045f1",
+      "bytes": 15786
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_stack10_m.json",
+      "sha256": "f47057d574bf4794358a055ea1aaec38975a96a508d0413a72fabdadb87a2901",
+      "bytes": 15851
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_table_h.json",
+      "sha256": "c80ff7dce69950dedbfce3eb49ada42af640dfce7873b1e3f80de5d0a9fe10e3",
+      "bytes": 4479
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_table_l.json",
+      "sha256": "e16b84c3b1552e86e3037ac9d7e76adeed6efa2d2a7f56078ae809649eb9896d",
+      "bytes": 4475
+    },
+    {
+      "path": "sources/stiff_fused/Assets/benchmark_scenes/cloth_table_m.json",
+      "sha256": "0daa71806bd8c3e2363bfa1013153e45417ce3c99e8cb97397b764cd9b0f7f28",
+      "bytes": 4591
+    },
+    {
+      "path": "sources/stiff_fused/Assets/scene/abd_system_config.json",
+      "sha256": "da1d86488832bc5dba126953f8623bd74a8d68b74e3d799fe41c4673a0dc637b",
+      "bytes": 56
+    },
+    {
+      "path": "sources/stiff_fused/Assets/scene/json/wrecking-ball-box.json",
+      "sha256": "9def9fd2c1b68e2a958ad380d939a3ad0ad72ed73ffdcf08d0f704f4dd8478b0",
+      "bytes": 102827
+    },
+    {
+      "path": "sources/stiff_fused/Assets/scene/json/wrecking-ball-simple.json",
+      "sha256": "31de033ccf5263d86a21fb85a080215d7391671b07f0d0a9be9d9bb8df94083a",
+      "bytes": 105980
+    },
+    {
+      "path": "sources/stiff_fused/Assets/scene/parameterSetting.txt",
+      "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6",
+      "bytes": 793
+    },
+    {
+      "path": "sources/stiff_fused/Assets/scene/temp.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sources/stiff_fused/Assets/teaser.JPG",
+      "sha256": "b6b5811e4321f0a7cb54aa900a8d56f1c876e4cb907d412309675bbb2e00edf0",
+      "bytes": 265573
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/bunny10.msh",
+      "sha256": "e47e085115a99bfd9449277134bb494337136985d9785e832a86e50c26021d5f",
+      "bytes": 32999837
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/bunny2.msh",
+      "sha256": "819d674817b95011ffd831cdec89f387beee266ee6bbc41040c2f625376151ca",
+      "bytes": 3847753
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/cube.msh",
+      "sha256": "a4ed6661fe833ccd72d04fd74f3230f1dd8421870d2c0698a54a8430bd01d341",
+      "bytes": 266
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/high_mat.msh",
+      "sha256": "04b3e495d0a8948e1827e706ae8201ee314efdae2067e76117ba37cfeeafcebf",
+      "bytes": 6239699
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/wrecking-ball-mesh/cube.obj_.msh",
+      "sha256": "dbf2fef8d6d80437972dc4f2c692c50ddf430849f4dfeb13d3f73b839e8a413e",
+      "bytes": 232
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/ball.obj_.msh",
+      "sha256": "f70daf358b4c60268e9d344dd112626eb3918687bc8546d23383dd901df716fd",
+      "bytes": 347404
+    },
+    {
+      "path": "sources/stiff_fused/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/link.obj_.msh",
+      "sha256": "8ad143e0880dc404dcdbcc0c669de0f30e222127b9eef08f1dac349c85e5dd4e",
+      "bytes": 74049
+    },
+    {
+      "path": "sources/stiff_fused/Assets/triMesh/cloth_high.obj",
+      "sha256": "0f20741edac2a28cc020c0f9cf044e1f9116ab2b3f7b669e2d5f0f91974d10f3",
+      "bytes": 224752
+    },
+    {
+      "path": "sources/stiff_fused/CMakeLists.txt",
+      "sha256": "03975802c239c0a3ce64730cb6a1c1220c1b2a90f8cbe3db68f58fac04cf7252",
+      "bytes": 4394
+    },
+    {
+      "path": "sources/stiff_fused/LICENSE",
+      "sha256": "2684de17300e0a434686f1ec7f8af6045207a4b457a3fe04b2b9ce655e7c5d50",
+      "bytes": 17098
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/CMakeLists.txt",
+      "sha256": "4c5b6386752a172088b6ee3a5cfef01d59cf9d47c1db2d243a63cb47c40e4cc2",
+      "bytes": 443
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/CMakeLists.txt",
+      "sha256": "25bbc6dd3e0d2eb6c17e491c9ec5c0fab94b726db24fcf89619980acf40c1238",
+      "bytes": 367
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/cmake/GKlibSystem.cmake",
+      "sha256": "37134ba28ad78ca83ec30271cf9547963e09e0c1e1428ab32073d584b9e452ab",
+      "bytes": 1435
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/CMakeLists.txt",
+      "sha256": "86a9422f1f4885d3674b64630e8da57dbd41d76835d706f21aa6774cc83689f8",
+      "bytes": 5886
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_arch.h",
+      "sha256": "9181bb3a80c4aa41cc4fcb7c7f6ef58bb3c63fb32674dd4dd400c6b27b55aeac",
+      "bytes": 1502
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_defs.h",
+      "sha256": "361175ac86d023d0a431e4d1e2a5e0f325512f6fc8a02fb513e7d57764cf686c",
+      "bytes": 2148
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_externs.h",
+      "sha256": "e45f95384dc05e1f3aa7ff295bf22244f27593ad0c1298c3a3f7d1d1c1fdea65",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_getopt.h",
+      "sha256": "cd21e90789c3c06daf2a1fbc0191dcea44d167648f2a36cdf5b89042fe5afb94",
+      "bytes": 2400
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_macros.h",
+      "sha256": "5f788c6a977af2725aebd64ffb43bf4c656d1eeb55707f17bf42bee27c981940",
+      "bytes": 6447
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkblas.h",
+      "sha256": "510fcde844c96ff41e92ecffd8b59347fabf24519131fae24fa2e01c04fb6449",
+      "bytes": 5897
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkmemory.h",
+      "sha256": "f765fedac4151f5b385acc9d1370c123a4b17df39d27034ae63a5394be7bab18",
+      "bytes": 4331
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkpqueue.h",
+      "sha256": "59914e9359cb21be5cb948788698794284372ebb97e2ad6b357c8bf9a401fb47",
+      "bytes": 12196
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkpqueue2.h",
+      "sha256": "0dce3d223ef9a73016b8b60556d389a338fb822eaf2b9ba50f39a29018ceff88",
+      "bytes": 6047
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkrandom.h",
+      "sha256": "c8f2b3e3138edd6b1b43c330db7ea0a70028e2a01904eac1b73728fa5696af80",
+      "bytes": 3786
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mksort.h",
+      "sha256": "1ffcf7d782ea5187fc985c67ebc8c83addd1c875f6083b514ec1051d5ec9773c",
+      "bytes": 10525
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_mkutils.h",
+      "sha256": "cf79db8c81909ddcc92ec44fef49f723dfd3917540ccb95c83128ecbacea0789",
+      "bytes": 988
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_ms_inttypes.h",
+      "sha256": "9dc1c97981ae7c2cd5786ea68a164ad9fec321991d29ab1cfcdd4bf83d588fdf",
+      "bytes": 8181
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_ms_stat.h",
+      "sha256": "cedfe170fb9eadb48ce0051dbb1f7cc18900f08b027c74f0e6587e684de00d7e",
+      "bytes": 557
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_ms_stdint.h",
+      "sha256": "21582dac040c5f7a8d1f205a41e78b4c91768564ec460192b0b60eabef9a9d9c",
+      "bytes": 7268
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_proto.h",
+      "sha256": "305afdc4c1e7d07bbfb72ed400aa052d295196988663824e5542047b26e4b157",
+      "bytes": 16944
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_struct.h",
+      "sha256": "d7828a03502dd5e83fddde15b705e7a8cd92e907fada439e0c39e236029a0576",
+      "bytes": 10322
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gk_types.h",
+      "sha256": "946a96412d9cf5d5aa6e80768f9db64b8a7c4d1484c56d95bf8f8041bb15142a",
+      "bytes": 1548
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/GKlib.h",
+      "sha256": "b830ec088bb3ae200f49d14bcefb1a94d9eaa34bcb26e38f761b01d003316d6d",
+      "bytes": 1508
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/gkregex.h",
+      "sha256": "0537c6abe40f342133b60ae15f24650034fdf37afa2393b6997f4dce057dbeb9",
+      "bytes": 21823
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/include/win32/adapt.h",
+      "sha256": "80bfa150409259ca86b8e669f2a22f503dfa35a82a9b76e6b3f38a7956cb8584",
+      "bytes": 253
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/LICENSE.txt",
+      "sha256": "b7a2c8e49ab17746e2e9a2eb670c3a190dcb5525f7de606fc31e67b3b4b5c6bd",
+      "bytes": 659
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/b64.c",
+      "sha256": "d1d71c678863942fa03ef284ddbb91adf79bb51ded225b365290a7c7cae66291",
+      "bytes": 3152
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/blas.c",
+      "sha256": "b315b834abe0ecf39a5470c3e007f8522796225849cc6f4388ee5029c7c01e6a",
+      "bytes": 1187
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/cache.c",
+      "sha256": "648d4e07fdfd801c55bca2c6a3ce16ec269c6b6aab85cc1a06fed7074ed7e193",
+      "bytes": 3482
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/csr.c",
+      "sha256": "d59721a97c25b4ca8f0dff077e1d44a530793b6e25257612f17a28e60da3e2bd",
+      "bytes": 109512
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/error.c",
+      "sha256": "88eee0d8a64409b7d94343317c8af87757b981272982a8e6a877bd9e62a65e5f",
+      "bytes": 6157
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/evaluate.c",
+      "sha256": "8601a1f0a83001c63d115e117f4035a874740770be9beefa5da28f2be462e07d",
+      "bytes": 3095
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/fkvkselect.c",
+      "sha256": "ab7476cc2d181ca9535a5270d896b43ebd8cf08b85f27a8be2b6e8c1b5c8498c",
+      "bytes": 3418
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/fs.c",
+      "sha256": "0e4007d4135e100b070f46229d357de8ce193362990d7fefa17c07fde0d144a7",
+      "bytes": 6739
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/getopt.c",
+      "sha256": "9266fb8c28b8fabccf6f7aea50f3cb944f794527479c18710ff960ad35aef7bc",
+      "bytes": 31484
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/gk_util.c",
+      "sha256": "78492919a9833b891762aaa63b2bfe64bddda10eaaa33fb1316349251b66fb2b",
+      "bytes": 2903
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/gkregex.c",
+      "sha256": "51ba681bcfac877beb1ba02b72f389fe63ef5b3ad8b35fa2b7148fb0acf0707c",
+      "bytes": 321869
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/graph.c",
+      "sha256": "adcade791d9d1b86313b6504b9c2c16f4211b7443697add9fe5a07a504a700ab",
+      "bytes": 64665
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/htable.c",
+      "sha256": "62e7a63c8435713bc6e6c5e7fa93a7ded2dff8c98eeaf4ddeb7d3c83aae054e4",
+      "bytes": 7129
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/io.c",
+      "sha256": "5bf8ebd37129366d4699cfe2cec069bb15af8ad9878d8633a08653a26a6af262",
+      "bytes": 19057
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/itemsets.c",
+      "sha256": "d65d6d687d2445632d28ca87d13c4c53c9b525aa33c4da4a6133e2b47d0ff098",
+      "bytes": 7220
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/mcore.c",
+      "sha256": "6fc1a5502281d3cb0044049a51d7781a64a24de84711b0bf5dcd443cf6474366",
+      "bytes": 12339
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/memory.c",
+      "sha256": "8b97b3e59487fef74c31c5029447135d43759efca1f1e8ab9eadb0c87b881704",
+      "bytes": 8882
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/pqueue.c",
+      "sha256": "e89724c61c95e6e275b14ee0ba9f10c0b355c9051001ca09f716530f53a67a63",
+      "bytes": 1172
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/random.c",
+      "sha256": "727b545b7c78e73b4031822526e4d862ee1248d1ffcb0e7ddf60ee1fc59c677d",
+      "bytes": 4206
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/rw.c",
+      "sha256": "8440be768e2e3d650ae511e8cb4a328a2b99aa5cc34fa1b3893d1c2d8e202fd5",
+      "bytes": 3204
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/seq.c",
+      "sha256": "9d0e098f0809034acd316b1c177d117e685b011fc2e608aceb4ecb02f95ebefe",
+      "bytes": 4429
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/sort.c",
+      "sha256": "cc5241c586d0c393dd82446a11bbefc46a1ba32c59cf9256463d8132f62dbecd",
+      "bytes": 14268
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/string.c",
+      "sha256": "98452d2a599209dd717e6b14cea886a83de7c1f58d5e5d0e75253cb0a74f7b60",
+      "bytes": 16162
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/timers.c",
+      "sha256": "723a2b705095e814c0b79c47c8835de7bc9f3f33b106928a8373b1f1d8499470",
+      "bytes": 1231
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/tokenizer.c",
+      "sha256": "51f8e86f35e8a770e280baa1ce8906b41f06550b60936b8dd3559a3f2b02bb0d",
+      "bytes": 2168
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/GKlib/src/win32/adapt.c",
+      "sha256": "bc183f5a6be42f23939a4b57faa651a563b550f16ed2d79546ee03e15e846e0c",
+      "bytes": 174
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/CMakeLists.txt",
+      "sha256": "885ff8761e65e757856bfcc681d73664eea2eed98e7420742a9f9552a7a2f044",
+      "bytes": 331
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/include/CMakeLists.txt",
+      "sha256": "ee6a66abf24d9404d602a17185b6cdd0b0729c36d7962a67153e92079f5a21a1",
+      "bytes": 74
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/include/metis.h",
+      "sha256": "03b5b2d5613e94a262b57b056898568e45cc871a9abd2dff3603cd3e4020d1a8",
+      "bytes": 10880
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/auxapi.c",
+      "sha256": "001d5b14c2945eb79ee46aa5f8599c5666e90ab7702068de4bdb1a50916743af",
+      "bytes": 1168
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/balance.c",
+      "sha256": "0bc7875daf47883fc69188a8c870ad196dec140fbb7730b53cd72bda1a5f4781",
+      "bytes": 16935
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/bucketsort.c",
+      "sha256": "2eccdd4f8dbd29743fd0f516dab1e59c88a424312a28ee9f5a5502097479c41c",
+      "bytes": 1025
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/checkgraph.c",
+      "sha256": "db0630d393358d282fb180741dfaf569ab66a8683868ffdb5e69497d47842be5",
+      "bytes": 7706
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/CMakeLists.txt",
+      "sha256": "7704581d5eb2ad9c533dc2dc7d4ee08f6614998eab7cfc3b20be812303b27307",
+      "bytes": 219
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/coarsen.c",
+      "sha256": "49890e454b20409d999bd1086663b2f2a7e00c5d9740822cf6b017d8e786e767",
+      "bytes": 35662
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/compress.c",
+      "sha256": "2029c0aa710bc5839c8c1b2f5fb2e2763ecb113edc765e94320d78fe80a27de1",
+      "bytes": 6390
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/contig.c",
+      "sha256": "f322e35de73aeb1d91b8938d71dd0902832caeade224f35c453c92ee2983e423",
+      "bytes": 22007
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/debug.c",
+      "sha256": "841b646994ae11d2a61ffacb35f77677b609ee302c3d079b14a14f0de588655e",
+      "bytes": 13004
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/defs.h",
+      "sha256": "2a44073bf56799f528f8c97cea249dcee5c268427cf22464cd60bea2d38b06f3",
+      "bytes": 2075
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/fm.c",
+      "sha256": "3b45abb947c2fa3922d8c7dcbdea5f3198e0863df632a4ab1c85d7348638fdd7",
+      "bytes": 19426
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/fortran.c",
+      "sha256": "761f16f235ad55955b3d53541eb4fe2f67d7ef34e53c68914cc7f25b4e5d0ec9",
+      "bytes": 3560
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/frename.c",
+      "sha256": "1549cffb3b2767a73c6f5c780c5da0f7adb5d5d80fe60a5ddf58026837f555df",
+      "bytes": 3562
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/gklib.c",
+      "sha256": "d47018da038228e9af982c03a9cf7ade0e93ca9dc389552593420f912b62630a",
+      "bytes": 3393
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/gklib_defs.h",
+      "sha256": "27229ce6923b92dece9a42cad15587337f8c84aab04bccaa448cfc8756869d2f",
+      "bytes": 1684
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/gklib_rename.h",
+      "sha256": "eae1a06b2767c66274bc3d2149ef72f9c15552174a65240dffdb10ac92f32b15",
+      "bytes": 4140
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/graph.c",
+      "sha256": "14b3115dc74031c196668e66f3ecdbfb979fc91a5159f15c2ad4e43d6e43d63f",
+      "bytes": 12633
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/initpart.c",
+      "sha256": "a1500455ea68ccf8bec79ee39f9a4c8420af4b7f2c08419340e6c8f4a5e8056a",
+      "bytes": 18838
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/kmetis.c",
+      "sha256": "7f49a03a21fe26c545b48c3428d8b25ba74918cb726edc6a07fb3f2ed0aacb7b",
+      "bytes": 16809
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/kwayfm.c",
+      "sha256": "f55ffbc34df4dd87bc9e4cea5f93f5d988f967cf5fc00c6689f2a6042b239e6f",
+      "bytes": 77470
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/kwayrefine.c",
+      "sha256": "3e2f54a56e6d1dfe978afb18dbd82cdf18a838a6cf1511c822233f3e74cffaec",
+      "bytes": 21188
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/macros.h",
+      "sha256": "bb6010166fa66f9780514eface0b7d55afd8a5777785b9d6e8edd7e942fc34e8",
+      "bytes": 8623
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/mcutil.c",
+      "sha256": "9722bb357da6df383f5a47ecf7bdd36dd739e47917b292ab06570e47a234361e",
+      "bytes": 9139
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/mesh.c",
+      "sha256": "5f1e077c7107b6a855d0b847526a60450e7bffe5596875167e99c2335dfe7558",
+      "bytes": 13070
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/meshpart.c",
+      "sha256": "c49c5da79ccb3e5bd18b6a6394c206418494e83231ed26b2e347f751d08c784c",
+      "bytes": 7888
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/metislib.h",
+      "sha256": "9263c74e9808ea8e84af3120468ef0626a5c4dbb6828b8d5d8169b1cb5aaa3b0",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/minconn.c",
+      "sha256": "9cd85b7e1a9b4f0a0c8e95d3daafd3ceef591e19bd82d799992cb9644203d62e",
+      "bytes": 23977
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/mincover.c",
+      "sha256": "924a8413101113e3b758b3313a6bd2c47608acdbd0de59c64b01056c6b5a33c0",
+      "bytes": 7526
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/mmd.c",
+      "sha256": "4aeeb04fbdd90f50ebcb7c24b7c6cd0af1143d1cbbb791f0d9b979d45bcff2bf",
+      "bytes": 21737
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/ometis.c",
+      "sha256": "3059be6aa0030d84bdb08d64473d77901d621c16ee77d2bcf536fa7fcdd97f84",
+      "bytes": 21515
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/options.c",
+      "sha256": "943aeff2ca01073f2b5d23e41b5ea97f13380fdeed05b412f374f755557f6bba",
+      "bytes": 19098
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/parmetis.c",
+      "sha256": "025be52e1ecdaad28c33ae180ddf3a455d866c88ccdb8434fc6cf5e046feabe5",
+      "bytes": 26970
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/pmetis.c",
+      "sha256": "9ae324386fe50f87636f44cf86d86fdf93002757d718e5f33cd11e26c1af6a81",
+      "bytes": 12760
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/proto.h",
+      "sha256": "94f6ff16f990bce47aed481ca827d3a91c2e28e0d1f2b4912d569b3af6b0aefb",
+      "bytes": 15157
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/refine.c",
+      "sha256": "f3177f2987f765230775ddc09a9865b7569e390efee14e3a801bb1e000c4463d",
+      "bytes": 6090
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/rename.h",
+      "sha256": "b1166f3407a24db47b6c0142e67a19558e10746530774dbef8a69c409604cab4",
+      "bytes": 12230
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/separator.c",
+      "sha256": "e2545c4c51be5421d897a36d26267a0d8f035a0ccb6e04a2d8c0951413a52ea9",
+      "bytes": 5017
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/sfm.c",
+      "sha256": "688d5413d35920a5c84bdb6d6e83052d7f1891ade72c62c253e6e1cf87923af9",
+      "bytes": 20648
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/srefine.c",
+      "sha256": "3bd3e7bba19cd4811564245dd948ee08ce1648ecfaf3983980d3a9428c9d7f59",
+      "bytes": 5077
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/stat.c",
+      "sha256": "d097c203270433748529243495e9c90205079c25dddd3648ef92d58cd0b913ab",
+      "bytes": 5942
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/stdheaders.h",
+      "sha256": "aba5ccefd9d16a008c8ebb0a192924ee8e52a9d790db717e9ca9e38f1f6568be",
+      "bytes": 514
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/struct.h",
+      "sha256": "438f5095476e4dc9839efc73bf87f64b4b346207640d26e50354ab7d9f3358d0",
+      "bytes": 9862
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/timing.c",
+      "sha256": "c38aba5da374b863a53ad21fe69ef7773b41a2d0d726e1fc58431ffb0c8a1fd9",
+      "bytes": 2412
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/util.c",
+      "sha256": "0bfbebc1cb63b33ac8296bfc209dde0b4e1ca639f80df62414d55ffc6fc7fb04",
+      "bytes": 3120
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/libmetis/wspace.c",
+      "sha256": "406eec610526a6288659a352bb35d3c5cdff02024181e195cc8997ccf74a5f5b",
+      "bytes": 7717
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/External/METIS/LICENSE",
+      "sha256": "0ae4ac9049ec1b05c29a2eef542dc9fd674f09d45a65abeb7257fb4862b5f1f8",
+      "bytes": 659
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/CMakeLists.txt",
+      "sha256": "be22645aa7651dafb67a26d1569524485136e62a84e213e4e1ca9835996e8522",
+      "bytes": 1016
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/main.cpp",
+      "sha256": "7bb385a9aac781ae7701eec9e6e4b5fedf3679be402b8fb6a94b2151304dd07c",
+      "bytes": 439
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/mesh.cpp",
+      "sha256": "4ee0f2e8071657b40deaf6815ffb53798ead3704081ba4d33c39d4d0a6c922fb",
+      "bytes": 23400
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/mesh.h",
+      "sha256": "b87aa57416bf4cbe9a6c0ffb726cd0fcf2c02676ba1d6a85103a73d98d531b2a",
+      "bytes": 1840
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/metis_sort.cpp",
+      "sha256": "9f74e512a9ceb01abdd058afdf421953bf01fee58f8aa4a7a37e85d4633cf8dd",
+      "bytes": 15323
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/metis_sort.h",
+      "sha256": "e5facb0a470f852fe93fa4a3a970f905eefea093ce3bc536bdc788f2fe11673a",
+      "bytes": 94
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/node_edge_model.cpp",
+      "sha256": "9d43a9c8844f4d920e18259517e8dd9518847fd4c38816a793043a92de4fa1df",
+      "bytes": 1375
+    },
+    {
+      "path": "sources/stiff_fused/MeshProcess/metis_partition/src/node_edge_model.h",
+      "sha256": "fa13c3beaacdada87e6eede0fd0f6560858300e297b0f9507b09741d65b9173c",
+      "bytes": 623
+    },
+    {
+      "path": "sources/stiff_fused/README.md",
+      "sha256": "85d629c7d075058c44cae634f7e56289dd6e11e361c27c1203541f97aef7e90f",
+      "bytes": 3878
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_energy.h",
+      "sha256": "5bb0169286de1504c37ca3132e7af0b0d8369c94e0b9c04ef7b3f2745c817a88",
+      "bytes": 1350
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_jacobi_matrix.h",
+      "sha256": "8cb871d0d198c65e3a4897d5545ec34c0a5a9c167b8058f30af3963d2d36cded",
+      "bytes": 5944
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_sim_data.cu",
+      "sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887",
+      "bytes": 4004
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_sim_data.h",
+      "sha256": "39e2ba652d24adc4a1390077af8b8ae77447294529c0fcc223e62e39697bd1aa",
+      "bytes": 6755
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system.cu",
+      "sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad",
+      "bytes": 37967
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system.h",
+      "sha256": "c40d93700d19bc55d8c1e017a36072e95565b0117624633cd230519bcbf81274",
+      "bytes": 11303
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+      "sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9",
+      "bytes": 7065
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+      "sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441",
+      "bytes": 2964
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+      "sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092",
+      "bytes": 7292
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+      "sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407",
+      "bytes": 33832
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+      "sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae",
+      "bytes": 3892
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+      "sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e",
+      "bytes": 1887
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/abd_system_parms.h",
+      "sha256": "30ce99a06878dbcacfdb60a937255d1cd40daaa3a7af5f83a4ad2386ba53e52c",
+      "bytes": 515
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/details/abd_energy.inl",
+      "sha256": "66e6adc346ce17c51092efe35f3ccff7b24648321323d9e5af60f542ea162fcd",
+      "bytes": 75035
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/abd_system/details/abd_jacobi_matrix.inl",
+      "sha256": "422babedb38e18134144247cca64915df3faf926157d4969422fd413ea020e64",
+      "bytes": 8162
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/app/benchmark_scenes.inl",
+      "sha256": "afea8caf40b2f5374d17d31868bb6d3367dc1370992334766ceb5a9eec88aacb",
+      "bytes": 5195
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/app/gl_main.cu",
+      "sha256": "e33bd65940fb0dcd780efd88dc7fc1fc8c48e0237a7024d61d9009ddad35e10b",
+      "bytes": 69299
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/collision/ACCD.cu",
+      "sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea",
+      "bytes": 28249
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/collision/ACCD.cuh",
+      "sha256": "abde8441335005ed875bb77aa171fbbb4b47c694671a2b0f01990ecfe3039127",
+      "bytes": 1804
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/collision/FrictionUtils.cuh",
+      "sha256": "e8c72359674ae1a7ebb34c6349fbc2d1460a1e69fc86db6fe629cce04d2d44a1",
+      "bytes": 17970
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/collision/mlbvh.cu",
+      "sha256": "dddeefaccd279655d5f97853badc077f679418f4bce6fc77c3bd06b12dd97ee0",
+      "bytes": 98610
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/collision/mlbvh.cuh",
+      "sha256": "78fe0d1cc0faeec2cad9313ca226d603f6c9bc9a2d541a88e223ba13413605dc",
+      "bytes": 5727
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/accel_features.h",
+      "sha256": "be65408f0f53dde8239c4fcaf0cf6bb2b14e60f4a4c9253e4a866c563a8c76c2",
+      "bytes": 276
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/body_boundary_type.h",
+      "sha256": "23b94c866964b29f969e243eaf889465bbf3f6d28b2001d0f22eb9ab3359bf1c",
+      "bytes": 103
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/GIPC.cu",
+      "sha256": "3e9eef5495e217405a5721f3452e6a3912706df4706b3cb25ef67da9e0585343",
+      "bytes": 492327
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/GIPC.cuh",
+      "sha256": "8972a7a28bf09e83999c815c45cbb7a674a17fd3bde1223b92ba842774d24e84",
+      "bytes": 9292
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/gipc_path.h",
+      "sha256": "519bbe020dc0f5e6415a9f237d2f90a3694abd57a13afabd695ac2c99bb2e822",
+      "bytes": 337
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/GIPC_PDerivative.cuh",
+      "sha256": "0a044b885ed3f0c9a2e870b05903cb415c2aa0890c4765c7c7479f2d35ce6fe1",
+      "bytes": 221500
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/core/gipc_system.cu",
+      "sha256": "daee7d903fe9b9181c6bb8a3da5f0350424e6c5148613cd4f82edc49047b00e3",
+      "bytes": 3274
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_all.h",
+      "sha256": "dfa3e64042343d3fff90411f4c35701c0080852d69e593af670b337791e7eb09",
+      "bytes": 400
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_atomic.h",
+      "sha256": "52754e9df742937f98609c29263387601dba7ccd09e7cc98323e803af6b2994c",
+      "bytes": 766
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_buffer_view.h",
+      "sha256": "4f8d4c2ce51fd2bb800c11b6f5965954ba2b7f6801a72d2d126f357f252ff632",
+      "bytes": 20951
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_cub_wrappers.h",
+      "sha256": "a18c5d5c26aa0b87e9f713e4838b8dbee3ce09fe3e65a62fba836c2c2fd33cf0",
+      "bytes": 8395
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_debug.h",
+      "sha256": "3146663a760b1738a57f6907e45f7ad3ba16956feae0ddbc4d9d0a3868ee0894",
+      "bytes": 1674
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_def.h",
+      "sha256": "d4db23b958cec3de66dd825ae208b9a0628d2c71818f5e46e9cbf9d2103c45c3",
+      "bytes": 736
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_dense_vector.h",
+      "sha256": "286a9b9c53512d03143fd1925a3663611f9e3fc2e4407ecb2baf7632bed1cd02",
+      "bytes": 9991
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_eigen.h",
+      "sha256": "ef3d0ca59e0e5a2dff4125fcfd2cf59d5fb973c8a4a763aeaa131d191201bb60",
+      "bytes": 6795
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_linear_system.h",
+      "sha256": "589182bcbeaf8a0ae0060d45d915961a4e909be3f84561bf42d57b3f694bf7d5",
+      "bytes": 5206
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_tools.h",
+      "sha256": "6448f7db6eca41dff622e10c3315920fb23907185499ead2f1cbacdaaae9679d",
+      "bytes": 2783
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/cuda_tools/cuda_vec_utils.h",
+      "sha256": "f82624dac7fd1ff136b2ac2aa848fdfb5753eeae0b9b3c456b9406951c1f1b77",
+      "bytes": 235
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/fem/device_fem_data.cu",
+      "sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e",
+      "bytes": 3906
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/fem/device_fem_data.cuh",
+      "sha256": "e772fde35c81d1401cba1915a233eeeab8cbbb680b217adf9685f636330c342c",
+      "bytes": 2982
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/fem/fem_parameters.h",
+      "sha256": "fe982f3f334cd76c41576c827c00af814590377d35d61ec329cf962974f2ff10",
+      "bytes": 1210
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/fem/femEnergy.cu",
+      "sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1",
+      "bytes": 111083
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/fem/femEnergy.cuh",
+      "sha256": "76f1895483cc6013fb9fcdf6470d3167b7b728882cbc9ae42a1f903639e0f692",
+      "bytes": 15041
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/abd_fem_count_info.h",
+      "sha256": "ee0e96958fcbed78eb6c1f20e145ae1d294d9e9a71c6f197cafe30b101512f76",
+      "bytes": 1906
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/body_type.h",
+      "sha256": "d69b67728a86bf5063c8e90e220a8a82ec860535e352f613626b1a0095546380",
+      "bytes": 86
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/gipc.h",
+      "sha256": "f4d6cd548ce448d82afecfc80ce1278bbc3165fe462533e3471c40d57fd79554",
+      "bytes": 506
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/statistics.cpp",
+      "sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe",
+      "bytes": 253
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/statistics.h",
+      "sha256": "f80f907893d99bd924ad8136e641a8d806a7b9b803cdc1f80c325862e77bda16",
+      "bytes": 635
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/tet_local_info.h",
+      "sha256": "ab8d4cb8e17e73f687fd26f79d20952f7bcd9c47038985f0614edd1e29c0eaea",
+      "bytes": 3701
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/type_define.h",
+      "sha256": "3477f1aa8c90c4e0a6fd56abd1a11880254ea33178fcd8fb2cadae50b2943dc5",
+      "bytes": 1325
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/cuda_vec_to_eigen.h",
+      "sha256": "3ddc904360b42c8246f197f70cf64e56bb100e8adcfab70e86ad24c82716e720",
+      "bytes": 1908
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/details/cuda_vec_to_eigen.inl",
+      "sha256": "2b3e35068437da45122758deeac4cc51def5a2748e2905cc7a4be04fd2ab34c5",
+      "bytes": 784
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/details/print_buffer.inl",
+      "sha256": "97a1c8848ab964bcc1b0f096b2c43710b3000da517d1a52b740124a26a16771c",
+      "bytes": 2668
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/host_log.h",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/json.h",
+      "sha256": "46ec5962e9e55c72c5baafc2671647eaf218d85789aecc9edc26d4970e9a1432",
+      "bytes": 106
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/math.h",
+      "sha256": "12d3ad4e8a699643e9144999c26a7a2f431b180d44b046eaebc5219b2587cd20",
+      "bytes": 1976
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/details/fast_segmental_reduce.inl",
+      "sha256": "f51d9c1ec462ef41a0e5a616fd31f157e09fde4aafaa9da31e46ea14c1032fc0",
+      "bytes": 10411
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/details/scatter.inl",
+      "sha256": "3de6bdee3d6cc590a0bbdbcee3b82f23fbd9ed25c8a3691a01855ac6093f4eed",
+      "bytes": 1893
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/details/transform.inl",
+      "sha256": "9ecf89bfaf0afb04b3490d25cbdd5bf9f262df24413e604671ab960187d42ee8",
+      "bytes": 2602
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/details/unique_reduce.inl",
+      "sha256": "d81c8f24d807de3e9178eee3a335f827200663066f06fb7f0dfe4bbc5c2a31f8",
+      "bytes": 3397
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/fast_segmental_reduce.h",
+      "sha256": "d7431a06935d85e7d7f41e978852908eab324a86da811204cc10326b8b2b5f54",
+      "bytes": 1345
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/scatter.h",
+      "sha256": "d75b4b38cfc3ebd2cc4a586352e524b6f12bf170cb8e079116b084a2ec300ed6",
+      "bytes": 436
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/transform.h",
+      "sha256": "34ebafa04a596a112db8a25c6ea31ee8fe2eaed99fdc03956b11dac3300c9d3a",
+      "bytes": 623
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/parallel_algorithm/unique_reduce.h",
+      "sha256": "07b1cbecbbecc142108692d785cf0bb935b01a7b1041ea03a2e534004bcf4ea2",
+      "bytes": 838
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/print_buffer.h",
+      "sha256": "2839ce6aee5f3f792bac5c2d810a5058380f740dec834213659cba4624ed78da",
+      "bytes": 700
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+      "sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8",
+      "bytes": 4880
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/simple_scene_importer.h",
+      "sha256": "77b379470dc2c1eac17e18c9f03e899ebaf06a87a64d9286b28dabe7729fffc5",
+      "bytes": 1108
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/timer.cpp",
+      "sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e",
+      "bytes": 9233
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/gipc/utils/timer.h",
+      "sha256": "580be914d34d1a782bfccfd91c75e17879fc3f993ed5b4b5e110116d2e207743",
+      "bytes": 3467
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/io/load_mesh.cpp",
+      "sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6",
+      "bytes": 46570
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/io/load_mesh.h",
+      "sha256": "431848e78803854bf01567dbfbc5cb4e9d97ba514e3ee54f6f10ec063fdaa73f",
+      "bytes": 6558
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+      "sha256": "24c6353a17541501d1e19a050b322d0c4a301a76c6c13e65fd9a5f4273fbf6ac",
+      "bytes": 7732
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/global_linear_system.h",
+      "sha256": "bb1cf7e038a8b70d464e1c3707713b102fca755cc55b93d5b819119af4f6279b",
+      "bytes": 3652
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/global_matrix.cu",
+      "sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e",
+      "bytes": 1760
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/global_matrix.h",
+      "sha256": "5407c30d009e21c40136091ebc30c975edba4a4b7194499c259f826081bc06d4",
+      "bytes": 11403
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+      "sha256": "0db85528a4b5c6f256c53d11e1c885a9844fb2a76db2c2aee57bea8d6139e7f3",
+      "bytes": 936
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/i_linear_system_solver.h",
+      "sha256": "9021c95e74f9c66a59c22b377c9d88ef724bc4836c9ce036a80f45d13be4b465",
+      "bytes": 2451
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+      "sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1",
+      "bytes": 4360
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/i_preconditioner.h",
+      "sha256": "e0b74f2f4b77d9b9d5b04e452c78a5c06675b68428f24176dbea5205e9d9555d",
+      "bytes": 3439
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+      "sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca",
+      "bytes": 1966
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/linear_system/linear_subsystem.h",
+      "sha256": "e72517bc23c4c4668dadadae155c3aa9981c2a6543f87d47dbfcf81270be7a09",
+      "bytes": 5380
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+      "sha256": "f599ba8958f522fafd56b3229b36fadbd397622425e8177078ae3e89424aeead",
+      "bytes": 2167
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/abd_preconditioner.h",
+      "sha256": "262c1f8ebd25f6e6e98071752956cb760706d804e61b9d95d1cbada1a57ca665",
+      "bytes": 690
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+      "sha256": "83ae9b6928471da1473fca9d2bff720b89bc9c842a47b357449a1c8a7ac4ce59",
+      "bytes": 3404
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/diag_preconditioner.h",
+      "sha256": "6cb2c2dc0181328c0be1bfedf70c4bbb68a8c65573e90786392a237c5da62ecc",
+      "bytes": 696
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+      "sha256": "dc29844a9427c10f58f41a7a1b411ef44640553032a0c518308bdf76a8123831",
+      "bytes": 1806
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h",
+      "sha256": "ba08782ea0f2465eca408ad5038cfdda7c1dc858e4546e14d3a60c7385ef83d2",
+      "bytes": 1136
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/solver/pcg_graph_impl.inl",
+      "sha256": "4f518dabced8d2ba8384085701d5d742223e7a3df539de1f991cb5e70f603af7",
+      "bytes": 6783
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/solver/pcg_solver.cu",
+      "sha256": "7f0a4ad08ed1c6d1b9061fb282556e6049fa4f05bb8aadaf93bbc5d6152c09ca",
+      "bytes": 9891
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/solver/pcg_solver.h",
+      "sha256": "893ce05d3e3c3e7f4237a15522a0e20d7dfd055b2f1882f77f5c8f12e23e627b",
+      "bytes": 1778
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+      "sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29",
+      "bytes": 2966
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.h",
+      "sha256": "0140d341440ae99c1dc51705dd0fe622dfb3c16da71550753ef3392fadc607f9",
+      "bytes": 945
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+      "sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4",
+      "bytes": 4774
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.h",
+      "sha256": "888e7d5225a78ff2ebbf6da188f652622604900ad0107ed088b7cc0516c82445",
+      "bytes": 1139
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/utils/converter.cu",
+      "sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c",
+      "bytes": 14031
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/utils/converter.h",
+      "sha256": "1312437621380de2eb95818a39eb086992705f4c666a229e88924ab6237e7a62",
+      "bytes": 1333
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/utils/spmv.cu",
+      "sha256": "be5629ce3c25790d39913939bf934c04e6a1ebb9d89439a55ce7011b5c6d142d",
+      "bytes": 4357
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/linear_system/utils/spmv.h",
+      "sha256": "67fdc573f54a3b0b0e09ff260682979cfc93dd2b1c92374c219cd4a1e5f01479",
+      "bytes": 714
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/math/eigen_data.h",
+      "sha256": "032609328e1d102de120da80cd92224355e983969cc9262c4a05a128590ec40b",
+      "bytes": 2351
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/math/givens.hpp",
+      "sha256": "ec06b4bebbd04042ce0dcfc0617748cca46139ea4039d0537da829be5ae717d0",
+      "bytes": 7002
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/math/gpu_eigen_libs.cu",
+      "sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da",
+      "bytes": 53228
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/math/gpu_eigen_libs.cuh",
+      "sha256": "224e70a52712f26a55c465f98cb9ddcc8108e680d61b2c97c0bfb85b4e2cc08a",
+      "bytes": 15577
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/math/QRSVD.hpp",
+      "sha256": "623976e7481e6a66f5627a0ce8ee6cfd5a4197c543bc6f7f38941def9c986e09",
+      "bytes": 10177
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/MASPreconditioner.cu",
+      "sha256": "9e9b277bedc5fc9d2bb3100d117d2a26c2c7bc232e5f1130fbf931eeefcf3511",
+      "bytes": 87935
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/MASPreconditioner.cuh",
+      "sha256": "f0f89a36f60d02e82a7bbf8c9b064bf6a1994e12f74367e1e7fb75c01f72e235",
+      "bytes": 6783
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/PCG_SOLVER.cu",
+      "sha256": "946e0407d13459fa62cfd5c83d99185a09acb79390c97a36bbbde5cc731fc21f",
+      "bytes": 1267
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/PCG_SOLVER.cuh",
+      "sha256": "8c73f99b35e01c2d0a6ca5e8bac80088ca9778c88f4d721b5f810bbc74c9353b",
+      "bytes": 904
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/toi_solver.cu",
+      "sha256": "94777345d5abc6de211a5cc3b7c7b58117532018e09a4e878cec6e9fcfd01edb",
+      "bytes": 57344
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/toi_solver.cuh",
+      "sha256": "3c2792509db1ac1c79ec4bb76fda7d3c37ad06be2d7265b843c735674a2dbf55",
+      "bytes": 948
+    },
+    {
+      "path": "sources/stiff_fused/StiffGIPC/solver/toi_volume_step.cuh",
+      "sha256": "ee8bd612b7bb3308432b55af2e3cb8f167d27bc08f39868a51502731b7740710",
+      "bytes": 3285
+    }
+  ],
+  "source_digest": "c465e036a20070eb41f1e62a6f5de1009c7b8622b772e89906dd191f05953430"
+}

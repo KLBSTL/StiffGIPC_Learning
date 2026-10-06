@@ -1,0 +1,109 @@
+{
+  "public_commit": "389f8a52a29606ccaf5640607dd1e38987500988",
+  "public_worktree_status": "M apps/AL_examples/animal_well/main.cpp",
+  "scope": "Selected public files plus separately labeled prior derived variants; donors were only read.",
+  "files": [
+    {
+      "path": "references/robust_local/public/LICENSE",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\LICENSE",
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "bytes": 11558
+    },
+    {
+      "path": "references/robust_local/public/src/core/core/scene_default_config.cpp",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\core\\core\\scene_default_config.cpp",
+      "sha256": "26b330b278f65d7bfea62652076665b743fb281f0dae9a4509f23307c5ca50b7",
+      "bytes": 5426
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/engine/advance_al.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\engine\\advance_al.cu",
+      "sha256": "63eb58f2af9aa5cab18ecf21ce4714d6e354b92461e2bfd663b37875c35b967c",
+      "bytes": 17099
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/active_set_system/global_active_set_manager.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\active_set_system\\global_active_set_manager.cu",
+      "sha256": "78949aecdd8647d877f37fba9f9d51aca1b8b0838af1335347518c1456745559",
+      "bytes": 43193
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/affine_body/abd_al_stiffness_estimator.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\affine_body\\abd_al_stiffness_estimator.cu",
+      "sha256": "72a60efa473b13f75d6f34c14b206567eb179667eebc5794e9bc5a68330c5e64",
+      "bytes": 1666
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/finite_element/fem_al_stiffness_estimator.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\finite_element\\fem_al_stiffness_estimator.cu",
+      "sha256": "6ef849f5f1e644e58274ea99e05b2b4f845954382f3b53e472bc481df6dfd7e0",
+      "bytes": 1523
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/affine_body/abd_linear_subsystem.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\affine_body\\abd_linear_subsystem.cu",
+      "sha256": "d158445f0e70517707e48dd5d3db15374d2c0c9e49d5d04fa777c6e323385675",
+      "bytes": 25935
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/finite_element/fem_linear_subsystem.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\finite_element\\fem_linear_subsystem.cu",
+      "sha256": "bb952092fd7d0b7ca8cde49d781705071fe0a6cfc484ef151efae47cd23d68e5",
+      "bytes": 19602
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/linear_system/global_linear_system.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\linear_system\\global_linear_system.cu",
+      "sha256": "19db24bc37e29a93e30559e49c57e6092fceaf92bd39829c6a7e691cab197518",
+      "bytes": 23923
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/linear_system/linear_fused_pcg.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\linear_system\\linear_fused_pcg.cu",
+      "sha256": "0dd74beb0c326f36a493366ecae186b1994b66640fde905ddfaccfe3c2079643",
+      "bytes": 11450
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/affine_body/abd_active_set_reporter.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\affine_body\\abd_active_set_reporter.cu",
+      "sha256": "b41ceba481b23c344bec32981ad8ef81844abb484ba6e22054d133b01af9959c",
+      "bytes": 2029
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/finite_element/fem_active_set_reporter.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\finite_element\\fem_active_set_reporter.cu",
+      "sha256": "5b600cb3588568416f8c8aba9886dea4f1a18ce3accd92ef677f2e5785e78271",
+      "bytes": 1152
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/contact_system/al_contact_function.h",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\contact_system\\al_contact_function.h",
+      "sha256": "5683d5e4e44be5cf28e1cc01d947dc5be7b12aca0cb3d164462133de0f8d8dc2",
+      "bytes": 8920
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/collision_detection/filters/al_vertex_half_plane_trajectory_filter.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\collision_detection\\filters\\al_vertex_half_plane_trajectory_filter.cu",
+      "sha256": "655b29ab586a857de8e30902b38f9f0a84193e29b23170217bd915d32e9e133e",
+      "bytes": 4747
+    },
+    {
+      "path": "references/robust_local/public/src/backends/cuda/collision_detection/filters/stackless_bvh_simplex_trajectory_filter.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\externals\\history-Robust\\src\\backends\\cuda\\collision_detection\\filters\\stackless_bvh_simplex_trajectory_filter.cu",
+      "sha256": "a2c4b25cac72323ec49f2381605624e3973d2f3ee5959a0a0cd7fe2530e846a2",
+      "bytes": 59043
+    },
+    {
+      "path": "references/robust_local/prior_derived/advance_al_public.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\paper_reproduction_20260928\\derived\\robust_paper_20260929_v3\\sources\\robust\\advance_al_public.cu",
+      "sha256": "63eb58f2af9aa5cab18ecf21ce4714d6e354b92461e2bfd663b37875c35b967c",
+      "bytes": 17099
+    },
+    {
+      "path": "references/robust_local/prior_derived/advance_al_paper.cu",
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\paper_reproduction_20260928\\derived\\robust_paper_20260929_v3\\sources\\robust\\advance_al_paper.cu",
+      "sha256": "1bddd5c721cc4158ae419a85f54655fd17882f88c2e61faa4594f69bdb88b482",
+      "bytes": 17566
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "report":"reports/active/FOUR_WAY_WINDOW_BATCH.json",
+  "stop_on_failure":true,
+  "runs":[
+    {"name":"restrict_ipc_host_window","config":{"preset":"toi","backend":"ipc","execution":"host","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}},
+    {"name":"restrict_ipc_graph_window","config":{"preset":"toi","backend":"ipc","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}},
+    {"name":"restrict_toi_host_window","config":{"preset":"toi","execution":"host","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}}
+  ]
+}

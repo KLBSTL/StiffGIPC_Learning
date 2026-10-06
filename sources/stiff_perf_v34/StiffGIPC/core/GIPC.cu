@@ -1,0 +1,11509 @@
+//
+// GIPC.cu
+// GIPC
+//
+// created by Kemeng Huang on 2022/12/01
+// Copyright (c) 2024 Kemeng Huang. All rights reserved.
+//
+
+#include "GIPC.cuh"
+#include <gipc/gipc.h>
+#include "cuda_tools/cuda_tools.h"
+#include "GIPC_PDerivative.cuh"
+#include <fem/fem_parameters.h>
+#include <collision/ACCD.cuh>
+#include <fem/femEnergy.cuh>
+#include <collision/FrictionUtils.cuh>
+#include <cstdlib>
+#include <fstream>
+#include <filesystem>
+#include <array>
+#include <limits>
+#include "Eigen/Eigen"
+#include <gipc/statistics.h>
+#include <core/gipc_path.h>
+#include <gipc/utils/timer.h>
+
+#include <cuda_tools/cuda_all.h>
+#include <core/accel_features.h>
+#include <cub/device/device_reduce.cuh>
+#include <cub/block/block_reduce.cuh>
+using namespace Eigen;
+#define RANK 2
+#define NEWF
+
+extern int total_Frames;
+void trace_ipc_safe_state(const double3* positions,int count,int step)
+{
+    if(const char* dir=std::getenv("GIPC_TRACE_SUBSTEPS"))
+    {
+        std::filesystem::create_directories(dir);
+        std::vector<double3> state(count);
+        CUDA_SAFE_CALL(cudaMemcpy(state.data(),positions,count*sizeof(double3),cudaMemcpyDeviceToHost));
+        char name[64];std::snprintf(name,sizeof(name),"/safe_%04d_%04d.bin",total_Frames,step);
+        std::ofstream out(std::string(dir)+name,std::ios::binary);
+        out.write(reinterpret_cast<const char*>(state.data()),state.size()*sizeof(double3));
+        if(!out)throw std::runtime_error("Failed to export IPC safe substep");
+    }
+}
+
+namespace
+{
+struct MaxDouble
+{
+    __host__ __device__ double operator()(double lhs, double rhs) const
+    {
+        return lhs > rhs ? lhs : rhs;
+    }
+};
+
+struct MaxDouble2
+{
+    __host__ __device__ double2 operator()(const double2& lhs, const double2& rhs) const
+    {
+        return make_double2(lhs.x > rhs.x ? lhs.x : rhs.x,
+                            lhs.y > rhs.y ? lhs.y : rhs.y);
+    }
+};
+
+double reduce_sum_to_host(const double* input, int count, double* output)
+{
+    cudatool::DeviceReduce().Sum(input, output, count);
+    double result = 0.0;
+    CUDA_SAFE_CALL(cudaMemcpy(&result, output, sizeof(result), cudaMemcpyDeviceToHost));
+    return result;
+}
+
+double reduce_max_to_host(const double* input, int count, double* output)
+{
+    cudatool::DeviceReduce().Max(input, output, count);
+    double result = 0.0;
+    CUDA_SAFE_CALL(cudaMemcpy(&result, output, sizeof(result), cudaMemcpyDeviceToHost));
+    return result;
+}
+
+double2 reduce_component_max_to_host(const double2* input, int count, double2* output)
+{
+    cudatool::DeviceReduce().Reduce(
+        input, output, count, MaxDouble2{}, make_double2(0.0, 0.0));
+    double2 result = make_double2(0.0, 0.0);
+    CUDA_SAFE_CALL(cudaMemcpy(&result, output, sizeof(result), cudaMemcpyDeviceToHost));
+    return result;
+}
+}  // namespace
+
+__global__ void _cub_reduct_max_double3_to_double(const double3* input,
+                                                  double*        output,
+                                                  int            number);
+__global__ void _cub_reduct_MGroundDist(const double3* vertexes,
+                                        const double*  ground_offset,
+                                        const double3* ground_normal,
+                                        const uint32_t* collision_pairs,
+                                        double2* output,
+                                        int number);
+__global__ void _cub_reduct_MSelfDist(const double3* vertexes,
+                                      const int4*    collision_pairs,
+                                      double2*       output,
+                                      int            number);
+__global__ void _cub_reduct_ground_step(const double3* vertexes,
+                                        const uint32_t* surf_vertex_ids,
+                                        const double* ground_offset,
+                                        const double3* ground_normal,
+                                        const double3* move_dir,
+                                        double* output,
+                                        double slackness,
+                                        int number);
+__global__ void _cub_reduct_injective_step(const double3* vertexes,
+                                           const uint4* tetrahedra,
+                                           const double3* move_dir,
+                                           double* output,
+                                           double slackness,
+                                           double error_rate,
+                                           int number);
+__global__ void _cub_reduct_self_step(const double3* vertexes,
+                                      const int4* collision_pairs,
+                                      const double3* move_dir,
+                                      double* output,
+                                      double slackness,
+                                      int number);
+__global__ void _cub_reduct_cfl(const double3* move_dir,
+                                double* output,
+                                const uint32_t* surface_vertex_ids,
+                                int number);
+__global__ void _cub_reduct_squared_norm(const double3* input, double* output, int number);
+__global__ void _cub_reduct_dot(const double3* lhs,
+                               const double3* rhs,
+                               double* output,
+                               int number);
+
+#define GIPC_CUB_BLOCK_SUM_AND_STORE(value, valid_items, target)                         \
+    do                                                                                   \
+    {                                                                                    \
+        using GIPCBlockReduce = cub::BlockReduce<double, default_threads>;                \
+        __shared__ typename GIPCBlockReduce::TempStorage gipc_reduce_storage;             \
+        double gipc_reduce_result =                                                       \
+            GIPCBlockReduce(gipc_reduce_storage).Sum((value), (valid_items));             \
+        if(threadIdx.x == 0)                                                              \
+            (target) = gipc_reduce_result;                                                \
+    } while(false)
+
+template <typename Scalar, int size>
+__device__ __host__ void makePDGeneral(Eigen::Matrix<Scalar, size, size>& symMtr)
+{
+    Eigen::SelfAdjointEigenSolver<Eigen::Matrix<Scalar, size, size>> eigen_solver;
+
+    if constexpr(size <= 3)
+        eigen_solver.computeDirect(symMtr);
+    else
+        eigen_solver.compute(symMtr);
+    Eigen::Vector<Scalar, size> eigen_values = eigen_solver.eigenvalues();
+    Eigen::Matrix<Scalar, size, size> eigen_vectors = eigen_solver.eigenvectors();
+
+
+    if(eigen_values[0] >= 0.0)
+    {
+        return;
+    }
+
+    for(int i = 0; i < size; ++i)
+    {
+        if(eigen_values(i) < 0)
+        {
+            eigen_values(i) = 0;
+        }
+    }
+    symMtr = eigen_vectors * eigen_values.asDiagonal() * eigen_vectors.transpose();
+}
+
+template <typename Scalar, int size>
+__device__ __host__ void makePD(Eigen::Matrix<Scalar, size, size>& symMtr)
+{
+    Eigen::SelfAdjointEigenSolver<Eigen::Matrix<Scalar, size, size>> eigenSolver(symMtr);
+    if(eigenSolver.eigenvalues()[0] >= 0.0)
+    {
+        return;
+    }
+    Eigen::Matrix<Scalar, size, size> D;  //(eigenSolver.eigenvalues());
+    D.setZero();
+    int rows = size;  //((size == Eigen::Dynamic) ? symMtr.rows() : size);
+    for(int i = 0; i < rows; i++)
+    {
+        if(eigenSolver.eigenvalues()[i] > 0.0)
+        {
+            D(i, i) = eigenSolver.eigenvalues()[i];
+        }
+    }
+    symMtr = eigenSolver.eigenvectors() * D * eigenSolver.eigenvectors().transpose();
+}
+
+template <int ROWS, int COLS>
+__device__ inline void write_triplet(Eigen::Matrix3d*    triplet_value,
+                                     int*                row_ids,
+                                     int*                col_ids,
+                                     const unsigned int* index,
+                                     const double        input[ROWS][COLS],
+                                     const int&          offset)
+{
+    int rown = ROWS / 3;
+    int coln = COLS / 3;
+    for(int ii = 0; ii < rown; ii++)
+    {
+#ifdef SymGH
+        int start = ii;
+#else
+        int start = 0;
+#endif
+        for(int jj = start; jj < coln; jj++)
+        {
+
+#ifdef SymGH
+            int kk = ii * rown + jj - ii * (ii + 1) / 2;
+#else
+            int kk = ii * rown + jj;  // - ii * (ii + 1) / 2;
+#endif
+            int row = index[ii];
+            int col = index[jj];
+#ifdef SymGH
+            if(row > col)
+            {
+                row_ids[offset + kk] = col;
+                col_ids[offset + kk] = row;
+                for(int iii = 0; iii < 3; iii++)
+                {
+                    for(int jjj = 0; jjj < 3; jjj++)
+                    {
+                        triplet_value[offset + kk](iii, jjj) =
+                            input[jj * 3 + iii][ii * 3 + jjj];
+                    }
+                }
+            }
+            else
+#endif
+            {
+                row_ids[offset + kk] = row;
+                col_ids[offset + kk] = col;
+                for(int iii = 0; iii < 3; iii++)
+                {
+                    for(int jjj = 0; jjj < 3; jjj++)
+                    {
+                        triplet_value[offset + kk](iii, jjj) =
+                            input[ii * 3 + iii][jj * 3 + jjj];
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+__device__ __host__ inline uint32_t expand_bits(std::uint32_t v) noexcept
+{
+    v = (v * 0x00010001u) & 0xFF0000FFu;
+    v = (v * 0x00000101u) & 0x0F00F00Fu;
+    v = (v * 0x00000011u) & 0xC30C30C3u;
+    v = (v * 0x00000005u) & 0x49249249u;
+    return v;
+}
+
+__device__ __host__ inline double normalized_hash_axis(double offset, double extent) noexcept
+{
+    return extent > 0.0 ? offset / extent : 0.0;
+}
+
+__device__ __host__ inline uint32_t hash_code(
+    int type, double x, double y, double z, double resolution = 1024) noexcept
+{
+    x = std::min(std::max(x * resolution, 0.0), resolution - 1.0);
+    y = std::min(std::max(y * resolution, 0.0), resolution - 1.0);
+    z = std::min(std::max(z * resolution, 0.0), resolution - 1.0);
+
+
+    //
+    if(type == -1)
+    {
+        const uint32_t xx     = expand_bits(static_cast<uint32_t>(x));
+        const uint32_t yy     = expand_bits(static_cast<uint32_t>(y));
+        const uint32_t zz     = expand_bits(static_cast<uint32_t>(z));
+        std::uint32_t  mchash = ((xx << 2) + (yy << 1) + zz);
+
+        return mchash;
+    }
+    else if(type == 0)
+    {
+        return (((static_cast<uint32_t>(z) * 1024) + static_cast<uint32_t>(y)) * 1024)
+               + static_cast<uint32_t>(x);
+    }
+    else if(type == 1)
+    {
+        return (((static_cast<uint32_t>(y) * 1024) + static_cast<uint32_t>(z)) * 1024)
+               + static_cast<uint32_t>(x);
+    }
+    else if(type == 2)
+    {
+        return (((static_cast<uint32_t>(x) * 1024) + static_cast<uint32_t>(z)) * 1024)
+               + static_cast<uint32_t>(y);
+    }
+    else if(type == 3)
+    {
+        return (((static_cast<uint32_t>(z) * 1024) + static_cast<uint32_t>(x)) * 1024)
+               + static_cast<uint32_t>(y);
+    }
+    else if(type == 4)
+    {
+        return (((static_cast<uint32_t>(y) * 1024) + static_cast<uint32_t>(x)) * 1024)
+               + static_cast<uint32_t>(z);
+    }
+    else
+    {
+        return (((static_cast<uint32_t>(x) * 1024) + static_cast<uint32_t>(y)) * 1024)
+               + static_cast<uint32_t>(z);
+    }
+    //std::uint32_t mchash = (((static_cast<std::uint32_t>(z) * 1024) + static_cast<std::uint32_t>(y)) * 1024) + static_cast<std::uint32_t>(x);//((xx << 2) + (yy << 1) + zz);
+    //return mchash;
+}
+
+__global__ void _partition_collision_triplets(const uint64_t* sort_hash,
+                                              int*            abd_abd_offset,
+                                              int*            abd_fem_offset,
+                                              int*            fem_abd_offset,
+                                              int*            fem_fem_offset,
+                                              int             number)
+{
+    extern __shared__ int shared_hash[];
+    unsigned int          idx = threadIdx.x + (blockDim.x * blockIdx.x);
+    //if(idx == 0)
+    //{
+    //    *abd_abd_offset = -1;
+    //    *abd_fem_offset = -1;
+    //    *fem_abd_offset = -1;
+    //    *fem_fem_offset = -1;
+    //}
+    int self_hash;
+    if(idx < number)
+    {
+        self_hash                    = sort_hash[idx];
+        shared_hash[threadIdx.x + 1] = self_hash;
+        if(idx > 0 && threadIdx.x == 0)
+        {
+            shared_hash[0] = sort_hash[idx - 1];
+        }
+    }
+    __syncthreads();
+    if(idx < number)
+    {
+        int prior_hash = idx == 0 ? -1 : shared_hash[threadIdx.x];
+        if(self_hash != prior_hash)
+        {
+            if(self_hash == 3)
+            {
+                *abd_abd_offset = idx;
+            }
+            else if(self_hash == 1)
+            {
+                *abd_fem_offset = idx;
+            }
+            else if(self_hash == 2)
+            {
+                *fem_abd_offset = idx;
+            }
+            else if(self_hash == 0)
+            {
+                *fem_fem_offset = idx;
+            }
+        }
+    }
+}
+
+__global__ void _reorder_triplets(int*             row_ids_input,
+                                  int*             col_ids_input,
+                                  Eigen::Matrix3d* triplet_value_inpuit,
+                                  int*             row_ids,
+                                  int*             col_ids,
+                                  Eigen::Matrix3d* triplet_value,
+                                  const uint32_t*  sort_index,
+                                  int              number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    row_ids[idx]       = row_ids_input[sort_index[idx]];
+    col_ids[idx]       = col_ids_input[sort_index[idx]];
+    triplet_value[idx] = triplet_value_inpuit[sort_index[idx]];
+}
+
+
+uint64_t GIPC::getHashCode(double3 p, uint32_t i)
+{
+    uint64_t code = hash_code(-1, p.x, p.y, p.z);
+    return (code << 32) | i;
+}
+
+__global__ void _calcTetMChash(uint64_t*       _MChash,
+                               const double3*  _vertexes,
+                               uint4*          tets,
+                               const AABB*     _MaxBv,
+                               const uint32_t* sortMapVertIndex,
+                               int             number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+
+    tets[idx].x = sortMapVertIndex[tets[idx].x];
+    tets[idx].y = sortMapVertIndex[tets[idx].y];
+    tets[idx].z = sortMapVertIndex[tets[idx].z];
+    tets[idx].w = sortMapVertIndex[tets[idx].w];
+
+    double3 SceneSize = make_double3((*_MaxBv).upper.x - (*_MaxBv).lower.x,
+                                     (*_MaxBv).upper.y - (*_MaxBv).lower.y,
+                                     (*_MaxBv).upper.z - (*_MaxBv).lower.z);
+    double3 centerP   = __GEIGEN__::__s_vec_multiply(
+        __GEIGEN__::__add(
+            __GEIGEN__::__add(_vertexes[tets[idx].x], _vertexes[tets[idx].y]),
+            __GEIGEN__::__add(_vertexes[tets[idx].z], _vertexes[tets[idx].w])),
+        0.25);
+    double3 offset = make_double3(centerP.x - (*_MaxBv).lower.x,
+                                  centerP.y - (*_MaxBv).lower.y,
+                                  centerP.z - (*_MaxBv).lower.z);
+
+    int type = 0;
+    if(SceneSize.x > SceneSize.y && SceneSize.y > SceneSize.z)
+    {
+        type = 0;
+    }
+    else if(SceneSize.x > SceneSize.z && SceneSize.z > SceneSize.y)
+    {
+        type = 1;
+    }
+    else if(SceneSize.y > SceneSize.z && SceneSize.z > SceneSize.x)
+    {
+        type = 2;
+    }
+    else if(SceneSize.y > SceneSize.x && SceneSize.x > SceneSize.z)
+    {
+        type = 3;
+    }
+    else if(SceneSize.z > SceneSize.x && SceneSize.x > SceneSize.y)
+    {
+        type = 4;
+    }
+    else
+    {
+        type = 5;
+    }
+
+    //printf("%d   %f     %f     %f\n", offset.x, offset.y, offset.z);
+    uint64_t mc32 = hash_code(type,
+                              normalized_hash_axis(offset.x, SceneSize.x),
+                              normalized_hash_axis(offset.y, SceneSize.y),
+                              normalized_hash_axis(offset.z, SceneSize.z));
+    uint64_t mc64 = ((mc32 << 32) | idx);
+    //printf("morton code %d\n", mc64);
+    _MChash[idx] = mc64;
+}
+
+__global__ void _updateTopology(uint4*          tets,
+                                uint3*          tris,
+                                const uint32_t* sortMapVertIndex,
+                                int             traNumber,
+                                int             triNumber)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx < traNumber)
+    {
+
+        tets[idx].x = sortMapVertIndex[tets[idx].x];
+        tets[idx].y = sortMapVertIndex[tets[idx].y];
+        tets[idx].z = sortMapVertIndex[tets[idx].z];
+        tets[idx].w = sortMapVertIndex[tets[idx].w];
+    }
+    if(idx < triNumber)
+    {
+        tris[idx].x = sortMapVertIndex[tris[idx].x];
+        tris[idx].y = sortMapVertIndex[tris[idx].y];
+        tris[idx].z = sortMapVertIndex[tris[idx].z];
+    }
+}
+
+
+__global__ void _updateVertexes(double3*                      o_vertexes,
+                                const double3*                _vertexes,
+                                double*                       tempM,
+                                const double*                 mass,
+                                __GEIGEN__::Matrix3x3d*       tempCons,
+                                int*                          tempBtype,
+                                const __GEIGEN__::Matrix3x3d* cons,
+                                const int*                    bType,
+                                const uint32_t*               sortIndex,
+                                uint32_t*                     sortMapIndex,
+                                int                           number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    o_vertexes[idx]              = _vertexes[sortIndex[idx]];
+    tempM[idx]                   = mass[sortIndex[idx]];
+    tempCons[idx]                = cons[sortIndex[idx]];
+    sortMapIndex[sortIndex[idx]] = idx;
+    tempBtype[idx]               = bType[sortIndex[idx]];
+    //printf("original idx: %d        new idx: %d\n", sortIndex[idx], idx);
+}
+
+__global__ void _updateTetrahedras(uint4*                        o_tetrahedras,
+                                   uint4*                        tetrahedras,
+                                   double*                       tempV,
+                                   const double*                 volum,
+                                   __GEIGEN__::Matrix3x3d*       tempDmInverse,
+                                   const __GEIGEN__::Matrix3x3d* dmInverse,
+                                   const uint32_t*               sortTetIndex,
+                                   const uint32_t* sortMapVertIndex,
+                                   int             number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    //tetrahedras[idx].x = sortMapVertIndex[tetrahedras[idx].x];
+    //tetrahedras[idx].y = sortMapVertIndex[tetrahedras[idx].y];
+    //tetrahedras[idx].z = sortMapVertIndex[tetrahedras[idx].z];
+    //tetrahedras[idx].w = sortMapVertIndex[tetrahedras[idx].w];
+    o_tetrahedras[idx] = tetrahedras[sortTetIndex[idx]];
+    tempV[idx]         = volum[sortTetIndex[idx]];
+    tempDmInverse[idx] = dmInverse[sortTetIndex[idx]];
+}
+
+__global__ void _calcVertMChash(uint64_t* _MChash, const double3* _vertexes, const AABB* _MaxBv, int number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    double3 SceneSize = make_double3((*_MaxBv).upper.x - (*_MaxBv).lower.x,
+                                     (*_MaxBv).upper.y - (*_MaxBv).lower.y,
+                                     (*_MaxBv).upper.z - (*_MaxBv).lower.z);
+    double3 centerP   = _vertexes[idx];
+    double3 offset    = make_double3(centerP.x - (*_MaxBv).lower.x,
+                                  centerP.y - (*_MaxBv).lower.y,
+                                  centerP.z - (*_MaxBv).lower.z);
+    int     type      = -1;
+    if(type >= 0)
+    {
+        if(SceneSize.x > SceneSize.y && SceneSize.y > SceneSize.z)
+        {
+            type = 0;
+        }
+        else if(SceneSize.x > SceneSize.z && SceneSize.z > SceneSize.y)
+        {
+            type = 1;
+        }
+        else if(SceneSize.y > SceneSize.z && SceneSize.z > SceneSize.x)
+        {
+            type = 2;
+        }
+        else if(SceneSize.y > SceneSize.x && SceneSize.x > SceneSize.z)
+        {
+            type = 3;
+        }
+        else if(SceneSize.z > SceneSize.x && SceneSize.x > SceneSize.y)
+        {
+            type = 4;
+        }
+        else
+        {
+            type = 5;
+        }
+    }
+
+    //printf("minSize %f     %f     %f\n", SceneSize.x, SceneSize.y, SceneSize.z);
+    uint64_t mc32 = hash_code(type,
+                              normalized_hash_axis(offset.x, SceneSize.x),
+                              normalized_hash_axis(offset.y, SceneSize.y),
+                              normalized_hash_axis(offset.z, SceneSize.z));
+    uint64_t mc64 = ((mc32 << 32) | idx);
+    //printf("morton code %lld\n", mc64);
+    _MChash[idx] = mc64;
+}
+
+
+__device__ double __cal_Barrier_energy(const double3* _vertexes,
+                                       const double3* _rest_vertexes,
+                                       int4           MMCVIDI,
+                                       double         _Kappa,
+                                       double         _dHat)
+{
+    double dHat_sqrt = sqrt(_dHat);
+    double dHat      = _dHat;
+    double Kappa     = _Kappa;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I5 = dis / dHat;
+
+            double lenE = (dis - dHat);
+#if (RANK == 1)
+            return -Kappa * lenE * lenE * log(I5);
+#elif (RANK == 2)
+            return Kappa * lenE * lenE * log(I5) * log(I5);
+#elif (RANK == 3)
+            return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5);
+#elif (RANK == 4)
+            return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 5)
+            return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 6)
+            return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5)
+                   * log(I5) * log(I5);
+#endif
+        }
+        else
+        {
+            //return 0;
+            MMCVIDI.w = -MMCVIDI.w - 1;
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z]);
+            double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+            double I1 = c * c;
+            if(I1 == 0)
+                return 0;
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I2    = dis / dHat;
+            double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                        _rest_vertexes[MMCVIDI.y],
+                                        _rest_vertexes[MMCVIDI.z],
+                                        _rest_vertexes[MMCVIDI.w]);
+#if (RANK == 1)
+            double Energy = Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                            * -(dHat - dHat * I2) * (dHat - dHat * I2) * log(I2);
+#elif (RANK == 2)
+            double Energy =
+                Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2) * log(I2);
+#elif (RANK == 4)
+            double Energy = Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                            * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                            * log(I2) * log(I2) * log(I2);
+#elif (RANK == 6)
+            double Energy = Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                            * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                            * log(I2) * log(I2) * log(I2) * log(I2) * log(I2);
+#endif
+            if(Energy < 0)
+                printf("I am pee\n");
+            return Energy;
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.z = -MMCVIDI.z - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return 0;
+                double dis;
+                _d_PP(_vertexes[MMCVIDI.x], _vertexes[MMCVIDI.y], dis);
+                double I2    = dis / dHat;
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.z],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.w]);
+#if (RANK == 1)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * -(dHat - dHat * I2) * (dHat - dHat * I2) * log(I2);
+#elif (RANK == 2)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2) * log(I2);
+#elif (RANK == 4)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                    * log(I2) * log(I2) * log(I2);
+#elif (RANK == 6)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                    * log(I2) * log(I2) * log(I2) * log(I2) * log(I2);
+#endif
+                if(Energy < 0)
+                    printf("I am pp\n");
+                return Energy;
+            }
+            else
+            {
+                double dis;
+                _d_PP(_vertexes[v0I], _vertexes[MMCVIDI.y], dis);
+                double I5 = dis / dHat;
+
+                double lenE = (dis - dHat);
+#if (RANK == 1)
+                return -Kappa * lenE * lenE * log(I5);
+#elif (RANK == 2)
+                return Kappa * lenE * lenE * log(I5) * log(I5);
+#elif (RANK == 3)
+                return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5);
+#elif (RANK == 4)
+                return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 5)
+                return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5);
+#elif (RANK == 6)
+                return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5) * log(I5);
+#endif
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                //MMCVIDI.z = -MMCVIDI.z - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return 0;
+                double dis;
+                _d_PE(_vertexes[MMCVIDI.x],
+                      _vertexes[MMCVIDI.y],
+                      _vertexes[MMCVIDI.z],
+                      dis);
+                double I2    = dis / dHat;
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.w],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.z]);
+#if (RANK == 1)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * -(dHat - dHat * I2) * (dHat - dHat * I2) * log(I2);
+#elif (RANK == 2)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2) * log(I2);
+#elif (RANK == 4)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                    * log(I2) * log(I2) * log(I2);
+#elif (RANK == 6)
+                double Energy =
+                    Kappa * (-(1 / (eps_x * eps_x)) * I1 * I1 + (2 / eps_x) * I1)
+                    * (dHat - dHat * I2) * (dHat - dHat * I2) * log(I2)
+                    * log(I2) * log(I2) * log(I2) * log(I2) * log(I2);
+#endif
+                if(Energy < 0)
+                    printf("I am ppe\n");
+                return Energy;
+            }
+            else
+            {
+                double dis;
+                _d_PE(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dis);
+                double I5 = dis / dHat;
+
+                double lenE = (dis - dHat);
+#if (RANK == 1)
+                return -Kappa * lenE * lenE * log(I5);
+#elif (RANK == 2)
+                return Kappa * lenE * lenE * log(I5) * log(I5);
+#elif (RANK == 3)
+                return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5);
+#elif (RANK == 4)
+                return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 5)
+                return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5);
+#elif (RANK == 6)
+                return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5) * log(I5);
+#endif
+            }
+        }
+        else
+        {
+            double dis;
+            _d_PT(_vertexes[v0I],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I5 = dis / dHat;
+
+            double lenE = (dis - dHat);
+#if (RANK == 1)
+            return -Kappa * lenE * lenE * log(I5);
+#elif (RANK == 2)
+            return Kappa * lenE * lenE * log(I5) * log(I5);
+#elif (RANK == 3)
+            return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5);
+#elif (RANK == 4)
+            return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 5)
+            return -Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5) * log(I5);
+#elif (RANK == 6)
+            return Kappa * lenE * lenE * log(I5) * log(I5) * log(I5) * log(I5)
+                   * log(I5) * log(I5);
+#endif
+        }
+    }
+}
+
+__device__ bool segTriIntersect(const double3& ve0,
+                                const double3& ve1,
+                                const double3& vt0,
+                                const double3& vt1,
+                                const double3& vt2)
+{
+
+    //printf("check for tri and lines\n");
+
+    __GEIGEN__::Matrix3x3d coefMtr;
+    double3                col0 = __GEIGEN__::__minus(vt1, vt0);
+    double3                col1 = __GEIGEN__::__minus(vt2, vt0);
+    double3                col2 = __GEIGEN__::__minus(ve0, ve1);
+
+    __GEIGEN__::__set_Mat_val_column(coefMtr, col0, col1, col2);
+
+    double3 n = __GEIGEN__::__v_vec_cross(col0, col1);
+    if(__GEIGEN__::__v_vec_dot(n, __GEIGEN__::__minus(ve0, vt0))
+           * __GEIGEN__::__v_vec_dot(n, __GEIGEN__::__minus(ve1, vt0))
+       > 0)
+    {
+        return false;
+    }
+
+    double det = __GEIGEN__::__Determiant(coefMtr);
+
+    if(abs(det) < 1e-20)
+    {
+        return false;
+    }
+
+    __GEIGEN__::Matrix3x3d D1, D2, D3;
+    double3                b = __GEIGEN__::__minus(ve0, vt0);
+
+    __GEIGEN__::__set_Mat_val_column(D1, b, col1, col2);
+    __GEIGEN__::__set_Mat_val_column(D2, col0, b, col2);
+    __GEIGEN__::__set_Mat_val_column(D3, col0, col1, b);
+
+    double uvt[3];
+    uvt[0] = __GEIGEN__::__Determiant(D1) / det;
+    uvt[1] = __GEIGEN__::__Determiant(D2) / det;
+    uvt[2] = __GEIGEN__::__Determiant(D3) / det;
+
+    if(uvt[0] >= 0.0 && uvt[1] >= 0.0 && uvt[0] + uvt[1] <= 1.0 && uvt[2] >= 0.0
+       && uvt[2] <= 1.0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+__device__ __host__ inline bool _overlap(const AABB& lhs, const AABB& rhs, const double& gapL) noexcept
+{
+    if((rhs.lower.x - lhs.upper.x) >= gapL || (lhs.lower.x - rhs.upper.x) >= gapL)
+        return false;
+    if((rhs.lower.y - lhs.upper.y) >= gapL || (lhs.lower.y - rhs.upper.y) >= gapL)
+        return false;
+    if((rhs.lower.z - lhs.upper.z) >= gapL || (lhs.lower.z - rhs.upper.z) >= gapL)
+        return false;
+    return true;
+}
+
+__device__ double _selfConstraintVal(const double3* vertexes, const int4& active)
+{
+    double val;
+    if(active.x >= 0)
+    {
+        if(active.w >= 0)
+        {
+            _d_EE(vertexes[active.x],
+                  vertexes[active.y],
+                  vertexes[active.z],
+                  vertexes[active.w],
+                  val);
+        }
+        else
+        {
+            _d_EE(vertexes[active.x],
+                  vertexes[active.y],
+                  vertexes[active.z],
+                  vertexes[-active.w - 1],
+                  val);
+        }
+    }
+    else
+    {
+        if(active.z < 0)
+        {
+            if(active.y < 0)
+            {
+                _d_PP(vertexes[-active.x - 1], vertexes[-active.y - 1], val);
+            }
+            else
+            {
+                _d_PP(vertexes[-active.x - 1], vertexes[active.y], val);
+            }
+        }
+        else if(active.w < 0)
+        {
+            if(active.y < 0)
+            {
+                _d_PE(vertexes[-active.x - 1],
+                      vertexes[-active.y - 1],
+                      vertexes[active.z],
+                      val);
+            }
+            else
+            {
+                _d_PE(
+                    vertexes[-active.x - 1], vertexes[active.y], vertexes[active.z], val);
+            }
+        }
+        else
+        {
+            _d_PT(vertexes[-active.x - 1],
+                  vertexes[active.y],
+                  vertexes[active.z],
+                  vertexes[active.w],
+                  val);
+        }
+    }
+    return val;
+}
+
+__device__ double _computeInjectiveStepSize_3d(const double3*  verts,
+                                               const double3*  mv,
+                                               const uint32_t& v0,
+                                               const uint32_t& v1,
+                                               const uint32_t& v2,
+                                               const uint32_t& v3,
+                                               double          ratio,
+                                               double          errorRate)
+{
+
+    double x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    double p1, p2, p3, p4, q1, q2, q3, q4, r1, r2, r3, r4;
+    double a, b, c, d, t;
+
+
+    x1 = verts[v0].x;
+    x2 = verts[v1].x;
+    x3 = verts[v2].x;
+    x4 = verts[v3].x;
+
+    y1 = verts[v0].y;
+    y2 = verts[v1].y;
+    y3 = verts[v2].y;
+    y4 = verts[v3].y;
+
+    z1 = verts[v0].z;
+    z2 = verts[v1].z;
+    z3 = verts[v2].z;
+    z4 = verts[v3].z;
+
+    int _3Fii0 = v0 * 3;
+    int _3Fii1 = v1 * 3;
+    int _3Fii2 = v2 * 3;
+    int _3Fii3 = v3 * 3;
+
+    p1 = -mv[v0].x;
+    p2 = -mv[v1].x;
+    p3 = -mv[v2].x;
+    p4 = -mv[v3].x;
+
+    q1 = -mv[v0].y;
+    q2 = -mv[v1].y;
+    q3 = -mv[v2].y;
+    q4 = -mv[v3].y;
+
+    r1 = -mv[v0].z;
+    r2 = -mv[v1].z;
+    r3 = -mv[v2].z;
+    r4 = -mv[v3].z;
+
+    a = -p1 * q2 * r3 + p1 * r2 * q3 + q1 * p2 * r3 - q1 * r2 * p3 - r1 * p2 * q3
+        + r1 * q2 * p3 + p1 * q2 * r4 - p1 * r2 * q4 - q1 * p2 * r4 + q1 * r2 * p4
+        + r1 * p2 * q4 - r1 * q2 * p4 - p1 * q3 * r4 + p1 * r3 * q4 + q1 * p3 * r4
+        - q1 * r3 * p4 - r1 * p3 * q4 + r1 * q3 * p4 + p2 * q3 * r4 - p2 * r3 * q4
+        - q2 * p3 * r4 + q2 * r3 * p4 + r2 * p3 * q4 - r2 * q3 * p4;
+    b = -x1 * q2 * r3 + x1 * r2 * q3 + y1 * p2 * r3 - y1 * r2 * p3 - z1 * p2 * q3
+        + z1 * q2 * p3 + x2 * q1 * r3 - x2 * r1 * q3 - y2 * p1 * r3
+        + y2 * r1 * p3 + z2 * p1 * q3 - z2 * q1 * p3 - x3 * q1 * r2
+        + x3 * r1 * q2 + y3 * p1 * r2 - y3 * r1 * p2 - z3 * p1 * q2 + z3 * q1 * p2
+        + x1 * q2 * r4 - x1 * r2 * q4 - y1 * p2 * r4 + y1 * r2 * p4 + z1 * p2 * q4
+        - z1 * q2 * p4 - x2 * q1 * r4 + x2 * r1 * q4 + y2 * p1 * r4 - y2 * r1 * p4
+        - z2 * p1 * q4 + z2 * q1 * p4 + x4 * q1 * r2 - x4 * r1 * q2 - y4 * p1 * r2
+        + y4 * r1 * p2 + z4 * p1 * q2 - z4 * q1 * p2 - x1 * q3 * r4 + x1 * r3 * q4
+        + y1 * p3 * r4 - y1 * r3 * p4 - z1 * p3 * q4 + z1 * q3 * p4 + x3 * q1 * r4
+        - x3 * r1 * q4 - y3 * p1 * r4 + y3 * r1 * p4 + z3 * p1 * q4 - z3 * q1 * p4
+        - x4 * q1 * r3 + x4 * r1 * q3 + y4 * p1 * r3 - y4 * r1 * p3 - z4 * p1 * q3
+        + z4 * q1 * p3 + x2 * q3 * r4 - x2 * r3 * q4 - y2 * p3 * r4 + y2 * r3 * p4
+        + z2 * p3 * q4 - z2 * q3 * p4 - x3 * q2 * r4 + x3 * r2 * q4 + y3 * p2 * r4
+        - y3 * r2 * p4 - z3 * p2 * q4 + z3 * q2 * p4 + x4 * q2 * r3 - x4 * r2 * q3
+        - y4 * p2 * r3 + y4 * r2 * p3 + z4 * p2 * q3 - z4 * q2 * p3;
+    c = -x1 * y2 * r3 + x1 * z2 * q3 + x1 * y3 * r2 - x1 * z3 * q2 + y1 * x2 * r3
+        - y1 * z2 * p3 - y1 * x3 * r2 + y1 * z3 * p2 - z1 * x2 * q3
+        + z1 * y2 * p3 + z1 * x3 * q2 - z1 * y3 * p2 - x2 * y3 * r1
+        + x2 * z3 * q1 + y2 * x3 * r1 - y2 * z3 * p1 - z2 * x3 * q1 + z2 * y3 * p1
+        + x1 * y2 * r4 - x1 * z2 * q4 - x1 * y4 * r2 + x1 * z4 * q2 - y1 * x2 * r4
+        + y1 * z2 * p4 + y1 * x4 * r2 - y1 * z4 * p2 + z1 * x2 * q4 - z1 * y2 * p4
+        - z1 * x4 * q2 + z1 * y4 * p2 + x2 * y4 * r1 - x2 * z4 * q1 - y2 * x4 * r1
+        + y2 * z4 * p1 + z2 * x4 * q1 - z2 * y4 * p1 - x1 * y3 * r4 + x1 * z3 * q4
+        + x1 * y4 * r3 - x1 * z4 * q3 + y1 * x3 * r4 - y1 * z3 * p4 - y1 * x4 * r3
+        + y1 * z4 * p3 - z1 * x3 * q4 + z1 * y3 * p4 + z1 * x4 * q3 - z1 * y4 * p3
+        - x3 * y4 * r1 + x3 * z4 * q1 + y3 * x4 * r1 - y3 * z4 * p1 - z3 * x4 * q1
+        + z3 * y4 * p1 + x2 * y3 * r4 - x2 * z3 * q4 - x2 * y4 * r3 + x2 * z4 * q3
+        - y2 * x3 * r4 + y2 * z3 * p4 + y2 * x4 * r3 - y2 * z4 * p3 + z2 * x3 * q4
+        - z2 * y3 * p4 - z2 * x4 * q3 + z2 * y4 * p3 + x3 * y4 * r2 - x3 * z4 * q2
+        - y3 * x4 * r2 + y3 * z4 * p2 + z3 * x4 * q2 - z3 * y4 * p2;
+    d = (ratio)
+        * (x1 * z2 * y3 - x1 * y2 * z3 + y1 * x2 * z3 - y1 * z2 * x3 - z1 * x2 * y3
+           + z1 * y2 * x3 + x1 * y2 * z4 - x1 * z2 * y4 - y1 * x2 * z4 + y1 * z2 * x4
+           + z1 * x2 * y4 - z1 * y2 * x4 - x1 * y3 * z4 + x1 * z3 * y4 + y1 * x3 * z4
+           - y1 * z3 * x4 - z1 * x3 * y4 + z1 * y3 * x4 + x2 * y3 * z4 - x2 * z3 * y4
+           - y2 * x3 * z4 + y2 * z3 * x4 + z2 * x3 * y4 - z2 * y3 * x4);
+
+
+    //printf("a b c d:   %f  %f  %f  %f     %f     %f,    id0, id1, id2, id3:  %d  %d  %d  %d\n", a, b, c, d, ratio, errorRate, v0, v1, v2, v3);
+    if(std::fabs(a) <= errorRate /** errorRate*/)
+    {
+        if(std::fabs(b) <= errorRate /** errorRate*/)
+        {
+            if(false && std::fabs(c) <= errorRate)
+            {
+                t = 1;
+            }
+            else
+            {
+                t = -d / c;
+            }
+        }
+        else
+        {
+            double desc = c * c - 4 * b * d;
+            if(desc > 0)
+            {
+                t = (-c - sqrt(desc)) / (2 * b);
+                if(t < 0)
+                    t = (-c + sqrt(desc)) / (2 * b);
+            }
+            else
+                t = 1;
+        }
+    }
+    else
+    {
+        //double results[3];
+        //int number = 0;
+        //__GEIGEN__::__NewtonSolverForCubicEquation(a, b, c, d, results, number, errorRate);
+
+        //t = 1;
+        //for (int index = 0;index < number;index++) {
+        //    if (results[index] > 0 && results[index] < t) {
+        //        t = results[index];
+        //    }
+        //}
+        //zs::complex<double> i(0, 1);
+        //zs::complex<double> delta0(b * b - 3 * a * c, 0);
+        //zs::complex<double> delta1(2 * b * b * b - 9 * a * b * c + 27 * a * a * d, 0);
+        //zs::complex<double> C =
+        //    pow((delta1 + sqrt(delta1 * delta1 - 4.0 * delta0 * delta0 * delta0)) / 2.0,
+        //        1.0 / 3.0);
+        //if(abs(C) == 0.0)
+        //{
+        //    // a corner case listed by wikipedia found by our collaborate from another project
+        //    C = pow((delta1 - sqrt(delta1 * delta1 - 4.0 * delta0 * delta0 * delta0)) / 2.0,
+        //            1.0 / 3.0);
+        //}
+
+        //zs::complex<double> u2 = (-1.0 + sqrt(3.0) * i) / 2.0;
+        //zs::complex<double> u3 = (-1.0 - sqrt(3.0) * i) / 2.0;
+
+        //zs::complex<double> t1 = (b + C + delta0 / C) / (-3.0 * a);
+        //zs::complex<double> t2 = (b + u2 * C + delta0 / (u2 * C)) / (-3.0 * a);
+        //zs::complex<double> t3 = (b + u3 * C + delta0 / (u3 * C)) / (-3.0 * a);
+        //t                      = -1;
+        //if((abs(imag(t1)) < errorRate /** errorRate*/) && (real(t1) > 0))
+        //    t = real(t1);
+        //if((abs(imag(t2)) < errorRate /** errorRate*/) && (real(t2) > 0)
+        //   && ((real(t2) < t) || (t < 0)))
+        //    t = real(t2);
+        //if((abs(imag(t3)) < errorRate /** errorRate*/) && (real(t3) > 0)
+        //   && ((real(t3) < t) || (t < 0)))
+        //    t = real(t3);
+    }
+    if(t <= 0)
+        t = 1;
+    return t;
+}
+
+__device__ double __cal_Friction_gd_energy(const double3* _vertexes,
+                                           const double3* _o_vertexes,
+                                           const double3* _normal,
+                                           uint32_t       gidx,
+                                           double         dt,
+                                           double         lastH,
+                                           double         eps)
+{
+
+    double3 normal = *_normal;
+    double3 Vdiff  = __GEIGEN__::__minus(_vertexes[gidx], _o_vertexes[gidx]);
+    double3 VProj  = __GEIGEN__::__minus(
+        Vdiff, __GEIGEN__::__s_vec_multiply(normal, __GEIGEN__::__v_vec_dot(Vdiff, normal)));
+    double VProjMag2 = __GEIGEN__::__squaredNorm(VProj);
+    if(VProjMag2 > eps * eps)
+    {
+        return lastH * (sqrt(VProjMag2) - eps * 0.5);
+    }
+    else
+    {
+        return lastH * VProjMag2 / eps * 0.5;
+    }
+}
+
+
+__device__ double __cal_Friction_energy(const double3*         _vertexes,
+                                        const double3*         _o_vertexes,
+                                        int4                   MMCVIDI,
+                                        double                 dt,
+                                        double2                distCoord,
+                                        __GEIGEN__::Matrix3x2d tanBasis,
+                                        double                 lastH,
+                                        double                 fricDHat,
+                                        double                 eps)
+{
+    double3 relDX3D;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+            Friction::computeRelDX_EE(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+                distCoord.x,
+                distCoord.y,
+                relDX3D);
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y >= 0)
+            {
+                Friction::computeRelDX_PP(
+                    __GEIGEN__::__minus(_vertexes[v0I], _o_vertexes[v0I]),
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.y],
+                                        _o_vertexes[MMCVIDI.y]),
+                    relDX3D);
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y >= 0)
+            {
+                Friction::computeRelDX_PE(
+                    __GEIGEN__::__minus(_vertexes[v0I], _o_vertexes[v0I]),
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.y],
+                                        _o_vertexes[MMCVIDI.y]),
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z],
+                                        _o_vertexes[MMCVIDI.z]),
+                    distCoord.x,
+                    relDX3D);
+            }
+        }
+        else
+        {
+            Friction::computeRelDX_PT(
+                __GEIGEN__::__minus(_vertexes[v0I], _o_vertexes[v0I]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+                distCoord.x,
+                distCoord.y,
+                relDX3D);
+        }
+    }
+    __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis);
+    double                 relDXSqNorm =
+        __GEIGEN__::__squaredNorm(__GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D));
+    if(relDXSqNorm > fricDHat)
+    {
+        return lastH * sqrt(relDXSqNorm);
+    }
+    else
+    {
+        double f0;
+        Friction::f0_SF(relDXSqNorm, eps, f0);
+        return lastH * f0;
+    }
+}
+
+__global__ void _calFrictionHessian_gd(const double3*   _vertexes,
+                                       const double3*   _o_vertexes,
+                                       const double3*   _normal,
+                                       const uint32_t*  _last_collisionPair_gd,
+                                       Eigen::Matrix3d* triplet_values,
+                                       int*             row_ids,
+                                       int*             col_ids,
+                                       int              number,
+                                       double           dt,
+                                       double           eps2,
+                                       double*          lastH,
+                                       int              global_offset,
+                                       double           coef)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double                 eps           = sqrt(eps2);
+    unsigned int           gidx          = _last_collisionPair_gd[idx];
+    double                 multiplier_vI = coef * lastH[idx];
+    __GEIGEN__::Matrix3x3d H_vI;
+
+    double3 Vdiff  = __GEIGEN__::__minus(_vertexes[gidx], _o_vertexes[gidx]);
+    double3 normal = *_normal;
+    double3 VProj  = __GEIGEN__::__minus(
+        Vdiff, __GEIGEN__::__s_vec_multiply(normal, __GEIGEN__::__v_vec_dot(Vdiff, normal)));
+    double VProjMag2 = __GEIGEN__::__squaredNorm(VProj);
+
+    if(VProjMag2 > eps2)
+    {
+        double VProjMag = sqrt(VProjMag2);
+
+        __GEIGEN__::Matrix2x2d projH;
+        __GEIGEN__::__set_Mat2x2_val_column(projH, make_double2(0, 0), make_double2(0, 0));
+
+        double  eigenValues[2];
+        int     eigenNum = 0;
+        double2 eigenVecs[2];
+        __GEIGEN__::__makePD2x2(VProj.x * VProj.x * -multiplier_vI / VProjMag2 / VProjMag
+                                    + (multiplier_vI / VProjMag),
+                                VProj.x * VProj.z * -multiplier_vI / VProjMag2 / VProjMag,
+                                VProj.x * VProj.z * -multiplier_vI / VProjMag2 / VProjMag,
+                                VProj.z * VProj.z * -multiplier_vI / VProjMag2 / VProjMag
+                                    + (multiplier_vI / VProjMag),
+                                eigenValues,
+                                eigenNum,
+                                eigenVecs);
+        for(int i = 0; i < eigenNum; i++)
+        {
+            if(eigenValues[i] > 0)
+            {
+                __GEIGEN__::Matrix2x2d eigenMatrix =
+                    __GEIGEN__::__v2_vec2_toMat2x2(eigenVecs[i], eigenVecs[i]);
+                eigenMatrix =
+                    __GEIGEN__::__s_Mat2x2_multiply(eigenMatrix, eigenValues[i]);
+                projH = __GEIGEN__::__Mat2x2_add(projH, eigenMatrix);
+            }
+        }
+
+        __GEIGEN__::__set_Mat_val(H_vI,
+                                  projH.m[0][0],
+                                  0,
+                                  projH.m[0][1],
+                                  0,
+                                  0,
+                                  0,
+                                  projH.m[1][0],
+                                  0,
+                                  projH.m[1][1]);
+    }
+    else
+    {
+        __GEIGEN__::__set_Mat_val(
+            H_vI, (multiplier_vI / eps), 0, 0, 0, 0, 0, 0, 0, (multiplier_vI / eps));
+    }
+
+    //H3x3[idx]    = H_vI;
+    //D1Index[idx] = gidx;
+
+    write_triplet<3, 3>(triplet_values, row_ids, col_ids, &gidx, H_vI.m, global_offset + idx);
+}
+
+__global__ void _calFrictionHessian(const double3*          _vertexes,
+                                    const double3*          _o_vertexes,
+                                    const int4*             _last_collisionPair,
+                                    Eigen::Matrix3d*        triplet_values,
+                                    int*                    row_ids,
+                                    int*                    col_ids,
+                                    uint32_t*               _cpNum,
+                                    int                     number,
+                                    double                  dt,
+                                    double2*                distCoord,
+                                    __GEIGEN__::Matrix3x2d* tanBasis,
+                                    double                  eps2,
+                                    double*                 lastH,
+                                    double                  coef,
+                                    int                     cd_offset4,
+                                    int                     cd_offset3,
+                                    int                     cd_offset2,
+                                    int                     f_offset4,
+                                    int                     f_offset3,
+                                    int                     f_offset2)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4    MMCVIDI = _last_collisionPair[idx];
+    double  eps     = sqrt(eps2);
+    double3 relDX3D;
+    int global_offset = cd_offset4 * M12_Off + cd_offset3 * M9_Off + cd_offset2 * M6_Off;
+    if(MMCVIDI.x >= 0)
+    {
+        Friction::computeRelDX_EE(
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+            distCoord[idx].x,
+            distCoord[idx].y,
+            relDX3D);
+
+
+        __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+        double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+        double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+        double  relDXNorm   = sqrt(relDXSqNorm);
+        __GEIGEN__::Matrix12x2d T;
+        Friction::computeT_EE(tanBasis[idx], distCoord[idx].x, distCoord[idx].y, T);
+        __GEIGEN__::Matrix2x2d M2;
+        if(relDXSqNorm > eps2)
+        {
+            __GEIGEN__::__set_Mat_identity(M2);
+            M2.m[0][0] /= relDXNorm;
+            M2.m[1][1] /= relDXNorm;
+            M2 = __GEIGEN__::__Mat2x2_minus(
+                M2,
+                __GEIGEN__::__s_Mat2x2_multiply(__GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                                                1 / (relDXSqNorm * relDXNorm)));
+        }
+        else
+        {
+            double f1_div_relDXNorm;
+            Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+            double f2;
+            Friction::f2_SF(relDXSqNorm, eps, f2);
+            if(f2 != f1_div_relDXNorm && relDXSqNorm)
+            {
+
+                __GEIGEN__::__set_Mat_identity(M2);
+                M2.m[0][0] *= f1_div_relDXNorm;
+                M2.m[1][1] *= f1_div_relDXNorm;
+                M2 = __GEIGEN__::__Mat2x2_minus(
+                    M2,
+                    __GEIGEN__::__s_Mat2x2_multiply(__GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                                                    (f1_div_relDXNorm - f2) / relDXSqNorm));
+            }
+            else
+            {
+                __GEIGEN__::__set_Mat_identity(M2);
+                M2.m[0][0] *= f1_div_relDXNorm;
+                M2.m[1][1] *= f1_div_relDXNorm;
+            }
+        }
+
+        __GEIGEN__::Matrix2x2d projH;
+
+        Matrix2d F_mat2;
+        F_mat2 << M2.m[0][0], M2.m[0][1], M2.m[1][0], M2.m[1][1];
+        makePDGeneral<double, 2>(F_mat2);
+        projH.m[0][0] = F_mat2(0, 0);
+        projH.m[0][1] = F_mat2(0, 1);
+        projH.m[1][0] = F_mat2(1, 0);
+        projH.m[1][1] = F_mat2(1, 1);
+
+
+        __GEIGEN__::Matrix12x2d TM2 = __GEIGEN__::__M12x2_M2x2_Multiply(T, projH);
+
+        __GEIGEN__::Matrix12x12d HessianBlock =
+            __GEIGEN__::__s_M12x12_Multiply(__M12x2_M12x2T_Multiply(TM2, T),
+                                            coef * lastH[idx]);
+        int Hidx   = atomicAdd(_cpNum + 4, 1);
+        int offset = global_offset + Hidx * M12_Off;
+        //Hidx += cd_offset4;
+        //H12x12[Hidx]  = HessianBlock;
+        uint4 global_index = make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+        //D4Index[Hidx] = global_index;
+
+        write_triplet<12, 12>(
+            triplet_values, row_ids, col_ids, &(global_index.x), HessianBlock.m, offset);
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+
+            MMCVIDI.x = v0I;
+            Friction::computeRelDX_PP(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                relDX3D);
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+            double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            double  relDXNorm   = sqrt(relDXSqNorm);
+            __GEIGEN__::Matrix6x2d T;
+            Friction::computeT_PP(tanBasis[idx], T);
+            __GEIGEN__::Matrix2x2d M2;
+            if(relDXSqNorm > eps2)
+            {
+                __GEIGEN__::__set_Mat_identity(M2);
+                M2.m[0][0] /= relDXNorm;
+                M2.m[1][1] /= relDXNorm;
+                M2 = __GEIGEN__::__Mat2x2_minus(
+                    M2,
+                    __GEIGEN__::__s_Mat2x2_multiply(__GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                                                    1 / (relDXSqNorm * relDXNorm)));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                double f2;
+                Friction::f2_SF(relDXSqNorm, eps, f2);
+                if(f2 != f1_div_relDXNorm && relDXSqNorm)
+                {
+
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                    M2 = __GEIGEN__::__Mat2x2_minus(
+                        M2,
+                        __GEIGEN__::__s_Mat2x2_multiply(
+                            __GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                            (f1_div_relDXNorm - f2) / relDXSqNorm));
+                }
+                else
+                {
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                }
+            }
+            __GEIGEN__::Matrix2x2d projH;
+            Matrix2d               F_mat2;
+            F_mat2 << M2.m[0][0], M2.m[0][1], M2.m[1][0], M2.m[1][1];
+            makePDGeneral<double, 2>(F_mat2);
+            projH.m[0][0] = F_mat2(0, 0);
+            projH.m[0][1] = F_mat2(0, 1);
+            projH.m[1][0] = F_mat2(1, 0);
+            projH.m[1][1] = F_mat2(1, 1);
+
+            __GEIGEN__::Matrix6x2d TM2 = __GEIGEN__::__M6x2_M2x2_Multiply(T, projH);
+
+            __GEIGEN__::Matrix6x6d HessianBlock =
+                __GEIGEN__::__s_M6x6_Multiply(__M6x2_M6x2T_Multiply(TM2, T),
+                                              coef * lastH[idx]);
+
+            int Hidx   = atomicAdd(_cpNum + 2, 1);
+            int offset = global_offset + f_offset4 * M12_Off
+                         + f_offset3 * M9_Off + Hidx * M6_Off;
+            //Hidx += cd_offset2;
+            //H6x6[Hidx]    = HessianBlock;
+            uint2 global_index = make_uint2(MMCVIDI.x, MMCVIDI.y);
+            //D2Index[Hidx]      = global_index;
+
+
+            write_triplet<6, 6>(triplet_values,
+                                row_ids,
+                                col_ids,
+                                &(global_index.x),
+                                HessianBlock.m,
+                                offset);
+        }
+        else if(MMCVIDI.w < 0)
+        {
+
+            MMCVIDI.x = v0I;
+            Friction::computeRelDX_PE(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                distCoord[idx].x,
+                relDX3D);
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+            double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            double  relDXNorm   = sqrt(relDXSqNorm);
+            __GEIGEN__::Matrix9x2d T;
+            Friction::computeT_PE(tanBasis[idx], distCoord[idx].x, T);
+            __GEIGEN__::Matrix2x2d M2;
+            if(relDXSqNorm > eps2)
+            {
+                __GEIGEN__::__set_Mat_identity(M2);
+                M2.m[0][0] /= relDXNorm;
+                M2.m[1][1] /= relDXNorm;
+                M2 = __GEIGEN__::__Mat2x2_minus(
+                    M2,
+                    __GEIGEN__::__s_Mat2x2_multiply(__GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                                                    1 / (relDXSqNorm * relDXNorm)));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                double f2;
+                Friction::f2_SF(relDXSqNorm, eps, f2);
+                if(f2 != f1_div_relDXNorm && relDXSqNorm)
+                {
+
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                    M2 = __GEIGEN__::__Mat2x2_minus(
+                        M2,
+                        __GEIGEN__::__s_Mat2x2_multiply(
+                            __GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                            (f1_div_relDXNorm - f2) / relDXSqNorm));
+                }
+                else
+                {
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                }
+            }
+            __GEIGEN__::Matrix2x2d projH;
+            Matrix2d               F_mat2;
+            F_mat2 << M2.m[0][0], M2.m[0][1], M2.m[1][0], M2.m[1][1];
+            makePDGeneral<double, 2>(F_mat2);
+            projH.m[0][0] = F_mat2(0, 0);
+            projH.m[0][1] = F_mat2(0, 1);
+            projH.m[1][0] = F_mat2(1, 0);
+            projH.m[1][1] = F_mat2(1, 1);
+
+            __GEIGEN__::Matrix9x2d TM2 = __GEIGEN__::__M9x2_M2x2_Multiply(T, projH);
+
+            __GEIGEN__::Matrix9x9d HessianBlock =
+                __GEIGEN__::__s_M9x9_Multiply(__M9x2_M9x2T_Multiply(TM2, T),
+                                              coef * lastH[idx]);
+            int Hidx   = atomicAdd(_cpNum + 3, 1);
+            int offset = global_offset + f_offset4 * M12_Off + Hidx * M9_Off;
+            //Hidx += cd_offset3;
+            //H9x9[Hidx]    = HessianBlock;
+            uint3 global_index = make_uint3(v0I, MMCVIDI.y, MMCVIDI.z);
+            //D3Index[Hidx]      = global_index;
+
+
+            write_triplet<9, 9>(triplet_values,
+                                row_ids,
+                                col_ids,
+                                &(global_index.x),
+                                HessianBlock.m,
+                                offset);
+        }
+        else
+        {
+            MMCVIDI.x = v0I;
+            Friction::computeRelDX_PT(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+                distCoord[idx].x,
+                distCoord[idx].y,
+                relDX3D);
+
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+            double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            double  relDXNorm   = sqrt(relDXSqNorm);
+            __GEIGEN__::Matrix12x2d T;
+            Friction::computeT_PT(
+                tanBasis[idx], distCoord[idx].x, distCoord[idx].y, T);
+            __GEIGEN__::Matrix2x2d M2;
+            if(relDXSqNorm > eps2)
+            {
+                __GEIGEN__::__set_Mat_identity(M2);
+                M2.m[0][0] /= relDXNorm;
+                M2.m[1][1] /= relDXNorm;
+                M2 = __GEIGEN__::__Mat2x2_minus(
+                    M2,
+                    __GEIGEN__::__s_Mat2x2_multiply(__GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                                                    1 / (relDXSqNorm * relDXNorm)));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                double f2;
+                Friction::f2_SF(relDXSqNorm, eps, f2);
+                if(f2 != f1_div_relDXNorm && relDXSqNorm)
+                {
+
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                    M2 = __GEIGEN__::__Mat2x2_minus(
+                        M2,
+                        __GEIGEN__::__s_Mat2x2_multiply(
+                            __GEIGEN__::__v2_vec2_toMat2x2(relDX, relDX),
+                            (f1_div_relDXNorm - f2) / relDXSqNorm));
+                }
+                else
+                {
+                    __GEIGEN__::__set_Mat_identity(M2);
+                    M2.m[0][0] *= f1_div_relDXNorm;
+                    M2.m[1][1] *= f1_div_relDXNorm;
+                }
+            }
+            __GEIGEN__::Matrix2x2d projH;
+            Matrix2d               F_mat2;
+            F_mat2 << M2.m[0][0], M2.m[0][1], M2.m[1][0], M2.m[1][1];
+            makePDGeneral<double, 2>(F_mat2);
+            projH.m[0][0] = F_mat2(0, 0);
+            projH.m[0][1] = F_mat2(0, 1);
+            projH.m[1][0] = F_mat2(1, 0);
+            projH.m[1][1] = F_mat2(1, 1);
+
+            __GEIGEN__::Matrix12x2d TM2 = __GEIGEN__::__M12x2_M2x2_Multiply(T, projH);
+
+            __GEIGEN__::Matrix12x12d HessianBlock =
+                __GEIGEN__::__s_M12x12_Multiply(__M12x2_M12x2T_Multiply(TM2, T),
+                                                coef * lastH[idx]);
+            int Hidx   = atomicAdd(_cpNum + 4, 1);
+            int offset = global_offset + Hidx * M12_Off;
+            //Hidx += cd_offset4;
+            //H12x12[Hidx]  = HessianBlock;
+            uint4 global_index = make_uint4(v0I, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+            //D4Index[Hidx] = global_index;
+
+
+            write_triplet<12, 12>(triplet_values,
+                                  row_ids,
+                                  col_ids,
+                                  &(global_index.x),
+                                  HessianBlock.m,
+                                  offset);
+        }
+    }
+}
+
+template <typename T>
+__global__ inline void moveMemory_1(T* data, int output_start, int input_start, int length)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= length)
+        return;
+    data[output_start + idx] = data[input_start + idx];
+}
+
+__global__ void _calBarrierHessian(const double3*   _vertexes,
+                                   const double3*   _rest_vertexes,
+                                   const int4*      _collisionPair,
+                                   Eigen::Matrix3d* triplet_values,
+                                   int*             row_ids,
+                                   int*             col_ids,
+                                   uint32_t*        _cpNum,
+                                   int*             matIndex,
+                                   double           dHat,
+                                   double           Kappa,
+                                   int              offset4,
+                                   int              offset3,
+                                   int              offset2,
+                                   int              number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI   = _collisionPair[idx];
+    double dHat_sqrt = sqrt(dHat);
+
+    double gassThreshold = 1e-6;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            dis = sqrt(dis);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_ee2(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     dHat_sqrt,
+                     PFPxT);
+            double              I5 = pow(dis / dHat_sqrt, 2);
+            __GEIGEN__::Vector9 q0;
+            q0.v[0] = q0.v[1] = q0.v[2] = q0.v[3] = q0.v[4] = q0.v[5] =
+                q0.v[6] = q0.v[7] = 0;
+            q0.v[8]               = 1;
+            __GEIGEN__::Matrix9x9d H;
+            __GEIGEN__::__init_Mat9x9(H, 0);
+
+#if (RANK == 1)
+            double lambda0 =
+                Kappa
+                * (2 * dHat * dHat
+                   * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    Kappa
+                    * (2 * dHat * dHat
+                       * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                          - 7 * gassThreshold * gassThreshold
+                          - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 2)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat
+                  * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5) + 6 * I5 * log(I5)
+                     - 2 * I5 * I5 + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * gassThreshold + log(gassThreshold)
+                         - 3 * gassThreshold * gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                         + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 3)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5)
+                 * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 18 * I5 * log(I5) - 12 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 4)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                  * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 12 * I5 * log(I5) - 12 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 14 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 5)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 30 * I5 * log(I5) - 40 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                / I5;
+#elif (RANK == 6)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                  * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 18 * I5 * log(I5) - 30 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 21 * I5 * I5 * log(I5) - 30))
+                / I5;
+#endif
+
+            H = __GEIGEN__::__S_Mat9x9_multiply(__GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPxT, H), __GEIGEN__::__Transpose12x9(PFPxT));
+
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPxT, H, Hessian);
+
+            int Hidx = matIndex[idx];
+
+            uint4 global_index =
+                make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+            int triplet_id_offset = Hidx * 16;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+        else
+        {
+            MMCVIDI.w = -MMCVIDI.w - 1;
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z]);
+            double c  = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1));
+            double I1 = c * c;
+            if(I1 == 0)
+                return;
+            __GEIGEN__::Matrix12x9d PFPx;
+            pFpx_pee(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     dHat_sqrt,
+                     PFPx);
+
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I2 = dis / dHat;
+            dis       = sqrt(dis);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+            double3 n1 = make_double3(0, 1, 0);
+            double3 n2 = make_double3(0, 0, 1);
+
+            double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                        _rest_vertexes[MMCVIDI.y],
+                                        _rest_vertexes[MMCVIDI.z],
+                                        _rest_vertexes[MMCVIDI.w]);
+
+#if (RANK == 1)
+            double lambda10 =
+                Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                / (eps_x * eps_x);
+            double lambda11 =
+                Kappa * 2
+                * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                / (eps_x * eps_x);
+            double lambda12 =
+                Kappa * 2
+                * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                / (eps_x * eps_x);
+#elif (RANK == 2)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#elif (RANK == 4)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#elif (RANK == 6)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#endif
+            __GEIGEN__::Matrix3x3d fnn;
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+            __GEIGEN__::Vector9 q10 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+            q10 = __GEIGEN__::__s_vec9_multiply(q10, 1.0 / sqrt(I1));
+
+            __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+            __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+            __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+            __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+            double ratio = 1.f / sqrt(2.f);
+            Tx           = __S_Mat_multiply(Tx, ratio);
+            Ty           = __S_Mat_multiply(Ty, ratio);
+            Tz           = __S_Mat_multiply(Tz, ratio);
+
+            __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                __GEIGEN__::__M_Mat_multiply(Tx, fnn));
+            __GEIGEN__::__normalized_vec9_double(q11);
+            __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                __GEIGEN__::__M_Mat_multiply(Tz, fnn));
+            //__GEIGEN__::__s_vec9_multiply(q12, c);
+            __GEIGEN__::__normalized_vec9_double(q12);
+
+            __GEIGEN__::Matrix9x9d projectedH;
+            __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+            __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+            M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+            projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+            M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+            M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+            projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+            double lambda20 =
+                -Kappa
+                * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                   * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2 - 6 * I2 * I2 * log(I2) + 1))
+                / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                   * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 6 * I2 * log(I2) - 2 * I2 * I2 + I2 * log(I2) * log(I2)
+                      - 7 * I2 * I2 * log(I2) - 2))
+                / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                   * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 12 * I2 * log(I2) - 12 * I2 * I2
+                      + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                   * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 18 * I2 * log(I2) - 30 * I2 * I2
+                      + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                / (I2 * (eps_x * eps_x));
+#endif
+            nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+            __GEIGEN__::Vector9 q20 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+            q20 = __GEIGEN__::__s_vec9_multiply(q20, 1.0 / sqrt(I2));
+
+
+#if (RANK == 1)
+            double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                               * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                   * (I2 + 2 * I2 * log(I2) - 1))
+                                  / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                  * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                               / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                  * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                               / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                  * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                               / (I2 * (eps_x * eps_x));
+#endif
+
+            Eigen::Matrix2d FMat2;
+            FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+            makePDGeneral<double, 2>(FMat2);
+            projectedH.m[4][4] += FMat2(0, 0);
+            projectedH.m[4][8] += FMat2(0, 1);
+            projectedH.m[8][4] += FMat2(1, 0);
+            projectedH.m[8][8] += FMat2(1, 1);
+
+            __GEIGEN__::Matrix12x12d Hessian;
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+            int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 4, 1);
+
+            uint4 global_index =
+                make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+            int triplet_id_offset = Hidx * 16;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.z = -MMCVIDI.z - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+                //printf("ppp condition  ***************************************\n: %d  %d  %d  %d\n***************************************\n", MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppp(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+
+                double dis;
+                _d_PP(_vertexes[MMCVIDI.x], _vertexes[MMCVIDI.y], dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.z],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.w]);
+
+#if (RANK == 1)
+                double lambda10 =
+                    Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                    / (eps_x * eps_x);
+                double lambda11 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double lambda12 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 4)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 6)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#endif
+                __GEIGEN__::Matrix3x3d fnn;
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+                __GEIGEN__::Vector9 q10 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+                q10 = __GEIGEN__::__s_vec9_multiply(q10, 1.0 / sqrt(I1));
+
+                __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+                __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+                __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+                __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+                double ratio = 1.f / sqrt(2.f);
+                Tx           = __S_Mat_multiply(Tx, ratio);
+                Ty           = __S_Mat_multiply(Ty, ratio);
+                Tz           = __S_Mat_multiply(Tz, ratio);
+
+                __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tx, fnn));
+                __GEIGEN__::__normalized_vec9_double(q11);
+                __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tz, fnn));
+                //__GEIGEN__::__s_vec9_multiply(q12, c);
+                __GEIGEN__::__normalized_vec9_double(q12);
+
+                __GEIGEN__::Matrix9x9d projectedH;
+                __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+                __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+                M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+                double lambda20 = -Kappa
+                                  * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                                     * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2
+                                        - 6 * I2 * I2 * log(I2) + 1))
+                                  / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                       * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 6 * I2 * log(I2) - 2 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 7 * I2 * I2 * log(I2) - 2))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                       * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 12 * I2 * log(I2) - 12 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                       * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 18 * I2 * log(I2) - 30 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                    / (I2 * (eps_x * eps_x));
+#endif
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+                __GEIGEN__::Vector9 q20 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+                q20 = __GEIGEN__::__s_vec9_multiply(q20, 1.0 / sqrt(I2));
+
+
+#if (RANK == 1)
+                double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                                   * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                       * (I2 + 2 * I2 * log(I2) - 1))
+                                      / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                      * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                      * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                      * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                                   / (I2 * (eps_x * eps_x));
+#endif
+                Eigen::Matrix2d FMat2;
+                FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+                makePDGeneral<double, 2>(FMat2);
+                projectedH.m[4][4] += FMat2(0, 0);
+                projectedH.m[4][8] += FMat2(0, 1);
+                projectedH.m[8][4] += FMat2(1, 0);
+                projectedH.m[8][8] += FMat2(1, 1);
+
+                //__GEIGEN__::Matrix9x12d PFPxTransPos = __GEIGEN__::__Transpose12x9(PFPx);
+                __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPx, projectedH), PFPxTransPos);
+                __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+                int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+                uint4 global_index =
+                    make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+                //D4Index[Hidx] = global_index;
+
+
+                int triplet_id_offset = Hidx * 16;
+                write_triplet<12, 12>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PP(_vertexes[v0I], _vertexes[MMCVIDI.y], dis);
+                dis                            = sqrt(dis);
+                double              d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Vector6 PFPxT;
+                pFpx_pp2(_vertexes[v0I], _vertexes[MMCVIDI.y], d_hat_sqrt, PFPxT);
+                double I5 = pow(dis / d_hat_sqrt, 2);
+                //double q0 = 1;
+#else
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 Ds  = v0;
+                double  dis = __GEIGEN__::__norm(v0);
+                //if (dis > dHat_sqrt) return;
+                double3 vec_normal =
+                    __GEIGEN__::__normalized(make_double3(-v0.x, -v0.y, -v0.z));
+                double3 target = make_double3(0, 1, 0);
+                double3 vec    = __GEIGEN__::__v_vec_cross(vec_normal, target);
+                double  cos    = __GEIGEN__::__v_vec_dot(vec_normal, target);
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    //pDmpx_pp(_vertexes[v0I], _vertexes[MMCVIDI.y], dHat_sqrt, PDmPx);
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(vec_normal, dHat_sqrt - dis));
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+
+                double uv0 = rotate_uv0.y;
+                double uv1 = rotate_uv1.y;
+
+                double u0    = uv1 - uv0;
+                double Dm    = u0;
+                double DmInv = 1 / u0;
+
+                double3 F  = __GEIGEN__::__s_vec_multiply(Ds, DmInv);
+                double  I5 = __GEIGEN__::__squaredNorm(F);
+
+                double3 fnn = F;
+
+                __GEIGEN__::Matrix3x6d PFPx = __computePFDsPX3D_3x6_double(DmInv);
+#endif
+
+
+#if (RANK == 1)
+                double lambda0 = Kappa
+                                 * (2 * dHat * dHat
+                                    * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                       - 6 * I5 * I5 * log(I5) + 1))
+                                 / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        Kappa
+                        * (2 * dHat * dHat
+                           * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                              - 7 * gassThreshold * gassThreshold
+                              - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 2)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        -(4 * Kappa * dHat * dHat
+                          * (4 * gassThreshold + log(gassThreshold)
+                             - 3 * gassThreshold * gassThreshold
+                                   * log(gassThreshold) * log(gassThreshold)
+                             + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                             + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                             - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 3)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5)
+                     * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 18 * I5 * log(I5) - 12 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 4)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                      * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 12 * I5 * log(I5) - 12 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 14 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 5)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 30 * I5 * log(I5) - 40 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                    / I5;
+#elif (RANK == 6)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                      * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 18 * I5 * log(I5) - 30 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 30))
+                    / I5;
+#endif
+
+#ifdef NEWF
+                double                 H       = lambda0;
+                __GEIGEN__::Matrix6x6d Hessian = __GEIGEN__::__s_M6x6_Multiply(
+                    __GEIGEN__::__v6_vec6_toMat6x6(PFPxT, PFPxT), H);
+#else
+                double3 q0 = __GEIGEN__::__s_vec_multiply(F, 1 / sqrt(I5));
+
+                __GEIGEN__::Matrix3x3d H =
+                    __GEIGEN__::__S_Mat_multiply(__GEIGEN__::__v_vec_toMat(q0, q0),
+                                                 lambda0);  //lambda0 * q0 * q0.transpose();
+
+                __GEIGEN__::Matrix6x3d PFPxTransPos = __GEIGEN__::__Transpose3x6(PFPx);
+                __GEIGEN__::Matrix6x6d Hessian = __GEIGEN__::__M6x3_M3x6_Multiply(
+                    __GEIGEN__::__M6x3_M3x3_Multiply(PFPxTransPos, H), PFPx);
+#endif
+                int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+                uint2 global_index = make_uint2(v0I, MMCVIDI.y);
+                //D2Index[Hidx]      = global_index;
+
+                int triplet_id_offset = Hidx * 4 + offset3 * 9 + offset4 * 16;
+                write_triplet<6, 6>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+                //printf("ppe condition  ***************************************\n: %d  %d  %d  %d\n***************************************\n", MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppe(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+
+                double dis;
+                _d_PE(_vertexes[MMCVIDI.x],
+                      _vertexes[MMCVIDI.y],
+                      _vertexes[MMCVIDI.z],
+                      dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.w],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.z]);
+
+#if (RANK == 1)
+                double lambda10 =
+                    Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                    / (eps_x * eps_x);
+                double lambda11 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double lambda12 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 4)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 6)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#endif
+                __GEIGEN__::Matrix3x3d fnn;
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+                __GEIGEN__::Vector9 q10 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+                q10 = __GEIGEN__::__s_vec9_multiply(q10, 1.0 / sqrt(I1));
+
+                __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+                __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+                __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+                __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+                double ratio = 1.f / sqrt(2.f);
+                Tx           = __S_Mat_multiply(Tx, ratio);
+                Ty           = __S_Mat_multiply(Ty, ratio);
+                Tz           = __S_Mat_multiply(Tz, ratio);
+
+                __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tx, fnn));
+                __GEIGEN__::__normalized_vec9_double(q11);
+                __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tz, fnn));
+                //__GEIGEN__::__s_vec9_multiply(q12, c);
+                __GEIGEN__::__normalized_vec9_double(q12);
+
+                __GEIGEN__::Matrix9x9d projectedH;
+                __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+                __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+                M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+                double lambda20 = -Kappa
+                                  * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                                     * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2
+                                        - 6 * I2 * I2 * log(I2) + 1))
+                                  / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                       * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 6 * I2 * log(I2) - 2 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 7 * I2 * I2 * log(I2) - 2))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                       * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 12 * I2 * log(I2) - 12 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                       * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 18 * I2 * log(I2) - 30 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                    / (I2 * (eps_x * eps_x));
+#endif
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+                __GEIGEN__::Vector9 q20 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+                q20 = __GEIGEN__::__s_vec9_multiply(q20, 1.0 / sqrt(I2));
+
+
+#if (RANK == 1)
+                double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                                   * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                       * (I2 + 2 * I2 * log(I2) - 1))
+                                      / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                      * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                      * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                      * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                                   / (I2 * (eps_x * eps_x));
+#endif
+                Eigen::Matrix2d FMat2;
+                FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+                makePDGeneral<double, 2>(FMat2);
+                projectedH.m[4][4] += FMat2(0, 0);
+                projectedH.m[4][8] += FMat2(0, 1);
+                projectedH.m[8][4] += FMat2(1, 0);
+                projectedH.m[8][8] += FMat2(1, 1);
+                //__GEIGEN__::Matrix9x12d PFPxTransPos = __GEIGEN__::__Transpose12x9(PFPx);
+                __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPx, projectedH), PFPxTransPos);
+                __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+                int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+                uint4 global_index =
+                    make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+                //D4Index[Hidx] = global_index;
+
+
+                int triplet_id_offset = Hidx * 16;
+                write_triplet<12, 12>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PE(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dis);
+                dis                               = sqrt(dis);
+                double                 d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Matrix9x4d PFPxT;
+                pFpx_pe2(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], d_hat_sqrt, PFPxT);
+                double              I5 = pow(dis / d_hat_sqrt, 2);
+                __GEIGEN__::Vector4 q0;
+                q0.v[0] = q0.v[1] = q0.v[2] = 0;
+                q0.v[3]                     = 1;
+
+                __GEIGEN__::Matrix4x4d H;
+                //__GEIGEN__::__init_Mat4x4_val(H, 0);
+#else
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+
+
+                __GEIGEN__::Matrix3x2d Ds;
+                __GEIGEN__::__set_Mat3x2_val_column(Ds, v0, v1);
+
+                double3 triangle_normal =
+                    __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(v0, v1));
+                double3 target = make_double3(0, 1, 0);
+
+                double3 vec = __GEIGEN__::__v_vec_cross(triangle_normal, target);
+                double cos = __GEIGEN__::__v_vec_dot(triangle_normal, target);
+
+                double3 edge_normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z]),
+                    triangle_normal));
+                double dis = __GEIGEN__::__v_vec_dot(
+                    __GEIGEN__::__minus(_vertexes[v0I], _vertexes[MMCVIDI.y]), edge_normal);
+
+                //if (dis > dHat_sqrt) return;
+
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+                __GEIGEN__::Matrix9x4d PDmPx;
+
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    //pDmpx_pe(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dHat_sqrt, PDmPx);
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(edge_normal, dHat_sqrt - dis));
+
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+                double3 rotate_uv2 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.z]);
+                double3 rotate_normal = __GEIGEN__::__M_v_multiply(rotation, edge_normal);
+
+                double2 uv0    = make_double2(rotate_uv0.x, rotate_uv0.z);
+                double2 uv1    = make_double2(rotate_uv1.x, rotate_uv1.z);
+                double2 uv2    = make_double2(rotate_uv2.x, rotate_uv2.z);
+                double2 normal = make_double2(rotate_normal.x, rotate_normal.z);
+
+                double2 u0 = __GEIGEN__::__minus_v2(uv1, uv0);
+                double2 u1 = __GEIGEN__::__minus_v2(uv2, uv0);
+
+                __GEIGEN__::Matrix2x2d Dm;
+
+                __GEIGEN__::__set_Mat2x2_val_column(Dm, u0, u1);
+
+                __GEIGEN__::Matrix2x2d DmInv;
+                __GEIGEN__::__Inverse2x2(Dm, DmInv);
+
+                __GEIGEN__::Matrix3x2d F = __GEIGEN__::__M3x2_M2x2_Multiply(Ds, DmInv);
+
+                double3 FxN = __GEIGEN__::__M3x2_v2_multiply(F, normal);
+                double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+                __GEIGEN__::Matrix3x2d fnn;
+
+                __GEIGEN__::Matrix2x2d nn = __GEIGEN__::__v2_vec2_toMat2x2(normal, normal);
+
+                fnn = __GEIGEN__::__M3x2_M2x2_Multiply(F, nn);
+
+                __GEIGEN__::Matrix6x9d PFPx = __computePFDsPX3D_6x9_double(DmInv);
+#endif
+
+#if (RANK == 1)
+                double lambda0 = Kappa
+                                 * (2 * dHat * dHat
+                                    * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                       - 6 * I5 * I5 * log(I5) + 1))
+                                 / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        Kappa
+                        * (2 * dHat * dHat
+                           * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                              - 7 * gassThreshold * gassThreshold
+                              - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 2)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        -(4 * Kappa * dHat * dHat
+                          * (4 * gassThreshold + log(gassThreshold)
+                             - 3 * gassThreshold * gassThreshold
+                                   * log(gassThreshold) * log(gassThreshold)
+                             + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                             + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                             - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 3)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5)
+                     * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 18 * I5 * log(I5) - 12 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 4)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                      * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 12 * I5 * log(I5) - 12 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 14 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 5)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 30 * I5 * log(I5) - 40 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                    / I5;
+#elif (RANK == 6)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                      * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 18 * I5 * log(I5) - 30 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 30))
+                    / I5;
+#endif
+
+#ifdef NEWF
+                H = __GEIGEN__::__S_Mat4x4_multiply(
+                    __GEIGEN__::__v4_vec4_toMat4x4(q0, q0), lambda0);
+
+                __GEIGEN__::Matrix9x9d Hessian;  // = __GEIGEN__::__M9x4_M4x9_Multiply(__GEIGEN__::__M9x4_M4x4_Multiply(PFPxT, H), __GEIGEN__::__Transpose9x4(PFPxT));
+                __M9x4_S4x4_MT4x9_Multiply(PFPxT, H, Hessian);
+#else
+
+                __GEIGEN__::Vector6 q0 = __GEIGEN__::__Mat3x2_to_vec6_double(fnn);
+
+                q0 = __GEIGEN__::__s_vec6_multiply(q0, 1.0 / sqrt(I5));
+
+                __GEIGEN__::Matrix6x6d H;
+                __GEIGEN__::__init_Mat6x6(H, 0);
+
+                H = __GEIGEN__::__S_Mat6x6_multiply(
+                    __GEIGEN__::__v6_vec6_toMat6x6(q0, q0), lambda0);
+
+                __GEIGEN__::Matrix9x6d PFPxTransPos = __GEIGEN__::__Transpose6x9(PFPx);
+                __GEIGEN__::Matrix9x9d Hessian = __GEIGEN__::__M9x6_M6x9_Multiply(
+                    __GEIGEN__::__M9x6_M6x6_Multiply(PFPxTransPos, H), PFPx);
+#endif
+                int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+                uint3 global_index = make_uint3(v0I, MMCVIDI.y, MMCVIDI.z);
+
+                //D3Index[Hidx] = global_index;
+
+                int triplet_id_offset = Hidx * 9 + offset4 * 16;
+                write_triplet<9, 9>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+        }
+        else
+        {
+#ifdef NEWF
+            double dis;
+            //printf("PT: %d %d %d %d\n", v0I, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+            _d_PT(_vertexes[v0I],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I5                          = dis / dHat;
+            dis                                = sqrt(dis);
+            double                  d_hat_sqrt = sqrt(dHat);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_pt2(_vertexes[v0I],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     d_hat_sqrt,
+                     PFPxT);
+
+            __GEIGEN__::Vector9 q0;
+            q0.v[0] = q0.v[1] = q0.v[2] = q0.v[3] = q0.v[4] = q0.v[5] =
+                q0.v[6] = q0.v[7] = 0;
+            q0.v[8]               = 1;
+
+
+#else
+            double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+            double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+            double3 v2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[v0I]);
+
+            __GEIGEN__::Matrix3x3d Ds;
+            __GEIGEN__::__set_Mat_val_column(Ds, v0, v1, v2);
+
+            double3 normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y])));
+            double  dis    = __GEIGEN__::__v_vec_dot(v0, normal);
+
+            if(dis > 0)
+            {
+                normal = make_double3(-normal.x, -normal.y, -normal.z);
+            }
+            else
+            {
+                dis = -dis;
+            }
+
+            double3 pos0 = __GEIGEN__::__add(
+                _vertexes[v0I], __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+
+
+            double3 u0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], pos0);
+            double3 u1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], pos0);
+            double3 u2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], pos0);
+
+            __GEIGEN__::Matrix3x3d Dm, DmInv;
+            __GEIGEN__::__set_Mat_val_column(Dm, u0, u1, u2);
+
+            __GEIGEN__::__Inverse(Dm, DmInv);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__M_Mat_multiply(Ds, DmInv, F);
+            __GEIGEN__::Matrix3x3d uu, vv, ss;
+            __GEIGEN__::SVD(F, uu, vv, ss);
+            double values = ss.m[0][0] + ss.m[1][1] + ss.m[2][2];
+            values        = (values - 2) * (values - 2);
+            double3 FxN   = __GEIGEN__::__M_v_multiply(F, normal);
+            double  I5    = __GEIGEN__::__squaredNorm(FxN);
+
+            __GEIGEN__::Matrix9x12d PFPx = __computePFDsPX3D_double(DmInv);
+#endif
+
+#if (RANK == 1)
+            double lambda0 =
+                Kappa
+                * (2 * dHat * dHat
+                   * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    Kappa
+                    * (2 * dHat * dHat
+                       * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                          - 7 * gassThreshold * gassThreshold
+                          - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 2)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat
+                  * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5) + 6 * I5 * log(I5)
+                     - 2 * I5 * I5 + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * gassThreshold + log(gassThreshold)
+                         - 3 * gassThreshold * gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                         + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 3)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5)
+                 * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 18 * I5 * log(I5) - 12 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 4)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                  * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 12 * I5 * log(I5) - 12 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 14 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 5)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 30 * I5 * log(I5) - 40 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                / I5;
+#elif (RANK == 6)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                  * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 18 * I5 * log(I5) - 30 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 21 * I5 * I5 * log(I5) - 30))
+                / I5;
+#endif
+
+#ifdef NEWF
+            //printf("lamdba0:    %f\n", lambda0*1e6);
+            //__GEIGEN__::__v9_vec9_toMat9x9(H,q0, q0, lambda0); //__GEIGEN__::__S_Mat9x9_multiply(__GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+            //__GEIGEN__::Matrix9x9d H;
+            //__GEIGEN__::__init_Mat9x9(H, 0);
+            //H.m[8][8] = lambda0;
+            __GEIGEN__::Matrix9x9d H = __GEIGEN__::__S_Mat9x9_multiply(
+                __GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);  //__GEIGEN__::__v9_vec9_toMat9x9(q0, q0, lambda0);
+            __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPxT, H), __GEIGEN__::__Transpose12x9(PFPxT));
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPxT, H, Hessian);
+
+#else
+
+            __GEIGEN__::Matrix3x3d Q0;
+
+            __GEIGEN__::Matrix3x3d fnn;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 q0 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+
+            q0 = __GEIGEN__::__s_vec9_multiply(q0, 1.0 / sqrt(I5));
+
+            __GEIGEN__::Matrix9x9d H = __GEIGEN__::__S_Mat9x9_multiply(
+                __GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x9d PFPxTransPos = __GEIGEN__::__Transpose9x12(PFPx);
+            __GEIGEN__::Matrix12x12d H2 = __GEIGEN__::__M12x9_M9x12_Multiply(
+                __GEIGEN__::__M12x9_M9x9_Multiply(PFPxTransPos, H), PFPx);
+#endif
+
+            int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+            uint4 global_index = make_uint4(v0I, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+            //D4Index[Hidx]         = global_index;
+            int triplet_id_offset = Hidx * 16;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+    }
+}
+
+__global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
+                                              const double3*   _rest_vertexes,
+                                              const int4*      _collisionPair,
+                                              double3*         _gradient,
+                                              Eigen::Matrix3d* triplet_values,
+                                              int*             row_ids,
+                                              int*             col_ids,
+                                              uint32_t*        _cpNum,
+                                              int*             matIndex,
+                                              double           dHat,
+                                              double           Kappa,
+                                              int              offset4,
+                                              int              offset3,
+                                              int              offset2,
+                                              int              number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI   = _collisionPair[idx];
+    double dHat_sqrt = sqrt(dHat);
+    //double dHat = dHat_sqrt * dHat_sqrt;
+    //double Kappa = 1;
+    double gassThreshold = 1e-6;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+#ifdef NEWF
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            dis                                = sqrt(dis);
+            double                  d_hat_sqrt = sqrt(dHat);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_ee2(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     d_hat_sqrt,
+                     PFPxT);
+            double              I5 = pow(dis / d_hat_sqrt, 2);
+            __GEIGEN__::Vector9 tmp;
+            tmp.v[0] = tmp.v[1] = tmp.v[2] = tmp.v[3] = tmp.v[4] = tmp.v[5] =
+                tmp.v[6] = tmp.v[7] = 0;
+            tmp.v[8]                = dis / d_hat_sqrt;
+
+            __GEIGEN__::Vector9 q0;
+            q0.v[0] = q0.v[1] = q0.v[2] = q0.v[3] = q0.v[4] = q0.v[5] =
+                q0.v[6] = q0.v[7] = 0;
+            q0.v[8]               = 1;
+            //q0 = __GEIGEN__::__s_vec9_multiply(q0, 1.0 / sqrt(I5));
+
+            __GEIGEN__::Matrix9x9d H;
+            //__GEIGEN__::__init_Mat9x9(H, 0);
+#else
+
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+            double3 v2 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+            __GEIGEN__::Matrix3x3d Ds;
+            __GEIGEN__::__set_Mat_val_column(Ds, v0, v1, v2);
+            double3 normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                v0, __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z])));
+            double  dis    = __GEIGEN__::__v_vec_dot(v1, normal);
+            if(dis < 0)
+            {
+                normal = make_double3(-normal.x, -normal.y, -normal.z);
+                dis    = -dis;
+            }
+
+            double3 pos2 =
+                __GEIGEN__::__add(_vertexes[MMCVIDI.z],
+                                  __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+            double3 pos3 =
+                __GEIGEN__::__add(_vertexes[MMCVIDI.w],
+                                  __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+
+            double3 u0 = v0;
+            double3 u1 = __GEIGEN__::__minus(pos2, _vertexes[MMCVIDI.x]);
+            double3 u2 = __GEIGEN__::__minus(pos3, _vertexes[MMCVIDI.x]);
+
+            __GEIGEN__::Matrix3x3d Dm, DmInv;
+            __GEIGEN__::__set_Mat_val_column(Dm, u0, u1, u2);
+
+            __GEIGEN__::__Inverse(Dm, DmInv);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__M_Mat_multiply(Ds, DmInv, F);
+
+            double3 FxN = __GEIGEN__::__M_v_multiply(F, normal);
+            double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+            __GEIGEN__::Matrix9x12d PFPx = __computePFDsPX3D_double(DmInv);
+
+            __GEIGEN__::Matrix3x3d fnn;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 tmp = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+
+#endif
+
+#if (RANK == 1)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+#elif (RANK == 3)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                       * (3 * I5 + 2 * I5 * log(I5) - 3))
+                    / I5);
+#elif (RANK == 4)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5);
+#elif (RANK == 5)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5);
+#elif (RANK == 6)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                 * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5);
+#endif
+
+
+#if (RANK == 1)
+            double lambda0 =
+                Kappa
+                * (2 * dHat * dHat
+                   * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    Kappa
+                    * (2 * dHat * dHat
+                       * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                          - 7 * gassThreshold * gassThreshold
+                          - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 2)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat
+                  * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5) + 6 * I5 * log(I5)
+                     - 2 * I5 * I5 + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * gassThreshold + log(gassThreshold)
+                         - 3 * gassThreshold * gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                         + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 3)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5)
+                 * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 18 * I5 * log(I5) - 12 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 4)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                  * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 12 * I5 * log(I5) - 12 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 14 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 5)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 30 * I5 * log(I5) - 40 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                / I5;
+#elif (RANK == 6)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                  * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 18 * I5 * log(I5) - 30 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 21 * I5 * I5 * log(I5) - 30))
+                / I5;
+#endif
+
+
+#ifdef NEWF
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply((PFPxT), flatten_pk1);
+            H = __GEIGEN__::__S_Mat9x9_multiply(__GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPxT, H), __GEIGEN__::__Transpose12x9(PFPxT));
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPxT, H, Hessian);
+#else
+
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(__GEIGEN__::__Transpose9x12(PFPx), flatten_pk1);
+            //__GEIGEN__::Matrix3x3d Q0;
+
+            //            __GEIGEN__::Matrix3x3d fnn;
+
+            //           __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            //            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 q0 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+
+            q0 = __GEIGEN__::__s_vec9_multiply(q0, 1.0 / sqrt(I5));
+
+            __GEIGEN__::Matrix9x9d H;
+            __GEIGEN__::__init_Mat9x9(H, 0);
+
+            H = __GEIGEN__::__S_Mat9x9_multiply(__GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x9d PFPxTransPos = __GEIGEN__::__Transpose9x12(PFPx);
+            __GEIGEN__::Matrix12x12d Hessian = __GEIGEN__::__M12x9_M9x12_Multiply(
+                __GEIGEN__::__M12x9_M9x9_Multiply(PFPxTransPos, H), PFPx);
+#endif
+
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+            }
+            int Hidx = matIndex[idx];  //atomicAdd(_cpNum + 4, 1);
+
+            uint4 global_index =
+                make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+            int triplet_id_offset = Hidx * M12_Off;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+        else
+        {
+            //return;
+            MMCVIDI.w = -MMCVIDI.w - 1;
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z]);
+            double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+            double I1 = c * c;
+            if(I1 == 0)
+                return;
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I2 = dis / dHat;
+            dis       = sqrt(dis);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+            double3 n1 = make_double3(0, 1, 0);
+            double3 n2 = make_double3(0, 0, 1);
+
+            double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                        _rest_vertexes[MMCVIDI.y],
+                                        _rest_vertexes[MMCVIDI.z],
+                                        _rest_vertexes[MMCVIDI.w]);
+
+            __GEIGEN__::Matrix3x3d g1, g2;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+            __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+            nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+            __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+            __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+            __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+            __GEIGEN__::Matrix12x9d PFPx;
+            pFpx_pee(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     dHat_sqrt,
+                     PFPx);
+
+#if (RANK == 1)
+            double p1 = Kappa * 2
+                        * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = Kappa * 2
+                        * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                           * (I2 + 2 * I2 * log(I2) - 1))
+                        / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * log(I2) * log(I2) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                        / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                        / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                        / (I2 * (eps_x * eps_x));
+#endif
+            __GEIGEN__::Vector9 flatten_pk1 =
+                __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                   __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+            }
+
+#if (RANK == 1)
+            double lambda10 =
+                Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                / (eps_x * eps_x);
+            double lambda11 =
+                Kappa * 2
+                * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                / (eps_x * eps_x);
+            double lambda12 =
+                Kappa * 2
+                * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                / (eps_x * eps_x);
+#elif (RANK == 2)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * log(I2) * log(I2)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#elif (RANK == 4)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 4)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#elif (RANK == 6)
+            double lambda10 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6) * (I2 - 1)
+                                 * (I2 - 1) * (3 * I1 - eps_x))
+                              / (eps_x * eps_x);
+            double lambda11 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+            double lambda12 = -Kappa
+                              * (4 * dHat * dHat * pow(log(I2), 6)
+                                 * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                              / (eps_x * eps_x);
+#endif
+            __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+            __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+            __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+            __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+            __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                __GEIGEN__::__M_Mat_multiply(Tx, g1));
+            __GEIGEN__::__normalized_vec9_double(q11);
+            __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                __GEIGEN__::__M_Mat_multiply(Tz, g1));
+            __GEIGEN__::__normalized_vec9_double(q12);
+
+            __GEIGEN__::Matrix9x9d projectedH;
+            __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+            __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+            M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+            projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+            M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+            M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+            projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+            double lambda20 =
+                -Kappa
+                * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                   * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2 - 6 * I2 * I2 * log(I2) + 1))
+                / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                   * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 6 * I2 * log(I2) - 2 * I2 * I2 + I2 * log(I2) * log(I2)
+                      - 7 * I2 * I2 * log(I2) - 2))
+                / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                   * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 12 * I2 * log(I2) - 12 * I2 * I2
+                      + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double lambda20 =
+                Kappa
+                * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                   * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                      + 18 * I2 * log(I2) - 30 * I2 * I2
+                      + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                / (I2 * (eps_x * eps_x));
+#endif
+
+#if (RANK == 1)
+            double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                               * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                   * (I2 + 2 * I2 * log(I2) - 1))
+                                  / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                  * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                               / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                  * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                               / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                               * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                  * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                               / (I2 * (eps_x * eps_x));
+#endif
+            Eigen::Matrix2d FMat2;
+            FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+            makePDGeneral<double, 2>(FMat2);
+            projectedH.m[4][4] += FMat2(0, 0);
+            projectedH.m[4][8] += FMat2(0, 1);
+            projectedH.m[8][4] += FMat2(1, 0);
+            projectedH.m[8][8] += FMat2(1, 1);
+
+            //__GEIGEN__::Matrix9x12d PFPxTransPos = __GEIGEN__::__Transpose12x9(PFPx);
+            __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPx, projectedH), PFPxTransPos);
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+            int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 4, 1);
+
+            uint4 global_index =
+                make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+            int triplet_id_offset = Hidx * M12_Off;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.z = -MMCVIDI.z - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                double dis;
+                _d_PP(_vertexes[MMCVIDI.x], _vertexes[MMCVIDI.y], dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.z],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.w]);
+
+                __GEIGEN__::Matrix3x3d g1, g2;
+
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+                __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+                __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppp(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+
+#if (RANK == 1)
+                double p1 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double p2 = Kappa * 2
+                            * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                               * (I2 + 2 * I2 * log(I2) - 1))
+                            / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * log(I2) * log(I2)
+                               * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                            / (I2 * (eps_x * eps_x));
+#endif
+                __GEIGEN__::Vector9 flatten_pk1 =
+                    __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                       __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+                __GEIGEN__::Vector12 gradient_vec =
+                    __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+                {
+                    atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+                }
+
+#if (RANK == 1)
+                double lambda10 =
+                    Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                    / (eps_x * eps_x);
+                double lambda11 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double lambda12 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 4)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 6)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#endif
+                __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+                __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+                __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+                __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+                __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tx, g1));
+                __GEIGEN__::__normalized_vec9_double(q11);
+                __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tz, g1));
+                __GEIGEN__::__normalized_vec9_double(q12);
+
+                __GEIGEN__::Matrix9x9d projectedH;
+                __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+                __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+                M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+                double lambda20 = -Kappa
+                                  * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                                     * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2
+                                        - 6 * I2 * I2 * log(I2) + 1))
+                                  / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                       * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 6 * I2 * log(I2) - 2 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 7 * I2 * I2 * log(I2) - 2))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                       * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 12 * I2 * log(I2) - 12 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                       * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 18 * I2 * log(I2) - 30 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                    / (I2 * (eps_x * eps_x));
+#endif
+
+#if (RANK == 1)
+                double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                                   * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                       * (I2 + 2 * I2 * log(I2) - 1))
+                                      / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                      * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                      * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                      * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                                   / (I2 * (eps_x * eps_x));
+#endif
+                Eigen::Matrix2d FMat2;
+                FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+                makePDGeneral<double, 2>(FMat2);
+                projectedH.m[4][4] += FMat2(0, 0);
+                projectedH.m[4][8] += FMat2(0, 1);
+                projectedH.m[8][4] += FMat2(1, 0);
+                projectedH.m[8][8] += FMat2(1, 1);
+
+                //__GEIGEN__::Matrix9x12d PFPxTransPos = __GEIGEN__::__Transpose12x9(PFPx);
+                __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPx, projectedH), PFPxTransPos);
+                __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+                int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 4, 1);
+
+                uint4 global_index =
+                    make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+                int triplet_id_offset = Hidx * M12_Off;
+                write_triplet<12, 12>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PP(_vertexes[v0I], _vertexes[MMCVIDI.y], dis);
+                dis                            = sqrt(dis);
+                double              d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Vector6 PFPxT;
+                pFpx_pp2(_vertexes[v0I], _vertexes[MMCVIDI.y], d_hat_sqrt, PFPxT);
+                double I5  = pow(dis / d_hat_sqrt, 2);
+                double fnn = dis / d_hat_sqrt;
+
+#if (RANK == 1)
+                double flatten_pk1 =
+                    fnn * 2 * Kappa
+                    * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5;
+#elif (RANK == 2)
+                double flatten_pk1 = fnn * 2
+                                     * (2 * Kappa * dHat * dHat * log(I5)
+                                        * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                                     / I5;
+#elif (RANK == 3)
+                double flatten_pk1 = fnn * -2
+                                     * (Kappa * dHat * dHat * log(I5) * log(I5)
+                                        * (I5 - 1) * (3 * I5 + 2 * I5 * log(I5) - 3))
+                                     / I5;
+#elif (RANK == 4)
+                double flatten_pk1 =
+                    fnn
+                    * (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5;
+#elif (RANK == 5)
+                double flatten_pk1 =
+                    fnn * -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5;
+#elif (RANK == 6)
+                double flatten_pk1 =
+                    fnn
+                    * (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5;
+#endif
+
+                __GEIGEN__::Vector6 gradient_vec =
+                    __GEIGEN__::__s_vec6_multiply(PFPxT, flatten_pk1);
+
+#else
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 Ds  = v0;
+                double  dis = __GEIGEN__::__norm(v0);
+                //if (dis > dHat_sqrt) return;
+                double3 vec_normal =
+                    __GEIGEN__::__normalized(make_double3(-v0.x, -v0.y, -v0.z));
+                double3 target = make_double3(0, 1, 0);
+                double3 vec    = __GEIGEN__::__v_vec_cross(vec_normal, target);
+                double  cos    = __GEIGEN__::__v_vec_dot(vec_normal, target);
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+                __GEIGEN__::Vector6 PDmPx;
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(vec_normal, dHat_sqrt - dis));
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+
+                double uv0 = rotate_uv0.y;
+                double uv1 = rotate_uv1.y;
+
+                double u0    = uv1 - uv0;
+                double Dm    = u0;  //PFPx
+                double DmInv = 1 / u0;
+
+                double3 F  = __GEIGEN__::__s_vec_multiply(Ds, DmInv);
+                double  I5 = __GEIGEN__::__squaredNorm(F);
+
+                double3 tmp = F;
+
+#if (RANK == 1)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+
+#elif (RANK == 3)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+                __GEIGEN__::Matrix3x6d PFPx = __computePFDsPX3D_3x6_double(DmInv);
+
+                __GEIGEN__::Vector6 gradient_vec =
+                    __GEIGEN__::__M6x3_v3_multiply(__GEIGEN__::__Transpose3x6(PFPx), flatten_pk1);
+#endif
+
+
+                {
+                    atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                }
+
+#if (RANK == 1)
+                double lambda0 = Kappa
+                                 * (2 * dHat * dHat
+                                    * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                       - 6 * I5 * I5 * log(I5) + 1))
+                                 / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        Kappa
+                        * (2 * dHat * dHat
+                           * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                              - 7 * gassThreshold * gassThreshold
+                              - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 2)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        -(4 * Kappa * dHat * dHat
+                          * (4 * gassThreshold + log(gassThreshold)
+                             - 3 * gassThreshold * gassThreshold
+                                   * log(gassThreshold) * log(gassThreshold)
+                             + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                             + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                             - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 3)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5)
+                     * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 18 * I5 * log(I5) - 12 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 4)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                      * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 12 * I5 * log(I5) - 12 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 14 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 5)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 30 * I5 * log(I5) - 40 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                    / I5;
+#elif (RANK == 6)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                      * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 18 * I5 * log(I5) - 30 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 30))
+                    / I5;
+#endif
+
+
+#ifdef NEWF
+                double                 H       = lambda0;
+                __GEIGEN__::Matrix6x6d Hessian = __GEIGEN__::__s_M6x6_Multiply(
+                    __GEIGEN__::__v6_vec6_toMat6x6(PFPxT, PFPxT), H);
+#else
+                double3 q0 = __GEIGEN__::__s_vec_multiply(F, 1 / sqrt(I5));
+
+                __GEIGEN__::Matrix3x3d H =
+                    __GEIGEN__::__S_Mat_multiply(__GEIGEN__::__v_vec_toMat(q0, q0),
+                                                 lambda0);  //lambda0 * q0 * q0.transpose();
+
+                __GEIGEN__::Matrix6x3d PFPxTransPos = __GEIGEN__::__Transpose3x6(PFPx);
+                __GEIGEN__::Matrix6x6d Hessian = __GEIGEN__::__M6x3_M3x6_Multiply(
+                    __GEIGEN__::__M6x3_M3x3_Multiply(PFPxTransPos, H), PFPx);
+#endif
+                int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 2, 1);
+
+                //H6x6[Hidx]    = Hessian;
+                uint2 global_index = make_uint2(v0I, MMCVIDI.y);
+                //D2Index[Hidx]      = global_index;
+
+                int triplet_id_offset = Hidx * M6_Off + offset3 * M9_Off + offset4 * M12_Off;
+                write_triplet<6, 6>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.x = v0I;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                double dis;
+                _d_PE(_vertexes[MMCVIDI.x],
+                      _vertexes[MMCVIDI.y],
+                      _vertexes[MMCVIDI.z],
+                      dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.w],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.z]);
+
+                __GEIGEN__::Matrix3x3d g1, g2;
+
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+                __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+                __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppe(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+
+#if (RANK == 1)
+                double p1 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double p2 = Kappa * 2
+                            * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                               * (I2 + 2 * I2 * log(I2) - 1))
+                            / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * log(I2) * log(I2)
+                               * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                            / (I2 * (eps_x * eps_x));
+#endif
+                __GEIGEN__::Vector9 flatten_pk1 =
+                    __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                       __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+                __GEIGEN__::Vector12 gradient_vec =
+                    __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+                {
+                    atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+                }
+
+#if (RANK == 1)
+                double lambda10 =
+                    Kappa * (4 * dHat * dHat * log(I2) * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                    / (eps_x * eps_x);
+                double lambda11 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double lambda12 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * log(I2) * log(I2)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 4)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 4)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#elif (RANK == 6)
+                double lambda10 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I2 - 1) * (I2 - 1) * (3 * I1 - eps_x))
+                                  / (eps_x * eps_x);
+                double lambda11 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+                double lambda12 = -Kappa
+                                  * (4 * dHat * dHat * pow(log(I2), 6)
+                                     * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                                  / (eps_x * eps_x);
+#endif
+                __GEIGEN__::Matrix3x3d Tx, Ty, Tz;
+                __GEIGEN__::__set_Mat_val(Tx, 0, 0, 0, 0, 0, 1, 0, -1, 0);
+                __GEIGEN__::__set_Mat_val(Ty, 0, 0, -1, 0, 0, 0, 1, 0, 0);
+                __GEIGEN__::__set_Mat_val(Tz, 0, 1, 0, -1, 0, 0, 0, 0, 0);
+
+                __GEIGEN__::Vector9 q11 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tx, g1));
+                __GEIGEN__::__normalized_vec9_double(q11);
+                __GEIGEN__::Vector9 q12 = __GEIGEN__::__Mat3x3_to_vec9_double(
+                    __GEIGEN__::__M_Mat_multiply(Tz, g1));
+                __GEIGEN__::__normalized_vec9_double(q12);
+
+                __GEIGEN__::Matrix9x9d projectedH;
+                __GEIGEN__::__init_Mat9x9(projectedH, 0);
+
+                __GEIGEN__::Matrix9x9d M9_temp = __GEIGEN__::__v9_vec9_toMat9x9(q11, q11);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda11);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+                M9_temp    = __GEIGEN__::__v9_vec9_toMat9x9(q12, q12);
+                M9_temp    = __GEIGEN__::__S_Mat9x9_multiply(M9_temp, lambda12);
+                projectedH = __GEIGEN__::__Mat9x9_add(projectedH, M9_temp);
+
+#if (RANK == 1)
+                double lambda20 = -Kappa
+                                  * (2 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                                     * (6 * I2 + 2 * I2 * log(I2) - 7 * I2 * I2
+                                        - 6 * I2 * I2 * log(I2) + 1))
+                                  / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * (I1 - 2 * eps_x)
+                       * (4 * I2 + log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 6 * I2 * log(I2) - 2 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 7 * I2 * I2 * log(I2) - 2))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * log(I2) * log(I2) * (I1 - 2 * eps_x)
+                       * (24 * I2 + 2 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 12 * I2 * log(I2) - 12 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 14 * I2 * I2 * log(I2) - 12))
+                    / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambda20 =
+                    Kappa
+                    * (4 * I1 * dHat * dHat * pow(log(I2), 4) * (I1 - 2 * eps_x)
+                       * (60 * I2 + 3 * log(I2) - 3 * I2 * I2 * log(I2) * log(I2)
+                          + 18 * I2 * log(I2) - 30 * I2 * I2
+                          + I2 * log(I2) * log(I2) - 21 * I2 * I2 * log(I2) - 30))
+                    / (I2 * (eps_x * eps_x));
+#endif
+
+#if (RANK == 1)
+                double lambdag1g = Kappa * 4 * c * F.m[2][2]
+                                   * ((2 * dHat * dHat * (I1 - eps_x) * (I2 - 1)
+                                       * (I2 + 2 * I2 * log(I2) - 1))
+                                      / (I2 * eps_x * eps_x));
+#elif (RANK == 2)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * log(I2) * (I1 - eps_x)
+                                      * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 3) * (I1 - eps_x)
+                                      * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                                   / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double lambdag1g = -Kappa * 4 * c * F.m[2][2]
+                                   * (4 * dHat * dHat * pow(log(I2), 5) * (I1 - eps_x)
+                                      * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                                   / (I2 * (eps_x * eps_x));
+#endif
+                Eigen::Matrix2d FMat2;
+                FMat2 << lambda10, lambdag1g, lambdag1g, lambda20;
+                makePDGeneral<double, 2>(FMat2);
+                projectedH.m[4][4] += FMat2(0, 0);
+                projectedH.m[4][8] += FMat2(0, 1);
+                projectedH.m[8][4] += FMat2(1, 0);
+                projectedH.m[8][8] += FMat2(1, 1);
+
+                //__GEIGEN__::Matrix9x12d PFPxTransPos = __GEIGEN__::__Transpose12x9(PFPx);
+                __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPx, projectedH), PFPxTransPos);
+                __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPx, projectedH, Hessian);
+                int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 4, 1);
+
+                uint4 global_index =
+                    make_uint4(MMCVIDI.x, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+
+                int triplet_id_offset = Hidx * M12_Off;
+                write_triplet<12, 12>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PE(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dis);
+                dis                               = sqrt(dis);
+                double                 d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Matrix9x4d PFPxT;
+                pFpx_pe2(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], d_hat_sqrt, PFPxT);
+                double              I5 = pow(dis / d_hat_sqrt, 2);
+                __GEIGEN__::Vector4 fnn;
+                fnn.v[0] = fnn.v[1] = fnn.v[2] = 0;  // = fnn.v[3] = fnn.v[4] = 1;
+                fnn.v[3] = dis / d_hat_sqrt;
+                //__GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(fnn, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+                __GEIGEN__::Vector4 q0;
+                q0.v[0] = q0.v[1] = q0.v[2] = 0;
+                q0.v[3]                     = 1;
+                __GEIGEN__::Matrix4x4d H;
+                //__GEIGEN__::__init_Mat4x4_val(H, 0);
+#if (RANK == 1)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+#elif (RANK == 3)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+
+                __GEIGEN__::Vector9 gradient_vec =
+                    __GEIGEN__::__M9x4_v4_multiply(PFPxT, flatten_pk1);
+#else
+
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+
+
+                __GEIGEN__::Matrix3x2d Ds;
+                __GEIGEN__::__set_Mat3x2_val_column(Ds, v0, v1);
+
+                double3 triangle_normal =
+                    __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(v0, v1));
+                double3 target = make_double3(0, 1, 0);
+
+                double3 vec = __GEIGEN__::__v_vec_cross(triangle_normal, target);
+                double cos = __GEIGEN__::__v_vec_dot(triangle_normal, target);
+
+                double3 edge_normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z]),
+                    triangle_normal));
+                double dis = __GEIGEN__::__v_vec_dot(
+                    __GEIGEN__::__minus(_vertexes[v0I], _vertexes[MMCVIDI.y]), edge_normal);
+
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+                __GEIGEN__::Matrix9x4d PDmPx;
+
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(edge_normal, dHat_sqrt - dis));
+
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+                double3 rotate_uv2 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.z]);
+                double3 rotate_normal = __GEIGEN__::__M_v_multiply(rotation, edge_normal);
+
+                double2 uv0    = make_double2(rotate_uv0.x, rotate_uv0.z);
+                double2 uv1    = make_double2(rotate_uv1.x, rotate_uv1.z);
+                double2 uv2    = make_double2(rotate_uv2.x, rotate_uv2.z);
+                double2 normal = make_double2(rotate_normal.x, rotate_normal.z);
+
+                double2 u0 = __GEIGEN__::__minus_v2(uv1, uv0);
+                double2 u1 = __GEIGEN__::__minus_v2(uv2, uv0);
+
+                __GEIGEN__::Matrix2x2d Dm;
+
+                __GEIGEN__::__set_Mat2x2_val_column(Dm, u0, u1);
+
+                __GEIGEN__::Matrix2x2d DmInv;
+                __GEIGEN__::__Inverse2x2(Dm, DmInv);
+
+                __GEIGEN__::Matrix3x2d F = __GEIGEN__::__M3x2_M2x2_Multiply(Ds, DmInv);
+
+                double3 FxN = __GEIGEN__::__M3x2_v2_multiply(F, normal);
+                double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+                __GEIGEN__::Matrix3x2d fnn;
+
+                __GEIGEN__::Matrix2x2d nn = __GEIGEN__::__v2_vec2_toMat2x2(normal, normal);
+
+                fnn = __GEIGEN__::__M3x2_M2x2_Multiply(F, nn);
+
+                __GEIGEN__::Vector6 tmp = __GEIGEN__::__Mat3x2_to_vec6_double(fnn);
+
+#if (RANK == 1)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+#elif (RANK == 3)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+
+                __GEIGEN__::Matrix6x9d PFPx = __computePFDsPX3D_6x9_double(DmInv);
+
+                __GEIGEN__::Vector9 gradient_vec =
+                    __GEIGEN__::__M9x6_v6_multiply(__GEIGEN__::__Transpose6x9(PFPx), flatten_pk1);
+#endif
+
+                {
+                    atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                }
+
+#if (RANK == 1)
+                double lambda0 = Kappa
+                                 * (2 * dHat * dHat
+                                    * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                       - 6 * I5 * I5 * log(I5) + 1))
+                                 / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        Kappa
+                        * (2 * dHat * dHat
+                           * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                              - 7 * gassThreshold * gassThreshold
+                              - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 2)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                if(dis * dis < gassThreshold * dHat)
+                {
+                    double lambda1 =
+                        -(4 * Kappa * dHat * dHat
+                          * (4 * gassThreshold + log(gassThreshold)
+                             - 3 * gassThreshold * gassThreshold
+                                   * log(gassThreshold) * log(gassThreshold)
+                             + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                             + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                             - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                        / gassThreshold;
+                    lambda0 = lambda1;
+                }
+#elif (RANK == 3)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5)
+                     * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 18 * I5 * log(I5) - 12 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 4)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                      * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 12 * I5 * log(I5) - 12 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 14 * I5 * I5 * log(I5) - 12))
+                    / I5;
+#elif (RANK == 5)
+                double lambda0 =
+                    (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                        + 30 * I5 * log(I5) - 40 * I5 * I5
+                        + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                    / I5;
+#elif (RANK == 6)
+                double lambda0 =
+                    -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                      * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 18 * I5 * log(I5) - 30 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 30))
+                    / I5;
+#endif
+
+
+#ifdef NEWF
+                H = __GEIGEN__::__S_Mat4x4_multiply(
+                    __GEIGEN__::__v4_vec4_toMat4x4(q0, q0), lambda0);
+
+                __GEIGEN__::Matrix9x9d Hessian;  // = __GEIGEN__::__M9x4_M4x9_Multiply(__GEIGEN__::__M9x4_M4x4_Multiply(PFPxT, H), __GEIGEN__::__Transpose9x4(PFPxT));
+                __GEIGEN__::__M9x4_S4x4_MT4x9_Multiply(PFPxT, H, Hessian);
+#else
+
+                __GEIGEN__::Vector6 q0 = __GEIGEN__::__Mat3x2_to_vec6_double(fnn);
+
+                q0 = __GEIGEN__::__s_vec6_multiply(q0, 1.0 / sqrt(I5));
+
+                __GEIGEN__::Matrix6x6d H;
+                __GEIGEN__::__init_Mat6x6(H, 0);
+
+                H = __GEIGEN__::__S_Mat6x6_multiply(
+                    __GEIGEN__::__v6_vec6_toMat6x6(q0, q0), lambda0);
+
+                __GEIGEN__::Matrix9x6d PFPxTransPos = __GEIGEN__::__Transpose6x9(PFPx);
+                __GEIGEN__::Matrix9x9d Hessian = __GEIGEN__::__M9x6_M6x9_Multiply(
+                    __GEIGEN__::__M9x6_M6x6_Multiply(PFPxTransPos, H), PFPx);
+#endif
+                int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 3, 1);
+
+                //H9x9[Hidx]    = Hessian;
+
+                uint3 global_index = make_uint3(v0I, MMCVIDI.y, MMCVIDI.z);
+
+                //D3Index[Hidx] = global_index;
+
+                int triplet_id_offset = Hidx * M9_Off + offset4 * M12_Off;
+                write_triplet<9, 9>(
+                    triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            }
+        }
+        else
+        {
+#ifdef NEWF
+            double dis;
+            _d_PT(_vertexes[v0I],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            dis                                = sqrt(dis);
+            double                  d_hat_sqrt = sqrt(dHat);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_pt2(_vertexes[v0I],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     d_hat_sqrt,
+                     PFPxT);
+            double              I5 = pow(dis / d_hat_sqrt, 2);
+            __GEIGEN__::Vector9 tmp;
+            tmp.v[0] = tmp.v[1] = tmp.v[2] = tmp.v[3] = tmp.v[4] = tmp.v[5] =
+                tmp.v[6] = tmp.v[7] = 0;
+            tmp.v[8]                = dis / d_hat_sqrt;
+
+            __GEIGEN__::Vector9 q0;
+            q0.v[0] = q0.v[1] = q0.v[2] = q0.v[3] = q0.v[4] = q0.v[5] =
+                q0.v[6] = q0.v[7] = 0;
+            q0.v[8]               = 1;
+
+            __GEIGEN__::Matrix9x9d H;
+            //__GEIGEN__::__init_Mat9x9(H, 0);
+#else
+            double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+            double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+            double3 v2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[v0I]);
+
+            __GEIGEN__::Matrix3x3d Ds;
+            __GEIGEN__::__set_Mat_val_column(Ds, v0, v1, v2);
+
+            double3 normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y])));
+            double  dis    = __GEIGEN__::__v_vec_dot(v0, normal);
+            //if (abs(dis) > dHat_sqrt) return;
+            __GEIGEN__::Matrix12x9d PDmPx;
+            //bool is_flip = false;
+
+            if(dis > 0)
+            {
+                //is_flip = true;
+                normal = make_double3(-normal.x, -normal.y, -normal.z);
+                //pDmpx_pt_flip(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], _vertexes[MMCVIDI.w], dHat_sqrt, PDmPx);
+                //printf("dHat_sqrt = %f,   dis = %f\n", dHat_sqrt, dis);
+            }
+            else
+            {
+                dis = -dis;
+                //pDmpx_pt(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], _vertexes[MMCVIDI.w], dHat_sqrt, PDmPx);
+                //printf("dHat_sqrt = %f,   dis = %f\n", dHat_sqrt, dis);
+            }
+
+            double3 pos0 = __GEIGEN__::__add(
+                _vertexes[v0I], __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+
+
+            double3 u0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], pos0);
+            double3 u1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], pos0);
+            double3 u2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], pos0);
+
+            __GEIGEN__::Matrix3x3d Dm, DmInv;
+            __GEIGEN__::__set_Mat_val_column(Dm, u0, u1, u2);
+
+            __GEIGEN__::__Inverse(Dm, DmInv);
+
+            __GEIGEN__::Matrix3x3d F;  //, Ftest;
+            __GEIGEN__::__M_Mat_multiply(Ds, DmInv, F);
+            //__GEIGEN__::__M_Mat_multiply(Dm, DmInv, Ftest);
+
+            double3 FxN = __GEIGEN__::__M_v_multiply(F, normal);
+            double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+            //printf("I5 = %f,   dist/dHat_sqrt = %f\n", I5, (dis / dHat_sqrt)* (dis / dHat_sqrt));
+
+
+            __GEIGEN__::Matrix9x12d PFPx = __computePFDsPX3D_double(DmInv);
+
+            __GEIGEN__::Matrix3x3d fnn;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 tmp = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+#endif
+#if (RANK == 1)
+            double lambda0 =
+                Kappa
+                * (2 * dHat * dHat
+                   * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    Kappa
+                    * (2 * dHat * dHat
+                       * (6 * gassThreshold + 2 * gassThreshold * log(gassThreshold)
+                          - 7 * gassThreshold * gassThreshold
+                          - 6 * gassThreshold * gassThreshold * log(gassThreshold) + 1))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 2)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat
+                  * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5) + 6 * I5 * log(I5)
+                     - 2 * I5 * I5 + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                / I5;
+            if(dis * dis < gassThreshold * dHat)
+            {
+                double lambda1 =
+                    -(4 * Kappa * dHat * dHat
+                      * (4 * gassThreshold + log(gassThreshold)
+                         - 3 * gassThreshold * gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         + 6 * gassThreshold * log(gassThreshold) - 2 * gassThreshold * gassThreshold
+                         + gassThreshold * log(gassThreshold) * log(gassThreshold)
+                         - 7 * gassThreshold * gassThreshold * log(gassThreshold) - 2))
+                    / gassThreshold;
+                lambda0 = lambda1;
+            }
+#elif (RANK == 3)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5)
+                 * (24 * I5 + 3 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 18 * I5 * log(I5) - 12 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 21 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 4)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5)
+                  * (24 * I5 + 2 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 12 * I5 * log(I5) - 12 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 14 * I5 * I5 * log(I5) - 12))
+                / I5;
+#elif (RANK == 5)
+            double lambda0 =
+                (2 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (80 * I5 + 5 * log(I5) - 6 * I5 * I5 * log(I5) * log(I5)
+                    + 30 * I5 * log(I5) - 40 * I5 * I5
+                    + 2 * I5 * log(I5) * log(I5) - 35 * I5 * I5 * log(I5) - 40))
+                / I5;
+#elif (RANK == 6)
+            double lambda0 =
+                -(4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                  * (60 * I5 + 3 * log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                     + 18 * I5 * log(I5) - 30 * I5 * I5 + I5 * log(I5) * log(I5)
+                     - 21 * I5 * I5 * log(I5) - 30))
+                / I5;
+#endif
+
+#if (RANK == 1)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+#elif (RANK == 3)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                       * (3 * I5 + 2 * I5 * log(I5) - 3))
+                    / I5);
+#elif (RANK == 4)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5);
+#elif (RANK == 5)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5);
+#elif (RANK == 6)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                 * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5);
+#endif
+
+#ifdef NEWF
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(PFPxT, flatten_pk1);
+#else
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(__GEIGEN__::__Transpose9x12(PFPx), flatten_pk1);
+#endif
+
+            atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+            atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+            atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+            atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+            atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+            atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+            atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+            atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+            atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+            atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+            atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+            atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+
+#ifdef NEWF
+
+            H = __GEIGEN__::__S_Mat9x9_multiply(__GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x12d Hessian;  // = __GEIGEN__::__M12x9_M9x12_Multiply(__GEIGEN__::__M12x9_M9x9_Multiply(PFPxT, H), __GEIGEN__::__Transpose12x9(PFPxT));
+            __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply(PFPxT, H, Hessian);
+#else
+
+            //__GEIGEN__::Matrix3x3d Q0;
+
+            //__GEIGEN__::Matrix3x3d fnn;
+
+            //__GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            //__GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 q0 = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+
+            q0 = __GEIGEN__::__s_vec9_multiply(q0, 1.0 / sqrt(I5));
+
+            __GEIGEN__::Matrix9x9d H = __GEIGEN__::__S_Mat9x9_multiply(
+                __GEIGEN__::__v9_vec9_toMat9x9(q0, q0), lambda0);
+
+            __GEIGEN__::Matrix12x9d PFPxTransPos = __GEIGEN__::__Transpose9x12(PFPx);
+            __GEIGEN__::Matrix12x12d Hessian = __GEIGEN__::__M12x9_M9x12_Multiply(
+                __GEIGEN__::__M12x9_M9x9_Multiply(PFPxTransPos, H), PFPx);
+#endif
+
+            int Hidx = matIndex[idx];  //int Hidx = atomicAdd(_cpNum + 4, 1);
+
+            //H12x12[Hidx]  = Hessian;
+            uint4 global_index = make_uint4(v0I, MMCVIDI.y, MMCVIDI.z, MMCVIDI.w);
+            //D4Index[Hidx]         = global_index;
+            int triplet_id_offset = Hidx * M12_Off;
+            write_triplet<12, 12>(
+                triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+        }
+    }
+}
+
+
+__global__ void _calSelfCloseVal(const double3* _vertexes,
+                                 const int4*    _collisionPair,
+                                 int4*          _close_collisionPair,
+                                 double*        _close_collisionVal,
+                                 uint32_t*      _close_cpNum,
+                                 double         dTol,
+                                 int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI = _collisionPair[idx];
+    double dist2   = _selfConstraintVal(_vertexes, MMCVIDI);
+    if(dist2 < dTol)
+    {
+        int tidx                   = atomicAdd(_close_cpNum, 1);
+        _close_collisionPair[tidx] = MMCVIDI;
+        _close_collisionVal[tidx]  = dist2;
+    }
+}
+
+__global__ void _checkSelfCloseVal(const double3* _vertexes,
+                                   int*           _isChange,
+                                   int4*          _close_collisionPair,
+                                   double*        _close_collisionVal,
+                                   int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI = _close_collisionPair[idx];
+    double dist2   = _selfConstraintVal(_vertexes, MMCVIDI);
+    if(dist2 < _close_collisionVal[idx])
+    {
+        *_isChange = 1;
+    }
+}
+
+
+__global__ void _reduct_MSelfDist(const double3* _vertexes,
+                                  int4*          _collisionPairs,
+                                  double2*       _queue,
+                                  int            number)
+{
+    int                       idof = blockIdx.x * blockDim.x;
+    int                       idx  = threadIdx.x + idof;
+    extern __shared__ double2 sdata[];
+
+    if(idx >= number)
+        return;
+    int4    MMCVIDI = _collisionPairs[idx];
+    double  tempv   = _selfConstraintVal(_vertexes, MMCVIDI);
+    double2 temp    = make_double2(1.0 / tempv, tempv);
+    int     warpTid = threadIdx.x % 32;
+    int     warpId  = (threadIdx.x >> 5);
+    double  nextTp;
+    int     warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMin = __shfl_down_sync(0xffffffff, temp.x, i);
+        double tempMax = __shfl_down_sync(0xffffffff, temp.y, i);
+        temp.x         = std::max(temp.x, tempMin);
+        temp.y         = std::max(temp.y, tempMax);
+    }
+    if(warpTid == 0)
+    {
+        sdata[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = sdata[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMin = __shfl_down_sync(0xffffffff, temp.x, i);
+            double tempMax = __shfl_down_sync(0xffffffff, temp.y, i);
+            temp.x         = std::max(temp.x, tempMin);
+            temp.y         = std::max(temp.y, tempMax);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        _queue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _calFrictionGradient_gd(const double3* _vertexes,
+                                        const double3* _o_vertexes,
+                                        const double3* _normal,
+                                        const uint32_t* _last_collisionPair_gd,
+                                        double3* _gradient,
+                                        int      number,
+                                        double   dt,
+                                        double   eps2,
+                                        double*  lastH,
+                                        double   coef)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double   eps    = sqrt(eps2);
+    double3  normal = *_normal;
+    uint32_t gidx   = _last_collisionPair_gd[idx];
+    double3  Vdiff  = __GEIGEN__::__minus(_vertexes[gidx], _o_vertexes[gidx]);
+    double3  VProj  = __GEIGEN__::__minus(
+        Vdiff, __GEIGEN__::__s_vec_multiply(normal, __GEIGEN__::__v_vec_dot(Vdiff, normal)));
+    double VProjMag2 = __GEIGEN__::__squaredNorm(VProj);
+    if(VProjMag2 > eps2)
+    {
+        double3 gdf =
+            __GEIGEN__::__s_vec_multiply(VProj, coef * lastH[idx] / sqrt(VProjMag2));
+        /*atomicAdd(&(_gradient[gidx].x), gdf.x);
+        atomicAdd(&(_gradient[gidx].y), gdf.y);
+        atomicAdd(&(_gradient[gidx].z), gdf.z);*/
+        _gradient[gidx] = __GEIGEN__::__add(_gradient[gidx], gdf);
+    }
+    else
+    {
+        double3 gdf = __GEIGEN__::__s_vec_multiply(VProj, coef * lastH[idx] / eps);
+        /*atomicAdd(&(_gradient[gidx].x), gdf.x);
+        atomicAdd(&(_gradient[gidx].y), gdf.y);
+        atomicAdd(&(_gradient[gidx].z), gdf.z);*/
+        _gradient[gidx] = __GEIGEN__::__add(_gradient[gidx], gdf);
+    }
+}
+
+__global__ void _calFrictionGradient(const double3*    _vertexes,
+                                     const double3*    _o_vertexes,
+                                     const int4* _last_collisionPair,
+                                     double3*          _gradient,
+                                     int               number,
+                                     double            dt,
+                                     double2*          distCoord,
+                                     __GEIGEN__::Matrix3x2d* tanBasis,
+                                     double                  eps2,
+                                     double*                 lastH,
+                                     double                  coef)
+{
+    double eps = std::sqrt(eps2);
+    int    idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4    MMCVIDI = _last_collisionPair[idx];
+    double3 relDX3D;
+    if(MMCVIDI.x >= 0)
+    {
+        Friction::computeRelDX_EE(
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+            __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+            distCoord[idx].x,
+            distCoord[idx].y,
+            relDX3D);
+
+        __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+        double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+        double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+        if(relDXSqNorm > eps2)
+        {
+            relDX = __GEIGEN__::__s_vec_multiply(relDX, 1.0 / sqrt(relDXSqNorm));
+        }
+        else
+        {
+            double f1_div_relDXNorm;
+            Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+            relDX = __GEIGEN__::__s_vec_multiply(relDX, f1_div_relDXNorm);
+        }
+        __GEIGEN__::Vector12 TTTDX;
+        Friction::liftRelDXTanToMesh_EE(
+            relDX, tanBasis[idx], distCoord[idx].x, distCoord[idx].y, TTTDX);
+        TTTDX = __GEIGEN__::__s_vec12_multiply(TTTDX, lastH[idx] * coef);
+        {
+            atomicAdd(&(_gradient[MMCVIDI.x].x), TTTDX.v[0]);
+            atomicAdd(&(_gradient[MMCVIDI.x].y), TTTDX.v[1]);
+            atomicAdd(&(_gradient[MMCVIDI.x].z), TTTDX.v[2]);
+            atomicAdd(&(_gradient[MMCVIDI.y].x), TTTDX.v[3]);
+            atomicAdd(&(_gradient[MMCVIDI.y].y), TTTDX.v[4]);
+            atomicAdd(&(_gradient[MMCVIDI.y].z), TTTDX.v[5]);
+            atomicAdd(&(_gradient[MMCVIDI.z].x), TTTDX.v[6]);
+            atomicAdd(&(_gradient[MMCVIDI.z].y), TTTDX.v[7]);
+            atomicAdd(&(_gradient[MMCVIDI.z].z), TTTDX.v[8]);
+            atomicAdd(&(_gradient[MMCVIDI.w].x), TTTDX.v[9]);
+            atomicAdd(&(_gradient[MMCVIDI.w].y), TTTDX.v[10]);
+            atomicAdd(&(_gradient[MMCVIDI.w].z), TTTDX.v[11]);
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            MMCVIDI.x = v0I;
+
+            Friction::computeRelDX_PP(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                relDX3D);
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+            double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            if(relDXSqNorm > eps2)
+            {
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, 1.0 / sqrt(relDXSqNorm));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, f1_div_relDXNorm);
+            }
+
+            __GEIGEN__::Vector6 TTTDX;
+            Friction::liftRelDXTanToMesh_PP(relDX, tanBasis[idx], TTTDX);
+            TTTDX = __GEIGEN__::__s_vec6_multiply(TTTDX, lastH[idx] * coef);
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), TTTDX.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), TTTDX.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), TTTDX.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), TTTDX.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), TTTDX.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), TTTDX.v[5]);
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            MMCVIDI.x = v0I;
+            Friction::computeRelDX_PE(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                distCoord[idx].x,
+                relDX3D);
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX       = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+            double  relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            if(relDXSqNorm > eps2)
+            {
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, 1.0 / sqrt(relDXSqNorm));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, f1_div_relDXNorm);
+            }
+            __GEIGEN__::Vector9 TTTDX;
+            Friction::liftRelDXTanToMesh_PE(relDX, tanBasis[idx], distCoord[idx].x, TTTDX);
+            TTTDX = __GEIGEN__::__s_vec9_multiply(TTTDX, lastH[idx] * coef);
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), TTTDX.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), TTTDX.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), TTTDX.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), TTTDX.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), TTTDX.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), TTTDX.v[5]);
+                atomicAdd(&(_gradient[MMCVIDI.z].x), TTTDX.v[6]);
+                atomicAdd(&(_gradient[MMCVIDI.z].y), TTTDX.v[7]);
+                atomicAdd(&(_gradient[MMCVIDI.z].z), TTTDX.v[8]);
+            }
+        }
+        else
+        {
+            MMCVIDI.x = v0I;
+            Friction::computeRelDX_PT(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.x], _o_vertexes[MMCVIDI.x]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _o_vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _o_vertexes[MMCVIDI.z]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _o_vertexes[MMCVIDI.w]),
+                distCoord[idx].x,
+                distCoord[idx].y,
+                relDX3D);
+
+            __GEIGEN__::Matrix2x3d tB_T = __GEIGEN__::__Transpose3x2(tanBasis[idx]);
+            double2 relDX = __GEIGEN__::__M2x3_v3_multiply(tB_T, relDX3D);
+
+            double relDXSqNorm = __GEIGEN__::__squaredNorm(relDX);
+            if(relDXSqNorm > eps2)
+            {
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, 1.0 / sqrt(relDXSqNorm));
+            }
+            else
+            {
+                double f1_div_relDXNorm;
+                Friction::f1_SF_div_relDXNorm(relDXSqNorm, eps, f1_div_relDXNorm);
+                relDX = __GEIGEN__::__s_vec_multiply(relDX, f1_div_relDXNorm);
+            }
+            __GEIGEN__::Vector12 TTTDX;
+            Friction::liftRelDXTanToMesh_PT(
+                relDX, tanBasis[idx], distCoord[idx].x, distCoord[idx].y, TTTDX);
+            TTTDX = __GEIGEN__::__s_vec12_multiply(TTTDX, lastH[idx] * coef);
+
+            atomicAdd(&(_gradient[MMCVIDI.x].x), TTTDX.v[0]);
+            atomicAdd(&(_gradient[MMCVIDI.x].y), TTTDX.v[1]);
+            atomicAdd(&(_gradient[MMCVIDI.x].z), TTTDX.v[2]);
+            atomicAdd(&(_gradient[MMCVIDI.y].x), TTTDX.v[3]);
+            atomicAdd(&(_gradient[MMCVIDI.y].y), TTTDX.v[4]);
+            atomicAdd(&(_gradient[MMCVIDI.y].z), TTTDX.v[5]);
+            atomicAdd(&(_gradient[MMCVIDI.z].x), TTTDX.v[6]);
+            atomicAdd(&(_gradient[MMCVIDI.z].y), TTTDX.v[7]);
+            atomicAdd(&(_gradient[MMCVIDI.z].z), TTTDX.v[8]);
+            atomicAdd(&(_gradient[MMCVIDI.w].x), TTTDX.v[9]);
+            atomicAdd(&(_gradient[MMCVIDI.w].y), TTTDX.v[10]);
+            atomicAdd(&(_gradient[MMCVIDI.w].z), TTTDX.v[11]);
+        }
+    }
+}
+
+
+__global__ void _calBarrierGradient(const double3*    _vertexes,
+                                    const double3*    _rest_vertexes,
+                                    const int4* _collisionPair,
+                                    double3*          _gradient,
+                                    double            dHat,
+                                    double            Kappa,
+                                    int               number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI   = _collisionPair[idx];
+    double dHat_sqrt = sqrt(dHat);
+    //double dHat = dHat_sqrt * dHat_sqrt;
+    //double Kappa = 1;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+#ifdef NEWF
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            dis                                = sqrt(dis);
+            double                  d_hat_sqrt = sqrt(dHat);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_ee2(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     d_hat_sqrt,
+                     PFPxT);
+            double              I5 = pow(dis / d_hat_sqrt, 2);
+            __GEIGEN__::Vector9 tmp;
+            tmp.v[0] = tmp.v[1] = tmp.v[2] = tmp.v[3] = tmp.v[4] = tmp.v[5] =
+                tmp.v[6] = tmp.v[7] = 0;
+            tmp.v[8]                = dis / d_hat_sqrt;
+#else
+
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+            double3 v2 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+            __GEIGEN__::Matrix3x3d Ds;
+            __GEIGEN__::__set_Mat_val_column(Ds, v0, v1, v2);
+            double3 normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                v0, __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z])));
+            double  dis    = __GEIGEN__::__v_vec_dot(v1, normal);
+            if(dis < 0)
+            {
+                normal = make_double3(-normal.x, -normal.y, -normal.z);
+                dis    = -dis;
+            }
+
+            double3 pos2 =
+                __GEIGEN__::__add(_vertexes[MMCVIDI.z],
+                                  __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+            double3 pos3 =
+                __GEIGEN__::__add(_vertexes[MMCVIDI.w],
+                                  __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+
+            double3 u0 = v0;
+            double3 u1 = __GEIGEN__::__minus(pos2, _vertexes[MMCVIDI.x]);
+            double3 u2 = __GEIGEN__::__minus(pos3, _vertexes[MMCVIDI.x]);
+
+            __GEIGEN__::Matrix3x3d Dm, DmInv;
+            __GEIGEN__::__set_Mat_val_column(Dm, u0, u1, u2);
+
+            __GEIGEN__::__Inverse(Dm, DmInv);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__M_Mat_multiply(Ds, DmInv, F);
+
+            double3 FxN = __GEIGEN__::__M_v_multiply(F, normal);
+            double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+            __GEIGEN__::Matrix9x12d PFPx = __computePFDsPX3D_double(DmInv);
+
+            __GEIGEN__::Matrix3x3d fnn;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 tmp = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+
+#endif
+
+#if (RANK == 1)
+            double judge =
+                (2 * dHat * dHat
+                 * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            double judge2 = 2 * (dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1))
+                            / I5 * dis / d_hat_sqrt;
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+            //if (dis*dis<1e-2*dHat)
+            //flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5 / (I5) /*/ (I5) / (I5)*/);
+#elif (RANK == 2)
+            //__GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+
+            double judge = -(4 * dHat * dHat
+                             * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                                + 6 * I5 * log(I5) - 2 * I5 * I5
+                                + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                           / I5;
+            double judge2 =
+                2 * (2 * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                / I5 * dis / dHat_sqrt;
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+            //if (dis*dis<1e-2*dHat)
+            //flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5/I5);
+
+#elif (RANK == 3)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                       * (3 * I5 + 2 * I5 * log(I5) - 3))
+                    / I5);
+#elif (RANK == 4)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5);
+#elif (RANK == 5)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5);
+#elif (RANK == 6)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                 * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5);
+#endif
+
+#ifdef NEWF
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply((PFPxT), flatten_pk1);
+#else
+
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(__GEIGEN__::__Transpose9x12(PFPx), flatten_pk1);
+#endif
+
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+            }
+        }
+        else
+        {
+            //return;
+            MMCVIDI.w = -MMCVIDI.w - 1;
+            double3 v0 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.x]);
+            double3 v1 =
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.z]);
+            double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+            double I1 = c * c;
+            if(I1 == 0)
+                return;
+            double dis;
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            double I2 = dis / dHat;
+            dis       = sqrt(dis);
+
+            __GEIGEN__::Matrix3x3d F;
+            __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+            double3 n1 = make_double3(0, 1, 0);
+            double3 n2 = make_double3(0, 0, 1);
+
+            double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                        _rest_vertexes[MMCVIDI.y],
+                                        _rest_vertexes[MMCVIDI.z],
+                                        _rest_vertexes[MMCVIDI.w]);
+
+            __GEIGEN__::Matrix3x3d g1, g2;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+            __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+            nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+            __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+            __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+            __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+            __GEIGEN__::Matrix12x9d PFPx;
+            pFpx_pee(_vertexes[MMCVIDI.x],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     dHat_sqrt,
+                     PFPx);
+
+
+#if (RANK == 1)
+            double p1 = Kappa * 2
+                        * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = Kappa * 2
+                        * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                           * (I2 + 2 * I2 * log(I2) - 1))
+                        / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * log(I2) * log(I2) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                        / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                        / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+            double p1 = -Kappa * 2
+                        * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                           * (I2 - 1) * (I2 - 1))
+                        / (eps_x * eps_x);
+            double p2 = -Kappa * 2
+                        * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                           * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                        / (I2 * (eps_x * eps_x));
+#endif
+
+
+            __GEIGEN__::Vector9 flatten_pk1 =
+                __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                   __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+            {
+                atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+            }
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.z = -MMCVIDI.z - 1;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                MMCVIDI.x = v0I;
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                double dis;
+                _d_PP(_vertexes[MMCVIDI.x], _vertexes[MMCVIDI.y], dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.z],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.w]);
+
+                __GEIGEN__::Matrix3x3d g1, g2;
+
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+                __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+                __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppp(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+#if (RANK == 1)
+                double p1 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double p2 = Kappa * 2
+                            * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                               * (I2 + 2 * I2 * log(I2) - 1))
+                            / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * log(I2) * log(I2)
+                               * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                            / (I2 * (eps_x * eps_x));
+#endif
+                __GEIGEN__::Vector9 flatten_pk1 =
+                    __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                       __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+                __GEIGEN__::Vector12 gradient_vec =
+                    __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+                {
+                    atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+                }
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PP(_vertexes[v0I], _vertexes[MMCVIDI.y], dis);
+                dis                            = sqrt(dis);
+                double              d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Vector6 PFPxT;
+                pFpx_pp2(_vertexes[v0I], _vertexes[MMCVIDI.y], d_hat_sqrt, PFPxT);
+                double I5  = pow(dis / d_hat_sqrt, 2);
+                double fnn = dis / d_hat_sqrt;
+
+#if (RANK == 1)
+
+
+                double judge = (2 * dHat * dHat
+                                * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                   - 6 * I5 * I5 * log(I5) + 1))
+                               / I5;
+                double judge2 =
+                    2 * (dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1))
+                    / I5 * dis / d_hat_sqrt;
+                double flatten_pk1 =
+                    fnn * 2 * Kappa
+                    * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5;
+                //if (dis*dis<1e-2*dHat)
+                //flatten_pk1 = fnn * 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5 / (I5) /*/ (I5) / (I5)*/;
+#elif (RANK == 2)
+                //double flatten_pk1 = fnn * 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5;
+
+                double judge =
+                    -(4 * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                double judge2 =
+                    2 * (2 * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                    / I5 * dis / dHat_sqrt;
+                double flatten_pk1 = fnn * 2
+                                     * (2 * Kappa * dHat * dHat * log(I5)
+                                        * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                                     / I5;
+                //if (dis*dis<1e-2*dHat)
+                //flatten_pk1 = fnn * 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5/I5;
+
+#elif (RANK == 3)
+                double flatten_pk1 = fnn * -2
+                                     * (Kappa * dHat * dHat * log(I5) * log(I5)
+                                        * (I5 - 1) * (3 * I5 + 2 * I5 * log(I5) - 3))
+                                     / I5;
+#elif (RANK == 4)
+                double flatten_pk1 =
+                    fnn
+                    * (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5;
+#elif (RANK == 5)
+                double flatten_pk1 =
+                    fnn * -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5;
+#elif (RANK == 6)
+                double flatten_pk1 =
+                    fnn
+                    * (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5;
+#endif
+
+                __GEIGEN__::Vector6 gradient_vec =
+                    __GEIGEN__::__s_vec6_multiply(PFPxT, flatten_pk1);
+
+#else
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 Ds  = v0;
+                double  dis = __GEIGEN__::__norm(v0);
+                //if (dis > dHat_sqrt) return;
+                double3 vec_normal =
+                    __GEIGEN__::__normalized(make_double3(-v0.x, -v0.y, -v0.z));
+                double3 target = make_double3(0, 1, 0);
+                double3 vec    = __GEIGEN__::__v_vec_cross(vec_normal, target);
+                double  cos    = __GEIGEN__::__v_vec_dot(vec_normal, target);
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+                __GEIGEN__::Vector6 PDmPx;
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(vec_normal, dHat_sqrt - dis));
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+
+                double uv0 = rotate_uv0.y;
+                double uv1 = rotate_uv1.y;
+
+                double u0    = uv1 - uv0;
+                double Dm    = u0;  //PFPx
+                double DmInv = 1 / u0;
+
+                double3 F  = __GEIGEN__::__s_vec_multiply(Ds, DmInv);
+                double  I5 = __GEIGEN__::__squaredNorm(F);
+
+                double3 tmp = F;
+
+#if (RANK == 1)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+#elif (RANK == 3)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                double3 flatten_pk1 = __GEIGEN__::__s_vec_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+                __GEIGEN__::Matrix3x6d PFPx = __computePFDsPX3D_3x6_double(DmInv);
+
+                __GEIGEN__::Vector6 gradient_vec =
+                    __GEIGEN__::__M6x3_v3_multiply(__GEIGEN__::__Transpose3x6(PFPx), flatten_pk1);
+#endif
+
+
+                {
+                    atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                }
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y < 0)
+            {
+                MMCVIDI.y = -MMCVIDI.y - 1;
+                MMCVIDI.x = v0I;
+                MMCVIDI.w = -MMCVIDI.w - 1;
+                double3 v0 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.x]);
+                double3 v1 =
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]);
+                double c = __GEIGEN__::__norm(__GEIGEN__::__v_vec_cross(v0, v1)) /*/ __GEIGEN__::__norm(v0)*/;
+                double I1 = c * c;
+                if(I1 == 0)
+                    return;
+                double dis;
+                _d_PE(_vertexes[MMCVIDI.x],
+                      _vertexes[MMCVIDI.y],
+                      _vertexes[MMCVIDI.z],
+                      dis);
+                double I2 = dis / dHat;
+                dis       = sqrt(dis);
+
+                __GEIGEN__::Matrix3x3d F;
+                __GEIGEN__::__set_Mat_val(F, 1, 0, 0, 0, c, 0, 0, 0, dis / dHat_sqrt);
+                double3 n1 = make_double3(0, 1, 0);
+                double3 n2 = make_double3(0, 0, 1);
+
+                double eps_x = _compute_epx(_rest_vertexes[MMCVIDI.x],
+                                            _rest_vertexes[MMCVIDI.w],
+                                            _rest_vertexes[MMCVIDI.y],
+                                            _rest_vertexes[MMCVIDI.z]);
+
+                __GEIGEN__::Matrix3x3d g1, g2;
+
+                __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(n1, n1);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g1);
+                nn = __GEIGEN__::__v_vec_toMat(n2, n2);
+                __GEIGEN__::__M_Mat_multiply(F, nn, g2);
+
+                __GEIGEN__::Vector9 flatten_g1 = __GEIGEN__::__Mat3x3_to_vec9_double(g1);
+                __GEIGEN__::Vector9 flatten_g2 = __GEIGEN__::__Mat3x3_to_vec9_double(g2);
+
+                __GEIGEN__::Matrix12x9d PFPx;
+                pFpx_ppe(_vertexes[MMCVIDI.x],
+                         _vertexes[MMCVIDI.y],
+                         _vertexes[MMCVIDI.z],
+                         _vertexes[MMCVIDI.w],
+                         dHat_sqrt,
+                         PFPx);
+
+#if (RANK == 1)
+                double p1 =
+                    Kappa * 2
+                    * (2 * dHat * dHat * log(I2) * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                    / (eps_x * eps_x);
+                double p2 = Kappa * 2
+                            * (I1 * dHat * dHat * (I1 - 2 * eps_x) * (I2 - 1)
+                               * (I2 + 2 * I2 * log(I2) - 1))
+                            / (I2 * eps_x * eps_x);
+#elif (RANK == 2)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * log(I2) * log(I2)
+                               * (I1 - eps_x) * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * log(I2) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (I2 + I2 * log(I2) - 1))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 4)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 4) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 3) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (2 * I2 + I2 * log(I2) - 2))
+                            / (I2 * (eps_x * eps_x));
+#elif (RANK == 6)
+                double p1 = -Kappa * 2
+                            * (2 * dHat * dHat * pow(log(I2), 6) * (I1 - eps_x)
+                               * (I2 - 1) * (I2 - 1))
+                            / (eps_x * eps_x);
+                double p2 = -Kappa * 2
+                            * (2 * I1 * dHat * dHat * pow(log(I2), 5) * (I1 - 2 * eps_x)
+                               * (I2 - 1) * (3 * I2 + I2 * log(I2) - 3))
+                            / (I2 * (eps_x * eps_x));
+#endif
+                __GEIGEN__::Vector9 flatten_pk1 =
+                    __GEIGEN__::__add9(__GEIGEN__::__s_vec9_multiply(flatten_g1, p1),
+                                       __GEIGEN__::__s_vec9_multiply(flatten_g2, p2));
+                __GEIGEN__::Vector12 gradient_vec =
+                    __GEIGEN__::__M12x9_v9_multiply(PFPx, flatten_pk1);
+
+                {
+                    atomicAdd(&(_gradient[MMCVIDI.x].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[MMCVIDI.x].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+                    atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+                }
+            }
+            else
+            {
+#ifdef NEWF
+                double dis;
+                _d_PE(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dis);
+                dis                               = sqrt(dis);
+                double                 d_hat_sqrt = sqrt(dHat);
+                __GEIGEN__::Matrix9x4d PFPxT;
+                pFpx_pe2(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], d_hat_sqrt, PFPxT);
+                double              I5 = pow(dis / d_hat_sqrt, 2);
+                __GEIGEN__::Vector4 fnn;
+                fnn.v[0] = fnn.v[1] = fnn.v[2] = 0;  // = fnn.v[3] = fnn.v[4] = 1;
+                fnn.v[3] = dis / d_hat_sqrt;
+                //__GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(fnn, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+
+#if (RANK == 1)
+
+
+                double judge = (2 * dHat * dHat
+                                * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5
+                                   - 6 * I5 * I5 * log(I5) + 1))
+                               / I5;
+                double judge2 =
+                    2 * (dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1))
+                    / I5 * dis / d_hat_sqrt;
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+                //if (dis*dis<1e-2*dHat)
+                //flatten_pk1 = __GEIGEN__::__s_vec4_multiply(fnn, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5 / (I5) /*/ (I5) / (I5)*/);
+
+#elif (RANK == 2)
+                //__GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(fnn, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+
+                double judge =
+                    -(4 * dHat * dHat
+                      * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                         + 6 * I5 * log(I5) - 2 * I5 * I5
+                         + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                    / I5;
+                double judge2 =
+                    2 * (2 * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                    / I5 * dis / dHat_sqrt;
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+                //if (dis*dis<1e-2*dHat)
+                //flatten_pk1 = __GEIGEN__::__s_vec4_multiply(fnn, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5/I5);
+#elif (RANK == 3)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                __GEIGEN__::Vector4 flatten_pk1 = __GEIGEN__::__s_vec4_multiply(
+                    fnn,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+
+                __GEIGEN__::Vector9 gradient_vec =
+                    __GEIGEN__::__M9x4_v4_multiply(PFPxT, flatten_pk1);
+#else
+
+                double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+                double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+
+
+                __GEIGEN__::Matrix3x2d Ds;
+                __GEIGEN__::__set_Mat3x2_val_column(Ds, v0, v1);
+
+                double3 triangle_normal =
+                    __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(v0, v1));
+                double3 target = make_double3(0, 1, 0);
+
+                double3 vec = __GEIGEN__::__v_vec_cross(triangle_normal, target);
+                double cos = __GEIGEN__::__v_vec_dot(triangle_normal, target);
+
+                double3 edge_normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z]),
+                    triangle_normal));
+                double dis = __GEIGEN__::__v_vec_dot(
+                    __GEIGEN__::__minus(_vertexes[v0I], _vertexes[MMCVIDI.y]), edge_normal);
+
+                __GEIGEN__::Matrix3x3d rotation;
+                __GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+                __GEIGEN__::Matrix9x4d PDmPx;
+
+                if(cos + 1 == 0)
+                {
+                    rotation.m[0][0] = -1;
+                    rotation.m[1][1] = -1;
+                }
+                else
+                {
+                    __GEIGEN__::Matrix3x3d cross_vec;
+                    __GEIGEN__::__set_Mat_val(
+                        cross_vec, 0, -vec.z, vec.y, vec.z, 0, -vec.x, -vec.y, vec.x, 0);
+
+                    rotation = __GEIGEN__::__Mat_add(
+                        rotation,
+                        __GEIGEN__::__Mat_add(cross_vec,
+                                              __GEIGEN__::__S_Mat_multiply(
+                                                  __GEIGEN__::__M_Mat_multiply(cross_vec, cross_vec),
+                                                  1.0 / (1 + cos))));
+                }
+
+                double3 pos0 = __GEIGEN__::__add(
+                    _vertexes[v0I],
+                    __GEIGEN__::__s_vec_multiply(edge_normal, dHat_sqrt - dis));
+
+                double3 rotate_uv0 = __GEIGEN__::__M_v_multiply(rotation, pos0);
+                double3 rotate_uv1 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.y]);
+                double3 rotate_uv2 =
+                    __GEIGEN__::__M_v_multiply(rotation, _vertexes[MMCVIDI.z]);
+                double3 rotate_normal = __GEIGEN__::__M_v_multiply(rotation, edge_normal);
+
+                double2 uv0    = make_double2(rotate_uv0.x, rotate_uv0.z);
+                double2 uv1    = make_double2(rotate_uv1.x, rotate_uv1.z);
+                double2 uv2    = make_double2(rotate_uv2.x, rotate_uv2.z);
+                double2 normal = make_double2(rotate_normal.x, rotate_normal.z);
+
+                double2 u0 = __GEIGEN__::__minus_v2(uv1, uv0);
+                double2 u1 = __GEIGEN__::__minus_v2(uv2, uv0);
+
+                __GEIGEN__::Matrix2x2d Dm;
+
+                __GEIGEN__::__set_Mat2x2_val_column(Dm, u0, u1);
+
+                __GEIGEN__::Matrix2x2d DmInv;
+                __GEIGEN__::__Inverse2x2(Dm, DmInv);
+
+                __GEIGEN__::Matrix3x2d F = __GEIGEN__::__M3x2_M2x2_Multiply(Ds, DmInv);
+
+                double3 FxN = __GEIGEN__::__M3x2_v2_multiply(F, normal);
+                double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+                __GEIGEN__::Matrix3x2d fnn;
+
+                __GEIGEN__::Matrix2x2d nn = __GEIGEN__::__v2_vec2_toMat2x2(normal, normal);
+
+                fnn = __GEIGEN__::__M3x2_M2x2_Multiply(F, nn);
+
+                __GEIGEN__::Vector6 tmp = __GEIGEN__::__Mat3x2_to_vec6_double(fnn);
+
+
+#if (RANK == 1)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+#elif (RANK == 2)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                        / I5);
+#elif (RANK == 3)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                           * (3 * I5 + 2 * I5 * log(I5) - 3))
+                        / I5);
+#elif (RANK == 4)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                        / I5);
+#elif (RANK == 5)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    -2
+                        * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                           * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                        / I5);
+#elif (RANK == 6)
+                __GEIGEN__::Vector6 flatten_pk1 = __GEIGEN__::__s_vec6_multiply(
+                    tmp,
+                    (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                     * log(I5) * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                        / I5);
+#endif
+
+                __GEIGEN__::Matrix6x9d PFPx = __computePFDsPX3D_6x9_double(DmInv);
+
+                __GEIGEN__::Vector9 gradient_vec =
+                    __GEIGEN__::__M9x6_v6_multiply(__GEIGEN__::__Transpose6x9(PFPx), flatten_pk1);
+#endif
+
+                {
+                    atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+                    atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+                    atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+                    atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+                    atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+                }
+            }
+        }
+        else
+        {
+#ifdef NEWF
+            double dis;
+            _d_PT(_vertexes[v0I],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            dis                                = sqrt(dis);
+            double                  d_hat_sqrt = sqrt(dHat);
+            __GEIGEN__::Matrix12x9d PFPxT;
+            pFpx_pt2(_vertexes[v0I],
+                     _vertexes[MMCVIDI.y],
+                     _vertexes[MMCVIDI.z],
+                     _vertexes[MMCVIDI.w],
+                     d_hat_sqrt,
+                     PFPxT);
+            double              I5 = pow(dis / d_hat_sqrt, 2);
+            __GEIGEN__::Vector9 tmp;
+            tmp.v[0] = tmp.v[1] = tmp.v[2] = tmp.v[3] = tmp.v[4] = tmp.v[5] =
+                tmp.v[6] = tmp.v[7] = 0;
+            tmp.v[8]                = dis / d_hat_sqrt;
+#else
+            double3 v0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], _vertexes[v0I]);
+            double3 v1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[v0I]);
+            double3 v2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[v0I]);
+
+            __GEIGEN__::Matrix3x3d Ds;
+            __GEIGEN__::__set_Mat_val_column(Ds, v0, v1, v2);
+
+            double3 normal = __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.z], _vertexes[MMCVIDI.y]),
+                __GEIGEN__::__minus(_vertexes[MMCVIDI.w], _vertexes[MMCVIDI.y])));
+            double  dis    = __GEIGEN__::__v_vec_dot(v0, normal);
+            //if (abs(dis) > dHat_sqrt) return;
+            __GEIGEN__::Matrix12x9d PDmPx;
+            //bool is_flip = false;
+
+            if(dis > 0)
+            {
+                //is_flip = true;
+                normal = make_double3(-normal.x, -normal.y, -normal.z);
+                //pDmpx_pt_flip(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], _vertexes[MMCVIDI.w], dHat_sqrt, PDmPx);
+                //printf("dHat_sqrt = %f,   dis = %f\n", dHat_sqrt, dis);
+            }
+            else
+            {
+                dis = -dis;
+                //pDmpx_pt(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], _vertexes[MMCVIDI.w], dHat_sqrt, PDmPx);
+                //printf("dHat_sqrt = %f,   dis = %f\n", dHat_sqrt, dis);
+            }
+
+            double3 pos0 = __GEIGEN__::__add(
+                _vertexes[v0I], __GEIGEN__::__s_vec_multiply(normal, dHat_sqrt - dis));
+
+
+            double3 u0 = __GEIGEN__::__minus(_vertexes[MMCVIDI.y], pos0);
+            double3 u1 = __GEIGEN__::__minus(_vertexes[MMCVIDI.z], pos0);
+            double3 u2 = __GEIGEN__::__minus(_vertexes[MMCVIDI.w], pos0);
+
+            __GEIGEN__::Matrix3x3d Dm, DmInv;
+            __GEIGEN__::__set_Mat_val_column(Dm, u0, u1, u2);
+
+            __GEIGEN__::__Inverse(Dm, DmInv);
+
+            __GEIGEN__::Matrix3x3d F;  //, Ftest;
+            __GEIGEN__::__M_Mat_multiply(Ds, DmInv, F);
+            //__GEIGEN__::__M_Mat_multiply(Dm, DmInv, Ftest);
+
+            double3 FxN = __GEIGEN__::__M_v_multiply(F, normal);
+            double  I5  = __GEIGEN__::__squaredNorm(FxN);
+
+            //printf("I5 = %f,   dist/dHat_sqrt = %f\n", I5, (dis / dHat_sqrt)* (dis / dHat_sqrt));
+
+
+            __GEIGEN__::Matrix9x12d PFPx = __computePFDsPX3D_double(DmInv);
+
+            __GEIGEN__::Matrix3x3d fnn;
+
+            __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+
+            __GEIGEN__::__M_Mat_multiply(F, nn, fnn);
+
+            __GEIGEN__::Vector9 tmp = __GEIGEN__::__Mat3x3_to_vec9_double(fnn);
+#endif
+
+
+#if (RANK == 1)
+
+
+            double judge =
+                (2 * dHat * dHat
+                 * (6 * I5 + 2 * I5 * log(I5) - 7 * I5 * I5 - 6 * I5 * I5 * log(I5) + 1))
+                / I5;
+            double judge2 = 2 * (dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1))
+                            / I5 * dis / d_hat_sqrt;
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5);
+            //if (dis*dis<1e-2*dHat)
+            //flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * Kappa * -(dHat * dHat * (I5 - 1) * (I5 + 2 * I5 * log(I5) - 1)) / I5 / (I5) /*/ (I5) / (I5)*/);
+
+#elif (RANK == 2)
+            //__GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+
+            double judge = -(4 * dHat * dHat
+                             * (4 * I5 + log(I5) - 3 * I5 * I5 * log(I5) * log(I5)
+                                + 6 * I5 * log(I5) - 2 * I5 * I5
+                                + I5 * log(I5) * log(I5) - 7 * I5 * I5 * log(I5) - 2))
+                           / I5;
+            double judge2 =
+                2 * (2 * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1))
+                / I5 * dis / dHat_sqrt;
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5);
+            //if (dis*dis<1e-2*dHat)
+            //flatten_pk1 = __GEIGEN__::__s_vec9_multiply(tmp, 2 * (2 * Kappa * dHat * dHat * log(I5) * (I5 - 1) * (I5 + I5 * log(I5) - 1)) / I5/I5);
+#elif (RANK == 3)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * (I5 - 1)
+                       * (3 * I5 + 2 * I5 * log(I5) - 3))
+                    / I5);
+#elif (RANK == 4)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                 * (I5 - 1) * (2 * I5 + I5 * log(I5) - 2))
+                    / I5);
+#elif (RANK == 5)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                -2
+                    * (Kappa * dHat * dHat * log(I5) * log(I5) * log(I5)
+                       * log(I5) * (I5 - 1) * (5 * I5 + 2 * I5 * log(I5) - 5))
+                    / I5);
+#elif (RANK == 6)
+            __GEIGEN__::Vector9 flatten_pk1 = __GEIGEN__::__s_vec9_multiply(
+                tmp,
+                (4 * Kappa * dHat * dHat * log(I5) * log(I5) * log(I5) * log(I5)
+                 * log(I5) * (I5 - 1) * (3 * I5 + I5 * log(I5) - 3))
+                    / I5);
+#endif
+
+#ifdef NEWF
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(PFPxT, flatten_pk1);
+#else
+            __GEIGEN__::Vector12 gradient_vec =
+                __GEIGEN__::__M12x9_v9_multiply(__GEIGEN__::__Transpose9x12(PFPx), flatten_pk1);
+#endif
+
+            atomicAdd(&(_gradient[v0I].x), gradient_vec.v[0]);
+            atomicAdd(&(_gradient[v0I].y), gradient_vec.v[1]);
+            atomicAdd(&(_gradient[v0I].z), gradient_vec.v[2]);
+            atomicAdd(&(_gradient[MMCVIDI.y].x), gradient_vec.v[3]);
+            atomicAdd(&(_gradient[MMCVIDI.y].y), gradient_vec.v[4]);
+            atomicAdd(&(_gradient[MMCVIDI.y].z), gradient_vec.v[5]);
+            atomicAdd(&(_gradient[MMCVIDI.z].x), gradient_vec.v[6]);
+            atomicAdd(&(_gradient[MMCVIDI.z].y), gradient_vec.v[7]);
+            atomicAdd(&(_gradient[MMCVIDI.z].z), gradient_vec.v[8]);
+            atomicAdd(&(_gradient[MMCVIDI.w].x), gradient_vec.v[9]);
+            atomicAdd(&(_gradient[MMCVIDI.w].y), gradient_vec.v[10]);
+            atomicAdd(&(_gradient[MMCVIDI.w].z), gradient_vec.v[11]);
+        }
+    }
+}
+
+__global__ void _calKineticGradient(
+    double3* vertexes, double3* xTilta, double3* gradient, double* masses, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    double3 deltaX = __GEIGEN__::__minus(vertexes[idx], xTilta[idx]);
+    //masses[idx] = 1;
+    gradient[idx] = make_double3(
+        deltaX.x * masses[idx], deltaX.y * masses[idx], deltaX.z * masses[idx]);
+    //printf("%f  %f  %f\n", gradient[idx].x, gradient[idx].y, gradient[idx].z);
+}
+
+__global__ void _calKineticEnergy(
+    double3* vertexes, double3* xTilta, double3* gradient, double* masses, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    double3 deltaX = __GEIGEN__::__minus(vertexes[idx], xTilta[idx]);
+    gradient[idx]  = make_double3(
+        deltaX.x * masses[idx], deltaX.y * masses[idx], deltaX.z * masses[idx]);
+}
+
+__global__ void _computeSoftConstraintGradientAndHessian(const double3* vertexes,
+                                                         const double3* targetVert,
+                                                         const uint32_t* targetInd,
+                                                         double3*  gradient,
+                                                         uint32_t* _gpNum,
+                                                         Eigen::Matrix3d* triplet_values,
+                                                         int*   row_ids,
+                                                         int*   col_ids,
+                                                         double motionRate,
+                                                         double rate,
+                                                         int    global_offset,
+                                                         int global_hessian_fem_offset,
+                                                         int number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    uint32_t vInd = targetInd[idx];
+    double   x = vertexes[vInd].x, y = vertexes[vInd].y, z = vertexes[vInd].z,
+           a = targetVert[idx].x, b = targetVert[idx].y, c = targetVert[idx].z;
+    //double dis = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(vertexes[vInd], targetVert[idx]));
+    //printf("%f\n", dis);
+    double d = motionRate;
+    {
+        atomicAdd(&(gradient[vInd].x), d * rate * rate * (x - a));
+        atomicAdd(&(gradient[vInd].y), d * rate * rate * (y - b));
+        atomicAdd(&(gradient[vInd].z), d * rate * rate * (z - c));
+    }
+    __GEIGEN__::Matrix3x3d Hpg;
+    Hpg.m[0][0] = rate * rate * d;
+    Hpg.m[0][1] = 0;
+    Hpg.m[0][2] = 0;
+    Hpg.m[1][0] = 0;
+    Hpg.m[1][1] = rate * rate * d;
+    Hpg.m[1][2] = 0;
+    Hpg.m[2][0] = 0;
+    Hpg.m[2][1] = 0;
+    Hpg.m[2][2] = rate * rate * d;
+    int pidx    = atomicAdd(_gpNum, 1);
+    //H3x3[pidx]    = Hpg;
+    //D1Index[pidx] = vInd;
+    vInd += global_hessian_fem_offset;
+    write_triplet<3, 3>(triplet_values, row_ids, col_ids, &vInd, Hpg.m, global_offset + idx);
+    //_environment_collisionPair[atomicAdd(_gpNum, 1)] = surfVertIds[idx];
+}
+
+__global__ void _computeSoftConstraintGradient(const double3*  vertexes,
+                                               const double3*  targetVert,
+                                               const uint32_t* targetInd,
+                                               double3*        gradient,
+                                               double          motionRate,
+                                               double          rate,
+                                               int             number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    uint32_t vInd = targetInd[idx];
+    double   x = vertexes[vInd].x, y = vertexes[vInd].y, z = vertexes[vInd].z,
+           a = targetVert[idx].x, b = targetVert[idx].y, c = targetVert[idx].z;
+    //double dis = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(vertexes[vInd], targetVert[idx]));
+    //printf("%f\n", dis);
+    double d = motionRate;
+    {
+        atomicAdd(&(gradient[vInd].x), d * rate * rate * (x - a));
+        atomicAdd(&(gradient[vInd].y), d * rate * rate * (y - b));
+        atomicAdd(&(gradient[vInd].z), d * rate * rate * (z - c));
+    }
+}
+
+__global__ void _GroundCollisionDetect(const double3*  vertexes,
+                                       const uint32_t* surfVertIds,
+                                       const double*   g_offset,
+                                       const double3*  g_normal,
+                                       uint32_t* _environment_collisionPair,
+                                       uint32_t* _gpNum,
+                                       double    dHat,
+                                       int       number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double dist = __GEIGEN__::__v_vec_dot(*g_normal, vertexes[surfVertIds[idx]]) - *g_offset;
+    if(dist * dist > dHat)
+        return;
+
+    _environment_collisionPair[atomicAdd(_gpNum, 1)] = surfVertIds[idx];
+}
+
+__global__ void _getTotalForce(const double3* _force0, double3* _force, int number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    _force[idx].x += _force0[idx].x;
+    _force[idx].y += _force0[idx].y;
+    _force[idx].z += _force0[idx].z;
+}
+
+
+__global__ void _computeGroundGradientAndHessian(const double3* vertexes,
+                                                 const double*  g_offset,
+                                                 const double3* g_normal,
+                                                 const uint32_t* _environment_collisionPair,
+                                                 double3*  gradient,
+                                                 uint32_t* _gpNum,
+                                                 Eigen::Matrix3d* triplet_values,
+                                                 int*   row_ids,
+                                                 int*   col_ids,
+                                                 double dHat,
+                                                 double Kappa,
+                                                 int    global_offset,
+                                                 int    number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3      normal = *g_normal;
+    unsigned int gidx   = _environment_collisionPair[idx];
+    double dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double dist2 = dist * dist;
+
+    double t   = dist2 - dHat;
+    double g_b = t * log(dist2 / dHat) * -2.0 - (t * t) / dist2;
+
+    double H_b = (log(dist2 / dHat) * -2.0 - t * 4.0 / dist2)
+                 + 1.0 / (dist2 * dist2) * (t * t);
+
+    //printf("H_b   dist   g_b    is  %lf  %lf  %lf\n", H_b, dist2, g_b);
+
+    double3 grad = __GEIGEN__::__s_vec_multiply(normal, Kappa * g_b * 2 * dist);
+
+    {
+        atomicAdd(&(gradient[gidx].x), grad.x);
+        atomicAdd(&(gradient[gidx].y), grad.y);
+        atomicAdd(&(gradient[gidx].z), grad.z);
+    }
+
+    double param = 4.0 * H_b * dist2 + 2.0 * g_b;
+    //if(param > 0)
+    {
+        __GEIGEN__::Matrix3x3d nn = __GEIGEN__::__v_vec_toMat(normal, normal);
+        __GEIGEN__::Matrix3x3d Hpg = __GEIGEN__::__S_Mat_multiply(nn, Kappa * param);
+
+        int pidx = atomicAdd(_gpNum, 1);
+        //H3x3[pidx]    = Hpg;
+        //D1Index[pidx] = gidx;
+
+        write_triplet<3, 3>(triplet_values, row_ids, col_ids, &gidx, Hpg.m, global_offset + idx);
+    }
+    //_environment_collisionPair[atomicAdd(_gpNum, 1)] = surfVertIds[idx];
+}
+
+__global__ void _computeGroundGradient(const double3* vertexes,
+                                       const double*  g_offset,
+                                       const double3* g_normal,
+                                       const uint32_t* _environment_collisionPair,
+                                       double3*  gradient,
+                                       uint32_t* _gpNum,
+                                       double    dHat,
+                                       double    Kappa,
+                                       int       number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+
+    double t   = dist2 - dHat;
+    double g_b = t * std::log(dist2 / dHat) * -2.0 - (t * t) / dist2;
+
+    //double H_b = (std::log(dist2 / dHat) * -2.0 - t * 4.0 / dist2) + 1.0 / (dist2 * dist2) * (t * t);
+    double3 grad = __GEIGEN__::__s_vec_multiply(normal, Kappa * g_b * 2 * dist);
+
+    {
+        atomicAdd(&(gradient[gidx].x), grad.x);
+        atomicAdd(&(gradient[gidx].y), grad.y);
+        atomicAdd(&(gradient[gidx].z), grad.z);
+    }
+}
+
+__global__ void _computeGroundCloseVal(const double3* vertexes,
+                                       const double*  g_offset,
+                                       const double3* g_normal,
+                                       const uint32_t* _environment_collisionPair,
+                                       double    dTol,
+                                       uint32_t* _closeConstraintID,
+                                       double*   _closeConstraintVal,
+                                       uint32_t* _close_gpNum,
+                                       int       number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+
+    if(dist2 < dTol)
+    {
+        int tidx                  = atomicAdd(_close_gpNum, 1);
+        _closeConstraintID[tidx]  = gidx;
+        _closeConstraintVal[tidx] = dist2;
+    }
+}
+
+__global__ void _checkGroundCloseVal(const double3* vertexes,
+                                     const double*  g_offset,
+                                     const double3* g_normal,
+                                     int*           _isChange,
+                                     uint32_t*      _closeConstraintID,
+                                     double*        _closeConstraintVal,
+                                     int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _closeConstraintID[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+
+    if(dist2 < _closeConstraintVal[idx])
+    {
+        *_isChange = 1;
+    }
+}
+
+__global__ void _reduct_MGroundDist(const double3* vertexes,
+                                    const double*  g_offset,
+                                    const double3* g_normal,
+                                    uint32_t*      _environment_collisionPair,
+                                    double2*       _queue,
+                                    int            number)
+{
+    int                       idof = blockIdx.x * blockDim.x;
+    int                       idx  = threadIdx.x + idof;
+    extern __shared__ double2 sdata[];
+
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  tempv = dist * dist;
+    double2 temp  = make_double2(1.0 / tempv, tempv);
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMin = __shfl_down_sync(0xffffffff, temp.x, i);
+        double tempMax = __shfl_down_sync(0xffffffff, temp.y, i);
+        temp.x         = std::max(temp.x, tempMin);
+        temp.y         = std::max(temp.y, tempMax);
+    }
+    if(warpTid == 0)
+    {
+        sdata[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = sdata[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMin = __shfl_down_sync(0xffffffff, temp.x, i);
+            double tempMax = __shfl_down_sync(0xffffffff, temp.y, i);
+            temp.x         = std::max(temp.x, tempMin);
+            temp.y         = std::max(temp.y, tempMax);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        _queue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _computeSelfCloseVal(const double3*  vertexes,
+                                     const double*   g_offset,
+                                     const double3*  g_normal,
+                                     const uint32_t* _environment_collisionPair,
+                                     double          dTol,
+                                     uint32_t*       _closeConstraintID,
+                                     double*         _closeConstraintVal,
+                                     uint32_t*       _close_gpNum,
+                                     int             number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+
+    if(dist2 < dTol)
+    {
+        int tidx                  = atomicAdd(_close_gpNum, 1);
+        _closeConstraintID[tidx]  = gidx;
+        _closeConstraintVal[tidx] = dist2;
+    }
+}
+
+
+__global__ void _checkGroundIntersection(const double3* vertexes,
+                                         const double*  g_offset,
+                                         const double3* g_normal,
+                                         const uint32_t* _environment_collisionPair,
+                                         int* _isIntersect,
+                                         int  number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    //printf("%f  %f\n", *g_offset, dist);
+    if(dist < 0)
+        *_isIntersect = -1;
+}
+
+__global__ void _getFrictionEnergy_Reduction_3D(double*        squeue,
+                                                const double3* vertexes,
+                                                const double3* o_vertexes,
+                                                const int4*    _collisionPair,
+                                                int            cpNum,
+                                                double         dt,
+                                                const double2* distCoord,
+                                                const __GEIGEN__::Matrix3x2d* tanBasis,
+                                                const double* lastH,
+                                                double        fricDHat,
+                                                double        eps
+
+)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = cpNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    double temp = __cal_Friction_energy(
+        vertexes, o_vertexes, _collisionPair[idx], dt, distCoord[idx], tanBasis[idx], lastH[idx], fricDHat, eps);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _getFrictionEnergy_gd_Reduction_3D(double*        squeue,
+                                                   const double3* vertexes,
+                                                   const double3* o_vertexes,
+                                                   const double3* _normal,
+                                                   const uint32_t* _collisionPair_gd,
+                                                   int           gpNum,
+                                                   double        dt,
+                                                   const double* lastH,
+                                                   double        eps
+
+)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = gpNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    double temp = __cal_Friction_gd_energy(
+        vertexes, o_vertexes, _normal, _collisionPair_gd[idx], dt, lastH[idx], eps);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _computeGroundEnergy_Reduction(double*        squeue,
+                                               const double3* vertexes,
+                                               const double*  g_offset,
+                                               const double3* g_normal,
+                                               const uint32_t* _environment_collisionPair,
+                                               double dHat,
+                                               double Kappa,
+                                               int    number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    int remaining = number - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= number)
+        idx = 0;
+
+    double3 normal = *g_normal;
+    int     gidx   = _environment_collisionPair[idx];
+    double  dist  = __GEIGEN__::__v_vec_dot(normal, vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+    double  temp  = -(dist2 - dHat) * (dist2 - dHat) * log(dist2 / dHat);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _reduct_min_groundTimeStep_to_double(const double3* vertexes,
+                                                     const uint32_t* surfVertIds,
+                                                     const double*  g_offset,
+                                                     const double3* g_normal,
+                                                     const double3* moveDir,
+                                                     double* minStepSizes,
+                                                     double  slackness,
+                                                     int     number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+    int     svI    = surfVertIds[idx];
+    double  temp   = 1.0;
+    double3 normal = *g_normal;
+    double  coef   = __GEIGEN__::__v_vec_dot(normal, moveDir[svI]);
+    if(coef > 0.0)
+    {
+        double dist = __GEIGEN__::__v_vec_dot(normal, vertexes[svI]) - *g_offset;  //normal
+        temp = coef / (dist * slackness);
+        //printf("%f\n", temp);
+    }
+    /*if (blockIdx.x == 4) {
+        printf("%f\n", temp);
+    }
+    __syncthreads();*/
+    //printf("%f\n", temp);
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+        //printf("warpNum %d\n", warpNum);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+        temp           = std::max(temp, tempMin);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+            temp           = std::max(temp, tempMin);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        minStepSizes[blockIdx.x] = temp;
+        //printf("%f   %d\n", temp, blockIdx.x);
+    }
+}
+
+__global__ void _reduct_min_InjectiveTimeStep_to_double(const double3* vertexes,
+                                                        const uint4* tetrahedra,
+                                                        const double3* moveDir,
+                                                        double* minStepSizes,
+                                                        double  slackness,
+                                                        double  errorRate,
+                                                        int     number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+    double ratio = 1 - slackness;
+
+    double temp = 1.0
+                  / _computeInjectiveStepSize_3d(vertexes,
+                                                 moveDir,
+                                                 tetrahedra[idx].x,
+                                                 tetrahedra[idx].y,
+                                                 tetrahedra[idx].z,
+                                                 tetrahedra[idx].w,
+                                                 ratio,
+                                                 errorRate);
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+        //printf("warpNum %d\n", warpNum);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+        temp           = std::max(temp, tempMin);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+            temp           = std::max(temp, tempMin);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        minStepSizes[blockIdx.x] = temp;
+        //printf("%f   %d\n", temp, blockIdx.x);
+    }
+}
+
+__global__ void _reduct_min_selfTimeStep_to_double(const double3* vertexes,
+                                                   const int4* _ccd_collitionPairs,
+                                                   const double3* moveDir,
+                                                   double*        minStepSizes,
+                                                   double         slackness,
+                                                   int            number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+    double temp         = 1.0;
+    double CCDDistRatio = 1.0 - slackness;
+
+    int4 MMCVIDI = _ccd_collitionPairs[idx];
+
+    if(MMCVIDI.x < 0)
+    {
+        MMCVIDI.x = -MMCVIDI.x - 1;
+
+        double temp1 =
+            point_triangle_ccd(vertexes[MMCVIDI.x],
+                               vertexes[MMCVIDI.y],
+                               vertexes[MMCVIDI.z],
+                               vertexes[MMCVIDI.w],
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.x], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.y], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.z], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.w], -1),
+                               CCDDistRatio,
+                               0);
+
+        //double temp2 = doCCDVF(vertexes[MMCVIDI.x],
+        //    vertexes[MMCVIDI.y],
+        //    vertexes[MMCVIDI.z],
+        //    vertexes[MMCVIDI.w],
+        //    __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.x], -1),
+        //    __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.y], -1),
+        //    __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.z], -1),
+        //    __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.w], -1), 1e-9, 0.2);
+
+        temp = 1.0 / temp1;
+    }
+    else
+    {
+        temp = 1.0
+               / edge_edge_ccd(vertexes[MMCVIDI.x],
+                               vertexes[MMCVIDI.y],
+                               vertexes[MMCVIDI.z],
+                               vertexes[MMCVIDI.w],
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.x], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.y], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.z], -1),
+                               __GEIGEN__::__s_vec_multiply(moveDir[MMCVIDI.w], -1),
+                               CCDDistRatio,
+                               0);
+    }
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+        temp           = std::max(temp, tempMin);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMin = __shfl_down_sync(0xffffffff, temp, i);
+            temp           = std::max(temp, tempMin);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        minStepSizes[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _reduct_max_cfl_to_double(const double3* moveDir,
+                                          double*        max_double_val,
+                                          uint32_t*      mSVI,
+                                          int            number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+
+    double temp = __GEIGEN__::__norm(moveDir[mSVI[idx]]);
+
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        double tempMax = __shfl_down_sync(0xffffffff, temp, i);
+        temp           = std::max(temp, tempMax);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            double tempMax = __shfl_down_sync(0xffffffff, temp, i);
+            temp           = std::max(temp, tempMax);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        max_double_val[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _reduct_double3Sqn_to_double(const double3* A, double* D, int number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+
+    double temp = __GEIGEN__::__squaredNorm(A[idx]);
+
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        //double tempMax = __shfl_down_sync(0xffffffff, temp, i);
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        D[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _reduct_double3Dot_to_double(const double3* A, const double3* B, double* D, int number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    if(idx >= number)
+        return;
+
+    double temp = __GEIGEN__::__v_vec_dot(A[idx], B[idx]);
+
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        //double tempMax = __shfl_down_sync(0xffffffff, temp, i);
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        D[blockIdx.x] = temp;
+    }
+}
+
+
+__global__ void _getKineticEnergy_Reduction_3D(
+    double3* _vertexes, double3* _xTilta, double* _energy, double* _masses, int number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    int remaining = number - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= number)
+        idx = 0;
+
+    double temp =
+        __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_vertexes[idx], _xTilta[idx]))
+        * _masses[idx] * 0.5;
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, _energy[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        _energy[blockIdx.x] = temp;
+    }
+}
+
+#ifdef USE_QUADRATIC_BENDING
+__global__ void _getQuadBendingEnergy_Reduction(double*        squeue,
+                                                const double3* vertexes,
+                                                const double3* rest_vertexex,
+                                                const uint2*   edges,
+                                                const uint2*   edge_adj_vertex,
+                                                const Eigen::Matrix4d* quad_bending_Q,
+                                                int    edgesNum,
+                                                double bendStiff)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = edgesNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    uint2  adj  = edge_adj_vertex[idx];
+    double temp = __cal_quad_bending_energy(
+        vertexes, rest_vertexex, edges[idx], adj, quad_bending_Q[idx], bendStiff);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        temp = tep[threadIdx.x];
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+#endif
+
+__global__ void _getBendingEnergy_Reduction(double*        squeue,
+                                            const double3* vertexes,
+                                            const double3* rest_vertexex,
+                                            const uint2*   edges,
+                                            const uint2*   edge_adj_vertex,
+                                            int            edgesNum,
+                                            double         bendStiff)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = edgesNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    //double temp = __cal_BaraffWitkinStretch_energy(vertexes, triangles[idx], triDmInverses[idx], area[idx], stretchStiff, shearStiff);
+    // double temp = __cal_hc_cloth_energy(vertexes, triangles[idx], triDmInverses[idx], area[idx], stretchStiff, shearStiff);
+    uint2   adj     = edge_adj_vertex[idx];
+    double3 rest_x0 = rest_vertexex[edges[idx].x];
+    double3 rest_x1 = rest_vertexex[edges[idx].y];
+    double  length  = __GEIGEN__::__norm(__GEIGEN__::__minus(rest_x0, rest_x1));
+    double  temp =
+        __cal_bending_energy(vertexes, rest_vertexex, edges[idx], adj, length, bendStiff);
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+    //double temp = 0;
+    //printf("%f    %f\n\n\n", lenRate, volRate);
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+
+__global__ void _getFEMEnergy_Reduction_3D(double*        squeue,
+                                           const double3* vertexes,
+                                           const uint4*   tetrahedras,
+                                           const __GEIGEN__::Matrix3x3d* DmInverses,
+                                           const double* volume,
+                                           int           tetrahedraNum,
+                                           double*       lenRate,
+                                           double*       volRate)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = tetrahedraNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+#ifdef USE_SNK1
+    double temp = __cal_StabbleNHK_energy1_3D(
+        vertexes, tetrahedras[idx], DmInverses[idx], volume[idx], lenRate[idx], volRate[idx]);
+#elif USE_SNK2
+    double temp = __cal_StabbleNHK_energy2_3D(
+        vertexes, tetrahedras[idx], DmInverses[idx], volume[idx], lenRate[idx], volRate[idx]);
+#else
+    double temp = __cal_ARAP_energy_3D(
+        vertexes, tetrahedras[idx], DmInverses[idx], volume[idx], lenRate[idx]);
+#endif
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    //printf("%f    %f\n\n\n", lenRate, volRate);
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+__global__ void _computeSoftConstraintEnergy_Reduction(double*        squeue,
+                                                       const double3* vertexes,
+                                                       const double3* targetVert,
+                                                       const uint32_t* targetInd,
+                                                       double motionRate,
+                                                       double rate,
+                                                       int    number)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+
+    int remaining = number - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= number)
+        idx = 0;
+    uint32_t vInd = targetInd[idx];
+    double   dis  = __GEIGEN__::__squaredNorm(__GEIGEN__::__s_vec_multiply(
+        __GEIGEN__::__minus(vertexes[vInd], targetVert[idx]), rate));
+    double   d    = motionRate;
+    double   temp = d * dis * 0.5;
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((number - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+__global__ void _get_triangleFEMEnergy_Reduction_3D(double*        squeue,
+                                                    const double3* vertexes,
+                                                    const uint3*   triangles,
+                                                    const __GEIGEN__::Matrix2x2d* triDmInverses,
+                                                    const double* area,
+                                                    int           trianglesNum,
+                                                    double        stretchStiff,
+                                                    double        shearStiff,
+                                                    double        strainRate)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = trianglesNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    double temp = __cal_BaraffWitkinStretch_energy(
+        vertexes, triangles[idx], triDmInverses[idx], area[idx], stretchStiff, shearStiff, strainRate);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+
+    //printf("%f    %f\n\n\n", lenRate, volRate);
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+__global__ void _getRestStableNHKEnergy_Reduction_3D(double*       squeue,
+                                                     const double* volume,
+                                                     int    tetrahedraNum,
+                                                     double lenRate,
+                                                     double volRate)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = tetrahedraNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    double temp = ((0.5 * volRate * (3 * lenRate / 4 / volRate) * (3 * lenRate / 4 / volRate)
+                    - 0.5 * lenRate * log(4.0)))
+                  * volume[idx];
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _getBarrierEnergy_Reduction_3D(double*        squeue,
+                                               const double3* vertexes,
+                                               const double3* rest_vertexes,
+                                               int4*          _collisionPair,
+                                               double         _Kappa,
+                                               double         _dHat,
+                                               int            cpNum)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = cpNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+
+    double temp =
+        __cal_Barrier_energy(vertexes, rest_vertexes, _collisionPair[idx], _Kappa, _dHat);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _getDeltaEnergy_Reduction(double* squeue, const double3* b, const double3* dx, int vertexNum)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+
+    extern __shared__ double tep[];
+    int                      numbers = vertexNum;
+    int remaining = numbers - idof;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    if(idx >= numbers)
+        idx = 0;
+    //int cfid = tid + CONFLICT_FREE_OFFSET(tid);
+
+    double temp = __GEIGEN__::__v_vec_dot(b[idx], dx[idx]);
+
+    GIPC_CUB_BLOCK_SUM_AND_STORE(temp, valid_items, squeue[blockIdx.x]);
+    return;
+
+    int    warpTid = threadIdx.x % 32;
+    int    warpId  = (threadIdx.x >> 5);
+    double nextTp;
+    int    warpNum;
+    //int tidNum = 32;
+    if(blockIdx.x == gridDim.x - 1)
+    {
+        //tidNum = numbers - idof;
+        warpNum = ((numbers - idof + 31) >> 5);
+    }
+    else
+    {
+        warpNum = ((blockDim.x) >> 5);
+    }
+    for(int i = 1; i < 32; i = (i << 1))
+    {
+        temp += __shfl_down_sync(0xffffffff, temp, i);
+    }
+    if(warpTid == 0)
+    {
+        tep[warpId] = temp;
+    }
+    __syncthreads();
+    if(threadIdx.x >= warpNum)
+        return;
+    if(warpNum > 1)
+    {
+        //	tidNum = warpNum;
+        temp = tep[threadIdx.x];
+        //	warpNum = ((tidNum + 31) >> 5);
+        for(int i = 1; i < warpNum; i = (i << 1))
+        {
+            temp += __shfl_down_sync(0xffffffff, temp, i);
+        }
+    }
+    if(threadIdx.x == 0)
+    {
+        squeue[blockIdx.x] = temp;
+    }
+}
+
+__global__ void _stepForward(double3* _vertexes,
+                             double3* _vertexesTemp,
+                             double3* _moveDir,
+                             int*     bType,
+                             double   alpha,
+                             bool     moveBoundary,
+                             int      numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(abs(bType[idx]) == 0 || moveBoundary)
+    {
+        _vertexes[idx] =
+            __GEIGEN__::__minus(_vertexesTemp[idx],
+                                __GEIGEN__::__s_vec_multiply(_moveDir[idx], alpha));
+    }
+}
+
+__global__ void _updateVelocities(double3* _vertexes,
+                                  double3* _o_vertexes,
+                                  double3* _velocities,
+                                  int*     btype,
+                                  double   ipc_dt,
+                                  int      numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(btype[idx] == 0)
+    {
+        _velocities[idx] = __GEIGEN__::__s_vec_multiply(
+            __GEIGEN__::__minus(_vertexes[idx], _o_vertexes[idx]), 1 / ipc_dt);
+        //_velocities[idx] = make_double3(0, 0, 0);
+        _o_vertexes[idx] = _vertexes[idx];
+    }
+    else
+    {
+        _velocities[idx] = make_double3(0, 0, 0);
+        _o_vertexes[idx] = _vertexes[idx];
+    }
+}
+
+__global__ void _updateBoundary(double3* _vertexes, int* _btype, double3* _moveDir, double ipc_dt, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    if((_btype[idx]) == -1 || (_btype[idx]) == 1)
+    {
+        _vertexes[idx] = __GEIGEN__::__add(_vertexes[idx], _moveDir[idx]);
+    }
+}
+
+__global__ void _updateBoundary2(int* _btype, __GEIGEN__::Matrix3x3d* _constraints, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    if((_btype[idx]) == 1)
+    {
+        _btype[idx] = 0;
+        __GEIGEN__::__set_Mat_val(_constraints[idx], 1, 0, 0, 0, 1, 0, 0, 0, 1);
+    }
+}
+
+
+__global__ void _updateBoundaryMoveDir(double3* _vertexes,
+                                       int*     _btype,
+                                       double3* _moveDir,
+                                       double   ipc_dt,
+                                       double   PI,
+                                       double   alpha,
+                                       int      numbers,
+                                       int      frameid)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    double                 massSum = 0;
+    double                 angleX  = PI / 2.5 * ipc_dt * alpha;
+    __GEIGEN__::Matrix3x3d rotationL, rotationR;
+    __GEIGEN__::__set_Mat_val(
+        rotationL, 1, 0, 0, 0, cos(angleX), sin(angleX), 0, -sin(angleX), cos(angleX));
+    __GEIGEN__::__set_Mat_val(
+        rotationR, 1, 0, 0, 0, cos(angleX), -sin(angleX), 0, sin(angleX), cos(angleX));
+
+    //_moveDir[idx] = make_double3(0, 0, 0);
+    double mvl = -0.3 * ipc_dt * alpha;
+    //if((_btype[idx]) == 1)
+    //{
+    //    _moveDir[idx] = make_double3(mvl, 0, 0);  //__GEIGEN__::__minus(__GEIGEN__::__M_v_multiply(rotationL, _vertexes[idx]), _vertexes[idx]);
+    //}
+    if((_btype[idx]) > 0)
+    {
+        if(frameid < 32)
+        {
+            if(_vertexes[idx].y > 0.01)
+            {
+                _moveDir[idx] = make_double3(0, -mvl, 0);
+            }
+            else if(_vertexes[idx].y < -0.01)
+            {
+                _moveDir[idx] = make_double3(0, mvl, 0);
+            }
+        }
+        else
+        {
+            _moveDir[idx] = __GEIGEN__::__minus(
+                __GEIGEN__::__M_v_multiply(rotationL, _vertexes[idx]), _vertexes[idx]);
+        }
+    }
+    if((_btype[idx]) < 0)
+    {
+        if(frameid < 32)
+        {
+            if(_vertexes[idx].y > 0.01)
+            {
+                _moveDir[idx] = make_double3(0, -mvl, 0);
+            }
+            else if(_vertexes[idx].y < -0.01)
+            {
+                _moveDir[idx] = make_double3(0, mvl, 0);
+            }
+        }
+        else
+        {
+            _moveDir[idx] = __GEIGEN__::__minus(
+                __GEIGEN__::__M_v_multiply(rotationR, _vertexes[idx]), _vertexes[idx]);
+        }
+    }
+}
+
+__global__ void _computeXTilta(int*     _btype,
+                               double3* _velocities,
+                               double3* _o_vertexes,
+                               double3* _xTilta,
+                               int*     _apply_gravity,
+                               double   ipc_dt,
+                               double   rate,
+                               int      numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    double3 gravityDtSq = make_double3(0, 0, 0);  //__GEIGEN__::__s_vec_multiply(make_double3(0, -9.8, 0), ipc_dt * ipc_dt);//Vector3d(0, gravity, 0) * IPC_dt * IPC_dt;
+    if(_btype[idx] == 0 && _apply_gravity[idx])
+    {
+        gravityDtSq =
+            __GEIGEN__::__s_vec_multiply(make_double3(0, -9.8, 0), ipc_dt * ipc_dt);
+    }
+    _xTilta[idx] = __GEIGEN__::__add(
+        _o_vertexes[idx],
+        __GEIGEN__::__add(__GEIGEN__::__s_vec_multiply(_velocities[idx], ipc_dt),
+                          gravityDtSq));  //(mesh.V_prev[vI] + (mesh.velocities[vI] * IPC_dt + gravityDtSq));
+}
+
+__global__ void _updateSurfaces(uint32_t* sortIndex, uint3* _faces, int _offset_num, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(_faces[idx].x < _offset_num)
+    {
+        _faces[idx].x = sortIndex[_faces[idx].x];
+    }
+    else
+    {
+        _faces[idx].x = _faces[idx].x;
+    }
+    if(_faces[idx].y < _offset_num)
+    {
+        _faces[idx].y = sortIndex[_faces[idx].y];
+    }
+    else
+    {
+        _faces[idx].y = _faces[idx].y;
+    }
+    if(_faces[idx].z < _offset_num)
+    {
+        _faces[idx].z = sortIndex[_faces[idx].z];
+    }
+    else
+    {
+        _faces[idx].z = _faces[idx].z;
+    }
+    //printf("sorted face: %d  %d  %d\n", _faces[idx].x, _faces[idx].y, _faces[idx].z);
+}
+
+__global__ void _updateNeighborNum(unsigned int*   _neighborNumInit,
+                                   unsigned int*   _neighborNum,
+                                   const uint32_t* sortMapVertIndex,
+                                   int             numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    _neighborNum[idx] = _neighborNumInit[sortMapVertIndex[idx]];
+}
+
+__global__ void _updateNeighborList(unsigned int*   _neighborListInit,
+                                    unsigned int*   _neighborList,
+                                    unsigned int*   _neighborNum,
+                                    unsigned int*   _neighborStart,
+                                    unsigned int*   _neighborStartTemp,
+                                    const uint32_t* sortIndex,
+                                    const uint32_t* sortMapVertIndex,
+                                    int             numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+
+    int startId   = _neighborStartTemp[idx];
+    int o_startId = _neighborStart[sortIndex[idx]];
+    int neiNum    = _neighborNum[idx];
+    for(int i = 0; i < neiNum; i++)
+    {
+        _neighborList[startId + i] = sortMapVertIndex[_neighborListInit[o_startId + i]];
+    }
+    //_neighborStart[sortMapVertIndex[idx]] = startId;
+    //_neighborNum[idx] = _neighborNum[sortMapVertIndex[idx]];
+}
+
+__global__ void _updateEdges(uint32_t* sortIndex, uint2* _edges, int _offset_num, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(_edges[idx].x < _offset_num)
+    {
+        _edges[idx].x = sortIndex[_edges[idx].x];
+    }
+    else
+    {
+        _edges[idx].x = _edges[idx].x;
+    }
+    if(_edges[idx].y < _offset_num)
+    {
+        _edges[idx].y = sortIndex[_edges[idx].y];
+    }
+    else
+    {
+        _edges[idx].y = _edges[idx].y;
+    }
+}
+
+__global__ void _updateTriEdges_adjVerts(
+    uint32_t* sortIndex, uint2* _edges, uint2* _adj_verts, int _offset_num, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(_edges[idx].x < _offset_num)
+    {
+        _edges[idx].x = sortIndex[_edges[idx].x];
+    }
+    else
+    {
+        _edges[idx].x = _edges[idx].x;
+    }
+    if(_edges[idx].y < _offset_num)
+    {
+        _edges[idx].y = sortIndex[_edges[idx].y];
+    }
+    else
+    {
+        _edges[idx].y = _edges[idx].y;
+    }
+
+
+    if(_adj_verts[idx].x < _offset_num)
+    {
+        _adj_verts[idx].x = sortIndex[_adj_verts[idx].x];
+    }
+    else
+    {
+        _adj_verts[idx].x = _adj_verts[idx].x;
+    }
+    if(_adj_verts[idx].y < _offset_num)
+    {
+        _adj_verts[idx].y = sortIndex[_adj_verts[idx].y];
+    }
+    else
+    {
+        _adj_verts[idx].y = _adj_verts[idx].y;
+    }
+}
+
+__global__ void _updateSurfVerts(uint32_t* sortIndex, uint32_t* _sVerts, int _offset_num, int numbers)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= numbers)
+        return;
+    if(_sVerts[idx] < _offset_num)
+    {
+        _sVerts[idx] = sortIndex[_sVerts[idx]];
+    }
+    else
+    {
+        _sVerts[idx] = _sVerts[idx];
+    }
+}
+
+__global__ void _edgeTriIntersectionQuery(const int*     _btype,
+                                          const double3* _vertexes,
+                                          const uint2*   _edges,
+                                          const uint3*   _faces,
+                                          const AABB*    _edge_bvs,
+                                          const Node*    _edge_nodes,
+                                          int*           _isIntesect,
+                                          double         dHat,
+                                          int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[64];
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    uint3 face = _faces[idx];
+    //idx = idx + number - 1;
+
+
+    AABB _bv;
+
+    double3 _v = _vertexes[face.x];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _v = _vertexes[face.y];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _v = _vertexes[face.z];
+    _bv.combines(_v.x, _v.y, _v.z);
+
+    //uint32_t self_eid = _edge_nodes[idx].element_idx;
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_edge_bvs[0].upper, _edge_bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = 0;  //sqrt(dHat);
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _edge_nodes[node_id].left_idx;
+        const uint32_t R_idx   = _edge_nodes[node_id].right_idx;
+
+        if(_overlap(_bv, _edge_bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _edge_nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(!(face.x == _edges[obj_idx].x || face.x == _edges[obj_idx].y
+                     || face.y == _edges[obj_idx].x || face.y == _edges[obj_idx].y
+                     || face.z == _edges[obj_idx].x || face.z == _edges[obj_idx].y))
+                {
+                    if(!(_btype[face.x] >= 2 && _btype[face.y] >= 2
+                         && _btype[face.z] >= 2 && _btype[_edges[obj_idx].x] >= 2
+                         && _btype[_edges[obj_idx].y] >= 2))
+                        if(segTriIntersect(_vertexes[_edges[obj_idx].x],
+                                           _vertexes[_edges[obj_idx].y],
+                                           _vertexes[face.x],
+                                           _vertexes[face.y],
+                                           _vertexes[face.z]))
+                        {
+                            //atomicAdd(_isIntesect, -1);
+                            *_isIntesect = -1;
+                            //printf("tri: %d %d %d,  edge: %d  %d\n",
+                            //       face.x,
+                            //       face.y,
+                            //       face.z,
+                            //       _edges[obj_idx].x,
+                            //       _edges[obj_idx].y);
+                            return;
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(_overlap(_bv, _edge_bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _edge_nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(!(face.x == _edges[obj_idx].x || face.x == _edges[obj_idx].y
+                     || face.y == _edges[obj_idx].x || face.y == _edges[obj_idx].y
+                     || face.z == _edges[obj_idx].x || face.z == _edges[obj_idx].y))
+                {
+                    if(!(_btype[face.x] >= 2 && _btype[face.y] >= 2
+                         && _btype[face.z] >= 2 && _btype[_edges[obj_idx].x] >= 2
+                         && _btype[_edges[obj_idx].y] >= 2))
+                        if(segTriIntersect(_vertexes[_edges[obj_idx].x],
+                                           _vertexes[_edges[obj_idx].y],
+                                           _vertexes[face.x],
+                                           _vertexes[face.y],
+                                           _vertexes[face.z]))
+                        {
+                            //atomicAdd(_isIntesect, -1);
+                            *_isIntesect = -1;
+                            //printf("tri: %d %d %d,  edge: %d  %d\n",
+                            //       face.x,
+                            //       face.y,
+                            //       face.z,
+                            //       _edges[obj_idx].x,
+                            //       _edges[obj_idx].y);
+                            return;
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+__global__ void _calFrictionLastH_gd(const double3* _vertexes,
+                                     const double*  g_offset,
+                                     const double3* g_normal,
+                                     const uint32_t* _collisionPair_environment,
+                                     double*   lambda_lastH_gd,
+                                     uint32_t* _collisionPair_last_gd,
+                                     double    dHat,
+                                     double    Kappa,
+                                     int       number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    double3 normal = *g_normal;
+    int     gidx   = _collisionPair_environment[idx];
+    double  dist = __GEIGEN__::__v_vec_dot(normal, _vertexes[gidx]) - *g_offset;
+    double  dist2 = dist * dist;
+
+    double t   = dist2 - dHat;
+    double g_b = t * log(dist2 / dHat) * -2.0 - (t * t) / dist2;
+
+    lambda_lastH_gd[idx]        = -Kappa * 2.0 * sqrt(dist2) * g_b;
+    _collisionPair_last_gd[idx] = gidx;
+}
+
+__global__ void _calFrictionLastH_DistAndTan(const double3*    _vertexes,
+                                             const int4* _collisionPair,
+                                             double*           lambda_lastH,
+                                             double2*          distCoord,
+                                             __GEIGEN__::Matrix3x2d* tanBasis,
+                                             int4*     _collisionPair_last,
+                                             double    dHat,
+                                             double    Kappa,
+                                             uint32_t* _cpNum_last,
+                                             int       number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    int4   MMCVIDI = _collisionPair[idx];
+    double dis;
+    int    last_index = -1;
+    if(MMCVIDI.x >= 0)
+    {
+        if(MMCVIDI.w >= 0)
+        {
+            last_index = atomicAdd(_cpNum_last, 1);
+            atomicAdd(_cpNum_last + 4, 1);
+            _d_EE(_vertexes[MMCVIDI.x],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            Friction::computeClosestPoint_EE(_vertexes[MMCVIDI.x],
+                                             _vertexes[MMCVIDI.y],
+                                             _vertexes[MMCVIDI.z],
+                                             _vertexes[MMCVIDI.w],
+                                             distCoord[last_index]);
+            Friction::computeTangentBasis_EE(_vertexes[MMCVIDI.x],
+                                             _vertexes[MMCVIDI.y],
+                                             _vertexes[MMCVIDI.z],
+                                             _vertexes[MMCVIDI.w],
+                                             tanBasis[last_index]);
+        }
+    }
+    else
+    {
+        int v0I = -MMCVIDI.x - 1;
+        if(MMCVIDI.z < 0)
+        {
+            if(MMCVIDI.y >= 0)
+            {
+                last_index = atomicAdd(_cpNum_last, 1);
+                atomicAdd(_cpNum_last + 2, 1);
+                _d_PP(_vertexes[v0I], _vertexes[MMCVIDI.y], dis);
+                distCoord[last_index].x = 0;
+                distCoord[last_index].y = 0;
+                Friction::computeTangentBasis_PP(
+                    _vertexes[v0I], _vertexes[MMCVIDI.y], tanBasis[last_index]);
+            }
+        }
+        else if(MMCVIDI.w < 0)
+        {
+            if(MMCVIDI.y >= 0)
+            {
+                last_index = atomicAdd(_cpNum_last, 1);
+                atomicAdd(_cpNum_last + 3, 1);
+                _d_PE(_vertexes[v0I], _vertexes[MMCVIDI.y], _vertexes[MMCVIDI.z], dis);
+                Friction::computeClosestPoint_PE(_vertexes[v0I],
+                                                 _vertexes[MMCVIDI.y],
+                                                 _vertexes[MMCVIDI.z],
+                                                 distCoord[last_index].x);
+                distCoord[last_index].y = 0;
+                Friction::computeTangentBasis_PE(_vertexes[v0I],
+                                                 _vertexes[MMCVIDI.y],
+                                                 _vertexes[MMCVIDI.z],
+                                                 tanBasis[last_index]);
+            }
+        }
+        else
+        {
+            last_index = atomicAdd(_cpNum_last, 1);
+            atomicAdd(_cpNum_last + 4, 1);
+            _d_PT(_vertexes[v0I],
+                  _vertexes[MMCVIDI.y],
+                  _vertexes[MMCVIDI.z],
+                  _vertexes[MMCVIDI.w],
+                  dis);
+            Friction::computeClosestPoint_PT(_vertexes[v0I],
+                                             _vertexes[MMCVIDI.y],
+                                             _vertexes[MMCVIDI.z],
+                                             _vertexes[MMCVIDI.w],
+                                             distCoord[last_index]);
+            Friction::computeTangentBasis_PT(_vertexes[v0I],
+                                             _vertexes[MMCVIDI.y],
+                                             _vertexes[MMCVIDI.z],
+                                             _vertexes[MMCVIDI.w],
+                                             tanBasis[last_index]);
+        }
+    }
+    if(last_index >= 0)
+    {
+//        double t = dis - dHat;
+//        lambda_lastH[last_index] = -Kappa * 2.0 * std::sqrt(dis) * (t * std::log(dis / dHat) * -2.0 - (t * t) / dis);
+#if (RANK == 1)
+        double t = dis - dHat;
+        lambda_lastH[last_index] =
+            -Kappa * 2.0 * sqrt(dis) * (t * log(dis / dHat) * -2.0 - (t * t) / dis);
+#elif (RANK == 2)
+        lambda_lastH[last_index] =
+            -Kappa * 2.0 * sqrt(dis)
+            * (log(dis / dHat) * log(dis / dHat) * (2 * dis - 2 * dHat)
+               + (2 * log(dis / dHat) * (dis - dHat) * (dis - dHat)) / dis);
+#endif
+        _collisionPair_last[last_index] = _collisionPair[idx];
+    }
+}
+
+/// <summary>
+///  host code
+/// </summary>
+void GIPC::FREE_DEVICE_MEM()
+{
+    _MatIndex.release();
+    _collisonPairs.release();
+    _ccd_collisonPairs.release();
+    _cpNum.release();
+    _close_cpNum.release();
+    _close_gpNum.release();
+    _environment_collisionPair.release();
+    _gpNum.release();
+    _scalar_scratch.release();
+    _distance_scratch.release();
+    _groundNormal.release();
+    _groundOffset.release();
+
+    _faces.release();
+    _edges.release();
+    _surfVerts.release();
+
+    pcg_data.FREE_DEVICE_MEM();
+
+    bvh_e.FREE_DEVICE_MEM();
+    bvh_f.FREE_DEVICE_MEM();
+}
+
+void GIPC::MALLOC_DEVICE_MEM()
+{
+    // Keep logical ranges empty, but avoid a count-only/re-run pass for the
+    // common case. DCD owns the live pair/index arrays; CCD keeps a larger
+    // independent allocation for line-search candidates.
+    _MatIndex.release();
+    _collisonPairs.release();
+    _ccd_collisonPairs.release();
+    _MatIndex.reserve(INITIAL_DCD_PAIR_CAPACITY);
+    _collisonPairs.reserve(INITIAL_DCD_PAIR_CAPACITY);
+    _ccd_collisonPairs.reserve(INITIAL_CCD_PAIR_CAPACITY);
+    _environment_collisionPair.resize(surf_vertexNum);
+    _cpNum.resize(5);
+    _gpNum.resize(1);
+    _groundNormal.resize(5);
+    _groundOffset.resize(5);
+    double  h_offset[5] = {-1, -1, 1, -1, 1};
+    double3 H_normal[5];  // = { make_double3(0, 1, 0);
+    H_normal[0] = make_double3(0, 1, 0);
+    H_normal[1] = make_double3(1, 0, 0);
+    H_normal[2] = make_double3(-1, 0, 0);
+    H_normal[3] = make_double3(0, 0, 1);
+    H_normal[4] = make_double3(0, 0, -1);
+    CUDA_SAFE_CALL(cudaMemcpy(_groundOffset, &h_offset, 5 * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(_groundNormal, &H_normal, 5 * sizeof(double3), cudaMemcpyHostToDevice));
+
+
+    _faces.resize(surface_Num);
+    _edges.resize(edge_Num);
+    _surfVerts.resize(surf_vertexNum);
+
+    _close_cpNum.resize(1);
+    _close_gpNum.resize(1);
+
+    CUDA_SAFE_CALL(cudaMemset(_close_cpNum, 0, sizeof(uint32_t)));
+    CUDA_SAFE_CALL(cudaMemset(_close_gpNum, 0, sizeof(uint32_t)));
+
+    pcg_data.Malloc_DEVICE_MEM(vertexNum, tetrahedraNum);
+}
+
+
+void GIPC::initBVH(int* _btype, int* _bodyId)
+{
+
+    bvh_e.init(_bodyId, _btype, _vertexes, _rest_vertexes, _edges, edge_Num, surf_vertexNum);
+    bvh_f.init(_bodyId, _btype, _vertexes, _faces, _surfVerts, surface_Num, surf_vertexNum);
+}
+
+void GIPC::init(double m_meanMass, double m_meanVolumn, double3 minConer, double3 maxConer)
+{
+    SceneSize     = bvh_f.scene;
+    bboxDiagSize2 = __GEIGEN__::__squaredNorm(
+        __GEIGEN__::__minus(SceneSize.upper, SceneSize.lower));  //(maxConer - minConer).squaredNorm();
+    dTol         = 1e-18 * bboxDiagSize2;
+    minKappaCoef = 1e11;
+    meanMass     = m_meanMass;
+    meanVolumn   = m_meanVolumn;
+    dHat = relative_dhat * relative_dhat * bboxDiagSize2;  //__GEIGEN__::__squaredNorm(__GEIGEN__::__minus(maxConer, minConer));
+    fDhat = 1e-4 * bboxDiagSize2;
+
+
+    const size_t matrix_block3_size =
+        static_cast<size_t>(abd_fem_count_info.abd_body_num) * 4
+        + static_cast<size_t>(abd_fem_count_info.fem_point_num);
+    if(matrix_block3_size > static_cast<size_t>(std::numeric_limits<int>::max()))
+    {
+        std::cerr << "Global matrix dimension exceeds the 32-bit index range." << std::endl;
+        std::abort();
+    }
+    const int global_matrix_block3_size = static_cast<int>(matrix_block3_size);
+
+    const size_t fixed_energy_triplets =
+        static_cast<size_t>(abd_fem_count_info.abd_body_num) * 10
+        + static_cast<size_t>(abd_fem_count_info.fem_tet_num) * 10
+        + static_cast<size_t>(tri_edge_num) * 10
+        + static_cast<size_t>(triangleNum) * 6
+        + static_cast<size_t>(softNum)
+        + static_cast<size_t>(abd_fem_count_info.fem_point_num);
+    const size_t initial_pt_triplets = INITIAL_DCD_PAIR_CAPACITY * M12_Off;
+    if(fixed_energy_triplets > std::numeric_limits<size_t>::max() - initial_pt_triplets)
+    {
+        std::cerr << "Initial triplet capacity calculation overflow." << std::endl;
+        std::abort();
+    }
+    const size_t initial_live_triplets = fixed_energy_triplets + initial_pt_triplets;
+    if(initial_live_triplets > std::numeric_limits<size_t>::max() / 2)
+    {
+        std::cerr << "Initial triplet staging capacity calculation overflow." << std::endl;
+        std::abort();
+    }
+    const size_t initial_triplet_storage = 2 * initial_live_triplets;
+
+    gipc_global_triplet.init_var();
+
+    gipc_global_triplet.resize(global_matrix_block3_size, global_matrix_block3_size, 0);
+    // Conversion writes sorted values into a disjoint staging range, hence
+    // values/rows/cols reserve 2 * live while hashes/indices reserve live.
+    gipc_global_triplet.reserve_triplets(initial_triplet_storage);
+    gipc_global_triplet.reserve_conversion_scratch(initial_live_triplets);
+    std::cout << "Initial triplet capacities: fixed=" << fixed_energy_triplets
+              << ", PT=" << initial_pt_triplets
+              << ", live=" << initial_live_triplets
+              << ", storage=" << initial_triplet_storage << std::endl;
+
+
+    m_global_linear_system->gipc_global_triplet = &(gipc_global_triplet);
+    m_abd_system->global_triplet                = &(gipc_global_triplet);
+    init_abd_system();
+}
+
+GIPC::~GIPC()
+{
+    FREE_DEVICE_MEM();
+}
+
+GIPC::GIPC()
+{
+    IPC_dt            = 0.01;
+    animation_subRate = 1.0;
+    animation         = false;
+
+    h_cpNum_last[0] = 0;
+    h_cpNum_last[1] = 0;
+    h_cpNum_last[2] = 0;
+    h_cpNum_last[3] = 0;
+    h_cpNum_last[4] = 0;
+}
+
+void GIPC::buildFrictionSets()
+{
+    CUDA_SAFE_CALL(cudaMemset(_cpNum, 0, 5 * sizeof(uint32_t)));
+    int                numbers   = h_cpNum[0];
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    if(numbers > 0)
+    {
+        _calFrictionLastH_DistAndTan<<<blockNum, threadNum>>>(_vertexes,
+                                                              _collisonPairs,
+                                                              lambda_lastH_scalar,
+                                                              distCoord,
+                                                              tanBasis,
+                                                              _collisonPairs_lastH,
+                                                              dHat,
+                                                              Kappa,
+                                                              _cpNum,
+                                                              h_cpNum[0]);
+    }
+    CUDA_SAFE_CALL(cudaMemcpy(h_cpNum_last, _cpNum, 5 * sizeof(uint32_t), cudaMemcpyDeviceToHost));
+    numbers = h_gpNum;
+    if(numbers > 0)
+    {
+
+        blockNum = (numbers + threadNum - 1) / threadNum;
+        _calFrictionLastH_gd<<<blockNum, threadNum>>>(_vertexes,
+                                                      _groundOffset,
+                                                      _groundNormal,
+                                                      _environment_collisionPair,
+                                                      lambda_lastH_scalar_gd,
+                                                      _collisonPairs_lastH_gd,
+                                                      dHat,
+                                                      Kappa,
+                                                      h_gpNum);
+    }
+    h_gpNum_last = h_gpNum;
+}
+
+
+void GIPC::GroundCollisionDetect()
+{
+    int numbers = surf_vertexNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _GroundCollisionDetect<<<blockNum, threadNum>>>(
+        _vertexes, _surfVerts, _groundOffset, _groundNormal, _environment_collisionPair, _gpNum, dHat, numbers);
+}
+
+void GIPC::computeSoftConstraintGradientAndHessian(double3* _gradient, int global_hessian_fem_offset)
+{
+    int numbers = softNum;
+    if(numbers < 1)
+    {
+        return;
+    }
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    // offset
+    _computeSoftConstraintGradientAndHessian<<<blockNum, threadNum>>>(
+        _vertexes,
+        targetVert,
+        targetInd,
+        _gradient,
+        _gpNum,
+        gipc_global_triplet.block_values(),
+        gipc_global_triplet.block_row_indices(),
+        gipc_global_triplet.block_col_indices(),
+        softMotionRate,
+        animation_fullRate,
+        gipc_global_triplet.global_triplet_offset,
+        global_hessian_fem_offset,
+        softNum);
+}
+
+void GIPC::getTotalForce(double3* _gradient0, double3* _gradient1)
+{
+
+    int numbers = vertexNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _getTotalForce<<<blockNum, threadNum>>>(_gradient0, _gradient1, numbers);
+}
+
+
+void GIPC::computeGroundGradientAndHessian(double3* _gradient)
+{
+#ifndef USE_FRICTION
+    CUDA_SAFE_CALL(cudaMemset(_gpNum, 0, sizeof(uint32_t)));
+#endif
+    int numbers = h_gpNum;
+    if(numbers < 1)
+    {
+        return;
+    }
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _computeGroundGradientAndHessian<<<blockNum, threadNum>>>(
+        _vertexes,
+        _groundOffset,
+        _groundNormal,
+        _environment_collisionPair,
+        _gradient,
+        _gpNum,
+        gipc_global_triplet.block_values(),
+        gipc_global_triplet.block_row_indices(),
+        gipc_global_triplet.block_col_indices(),
+        dHat,
+        Kappa,
+        gipc_global_triplet.global_triplet_offset,
+        numbers);
+}
+
+void GIPC::computeCloseGroundVal()
+{
+    int numbers = h_gpNum;
+    if(h_gpNum <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _computeGroundCloseVal<<<blockNum, threadNum>>>(_vertexes,
+                                                    _groundOffset,
+                                                    _groundNormal,
+                                                    _environment_collisionPair,
+                                                    dTol,
+                                                    _closeConstraintID,
+                                                    _closeConstraintVal,
+                                                    _close_gpNum,
+                                                    numbers);
+}
+
+bool GIPC::checkCloseGroundVal()
+{
+    int numbers = h_close_gpNum;
+    if(numbers < 1)
+        return false;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _scalar_scratch.resize_discard(1);
+    CUDA_SAFE_CALL(cudaMemset(_scalar_scratch.data(), 0, sizeof(int)));
+    _checkGroundCloseVal<<<blockNum, threadNum>>>(_vertexes,
+                                                  _groundOffset,
+                                                  _groundNormal,
+                                                  _scalar_scratch.data(),
+                                                  _closeConstraintID,
+                                                  _closeConstraintVal,
+                                                  numbers);
+    int isChange;
+    CUDA_SAFE_CALL(cudaMemcpy(&isChange, _scalar_scratch.data(), sizeof(int), cudaMemcpyDeviceToHost));
+
+    return (isChange == 1);
+}
+
+double2 GIPC::minMaxGroundDist()
+{
+    //_reduct_minGroundDist << <blockNum, threadNum >> > (_vertexes, _groundOffset, _groundNormal, _isChange, _closeConstraintID, _closeConstraintVal, numbers);
+
+    int numbers = h_gpNum;
+    if(numbers < 1)
+        return make_double2(1e32, 0);
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+
+    _distance_scratch.resize_discard(blockNum);
+    auto* queue = _distance_scratch.data();
+    //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+    _cub_reduct_MGroundDist<<<blockNum, threadNum>>>(
+        _vertexes, _groundOffset, _groundNormal, _environment_collisionPair, queue, numbers);
+    //_reduct_min_double3_to_double << <blockNum, threadNum, sharedMsize >> > (_moveDir, _tempMinMovement, numbers);
+
+    double2 minMaxValue = reduce_component_max_to_host(
+        queue, blockNum, pcg_data.prepare_reduction_pair());
+    minMaxValue.x = 1.0 / minMaxValue.x;
+    return minMaxValue;
+}
+
+void GIPC::computeGroundGradient(double3* _gradient, double mKappa)
+{
+    int numbers = h_gpNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _computeGroundGradient<<<blockNum, threadNum>>>(_vertexes,
+                                                    _groundOffset,
+                                                    _groundNormal,
+                                                    _environment_collisionPair,
+                                                    _gradient,
+                                                    _gpNum,
+                                                    dHat,
+                                                    mKappa,
+                                                    numbers);
+}
+
+void GIPC::computeSoftConstraintGradient(double3* _gradient)
+{
+    int numbers = softNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    // offset
+    _computeSoftConstraintGradient<<<blockNum, threadNum>>>(
+        _vertexes, targetVert, targetInd, _gradient, softMotionRate, animation_fullRate, softNum);
+}
+
+double GIPC::self_largestFeasibleStepSize(double slackness, int numbers)
+{
+    //slackness = 0.9;
+    //int numbers = h_cpNum[0];
+    if(numbers < 1)
+        return 1;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    double* mqueue = pcg_data.prepare_reduction_queue(numbers, threadNum);
+
+
+    //double* _minSteps;
+    //CUDA_SAFE_CALL(cudaMalloc((void**)&_minSteps, numbers * sizeof(double)));
+    //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+    _cub_reduct_self_step<<<blockNum, threadNum>>>(
+        _vertexes, _ccd_collisonPairs, _moveDir, mqueue, slackness, numbers);
+    //_reduct_min_double3_to_double << <blockNum, threadNum, sharedMsize >> > (_moveDir, _tempMinMovement, numbers);
+
+    const double minValue =
+        reduce_max_to_host(mqueue, blockNum, pcg_data.prepare_reduction_scalar());
+    //printf("                 full ccd time step:  %f\n", 1.0 / minValue);
+    //CUDA_SAFE_CALL(cudaFree(_minSteps));
+    return 1.0 / minValue;
+}
+
+double GIPC::cfl_largestSpeed()
+{
+    int                numbers   = surf_vertexNum;
+    if(numbers < 1)
+        return 0.0;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    double* mqueue = pcg_data.prepare_reduction_queue(numbers, threadNum);
+
+
+    /*double* _maxV;
+    CUDA_SAFE_CALL(cudaMalloc((void**)&_maxV, numbers * sizeof(double)));*/
+    //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+    _cub_reduct_cfl<<<blockNum, threadNum>>>(
+        _moveDir, mqueue, _surfVerts, numbers);
+    //_reduct_min_double3_to_double << <blockNum, threadNum, sharedMsize >> > (_moveDir, _tempMinMovement, numbers);
+
+    const double minValue =
+        reduce_max_to_host(mqueue, blockNum, pcg_data.prepare_reduction_scalar());
+    //CUDA_SAFE_CALL(cudaFree(_maxV));
+    return minValue;
+}
+
+double reduction2Kappa(int            type,
+                       const double3* A,
+                       const double3* B,
+                       double*        queue,
+                       double*        reduction_output,
+                       int            vertexNum)
+{
+    int                numbers   = vertexNum;
+    if(numbers < 1)
+        return 0.0;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+
+    /*double* _queue;
+    CUDA_SAFE_CALL(cudaMalloc((void**)&_queue, numbers * sizeof(double)));*/
+    if(type == 0)
+    {
+        //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+        _cub_reduct_dot<<<blockNum, threadNum>>>(A, B, queue, numbers);
+    }
+    else if(type == 1)
+    {
+        _cub_reduct_squared_norm<<<blockNum, threadNum>>>(A, queue, numbers);
+    }
+    //_reduct_min_double3_to_double << <blockNum, threadNum, sharedMsize >> > (_moveDir, _tempMinMovement, numbers);
+
+    return reduce_sum_to_host(queue, blockNum, reduction_output);
+}
+
+double GIPC::ground_largestFeasibleStepSize(double slackness)
+{
+
+    int numbers = surf_vertexNum;
+    if(numbers < 1)
+        return 1;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    double* mqueue = pcg_data.prepare_reduction_queue(numbers, threadNum);
+
+
+    //double* _minSteps;
+    //CUDA_SAFE_CALL(cudaMalloc((void**)&_minSteps, numbers * sizeof(double)));
+
+    //if (h_cpNum[0] > 0) {
+    //    double3* mvd = new double3[vertexNum];
+    //    cudaMemcpy(mvd, _moveDir, sizeof(double3) * vertexNum, cudaMemcpyDeviceToHost);
+    //    for (int i = 0;i < vertexNum;i++) {
+    //        printf("%f  %f  %f\n", mvd[i].x, mvd[i].y, mvd[i].z);
+    //    }
+    //    delete[] mvd;
+    //}
+    _cub_reduct_ground_step<<<blockNum, threadNum>>>(
+        _vertexes, _surfVerts, _groundOffset, _groundNormal, _moveDir, mqueue, slackness, numbers);
+
+
+    const double minValue =
+        reduce_max_to_host(mqueue, blockNum, pcg_data.prepare_reduction_scalar());
+    //CUDA_SAFE_CALL(cudaFree(_minSteps));
+    return 1.0 / minValue;
+}
+
+double GIPC::InjectiveStepSize(double slackness, double errorRate, uint4* tets)
+{
+
+    int numbers = tetrahedraNum;
+    if(numbers < 1)
+        return 1;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    double* mqueue = pcg_data.prepare_reduction_queue(numbers, threadNum);
+
+
+    _cub_reduct_injective_step<<<blockNum, threadNum>>>(
+        _vertexes, tets, _moveDir, mqueue, slackness, errorRate, numbers);
+
+
+    const double minValue =
+        reduce_max_to_host(mqueue, blockNum, pcg_data.prepare_reduction_scalar());
+    //printf("Injective Time step:   %f\n", 1.0 / minValue);
+    //if (1.0 / minValue < 1) {
+    //    system("pause");
+    //}
+    //CUDA_SAFE_CALL(cudaFree(_minSteps));
+    return 1.0 / minValue;
+}
+
+void GIPC::buildCP()
+{
+    for(;;)
+    {
+        size_t common_capacity = std::min({_collisonPairs.capacity(),
+                                           _ccd_collisonPairs.capacity(),
+                                           _MatIndex.capacity()});
+        if(common_capacity > std::numeric_limits<uint32_t>::max())
+        {
+            std::cerr << "Collision-pair capacity exceeds the 32-bit device counter range."
+                      << std::endl;
+            std::abort();
+        }
+        uint32_t pair_capacity = static_cast<uint32_t>(common_capacity);
+
+        // Expose the complete allocations as writable for this pass. The
+        // successful pass shrinks the logical ranges back to the live count.
+        _collisonPairs.resize(_collisonPairs.capacity());
+        _ccd_collisonPairs.resize(_ccd_collisonPairs.capacity());
+        _MatIndex.resize(_MatIndex.capacity());
+
+        CUDA_SAFE_CALL(cudaMemset(_cpNum, 0, 5 * sizeof(uint32_t)));
+        CUDA_SAFE_CALL(cudaMemset(_gpNum, 0, sizeof(uint32_t)));
+        bvh_f.SelfCollitionDetect(dHat,
+                                  _collisonPairs.data(),
+                                  _ccd_collisonPairs.data(),
+                                  _cpNum.data(),
+                                  _MatIndex.data(),
+                                  pair_capacity);
+        bvh_e.SelfCollitionDetect(dHat,
+                                  _collisonPairs.data(),
+                                  _ccd_collisonPairs.data(),
+                                  _cpNum.data(),
+                                  _MatIndex.data(),
+                                  pair_capacity);
+        GroundCollisionDetect();
+        CUDA_SAFE_CALL(cudaMemcpy(&h_cpNum, _cpNum, 5 * sizeof(uint32_t), cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(&h_gpNum, _gpNum, sizeof(uint32_t), cudaMemcpyDeviceToHost));
+
+        if(h_cpNum[0] <= pair_capacity)
+        {
+            uint64_t typed_pair_count = static_cast<uint64_t>(h_cpNum[2])
+                                        + static_cast<uint64_t>(h_cpNum[3])
+                                        + static_cast<uint64_t>(h_cpNum[4]);
+            if(typed_pair_count != h_cpNum[0])
+            {
+                std::cerr << "Collision-pair subtype counts do not match the total."
+                          << std::endl;
+                std::abort();
+            }
+            _collisonPairs.resize(h_cpNum[0]);
+            _ccd_collisonPairs.resize(h_cpNum[0]);
+            _MatIndex.resize(h_cpNum[0]);
+            break;
+        }
+
+        // This pass counted every candidate but deliberately skipped all
+        // writes beyond pair_capacity. Old contents are irrelevant because
+        // the next pass regenerates the complete output.
+        std::cout << "Growing DCD pair storage from " << pair_capacity
+                  << " for " << h_cpNum[0] << " detected pairs." << std::endl;
+        _collisonPairs.resize_discard(h_cpNum[0]);
+        _ccd_collisonPairs.resize_discard(h_cpNum[0]);
+        _MatIndex.resize_discard(h_cpNum[0]);
+    }
+}
+
+void GIPC::buildFullCP(const double& alpha)
+{
+    for(;;)
+    {
+        if(_ccd_collisonPairs.capacity() > std::numeric_limits<uint32_t>::max())
+        {
+            std::cerr << "CCD-pair capacity exceeds the 32-bit device counter range."
+                      << std::endl;
+            std::abort();
+        }
+        uint32_t pair_capacity = static_cast<uint32_t>(_ccd_collisonPairs.capacity());
+        _ccd_collisonPairs.resize(_ccd_collisonPairs.capacity());
+
+        CUDA_SAFE_CALL(cudaMemset(_cpNum, 0, sizeof(uint32_t)));
+        bvh_f.SelfCollitionFullDetect(
+            dHat, _moveDir, alpha, _ccd_collisonPairs.data(), _cpNum.data(), pair_capacity);
+        bvh_e.SelfCollitionFullDetect(
+            dHat, _moveDir, alpha, _ccd_collisonPairs.data(), _cpNum.data(), pair_capacity);
+        CUDA_SAFE_CALL(cudaMemcpy(&h_ccd_cpNum, _cpNum, sizeof(uint32_t), cudaMemcpyDeviceToHost));
+        if(const char* limit=std::getenv("GIPC_CCD_PAIR_LIMIT"))
+        {
+            auto max_pairs=std::stoull(limit);
+            if(max_pairs && h_ccd_cpNum>max_pairs)
+                throw std::runtime_error("CCD pair resource limit: "+std::to_string(h_ccd_cpNum)+" > "+std::to_string(max_pairs));
+        }
+
+        if(h_ccd_cpNum <= pair_capacity)
+        {
+            _ccd_collisonPairs.resize(h_ccd_cpNum);
+            break;
+        }
+
+        std::cout << "Growing CCD pair storage from " << pair_capacity
+                  << " for " << h_ccd_cpNum << " detected pairs." << std::endl;
+        _ccd_collisonPairs.resize_discard(h_ccd_cpNum);
+    }
+}
+
+
+void GIPC::buildBVH()
+{
+    bvh_f.Construct();
+    bvh_e.Construct();
+}
+
+AABB* GIPC::calcuMaxSceneSize()
+{
+    return bvh_f.getSceneSize();
+}
+
+void GIPC::buildBVH_FULLCCD(const double& alpha)
+{
+    if(gipc_accel_feature("GIPC_CCD_BVH_REFIT"))
+    {
+        bvh_f.RefitFullCCD(_moveDir,alpha);
+        bvh_e.RefitFullCCD(_moveDir,alpha);
+        if(const char* audit=std::getenv("GIPC_AUDIT_REFIT");audit && audit[0]=='1')
+        {
+            static thread_local int last_audited_frame=-1;
+            if(last_audited_frame!=total_Frames)
+            {
+                auto pair_set=[&](){
+                    buildFullCP(alpha);std::vector<int4> raw(h_ccd_cpNum);
+                    if(!raw.empty())CUDA_SAFE_CALL(cudaMemcpy(raw.data(),_ccd_collisonPairs.data(),raw.size()*sizeof(int4),cudaMemcpyDeviceToHost));
+                    std::vector<std::array<int,4>> result;for(auto p:raw)result.push_back({p.x,p.y,p.z,p.w});
+                    std::sort(result.begin(),result.end());result.erase(std::unique(result.begin(),result.end()),result.end());return result;
+                };
+                auto refitted=pair_set();
+                bvh_f.ConstructFullCCD(_moveDir,alpha);bvh_e.ConstructFullCCD(_moveDir,alpha);
+                auto rebuilt=pair_set();
+                gipc::Statistics::instance().at_current_frame()["bvh_refit_audit"]={{"pairs_refit",refitted.size()},{"pairs_rebuild",rebuilt.size()},{"identical",refitted==rebuilt}};
+                if(refitted!=rebuilt)throw std::runtime_error("Refit/rebuild full CCD candidate sets differ");
+                last_audited_frame=total_Frames;
+            }
+        }
+    }
+    else
+    {
+        bvh_f.ConstructFullCCD(_moveDir, alpha);
+        bvh_e.ConstructFullCCD(_moveDir, alpha);
+    }
+}
+
+void GIPC::calBarrierGradientAndHessian(double3* _gradient, double mKappa)
+{
+    int numbers = h_cpNum[0];
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    _calBarrierGradientAndHessian<<<blockNum, threadNum>>>(
+        _vertexes,
+        _rest_vertexes,
+        _collisonPairs,
+        _gradient,
+        gipc_global_triplet.block_values(),
+        gipc_global_triplet.block_row_indices(),
+        gipc_global_triplet.block_col_indices(),
+        _cpNum,
+        _MatIndex,
+        dHat,
+        mKappa,
+        h_cpNum[4],
+        h_cpNum[3],
+        h_cpNum[2],
+        numbers);
+}
+
+
+void GIPC::calBarrierHessian()
+{
+
+    int numbers = h_cpNum[0];
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 32;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+
+    _calBarrierHessian<<<blockNum, threadNum>>>(_vertexes,
+                                                _rest_vertexes,
+                                                _collisonPairs,
+                                                gipc_global_triplet.block_values(),
+                                                gipc_global_triplet.block_row_indices(),
+                                                gipc_global_triplet.block_col_indices(),
+                                                _cpNum,
+                                                _MatIndex,
+                                                dHat,
+                                                Kappa,
+                                                h_cpNum[4],
+                                                h_cpNum[3],
+                                                h_cpNum[2],
+                                                numbers);
+}
+
+void GIPC::calFrictionHessian(device_TetraData& TetMesh)
+{
+    int numbers = h_cpNum_last[0];
+    //if (numbers < 1) return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    if(numbers > 0)
+    {
+        _calFrictionHessian<<<blockNum, threadNum>>>(
+            _vertexes,
+            TetMesh.o_vertexes,
+            _collisonPairs_lastH,
+            gipc_global_triplet.block_values(),
+            gipc_global_triplet.block_row_indices(),
+            gipc_global_triplet.block_col_indices(),
+            _cpNum,
+            numbers,
+            IPC_dt,
+            distCoord,
+            tanBasis,
+            fDhat * IPC_dt * IPC_dt,
+            lambda_lastH_scalar,
+            frictionRate,
+            h_cpNum[4],
+            h_cpNum[3],
+            h_cpNum[2],
+            h_cpNum_last[4],
+            h_cpNum_last[3],
+            h_cpNum_last[2]);
+    }
+
+    numbers = h_gpNum_last;
+    CUDA_SAFE_CALL(cudaMemcpy(_gpNum, &h_gpNum_last, sizeof(uint32_t), cudaMemcpyHostToDevice));
+    if(numbers < 1)
+        return;
+
+    blockNum = (numbers + threadNum - 1) / threadNum;
+    int global_offset = gipc_global_triplet.global_triplet_offset + h_cpNum_last[4] * M12_Off
+                        + h_cpNum_last[3] * M9_Off + h_cpNum_last[2] * M6_Off;
+    _calFrictionHessian_gd<<<blockNum, threadNum>>>(
+        _vertexes,
+        TetMesh.o_vertexes,
+        _groundNormal,
+        _collisonPairs_lastH_gd,
+        gipc_global_triplet.block_values(),
+        gipc_global_triplet.block_row_indices(),
+        gipc_global_triplet.block_col_indices(),
+        numbers,
+        IPC_dt,
+        fDhat * IPC_dt * IPC_dt,
+        lambda_lastH_scalar_gd,
+        global_offset,
+        gd_frictionRate);
+}
+
+void GIPC::computeSelfCloseVal()
+{
+    int numbers = h_cpNum[0];
+    if(numbers <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _calSelfCloseVal<<<blockNum, threadNum>>>(
+        _vertexes, _collisonPairs, _closeMConstraintID, _closeMConstraintVal, _close_cpNum, dTol, numbers);
+}
+
+bool GIPC::checkSelfCloseVal()
+{
+    int numbers = h_close_cpNum;
+    if(numbers < 1)
+        return false;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _scalar_scratch.resize_discard(1);
+    CUDA_SAFE_CALL(cudaMemset(_scalar_scratch.data(), 0, sizeof(int)));
+    _checkSelfCloseVal<<<blockNum, threadNum>>>(
+        _vertexes, _scalar_scratch.data(), _closeMConstraintID, _closeMConstraintVal, numbers);
+    int isChange;
+    CUDA_SAFE_CALL(cudaMemcpy(&isChange, _scalar_scratch.data(), sizeof(int), cudaMemcpyDeviceToHost));
+
+    return (isChange == 1);
+}
+
+double2 GIPC::minMaxSelfDist()
+{
+    int numbers = h_cpNum[0];
+    if(numbers < 1)
+        return make_double2(1e32, 0);
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+
+    _distance_scratch.resize_discard(blockNum);
+    auto* queue = _distance_scratch.data();
+    //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+    _cub_reduct_MSelfDist<<<blockNum, threadNum>>>(
+        _vertexes, _collisonPairs, queue, numbers);
+    //_reduct_min_double3_to_double << <blockNum, threadNum, sharedMsize >> > (_moveDir, _tempMinMovement, numbers);
+
+    double2 minValue = reduce_component_max_to_host(
+        queue, blockNum, pcg_data.prepare_reduction_pair());
+    minValue.x = 1.0 / minValue.x;
+    return minValue;
+}
+
+// void GIPC::calBarrierGradient(double3* _gradient, double mKappa) {
+//     int numbers = h_cpNum[0];
+//     if (numbers < 1)return;
+//     const unsigned int threadNum = 256;
+//     int blockNum = (numbers + threadNum - 1) / threadNum;
+//     _calBarrierGradient << <blockNum, threadNum >> > (_vertexes, _rest_vertexes, _collisonPairs, _gradient, dHat, mKappa, numbers);
+// }
+
+void GIPC::calBarrierGradient(double3* _gradient, double mKappa)
+{
+    int numbers = h_cpNum[0];
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+
+    _calBarrierGradient<<<blockNum, threadNum>>>(
+        _vertexes, _rest_vertexes, _collisonPairs, _gradient, dHat, mKappa, numbers);
+}
+
+void GIPC::calFrictionGradient(double3* _gradient, device_TetraData& TetMesh)
+{
+    int                numbers   = h_cpNum_last[0];
+    const unsigned int threadNum = 256;
+    int                blockNum  = 0;
+    if(numbers > 0)
+    {
+        blockNum = (numbers + threadNum - 1) / threadNum;
+        _calFrictionGradient<<<blockNum, threadNum>>>(_vertexes,
+                                                      TetMesh.o_vertexes,
+                                                      _collisonPairs_lastH,
+                                                      _gradient,
+                                                      numbers,
+                                                      IPC_dt,
+                                                      distCoord,
+                                                      tanBasis,
+                                                      fDhat * IPC_dt * IPC_dt,
+                                                      lambda_lastH_scalar,
+                                                      frictionRate);
+    }
+    numbers = h_gpNum_last;
+    if(numbers < 1)
+        return;
+    blockNum = (numbers + threadNum - 1) / threadNum;
+
+    _calFrictionGradient_gd<<<blockNum, threadNum>>>(_vertexes,
+                                                     TetMesh.o_vertexes,
+                                                     _groundNormal,
+                                                     _collisonPairs_lastH_gd,
+                                                     _gradient,
+                                                     numbers,
+                                                     IPC_dt,
+                                                     fDhat * IPC_dt * IPC_dt,
+                                                     lambda_lastH_scalar_gd,
+                                                     gd_frictionRate);
+}
+
+
+void calKineticGradient(double3* _vertexes, double3* _xTilta, double3* _gradient, double* _masses, int numbers)
+{
+    const unsigned int threadNum = default_threads;
+    if(numbers < 1)
+        return;
+    int blockNum = (numbers + threadNum - 1) / threadNum;
+    _calKineticGradient<<<blockNum, threadNum>>>(_vertexes, _xTilta, _gradient, _masses, numbers);
+}
+
+
+void calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInverses,
+                                    const double3*          vertexes,
+                                    const uint4*            tetrahedras,
+                                    const double*           volume,
+                                    double3*                gradient,
+                                    int                     tetrahedraNum_FEM,
+                                    int                     tetrahedraNum_ABD,
+                                    const double*           lenRate,
+                                    const double*           volRate,
+                                    int                     global_offset,
+                                    Eigen::Matrix3d*        triplet_values,
+                                    int*                    row_ids,
+                                    int*                    col_ids,
+                                    double                  IPC_dt,
+                                    int global_hessian_fem_offset)
+{
+    int numbers = tetrahedraNum_FEM;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_fem_gradient_hessian<<<blockNum, threadNum>>>(
+        DmInverses + tetrahedraNum_ABD,
+        vertexes,
+        tetrahedras + tetrahedraNum_ABD,
+        volume + tetrahedraNum_ABD,
+        gradient,
+        numbers,
+        lenRate + tetrahedraNum_ABD,
+        volRate + tetrahedraNum_ABD,
+        //tet_ids,
+        global_offset,
+        triplet_values,
+        row_ids,
+        col_ids,
+        IPC_dt,
+        global_hessian_fem_offset);
+}
+
+void calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d* triDmInverses,
+                                             const double3*   vertexes,
+                                             const uint3*     triangles,
+                                             const double*    area,
+                                             double3*         gradient,
+                                             int              triangleNum,
+                                             double           stretchStiff,
+                                             double           shearStiff,
+                                             double           strainRate,
+                                             int              global_offset,
+                                             Eigen::Matrix3d* triplet_values,
+                                             int*             row_ids,
+                                             int*             col_ids,
+                                             double           IPC_dt,
+                                             int global_hessian_fem_offset)
+{
+    int numbers = triangleNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_triangle_fem_gradient_hessian<<<blockNum, threadNum>>>(triDmInverses,
+                                                                      vertexes,
+                                                                      triangles,
+                                                                      area,
+                                                                      gradient,
+                                                                      triangleNum,
+                                                                      stretchStiff,
+                                                                      shearStiff,
+                                                                      IPC_dt,
+                                                                      global_offset,
+                                                                      triplet_values,
+                                                                      row_ids,
+                                                                      col_ids,
+                                                                      strainRate,
+                                                                      global_hessian_fem_offset);
+}
+
+
+void calculate_triangle_fem_strain_limiting_gradient_hessian(__GEIGEN__::Matrix2x2d* triDmInverses,
+                                                             const double3* vertexes,
+                                                             const uint3* triangles,
+                                                             __GEIGEN__::Matrix9x9d* Hessians,
+                                                             const uint32_t& offset,
+                                                             const double* area,
+                                                             double3* gradient,
+                                                             int triangleNum,
+                                                             Eigen::Matrix3d* U3x2,
+                                                             Eigen::Matrix2d* V3x2,
+                                                             Eigen::Vector2d* S3x2,
+                                                             double IPC_dt)
+{
+    int numbers = triangleNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_triangle_fem_strain_limiting_gradient_hessian<<<blockNum, threadNum>>>(
+        triDmInverses, vertexes, triangles, Hessians, offset, area, gradient, triangleNum, U3x2, V3x2, S3x2, IPC_dt);
+}
+
+
+void calculate_triangle_fem_deformationF(__GEIGEN__::Matrix2x2d* triDmInverses,
+                                         const double3*          vertexes,
+                                         const uint3*            triangles,
+                                         int                     triangleNum,
+                                         Eigen::Matrix<double, 3, 2>* F3x2)
+{
+    int numbers = triangleNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_triangle_fem_deformationF<<<blockNum, threadNum>>>(triDmInverses,
+                                                                  vertexes,
+                                                                  triangles,
+
+                                                                  triangleNum,
+                                                                  F3x2);
+}
+
+void calculate_bending_gradient_hessian(const double3*   vertexes,
+                                        const double3*   rest_vertexes,
+                                        const uint2*     edges,
+                                        const uint2*     edges_adj_vertex,
+                                        double3*         gradient,
+                                        int              edgeNum,
+                                        double           bendStiff,
+                                        int              global_offset,
+                                        Eigen::Matrix3d* triplet_values,
+                                        int*             row_ids,
+                                        int*             col_ids,
+                                        double           IPC_dt,
+                                        int global_hessian_fem_offset)
+{
+    int numbers = edgeNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_bending_gradient_hessian<<<blockNum, threadNum>>>(vertexes,
+                                                                 rest_vertexes,
+                                                                 edges,
+                                                                 edges_adj_vertex,
+                                                                 gradient,
+                                                                 edgeNum,
+                                                                 bendStiff,
+                                                                 global_offset,
+                                                                 triplet_values,
+                                                                 row_ids,
+                                                                 col_ids,
+                                                                 IPC_dt,
+                                                                 global_hessian_fem_offset);
+}
+
+
+#ifdef USE_QUADRATIC_BENDING
+void calculate_quad_bending_gradient_hessian(const double3* vertexes,
+                                             const double3* rest_vertexes,
+                                             const uint2*   edges,
+                                             const uint2*   edges_adj_vertex,
+                                             const Eigen::Matrix4d* quad_bending_Q,
+                                             double3*         gradient,
+                                             int              edgeNum,
+                                             double           bendStiff,
+                                             int              global_offset,
+                                             Eigen::Matrix3d* triplet_values,
+                                             int*             row_ids,
+                                             int*             col_ids,
+                                             double           IPC_dt,
+                                             int global_hessian_fem_offset)
+{
+    int numbers = edgeNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_quad_bending_gradient_hessian<<<blockNum, threadNum>>>(vertexes,
+                                                                      rest_vertexes,
+                                                                      edges,
+                                                                      edges_adj_vertex,
+                                                                      quad_bending_Q,
+                                                                      gradient,
+                                                                      edgeNum,
+                                                                      bendStiff,
+                                                                      global_offset,
+                                                                      triplet_values,
+                                                                      row_ids,
+                                                                      col_ids,
+                                                                      IPC_dt,
+                                                                      global_hessian_fem_offset);
+}
+#endif
+
+
+void calculate_fem_gradient(__GEIGEN__::Matrix3x3d* DmInverses,
+                            const double3*          vertexes,
+                            const uint4*            tetrahedras,
+                            const double*           volume,
+                            double3*                gradient,
+                            int                     tetrahedraNum,
+                            double*                 lenRate,
+                            double*                 volRate,
+                            double                  dt)
+{
+    int numbers = tetrahedraNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_fem_gradient<<<blockNum, threadNum>>>(
+        DmInverses, vertexes, tetrahedras, volume, gradient, tetrahedraNum, lenRate, volRate, dt);
+}
+
+void calculate_triangle_fem_gradient(__GEIGEN__::Matrix2x2d* triDmInverses,
+                                     const double3*          vertexes,
+                                     const uint3*            triangles,
+                                     const double*           area,
+                                     double3*                gradient,
+                                     int                     triangleNum,
+                                     double                  stretchStiff,
+                                     double                  shearStiff,
+                                     double                  IPC_dt,
+                                     double                  strainRate)
+{
+    int numbers = triangleNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calculate_triangle_fem_gradient<<<blockNum, threadNum>>>(
+        triDmInverses, vertexes, triangles, area, gradient, triangleNum, stretchStiff, shearStiff, IPC_dt, strainRate);
+}
+
+double calcMinMovement(const double3* move_dir,
+                       double*        queue,
+                       double*        reduction_output,
+                       const int&     number)
+{
+
+    int numbers = number;
+    if(numbers < 1)
+        return 0;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+
+    /*double* _tempMinMovement;
+    CUDA_SAFE_CALL(cudaMalloc((void**)&_tempMinMovement, numbers * sizeof(double)));*/
+    //CUDA_SAFE_CALL(cudaMemcpy(_tempMinMovement, _moveDir, number * sizeof(AABB), cudaMemcpyDeviceToDevice));
+
+    _cub_reduct_max_double3_to_double<<<blockNum, threadNum>>>(move_dir, queue, numbers);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+
+    return reduce_max_to_host(queue, blockNum, reduction_output);
+}
+
+void stepForward(double3* _vertexes,
+                 double3* _vertexesTemp,
+                 double3* _moveDir,
+                 int*     bType,
+                 double   alpha,
+                 bool     moveBoundary,
+                 int      numbers)
+{
+    const unsigned int threadNum = default_threads;
+    if(numbers < 1)
+        return;
+    int blockNum = (numbers + threadNum - 1) / threadNum;
+    _stepForward<<<blockNum, threadNum>>>(
+        _vertexes, _vertexesTemp, _moveDir, bType, alpha, moveBoundary, numbers);
+}
+
+void GIPC::step_forward(device_TetraData& TetMesh, double alpha, bool move_boundary)
+{
+    auto vertexes = cudatool::BufferView<double3>{TetMesh.vertexes, vertexNum};
+    auto vertexes_temp = cudatool::BufferView<double3>{TetMesh.temp_double3Mem, vertexNum};
+    auto move_dir = cudatool::BufferView<double3>{_moveDir, vertexNum};
+    if(abd_fem_count_info.fem_point_num > 0)
+    {
+        auto fem_vertexes = vertexes.subview(abd_fem_count_info.fem_point_offset,
+                                             abd_fem_count_info.fem_point_num);
+        auto fem_vertexes_temp =
+            vertexes_temp.subview(abd_fem_count_info.fem_point_offset,
+                                  abd_fem_count_info.fem_point_num);
+
+        auto fem_move_dir = move_dir.subview(abd_fem_count_info.fem_point_offset,
+                                             abd_fem_count_info.fem_point_num);
+
+        auto btype = cudatool::BufferView<int>{TetMesh.BoundaryType, vertexNum}.subview(
+            abd_fem_count_info.fem_point_offset, abd_fem_count_info.fem_point_num);
+
+
+        stepForward(fem_vertexes.data(),
+                    fem_vertexes_temp.data(),
+                    fem_move_dir.data(),
+                    btype.data(),
+                    alpha,
+                    move_boundary,
+                    fem_vertexes.size());
+    }
+    if(abd_fem_count_info.abd_point_num <= 0)
+        return;
+
+    auto abd_vertexes = cudatool::BufferView<double3>{TetMesh.vertexes, vertexNum}.subview(
+        abd_fem_count_info.abd_point_offset, abd_fem_count_info.abd_point_num);
+
+    m_abd_system->step_forward(*m_abd_sim_data, abd_vertexes, alpha);
+}
+
+void updateSurfaces(uint32_t* sortIndex, uint3* _faces, const int& offset_num, const int& numbers)
+{
+    const unsigned int threadNum = default_threads;
+    if(numbers < 1)
+        return;
+    int blockNum = (numbers + threadNum - 1) / threadNum;  //
+    _updateSurfaces<<<blockNum, threadNum>>>(sortIndex, _faces, offset_num, numbers);
+}
+
+void updateSurfaceEdges(uint32_t* sortIndex, uint2* _edges, const int& offset_num, const int& numbers)
+{
+    const unsigned int threadNum = default_threads;
+    if(numbers < 1)
+        return;
+    int blockNum = (numbers + threadNum - 1) / threadNum;  //
+    _updateEdges<<<blockNum, threadNum>>>(sortIndex, _edges, offset_num, numbers);
+}
+
+void updateTriEdges_adjVerts(uint32_t*  sortIndex,
+                             uint2*     _tri_edges,
+                             uint2*     _adj_verts,
+                             const int& offset_num,
+                             const int& numbers)
+{
+    const unsigned int threadNum = default_threads;
+    if(numbers < 1)
+        return;
+    int blockNum = (numbers + threadNum - 1) / threadNum;  //
+    _updateTriEdges_adjVerts<<<blockNum, threadNum>>>(
+        sortIndex, _tri_edges, _adj_verts, offset_num, numbers);
+}
+
+
+void updateSurfaceVerts(uint32_t* sortIndex, uint32_t* _sVerts, const int& offset_num, const int& numbers)
+{
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _updateSurfVerts<<<blockNum, threadNum>>>(sortIndex, _sVerts, offset_num, numbers);
+}
+
+void updateNeighborInfo(unsigned int*   _neighborList,
+                        unsigned int*   d_neighborListInit,
+                        unsigned int*   _neighborNum,
+                        unsigned int*   _neighborNumInit,
+                        unsigned int*   _neighborStart,
+                        unsigned int*   _neighborStartTemp,
+                        const uint32_t* sortIndex,
+                        const uint32_t* sortMapVertIndex,
+                        const int&      numbers,
+                        const int&      neighborListSize)
+{
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _updateNeighborNum<<<blockNum, threadNum>>>(_neighborNumInit, _neighborNum, sortIndex, numbers);
+    cudatool::DeviceScan().ExclusiveSum(
+        _neighborNum, _neighborStartTemp, numbers);
+    _updateNeighborList<<<blockNum, threadNum>>>(d_neighborListInit,
+                                                 _neighborList,
+                                                 _neighborNum,
+                                                 _neighborStart,
+                                                 _neighborStartTemp,
+                                                 sortIndex,
+                                                 sortMapVertIndex,
+                                                 numbers);
+    CUDA_SAFE_CALL(cudaMemcpy(d_neighborListInit,
+                              _neighborList,
+                              neighborListSize * sizeof(unsigned int),
+                              cudaMemcpyDeviceToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(_neighborStart,
+                              _neighborStartTemp,
+                              numbers * sizeof(unsigned int),
+                              cudaMemcpyDeviceToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(
+        _neighborNumInit, _neighborNum, numbers * sizeof(unsigned int), cudaMemcpyDeviceToDevice));
+}
+
+void calcTetMChash(uint64_t*         _MChash,
+                   const double3*    _vertexes,
+                   uint4*            tets,
+                   const AABB* _MaxBv,
+                   const uint32_t*   sortMapVertIndex,
+                   int               number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcTetMChash<<<blockNum, threadNum>>>(
+        _MChash, _vertexes, tets, _MaxBv, sortMapVertIndex, number);
+}
+
+void updateTopology(uint4* tets, uint3* tris, const uint32_t* sortMapVertIndex, int traNumber, int triNumber)
+{
+    int numbers = std::max(traNumber, triNumber);
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _updateTopology<<<blockNum, threadNum>>>(tets, tris, sortMapVertIndex, traNumber, triNumber);
+}
+
+void updateVertexes(double3*                      o_vertexes,
+                    const double3*                _vertexes,
+                    double*                       tempM,
+                    const double*                 mass,
+                    __GEIGEN__::Matrix3x3d*       tempCons,
+                    int*                          tempBtype,
+                    const __GEIGEN__::Matrix3x3d* cons,
+                    const int*                    bType,
+                    const uint32_t*               sortIndex,
+                    uint32_t*                     sortMapIndex,
+                    int                           number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _updateVertexes<<<blockNum, threadNum>>>(
+        o_vertexes, _vertexes, tempM, mass, tempCons, tempBtype, cons, bType, sortIndex, sortMapIndex, numbers);
+}
+
+void updateTetrahedras(uint4*                        o_tetrahedras,
+                       uint4*                        tetrahedras,
+                       double*                       tempV,
+                       const double*                 volum,
+                       __GEIGEN__::Matrix3x3d*       tempDmInverse,
+                       const __GEIGEN__::Matrix3x3d* dmInverse,
+                       const uint32_t*               sortTetIndex,
+                       const uint32_t*               sortMapVertIndex,
+                       int                           number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _updateTetrahedras<<<blockNum, threadNum>>>(
+        o_tetrahedras, tetrahedras, tempV, volum, tempDmInverse, dmInverse, sortTetIndex, sortMapVertIndex, number);
+}
+
+void calcVertMChash(uint64_t* _MChash, const double3* _vertexes, const AABB* _MaxBv, int number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcVertMChash<<<blockNum, threadNum>>>(_MChash, _vertexes, _MaxBv, number);
+}
+
+void sortGeometry(device_TetraData& TetMesh,
+                  const AABB*       _MaxBv,
+                  const int&        vertex_num,
+                  const int&        tetradedra_num,
+                  const int&        triangle_num)
+{
+
+
+}
+
+////////////////////////TO DO LATER/////////////////////////////////////////
+
+
+void compute_H_b(double d, double dHat, double& H)
+{
+    double t = d - dHat;
+    H = (std::log(d / dHat) * -2.0 - t * 4.0 / d) + 1.0 / (d * d) * (t * t);
+}
+
+void GIPC::suggestKappa(double& kappa)
+{
+    double H_b;
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(bvh_f.scene.upper, bvh_f.scene.lower));
+    compute_H_b(1.0e-16 * bboxDiagSize2, dHat, H_b);
+    if(meanMass == 0.0)
+    {
+        kappa = minKappaCoef / (4.0e-16 * bboxDiagSize2 * H_b);
+    }
+    else
+    {
+        kappa = minKappaCoef * meanMass / (4.0e-16 * bboxDiagSize2 * H_b);
+    }
+    //    printf("bboxDiagSize2: %f\n", bboxDiagSize2);
+    //    printf("H_b: %f\n", H_b);
+    //    printf("sug Kappa: %f\n", kappa);
+}
+
+void GIPC::upperBoundKappa(double& kappa)
+{
+    double H_b;
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(bvh_f.scene.upper, bvh_f.scene.lower));//(maxConer - minConer).squaredNorm();
+    compute_H_b(1.0e-16 * bboxDiagSize2, dHat, H_b);
+    double kappaMax = 100 * minKappaCoef * meanMass / (4.0e-16 * bboxDiagSize2 * H_b);
+    //printf("max Kappa: %f\n", kappaMax);
+    if(meanMass == 0.0)
+    {
+        kappaMax = 100 * minKappaCoef / (4.0e-16 * bboxDiagSize2 * H_b);
+    }
+
+    if(kappa > kappaMax)
+    {
+        kappa = kappaMax;
+    }
+}
+
+
+void GIPC::initKappa(device_TetraData& TetMesh)
+{
+    if(h_cpNum[0] > 0)
+    {
+        double3* _GE = TetMesh.fb;
+        double3* _gc = TetMesh.temp_double3Mem;
+        //CUDA_SAFE_CALL(cudaMalloc((void**)&_gc, vertexNum * sizeof(double3)));
+        //CUDA_SAFE_CALL(cudaMalloc((void**)&_GE, vertexNum * sizeof(double3)));
+        CUDA_SAFE_CALL(cudaMemset(_gc, 0, vertexNum * sizeof(double3)));
+        CUDA_SAFE_CALL(cudaMemset(_GE, 0, vertexNum * sizeof(double3)));
+        calKineticGradient(TetMesh.vertexes, TetMesh.xTilta, _GE, TetMesh.masses, vertexNum);
+        calculate_fem_gradient(TetMesh.DmInverses,
+                               TetMesh.vertexes,
+                               TetMesh.tetrahedras,
+                               TetMesh.volum,
+                               _GE,
+                               tetrahedraNum,
+                               TetMesh.lengthRate,
+                               TetMesh.volumeRate,
+                               IPC_dt);
+        //calculate_triangle_fem_gradient(TetMesh.triDmInverses, TetMesh.vertexes, TetMesh.triangles, TetMesh.area, _GE, triangleNum, stretchStiff, shearStiff, IPC_dt);
+        computeSoftConstraintGradient(_GE);
+        computeGroundGradient(_gc, 1);
+        calBarrierGradient(_gc, 1);
+        double* reduction_queue =
+            pcg_data.prepare_reduction_queue(vertexNum, default_threads);
+        double* reduction_output = pcg_data.prepare_reduction_scalar();
+        double  gsum =
+            reduction2Kappa(0, _gc, _GE, reduction_queue, reduction_output, vertexNum);
+        double gsnorm =
+            reduction2Kappa(1, _gc, _GE, reduction_queue, reduction_output, vertexNum);
+        //CUDA_SAFE_CALL(cudaFree(_gc));
+        //CUDA_SAFE_CALL(cudaFree(_GE));
+        double minKappa = -gsum / gsnorm;
+        if(minKappa > 0.0)
+        {
+            Kappa = minKappa;
+        }
+        suggestKappa(minKappa);
+        if(Kappa < minKappa)
+        {
+            Kappa = minKappa;
+        }
+        upperBoundKappa(Kappa);
+    }
+
+    //printf("Kappa ====== %f\n", Kappa);
+}
+
+
+void GIPC::partitionContactHessian()
+{
+
+    cudatool::DeviceRadixSort().SortPairs(gipc_global_triplet.block_hash_value(),
+                                          gipc_global_triplet.block_sort_hash_value(),
+                                          gipc_global_triplet.block_index(),
+                                          gipc_global_triplet.block_sort_index(),
+                                          gipc_global_triplet.global_collision_triplet_offset);
+
+    int threadNum = 256;
+
+    LaunchCudaKernal_default(
+        gipc_global_triplet.global_collision_triplet_offset,
+        threadNum,
+        0,
+        _reorder_triplets,
+        gipc_global_triplet.block_row_indices(),
+        gipc_global_triplet.block_col_indices(),
+        gipc_global_triplet.block_values(),
+        gipc_global_triplet.block_row_indices(gipc_global_triplet.global_collision_triplet_offset),
+        gipc_global_triplet.block_col_indices(gipc_global_triplet.global_collision_triplet_offset),
+        gipc_global_triplet.block_values(gipc_global_triplet.global_collision_triplet_offset),
+        (const uint32_t*)gipc_global_triplet.block_sort_index(),
+        gipc_global_triplet.global_collision_triplet_offset);
+
+    //gipc_global_triplet.d_abd_abd_contact_start_id = -1;
+    //gipc_global_triplet.d_abd_fem_contact_start_id = -1;
+    //gipc_global_triplet.d_fem_abd_contact_start_id = -1;
+    //gipc_global_triplet.d_fem_fem_contact_start_id = -1;
+
+    CUDA_SAFE_CALL(cudaMemset(gipc_global_triplet.d_abd_abd_contact_start_id, -1, sizeof(int)));
+    CUDA_SAFE_CALL(cudaMemset(gipc_global_triplet.d_abd_fem_contact_start_id, -1, sizeof(int)));
+    CUDA_SAFE_CALL(cudaMemset(gipc_global_triplet.d_fem_abd_contact_start_id, -1, sizeof(int)));
+    CUDA_SAFE_CALL(cudaMemset(gipc_global_triplet.d_fem_fem_contact_start_id, -1, sizeof(int)));
+
+    size_t shareMem = (threadNum + 1) * sizeof(int);
+    LaunchCudaKernal_default(gipc_global_triplet.global_collision_triplet_offset,
+                             threadNum,
+                             shareMem,
+                             _partition_collision_triplets,
+                             (const uint64_t*)gipc_global_triplet.block_sort_hash_value(),
+                             gipc_global_triplet.d_abd_abd_contact_start_id.data(),
+                             gipc_global_triplet.d_abd_fem_contact_start_id.data(),
+                             gipc_global_triplet.d_fem_abd_contact_start_id.data(),
+                             gipc_global_triplet.d_fem_fem_contact_start_id.data(),
+                             //abd_fem_count_info.abd_point_num,
+                             gipc_global_triplet.global_collision_triplet_offset);
+
+
+    //gipc_global_triplet.h_abd_abd_contact_start_id =
+    //    gipc_global_triplet.d_abd_abd_contact_start_id;
+    //gipc_global_triplet.h_abd_fem_contact_start_id =
+    //    gipc_global_triplet.d_abd_fem_contact_start_id;
+    //gipc_global_triplet.h_fem_abd_contact_start_id =
+    //    gipc_global_triplet.d_fem_abd_contact_start_id;
+    //gipc_global_triplet.h_fem_fem_contact_start_id =
+    //    gipc_global_triplet.d_fem_fem_contact_start_id;
+
+    CUDA_SAFE_CALL(cudaMemcpy(&(gipc_global_triplet.h_abd_abd_contact_start_id),
+                              gipc_global_triplet.d_abd_abd_contact_start_id,
+                              sizeof(int),
+                              cudaMemcpyDeviceToHost));
+
+    CUDA_SAFE_CALL(cudaMemcpy(&(gipc_global_triplet.h_abd_fem_contact_start_id),
+                              gipc_global_triplet.d_abd_fem_contact_start_id,
+                              sizeof(int),
+                              cudaMemcpyDeviceToHost));
+
+    CUDA_SAFE_CALL(cudaMemcpy(&(gipc_global_triplet.h_fem_abd_contact_start_id),
+                              gipc_global_triplet.d_fem_abd_contact_start_id,
+                              sizeof(int),
+                              cudaMemcpyDeviceToHost));
+
+    CUDA_SAFE_CALL(cudaMemcpy(&(gipc_global_triplet.h_fem_fem_contact_start_id),
+                              gipc_global_triplet.d_fem_fem_contact_start_id,
+                              sizeof(int),
+                              cudaMemcpyDeviceToHost));
+
+
+    gipc_global_triplet.update_contact_partition_counts(
+        gipc_global_triplet.global_collision_triplet_offset);
+
+
+    int number = gipc_global_triplet.global_collision_triplet_offset;
+
+    if(number > 0)
+    {
+        CUDA_SAFE_CALL(
+            cudaMemcpy(gipc_global_triplet.block_row_indices(),
+                       gipc_global_triplet.block_row_indices(number),
+                       static_cast<size_t>(number) * sizeof(int),
+                       cudaMemcpyDeviceToDevice));
+
+        CUDA_SAFE_CALL(
+            cudaMemcpy(gipc_global_triplet.block_col_indices(),
+                       gipc_global_triplet.block_col_indices(number),
+                       static_cast<size_t>(number) * sizeof(int),
+                       cudaMemcpyDeviceToDevice));
+
+        CUDA_SAFE_CALL(cudaMemcpy(gipc_global_triplet.block_values(),
+                                  gipc_global_triplet.block_values(number),
+                                  static_cast<size_t>(number) * sizeof(Eigen::Matrix3d),
+                                  cudaMemcpyDeviceToDevice));
+    }
+}
+
+// CUB replacements for the legacy warp-synchronous block reductions above.
+// `valid_items` makes the final partial block explicit and avoids reading
+// values from lanes that did not participate in a shuffle.
+__global__ void _cub_reduct_max_double3_to_double(const double3* input,
+                                                  double*        output,
+                                                  int            number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = 0.0;
+    if(idx < number)
+    {
+        const double3 v = input[idx];
+        value = std::fmax(std::fmax(std::fabs(v.x), std::fabs(v.y)), std::fabs(v.z));
+    }
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_MGroundDist(const double3* vertexes,
+                                        const double*  ground_offset,
+                                        const double3* ground_normal,
+                                        const uint32_t* collision_pairs,
+                                        double2* output,
+                                        int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double2 value = make_double2(0.0, 0.0);
+    if(idx < number)
+    {
+        int point = collision_pairs[idx];
+        double distance = __GEIGEN__::__v_vec_dot(*ground_normal, vertexes[point])
+                          - *ground_offset;
+        double distance_squared = distance * distance;
+        value = make_double2(1.0 / distance_squared, distance_squared);
+    }
+
+    using BlockReduce = cub::BlockReduce<double2, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble2{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_MSelfDist(const double3* vertexes,
+                                      const int4*    collision_pairs,
+                                      double2*       output,
+                                      int            number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double2 value = make_double2(0.0, 0.0);
+    if(idx < number)
+    {
+        double distance_squared = _selfConstraintVal(vertexes, collision_pairs[idx]);
+        value = make_double2(1.0 / distance_squared, distance_squared);
+    }
+
+    using BlockReduce = cub::BlockReduce<double2, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble2{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_ground_step(const double3* vertexes,
+                                        const uint32_t* surf_vertex_ids,
+                                        const double* ground_offset,
+                                        const double3* ground_normal,
+                                        const double3* move_dir,
+                                        double* output,
+                                        double slackness,
+                                        int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = 1.0;
+    if(idx < number)
+    {
+        int point = surf_vertex_ids[idx];
+        double coefficient = __GEIGEN__::__v_vec_dot(*ground_normal, move_dir[point]);
+        if(coefficient > 0.0)
+        {
+            double distance = __GEIGEN__::__v_vec_dot(*ground_normal, vertexes[point])
+                              - *ground_offset;
+            value = coefficient / (distance * slackness);
+        }
+    }
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_injective_step(const double3* vertexes,
+                                           const uint4* tetrahedra,
+                                           const double3* move_dir,
+                                           double* output,
+                                           double slackness,
+                                           double error_rate,
+                                           int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = 1.0;
+    if(idx < number)
+    {
+        const uint4 tet = tetrahedra[idx];
+        value = 1.0 / _computeInjectiveStepSize_3d(vertexes,
+                                                   move_dir,
+                                                   tet.x,
+                                                   tet.y,
+                                                   tet.z,
+                                                   tet.w,
+                                                   1.0 - slackness,
+                                                   error_rate);
+    }
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_self_step(const double3* vertexes,
+                                      const int4* collision_pairs,
+                                      const double3* move_dir,
+                                      double* output,
+                                      double slackness,
+                                      int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = 1.0;
+    if(idx < number)
+    {
+        int4 pair = collision_pairs[idx];
+        const double ratio = 1.0 - slackness;
+        if(pair.x < 0)
+        {
+            pair.x = -pair.x - 1;
+            value = 1.0 / point_triangle_ccd(
+                              vertexes[pair.x],
+                              vertexes[pair.y],
+                              vertexes[pair.z],
+                              vertexes[pair.w],
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.x], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.y], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.z], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.w], -1),
+                              ratio,
+                              0);
+        }
+        else
+        {
+            value = 1.0 / edge_edge_ccd(
+                              vertexes[pair.x],
+                              vertexes[pair.y],
+                              vertexes[pair.z],
+                              vertexes[pair.w],
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.x], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.y], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.z], -1),
+                              __GEIGEN__::__s_vec_multiply(move_dir[pair.w], -1),
+                              ratio,
+                              0);
+        }
+    }
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_cfl(const double3* move_dir,
+                                double* output,
+                                const uint32_t* surface_vertex_ids,
+                                int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = idx < number ? __GEIGEN__::__norm(move_dir[surface_vertex_ids[idx]]) : 0.0;
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Reduce(value, MaxDouble{}, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_squared_norm(const double3* input, double* output, int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = idx < number ? __GEIGEN__::__squaredNorm(input[idx]) : 0.0;
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Sum(value, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void _cub_reduct_dot(const double3* lhs,
+                               const double3* rhs,
+                               double* output,
+                               int number)
+{
+    int block_begin = blockIdx.x * blockDim.x;
+    int idx         = block_begin + threadIdx.x;
+    int remaining   = number - block_begin;
+    int valid_items = remaining < static_cast<int>(blockDim.x) ? remaining
+                                                                : static_cast<int>(blockDim.x);
+    double value = idx < number ? __GEIGEN__::__v_vec_dot(lhs[idx], rhs[idx]) : 0.0;
+
+    using BlockReduce = cub::BlockReduce<double, default_threads>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    value = BlockReduce(storage).Sum(value, valid_items);
+    if(threadIdx.x == 0)
+        output[blockIdx.x] = value;
+}
+
+__global__ void adjust_fem_fem_contact_indices_kernel(int                        n,
+                                                       int*                       cfem_rows,
+                                                       int*                       cfem_cols,
+                                                       gipc::Matrix3x3*           cfem_vals,
+                                                       int*                       BDType,
+                                                       int                        fem_global_hessian_index_offset)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if(i >= n)
+        return;
+
+    int row    = cfem_rows[i];
+    int col    = cfem_cols[i];
+    int btypeA = BDType[row];
+    int btypeB = BDType[col];
+    if(row <= col)
+    {
+        cfem_rows[i] = row + fem_global_hessian_index_offset;
+        cfem_cols[i] = col + fem_global_hessian_index_offset;
+        if(btypeA != 0 || btypeB != 0)
+        {
+            cfem_vals[i].setZero();
+        }
+    }
+    else
+    {
+        cfem_rows[i] = col + fem_global_hessian_index_offset;
+        cfem_cols[i] = row + fem_global_hessian_index_offset;
+        cfem_vals[i].setZero();
+    }
+}
+
+__global__ void zero_fem_boundary_hessian_kernel(int              n,
+                                                 int*             cfem_rows,
+                                                 int*             cfem_cols,
+                                                 gipc::Matrix3x3* triplet_fem,
+                                                 int*             BDType,
+                                                 int              hess_index2fem_index)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if(i >= n)
+        return;
+
+    int row    = cfem_rows[i];
+    int col    = cfem_cols[i];
+    int btypeA = BDType[row - hess_index2fem_index];
+    int btypeB = BDType[col - hess_index2fem_index];
+    if(btypeA != 0 || btypeB != 0)
+    {
+        triplet_fem[i].setZero();
+    }
+}
+
+__global__ void setup_fem_mass_triplets_kernel(int              n,
+                                               double*          mass,
+                                               int*             cfem_rows,
+                                               int*             cfem_cols,
+                                               gipc::Matrix3x3* triplet_fem,
+                                               int fem_global_hessian_index_offset,
+                                               int fem_pint_start,
+                                               int abd_num)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if(i >= n)
+        return;
+
+    triplet_fem[i] = mass[i + fem_pint_start] * gipc::Matrix3x3::Identity();
+    cfem_rows[i]   = i + abd_num * 4;
+    cfem_cols[i]   = i + abd_num * 4;
+}
+
+float GIPC::computeGradientAndHessian(device_TetraData& TetMesh)
+{
+    gipc::Timer timer{"cal_gradient_hessian"};
+
+    CUDA_SAFE_CALL(cudaMemset(TetMesh.fb, 0, vertexNum * sizeof(double3)));
+    CUDA_SAFE_CALL(cudaMemset(TetMesh.shape_grads, 0, vertexNum * sizeof(double3)));
+
+    //cudatool::BufferView<double3>{TetMesh.shape_grads, vertexNum}.fill(double3{0, 0, 0});
+
+
+    auto* shape_grads   = TetMesh.shape_grads.data();
+    auto* contact_grads = TetMesh.fb.data();
+    {
+        gipc::Timer timer{"cal_kinetic_gradient"};
+        calKineticGradient(
+            TetMesh.vertexes, TetMesh.xTilta, shape_grads, TetMesh.masses, vertexNum);
+    }
+
+    gipc_global_triplet.global_triplet_offset = 0;
+
+    // Collision triplet count grows with the contact count. NOTE: the
+    // assembly stages the reordered/re-organized triplets in the region
+    // right after the live one (see partitionContactHessian and the ABD
+    // setup), so the working set is TWICE the live count. Ensure capacity
+    // BEFORE any collision triplet write below, using the exact per-type
+    // counts from the detection readback: barrier (this step) + friction
+    // (last step) + ground.
+    {
+        size_t collision_triplets =
+            (size_t)h_cpNum[4] * M12_Off + (size_t)h_cpNum[3] * M9_Off
+            + (size_t)h_cpNum[2] * M6_Off + (size_t)h_cpNum_last[4] * M12_Off
+            + (size_t)h_cpNum_last[3] * M9_Off
+            + (size_t)h_cpNum_last[2] * M6_Off + h_gpNum_last + h_gpNum;
+        if(collision_triplets > static_cast<size_t>(std::numeric_limits<int>::max()))
+        {
+            std::cerr << "Collision Hessian triplet count exceeds the 32-bit offset range."
+                      << std::endl;
+            std::abort();
+        }
+        // The matrix is rebuilt from scratch. If this phase grows, discard
+        // the previous frame and expose both live and reorder regions.
+        gipc_global_triplet.resize_triplets_discard(2 * collision_triplets);
+    }
+
+    {
+        gipc::Timer timer{"cal_barrier_gradient_hessian"};
+        CUDA_SAFE_CALL(cudaMemset(_cpNum, 0, 5 * sizeof(uint32_t)));
+        //calBarrierHessian();
+        //calBarrierGradient(contact_grads, Kappa);
+
+        if(use_toi) toiSelfGradientHessian(contact_grads);
+        else calBarrierGradientAndHessian(contact_grads, Kappa);
+        gipc_global_triplet.global_triplet_offset +=
+            h_cpNum[4] * M12_Off + h_cpNum[3] * M9_Off + h_cpNum[2] * M6_Off;
+    }
+
+    float time00 = 0;
+
+#ifdef USE_FRICTION
+    {
+
+        gipc::Timer timer{"cal_friction_gradient_hessian"};
+        calFrictionGradient(contact_grads, TetMesh);
+        //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+        calFrictionHessian(TetMesh);
+        gipc_global_triplet.global_triplet_offset +=
+            h_cpNum_last[4] * M12_Off + h_cpNum_last[3] * M9_Off
+            + h_cpNum_last[2] * M6_Off + h_gpNum_last;
+        //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    }
+#endif
+
+    if(use_toi) toiGroundGradientHessian(contact_grads);
+    else computeGroundGradientAndHessian(contact_grads);
+    gipc_global_triplet.global_triplet_offset += h_gpNum;
+    gipc_global_triplet.global_collision_triplet_offset =
+        gipc_global_triplet.global_triplet_offset;
+
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    gipc_global_triplet.update_hash_value(abd_fem_count_info.abd_point_num);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    partitionContactHessian();
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+
+
+    {
+        gipc::Timer timer{"setup_abd_system_gradient_hessian"};
+
+        m_abd_system->setup_abd_system_gradient_hessian(
+            *m_abd_sim_data,
+            TetMesh.BoundaryType,
+            cudatool::BufferView<double3>{TetMesh.fb, vertexNum}.subview(
+                abd_fem_count_info.abd_point_offset, abd_fem_count_info.abd_point_num),
+            gipc_global_triplet);
+    }
+
+    int abd_dofs = abd_fem_count_info.abd_body_num * 4;
+    int fem_global_hessian_index_offset = -abd_fem_count_info.abd_point_num + abd_dofs;
+    {
+        LaunchCudaKernal_default(
+            gipc_global_triplet.fem_fem_contact_num,
+            256,
+            0,
+            adjust_fem_fem_contact_indices_kernel,
+            gipc_global_triplet.fem_fem_contact_num,
+            gipc_global_triplet.block_row_indices(gipc_global_triplet.h_fem_fem_contact_start_id),
+            gipc_global_triplet.block_col_indices(gipc_global_triplet.h_fem_fem_contact_start_id),
+            gipc_global_triplet.block_values(gipc_global_triplet.h_fem_fem_contact_start_id),
+            TetMesh.BoundaryType,
+            fem_global_hessian_index_offset);
+    }
+
+    {
+        gipc::Timer timer{"cal_fem_gradient_hessian"};
+        int fem_triplet_start = gipc_global_triplet.global_triplet_offset;
+        // The final converter stages F sorted values at offset F. Reserve
+        // 2F now, before any FEM writes, and include every appended source
+        // (notably the FEM mass diagonal that used to be omitted).
+        size_t fem_triplet_count =
+            (size_t)abd_fem_count_info.fem_tet_num * 10 + (size_t)tri_edge_num * 10
+            + (size_t)triangleNum * 6 + softNum + abd_fem_count_info.fem_point_num;
+        size_t final_triplet_count = (size_t)fem_triplet_start + fem_triplet_count;
+        if(final_triplet_count > static_cast<size_t>(std::numeric_limits<int>::max()))
+        {
+            std::cerr << "Global Hessian triplet count exceeds the 32-bit offset range."
+                      << std::endl;
+            std::abort();
+        }
+        gipc_global_triplet.ensure_triplet_capacity(2 * final_triplet_count);
+        //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+        calculate_fem_gradient_hessian(TetMesh.DmInverses,
+                                       TetMesh.vertexes,
+                                       TetMesh.tetrahedras,
+                                       TetMesh.volum,
+                                       shape_grads,
+                                       abd_fem_count_info.fem_tet_num,
+                                       abd_fem_count_info.abd_tet_num,
+                                       TetMesh.lengthRate,
+                                       TetMesh.volumeRate,
+                                       gipc_global_triplet.global_triplet_offset,
+                                       gipc_global_triplet.block_values(),
+                                       gipc_global_triplet.block_row_indices(),
+                                       gipc_global_triplet.block_col_indices(),
+                                       IPC_dt,
+                                       fem_global_hessian_index_offset);
+        gipc_global_triplet.global_triplet_offset += abd_fem_count_info.fem_tet_num * 10;
+
+
+#ifdef USE_QUADRATIC_BENDING
+        calculate_quad_bending_gradient_hessian(TetMesh.vertexes,
+                                                TetMesh.rest_vertexes,
+                                                TetMesh.tri_edges,
+                                                TetMesh.tri_edge_adj_vertex,
+                                                TetMesh.quad_bending_Q,
+                                                shape_grads,
+                                                tri_edge_num,
+                                                bendStiff,
+                                                gipc_global_triplet.global_triplet_offset,
+                                                gipc_global_triplet.block_values(),
+                                                gipc_global_triplet.block_row_indices(),
+                                                gipc_global_triplet.block_col_indices(),
+                                                IPC_dt,
+                                                fem_global_hessian_index_offset);
+#else
+        calculate_bending_gradient_hessian(TetMesh.vertexes,
+                                           TetMesh.rest_vertexes,
+                                           TetMesh.tri_edges,
+                                           TetMesh.tri_edge_adj_vertex,
+                                           shape_grads,
+                                           tri_edge_num,
+                                           bendStiff,
+                                           gipc_global_triplet.global_triplet_offset,
+                                           gipc_global_triplet.block_values(),
+                                           gipc_global_triplet.block_row_indices(),
+                                           gipc_global_triplet.block_col_indices(),
+                                           IPC_dt,
+                                           fem_global_hessian_index_offset);
+#endif
+        gipc_global_triplet.global_triplet_offset += tri_edge_num * 10;
+        //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+
+        calculate_triangle_fem_gradient_hessian(TetMesh.triDmInverses,
+                                                TetMesh.vertexes,
+                                                TetMesh.triangles,
+                                                TetMesh.area,
+                                                shape_grads,
+                                                triangleNum,
+                                                stretchStiff,
+                                                shearStiff,
+                                                strainRate,
+                                                gipc_global_triplet.global_triplet_offset,
+                                                gipc_global_triplet.block_values(),
+                                                gipc_global_triplet.block_row_indices(),
+                                                gipc_global_triplet.block_col_indices(),
+                                                IPC_dt,
+                                                fem_global_hessian_index_offset);
+
+        gipc_global_triplet.global_triplet_offset += triangleNum * 6;
+
+
+        computeSoftConstraintGradientAndHessian(shape_grads, fem_global_hessian_index_offset);
+        gipc_global_triplet.global_triplet_offset += softNum;
+
+        int fem_triplet_num = gipc_global_triplet.global_triplet_offset - fem_triplet_start;
+        LaunchCudaKernal_default(fem_triplet_num,
+                                 256,
+                                 0,
+                                 zero_fem_boundary_hessian_kernel,
+                                 fem_triplet_num,
+                                 gipc_global_triplet.block_row_indices(fem_triplet_start),
+                                 gipc_global_triplet.block_col_indices(fem_triplet_start),
+                                 gipc_global_triplet.block_values(fem_triplet_start),
+                                 TetMesh.BoundaryType,
+                                 fem_global_hessian_index_offset);
+
+
+        //int massNum =
+        LaunchCudaKernal_default(
+            abd_fem_count_info.fem_point_num,
+            256,
+            0,
+            setup_fem_mass_triplets_kernel,
+            abd_fem_count_info.fem_point_num,
+            TetMesh.masses,
+            gipc_global_triplet.block_row_indices(gipc_global_triplet.global_triplet_offset),
+            gipc_global_triplet.block_col_indices(gipc_global_triplet.global_triplet_offset),
+            gipc_global_triplet.block_values(gipc_global_triplet.global_triplet_offset),
+            fem_global_hessian_index_offset,
+            abd_fem_count_info.abd_point_num,
+            abd_fem_count_info.abd_body_num);
+        gipc_global_triplet.global_triplet_offset += abd_fem_count_info.fem_point_num;
+
+        if(gipc_global_triplet.global_triplet_offset != static_cast<int>(final_triplet_count))
+        {
+            std::cerr << "Global Hessian assembly count does not match its capacity plan."
+                      << std::endl;
+            std::abort();
+        }
+
+        //cudaMemcpy(TetMesh.totalForce, contact_grads, vertexNum * sizeof(double3), cudaMemcpyDeviceToDevice);
+        //getTotalForce(shape_grads, TetMesh.totalForce);
+    }
+
+    return time00;
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+}
+
+
+double GIPC::Energy_Add_Reduction_Algorithm(int type, device_TetraData& TetMesh,
+                                          double* supplied_queue, bool defer_reduction)
+{
+    int tet_offset   = abd_fem_count_info.fem_tet_offset;
+    int tet_count    = abd_fem_count_info.fem_tet_num;
+    int point_offset = abd_fem_count_info.fem_point_offset;
+    int point_count  = abd_fem_count_info.fem_point_num;
+
+    int numbers = tet_count;
+
+    if(type == 0 || type == 3)
+    {
+        numbers = point_count;
+    }
+    else if(type == 2)
+    {
+        numbers = h_cpNum[0];
+    }
+    else if(type == 4)
+    {
+        numbers = h_gpNum;
+    }
+    else if(type == 5)
+    {
+        numbers = h_cpNum_last[0];
+    }
+    else if(type == 6)
+    {
+        numbers = h_gpNum_last;
+    }
+    else if(type == 7 || type == 1)
+    {
+        numbers = tet_count;
+    }
+    else if(type == 8 || type == 11)
+    {
+        numbers = triangleNum;
+    }
+    else if(type == 9)
+    {
+        numbers = softNum;
+    }
+    else if(type == 10)
+    {
+        numbers = tri_edge_num;
+    }
+    if(numbers == 0)
+        return 0;
+    double* queue = supplied_queue ? supplied_queue : pcg_data.prepare_reduction_queue(numbers, default_threads);
+    //CUDA_SAFE_CALL(cudaMalloc((void**)&queue, numbers * sizeof(double)));*/
+
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    unsigned int sharedMsize = sizeof(double) * (threadNum >> 5);
+    switch(type)
+    {
+        case 0:
+            _getKineticEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                TetMesh.vertexes + point_offset,
+                TetMesh.xTilta + point_offset,
+                queue,
+                TetMesh.masses + point_offset,
+                numbers);
+            break;
+        case 1:
+            _getFEMEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.tetrahedras + tet_offset,
+                TetMesh.DmInverses + tet_offset,
+                TetMesh.volum + tet_offset,
+                numbers,
+                TetMesh.lengthRate + tet_offset,
+                TetMesh.volumeRate + tet_offset);
+            break;
+        case 2:
+            _getBarrierEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue, TetMesh.vertexes, TetMesh.rest_vertexes, _collisonPairs, Kappa, dHat, numbers);
+            break;
+        case 3:
+            _getDeltaEnergy_Reduction<<<blockNum, threadNum, sharedMsize>>>(
+                queue, TetMesh.fb + point_offset, _moveDir + point_offset, numbers);
+            break;
+        case 4:
+            _computeGroundEnergy_Reduction<<<blockNum, threadNum, sharedMsize>>>(
+                queue, TetMesh.vertexes, _groundOffset, _groundNormal, _environment_collisionPair, dHat, Kappa, numbers);
+            break;
+        case 5:
+            _getFrictionEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.o_vertexes,
+                _collisonPairs_lastH,
+                numbers,
+                IPC_dt,
+                distCoord,
+                tanBasis,
+                lambda_lastH_scalar,
+                fDhat * IPC_dt * IPC_dt,
+                sqrt(fDhat) * IPC_dt);
+            break;
+        case 6:
+            _getFrictionEnergy_gd_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.o_vertexes,
+                _groundNormal,
+                _collisonPairs_lastH_gd,
+                numbers,
+                IPC_dt,
+                lambda_lastH_scalar_gd,
+                sqrt(fDhat) * IPC_dt);
+            break;
+        case 7:
+            _getRestStableNHKEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue, TetMesh.volum + tet_offset, numbers, lengthRate, volumeRate);
+            break;
+        case 8:
+            _get_triangleFEMEnergy_Reduction_3D<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.triangles,
+                TetMesh.triDmInverses,
+                TetMesh.area,
+                numbers,
+                stretchStiff,
+                shearStiff,
+                strainRate);
+            break;
+        case 9:
+            _computeSoftConstraintEnergy_Reduction<<<blockNum, threadNum, sharedMsize>>>(
+                queue, TetMesh.vertexes, TetMesh.targetVert, TetMesh.targetIndex, softMotionRate, animation_fullRate, numbers);
+            break;
+        case 10:
+#ifdef USE_QUADRATIC_BENDING
+            _getQuadBendingEnergy_Reduction<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.rest_vertexes,
+                TetMesh.tri_edges,
+                TetMesh.tri_edge_adj_vertex,
+                TetMesh.quad_bending_Q,
+                numbers,
+                bendStiff);
+#else
+            _getBendingEnergy_Reduction<<<blockNum, threadNum, sharedMsize>>>(
+                queue,
+                TetMesh.vertexes,
+                TetMesh.rest_vertexes,
+                TetMesh.tri_edges,
+                TetMesh.tri_edge_adj_vertex,
+                numbers,
+                bendStiff);
+#endif
+            break;
+    }
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    if(defer_reduction) return 0;
+    return reduce_sum_to_host(queue, blockNum, pcg_data.prepare_reduction_scalar());
+}
+
+
+double GIPC::computeEnergy(device_TetraData& TetMesh)
+{
+    static thread_local bool auditing_energy=false;
+    if(gipc_accel_feature("GIPC_BATCHED_ENERGY") && !auditing_energy)
+    {
+        const int types[9]={0,1,8,10,9,2,4,5,6};
+        const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+            triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+#ifdef USE_FRICTION
+            h_cpNum_last[0],h_gpNum_last
+#else
+            0,0
+#endif
+        };
+        // Owned by the current thread, resized before any kernel is launched.
+        static thread_local cudatool::DeviceBuffer<double> partials, results;
+        static thread_local cudatool::DeviceBuffer<unsigned char> storage;
+        int blocks[9],offsets[9],total=0,largest=0;
+        for(int i=0;i<9;++i)
+        {offsets[i]=total;blocks[i]=(counts[i]+255)/256;total+=blocks[i];largest=std::max(largest,blocks[i]);}
+        partials.resize(total);results.resize(9);
+        CUDA_SAFE_CALL(cudaMemsetAsync(results.data(),0,9*sizeof(double),cudaStreamPerThread));
+        size_t bytes=0;
+        if(largest)
+        {CUDA_SAFE_CALL(cub::DeviceReduce::Sum(nullptr,bytes,partials.data(),results.data(),largest,cudaStreamPerThread));storage.resize(bytes);}
+        for(int i=0;i<9;++i)if(blocks[i])
+        {
+            Energy_Add_Reduction_Algorithm(types[i],TetMesh,partials.data()+offsets[i],true);
+            size_t required=bytes;
+            CUDA_SAFE_CALL(cub::DeviceReduce::Sum(storage.data(),required,partials.data()+offsets[i],results.data()+i,blocks[i],cudaStreamPerThread));
+        }
+        double c[9];CUDA_SAFE_CALL(cudaMemcpy(c,results.data(),sizeof(c),cudaMemcpyDeviceToHost));
+        double energy=c[0];
+        energy+=m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
+        energy+=m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
+        energy+=IPC_dt*IPC_dt*c[1];energy+=IPC_dt*IPC_dt*c[2];energy+=IPC_dt*IPC_dt*c[3];
+        energy+=c[4];energy+=use_toi?toiContactEnergy():c[5];energy+=Kappa*c[6];
+#ifdef USE_FRICTION
+        energy+=frictionRate*c[7];energy+=gd_frictionRate*c[8];
+#endif
+        if(const char* audit=std::getenv("GIPC_AUDIT_ENERGY");audit && audit[0]=='1')
+        {
+            auditing_energy=true;double reference=computeEnergy(TetMesh);auditing_energy=false;
+            double relative=std::abs(energy-reference)/std::max({1.,std::abs(energy),std::abs(reference)});
+            auto& record=gipc::Statistics::instance().at_current_frame()["energy_batch_audit"];
+            double previous=record.contains("max_relative_error")?record["max_relative_error"].get<double>():0;
+            record["max_relative_error"]=std::max(previous,relative);
+            if(!std::isfinite(relative)||relative>1e-10)throw std::runtime_error("Batched/scalar energy mismatch");
+        }
+        return energy;
+    }
+    double Energy      = 0.0;
+    auto   fem_kinetic = Energy_Add_Reduction_Algorithm(0, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += fem_kinetic;
+
+    auto abd_kinetic = m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += abd_kinetic;
+
+    auto abd_shape = m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += abd_shape;
+
+    auto fem = IPC_dt * IPC_dt * Energy_Add_Reduction_Algorithm(1, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += fem;
+
+    auto tri_fem = IPC_dt * IPC_dt * Energy_Add_Reduction_Algorithm(8, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += tri_fem;
+
+    auto bend = IPC_dt * IPC_dt * Energy_Add_Reduction_Algorithm(10, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += bend;
+
+    auto constraint = Energy_Add_Reduction_Algorithm(9, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += constraint;
+
+    auto barrier = use_toi ? toiContactEnergy() : Energy_Add_Reduction_Algorithm(2, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += barrier;
+
+    auto ground = use_toi ? 0.0 : Kappa * Energy_Add_Reduction_Algorithm(4, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += ground;
+
+    //std::cout << "fem_kinetic: " << fem_kinetic << std::endl;
+    //std::cout << "abd_kinetic: " << abd_kinetic << std::endl;
+    //std::cout << "abd_shape: " << abd_shape << std::endl;
+    //std::cout << "fem: " << fem << std::endl;
+    //std::cout << "tri_fem: " << tri_fem << std::endl;
+    //std::cout << "bend: " << bend << std::endl;
+    //std::cout << "constraint: " << constraint << std::endl;
+    //std::cout << "barrier: " << barrier << std::endl;
+    //std::cout << "ground: " << ground << std::endl;
+
+#ifdef USE_FRICTION
+    auto fric = frictionRate * Energy_Add_Reduction_Algorithm(5, TetMesh);
+    Energy += fric;
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    auto fric_ground = gd_frictionRate * Energy_Add_Reduction_Algorithm(6, TetMesh);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    Energy += fric_ground;
+#endif
+
+    return Energy;
+}
+
+int GIPC::calculateMovingDirection(device_TetraData& TetMesh, int cpNum, int preconditioner_type)
+{
+    gipc::Timer timer{"solve_linear_system"};
+    auto        iter = 0;
+
+    iter = m_global_linear_system->solve_linear_system();
+
+
+    auto& json = gipc::Statistics::instance().at_current_frame();
+    json["newton"].back()["pcg"]["iterations"] = iter;
+    return iter;
+}
+
+
+bool edgeTriIntersectionQuery(const int*     _btype,
+                              const double3* _vertexes,
+                              const uint2*   _edges,
+                              const uint3*   _faces,
+                              const AABB*    _edge_bvs,
+                              const Node*    _edge_nodes,
+                              int*           _isIntersect,
+                              double         dHat,
+                              int            number)
+{
+    int numbers = number;
+    if(numbers <= 0)
+        return false;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    CUDA_SAFE_CALL(cudaMemset(_isIntersect, 0, sizeof(int)));
+
+    _edgeTriIntersectionQuery<<<blockNum, threadNum>>>(
+        _btype, _vertexes, _edges, _faces, _edge_bvs, _edge_nodes, _isIntersect, dHat, numbers);
+
+    int h_isITST;
+    CUDA_SAFE_CALL(cudaMemcpy(&h_isITST, _isIntersect, sizeof(int), cudaMemcpyDeviceToHost));
+    if(h_isITST < 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GIPC::checkEdgeTriIntersectionIfAny(device_TetraData& TetMesh)
+{
+    _scalar_scratch.resize_discard(1);
+    return edgeTriIntersectionQuery(bvh_e._btype,
+                                    TetMesh.vertexes,
+                                    bvh_e._edges,
+                                    bvh_f._faces,
+                                    bvh_e._bvs,
+                                    bvh_e._nodes,
+                                    _scalar_scratch.data(),
+                                    dHat,
+                                    bvh_f.face_number);
+}
+
+bool GIPC::checkGroundIntersection()
+{
+    int numbers = h_gpNum;
+    if(numbers <= 0)
+        return false;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+
+    _scalar_scratch.resize_discard(1);
+    CUDA_SAFE_CALL(cudaMemset(_scalar_scratch.data(), 0, sizeof(int)));
+    _checkGroundIntersection<<<blockNum, threadNum>>>(_vertexes,
+                                                      _groundOffset,
+                                                      _groundNormal,
+                                                      _environment_collisionPair,
+                                                      _scalar_scratch.data(),
+                                                      numbers);
+
+    int h_isITST;
+    CUDA_SAFE_CALL(cudaMemcpy(
+        &h_isITST, _scalar_scratch.data(), sizeof(int), cudaMemcpyDeviceToHost));
+    if(h_isITST < 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GIPC::isIntersected(device_TetraData& TetMesh)
+{
+    if(checkGroundIntersection())
+    {
+        return true;
+    }
+
+    if(checkEdgeTriIntersectionIfAny(TetMesh))
+    {
+        std::cout << "is edge triangle\n";
+        return true;
+    }
+    return false;
+}
+
+
+bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cfl_alpha,
+                      const double* cached_energy,double* accepted_energy)
+{
+    wait_device();
+    bool   stopped       = false;
+    double lastEnergyVal = cached_energy ? *cached_energy : computeEnergy(TetMesh);
+    if(cached_energy && std::getenv("GIPC_AUDIT_ENERGY") && std::getenv("GIPC_AUDIT_ENERGY")[0]=='1')
+    {
+        double reference=computeEnergy(TetMesh);
+        double relative=std::abs(lastEnergyVal-reference)/std::max({1.,std::abs(lastEnergyVal),std::abs(reference)});
+        if(!std::isfinite(relative)||relative>1e-10)throw std::runtime_error("Reused/scalar energy mismatch");
+    }
+
+    double c1m         = 0.0;
+    double armijoParam = 0;
+    if(armijoParam > 0.0)
+    {
+        c1m += armijoParam * Energy_Add_Reduction_Algorithm(3, TetMesh);
+    }
+
+    CUDA_SAFE_CALL(cudaMemcpy(TetMesh.temp_double3Mem,
+                              TetMesh.vertexes,
+                              vertexNum * sizeof(double3),
+                              cudaMemcpyDeviceToDevice));
+
+    m_abd_system->copy_q_to_q_temp(*m_abd_sim_data);
+
+
+    double alpha_SL = alpha;
+
+    step_forward(TetMesh, alpha, false);
+
+    bool rehash = true;
+
+    buildBVH();
+
+    int numOfIntersect = 0;
+    int insectNum      = 0;
+
+    bool checkInterset = true;
+
+    while(checkInterset && isIntersected(TetMesh))
+    {
+        printf("type 0 intersection happened 0:  %d\n", insectNum);
+        insectNum++;
+        alpha /= 2.0;
+        numOfIntersect++;
+        alpha = std::min(cfl_alpha, alpha);
+        step_forward(TetMesh, alpha, false);
+        buildBVH();
+        //break;
+    }
+
+    buildCP();
+
+    double testingE = computeEnergy(TetMesh);
+
+    int    numOfLineSearch = 0;
+    double LFStepSize      = alpha;
+
+    std::cout.precision(18);
+    constexpr int report_line_search_threshold = 8;
+
+    while((testingE > lastEnergyVal + c1m * alpha) && numOfLineSearch <= report_line_search_threshold)
+    {
+        //std::cout << "[" << numOfLineSearch << "]   testE:    " << testingE
+        //          << "      lastEnergyVal:        " << lastEnergyVal << std::endl;
+        alpha /= 2.0;
+        ++numOfLineSearch;
+
+        step_forward(TetMesh, alpha, false);
+        buildBVH();
+        buildCP();
+        testingE = computeEnergy(TetMesh);
+    }
+    if(numOfLineSearch > report_line_search_threshold)
+        printf("!!!!!!!!!!!!!!!!!!!linesearch number is a bit high, lineSearchCount=%d !!!!!!!!!!!!!!!!!!!!!!\n",
+               numOfLineSearch);
+
+
+    if(alpha < LFStepSize)
+    {
+        bool needRecomputeCS = false;
+        while(checkInterset && isIntersected(TetMesh))
+        {
+            printf("type 1 intersection happened 1:  %d\n", insectNum);
+            insectNum++;
+            alpha /= 2.0;
+            numOfIntersect++;
+            alpha = std::min(cfl_alpha, alpha);
+
+            step_forward(TetMesh, alpha, false);
+            buildBVH();
+            needRecomputeCS = true;
+        }
+        if(needRecomputeCS)
+        {
+            buildCP();
+            if(accepted_energy) testingE=computeEnergy(TetMesh);
+        }
+    }
+
+    if(accepted_energy) *accepted_energy=testingE;
+
+    return stopped;
+}
+
+
+void GIPC::postLineSearch(device_TetraData& TetMesh, double alpha)
+{
+    if(Kappa == 0.0)
+    {
+        initKappa(TetMesh);
+    }
+    else
+    {
+
+        bool updateKappa = checkCloseGroundVal();
+        if(!updateKappa)
+        {
+            updateKappa = checkSelfCloseVal();
+        }
+        if(updateKappa)
+        {
+            Kappa *= 2.0;
+            upperBoundKappa(Kappa);
+        }
+        tempFree_closeConstraint();
+        tempMalloc_closeConstraint();
+        CUDA_SAFE_CALL(cudaMemset(_close_cpNum, 0, sizeof(uint32_t)));
+        CUDA_SAFE_CALL(cudaMemset(_close_gpNum, 0, sizeof(uint32_t)));
+
+        computeCloseGroundVal();
+
+        computeSelfCloseVal();
+    }
+    //printf("------------------------------------------Kappa: %f\n", Kappa);
+}
+
+void GIPC::tempMalloc_closeConstraint()
+{
+    _closeConstraintID.resize_discard(h_gpNum);
+    _closeConstraintVal.resize_discard(h_gpNum);
+    _closeMConstraintID.resize_discard(h_cpNum[0]);
+    _closeMConstraintVal.resize_discard(h_cpNum[0]);
+}
+
+void GIPC::tempFree_closeConstraint()
+{
+    _closeConstraintID.clear();
+    _closeConstraintVal.clear();
+    _closeMConstraintID.clear();
+    _closeMConstraintVal.clear();
+}
+double maxCOllisionPairNum = 0;
+double totalCollisionPairs = 0;
+double total_Cg_count      = 0;
+double timemakePd          = 0;
+#include <vector>
+#include <fstream>
+std::vector<int> iterV;
+int              GIPC::solve_subIP(device_TetraData& TetMesh,
+                      double&           time0,
+                      double&           time1,
+                      double&           time2,
+                      double&           time3,
+                      double&           time4)
+{
+    auto& stats_at_current_frame = gipc::Statistics::instance().at_current_frame();
+    std::cout << "solve_subIP >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+              << std::endl;
+
+    stats_at_current_frame["newton"] = gipc::Json::array();
+
+    int iterCap = 10000, k = 0;
+    trace_ipc_safe_state(_vertexes,vertexNum,0);
+
+    CUDA_SAFE_CALL(cudaMemset(_moveDir, 0, vertexNum * sizeof(double3)));
+    double totalTimeStep = 0;
+    double beta          = 1;
+    int    Kmin          = 6;
+    bool   semi_implicit = true;
+    bool energy_valid=false;
+    double accepted_energy=0;
+    for(; k < iterCap; ++k)
+    {
+        stats_at_current_frame["newton"].push_back(gipc::Json::object());
+
+        totalCollisionPairs += h_cpNum[0];
+        maxCOllisionPairNum =
+            (maxCOllisionPairNum > h_cpNum[0]) ? maxCOllisionPairNum : h_cpNum[0];
+        cudaEvent_t start, end0, end1, end2, end3, end4;
+        cudaEventCreate(&start);
+        cudaEventCreate(&end0);
+        cudaEventCreate(&end1);
+        cudaEventCreate(&end2);
+        cudaEventCreate(&end3);
+        cudaEventCreate(&end4);
+
+        //printf("\n\n\ncollision num  %d\n\n\n", h_cpNum[0]+h_gpNum);
+
+        cudaEventRecord(start);
+        timemakePd += computeGradientAndHessian(TetMesh);
+
+
+        double* movement_queue =
+            pcg_data.prepare_reduction_queue(vertexNum, default_threads);
+        double distToOpt_PN = calcMinMovement(_moveDir,
+                                              movement_queue,
+                                              pcg_data.prepare_reduction_scalar(),
+                                              vertexNum);
+
+        bool gradVanish = (distToOpt_PN < sqrt(Newton_solver_threshold * Newton_solver_threshold
+                                               * bboxDiagSize2 * IPC_dt * IPC_dt));
+
+        //double distToOpt_PN = calcMinMovement(TetMesh.totalForce, pcg_data.squeue, vertexNum);
+        //printf("disToopt:  %f        %f\n",
+        //       distToOpt_PN,
+        //       2 * sqrt(Newton_solver_threshold * Newton_solver_threshold * bboxDiagSize2)
+        //           * IPC_dt * IPC_dt);
+
+        //bool gradVanish =
+        //    (distToOpt_PN < 1
+        //                        * sqrt(Newton_solver_threshold * Newton_solver_threshold * bboxDiagSize2)
+        //                        * IPC_dt * IPC_dt);
+
+        if(k && gradVanish)
+        {
+            stats_at_current_frame["newton"].back()["exit"]="movement";
+            stats_at_current_frame["newton_exit"]="movement";
+            break;
+        }
+        cudaEventRecord(end0);
+
+        auto cg_count = calculateMovingDirection(TetMesh, h_cpNum[0], pcg_data.P_type);
+        //std::cout << "[" << k << "]"
+        //          << "cg_count = " << cg_count << std::endl;
+        total_Cg_count += cg_count;
+        cudaEventRecord(end1);
+        double alpha = 1.0, slackness_a = 0.8, slackness_m = 0.8;
+
+        alpha = std::min(alpha, ground_largestFeasibleStepSize(slackness_a));
+        //alpha = std::min(alpha, InjectiveStepSize(0.2, 1e-6, pcg_data.squeue, TetMesh.tetrahedras));
+        alpha = std::min(alpha, self_largestFeasibleStepSize(slackness_m, h_cpNum[0]));
+        double temp_alpha = alpha;
+        double alpha_CFL  = alpha;
+
+        double ccd_size = 1.0;
+        //#ifdef USE_FRICTION
+        //        ccd_size = 0.6;
+        //#endif
+
+        buildBVH_FULLCCD(temp_alpha);
+        buildFullCP(temp_alpha);
+        if(h_ccd_cpNum > 0)
+        {
+            double maxSpeed = cfl_largestSpeed();
+            alpha_CFL       = sqrt(dHat) / maxSpeed * 0.5;
+            alpha           = std::min(alpha, alpha_CFL);
+            if(temp_alpha > 2 * alpha_CFL)
+            {
+                /*buildBVH_FULLCCD(temp_alpha);
+                buildFullCP(temp_alpha);*/
+                alpha = std::min(temp_alpha,
+                                 self_largestFeasibleStepSize(slackness_m, h_ccd_cpNum) * ccd_size);
+                alpha = std::max(alpha, alpha_CFL);
+            }
+        }
+
+        cudaEventRecord(end2);
+        //printf("alpha:  %f\n", alpha);
+
+        const double old_kappa=Kappa;
+        bool reuse_energy=gipc_accel_feature("GIPC_ENERGY_REUSE");
+        bool isStop = lineSearch(TetMesh, alpha, alpha_CFL,
+            reuse_energy && energy_valid ? &accepted_energy : nullptr,
+            reuse_energy ? &accepted_energy : nullptr);
+
+        cudaEventRecord(end3);
+        postLineSearch(TetMesh, alpha);
+        trace_ipc_safe_state(_vertexes,vertexNum,k+1);
+        energy_valid=reuse_energy && Kappa==old_kappa;
+        //computeGradientAndHessian(TetMesh);
+        cudaEventRecord(end4);
+
+        CUDA_SAFE_CALL(cudaDeviceSynchronize());
+        float time00, time11, time22, time33, time44;
+        cudaEventElapsedTime(&time00, start, end0);
+        cudaEventElapsedTime(&time11, end0, end1);
+        //total_Cg_time += time1;
+        cudaEventElapsedTime(&time22, end1, end2);
+        cudaEventElapsedTime(&time33, end2, end3);
+        cudaEventElapsedTime(&time44, end3, end4);
+        time0 += time00;
+        time1 += time11;
+        time2 += time22;
+        time3 += time33;
+        time4 += time44;
+        ////*cflTime = ptime;
+        //printf("time0 = %f,  time1 = %f,  time2 = %f,  time3 = %f,  time4 = %f\n",
+        //       time00,
+        //       time11,
+        //       time22,
+        //       time33,
+        //       time44);
+        (cudaEventDestroy(start));
+        (cudaEventDestroy(end0));
+        (cudaEventDestroy(end1));
+        (cudaEventDestroy(end2));
+        (cudaEventDestroy(end3));
+        (cudaEventDestroy(end4));
+        totalTimeStep += alpha;
+        if(k + 1 >= Kmin)
+        {
+            beta = (1 - alpha) * beta;
+        }
+        else
+        {
+            beta = beta;
+        }
+        stats_at_current_frame["newton"].back()["alpha"]=alpha;
+        stats_at_current_frame["newton"].back()["beta"]=beta;
+        if(semi_implicit && beta <= Newton_solver_threshold)
+        {
+            stats_at_current_frame["newton_exit"]="cumulative_toi";
+            break;
+        }
+    }
+    if(k>=iterCap) stats_at_current_frame["newton_exit"]="iteration_limit";
+    //iterV.push_back(k);
+    //std::ofstream outiter("iterCount.txt");
+    //for(int ii = 0; ii < iterV.size(); ii++)
+    //{
+    //    outiter << iterV[ii] << std::endl;
+    //}
+    //outiter.close();
+    printf("\n\n      Kappa: %f                               iteration k:  %d\n", Kappa, k);
+    return k;
+}
+
+void GIPC::updateVelocities(device_TetraData& TetMesh)
+{
+    int numbers = vertexNum;
+    if(numbers <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _updateVelocities<<<blockNum, threadNum>>>(
+        TetMesh.vertexes, TetMesh.o_vertexes, TetMesh.velocities, TetMesh.BoundaryType, IPC_dt, numbers);
+
+    m_abd_system->update_velocity(*m_abd_sim_data);
+}
+
+void GIPC::updateBoundary(device_TetraData& TetMesh, double alpha)
+{
+    int numbers = vertexNum;
+    if(numbers <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _updateBoundary<<<blockNum, threadNum>>>(
+        TetMesh.vertexes, TetMesh.BoundaryType, _moveDir, alpha, numbers);
+}
+
+void GIPC::updateBoundaryMoveDir(device_TetraData& TetMesh, double alpha, int fid)
+{
+    int numbers = vertexNum;
+    if(numbers <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _updateBoundaryMoveDir<<<blockNum, threadNum>>>(
+        TetMesh.vertexes, TetMesh.BoundaryType, _moveDir, IPC_dt, FEM::PI, alpha, numbers, fid);
+}
+
+
+void GIPC::computeXTilta(device_TetraData& TetMesh, const double& rate)
+{
+    int numbers = vertexNum;
+    if(numbers <= 0)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;  //
+    _computeXTilta<<<blockNum, threadNum>>>(TetMesh.BoundaryType,
+                                            TetMesh.velocities,
+                                            TetMesh.o_vertexes,
+                                            TetMesh.xTilta,
+                                            TetMesh.apply_gravity,
+                                            IPC_dt,
+                                            rate,
+                                            numbers);
+
+    m_abd_system->cal_q_tilde(*m_abd_sim_data);
+}
+
+
+int    totalNT          = 0;
+double totalTime        = 0;
+int    total_Frames     = 0;
+double ttime0           = 0;
+double ttime1           = 0;
+double ttime2           = 0;
+double ttime3           = 0;
+double ttime4           = 0;
+bool   isUpdateBoundary = false;
+void   GIPC::IPC_Solver(device_TetraData& TetMesh)
+{
+    //double animation_fullRate = 0;
+    cudaEvent_t start, end0;
+    cudaEventCreate(&start);
+    cudaEventCreate(&end0);
+    double alpha = 1;
+    cudaEventRecord(start);
+    //    if(isRotate&&total_Frames*IPC_dt>=2.2){
+    //        isRotate = false;
+    //        updateBoundary2(TetMesh);
+    //    }
+    if(isUpdateBoundary)
+    {
+        updateBoundaryMoveDir(TetMesh, alpha, total_Frames);
+        buildBVH_FULLCCD(alpha);
+        buildFullCP(alpha);
+        if(h_ccd_cpNum > 0)
+        {
+            double slackness_m = 0.8;
+            alpha = std::min(alpha,
+                             self_largestFeasibleStepSize(slackness_m, h_ccd_cpNum));
+        }
+        //updateBoundary(TetMesh, alpha);
+
+        CUDA_SAFE_CALL(cudaMemcpy(TetMesh.temp_double3Mem,
+                                  TetMesh.vertexes,
+                                  vertexNum * sizeof(double3),
+                                  cudaMemcpyDeviceToDevice));
+        updateBoundaryMoveDir(TetMesh, alpha, total_Frames);
+        stepForward(TetMesh.vertexes, TetMesh.temp_double3Mem, _moveDir, TetMesh.BoundaryType, 1, true, vertexNum);
+        //step_forward(TetMesh, 1, true);
+
+        bool rehash = true;
+
+        buildBVH();
+        int numOfIntersect = 0;
+        while(isIntersected(TetMesh))
+        {
+            printf("type 6 intersection happened:    %f\n", alpha);
+            alpha /= 2.0;
+            updateBoundaryMoveDir(TetMesh, alpha, total_Frames);
+            numOfIntersect++;
+            stepForward(TetMesh.vertexes,
+                        TetMesh.temp_double3Mem,
+                        _moveDir,
+                        TetMesh.BoundaryType,
+                        1,
+                        true,
+                        vertexNum);
+            //step_forward(TetMesh, 1, true);
+            buildBVH();
+        }
+
+        buildCP();
+        printf("boundary alpha: %f\n  finished a step\n", alpha);
+    }
+
+    TetMesh.update_soft_constraint_target_position(total_Frames + 1, IPC_dt);
+    //suggestKappa(Kappa);
+    upperBoundKappa(Kappa);
+    if(Kappa < 1e-16)
+    {
+        suggestKappa(Kappa);
+    }
+    initKappa(TetMesh);
+    //Kappa = 1e4;
+#ifdef USE_FRICTION
+    lambda_lastH_scalar.resize_discard(h_cpNum[0]);
+    distCoord.resize_discard(h_cpNum[0]);
+    tanBasis.resize_discard(h_cpNum[0]);
+    _collisonPairs_lastH.resize_discard(h_cpNum[0]);
+    _MatIndex_last.resize_discard(h_cpNum[0]);
+
+    lambda_lastH_scalar_gd.resize_discard(h_gpNum);
+    _collisonPairs_lastH_gd.resize_discard(h_gpNum);
+    if(!use_toi) buildFrictionSets();
+#endif
+    animation_fullRate = animation_subRate;
+    int    k           = 0;
+    double time0       = 0;
+    double time1       = 0;
+    double time2       = 0;
+    double time3       = 0;
+    double time4       = 0;
+    while(true)
+    {
+        //if (h_cpNum[0] > 0) return;
+        tempMalloc_closeConstraint();
+        CUDA_SAFE_CALL(cudaMemset(_close_cpNum, 0, sizeof(uint32_t)));
+        CUDA_SAFE_CALL(cudaMemset(_close_gpNum, 0, sizeof(uint32_t)));
+
+        totalNT += use_toi ? solve_subTOI(TetMesh)
+                          : solve_subIP(TetMesh, time0, time1, time2, time3, time4);
+
+        double2 minMaxDist1 = minMaxGroundDist();
+        double2 minMaxDist2 = minMaxSelfDist();
+        auto& contact_record=gipc::Statistics::instance().at_current_frame()["contact_geometry"];
+        contact_record["native_narrow_self_pairs"]=h_cpNum[0];
+        contact_record["native_narrow_ground_pairs"]=h_gpNum;
+        contact_record["minimum_self_distance_m"]=h_cpNum[0]?gipc::Json(std::sqrt(minMaxDist2.x)):gipc::Json(nullptr);
+        contact_record["minimum_ground_distance_m"]=h_gpNum?gipc::Json(std::sqrt(minMaxDist1.x)):gipc::Json(nullptr);
+        contact_record["classification_distance_m"]=1e-4*std::sqrt(bboxDiagSize2);
+        contact_record["geometric_contact"]=(h_cpNum[0] && minMaxDist2.x<=1e-8*bboxDiagSize2) || (h_gpNum && minMaxDist1.x<=1e-8*bboxDiagSize2);
+        contact_record["scope"]="native narrow-phase candidates; distance <= 1e-4 times initial bbox diagonal";
+
+        double minDist = std::min(minMaxDist1.x, minMaxDist2.x);
+        double maxDist = std::max(minMaxDist1.y, minMaxDist2.y);
+
+
+        bool finishMotion = animation_fullRate > 0.99 ? true : false;
+
+        if(finishMotion)
+        {
+            tempFree_closeConstraint();
+            break;
+            //}
+        }
+        else
+        {
+            tempFree_closeConstraint();
+        }
+
+        animation_fullRate += animation_subRate;
+        //updateVelocities(TetMesh);
+
+        //computeXTilta(TetMesh, 1);
+#ifdef USE_FRICTION
+        lambda_lastH_scalar.resize_discard(h_cpNum[0]);
+        distCoord.resize_discard(h_cpNum[0]);
+        tanBasis.resize_discard(h_cpNum[0]);
+        _collisonPairs_lastH.resize_discard(h_cpNum[0]);
+        _MatIndex_last.resize_discard(h_cpNum[0]);
+        lambda_lastH_scalar_gd.resize_discard(h_gpNum);
+        _collisonPairs_lastH_gd.resize_discard(h_gpNum);
+        if(!use_toi) buildFrictionSets();
+#endif
+    }
+
+#ifdef USE_FRICTION
+    lambda_lastH_scalar.clear();
+    distCoord.clear();
+    tanBasis.clear();
+    _collisonPairs_lastH.clear();
+    _MatIndex_last.clear();
+
+    lambda_lastH_scalar_gd.clear();
+    _collisonPairs_lastH_gd.clear();
+#endif
+
+    updateVelocities(TetMesh);
+
+    computeXTilta(TetMesh, 1);
+    cudaEventRecord(end0);
+    CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    float tttime;
+    cudaEventElapsedTime(&tttime, start, end0);
+    totalTime += tttime;
+    total_Frames++;
+    printf("average time cost:     %f,    frame id:   %d\n", totalTime / totalNT, total_Frames);
+
+
+    gipc::Statistics::instance().at_current_frame()["phase_ms"]={{"assembly",time0},{"pcg",time1},{"ccd",time2},{"line_search",time3},{"state_update",time4}};
+    ttime0 += time0;
+    ttime1 += time1;
+    ttime2 += time2;
+    ttime3 += time3;
+    ttime4 += time4;
+
+
+    std::ofstream outTime("timeCost.txt");
+
+    outTime << "time0: " << ttime0 / 1000.0 << std::endl;
+    outTime << "time1: " << ttime1 / 1000.0 << std::endl;
+    outTime << "time2: " << ttime2 / 1000.0 << std::endl;
+    outTime << "time3: " << ttime3 / 1000.0 << std::endl;
+    outTime << "time4: " << ttime4 / 1000.0 << std::endl;
+    outTime << "time_makePD: " << timemakePd / 1000.0 << std::endl;
+
+    outTime << "totalTime: " << totalTime / 1000.0 << std::endl;
+    outTime << "total iter: " << totalNT << std::endl;
+    outTime << "frames: " << total_Frames << std::endl;
+    outTime << "totalCollisionNum: " << totalCollisionPairs << std::endl;
+    outTime << "averageCollision: " << totalCollisionPairs / totalNT << std::endl;
+    outTime << "maxCOllisionPairNum: " << maxCOllisionPairNum << std::endl;
+    outTime << "totalCgTime: " << total_Cg_count << std::endl;
+    outTime.close();
+
+
+    auto& stats = gipc::Statistics::instance();
+
+    stats.at_current_frame()["timer"] =
+        gipc::GlobalTimer::current()->report_merged_as_json();
+    gipc::GlobalTimer::current()->print_merged_timings();
+    gipc::GlobalTimer::current()->clear();
+    if(!std::getenv("GIPC_DEFER_STATS") || std::getenv("GIPC_DEFER_STATS")[0]!='1')
+        stats.write_to_file(std::string{gipc::output_dir()} + "/stats.json");
+
+    auto f = stats.frame();
+    stats.frame(f + 1);
+}

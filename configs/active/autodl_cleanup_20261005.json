@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "reports_root": "/root/autodl_factor_retest_20261004_659cef89/cleanup_20261005/tree_reports",
+  "protected_paths": ["/root/autodl_factor_retest_20261004_659cef89"],
+  "trees": [
+    {"path": "/root/autodl-tmp/autodl_stiff_base_graph_20260926", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/autodl_stiff_three_arm_20260927", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/autodl_stiff_four_arm_20260927", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/paper_animal_well_20260928", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/paper_yasps_fig14_20260928", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/tinygltf-verify-20260927", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/.autodl_vcpkg_checkout_20260927", "mode": "reports_only"},
+    {"path": "/root/stiff_toi_cudagraph_20260929", "mode": "reports_only"},
+    {"path": "/root/paper_builds_20260929", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/history_runs", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v26", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v27", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v32_20261002", "mode": "important", "keep_prefixes": ["sources", "tools", "manifests"], "note": "Core TOI port source reference"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v34_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v36_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v37_20261003", "mode": "important", "keep_prefixes": ["runs/autodl/autodl_perf_v37_mas_smoke"], "note": "Historical input system 1"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v38_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v39_20261003", "mode": "important", "keep_prefixes": ["runs/autodl/autodl_perf_v39_wide_bunny", "runs/autodl/autodl_perf_v39_wide_bunny_strict"], "note": "Historical input systems 2 and 3"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v40_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v41_20261003", "mode": "important", "keep_prefixes": ["runs/autodl/autodl_perf_v41_double_bunny", "runs/autodl/autodl_perf_v41_double_bunny_host", "runs/autodl/autodl_perf_v41_wide_guard"], "note": "Historical input systems 4 through 6"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v42_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v42a_20261003", "mode": "reports_only"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v43_20261003", "mode": "important", "keep_prefixes": ["sources", "tools", "manifests", "runs/fixtures", "runs/fixtures_corrected", "runs/autodl/autodl_perf_v43_chol_bunny", "runs/autodl/autodl_perf_v43_chol_bunny_host"], "note": "Stable MAS source, corrected fixtures and host/Graph representative mixed runs"},
+    {"path": "/root/autodl-tmp/stiff_toi_cudagraph_20260929/v44_20261004", "mode": "reports_only"}
+  ]
+}

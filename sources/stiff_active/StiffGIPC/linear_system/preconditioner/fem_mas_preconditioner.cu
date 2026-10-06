@@ -1,0 +1,99 @@
+#include <linear_system/preconditioner/fem_mas_preconditioner.h>
+#include <linear_system/subsystem/fem_linear_subsystem.h>
+#include <gipc/utils/timer.h>
+#include <fstream>
+#include <solver/mas_factor_action_options.h>
+namespace gipc
+{
+int MAS_Preconditioner::fused_dot_nodes() const
+{return MAS_Prec.diagnostic_dimensions()[0];}
+bool MAS_Preconditioner::fused_dot_supported() const
+{return MAS_Prec.fused_dot_collect_supported();}
+void MAS_Preconditioner::apply_fused_dot(cudatool::CDenseVectorView<Float> r,
+    cudatool::DenseVectorView<Float> z,Float* partials,bool prepared_only)
+{
+    if(r.size()!=3*fused_dot_nodes() || z.size()!=r.size() || !partials)
+        throw std::runtime_error("Invalid MAS fused dot ownership range");
+    if(prepared_only)MAS_Prec.collect_fused_dot(reinterpret_cast<const double3*>(r.data()),
+                                             reinterpret_cast<double3*>(z.data()),partials);
+    else MAS_Prec.preconditioning(reinterpret_cast<const double3*>(r.data()),
+                                  reinterpret_cast<double3*>(z.data()),partials);
+}
+void MAS_Preconditioner::dot_diagnostic_scratch(const std::function<void(void*,size_t)>& visitor) const
+{
+    MAS_Prec.diagnostic_buffers([&](const char* name,const void* address,size_t count,size_t item_bytes){
+        const std::string field=name;
+        if(field=="d_multiLevelR" || field=="d_multiLevelZ" ||
+           field=="d_multiLevelR64" || field=="d_multiLevelZ64")
+            visitor(const_cast<void*>(address),count*item_bytes);
+    });
+}
+Json MAS_Preconditioner::diagnostic_snapshot(const std::string& prefix) const
+{
+    Json result={{"kind","MAS_full_owned_buffers"},{"offset",get_offset()},
+        {"wide_apply",MAS_Prec.wide_apply_enabled()},
+        {"inverse64",MAS_Prec.inverse64_enabled()},
+        {"cholesky",MAS_Prec.cholesky_enabled()},
+        {"restriction_map_prepare_ms",MAS_Prec.restriction_map_prepare_time_ms()},
+        {"factor_action",MAS_Prec.cholesky_enabled()?mas_factor_action_mode():"inactive"},
+        {"dimensions",MAS_Prec.diagnostic_dimensions()},
+        {"dimension_names",{"nodes","mapped_nodes","levels","collision_offset","clusters","clevel_x","clevel_y","neighbor_list_size"}}};
+    MAS_Prec.diagnostic_buffers([&](const char* name,const void* device,size_t count,size_t item_bytes)
+    {
+        const size_t bytes=count*item_bytes;
+        std::vector<unsigned char> data(bytes);
+        if(bytes)CUDA_SAFE_CALL(cudaMemcpy(data.data(),device,bytes,cudaMemcpyDeviceToHost));
+        std::uint64_t hash=14695981039346656037ull;
+        for(auto byte:data){hash^=byte;hash*=1099511628211ull;}
+        result["buffers"][name]={{"count",count},{"item_bytes",item_bytes},{"fnv1a64",hash}};
+        if(!prefix.empty())
+        {
+            std::ofstream file(prefix+"_"+name+".bin",std::ios::binary);
+            file.write(reinterpret_cast<const char*>(data.data()),bytes);
+            if(!file)throw std::runtime_error("Failed to write MAS snapshot");
+        }
+    });
+    return result;
+}
+std::vector<std::uintptr_t> MAS_Preconditioner::graph_signature() const
+{
+    auto key = MAS_Prec.graph_signature();
+    key.push_back(get_offset());
+    return key;
+}
+MAS_Preconditioner::MAS_Preconditioner(FEMLinearSubsystem& subsystem,
+                                       MASPreconditioner&  mMAS,
+                                       double*             mMasses,
+                                       uint32_t*           mCpNum,
+                                       const cudatool::DeviceBuffer<int4>& mCollisionPairs)
+    : Base(subsystem)
+    , MAS_Prec(mMAS)
+    , masses(mMasses)
+    , cpNum(mCpNum)
+    , collision_pairs(mCollisionPairs)
+{
+    preconditioner_id = 1;
+}
+
+void MAS_Preconditioner::assemble()
+{
+    double      collision_num = *cpNum;
+    gipc::Timer timer{"precomputing mas Preconditioner"};
+    int         triplet_number = 0;
+    uint32_t*   indices = calculate_subsystem_bcoo_indices(triplet_number);
+    MAS_Prec.setPreconditioner_bcoo(system_bcoo_matrix(),
+                                    system_bcoo_rows(),
+                                    system_bcoo_cols(),
+                                    indices,
+                                    get_offset(),
+                                    triplet_number,
+                                    collision_num,
+                                    collision_pairs.data());
+}
+
+void MAS_Preconditioner::apply(cudatool::CDenseVectorView<Float> r,
+                               cudatool::DenseVectorView<Float>  z)
+{
+    MAS_Prec.preconditioning((double3*)r.data(), (double3*)z.data());
+}
+}  // namespace gipc

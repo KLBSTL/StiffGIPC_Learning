@@ -1,0 +1,118 @@
+{
+  "case_id": "cloth_hang_h",
+  "objects": [
+    {
+      "name": "cloth",
+      "body_type": "FEM",
+      "dimension": 2,
+      "stiff_mesh": "benchmark_meshes/triMesh/stiff4_hang_subdivide2.obj",
+      "stiff_mesh_sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644",
+      "robust_mesh": "../../Assets/triMesh/stiff4_hang_subdivide2.obj",
+      "robust_mesh_sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644",
+      "source_transform_f64x16": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "instance_transforms_f64x16": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "young_pa": null,
+      "material_model": "BaraffWitkinShell",
+      "fixed_mode": "diagonal_corners",
+      "self_collision": true,
+      "frozen_sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644"
+    }
+  ],
+  "effective_scalar_fields": {
+    "dt": 0.04,
+    "density": 1000.0,
+    "poisson_ratio": 0.243,
+    "cloth_density": 472.641509,
+    "cloth_thickness": 0.000318,
+    "cloth_young": 821000.0,
+    "bending_young": 821000.0,
+    "strain_rate": 100.0,
+    "cloth_stretch_stiffness": 330249.3966210781,
+    "cloth_shear_stiffness": 990748.1898632343,
+    "cloth_bending_stiffness": 1.1690854816031865e-06,
+    "friction_rate": 0.4,
+    "ground_friction_rate": 0.4,
+    "friction_compiled": true,
+    "newton_direction_threshold_coefficient": 0.001,
+    "pcg_requested_threshold": 0.001,
+    "preconditioner_type": 1,
+    "relative_dhat": 0.0007071067811865475,
+    "dhat_absolute": 0.001,
+    "dhat_squared": 1e-06,
+    "bbox_diagonal_squared": 2.0,
+    "active_implicit_planes": [
+      {
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "offset": -1.0
+      }
+    ],
+    "implicit_plane_rule": "dot(normal, x)-offset",
+    "cloth_stretch_model": "BaraffWitkinStrainLimiting",
+    "cloth_bending_model": "QuadraticBendingQ"
+  },
+  "initial_counts": {
+    "vertex_count": 30049,
+    "triangle_count": 59456,
+    "tet_count": 0,
+    "abd_body_count": 1,
+    "fixed_or_constrained_vertex_count": 2,
+    "initial_mass_sum": 0.15029999986200213
+  },
+  "case_spec": {
+    "case_id": "cloth_hang_h",
+    "family": "cloth_hang",
+    "resolution_id": "H",
+    "resolution_spec": "subdivide2",
+    "is_frozen_original": false,
+    "implementation_state": "mesh_generation_pending",
+    "scene_id": 7,
+    "cloth_case": "hang",
+    "frames": 100,
+    "dt": 0.04,
+    "physical_duration_s": 4.0,
+    "requires_friction": true,
+    "source_baseline": "cloth-v1-20260911",
+    "frozen_initial_sha256": null,
+    "frozen_triangles_sha256": null
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "stage": "smoke",
+  "runs": [
+    {
+      "name": "ipc_report_components_20261005_hang_old_smoke",
+      "arm": "hang_old",
+      "scene_key": "hang",
+      "variant": "old",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_dot_smoke",
+      "arm": "hang_dot",
+      "scene_key": "hang",
+      "variant": "dot",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_discrete_smoke",
+      "arm": "hang_discrete",
+      "scene_key": "hang",
+      "variant": "discrete",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_both_smoke",
+      "arm": "hang_both",
+      "scene_key": "hang",
+      "variant": "both",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_old_smoke",
+      "arm": "fixed_bunny_old",
+      "scene_key": "fixed_bunny",
+      "variant": "old",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_dot_smoke",
+      "arm": "fixed_bunny_dot",
+      "scene_key": "fixed_bunny",
+      "variant": "dot",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_smoke",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_both_smoke",
+      "arm": "fixed_bunny_both",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_mixed_old_smoke",
+      "arm": "mixed_old",
+      "scene_key": "mixed",
+      "variant": "old",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_mixed_both_smoke",
+      "arm": "mixed_both",
+      "scene_key": "mixed",
+      "variant": "both",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_both_host_smoke",
+      "arm": "hang_both_host",
+      "scene_key": "hang",
+      "variant": "both_host",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "execution": "host"
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_both_host_smoke",
+      "arm": "fixed_bunny_both_host",
+      "scene_key": "fixed_bunny",
+      "variant": "both_host",
+      "repeat": "smoke",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "execution": "host"
+      }
+    }
+  ],
+  "report": "reports/active/ipc_report_components_20261005_smoke_batch.json"
+}

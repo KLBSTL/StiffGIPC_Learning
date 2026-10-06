@@ -1,0 +1,41 @@
+{
+  "name": "local_warm_v31r2_20261001",
+  "run_prefix": "local_v31r2_warm",
+  "date": "2026-10-01",
+  "scene": "cloth_sphere7_l",
+  "implementation_version": "v31-independent-warm-histories",
+  "source_digest": "cda285a54f71829ac45d00b2257f96479559e8e2f8b41cd34b8f9dee92053097",
+  "fused_sha256": "7ff7e39ce10b3efa3f229ac6c2af707bb0f11da12321100df69301f297dcd9eb",
+  "incremental_build_failure": {
+    "binary_sha256": "2d6102a96db4d316f67ee444157543c028ab74c38cd7b30aed6e6e3a5bc1e0db",
+    "preserved_binary": "builds/v31_incremental_failed/gipc.exe",
+    "stage": "runs/local/local_warm_v31_20261001/smoke_status.json",
+    "symptom": "Both cold coupled/independent launch tests failed before frame 1 with cudaMemcpy invalid argument. Only toi_solver.cu recompiled after public ToiState layout change. Clean rebuild required before simulation diagnosis."
+  },
+  "dt": 0.01,
+  "newton_tol": 0.01,
+  "pcg_tol": 0.0001,
+  "suite": "0",
+  "mu_mode": "diagonal",
+  "timeout_seconds": 600,
+  "audit_from_frame": 22,
+  "branches": [
+    {"id": "cold", "contacts": false, "lambda": false, "gamma": false, "friction": false, "mode": "independent"},
+    {"id": "legacy", "contacts": true, "lambda": true, "gamma": true, "friction": true, "mode": "coupled"},
+    {"id": "c_only", "contacts": true, "lambda": false, "gamma": false, "friction": false, "mode": "independent"},
+    {"id": "c_lambda", "contacts": true, "lambda": true, "gamma": false, "friction": false, "mode": "independent"},
+    {"id": "c_gamma", "contacts": true, "lambda": false, "gamma": true, "friction": false, "mode": "independent"},
+    {"id": "c_lambda_gamma", "contacts": true, "lambda": true, "gamma": true, "friction": false, "mode": "independent"},
+    {"id": "c_friction", "contacts": true, "lambda": false, "gamma": false, "friction": true, "mode": "independent"},
+    {"id": "all_independent", "contacts": true, "lambda": true, "gamma": true, "friction": true, "mode": "independent"}
+  ],
+  "plan": [
+    "Freeze v30 changed files; validate fixed-input AL energy, friction force and warm-state updates on GPU.",
+    "Build v31 in Release; preserve versioned binary and runtime DLLs; lock manifest and binary hashes.",
+    "Run cold-coupled and cold-independent two-frame compatibility smoke tests, then all branches through 30 frames serially.",
+    "Run all branches which complete the pilot through 60 frames serially, with blockers and accepted substep export.",
+    "Validate actual effective warm options, source/binary identity, complete finite traces and independent CCD for each completed 60-frame run.",
+    "Compare actual work and cloth-only quality at matching physical times; no speed qualification with diagnostic overhead or an unconverged reference."
+  ],
+  "scope": "The optional friction proxy has its own lambda/gamma and receives the same constraint-value recurrence as AL. Only its frame-start inheritance is changed independently. It is an implementation ablation, not a claim to reproduce the paper friction algorithm. Coupled AL friction remains the default; changing normal history still changes subsequent trial trajectories. One run per branch is diagnosis, not a causal or performance acceptance study."
+}

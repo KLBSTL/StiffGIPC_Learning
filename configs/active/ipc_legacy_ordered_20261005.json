@@ -1,0 +1,13 @@
+{
+  "report": "reports/active/ipc_legacy_ordered_20261005_batch.json",
+  "stop_on_failure": true,
+  "purpose": "One default-off coarse restriction hypothesis, four fixed systems; natural default PCG, three interleaved pairs in host and Graph. No strict rho or parameter sweep.",
+  "runs": [
+    {"name":"ipc_legacy_ordered_20261005_fixed_f2", "config":{"scene":"cloth_fixed_bunny_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_legacy_restrict_study":true}},
+    {"name":"ipc_legacy_ordered_20261005_hang_f2", "config":{"scene":"cloth_hang_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_legacy_restrict_study":true}},
+    {"name":"ipc_legacy_ordered_20261005_fixed_f25", "config":{"scene":"cloth_fixed_bunny_l","steps":25,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"25","fixed_directions":"1","fixed_legacy_restrict_study":true}},
+    {"name":"ipc_legacy_ordered_20261005_mixed_f2", "config":{"scene":"bunny_cloth_bunny_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_legacy_restrict_study":true}},
+    {"name":"ipc_legacy_ordered_20261005_stage_f2", "config":{"scene":"cloth_fixed_bunny_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_mas_stage_study":true,"legacy_restrict":"ordered"}},
+    {"name":"ipc_legacy_ordered_20261005_disabled_f2", "config":{"scene":"cloth_fixed_bunny_l","steps":2,"trace_velocity":false}}
+  ]
+}

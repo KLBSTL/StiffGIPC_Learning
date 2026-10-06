@@ -1,0 +1,1 @@
+{"preset":"toi","steps":25,"timeout_seconds":120,"diagnostics":["state_window","fixed"],"fixed_frames":"25","fixed_directions":"7,8"}

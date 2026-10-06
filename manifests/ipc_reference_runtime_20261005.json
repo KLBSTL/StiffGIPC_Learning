@@ -1,0 +1,10 @@
+[
+  {
+    "path": "builds/ipc-reference/Release/freeglut.dll",
+    "sha256": "aa639699ba3bc4732651d8759fbc4dfc2a436c34c03b5d9b9bc288fd8ecf166a"
+  },
+  {
+    "path": "builds/ipc-reference/Release/glew32.dll",
+    "sha256": "6a30487171c89136869f4154426a1b52cf8b2ec81b8a41944a85b552e1b74f9c"
+  }
+]

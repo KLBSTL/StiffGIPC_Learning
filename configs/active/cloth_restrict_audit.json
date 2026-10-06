@@ -1,0 +1,117 @@
+{
+  "report": "reports/active/CLOTH_RESTRICT_AUDIT_BATCH.json",
+  "stop_on_failure": false,
+  "runs": [
+    {
+      "name": "cloth_restrict_hang_stiff_audit",
+      "arm": "hang_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "audit"
+    },
+    {
+      "name": "cloth_restrict_hang_toi_warp_audit",
+      "arm": "hang_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_hang_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "hang",
+      "variant": "toi_warp",
+      "repeat": "audit"
+    },
+    {
+      "name": "cloth_restrict_sphere_stiff_audit",
+      "arm": "sphere_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "sphere",
+      "variant": "stiff",
+      "repeat": "audit"
+    },
+    {
+      "name": "cloth_restrict_sphere_toi_warp_audit",
+      "arm": "sphere_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_sphere7_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "sphere",
+      "variant": "toi_warp",
+      "repeat": "audit"
+    },
+    {
+      "name": "cloth_restrict_bunny_stiff_audit",
+      "arm": "bunny_stiff",
+      "binary": "base",
+      "config": {
+        "preset": "base",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "bunny",
+      "variant": "stiff",
+      "repeat": "audit"
+    },
+    {
+      "name": "cloth_restrict_bunny_toi_warp_audit",
+      "arm": "bunny_toi_warp",
+      "binary": "active",
+      "config": {
+        "preset": "toi",
+        "mas_restrict": "warp",
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 100,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "diagnostics": [
+          "substeps"
+        ]
+      },
+      "scene_key": "bunny",
+      "variant": "toi_warp",
+      "repeat": "audit"
+    }
+  ]
+}

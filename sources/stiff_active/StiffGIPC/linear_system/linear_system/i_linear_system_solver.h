@@ -1,0 +1,82 @@
+#pragma once
+#include <list>
+#include <vector>
+#include <cstdint>
+#include <functional>
+#include <string>
+#include <linear_system/linear_system/linear_subsystem.h>
+#include <cuda_tools/cuda_all.h>
+
+namespace gipc
+{
+class GlobalLinearSystem;
+class IterativeSolver
+{
+    friend class GlobalLinearSystem;
+    GlobalLinearSystem* m_system;
+
+  public:
+    IterativeSolver() = default;
+    virtual ~IterativeSolver();
+
+    // delete copy
+    IterativeSolver(const IterativeSolver&)            = delete;
+    IterativeSolver& operator=(const IterativeSolver&) = delete;
+
+  protected:
+    /**
+     * \brief Subclass of ILinearSystemSolver must implement this method to solve the linear system Ax = b, directly or iteratively.
+     * 
+     * \details if the solver is iterative, you can use the following methods to help you implement the solve method:
+     * - apply_preconditioner(): Apply the preconditioner to the residual r = b - Ax. The preconditioner is defined by others,
+     * you don't need to take care of it.
+     * 
+     * - accuracy_statisfied(): check if the accuracy is satisfied. If the accuracy is satisfied, you can stop the iteration.
+     * The accuracy checking is defined by \ref LinearSubsystem, you don't need to take care of it.
+     * 
+     * - ctx(): get the context of the basic linear algorithm, to do `dot()/norm()/spmv()/mv() ...` 
+     * 
+     * \param[out] x: the solution of the linear system
+     *  you can change the format to BSR or CSR if you want using `ctx().convert()`
+     * \param[in]  b: the right-hand side of the linear system
+     * 
+     * \return the number of iterations used to solve the linear system, if the solver is iterative.
+     * otherwise, return 0.
+     * 
+     */
+    virtual SizeT solve(cudatool::DenseVectorView<Float>  x,
+                        cudatool::CDenseVectorView<Float> b) = 0;
+
+    void spmv(Float a, cudatool::CDenseVectorView<Float> x, Float b, cudatool::DenseVectorView<Float> y);
+    std::string spmv_quadratic_unavailable_reason(SizeT count) const;
+    SizeT spmv_quadratic_partial_count() const;
+    void spmv_quadratic(cudatool::CDenseVectorView<Float> x,
+        cudatool::DenseVectorView<Float> y,Float* partials);
+    void spmv(cudatool::CDenseVectorView<Float> x, cudatool::DenseVectorView<Float> y)
+    {
+        spmv(1.0, x, 0.0, y);
+    }
+
+    void apply_preconditioner(cudatool::DenseVectorView<Float>  z,
+                              cudatool::CDenseVectorView<Float> r) const;
+    std::string mas_fused_dot_unavailable_reason(SizeT count) const;
+    SizeT mas_fused_dot_partial_count(SizeT count) const;
+    void apply_preconditioner_fused_dot(cudatool::DenseVectorView<Float> z,
+        cudatool::CDenseVectorView<Float> r,Float* partials,bool prepared_only=false) const;
+    void mas_dot_scratch(const std::function<void(void*,size_t)>& visitor) const;
+    bool fused_diag_update_available() const;
+    void fused_diag_update(cudatool::DenseVectorView<Float> x,
+                           cudatool::DenseVectorView<Float> r,
+                           cudatool::CDenseVectorView<Float> p,
+                           cudatool::CDenseVectorView<Float> ap,
+                           const Float* alpha,
+                           cudatool::DenseVectorView<Float> z) const;
+
+    cudatool::LinearSystemContext& ctx() const;
+    std::vector<std::uintptr_t> graph_signature() const;
+    Json snapshot_system(const std::string& prefix) const;
+
+  private:
+    void system(GlobalLinearSystem& system) { m_system = &system; }
+};
+}  // namespace gipc

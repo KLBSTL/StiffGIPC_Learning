@@ -1,0 +1,10 @@
+{
+  "report":"reports/active/ipc_legacy_ordered_20261005_remaining_batch.json",
+  "stop_on_failure":false,
+  "purpose":"Continue only independent, already-declared arms after f25 hit the existing GPU memory reserve. No retry of f25 or budget extension.",
+  "runs":[
+    {"name":"ipc_legacy_ordered_20261005_mixed_f2","config":{"scene":"bunny_cloth_bunny_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_legacy_restrict_study":true}},
+    {"name":"ipc_legacy_ordered_20261005_stage_f2","config":{"scene":"cloth_fixed_bunny_l","steps":2,"trace_velocity":false,"diagnostics":["fixed"],"fixed_frames":"2","fixed_directions":"1","fixed_mas_stage_study":true,"legacy_restrict":"ordered"}},
+    {"name":"ipc_legacy_ordered_20261005_disabled_f2","config":{"scene":"cloth_fixed_bunny_l","steps":2,"trace_velocity":false}}
+  ]
+}

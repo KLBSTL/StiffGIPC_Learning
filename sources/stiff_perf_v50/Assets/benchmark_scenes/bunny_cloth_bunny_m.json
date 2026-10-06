@@ -1,0 +1,115 @@
+{
+  "case_id": "bunny_cloth_bunny_m",
+  "objects": [
+    {
+      "name": "abd_bunny",
+      "body_type": "ABD",
+      "dimension": 3,
+      "stiff_mesh": "benchmark_meshes/tetMesh/bunny2.msh",
+      "robust_mesh": "assets/sim_data/tetmesh/stiffgipc_bunny2.msh",
+      "source_scale": 0.2,
+      "world_translation_m": [
+        0.0,
+        0.5,
+        0.0
+      ],
+      "tet_young_pa": 10000.0,
+      "stiff_mesh_sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa",
+      "robust_mesh_sha256": "600d169e5610c2669db34ae5c640860c2a7217a3ed316eb0b69a6b316fcad41f",
+      "frozen_sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+    },
+    {
+      "name": "fem_bunny",
+      "body_type": "FEM",
+      "dimension": 3,
+      "stiff_mesh": "benchmark_meshes/tetMesh/bunny2.msh",
+      "robust_mesh": "assets/sim_data/tetmesh/stiffgipc_bunny2.msh",
+      "source_scale": 0.2,
+      "world_translation_m": [
+        0.0,
+        -0.65,
+        0.0
+      ],
+      "tet_young_pa": 10000.0,
+      "stiff_mesh_sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa",
+      "robust_mesh_sha256": "600d169e5610c2669db34ae5c640860c2a7217a3ed316eb0b69a6b316fcad41f",
+      "frozen_sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+    },
+    {
+      "name": "cloth",
+      "body_type": "FEM",
+      "dimension": 2,
+      "stiff_mesh": "benchmark_meshes/triMesh/cloth_high.obj",
+      "robust_mesh": "../../Assets/triMesh/cloth_high.obj",
+      "source_scale": 1.0,
+      "world_translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tet_young_pa": null,
+      "stiff_mesh_sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed",
+      "robust_mesh_sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed",
+      "frozen_sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed"
+    }
+  ],
+  "effective_scalar_fields": {
+    "dt": 0.01,
+    "density": 1000.0,
+    "poisson_ratio": 0.49,
+    "cloth_density": 200.0,
+    "cloth_thickness": 0.001,
+    "cloth_young": 50000.0,
+    "bending_young": 100000000.0,
+    "strain_rate": 100.0,
+    "cloth_stretch_stiffness": 16778.523489932886,
+    "cloth_shear_stiffness": 50335.57046979865,
+    "cloth_bending_stiffness": 0.005483177611089179,
+    "friction_rate": 0.2,
+    "ground_friction_rate": 0.2,
+    "friction_compiled": false,
+    "newton_direction_threshold_coefficient": 0.01,
+    "pcg_requested_threshold": 0.0001,
+    "preconditioner_type": 1,
+    "relative_dhat": 0.001,
+    "dhat_absolute": 0.0033350810757621988,
+    "dhat_squared": 1.1122765781907146e-05,
+    "bbox_diagonal_squared": 11.122765781907146,
+    "active_implicit_planes": [
+      {
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "offset": -1.0
+      }
+    ],
+    "implicit_plane_rule": "dot(normal, x)-offset",
+    "cloth_stretch_model": "BaraffWitkinStrainLimiting",
+    "cloth_bending_model": "QuadraticBendingQ"
+  },
+  "initial_counts": {
+    "vertex_count": 42611,
+    "triangle_count": 8192,
+    "tet_count": 159870,
+    "abd_body_count": 3,
+    "fixed_or_constrained_vertex_count": 0,
+    "initial_mass_sum": 97.31096039291882
+  },
+  "case_spec": {
+    "case_id": "bunny_cloth_bunny_m",
+    "family": "bunny_cloth_bunny",
+    "resolution_id": "M",
+    "resolution_spec": 65,
+    "is_frozen_original": true,
+    "implementation_state": "scene_entry_available",
+    "scene_id": 1,
+    "cloth_case": null,
+    "frames": 200,
+    "dt": 0.01,
+    "physical_duration_s": 2.0,
+    "requires_friction": false,
+    "source_baseline": "current-stiffgipc-scenes"
+  }
+}

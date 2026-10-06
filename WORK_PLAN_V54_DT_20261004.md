@@ -1,0 +1,9 @@
+# Frozen v54 time-step refinement
+
+Before running new GPU cases: test cloth_sphere7_l and cloth_fixed_bunny_l through physical time 0.5s, starting from zero. Use dt=.01/.005/.0025 and respectively 50/100/200 frames. Reuse the first50 frames of the existing dt=.01 OFF and GUARD repetitions; no altered initial state or checkpoint resume. Run OFF/GUARD twice at each refined dt, serial OFF r1/GUARD r1/GUARD r2/OFF r2, 180s per run. Total16 new runs. No solver, binary, frozen runner, materials, stopping tolerance, PCG/CCD budget changes.
+
+Use benchmark-regression checks: identities and matched material/initial state; native/restart/energy audits; finite vertices, fixed motion, stretch and triangle areas; independent accepted-path/bridge CCD; shared-time geometry and visual checks. All timings diagnostic, no speed claim across different time steps.
+
+Compare each arm h vs h/2 and h/2 vs h/4 at the same coarse-grid physical times, including own repetitions as numerical variability. Report mass-weighted movable-cloth RMS normalized by initial cloth diagonal, peak stretch at all exported endpoints and at common sample times, material/bending energy at common times. A downward difference in both repeated pairs is evidence of a trend only, not a convergence proof. Do not treat the finest result as exact truth, change thresholds after seeing results, or promote a candidate based only on lower peak stretch. Key contact windows: sphere .25-.48s; fixed bunny .44-.49s, plus its known .24s regression.
+
+If differences fail to shrink consistently or remain comparable to repeat variation, report the reference as inconclusive and retain default OFF. No new solver variants or iteration-count scan, and no mixed-body extension without quality evidence. Preserve partial/failing runs and stop that test matrix on a runtime failure; do not increase budgets.

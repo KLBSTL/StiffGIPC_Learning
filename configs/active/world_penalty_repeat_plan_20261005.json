@@ -1,0 +1,13 @@
+{
+  "report":"reports/active/WORLD_PENALTY_REPEAT_BATCH_20261005.json",
+  "stop_on_failure":true,
+  "runs":[
+    {"name":"world_penalty_mixed_stiff_r1","arm":"stiff","binary":"base","config":{"steps":35,"timeout_seconds":120,"trace_velocity":true}},
+    {"name":"world_penalty_mixed_world_r2","arm":"world_block","config":"configs/active/world_penalty_world_35.json"},
+    {"name":"world_penalty_mixed_generalized_r2","arm":"generalized","config":"configs/active/world_penalty_generalized_35.json"},
+    {"name":"world_penalty_mixed_stiff_r2","arm":"stiff","binary":"base","config":{"steps":35,"timeout_seconds":120,"trace_velocity":true}},
+    {"name":"world_penalty_mixed_generalized_r3","arm":"generalized","config":"configs/active/world_penalty_generalized_35.json"},
+    {"name":"world_penalty_mixed_world_r3","arm":"world_block","config":"configs/active/world_penalty_world_35.json"},
+    {"name":"world_penalty_mixed_stiff_r3","arm":"stiff","binary":"base","config":{"steps":35,"timeout_seconds":120,"trace_velocity":true}}
+  ]
+}

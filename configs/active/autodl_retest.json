@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "scenes": {
+    "mixed": "bunny_cloth_bunny_l",
+    "hang": "cloth_hang_l",
+    "fixed_bunny": "cloth_fixed_bunny_l"
+  },
+  "reserve_scene": "cloth_sphere7_l",
+  "arms": ["stiff", "ipc_host", "ipc_graph", "toi_host", "toi_graph"],
+  "dt": 0.01,
+  "smoke_steps": 3,
+  "window_steps": {"mixed": 35, "hang": 21, "fixed_bunny": 45},
+  "window_repeats": 3,
+  "window_timeout_seconds": 120,
+  "pilot_steps": 100,
+  "smoke_timeout_seconds": 30,
+  "pilot_timeout_seconds": 120,
+  "paired_repeats": 7,
+  "idle_utilization_max_percent": 5,
+  "disk_reserve_gib": 4,
+  "performance_certified": false
+}

@@ -1,0 +1,170 @@
+{
+  "case_id": "cloth_table_m",
+  "objects": [
+    {
+      "name": "fixed_obstacle",
+      "body_type": "FEM",
+      "dimension": 2,
+      "stiff_mesh": "benchmark_meshes/triMesh/cipc_table.obj",
+      "stiff_mesh_sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972",
+      "robust_mesh": "../../Assets/triMesh/cipc_table.obj",
+      "robust_mesh_sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972",
+      "source_transform_f64x16": [
+        1.8573887774807611,
+        0.0,
+        0.0,
+        -4.885025354214504e-05,
+        0.0,
+        1.8573887774807611,
+        0.0,
+        -1.8601453732586921,
+        0.0,
+        0.0,
+        1.8573887774807611,
+        3.6728005685904904e-05,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "instance_transforms_f64x16": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "young_pa": null,
+      "material_model": "BaraffWitkinShell",
+      "fixed_mode": "all",
+      "self_collision": false,
+      "frozen_sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972"
+    },
+    {
+      "name": "cloth",
+      "body_type": "FEM",
+      "dimension": 2,
+      "stiff_mesh": "benchmark_meshes/triMesh/square_cloth_23k.obj",
+      "stiff_mesh_sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4",
+      "robust_mesh": "../../Assets/triMesh/square_cloth_23k.obj",
+      "robust_mesh_sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4",
+      "source_transform_f64x16": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "instance_transforms_f64x16": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "young_pa": null,
+      "material_model": "BaraffWitkinShell",
+      "fixed_mode": "none",
+      "self_collision": true,
+      "frozen_sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4"
+    }
+  ],
+  "effective_scalar_fields": {
+    "dt": 0.01,
+    "density": 1000.0,
+    "poisson_ratio": 0.49,
+    "cloth_density": 200.0,
+    "cloth_thickness": 0.001,
+    "cloth_young": 1000000.0,
+    "bending_young": 100000000.0,
+    "strain_rate": 100.0,
+    "cloth_stretch_stiffness": 335570.4697986577,
+    "cloth_shear_stiffness": 1006711.409395973,
+    "cloth_bending_stiffness": 0.005483177611089179,
+    "friction_rate": 0.2,
+    "ground_friction_rate": 0.2,
+    "friction_compiled": true,
+    "newton_direction_threshold_coefficient": 0.001,
+    "pcg_requested_threshold": 0.001,
+    "preconditioner_type": 1,
+    "relative_dhat": 0.001,
+    "dhat_absolute": 0.002538208029299411,
+    "dhat_squared": 6.4425000000000006e-06,
+    "bbox_diagonal_squared": 6.442500000000001,
+    "active_implicit_planes": [
+      {
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "offset": -1.0
+      }
+    ],
+    "implicit_plane_rule": "dot(normal, x)-offset",
+    "cloth_stretch_model": "BaraffWitkinStrainLimiting",
+    "cloth_bending_model": "QuadraticBendingQ"
+  },
+  "initial_counts": {
+    "vertex_count": 29513,
+    "triangle_count": 58420,
+    "tet_count": 0,
+    "abd_body_count": 2,
+    "fixed_or_constrained_vertex_count": 6712,
+    "initial_mass_sum": 1.2230829633866693
+  },
+  "case_spec": {
+    "case_id": "cloth_table_m",
+    "family": "cloth_table",
+    "resolution_id": "M",
+    "resolution_spec": 151,
+    "is_frozen_original": true,
+    "implementation_state": "scene_entry_available",
+    "scene_id": 7,
+    "cloth_case": "table",
+    "frames": 200,
+    "dt": 0.01,
+    "physical_duration_s": 2.0,
+    "requires_friction": true,
+    "source_baseline": "cloth-v1-20260911",
+    "frozen_initial_sha256": "98adb74d76463d0c1b92e72067286bc96936acfe11fd7fb929c6a3e80b86d74c",
+    "frozen_triangles_sha256": "fe6c35dbf7a0565ba3567733831c75ab8f1416843a3e6185e1ea52f089523531"
+  }
+}

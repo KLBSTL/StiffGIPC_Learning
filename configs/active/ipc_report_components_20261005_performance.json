@@ -1,0 +1,576 @@
+{
+  "stage": "performance",
+  "runs": [
+    {
+      "name": "ipc_report_components_20261005_hang_stiff_r1",
+      "arm": "hang_stiff",
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r1",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_old_r1",
+      "arm": "hang_old",
+      "scene_key": "hang",
+      "variant": "old",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_dot_r1",
+      "arm": "hang_dot",
+      "scene_key": "hang",
+      "variant": "dot",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_discrete_r1",
+      "arm": "hang_discrete",
+      "scene_key": "hang",
+      "variant": "discrete",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_both_r1",
+      "arm": "hang_both",
+      "scene_key": "hang",
+      "variant": "both",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_stiff_r1",
+      "arm": "fixed_bunny_stiff",
+      "scene_key": "fixed_bunny",
+      "variant": "stiff",
+      "repeat": "r1",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_old_r1",
+      "arm": "fixed_bunny_old",
+      "scene_key": "fixed_bunny",
+      "variant": "old",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_dot_r1",
+      "arm": "fixed_bunny_dot",
+      "scene_key": "fixed_bunny",
+      "variant": "dot",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_r1",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_both_r1",
+      "arm": "fixed_bunny_both",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "repeat": "r1",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_old_r2",
+      "arm": "fixed_bunny_old",
+      "scene_key": "fixed_bunny",
+      "variant": "old",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_dot_r2",
+      "arm": "fixed_bunny_dot",
+      "scene_key": "fixed_bunny",
+      "variant": "dot",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_r2",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_both_r2",
+      "arm": "fixed_bunny_both",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_stiff_r2",
+      "arm": "fixed_bunny_stiff",
+      "scene_key": "fixed_bunny",
+      "variant": "stiff",
+      "repeat": "r2",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_old_r2",
+      "arm": "hang_old",
+      "scene_key": "hang",
+      "variant": "old",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_dot_r2",
+      "arm": "hang_dot",
+      "scene_key": "hang",
+      "variant": "dot",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_discrete_r2",
+      "arm": "hang_discrete",
+      "scene_key": "hang",
+      "variant": "discrete",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_both_r2",
+      "arm": "hang_both",
+      "scene_key": "hang",
+      "variant": "both",
+      "repeat": "r2",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_stiff_r2",
+      "arm": "hang_stiff",
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r2",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_dot_r3",
+      "arm": "hang_dot",
+      "scene_key": "hang",
+      "variant": "dot",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_discrete_r3",
+      "arm": "hang_discrete",
+      "scene_key": "hang",
+      "variant": "discrete",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_both_r3",
+      "arm": "hang_both",
+      "scene_key": "hang",
+      "variant": "both",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_stiff_r3",
+      "arm": "hang_stiff",
+      "scene_key": "hang",
+      "variant": "stiff",
+      "repeat": "r3",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_old_r3",
+      "arm": "hang_old",
+      "scene_key": "hang",
+      "variant": "old",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_dot_r3",
+      "arm": "fixed_bunny_dot",
+      "scene_key": "fixed_bunny",
+      "variant": "dot",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_r3",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_both_r3",
+      "arm": "fixed_bunny_both",
+      "scene_key": "fixed_bunny",
+      "variant": "both",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": true,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_stiff_r3",
+      "arm": "fixed_bunny_stiff",
+      "scene_key": "fixed_bunny",
+      "variant": "stiff",
+      "repeat": "r3",
+      "binary": "base",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "base",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_old_r3",
+      "arm": "fixed_bunny_old",
+      "scene_key": "fixed_bunny",
+      "variant": "old",
+      "repeat": "r3",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 100,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8
+      }
+    }
+  ],
+  "report": "reports/active/ipc_report_components_20261005_performance_batch.json"
+}

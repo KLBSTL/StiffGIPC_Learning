@@ -1,0 +1,170 @@
+{
+  "case_id": "cloth_sphere7_l",
+  "objects": [
+    {
+      "name": "fixed_obstacle",
+      "body_type": "ABD",
+      "dimension": 3,
+      "stiff_mesh": "benchmark_meshes/tetMesh/abd_sphere.msh",
+      "stiff_mesh_sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209",
+      "robust_mesh": "../../Assets/tetMesh/abd_sphere.msh",
+      "robust_mesh_sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209",
+      "source_transform_f64x16": [
+        0.42,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.42,
+        0.0,
+        -0.45,
+        0.0,
+        0.0,
+        0.42,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "instance_transforms_f64x16": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "young_pa": 1000000.0,
+      "material_model": "AffineBody",
+      "fixed_mode": "all",
+      "self_collision": true,
+      "frozen_sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209"
+    },
+    {
+      "name": "cloth",
+      "body_type": "FEM",
+      "dimension": 2,
+      "stiff_mesh": "benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+      "stiff_mesh_sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231",
+      "robust_mesh": "../../Assets/triMesh/stiff4_grid_51_1p6m.obj",
+      "robust_mesh_sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231",
+      "source_transform_f64x16": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "instance_transforms_f64x16": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "young_pa": null,
+      "material_model": "BaraffWitkinShell",
+      "fixed_mode": "none",
+      "self_collision": true,
+      "frozen_sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231"
+    }
+  ],
+  "effective_scalar_fields": {
+    "dt": 0.01,
+    "density": 1000.0,
+    "poisson_ratio": 0.49,
+    "cloth_density": 200.0,
+    "cloth_thickness": 0.001,
+    "cloth_young": 1000000.0,
+    "bending_young": 100000000.0,
+    "strain_rate": 100.0,
+    "cloth_stretch_stiffness": 335570.4697986577,
+    "cloth_shear_stiffness": 1006711.409395973,
+    "cloth_bending_stiffness": 0.005483177611089179,
+    "friction_rate": 0.2,
+    "ground_friction_rate": 0.2,
+    "friction_compiled": true,
+    "newton_direction_threshold_coefficient": 0.001,
+    "pcg_requested_threshold": 0.001,
+    "preconditioner_type": 1,
+    "relative_dhat": 0.001,
+    "dhat_absolute": 0.0025029782260339384,
+    "dhat_squared": 6.264900000000001e-06,
+    "bbox_diagonal_squared": 6.264900000000001,
+    "active_implicit_planes": [
+      {
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "offset": -1.0
+      }
+    ],
+    "implicit_plane_rule": "dot(normal, x)-offset",
+    "cloth_stretch_model": "BaraffWitkinStrainLimiting",
+    "cloth_bending_model": "QuadraticBendingQ"
+  },
+  "initial_counts": {
+    "vertex_count": 3084,
+    "triangle_count": 5000,
+    "tet_count": 960,
+    "abd_body_count": 2,
+    "fixed_or_constrained_vertex_count": 0,
+    "initial_mass_sum": 305.8984196913568
+  },
+  "case_spec": {
+    "case_id": "cloth_sphere7_l",
+    "family": "cloth_sphere7",
+    "resolution_id": "L",
+    "resolution_spec": 51,
+    "is_frozen_original": false,
+    "implementation_state": "mesh_generation_pending",
+    "scene_id": 7,
+    "cloth_case": "sphere7",
+    "frames": 200,
+    "dt": 0.01,
+    "physical_duration_s": 2.0,
+    "requires_friction": true,
+    "source_baseline": "cloth-v1-20260911",
+    "frozen_initial_sha256": null,
+    "frozen_triangles_sha256": null
+  }
+}

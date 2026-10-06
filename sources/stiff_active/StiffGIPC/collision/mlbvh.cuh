@@ -1,0 +1,213 @@
+//
+// mlbvh.cuh
+// GIPC
+//
+// created by Kemeng Huang on 2022/12/01
+// Copyright (c) 2024 Kemeng Huang. All rights reserved.
+//
+
+#pragma once
+#ifndef _MLBVH_CUH_
+#define _MLBVH_CUH_
+#include <cstdint>
+#include <cuda_runtime.h>
+#include <cuda_tools/cuda_buffer_view.h>
+#include <collision/discrete_bvh.h>
+#include <collision/query_eligibility.h>
+#include <collision/ipc_contact_pool.h>
+#include "device_launch_parameters.h"
+
+struct AABB
+{
+  public:
+    double3             upper;
+    double3             lower;
+    __host__ __device__ AABB();
+    __host__ __device__ void combines(const double& x, const double& y, const double& z);
+    __host__ __device__ void    combines(const double& x,
+                                         const double& y,
+                                         const double& z,
+                                         const double& xx,
+                                         const double& yy,
+                                         const double& zz);
+    __host__ __device__ void    combines(const AABB& aabb);
+    __host__ __device__ double3 center();
+};
+
+struct Node
+{
+  public:
+    uint32_t parent_idx;
+    uint32_t left_idx;
+    uint32_t right_idx;
+    uint32_t element_idx;
+};
+
+// The inactive tree owns its complete build/query storage. Moving this bundle
+// never copies device data or borrows pointers from the active public buffers.
+// Keeping sorting scratch with its tree also preserves both pointer signatures.
+struct LBVHStorage
+{
+    cudatool::DeviceBuffer<AABB> bvs, temp_leaf_box;
+    cudatool::DeviceBuffer<Node> nodes;
+    cudatool::DeviceBuffer<uint64_t> morton_codes, sort_morton_codes;
+    cudatool::DeviceBuffer<uint32_t> indices, sort_indices, flags;
+    AABB scene;
+    void release();
+    size_t capacity_bytes() const;
+};
+
+// Query-local scratch belongs to the tree object, not either cached storage.
+// Each query regenerates every live summary after selecting its current tree.
+struct QueryEligibilityScratch
+{
+    cudatool::DeviceBuffer<gipc::QueryEligibilitySummary> summaries;
+    cudatool::DeviceBuffer<uint32_t> arrivals;
+    cudatool::DeviceBuffer<unsigned long long> diagnostics;
+    void release(){summaries.release();arrivals.release();diagnostics.release();}
+    size_t capacity_bytes() const
+    {return summaries.capacity()*sizeof(gipc::QueryEligibilitySummary)
+        +arrivals.capacity()*sizeof(uint32_t)+diagnostics.capacity()*sizeof(unsigned long long);}
+};
+
+class lbvh
+{
+  public:
+    uint32_t                         vert_number;
+    double3*                         _vertexes;  // borrowed from GIPC
+    cudatool::DeviceBuffer<AABB>     _bvs;
+    cudatool::DeviceBuffer<AABB>     _tempLeafBox;
+    cudatool::DeviceBuffer<Node>     _nodes;
+    cudatool::DeviceBuffer<uint64_t> _MChash;
+    cudatool::DeviceBuffer<uint32_t> _indices;
+    cudatool::DeviceBuffer<uint64_t> _sort_morton_codes;
+    cudatool::DeviceBuffer<uint32_t> _sort_indices;
+    cudatool::DeviceBuffer<uint32_t> _flags;
+    AABB                             scene;
+    int*                             _btype;   // borrowed from GIPC
+    int*                             _bodyId;  // borrowed from GIPC
+    // With the ordinary-refit flag enabled, these states belong to independent
+    // storage bundles. Public buffers always expose the most recently selected
+    // operation, including legacy external _nodes/_bvs readers. Do not retain a
+    // borrowed public pointer across a construction, selection or resize.
+    gipc::DiscreteBVHState            discrete_state;
+    gipc::DiscreteBVHState            swept_state;
+    LBVHStorage                      alternate_storage;
+    bool                             swept_storage_active = false;
+    QueryEligibilityScratch          query_eligibility_scratch;
+
+  public:
+    lbvh() {}
+    ~lbvh();
+    void MALLOC_DEVICE_MEM(const int& number);
+    void FREE_DEVICE_MEM();
+    void sort_morton_codes(int number);
+    // Host ownership swaps only: no allocation, copy, launch or synchronization.
+    bool select_storage(bool swept);
+    size_t swept_cache_capacity_bytes() const;
+    // Required after external, in-place topology/index remapping. Pointer/size
+    // changes are detected automatically by the enabled ordinary policy.
+    void invalidate_discrete_topology() { discrete_state = {}; swept_state = {}; }
+    //void Construct();
+};
+
+
+class lbvh_f : public lbvh
+{
+  public:
+    uint32_t  face_number;
+    uint3*    _faces;
+    uint32_t* _surfVerts;
+
+  public:
+    void   init(int*       _bodyID,
+                int*       _btype,
+                double3*   _mVerts,
+                uint3*     _mFaces,
+                uint32_t*  _mSurfVert,
+                const int& faceNum,
+                const int& vertNum);
+    double Construct();
+    double ConstructRebuild(); // unconditional legacy sequence; updates mode
+    void RefitDiscrete();     // requires a valid ordinary topology/signature
+    AABB*  getSceneSize();
+    double ConstructFullCCD(const double3* moveDir, const double& alpha);
+    void RefitFullCCD(const double3* moveDir, const double& alpha);
+    void   SelfCollitionDetect(double    dHat,
+                               int4*     collision_pairs,
+                               int4*     ccd_collision_pairs,
+                               uint32_t* pair_counts,
+                               int*      matrix_indices,
+                               uint32_t  pair_capacity);
+    void   SelfCollitionFullDetect(double         dHat,
+                                   const double3* moveDir,
+                                   const double&  alpha,
+                                   int4*          ccd_collision_pairs,
+                                   uint32_t*      pair_count,
+                                   uint32_t       pair_capacity,
+                                   gipc::IpcContactPoolIdentity* pool=nullptr);
+};
+
+class lbvh_e : public lbvh
+{
+  public:
+    double3* _rest_vertexes;
+    uint32_t edge_number;
+    uint2*   _edges;
+
+  public:
+    void   init(int*       _bodyID,
+                int*       _btype,
+                double3*   _mVerts,
+                double3*   _rest_vertexes,
+                uint2*     _mEdges,
+                const int& edgeNum,
+                const int& vertNum);
+    double Construct();
+    double ConstructRebuild();
+    void RefitDiscrete();
+    double ConstructFullCCD(const double3* moveDir, const double& alpha);
+    void RefitFullCCD(const double3* moveDir, const double& alpha);
+    void   SelfCollitionDetect(double    dHat,
+                               int4*     collision_pairs,
+                               int4*     ccd_collision_pairs,
+                               uint32_t* pair_counts,
+                               int*      matrix_indices,
+                               uint32_t  pair_capacity);
+    void   SelfCollitionFullDetect(double         dHat,
+                                   const double3* moveDir,
+                                   const double&  alpha,
+                                   int4*          ccd_collision_pairs,
+                                   uint32_t*      pair_count,
+                                   uint32_t       pair_capacity,
+                                   gipc::IpcContactPoolIdentity* pool=nullptr);
+};
+
+__device__ void _d_PP(const double3& v0, const double3& v1, double& d);
+
+__device__ void _d_PT(const double3& v0,
+                      const double3& v1,
+                      const double3& v2,
+                      const double3& v3,
+                      double&        d);
+
+__device__ void _d_PE(const double3& v0, const double3& v1, const double3& v2, double& d);
+
+__device__ void _d_EE(const double3& v0,
+                      const double3& v1,
+                      const double3& v2,
+                      const double3& v3,
+                      double&        d);
+
+__device__ void _d_EEParallel(const double3& v0,
+                              const double3& v1,
+                              const double3& v2,
+                              const double3& v3,
+                              double&        d);
+
+__device__ double _compute_epx(const double3& v0,
+                               const double3& v1,
+                               const double3& v2,
+                               const double3& v3);
+
+#endif

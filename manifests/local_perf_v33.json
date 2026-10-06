@@ -1,0 +1,21 @@
+{
+  "implementation_version": "v33-local-scene-preconditioner-profile",
+  "execution_manifest": "manifests/robust_port_v32.json",
+  "source_digest": "e0d75fed3b32d319a42faa3c3cc344df1ba7cee8db5fa62417a9ad7419ba91ad",
+  "runner_sha256": "6daf6dfd07dd62ad63bd96c75df5470d0c3291070cfb3d7d0a5e7f35de19cc77",
+  "exe_sha256": "66902584d092ac19b29d2f63be45cf5f8d4b35caeb5407fe4c6df0efa4f3084d",
+  "arm": "base_toi_graph",
+  "dt": 0.01,
+  "tol": 0.01,
+  "pcg_tol": 0.0001,
+  "robust_velocity_tol": 0.05,
+  "suite": "0",
+  "scene_preconditioners": {
+    "cloth_sphere7_l": "diag",
+    "cloth_hang_l": "mas"
+  },
+  "scope": "Local RTX 3070 Laptop CUDA 13.0; two measured small scenes only. Existing v32 numerical code, scene-specific runtime configuration. Bunny unsupported due failed/timeout diagnostics.",
+  "performance_evidence": "reports/LOCAL_PERF_V33_20261003.json",
+  "safety_evidence": "reports/LOCAL_PERF_V33_ACCEPTED_PATHS.json",
+  "quality_matched_speed_qualified": false
+}

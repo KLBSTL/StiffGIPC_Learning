@@ -1,0 +1,19 @@
+{
+  "report":"reports/active/ipc_light_cost_20261005_batch.json",
+  "stop_on_failure":false,
+  "purpose":"Refresh Graph/combined costs without operator probes or added CUDA tracing events/waits; one node timeline each, separate 3-frame observation neutrality controls. No solver or candidate numerical changes.",
+  "runs":[
+    {"name":"ipc_light_cost_20261005_hang_graph_node","config":{"scene":"cloth_hang_l","preset":"graph","steps":3,"diagnostics":["cost"],"cost_frames":"1","cost_events":false,"profile":"node","trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_combined_node","config":{"scene":"cloth_hang_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1","cost_events":false,"profile":"node","trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_fixed_graph_node","config":{"scene":"cloth_fixed_bunny_l","preset":"graph","steps":3,"diagnostics":["cost"],"cost_frames":"1","cost_events":false,"profile":"node","trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_fixed_combined_node","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1","cost_events":false,"profile":"node","trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_combined_off","config":{"scene":"cloth_hang_l","preset":"combined","steps":3,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_combined_cpu","config":{"scene":"cloth_hang_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1-3","cost_events":false,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_combined_events","config":{"scene":"cloth_hang_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1-3","cost_events":true,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_fixed_combined_events","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1-3","cost_events":true,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_fixed_combined_cpu","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","steps":3,"diagnostics":["cost"],"cost_frames":"1-3","cost_events":false,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_fixed_combined_off","config":{"scene":"cloth_fixed_bunny_l","preset":"combined","steps":3,"trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_graph_late_node","config":{"scene":"cloth_hang_l","preset":"graph","steps":43,"diagnostics":["cost"],"cost_frames":"41","cost_events":false,"profile":"node","trace_velocity":false}},
+    {"name":"ipc_light_cost_20261005_hang_combined_late_node","config":{"scene":"cloth_hang_l","preset":"combined","steps":43,"diagnostics":["cost"],"cost_frames":"41","cost_events":false,"profile":"node","trace_velocity":false}}
+  ]
+}

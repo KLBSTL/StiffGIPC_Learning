@@ -1,0 +1,2567 @@
+{
+  "restrict_protected_systems": {
+    "status": "accepted",
+    "status_scope": "Fixed-system diagnostic integrity and numerical comparison only",
+    "reason": "Three representative full A/b/M systems; restored primary solution and unchanged operator inputs; CPU reference and interleaved host/Graph PCG comparison passed.",
+    "decision_evidence": "reports/active/RESTRICT_PROTECTED_PAIRS.json"
+  },
+  "restrict_difficult_systems": {
+    "status": "accepted",
+    "status_scope": "Fixed-system diagnostic integrity only; default PCG accuracy remains limited",
+    "reason": "First difficult RHS verified on same A/b/M; circa 2.1-2.2x PCG timing ratio; original solve repeat variation remains. No trajectory certification.",
+    "decision_evidence": "reports/active/RESTRICT_DIFFICULT_PAIRS.json"
+  },
+  "restrict_warp_window_r1": {
+    "status": "rejected",
+    "status_scope": "Promotion to full-scene quality/performance acceptance",
+    "reason": "Execution improves but does not pass frozen Stiff physical envelope or beat equally optimized IPC. Restriction candidate remains opt-in.",
+    "decision_evidence": "reports/active/RESTRICT_WINDOW_QUALITY.json"
+  },
+  "restrict_warp_window_r2": {
+    "status": "rejected",
+    "status_scope": "Promotion to full-scene quality/performance acceptance",
+    "reason": "Execution improves but does not pass frozen Stiff physical envelope or beat equally optimized IPC. Restriction candidate remains opt-in.",
+    "decision_evidence": "reports/active/RESTRICT_WINDOW_QUALITY.json"
+  },
+  "active_clean_inherit_trial": {
+    "status": "rejected",
+    "reason": "Single initial-guess hypothesis: 35-frame time 46.4565 s versus 41.8013 s, directions 198 versus 169; FEM min J -2.619 and 121 nonpositive elements, outside frozen Stiff envelope.",
+    "decision_evidence": "reports/active/TOI_INITIAL_GUESS_GATE.json"
+  },
+  "active_clean_toi_window": {
+    "status": "pending",
+    "reason": "No algorithm change. Early fixed-system checks pass, but frame 24-26 migration exceeds the previously frozen repeat range. Physical quality also fails Stiff envelope.",
+    "decision_evidence": "reports/active/MIGRATION_TOI_WINDOW.json"
+  },
+  "active_clean_nsight_graph": {
+    "status": "failed",
+    "reason": "Simulator completed, but Nsight emitted no report: unregistered NVTX strings were not enabled. Superseded by active_serial_nsight_graph_validated. Evidence retained."
+  },
+  "active_clean_nsight_node": {
+    "status": "failed",
+    "reason": "Simulator completed, but Nsight emitted no report: unregistered NVTX strings were not enabled. Superseded by active_serial_nsight_node_validated. Evidence retained."
+  },
+  "active_serial_nsight_node_validated": {
+    "status": "accepted",
+    "status_scope": "Diagnostic capture only; not performance certification",
+    "reason": "Actual .nsys-rep and SQLite/kernel summaries generated; frame 25 first linear system only."
+  },
+  "active_serial_nsight_graph_validated": {
+    "status": "accepted",
+    "status_scope": "Diagnostic capture only; not performance certification",
+    "reason": "Actual graph-granularity .nsys-rep generated separately from node-granularity capture."
+  },
+  "factor_protected_systems": {
+    "status": "accepted",
+    "status_scope": "Fixed-operator numerical evidence only",
+    "reason": "Three saved systems and 36 exported pair solutions verified. No trajectory or performance certification.",
+    "decision_evidence": "reports/active/FACTOR_CPU_WINDOWS.json"
+  },
+  "factor_difficult_systems": {
+    "status": "accepted",
+    "status_scope": "Fixed-operator numerical evidence only; default PCG sensitivity recorded",
+    "reason": "Two systems and 24 pair solutions verified. f25_n8 Graph residual rises while forward error falls; trajectory quality requires separate checks.",
+    "decision_evidence": "reports/active/FACTOR_CPU_DIFFICULT.json"
+  },
+  "factor_window_hang_factor_inverse_r1": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Global candidate blocked by cloth/mixed trajectory gates; hang scalar equivalence alone cannot promote it.",
+    "decision_evidence": "reports/active/FACTOR_ACTION_RESULTS.md"
+  },
+  "factor_window_hang_factor_inverse_r2": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Global candidate blocked by cloth/mixed trajectory gates; hang scalar equivalence alone cannot promote it.",
+    "decision_evidence": "reports/active/FACTOR_ACTION_RESULTS.md"
+  },
+  "factor_window_hang_factor_inverse_r3": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Global candidate blocked by cloth/mixed trajectory gates; hang scalar equivalence alone cannot promote it.",
+    "decision_evidence": "reports/active/FACTOR_ACTION_RESULTS.md"
+  },
+  "factor_window_fixed_bunny_factor_inverse_r1": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Five cloth-stretch frames exceed triangular repeat envelope.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "factor_window_fixed_bunny_factor_inverse_r2": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Six cloth-stretch frames exceed triangular repeat envelope.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "factor_window_fixed_bunny_factor_inverse_r3": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Four cloth-stretch frames exceed triangular repeat envelope.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "factor_window_mixed_factor_inverse_r1": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "FEM J and negative volume exceed previous TOI repeat envelope at frame35.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "factor_window_mixed_factor_inverse_r2": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "Global candidate quality fails across repeats and does not pass the Stiff envelope.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "factor_window_mixed_factor_inverse_r3": {
+    "status": "rejected",
+    "status_scope": "Candidate promotion only; run completed",
+    "reason": "FEM J and negative volume exceed old TOI range; frame34 has a new nonpositive element.",
+    "decision_evidence": "reports/active/FACTOR_WINDOW_QUALITY_TIMING.json"
+  },
+  "defaults_combined_mixed_r1": {
+    "status": "rejected",
+    "status_scope": "Quality acceptance only; defaults enabled by user",
+    "reason": "FEM compression exceeds Stiff envelope; code/configuration gates passed.",
+    "decision_evidence": "reports/active/DEFAULTS_COMBINED_GEOMETRY_20261005.json"
+  },
+  "defaults_combined_mixed_r2": {
+    "status": "rejected",
+    "status_scope": "Quality acceptance only; defaults enabled by user",
+    "reason": "FEM compression exceeds Stiff envelope; code/configuration gates passed.",
+    "decision_evidence": "reports/active/DEFAULTS_COMBINED_GEOMETRY_20261005.json"
+  },
+  "defaults_combined_mixed_r3": {
+    "status": "rejected",
+    "status_scope": "Quality acceptance only; defaults enabled by user",
+    "reason": "FEM compression exceeds Stiff envelope; code/configuration gates passed.",
+    "decision_evidence": "reports/active/DEFAULTS_COMBINED_GEOMETRY_20261005.json"
+  },
+  "defaults_outer_probe_20261005": {
+    "status": "accepted",
+    "status_scope": "Protected diagnostic evidence only",
+    "reason": "32 models, complete energy and protected physics-state checks passed; no physical quality certification.",
+    "decision_evidence": "reports/active/DEFAULTS_OUTER_DIAGNOSIS_20261005.json"
+  },
+  "defaults_native_smoke_20261005": {
+    "status": "accepted",
+    "status_scope": "Native default configuration and startup only",
+    "reason": "Both environment overrides omitted; actual factor_inverse/world_block confirmed."
+  },
+  "defaults_final_native_mixed_20261005": {
+    "status": "accepted",
+    "status_scope": "Native default configuration and startup only",
+    "reason": "Both environment overrides omitted; actual factor_inverse/world_block confirmed."
+  },
+  "defaults_final_native_hanging_20261005": {
+    "status": "accepted",
+    "status_scope": "Native default configuration and startup only",
+    "reason": "No ABD path; both native defaults confirmed."
+  },
+  "defaults_final_native_fixed_20261005": {
+    "status": "accepted",
+    "status_scope": "Native default configuration and startup only",
+    "reason": "Fixed ABD path; both native defaults confirmed."
+  },
+  "defaults_final_off_smoke_20261005": {
+    "status": "accepted",
+    "status_scope": "Explicit disable compatibility and startup only",
+    "reason": "Actual triangular/generalized confirmed; first two frames match old reference within 1.12e-15 m."
+  },
+  "defaults_final_native_window_20261005": {
+    "status": "rejected",
+    "status_scope": "Quality acceptance only; defaults enabled by user",
+    "reason": "Serial restriction default: 35 frames completed, one nonpositive FEM tet, min J -.04912; no quality or performance certification.",
+    "decision_evidence": "reports/active/DEFAULTS_NATIVE_WINDOW_GEOMETRY_20261005.json"
+  },
+  "outer_exit_native_20261005": {
+    "status": "accepted",
+    "status_scope": "Selected outer diagnostic reference only",
+    "reason": "Production stopping rule retained; complete energy/state checks passed."
+  },
+  "outer_exit_selected_r1_20261005": {
+    "status": "rejected",
+    "status_scope": "Selected exit intervention acceptance only; run completed",
+    "reason": "Target converged in six iterations, but total PCG rose and frame35 FEM J became negative. Pre-target trajectory differs, so causal attribution is limited.",
+    "decision_evidence": "reports/active/OUTER_EXIT_GEOMETRY_20261005.json"
+  },
+  "outer_exit_selected_r2_20261005": {
+    "status": "rejected",
+    "status_scope": "Selected exit intervention acceptance only; run completed",
+    "reason": "Target converged in three iterations; outer and quality improvement not stable. Pre-target trajectory differs; no promotion.",
+    "decision_evidence": "reports/active/OUTER_EXIT_GEOMETRY_20261005.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_refit_r2": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_components_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_batch_r2": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_components_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_graph_r3": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_components_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gate001_r1": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gated_r2": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gate001_r2": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_base_final_r1": {
+    "status": "pending",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_final_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_base_final_r2": {
+    "status": "pending",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_final_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_combined_final_r3": {
+    "status": "rejected",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_final_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_base_final_r3": {
+    "status": "pending",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_final_material_checks.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_reference_final_r3": {
+    "status": "pending",
+    "status_scope": "Frozen whole-window material protocol only",
+    "reason": "Material bound exceeded. Baseline failures make protocol uncertifiable; no post-hoc widening.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_final_material_checks.json"
+  },
+  "ipc_revision_20261005_hang_gated_r1": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_hang_gate001_r1": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gated_r1": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_hang_gated_r2": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_hang_gate001_r2": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_hang_gated_r3": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_hang_gate001_r3": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gated_r3": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gate001_r3": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gated_window_28-30": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_compensated_window_28-30": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_gated_window_57-59": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_revision_20261005_fixed_bunny_compensated_window_57-59": {
+    "status": "rejected",
+    "status_scope": "Promotion to fastest/default combination",
+    "reason": "No repeatable quality-cost advantage demonstrated within the predeclared finite experiment.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "decision_evidence": "reports/active/ipc_revision_20261005_residual_evidence.json"
+  },
+  "ipc_observer_causal_20261005_observed_off_r1": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_off_r2": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": false,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_off_r3": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_off_r4": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_off_r5": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_on_r1": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_on_r2": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_on_r3": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_on_r4": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_observed_on_r5": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": false,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_raw_off_r1": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_raw_off_r2": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": false,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_raw_off_r3": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_raw_off_r4": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_causal_20261005_raw_off_r5": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "old_protocol_material_passed": false,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_fixed_probe_20261005_f2": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "fixed_reference_restoration_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_observer_fixed_probe_20261005_f25": {
+    "status": "pending",
+    "status_scope": "Diagnostic evidence verified; promotion not certified",
+    "reason": "Completed finite observation/operator diagnosis. Old quality bounds preserved.",
+    "performance_certified": false,
+    "quality_certified": false,
+    "fixed_reference_restoration_passed": true,
+    "decision_evidence": "reports/active/IPC_OBSERVER_CAUSAL_RESULTS_20261005.md"
+  },
+  "ipc_mas_stage_20261005_disabled_f2": {
+    "status": "accepted",
+    "status_scope": "Fixed-system diagnostic completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Finite stage attribution and restoration verified. Does not accept trajectory quality or default promotion.",
+    "decision_evidence": "reports/active/IPC_MAS_STAGE_RESULTS_20261005.md"
+  },
+  "ipc_mas_stage_20261005_f2": {
+    "status": "accepted",
+    "status_scope": "Fixed-system diagnostic completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Finite stage attribution and restoration verified. Does not accept trajectory quality or default promotion.",
+    "decision_evidence": "reports/active/IPC_MAS_STAGE_RESULTS_20261005.md"
+  },
+  "ipc_mas_stage_20261005_fixtures": {
+    "status": "accepted",
+    "status_scope": "Fixture correctness only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Finite stage attribution and restoration verified. Does not accept trajectory quality or default promotion.",
+    "decision_evidence": "reports/active/IPC_MAS_STAGE_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_fixed_f2": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/fixture completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed numerical/regression diagnosis; cost gate fails and material quality unverified.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_hang_f2": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/fixture completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed numerical/regression diagnosis; cost gate fails and material quality unverified.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_fixed_f25": {
+    "status": "failed",
+    "status_scope": "Resource budget failure; selected fixed system unavailable",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Memory reserve preserved; no retry. Candidate not promoted.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_mixed_f2": {
+    "status": "failed",
+    "status_scope": "Resource budget failure; selected fixed system unavailable",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Memory reserve preserved; no retry. Candidate not promoted.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_stage_f2": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/fixture completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed numerical/regression diagnosis; cost gate fails and material quality unverified.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_disabled_f2": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/fixture completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed numerical/regression diagnosis; cost gate fails and material quality unverified.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_fixtures": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/fixture completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed numerical/regression diagnosis; cost gate fails and material quality unverified.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_legacy_ordered_20261005_candidate": {
+    "status": "rejected",
+    "status_scope": "Execution optimization promotion only; not numerical failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Completed systems pass finite numerical checks but no 15% complete-linear cost benefit evidence; two systems resource-incomplete. Default remains atomic.",
+    "decision_evidence": "reports/active/IPC_LEGACY_ORDERED_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_graph_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_combined_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixed_graph_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixed_combined_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_combined_off": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_combined_cpu": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_combined_events": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixed_combined_events": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixed_combined_cpu": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixed_combined_off": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_graph_late_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_hang_combined_late_node": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_fixtures": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_observation_delivery": {
+    "status": "accepted",
+    "status_scope": "Diagnostic/tooling completion only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "Finite observation, identity and regression checks passed; no long-trajectory or speed certification.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_light_cost_20261005_ee_hypothesis": {
+    "status": "pending",
+    "status_scope": "Unimplemented hypothesis; no promotion evidence",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "reason": "No frozen-tree net benefit or whole-scene 5% evidence; not implemented.",
+    "decision_evidence": "reports/active/IPC_LIGHT_COST_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_dot_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_dot_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mixed_old_smoke": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mixed_both_smoke": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_host_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_host_smoke": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_dot_guard": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_dot_guard": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_bvh_guard": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_bvh_guard": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Finite local diagnostic completed; long performance/quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_bvh_contact_guard": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_stiff_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_dot_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_stiff_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_dot_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_r1": {
+    "status": "failed",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Existing GPU memory reserve stopped requested window; failure retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mixed_discrete_bvh_guard": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_dot_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_stiff_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_dot_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_stiff_r2": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_dot_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_stiff_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_dot_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_stiff_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_r3": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier same-scene arm resource failure; later repetition not executed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_observed_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_old_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_dot_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_discrete_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_hang_both_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_observed_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_old_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_dot_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_discrete_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixed_bunny_both_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mixed_old_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mixed_both_quality": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Earlier resource failure in scene; no retry",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_fixtures": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Eight existing regression fixtures passed; no whole-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_mas_fused_dot_candidate": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Implemented and local collect/zero-RHS checked; stable net benefit, full quality and mixed coverage pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_discrete_bvh_candidate": {
+    "status": "pending",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Implemented and same-state query checked on saved prefix; no production refit hits observed; full gates pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_report_components_20261005_component_delivery": {
+    "status": "accepted",
+    "status_scope": "Component/local diagnostic scope only; complete gates pending",
+    "reason": "Code/docs and local evidence delivered; full testing blocked by unchanged resource gate",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_REPORT_COMPONENTS_RESULTS_20261005.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_study_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_study_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_legacy_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_spmv_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_compensated_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_both_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_legacy_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_spmv_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_compensated_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_both_host": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_legacy_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_spmv_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_compensated_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_hang_both_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_legacy_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_spmv_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_compensated_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_both_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_activation_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixed_bunny_terminal_conditional_graph": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Finite bounded local diagnostic completed; no long-scene certification",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_fixtures": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Eight existing GPU regression fixtures passed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_cpu_checks": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Configuration/native/CPU operator and observation completeness checks passed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_spmv_candidate": {
+    "status": "pending",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Implemented and local operator/replay checked; full-PCG net benefit, growth and complete quality pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_compensated_entry": {
+    "status": "pending",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Named report formula and controller validated, real exit observed; independent quality and history benefit unproved",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_spmv_compensated_20261005_delivery": {
+    "status": "accepted",
+    "status_scope": "Implementation and bounded local diagnostics only",
+    "reason": "Two components, debugging docs and bounded evidence delivered; no default promotion",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_SPMV_COMPENSATED_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_guards_hang_bvh_query": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_guards_fixed_bunny_bvh_query": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_guards_mixed_fused_compat": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_guards_fixed_bunny_fused_compensated": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_stiff_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_graph_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_combined_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_mas_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_spmv_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_bvh_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_fused_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_stiff_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_graph_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_combined_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_mas_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_spmv_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_bvh_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_fused_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_stiff_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_fused_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_bvh_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_spmv_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_mas_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_combined_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_graph_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_stiff_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_fused_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_bvh_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_spmv_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_mas_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_combined_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_graph_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_combined_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_mas_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_spmv_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_bvh_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_fused_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_stiff_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_hang_graph_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_combined_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_mas_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_spmv_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_bvh_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_fused_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_stiff_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_screen_fixed_bunny_graph_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_stiff_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_graph_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_combined_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_bvh_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_stiff_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_graph_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_combined_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_bvh_1": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_stiff_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_bvh_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_combined_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_graph_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_stiff_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_bvh_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_combined_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_graph_2": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_combined_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_bvh_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_stiff_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_hang_graph_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_combined_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_bvh_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_stiff_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_full_fixed_bunny_graph_3": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Complete local diagnostic; whole-scene certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_fixtures": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Eight GPU regression checks passed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_bvh_revision": {
+    "status": "pending",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Split cache verified; 100f +8.9% hang/+0.5% fixed vs old combination; retained opt-in, full quality and controlled load pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_mas_screen": {
+    "status": "rejected",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Local promotion screen: only 1.01x geometric mean vs old combination; no expansion or tuning",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_spmv_screen": {
+    "status": "rejected",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Local promotion screen: both cloth scenes slower, geometric mean .978x; default stays disabled",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_fused_screen": {
+    "status": "rejected",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Local promotion screen: all three components 1.030x, weaker than BVH alone, below 1.05x full-test threshold",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_component_tuning_20261006_delivery": {
+    "status": "accepted",
+    "status_scope": "Bounded local component diagnostic only",
+    "reason": "Revision and bounded evidence delivered; no default promotion",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_COMPONENT_TUNING_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_fixed39_off": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_fixed39_cpu": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_fixed39_graph_node": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_fixed39_host_node": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_fixed57_graph_node": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_hang41_graph_node": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Complete cost diagnostic; finite and no PCG hard failure",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_initialization_candidate": {
+    "status": "rejected",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Three diagnostic initialization inactivity envelopes below local 5% gate, including capture/scheduling; not a global exclusion",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_subtree_query_candidate": {
+    "status": "pending",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Query cost supports further bounded examination; prune ratio, same-state equivalence and net saving unmeasured",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_next_cost_20261006_delivery": {
+    "status": "accepted",
+    "status_scope": "Finite local cost diagnostic; no certification",
+    "reason": "Cost attribution delivered; solver unchanged and no new speed claim",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_NEXT_COST_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_guards_hang_on_query": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_guards_fixed_bunny_on_query": {
+    "status": "failed",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "['run_memory_budget']",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_off_1": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_on_1": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_on_2": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_off_2": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_off_3": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_hang_on_3": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_profile_hang_on_node": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_profile_hang_off_node": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Complete diagnostic; physics/performance certification pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_guards_mixed_on_query": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Earlier hard/resource failure; no budget extension",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_off_1": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_on_1": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_on_2": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_off_2": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_off_3": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_screen_fixed_bunny_on_3": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_profile_fixed_bunny_on_node": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_profile_fixed_bunny_off_node": {
+    "status": "pending",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixed/mixed guard incomplete; resource-limited subset only",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_fixtures": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Independent summary and eight prior GPU checks passed",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_candidate": {
+    "status": "rejected",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Hang 43f paired median 0.962011 fails performance screen; fixed/mixed guards incomplete, stop expansion",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_first_build": {
+    "status": "failed",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "NVCC/MSVC fixture constexpr capture compile error retained",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_final_build": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Fixture type-trait repair; 37 units, 11 changed objects, linked input identities verified",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_eligibility_20261006_delivery": {
+    "status": "accepted",
+    "status_scope": "Finite local eligibility component diagnostic",
+    "reason": "Implementation and finite partial tests analyzed; general quality/performance acceptance pending",
+    "performance_certified": false,
+    "quality_certified": false,
+    "default_promoted": false,
+    "decision_evidence": "reports/active/IPC_ELIGIBILITY_RESULTS_20261006.md"
+  },
+  "ipc_bounded_20261006": {
+    "status": "rejected",
+    "status_scope": "Default promotion and full-performance gate",
+    "default_promoted": false,
+    "performance_certified": false,
+    "quality_certified": false,
+    "reason": "Short-window net >=5% gate evaluated separately for both contact scenes; no relaxed stops.",
+    "decision_evidence": "reports/active/ipc_bounded_20261006_screen_analysis.json",
+    "full_performance_gate_passed": false
+  },
+  "ipc_contact_pool_20261006": {
+    "status": "pending",
+    "status_scope": "Finite component diagnostic; performance and physical acceptance remain pending",
+    "default_promoted": false,
+    "performance_certified": false,
+    "quality_certified": false,
+    "full_run_gate_passed": false,
+    "stage_gates": {
+      "guards": false,
+      "screen": false,
+      "cost": null
+    },
+    "reason": "Missing speed evidence or physical compatibility support cannot promote a default; resource failures are retained.",
+    "decision_evidence": "reports/active/CONTACT_POOL_RESULTS_20261006.md"
+  }
+}

@@ -1,0 +1,206 @@
+#include <linear_system/solver/pcg_solver.h>
+#include <gipc/utils/timer.h>
+#include <gipc/statistics.h>
+#include <cuda_tools/cuda_tools.h>
+#include <cuda_tools/cuda_cub_wrappers.h>
+#include <cub/block/block_reduce.cuh>
+#include <cstdlib>
+
+
+
+__global__ void PCG_vdv_Reduction(double* squeue, const double* a, const double* b, int numbers)
+{
+    int idof = blockIdx.x * blockDim.x;
+    int idx  = threadIdx.x + idof;
+    int valid_items = min(numbers - idof, static_cast<int>(blockDim.x));
+    double temp = idx < numbers ? a[idx] * b[idx] : 0.0;
+
+    using BlockReduce = cub::BlockReduce<double, 256>;
+    __shared__ typename BlockReduce::TempStorage storage;
+    temp = BlockReduce(storage).Sum(temp, valid_items);
+    if(threadIdx.x == 0)
+        squeue[blockIdx.x] = temp;
+}
+
+
+
+__global__ void update_vector_dx_r(
+    double* dx, double* r, const double* c, const double* q, double alpha, int numbers)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= numbers)
+        return;
+    dx[idx] = dx[idx] + alpha * c[idx];
+    r[idx]  = r[idx] - alpha * q[idx];
+}
+
+__global__ void update_vector_c(
+    double* c, const double* s, double beta, int numbers)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= numbers)
+        return;
+    c[idx] = s[idx] + beta * c[idx];
+}
+
+__global__ void audit_residual(double* r,const double* b,const double* ax,int n)
+{
+    int i=blockIdx.x*blockDim.x+threadIdx.x;
+    if(i<n)r[i]=b[i]-ax[i];
+}
+
+
+double My_PCG_General_v_v_Reduction_Algorithm(double*       partials,
+                                              const double* A,
+                                              const double* B,
+                                              double*       result_output,
+                                              int           vertexNum)
+{
+
+    int numbers = vertexNum;
+    if(numbers < 1)
+        return 0;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    PCG_vdv_Reduction<<<blockNum, threadNum>>>(partials, A, B, numbers);
+    cudatool::DeviceReduce().Sum(partials, result_output, blockNum);
+
+    double result = 0.0;
+    CUDA_SAFE_CALL(
+        cudaMemcpy(&result, result_output, sizeof(result), cudaMemcpyDeviceToHost));
+    return result;
+}
+
+namespace gipc
+{
+PCGSolver::PCGSolver(const PCGSolverConfig& cfg)
+    : m_config(cfg)
+{
+}
+SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b)
+{
+    Timer timer{"pcg"};
+
+    x.buffer_view().fill(0);
+    z.resize(b.size());
+    p.resize(b.size());
+    r.resize(b.size());
+    //temp.resize(b.size());
+    Ap.resize(b.size());
+    reduction_result.resize_discard(1);
+    auto iter = pcg(x, b, m_config.max_iter_ratio * b.size());
+    auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
+    info["iteration_limit"]=iter>=static_cast<SizeT>(m_config.max_iter_ratio*b.size());
+    if(const char* audit=std::getenv("GIPC_AUDIT_PCG"); audit && audit[0]=='1')
+    {
+        spmv(cudatool::CDenseVectorView<Float>{x.buffer_view().data(),static_cast<int>(x.size())},Ap.view());
+        audit_residual<<<(b.size()+255)/256,256>>>(r.buffer_view().data(),b.buffer_view().data(),Ap.buffer_view().data(),b.size());
+        double rr=My_PCG_General_v_v_Reduction_Algorithm(p.buffer_view().data(),r.buffer_view().data(),r.buffer_view().data(),reduction_result.data(),b.size());
+        double bb=My_PCG_General_v_v_Reduction_Algorithm(p.buffer_view().data(),b.buffer_view().data(),b.buffer_view().data(),reduction_result.data(),b.size());
+        info["true_relative_residual"]=bb>0?std::sqrt(rr/bb):std::sqrt(rr);
+    }
+
+    return iter;
+}
+
+
+SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b, SizeT max_iter)
+{
+    SizeT k = 0;
+
+    r.buffer_view().copy_from(b.buffer_view());
+
+    Float alpha, beta, rz, rz0;
+
+    {
+        //Timer timer{"preconditioner"};
+        apply_preconditioner(z, r);
+    }
+
+    {
+        //Timer timer{"dot"};
+        rz = My_PCG_General_v_v_Reduction_Algorithm(p.buffer_view().data(),
+                                                    r.buffer_view().data(),
+                                                    z.buffer_view().data(),
+                                                    reduction_result.data(),
+                                                    z.size());
+    }
+
+    p.copy_from(z);
+    rz0 = rz;
+
+    for(k = 1; k < max_iter; ++k)
+    {
+        {
+            //Timer timer{"spmv"};
+            // Ap = A * p
+            spmv(p.cview(), Ap.view());
+        }
+
+        {
+            //Timer timer{"dot"};
+
+            Float dot_res =
+                My_PCG_General_v_v_Reduction_Algorithm(z.buffer_view().data(),
+                                                       p.buffer_view().data(),
+                                                       Ap.buffer_view().data(),
+                                                       reduction_result.data(),
+                                                       z.size());
+
+            alpha = rz / dot_res;
+        }
+
+        {
+            //Timer timer{"axpby"};
+            LaunchCudaKernal_default(z.size(),
+                                     256,
+                                     0,
+                                     update_vector_dx_r,
+                                     x.buffer_view().data(),
+                                     r.buffer_view().data(),
+                                     (const double*)p.buffer_view().data(),
+                                     (const double*)Ap.buffer_view().data(),
+                                     alpha,
+                                     (int)z.size());
+        }
+
+        if(std::abs(rz) <= m_config.global_tol_rate * rz0)
+            break;
+
+        {
+            //Timer timer{"preconditioner"};
+            apply_preconditioner(z, r);
+        }
+
+        Float rz_new = 0;
+        {
+            //Timer timer{"dot"};
+            rz_new = My_PCG_General_v_v_Reduction_Algorithm(Ap.buffer_view().data(),
+                                                            r.buffer_view().data(),
+                                                            z.buffer_view().data(),
+                                                            reduction_result.data(),
+                                                            z.size());
+        }
+
+        beta = rz_new / rz;
+
+        {
+            //Timer timer{"axpby"};
+            LaunchCudaKernal_default(z.size(),
+                                     256,
+                                     0,
+                                     update_vector_c,
+                                     p.buffer_view().data(),
+                                     (const double*)z.buffer_view().data(),
+                                     beta,
+                                     (int)z.size());
+        }
+
+        rz = rz_new;
+    }
+
+    return k;
+}
+
+}  // namespace gipc

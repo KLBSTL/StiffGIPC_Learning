@@ -1,0 +1,53 @@
+{
+  "origin": "E:\\university_class\\ComputerGraphics\\GIPC\\cross_method_benchmark_20260927\\build-ipc\\_deps\\tight_inclusion-src",
+  "files": [
+    {
+      "path": "tight_inclusion\\avx.hpp",
+      "sha256": "fa7fdd669035a9da5bd697a35edce601995b1c698e21ea2aedd8aac9997a4905"
+    },
+    {
+      "path": "tight_inclusion\\eigen_ext.hpp",
+      "sha256": "a492a37a6be8e23e60d9055f87ea6b86734d1bde3f2b5438bbb6c7d2f8173d71"
+    },
+    {
+      "path": "tight_inclusion\\inclusion_ccd.hpp",
+      "sha256": "36813fd65940cbf7d4952b068db111dc30f7d9d75a401fc4f8e91f4ce1e20a81"
+    },
+    {
+      "path": "tight_inclusion\\interval.hpp",
+      "sha256": "486c3df430903533f4fb7039064f174735964902a67f06a5c22961a48a6a810f"
+    },
+    {
+      "path": "tight_inclusion\\interval_root_finder.hpp",
+      "sha256": "44d984ef8b2a4b6c06d95cdb6d9b2e35894df3c780c8a9914a11679fa1ecf273"
+    },
+    {
+      "path": "tight_inclusion\\Rational.hpp",
+      "sha256": "82bfb5782dae905db683f48844541dc13e0cde6df8fad455ee32054bceabdd75"
+    },
+    {
+      "path": "tight_inclusion\\Timer.hpp",
+      "sha256": "c43f1eb3eee5673338679204c01915373265b8e75f0d83a871eb519538fda2b9"
+    },
+    {
+      "path": "tight_inclusion\\Types.hpp",
+      "sha256": "a3c42a71034423d52ea67d5638f78c54f590f7990955bc62c1858aba8eb07e7f"
+    },
+    {
+      "path": "tight_inclusion\\avx.cpp",
+      "sha256": "2a8828ba9e646178f3d43cb21750c8d6f642025602c73b9721ffc84dc3739405"
+    },
+    {
+      "path": "tight_inclusion\\inclusion_ccd.cpp",
+      "sha256": "cdc91b770a7c1827fd1f2d36d1f17d86148129bdf24418ac0f0d5e5e9b491231"
+    },
+    {
+      "path": "tight_inclusion\\interval_root_finder.cpp",
+      "sha256": "8fc248e98b1253d6695e0b12646f943f2857db40b7b0f173f4823b480665613e"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "48b1c0ac22066e8bde442683fcee3a9654ff70a508f327132069461f3ea520df"
+    }
+  ]
+}

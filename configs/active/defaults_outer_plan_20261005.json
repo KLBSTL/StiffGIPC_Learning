@@ -1,0 +1,11 @@
+{
+  "report":"reports/active/DEFAULTS_COMBINED_BATCH_20261005.json",
+  "stop_on_failure":true,
+  "runs":[
+    {"name":"defaults_combined_stiff_r1","binary":"base","config":{"steps":35,"timeout_seconds":120}},
+    {"name":"defaults_combined_mixed_r1","config":{"preset":"toi","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}},
+    {"name":"defaults_combined_mixed_r2","config":{"preset":"toi","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}},
+    {"name":"defaults_combined_mixed_r3","config":{"preset":"toi","steps":35,"timeout_seconds":120,"mas_restrict":"warp"}},
+    {"name":"defaults_outer_probe_20261005","config":{"preset":"toi","steps":35,"timeout_seconds":120,"mas_restrict":"warp","diagnostics":["outer_probe"],"cost_frames":"1-3,24-26,33-35"}}
+  ]
+}

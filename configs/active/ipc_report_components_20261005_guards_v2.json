@@ -1,0 +1,136 @@
+{
+  "stage": "guards",
+  "runs": [
+    {
+      "name": "ipc_report_components_20261005_hang_old_dot_guard",
+      "arm": "hang_old",
+      "scene_key": "hang",
+      "variant": "old",
+      "repeat": "dot_guard",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 2,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "diagnostics": [
+          "fixed"
+        ],
+        "fixed_frames": "2",
+        "fixed_directions": "1",
+        "fixed_mas_dot_study": true
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_old_dot_guard",
+      "arm": "fixed_bunny_old",
+      "scene_key": "fixed_bunny",
+      "variant": "old",
+      "repeat": "dot_guard",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 2,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "diagnostics": [
+          "fixed"
+        ],
+        "fixed_frames": "2",
+        "fixed_directions": "1",
+        "fixed_mas_dot_study": true
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_hang_discrete_bvh_guard",
+      "arm": "hang_discrete",
+      "scene_key": "hang",
+      "variant": "discrete",
+      "repeat": "bvh_guard",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": true
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_bvh_guard",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "bvh_guard",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": true
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_mixed_discrete_bvh_guard",
+      "arm": "mixed_discrete",
+      "scene_key": "mixed",
+      "variant": "discrete",
+      "repeat": "bvh_guard",
+      "binary": "active",
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "combined",
+        "steps": 3,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": true
+      }
+    },
+    {
+      "name": "ipc_report_components_20261005_fixed_bunny_discrete_bvh_contact_guard",
+      "arm": "fixed_bunny_discrete",
+      "scene_key": "fixed_bunny",
+      "variant": "discrete",
+      "repeat": "bvh_contact_guard",
+      "binary": "active",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "steps": 59,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": false,
+        "mas_fused_dot": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": true
+      }
+    }
+  ],
+  "report": "reports/active/ipc_report_components_20261005_guards_batch.json"
+}

@@ -1,0 +1,481 @@
+{
+  "scope": "Standalone diagnostic replay; frozen v37 upstream kernels/headers",
+  "files": [
+    {
+      "path": "sources/mas_replay_v38/CMakeLists.txt",
+      "sha256": "97033d401bf5ad213ee0a47c3d22abe8ba7f88de59f59b89f597aaa02089e202"
+    },
+    {
+      "path": "sources/mas_replay_v38/native_kernels.cuh",
+      "sha256": "db5912fd580a3145b1649a5b40a798973c431a75d857ac617a2a24748d62e408"
+    },
+    {
+      "path": "sources/mas_replay_v38/replay.cu",
+      "sha256": "8dfb1a87bb911fe6001f253ad716400dfd24fa96558c8ca9d66dbe3a9f983169"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_energy.h",
+      "sha256": "5bb0169286de1504c37ca3132e7af0b0d8369c94e0b9c04ef7b3f2745c817a88"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_jacobi_matrix.h",
+      "sha256": "8cb871d0d198c65e3a4897d5545ec34c0a5a9c167b8058f30af3963d2d36cded"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_sim_data.cu",
+      "sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_sim_data.h",
+      "sha256": "39e2ba652d24adc4a1390077af8b8ae77447294529c0fcc223e62e39697bd1aa"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system.cu",
+      "sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system.h",
+      "sha256": "c40d93700d19bc55d8c1e017a36072e95565b0117624633cd230519bcbf81274"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+      "sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+      "sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+      "sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+      "sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+      "sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+      "sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/abd_system_parms.h",
+      "sha256": "30ce99a06878dbcacfdb60a937255d1cd40daaa3a7af5f83a4ad2386ba53e52c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/details/abd_energy.inl",
+      "sha256": "66e6adc346ce17c51092efe35f3ccff7b24648321323d9e5af60f542ea162fcd"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/abd_system/details/abd_jacobi_matrix.inl",
+      "sha256": "422babedb38e18134144247cca64915df3faf926157d4969422fd413ea020e64"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/app/benchmark_scenes.inl",
+      "sha256": "afea8caf40b2f5374d17d31868bb6d3367dc1370992334766ceb5a9eec88aacb"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/app/gl_main.cu",
+      "sha256": "e33bd65940fb0dcd780efd88dc7fc1fc8c48e0237a7024d61d9009ddad35e10b"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/collision/ACCD.cu",
+      "sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/collision/ACCD.cuh",
+      "sha256": "abde8441335005ed875bb77aa171fbbb4b47c694671a2b0f01990ecfe3039127"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/collision/FrictionUtils.cuh",
+      "sha256": "e8c72359674ae1a7ebb34c6349fbc2d1460a1e69fc86db6fe629cce04d2d44a1"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/collision/mlbvh.cu",
+      "sha256": "dddeefaccd279655d5f97853badc077f679418f4bce6fc77c3bd06b12dd97ee0"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/collision/mlbvh.cuh",
+      "sha256": "78fe0d1cc0faeec2cad9313ca226d603f6c9bc9a2d541a88e223ba13413605dc"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/accel_features.h",
+      "sha256": "be65408f0f53dde8239c4fcaf0cf6bb2b14e60f4a4c9253e4a866c563a8c76c2"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/body_boundary_type.h",
+      "sha256": "23b94c866964b29f969e243eaf889465bbf3f6d28b2001d0f22eb9ab3359bf1c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/GIPC.cu",
+      "sha256": "3e9eef5495e217405a5721f3452e6a3912706df4706b3cb25ef67da9e0585343"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/GIPC.cuh",
+      "sha256": "8972a7a28bf09e83999c815c45cbb7a674a17fd3bde1223b92ba842774d24e84"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/gipc_path.h",
+      "sha256": "519bbe020dc0f5e6415a9f237d2f90a3694abd57a13afabd695ac2c99bb2e822"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/GIPC_PDerivative.cuh",
+      "sha256": "0a044b885ed3f0c9a2e870b05903cb415c2aa0890c4765c7c7479f2d35ce6fe1"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/core/gipc_system.cu",
+      "sha256": "daee7d903fe9b9181c6bb8a3da5f0350424e6c5148613cd4f82edc49047b00e3"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_all.h",
+      "sha256": "dfa3e64042343d3fff90411f4c35701c0080852d69e593af670b337791e7eb09"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_atomic.h",
+      "sha256": "52754e9df742937f98609c29263387601dba7ccd09e7cc98323e803af6b2994c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_buffer_view.h",
+      "sha256": "4f8d4c2ce51fd2bb800c11b6f5965954ba2b7f6801a72d2d126f357f252ff632"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_cub_wrappers.h",
+      "sha256": "a18c5d5c26aa0b87e9f713e4838b8dbee3ce09fe3e65a62fba836c2c2fd33cf0"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_debug.h",
+      "sha256": "3146663a760b1738a57f6907e45f7ad3ba16956feae0ddbc4d9d0a3868ee0894"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_def.h",
+      "sha256": "d4db23b958cec3de66dd825ae208b9a0628d2c71818f5e46e9cbf9d2103c45c3"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_dense_vector.h",
+      "sha256": "286a9b9c53512d03143fd1925a3663611f9e3fc2e4407ecb2baf7632bed1cd02"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_eigen.h",
+      "sha256": "ef3d0ca59e0e5a2dff4125fcfd2cf59d5fb973c8a4a763aeaa131d191201bb60"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_linear_system.h",
+      "sha256": "589182bcbeaf8a0ae0060d45d915961a4e909be3f84561bf42d57b3f694bf7d5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_tools.h",
+      "sha256": "6448f7db6eca41dff622e10c3315920fb23907185499ead2f1cbacdaaae9679d"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/cuda_tools/cuda_vec_utils.h",
+      "sha256": "f82624dac7fd1ff136b2ac2aa848fdfb5753eeae0b9b3c456b9406951c1f1b77"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/fem/device_fem_data.cu",
+      "sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/fem/device_fem_data.cuh",
+      "sha256": "e772fde35c81d1401cba1915a233eeeab8cbbb680b217adf9685f636330c342c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/fem/fem_parameters.h",
+      "sha256": "fe982f3f334cd76c41576c827c00af814590377d35d61ec329cf962974f2ff10"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/fem/femEnergy.cu",
+      "sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/fem/femEnergy.cuh",
+      "sha256": "76f1895483cc6013fb9fcdf6470d3167b7b728882cbc9ae42a1f903639e0f692"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/abd_fem_count_info.h",
+      "sha256": "ee0e96958fcbed78eb6c1f20e145ae1d294d9e9a71c6f197cafe30b101512f76"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/body_type.h",
+      "sha256": "d69b67728a86bf5063c8e90e220a8a82ec860535e352f613626b1a0095546380"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/gipc.h",
+      "sha256": "f4d6cd548ce448d82afecfc80ce1278bbc3165fe462533e3471c40d57fd79554"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/statistics.cpp",
+      "sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/statistics.h",
+      "sha256": "f80f907893d99bd924ad8136e641a8d806a7b9b803cdc1f80c325862e77bda16"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/tet_local_info.h",
+      "sha256": "ab8d4cb8e17e73f687fd26f79d20952f7bcd9c47038985f0614edd1e29c0eaea"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/type_define.h",
+      "sha256": "3477f1aa8c90c4e0a6fd56abd1a11880254ea33178fcd8fb2cadae50b2943dc5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/cuda_vec_to_eigen.h",
+      "sha256": "3ddc904360b42c8246f197f70cf64e56bb100e8adcfab70e86ad24c82716e720"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/details/cuda_vec_to_eigen.inl",
+      "sha256": "2b3e35068437da45122758deeac4cc51def5a2748e2905cc7a4be04fd2ab34c5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/details/print_buffer.inl",
+      "sha256": "97a1c8848ab964bcc1b0f096b2c43710b3000da517d1a52b740124a26a16771c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/host_log.h",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/json.h",
+      "sha256": "46ec5962e9e55c72c5baafc2671647eaf218d85789aecc9edc26d4970e9a1432"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/math.h",
+      "sha256": "12d3ad4e8a699643e9144999c26a7a2f431b180d44b046eaebc5219b2587cd20"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/details/fast_segmental_reduce.inl",
+      "sha256": "f51d9c1ec462ef41a0e5a616fd31f157e09fde4aafaa9da31e46ea14c1032fc0"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/details/scatter.inl",
+      "sha256": "3de6bdee3d6cc590a0bbdbcee3b82f23fbd9ed25c8a3691a01855ac6093f4eed"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/details/transform.inl",
+      "sha256": "9ecf89bfaf0afb04b3490d25cbdd5bf9f262df24413e604671ab960187d42ee8"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/details/unique_reduce.inl",
+      "sha256": "d81c8f24d807de3e9178eee3a335f827200663066f06fb7f0dfe4bbc5c2a31f8"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/fast_segmental_reduce.h",
+      "sha256": "d7431a06935d85e7d7f41e978852908eab324a86da811204cc10326b8b2b5f54"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/scatter.h",
+      "sha256": "d75b4b38cfc3ebd2cc4a586352e524b6f12bf170cb8e079116b084a2ec300ed6"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/transform.h",
+      "sha256": "34ebafa04a596a112db8a25c6ea31ee8fe2eaed99fdc03956b11dac3300c9d3a"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/parallel_algorithm/unique_reduce.h",
+      "sha256": "07b1cbecbbecc142108692d785cf0bb935b01a7b1041ea03a2e534004bcf4ea2"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/print_buffer.h",
+      "sha256": "2839ce6aee5f3f792bac5c2d810a5058380f740dec834213659cba4624ed78da"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+      "sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/simple_scene_importer.h",
+      "sha256": "77b379470dc2c1eac17e18c9f03e899ebaf06a87a64d9286b28dabe7729fffc5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/timer.cpp",
+      "sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/gipc/utils/timer.h",
+      "sha256": "580be914d34d1a782bfccfd91c75e17879fc3f993ed5b4b5e110116d2e207743"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/io/load_mesh.cpp",
+      "sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/io/load_mesh.h",
+      "sha256": "431848e78803854bf01567dbfbc5cb4e9d97ba514e3ee54f6f10ec063fdaa73f"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+      "sha256": "0a83a92879ac0bde6b884a6ccc6c7ebc095667044ca88c9ae49661dcac05fe2e"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/global_linear_system.h",
+      "sha256": "5e8cc6d41ee9006796e3ae4b5f6dcc33895a88d55bf551af158ad50df466a86f"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/global_matrix.cu",
+      "sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/global_matrix.h",
+      "sha256": "5407c30d009e21c40136091ebc30c975edba4a4b7194499c259f826081bc06d4"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+      "sha256": "4b8b0ad4adc797bc82ed1221879e5f76d5d157339180701fce7150823c7a1ce5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/i_linear_system_solver.h",
+      "sha256": "a4b6a915e120b616de6db73709c34d211e882ec1f4f90f2b55fea2736c281e2b"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+      "sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/i_preconditioner.h",
+      "sha256": "e0b74f2f4b77d9b9d5b04e452c78a5c06675b68428f24176dbea5205e9d9555d"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+      "sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/linear_system/linear_subsystem.h",
+      "sha256": "e72517bc23c4c4668dadadae155c3aa9981c2a6543f87d47dbfcf81270be7a09"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+      "sha256": "f599ba8958f522fafd56b3229b36fadbd397622425e8177078ae3e89424aeead"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/abd_preconditioner.h",
+      "sha256": "262c1f8ebd25f6e6e98071752956cb760706d804e61b9d95d1cbada1a57ca665"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/diag_fused_update.cuh",
+      "sha256": "efdcbf96d0ada1c1c56c057aaf7db32c2db226e4dcef5f3cd9598aeb602db021"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+      "sha256": "092dd7d3b52adeca8856ce6d3e5a39df420f33b1ec984b36d0ac116f7764675b"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/diag_preconditioner.h",
+      "sha256": "d64febd392749a4d075ac400a74b30540d08be001cea27021b87fb64c4593da3"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+      "sha256": "1116dedf5a199bd574d44ad7e1dce87fac97e43b16a2fd348c473a27410dfae1"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h",
+      "sha256": "783832c5965b19bc6f6e97a5a9303c6866f9f4523e2846d537425574f5392ae4"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/solver/pcg_fixed_study.inl",
+      "sha256": "555c8f9fbfe79ca4853d499318c2bbb0cee92e6ddd59fa50d26d6ff63ba52dcd"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/solver/pcg_graph_impl.inl",
+      "sha256": "7aa708e55c31bac4dfd42fc5aa4a69b22f4a5177c1d526f8c1d86eb9540cfee5"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/solver/pcg_solver.cu",
+      "sha256": "f35d15dbc78619ce2ff6c014be00a2cdbb8b5060b1320129f7abf9f6e178ec20"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/solver/pcg_solver.h",
+      "sha256": "92186f5e265c18f93ea6a2b3a8f6802cf9bebc5b9a4041c341583f0ec7bfed96"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+      "sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.h",
+      "sha256": "0140d341440ae99c1dc51705dd0fe622dfb3c16da71550753ef3392fadc607f9"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+      "sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.h",
+      "sha256": "888e7d5225a78ff2ebbf6da188f652622604900ad0107ed088b7cc0516c82445"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/utils/converter.cu",
+      "sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/utils/converter.h",
+      "sha256": "1312437621380de2eb95818a39eb086992705f4c666a229e88924ab6237e7a62"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/utils/spmv.cu",
+      "sha256": "be5629ce3c25790d39913939bf934c04e6a1ebb9d89439a55ce7011b5c6d142d"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/linear_system/utils/spmv.h",
+      "sha256": "67fdc573f54a3b0b0e09ff260682979cfc93dd2b1c92374c219cd4a1e5f01479"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/math/eigen_data.h",
+      "sha256": "032609328e1d102de120da80cd92224355e983969cc9262c4a05a128590ec40b"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/math/givens.hpp",
+      "sha256": "ec06b4bebbd04042ce0dcfc0617748cca46139ea4039d0537da829be5ae717d0"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/math/gpu_eigen_libs.cu",
+      "sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/math/gpu_eigen_libs.cuh",
+      "sha256": "224e70a52712f26a55c465f98cb9ddcc8108e680d61b2c97c0bfb85b4e2cc08a"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/math/QRSVD.hpp",
+      "sha256": "623976e7481e6a66f5627a0ce8ee6cfd5a4197c543bc6f7f38941def9c986e09"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/MASPreconditioner.cu",
+      "sha256": "9e9b277bedc5fc9d2bb3100d117d2a26c2c7bc232e5f1130fbf931eeefcf3511"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/MASPreconditioner.cuh",
+      "sha256": "f7bc3732be63f7b0d9247faa1e1dd8d6a90bb1b10c3db58325d4a967969189cd"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/PCG_SOLVER.cu",
+      "sha256": "946e0407d13459fa62cfd5c83d99185a09acb79390c97a36bbbde5cc731fc21f"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/PCG_SOLVER.cuh",
+      "sha256": "8c73f99b35e01c2d0a6ca5e8bac80088ca9778c88f4d721b5f810bbc74c9353b"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/toi_port_policy.cuh",
+      "sha256": "cb85d376faa674bdbcdb54fc500d114ba20a712e89286ec2e6e80ea53966a403"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/toi_solver.cu",
+      "sha256": "56d99f60208ae94113d83ff31fc3dad7e3452d2b230eebf3d14c0d749127e4b9"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/toi_solver.cuh",
+      "sha256": "c6afa9ad2065a7e4f4c9a1579ceb5b1e15d19eb046dae6f6a0b07eb206d2b9e9"
+    },
+    {
+      "path": "sources/stiff_perf_v37/StiffGIPC/solver/toi_volume_step.cuh",
+      "sha256": "ee8bd612b7bb3308432b55af2e3cb8f167d27bc08f39868a51502731b7740710"
+    },
+    {
+      "path": "tools/prepare_replay_v38.py",
+      "sha256": "ffcf211782bdf6906255f21275b5fd7355effebdc254f5b15fd8855ff8e507e6"
+    }
+  ]
+}

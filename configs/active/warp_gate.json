@@ -1,0 +1,5 @@
+{
+  "preset":"toi","steps":35,"timeout_seconds":180,"mas_restrict":"warp",
+  "diagnostics":["fixed"],"fixed_frames":"2,25,34","fixed_directions":"1",
+  "fixed_restrict_study":true
+}

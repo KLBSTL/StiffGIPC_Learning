@@ -1,0 +1,40 @@
+{
+  "stage": "activation",
+  "runs": [
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_activation_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "activation",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "toi_compensated",
+        "execution": "conditional_graph",
+        "steps": 23,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false,
+        "ipc_residual_cpu_audit": true
+      }
+    },
+    {
+      "name": "ipc_spmv_compensated_20261005_fixed_bunny_terminal_conditional_graph",
+      "scene_key": "fixed_bunny",
+      "variant": "terminal",
+      "execution": "conditional_graph",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "graph",
+        "execution": "conditional_graph",
+        "steps": 23,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "trace_velocity": true,
+        "spmv_fused_quadratic": false,
+        "ipc_residual_shadow": true,
+        "ipc_terminal_audit_frame": 23
+      }
+    }
+  ]
+}

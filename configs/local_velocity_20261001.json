@@ -1,0 +1,44 @@
+{
+  "name": "local_velocity_20261001",
+  "date": "2026-10-01",
+  "scene": "cloth_sphere7_l",
+  "platform": "local",
+  "implementation_version": "v29-first-contact-state-audit-local",
+  "source_digest": "b72075846c78895020d7f724718ebe7bffc6d5514b6eceb14853400001e1ed62",
+  "binary_sha256": {
+    "base": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205",
+    "fused": "5b13fc3bffde9208d148bb360a4137ab295c140f167d3dbfce2794277ec1e907"
+  },
+  "variants": [
+    {"id": "base", "arm": "base", "velocity_tol": null, "velocity_stop": false},
+    {"id": "full", "arm": "base_toi", "velocity_tol": null, "velocity_stop": false},
+    {"id": "vel005", "arm": "base_toi", "velocity_tol": 0.05, "velocity_stop": true},
+    {"id": "vel100", "arm": "base_toi", "velocity_tol": 1.0, "velocity_stop": true}
+  ],
+  "pilot_frames": 30,
+  "measure_frames": 100,
+  "repeats": 3,
+  "suite": "0",
+  "newton_tol": 0.01,
+  "pcg_tol": 0.0001,
+  "dt": 0.01,
+  "mu_mode": "diagonal",
+  "persist_contacts": false,
+  "timeout_seconds": 600,
+  "reference_dt": 0.0025,
+  "reference_frames": 400,
+  "reference_half_dt": 0.005,
+  "reference_half_frames": 200,
+  "reference_newton_tol": 0.001,
+  "reference_pcg_tol": 1e-8,
+  "reference_timeout_seconds": 900,
+  "purpose": "User-approved local comparison of full-step, 0.05 m/s and 1.0 m/s TOI inner exits, plus a contemporaneous base denominator.",
+  "quality": {
+    "trajectory_equivalence_gate_existing": 0.000001,
+    "position_reference_budget_existing": 0.01,
+    "velocity_reference_budget_existing": 0.01,
+    "scope": "Different stopping rules are algorithmic ablations, not graph equivalence. Report all-frame position/velocity, stretch, energy proxy and continuous CCD independently. A single refined-dt base reference is a diagnostic, not an exact solution."
+  },
+  "semantics": "The velocity option enables both the 100-times-tolerance large-direction safeguard and the accepted energy-decreasing small-direction exit; Kmin=6, cumulative TOI epsilon=0.01, full CCD and current energy checks remain unchanged.",
+  "timing": "100-frame solver window with trace export outside the window; exclude separate substep-export safety runs and refined-dt reference from speed ratios. All GPU simulation runs serial. Record existing desktop graphics load."
+}

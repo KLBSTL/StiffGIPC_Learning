@@ -1,0 +1,34 @@
+{
+  "report": "reports/active/ipc_mas_stage_20261005_batch.json",
+  "stop_on_failure": true,
+  "purpose": "One frozen f2 first-direction legacy MAS stage diagnosis; 4 stages x (1 warmup + 3 observations), fixed upstream inputs and restored production buffers. No parameter or long-trajectory sweep.",
+  "runs": [
+    {
+      "name": "ipc_mas_stage_20261005_f2",
+      "binary": "active",
+      "variant": "stage_probe",
+      "config": {
+        "scene": "cloth_fixed_bunny_l", "steps": 2, "dt": 0.01, "timeout_seconds": 120,
+        "backend": "ipc", "execution": "host", "mas": "legacy",
+        "refit": false, "batch": false, "reuse": false, "trace_velocity": false,
+        "diagnostics": ["fixed"], "fixed_frames": "2", "fixed_directions": "1",
+        "fixed_mas_stage_study": true,
+        "ipc_termination": "legacy", "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01, "ipc_min_updates": 6, "pcg_rho_tol": 0.0001
+      }
+    },
+    {
+      "name": "ipc_mas_stage_20261005_disabled_f2",
+      "binary": "active",
+      "variant": "disabled_smoke",
+      "config": {
+        "scene": "cloth_fixed_bunny_l", "steps": 2, "dt": 0.01, "timeout_seconds": 120,
+        "backend": "ipc", "execution": "host", "mas": "legacy",
+        "refit": false, "batch": false, "reuse": false, "trace_velocity": false,
+        "diagnostics": [], "fixed_mas_stage_study": false,
+        "ipc_termination": "legacy", "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01, "ipc_min_updates": 6, "pcg_rho_tol": 0.0001
+      }
+    }
+  ]
+}
