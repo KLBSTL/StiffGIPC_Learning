@@ -1,13 +1,18 @@
 # 当前组件与保留边界
 
-2026-10-06；基于第三批清理及后续有界优化的本机源码。此表是代码能力清单，不表示完整
-质量或性能已认证。冻结Step3程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
+2026-10-07；基于第三批清理、后续有界优化及本轮AutoDL实测。此表是代码能力清单，不表示完整
+质量或性能已认证。本轮75次100帧完成，三场景七对Stiff/组合实测中位1.3613×、1.2860×、
+1.1058×；三项300帧因冻结材料/基线复核门控失败而跳过。固定兔子p6第52帧局部最大拉伸
+1.050672，高于同轮Stiff范围，未推广配置。原生起点5e2f9bb不变；Linux全新active/base
+程序及37/35单元身份封存。详见[完整报告](../reports/autodl_full_20261006/FULL_TEST_REPORT.md)。
+
+此前本机冻结Step3程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
 三项 GPU 夹具和退休入口检查通过，Step3完成9次短窗；Step4另完成6次悬挂
-短窗和2次受保护Nsight捕获。100/300帧、独立CCD与
-完整质量协议仍待验证。结果见
+短窗和2次受保护Nsight捕获。独立CCD、原版真实速度与
+完整质量认证仍待验证。此前结果见
 `../reports/STATUS_20261006.md`，第二、三批变更见对应清理文档。
 
-最新批次新增独立K4条件Graph与受保护冻结系统研究，新37单元程序`9ddf16cc…70c`。
+前一批本机新增独立K4条件Graph与受保护冻结系统研究，新37单元程序`9ddf16cc…70c`。
 CPU105/CTest7/新增守卫28项通过；短f2与接触长f57各七对完整solve的K1/K4
 配对中位0.8403×/0.9486×，未达收益门槛，K默认1并停止K4性能分支。
 独立CPU参考通过，但默认PCG真残差约4–5%，不能据此认证物理质量。
@@ -30,7 +35,7 @@ CPU69/CTest6/新查询fixture12项通过。两项性能分支均未达门槛，�
 | legacy / 稳定 MAS | legacy 默认；Cholesky、wide/inverse64 对照路径保留 | `solver/MASPreconditioner.cu`；稳定 CSR、factor 和六历史 M fixture 仍依赖这些共享结构 |
 | 稳定限制与局部作用 | `serial|warp`；`triangular|factor_inverse` | `solver/mas_restrict_options.h`、`mas_factor_action_options.h`；原生默认 serial、factor_inverse；不可与退休 ordered 混淆 |
 | 用户指定世界刚度默认 | diagonal/movable 条件下 `world_block` | `solver/toi_options.h:119–124`；用户默认选择记录于 `history/reports/active/DEFAULTS_OUTER_RESULTS_20261005.md:3` |
-| 既有执行组合 | FullCCD refit、batched energy、energy reuse、无接触 MAS topology reuse | `core/accel_features.h`、`core/GIPC.cu:9056,10766,10943`、`solver/MASPreconditioner.cu:2439`；原生开关默认 false，runner combined 明确开启所选项 |
+| 既有执行组件 | FullCCD refit、batched energy、energy reuse、无接触 MAS topology reuse | `core/accel_features.h`、`core/GIPC.cu:9056,10766,10943`、`solver/MASPreconditioner.cu:2439`；原生开关默认 false。本轮runner combined仅启用前三项，并另启普通BVH refit；MAS topology reuse有效值false，不能将本轮收益归给它 |
 | 普通/swept BVH 独立缓存 | `GIPC_DISCRETE_BVH_REFIT`，默认 false，周期8 | `collision/discrete_bvh.h:17–22`；有历史收益但未取得2×同质量认证；见组件实测报告 |
 | swept barrier contact pool | `GIPC_CONTACT_POOL`，默认 false；validate 独立 | `collision/ipc_contact_pool.h:13–27`；保守机器 bounds 检查及不满足回退保留。Step1 四guard的typed/energy与质量结论分开，旧 `allow_next_round=false` 保留；见 `reports/autodl_step1/ROUND0_AND_GUARDS.md` |
 | diagonal update fusion | `GIPC_PCG_FUSED_DIAG_UPDATE`，默认关闭，MAS 不适用 | `pcg_graph_impl.inl`、`tests/diag_fused_update_tests.cu`；只支持相应全局块对角路径，不是本次删除的 MAS-dot |

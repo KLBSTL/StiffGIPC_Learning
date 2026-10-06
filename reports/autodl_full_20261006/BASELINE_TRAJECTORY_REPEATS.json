@@ -1,0 +1,1091 @@
+{
+  "schema": "baseline_trajectory_repeats.v1",
+  "diagnostic_only": true,
+  "cpu_only": true,
+  "quality_certified": false,
+  "performance_certified": false,
+  "frozen_quality_bounds_modified": false,
+  "physical_frames": 100,
+  "position_states": 101,
+  "actual_velocity_available": false,
+  "metric": "Unweighted per-vertex Euclidean displacement: maximum over state_0000..0100 of group RMS, and maximum vertex displacement over the same states; metres.",
+  "grouping": "Exact frozen pool_metrics.state_comparison masks: ABD prefix; FEM tetrahedron vertices outside ABD; remaining vertices cloth.",
+  "scope": "Three calibration pair comparisons and two independent holdout-to-cal1 comparisons are kept separate. No gate enlargement or candidate-equivalence certification.",
+  "sources": {
+    "script": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\analyze.py",
+      "bytes": 13133,
+      "sha256": "b36076b754f168fc5ea5dea59399a0e4e675e96302e8a0bfe35eda1da42918f4"
+    },
+    "archive_receipts": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\xz_archive_phase_0015.json",
+      "bytes": 58885,
+      "sha256": "c1729b63e4d7abaf2feaa2a249bf7ddd9185d9a11414bf7f4965a3ec522fa28a"
+    },
+    "summary": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\summary_0051.json",
+      "bytes": 2625094,
+      "sha256": "10de4f39ece585d4f62f97a5854c45e4380994b43c9f478ac4781ee5785ee55b"
+    },
+    "state_comparison_tool": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\bench\\pool_metrics.py",
+      "bytes": 16033,
+      "sha256": "cd41927a6eeb17875431fba82440355aa40ba423811d9111750f544e5b2939ba"
+    }
+  },
+  "restored_runs": [
+    {
+      "run": "calibration1_hang_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration1_hang_original_stiff.tar.xz",
+        "bytes": 3983080,
+        "sha256": "ac93933defc12a52f4e34e0e45aa480f4f87d32dca8bda6fc3fda2d0436dc983"
+      },
+      "raw_evidence_sha256": "cd64b94e89cf26a09eadde7e02eb5000e0142ea83d2aaa5a8142ab624f670b14",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration1_hang_original_stiff\\restored_trace_manifest.json",
+        "bytes": 15953,
+        "sha256": "31036c05e1d979063fa0408ea38bccffcbe889c36d397e51d3da042cee61ef82"
+      },
+      "vertices": 1939,
+      "faces": 3716,
+      "tets": 0,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+        "trace/masses.bin": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+        "trace/boundary_types.bin": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+        "trace/body_ids.bin": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+        "trace/state_0000.bin": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+        "trace/metadata.json": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+        "physical_scene_objects": "94f8342b9d5909a69e32ab2524bcb07c1b8dca04ada1b7cf17b7d31ce8e3798d",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cda28a26ae2363c8ce700c9f522c1e4d041c1b7ac8e9b2ee712dffa8187b4e1a"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration2_hang_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration2_hang_original_stiff.tar.xz",
+        "bytes": 3991128,
+        "sha256": "fa98b8d5742dd16dc62a46c51862b2813d98d7b8eb3bc0817edb0bab7babfc30"
+      },
+      "raw_evidence_sha256": "48d324fbe0683777d2276fa8c53cfef7539038706e116cc8650e823a7e91763c",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration2_hang_original_stiff\\restored_trace_manifest.json",
+        "bytes": 15953,
+        "sha256": "4fb59c5e1ff18daccd902c4561fddcff13ef9e62e2b1c85688960625b566534a"
+      },
+      "vertices": 1939,
+      "faces": 3716,
+      "tets": 0,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+        "trace/masses.bin": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+        "trace/boundary_types.bin": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+        "trace/body_ids.bin": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+        "trace/state_0000.bin": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+        "trace/metadata.json": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+        "physical_scene_objects": "94f8342b9d5909a69e32ab2524bcb07c1b8dca04ada1b7cf17b7d31ce8e3798d",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cda28a26ae2363c8ce700c9f522c1e4d041c1b7ac8e9b2ee712dffa8187b4e1a"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration3_hang_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration3_hang_original_stiff.tar.xz",
+        "bytes": 3983692,
+        "sha256": "205d1b115099240d0481f1d6a73302860fe15539fd104cc6a0e20f7ba8d75aec"
+      },
+      "raw_evidence_sha256": "56d0d191bd3d37d23624c03b00102fb39702a8652323b20f9a05bfa6e8f181d0",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration3_hang_original_stiff\\restored_trace_manifest.json",
+        "bytes": 15953,
+        "sha256": "b1f08d1aaf9a0ea6b1c6f62308c3cb9860198a84a7ec936fd50eff21cab9ce6d"
+      },
+      "vertices": 1939,
+      "faces": 3716,
+      "tets": 0,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+        "trace/masses.bin": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+        "trace/boundary_types.bin": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+        "trace/body_ids.bin": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+        "trace/state_0000.bin": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+        "trace/metadata.json": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+        "physical_scene_objects": "94f8342b9d5909a69e32ab2524bcb07c1b8dca04ada1b7cf17b7d31ce8e3798d",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cda28a26ae2363c8ce700c9f522c1e4d041c1b7ac8e9b2ee712dffa8187b4e1a"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification1_hang_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification1_hang_original_stiff.tar.xz",
+        "bytes": 3990264,
+        "sha256": "4148d2ac2bbed1ee9c535319dd736de6aeea2881bdf4e2438eae2e76c4f0efe3"
+      },
+      "raw_evidence_sha256": "d49f391af9225ea5711b916053f21316f729744bd0b66555bc2f10b28cafc48d",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification1_hang_original_stiff\\restored_trace_manifest.json",
+        "bytes": 15955,
+        "sha256": "3521970c02341a4e76ebb9530a699247840770bca8d557497c8e3dd6291d74cb"
+      },
+      "vertices": 1939,
+      "faces": 3716,
+      "tets": 0,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+        "trace/masses.bin": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+        "trace/boundary_types.bin": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+        "trace/body_ids.bin": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+        "trace/state_0000.bin": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+        "trace/metadata.json": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+        "physical_scene_objects": "94f8342b9d5909a69e32ab2524bcb07c1b8dca04ada1b7cf17b7d31ce8e3798d",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cda28a26ae2363c8ce700c9f522c1e4d041c1b7ac8e9b2ee712dffa8187b4e1a"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification2_hang_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification2_hang_original_stiff.tar.xz",
+        "bytes": 3984504,
+        "sha256": "e80944e6274f503f228d3e239727fbeffd7580680e3bb32ed0a8e5452422caaa"
+      },
+      "raw_evidence_sha256": "bae17d82ee410dfc80ece70e331b4cc1c7d53290a7b12961955d538059b4068d",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification2_hang_original_stiff\\restored_trace_manifest.json",
+        "bytes": 15955,
+        "sha256": "c5a82979519d994bced6f8d7c0262b9f4dea5f7c4f3c10bca0063ce3fc0d7182"
+      },
+      "vertices": 1939,
+      "faces": 3716,
+      "tets": 0,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+        "trace/masses.bin": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+        "trace/boundary_types.bin": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+        "trace/body_ids.bin": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+        "trace/state_0000.bin": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+        "trace/metadata.json": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+        "physical_scene_objects": "94f8342b9d5909a69e32ab2524bcb07c1b8dca04ada1b7cf17b7d31ce8e3798d",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cda28a26ae2363c8ce700c9f522c1e4d041c1b7ac8e9b2ee712dffa8187b4e1a"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration1_fixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration1_fixed_original_stiff.tar.xz",
+        "bytes": 12786612,
+        "sha256": "587e304ab53b3249f31c29225b8028e4f02fa2a912dabc152c2f872461f028fe"
+      },
+      "raw_evidence_sha256": "f10e9154e4f425968273c2e4ad0e76697f6e4b7fce98a819863294214a0a6990",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration1_fixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16062,
+        "sha256": "ff6881eb27de868d33501a8dca606d0776e1f715687f54900f59f6f1b7ddfff1"
+      },
+      "vertices": 24969,
+      "faces": 32082,
+      "tets": 79935,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "3a6824ff04f6b5565ef5a5d8dfe1420db2268c4fcf88f9b2de3114790590d5eb",
+        "trace/masses.bin": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+        "trace/boundary_types.bin": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+        "trace/body_ids.bin": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+        "trace/state_0000.bin": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "8db3b46d73ec57e6de6400037d8ae21a7c9e010f6e6e28c65c75e72b222bfb57",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cd24016e6ee08e301ab168ec3607341efacd3df1561c6c217274a5e939505738"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration2_fixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration2_fixed_original_stiff.tar.xz",
+        "bytes": 12800668,
+        "sha256": "ecca06e05849d177317d3a2d196ea567d24f8d43eb2bda794192a4c344e8f0f9"
+      },
+      "raw_evidence_sha256": "10ff57579c5e1a431173bced7bed7e89a802e44fd6b6d9b35e83813c1a49aa57",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration2_fixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16062,
+        "sha256": "b760bdea29f28ea4853c4d62ee49009b92cc7bb7d9e7ff54b39fb0c59d8e6510"
+      },
+      "vertices": 24969,
+      "faces": 32082,
+      "tets": 79935,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "3a6824ff04f6b5565ef5a5d8dfe1420db2268c4fcf88f9b2de3114790590d5eb",
+        "trace/masses.bin": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+        "trace/boundary_types.bin": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+        "trace/body_ids.bin": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+        "trace/state_0000.bin": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "8db3b46d73ec57e6de6400037d8ae21a7c9e010f6e6e28c65c75e72b222bfb57",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cd24016e6ee08e301ab168ec3607341efacd3df1561c6c217274a5e939505738"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration3_fixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration3_fixed_original_stiff.tar.xz",
+        "bytes": 12794676,
+        "sha256": "88342f5f44c7d9bc0f89b756e83a2272aa81acabb93d3e9237277731ace9a7cb"
+      },
+      "raw_evidence_sha256": "e7d03be4cbd6594b9ad625c280f8f35c322d3d41d6cfbb6db6498c11cf0e8272",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration3_fixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16062,
+        "sha256": "ebd4aba89aad3b9591eb193450465c269f93a4bf65ed148ff546d13899064d48"
+      },
+      "vertices": 24969,
+      "faces": 32082,
+      "tets": 79935,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "3a6824ff04f6b5565ef5a5d8dfe1420db2268c4fcf88f9b2de3114790590d5eb",
+        "trace/masses.bin": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+        "trace/boundary_types.bin": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+        "trace/body_ids.bin": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+        "trace/state_0000.bin": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "8db3b46d73ec57e6de6400037d8ae21a7c9e010f6e6e28c65c75e72b222bfb57",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cd24016e6ee08e301ab168ec3607341efacd3df1561c6c217274a5e939505738"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification1_fixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification1_fixed_original_stiff.tar.xz",
+        "bytes": 12815920,
+        "sha256": "4118acd7134b31c151529aa17f43d37e7286e2dee97c3592ff23607a484d1545"
+      },
+      "raw_evidence_sha256": "eb968d6a800f0325389c9cf266073a63796f8e758849acdd7aa8ff42acf63c45",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification1_fixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16064,
+        "sha256": "b6bfbf7dd808e14aafe30d9db22959d6323c0d87f8a0e98997ab2e4a85e1e501"
+      },
+      "vertices": 24969,
+      "faces": 32082,
+      "tets": 79935,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "3a6824ff04f6b5565ef5a5d8dfe1420db2268c4fcf88f9b2de3114790590d5eb",
+        "trace/masses.bin": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+        "trace/boundary_types.bin": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+        "trace/body_ids.bin": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+        "trace/state_0000.bin": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "8db3b46d73ec57e6de6400037d8ae21a7c9e010f6e6e28c65c75e72b222bfb57",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cd24016e6ee08e301ab168ec3607341efacd3df1561c6c217274a5e939505738"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification2_fixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification2_fixed_original_stiff.tar.xz",
+        "bytes": 12791316,
+        "sha256": "3e2f6dab0cf1c6eb9271dfc58ec60a8632d69e667e09467efdf33daf5ae52ace"
+      },
+      "raw_evidence_sha256": "c9fdd2d44b02c7853e274cc6fc92be422caa32cfc473985f074f170b0860db96",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification2_fixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16064,
+        "sha256": "ad04acce165b372f9d48fbc50bcaf17587afa06bd261e6454a614dbd51d121e2"
+      },
+      "vertices": 24969,
+      "faces": 32082,
+      "tets": 79935,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "3a6824ff04f6b5565ef5a5d8dfe1420db2268c4fcf88f9b2de3114790590d5eb",
+        "trace/masses.bin": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+        "trace/boundary_types.bin": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+        "trace/body_ids.bin": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+        "trace/state_0000.bin": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "8db3b46d73ec57e6de6400037d8ae21a7c9e010f6e6e28c65c75e72b222bfb57",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "cd24016e6ee08e301ab168ec3607341efacd3df1561c6c217274a5e939505738"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration1_mixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration1_mixed_original_stiff.tar.xz",
+        "bytes": 73887428,
+        "sha256": "6e34368b863758d6cf4d91221a7da67b56670f18f9ab2fc4f591e62bf0ab6a5d"
+      },
+      "raw_evidence_sha256": "3d449c881a79601f85cce55f31b87cbf20e44809f59b0307f4f72e5575b5ca62",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration1_mixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16064,
+        "sha256": "54c1d307f64dd4bc5a0a1906860452ce62a49ae7fc71391b7869ff2fc86cab16"
+      },
+      "vertices": 39475,
+      "faces": 43712,
+      "tets": 159870,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "93e90022ce3e419eba1f6e37490c2efd3639ee77e44fd8cf7d6b532007688467",
+        "trace/masses.bin": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+        "trace/boundary_types.bin": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+        "trace/body_ids.bin": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+        "trace/state_0000.bin": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "680bdd51d6e434b9a76fa7f484ca8ae6498539bfdb25bf2d41a9418c4eda73ef",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "20b9c6fa8ecdc8376a061f665a349be6ada4a30b8f52640effc39bee8a601683"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration2_mixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration2_mixed_original_stiff.tar.xz",
+        "bytes": 73961424,
+        "sha256": "e7f0897940606d27372bf2ed28c07d73f4ea3188c98a26f077b7a6c4144c15df"
+      },
+      "raw_evidence_sha256": "3f44611d95b3cd653e875cf35c605b8ac6984a6aceff6b12aafe9dac8826f66f",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration2_mixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16064,
+        "sha256": "beafda03647f36a84ed1770a230b202783d6367f42a0dbf8c69cf29844492397"
+      },
+      "vertices": 39475,
+      "faces": 43712,
+      "tets": 159870,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "93e90022ce3e419eba1f6e37490c2efd3639ee77e44fd8cf7d6b532007688467",
+        "trace/masses.bin": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+        "trace/boundary_types.bin": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+        "trace/body_ids.bin": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+        "trace/state_0000.bin": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "680bdd51d6e434b9a76fa7f484ca8ae6498539bfdb25bf2d41a9418c4eda73ef",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "20b9c6fa8ecdc8376a061f665a349be6ada4a30b8f52640effc39bee8a601683"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "calibration3_mixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\calibration3_mixed_original_stiff.tar.xz",
+        "bytes": 74494080,
+        "sha256": "f1a48aba53aecbabb1ae4fd427146688d9e25e0c93b2cb9aba26e9694eb55e61"
+      },
+      "raw_evidence_sha256": "41090aa760aee60ab30d73c86b865b850d917d76bb9e7669d72f0dfb72381c30",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\calibration3_mixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16064,
+        "sha256": "c1a0d366a8617ceb41c18c6a48cbe2a5a9f193d501a3856c71d94366deea4b12"
+      },
+      "vertices": 39475,
+      "faces": 43712,
+      "tets": 159870,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "93e90022ce3e419eba1f6e37490c2efd3639ee77e44fd8cf7d6b532007688467",
+        "trace/masses.bin": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+        "trace/boundary_types.bin": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+        "trace/body_ids.bin": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+        "trace/state_0000.bin": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "680bdd51d6e434b9a76fa7f484ca8ae6498539bfdb25bf2d41a9418c4eda73ef",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "20b9c6fa8ecdc8376a061f665a349be6ada4a30b8f52640effc39bee8a601683"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification1_mixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification1_mixed_original_stiff.tar.xz",
+        "bytes": 74327516,
+        "sha256": "2c115712e1765b0049ebecfaa60a9a6f20e34cb4378fe1feb2622f47556c49f9"
+      },
+      "raw_evidence_sha256": "64c758d48e49e2f3cc7d0f5be14a39dd707b7c9349323e6fb396208ac84556f7",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification1_mixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16066,
+        "sha256": "ba6ab4d778284be6f94a29d27183c2f0e9afe95c29ac3022cd82ac5d89d3f350"
+      },
+      "vertices": 39475,
+      "faces": 43712,
+      "tets": 159870,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "93e90022ce3e419eba1f6e37490c2efd3639ee77e44fd8cf7d6b532007688467",
+        "trace/masses.bin": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+        "trace/boundary_types.bin": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+        "trace/body_ids.bin": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+        "trace/state_0000.bin": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "680bdd51d6e434b9a76fa7f484ca8ae6498539bfdb25bf2d41a9418c4eda73ef",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "20b9c6fa8ecdc8376a061f665a349be6ada4a30b8f52640effc39bee8a601683"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    },
+    {
+      "run": "verification2_mixed_original_stiff",
+      "archive": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\autodl_full_download\\raw_archives\\verification2_mixed_original_stiff.tar.xz",
+        "bytes": 74504544,
+        "sha256": "43615bf2ad7876235e0670c3c199bc0b6ac07cf3bd86c2818db7737fb3bd3f13"
+      },
+      "raw_evidence_sha256": "912c7e20349c01be45929860f9d287a504071a0b2d074950b2d79264f00aa0ae",
+      "restored_manifest": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\baseline_trajectory_repeats_20261007\\restored\\verification2_mixed_original_stiff\\restored_trace_manifest.json",
+        "bytes": 16066,
+        "sha256": "128a0f2fbc29742092ec2ed8c0fdfe40aeb8c7a1501af802cc99cf5ee90a04f1"
+      },
+      "vertices": 39475,
+      "faces": 43712,
+      "tets": 159870,
+      "states": 101,
+      "finite_positions": true,
+      "actual_velocity_available": false,
+      "input_identity": {
+        "trace/topology.bin": "93e90022ce3e419eba1f6e37490c2efd3639ee77e44fd8cf7d6b532007688467",
+        "trace/masses.bin": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+        "trace/boundary_types.bin": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+        "trace/body_ids.bin": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+        "trace/state_0000.bin": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+        "trace/metadata.json": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+        "physical_scene_objects": "680bdd51d6e434b9a76fa7f484ca8ae6498539bfdb25bf2d41a9418c4eda73ef",
+        "initial_actual_velocity": null
+      },
+      "program_identity": {
+        "source_digest": "0997c89d8f936efa8968e1cd714b2403c31ca01425d986aaca7c49169e83a4d4",
+        "exe_sha256": "a104ea4773e5ec98d5b55f3265ea6506c495b879abce1920ebcb503632c961a3",
+        "config_sha256": "20b9c6fa8ecdc8376a061f665a349be6ada4a30b8f52640effc39bee8a601683"
+      },
+      "gpu_uuid": "GPU-21d8ced1-7b60-e544-b8f1-3187ca5936b9"
+    }
+  ],
+  "scenes": {
+    "hang": {
+      "calibration_pairs": [
+        {
+          "left": "calibration1_hang_original_stiff",
+          "right": "calibration2_hang_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 1.0941444814808607e-05,
+                "max_vertex": 6.271775705381856e-05,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_hang_original_stiff",
+          "right": "calibration3_hang_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 1.0093139200878217e-05,
+                "max_vertex": 6.474203455286961e-05,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration2_hang_original_stiff",
+          "right": "calibration3_hang_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 4.615248940756821e-06,
+                "max_vertex": 4.632836442633714e-05,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "calibration_pairs_range": {
+        "cloth": {
+          "max_frame_rms": {
+            "min": 4.615248940756821e-06,
+            "max": 1.0941444814808607e-05
+          },
+          "max_vertex": {
+            "min": 4.632836442633714e-05,
+            "max": 6.474203455286961e-05
+          }
+        }
+      },
+      "holdout_vs_calibration1": [
+        {
+          "left": "calibration1_hang_original_stiff",
+          "right": "verification1_hang_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 9.219439773629431e-07,
+                "max_vertex": 4.308724490723297e-06,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_hang_original_stiff",
+          "right": "verification2_hang_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 5.27352958191083e-07,
+                "max_vertex": 3.899774411707208e-06,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "holdout_vs_calibration1_range": {
+        "cloth": {
+          "max_frame_rms": {
+            "min": 5.27352958191083e-07,
+            "max": 9.219439773629431e-07
+          },
+          "max_vertex": {
+            "min": 3.899774411707208e-06,
+            "max": 4.308724490723297e-06
+          }
+        }
+      }
+    },
+    "fixed": {
+      "calibration_pairs": [
+        {
+          "left": "calibration1_fixed_original_stiff",
+          "right": "calibration2_fixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.01759891411405631,
+                "max_vertex": 0.13963910432488771,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 1.5403385137911103e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_fixed_original_stiff",
+          "right": "calibration3_fixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.018990564123028478,
+                "max_vertex": 0.11361276096740869,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 7.843742421040819e-18,
+                "max_vertex": 2.7755575615628914e-17,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration2_fixed_original_stiff",
+          "right": "calibration3_fixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.024827914235653482,
+                "max_vertex": 0.1340064376732739,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 1.45564220086444e-17,
+                "max_vertex": 5.721958498152797e-17,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "calibration_pairs_range": {
+        "ABD": {
+          "max_frame_rms": {
+            "min": 7.843742421040819e-18,
+            "max": 1.5403385137911103e-17
+          },
+          "max_vertex": {
+            "min": 2.7755575615628914e-17,
+            "max": 6.206335383118183e-17
+          }
+        },
+        "cloth": {
+          "max_frame_rms": {
+            "min": 0.01759891411405631,
+            "max": 0.024827914235653482
+          },
+          "max_vertex": {
+            "min": 0.11361276096740869,
+            "max": 0.13963910432488771
+          }
+        }
+      },
+      "holdout_vs_calibration1": [
+        {
+          "left": "calibration1_fixed_original_stiff",
+          "right": "verification1_fixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.018745398743343397,
+                "max_vertex": 0.10912245581801573,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 6.818176563527469e-18,
+                "max_vertex": 2.7755575615628914e-17,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_fixed_original_stiff",
+          "right": "verification2_fixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.018554964843031922,
+                "max_vertex": 0.08868195969510191,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 2.979523566367167e-17,
+                "max_vertex": 7.850462293418876e-17,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "holdout_vs_calibration1_range": {
+        "ABD": {
+          "max_frame_rms": {
+            "min": 6.818176563527469e-18,
+            "max": 2.979523566367167e-17
+          },
+          "max_vertex": {
+            "min": 2.7755575615628914e-17,
+            "max": 7.850462293418876e-17
+          }
+        },
+        "cloth": {
+          "max_frame_rms": {
+            "min": 0.018554964843031922,
+            "max": 0.018745398743343397
+          },
+          "max_vertex": {
+            "min": 0.08868195969510191,
+            "max": 0.10912245581801573
+          }
+        }
+      }
+    },
+    "mixed": {
+      "calibration_pairs": [
+        {
+          "left": "calibration1_mixed_original_stiff",
+          "right": "calibration2_mixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.006313897616108907,
+                "max_vertex": 0.0363812885402849,
+                "frames": 101
+              },
+              "FEM": {
+                "max_frame_rms": 0.0030830152602403533,
+                "max_vertex": 0.027718071171409363,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 0.0009511638993197523,
+                "max_vertex": 0.0012463223336531886,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_mixed_original_stiff",
+          "right": "calibration3_mixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.010009049803380268,
+                "max_vertex": 0.06348534750841807,
+                "frames": 101
+              },
+              "FEM": {
+                "max_frame_rms": 0.002204999931906614,
+                "max_vertex": 0.028910440435391253,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 0.0013101354383770309,
+                "max_vertex": 0.0018663638982935932,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration2_mixed_original_stiff",
+          "right": "calibration3_mixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.008152145130817193,
+                "max_vertex": 0.06918950585783228,
+                "frames": 101
+              },
+              "FEM": {
+                "max_frame_rms": 0.0024404981518865326,
+                "max_vertex": 0.020951169776481527,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 0.0013285340818284103,
+                "max_vertex": 0.0015802361245711883,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "calibration_pairs_range": {
+        "ABD": {
+          "max_frame_rms": {
+            "min": 0.0009511638993197523,
+            "max": 0.0013285340818284103
+          },
+          "max_vertex": {
+            "min": 0.0012463223336531886,
+            "max": 0.0018663638982935932
+          }
+        },
+        "FEM": {
+          "max_frame_rms": {
+            "min": 0.002204999931906614,
+            "max": 0.0030830152602403533
+          },
+          "max_vertex": {
+            "min": 0.020951169776481527,
+            "max": 0.028910440435391253
+          }
+        },
+        "cloth": {
+          "max_frame_rms": {
+            "min": 0.006313897616108907,
+            "max": 0.010009049803380268
+          },
+          "max_vertex": {
+            "min": 0.0363812885402849,
+            "max": 0.06918950585783228
+          }
+        }
+      },
+      "holdout_vs_calibration1": [
+        {
+          "left": "calibration1_mixed_original_stiff",
+          "right": "verification1_mixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.006965343011490513,
+                "max_vertex": 0.05447543108063648,
+                "frames": 101
+              },
+              "FEM": {
+                "max_frame_rms": 0.0014651154949188766,
+                "max_vertex": 0.027944536821319536,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 0.0009768954388597745,
+                "max_vertex": 0.002065734677958923,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "calibration1_mixed_original_stiff",
+          "right": "verification2_mixed_original_stiff",
+          "difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.007990029046060254,
+                "max_vertex": 0.04343208618559216,
+                "frames": 101
+              },
+              "FEM": {
+                "max_frame_rms": 0.007797221825678565,
+                "max_vertex": 0.0657608047822141,
+                "frames": 101
+              },
+              "ABD": {
+                "max_frame_rms": 0.0011101341243284757,
+                "max_vertex": 0.0018284077373559476,
+                "frames": 101
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ],
+      "holdout_vs_calibration1_range": {
+        "ABD": {
+          "max_frame_rms": {
+            "min": 0.0009768954388597745,
+            "max": 0.0011101341243284757
+          },
+          "max_vertex": {
+            "min": 0.0018284077373559476,
+            "max": 0.002065734677958923
+          }
+        },
+        "FEM": {
+          "max_frame_rms": {
+            "min": 0.0014651154949188766,
+            "max": 0.007797221825678565
+          },
+          "max_vertex": {
+            "min": 0.027944536821319536,
+            "max": 0.0657608047822141
+          }
+        },
+        "cloth": {
+          "max_frame_rms": {
+            "min": 0.006965343011490513,
+            "max": 0.007990029046060254
+          },
+          "max_vertex": {
+            "min": 0.04343208618559216,
+            "max": 0.05447543108063648
+          }
+        }
+      }
+    }
+  },
+  "wall_seconds_cpu_diagnostic": 41.375
+}

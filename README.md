@@ -2,6 +2,16 @@
 
 IPC + CUDA Graph research code for contact cloth and mixed ABD/FEM scenes.
 
+The latest AutoDL RTX 4090 evaluation completed all 75 declared 100-frame runs
+with seven Stiff/combined pairs per scene. Paired median solver speedups were
+1.3613x (hanging cloth), 1.2860x (fixed-bunny cloth), and 1.1058x (mixed bunny).
+These are diagnostic measurements: independent baseline material holdouts
+failed the frozen range, and fixed cloth had a candidate stretch outlier.
+The three conditional 300-frame runs were skipped; same-quality 2x remains
+unachieved. Full raw archives and metadata were downloaded and hash verified.
+See the [full report](reports/autodl_full_20261006/FULL_TEST_REPORT.md) and
+[run index](reports/autodl_full_20261006/RUN_INDEX.csv).
+
 The latest local batch implemented guarded four-step conditional PCG Graphs.
 Seven native CTests (including 28 new boundary cases) and 105 Python CPU
 checks passed. Frozen short and contact-long systems completed seven paired
@@ -37,6 +47,7 @@ The active source is standalone; it no longer inherits historical overlays.
 | `Assets/`, `MeshProcess/` | Active input meshes and partition dependency |
 | `tests/` | Numerical and configuration invariants |
 | `tools/bench/` | Portable, bounded, serial GPU experiments and analysis |
+| `tools/full_eval/` | Sealed four-arm full-run controller, identity checks and analysis |
 | `tools/validator/`, `references/tight_inclusion/` | Independent CPU path audit |
 | `docs/` | Current execution plan and component decisions |
 | `history/` | Historical reports and program identities, without version copies |
@@ -61,8 +72,11 @@ and timing outputs remain outside Git; compact reports and identities are saved.
 Each optimization round is analyzed before advancing. See
 [`docs/EXECUTION_PLAN_20261006.md`](docs/EXECUTION_PLAN_20261006.md).
 
-The current execution target is the local Windows workstation, as requested on
-2026-10-06. See [`docs/LOCAL_EXECUTION_PLAN_20261006.md`](docs/LOCAL_EXECUTION_PLAN_20261006.md)
+The latest execution target is AutoDL, as requested on 2026-10-07; its clean
+Linux binaries have separate identities from the prior Windows experiments.
+See [`docs/AUTODL_FULL_TEST_PLAN_20261006.md`](docs/AUTODL_FULL_TEST_PLAN_20261006.md)
+and [`reports/STATUS_20261007.md`](reports/STATUS_20261007.md).
+The preceding local work follows [`docs/LOCAL_EXECUTION_PLAN_20261006.md`](docs/LOCAL_EXECUTION_PLAN_20261006.md)
 and [`docs/CURRENT_COMPONENTS.md`](docs/CURRENT_COMPONENTS.md). Windows builds
 assign independent object names to every source, including the two PCG sources
 whose filenames differ only in case. The latest Step3 Windows build has a sealed
@@ -77,7 +91,7 @@ off. Two protected Windows Nsight captures now separate actual kernel work from
 CPU waiting; no native solver code changed in Step4. Full quality/100-frame
 regression remains pending, and prior material/resource failures are preserved.
 These are not certified speedups.
-See [`reports/STATUS_20261006.md`](reports/STATUS_20261006.md) for the current result
+See [`reports/STATUS_20261006.md`](reports/STATUS_20261006.md) for that local result
 and [`reports/local_step4/ROUND_REVIEW.md`](reports/local_step4/ROUND_REVIEW.md)
 for the per-round analysis and speed-comparison explanation. The 4090 evidence
 remains a separate program identity.

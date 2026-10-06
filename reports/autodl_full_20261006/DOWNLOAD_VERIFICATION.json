@@ -1,0 +1,15 @@
+{
+  "schema": "autodl_full_download_verification.v1",
+  "source_commit": "5e2f9bba4abadf21591aa28d4e6b039447c3f181",
+  "metadata_archive_sha256": "fb83ff6d218de97a8e4425fde5e3a2eef1647e184254be3478ec3dc5baec87a8",
+  "metadata_archive_bytes": 7737408,
+  "inventory_sha256": "b91731f8c3ba9e4d26ef04fb5341ee912f5b83750e387ab6d804f5b873277a43",
+  "metadata_files_verified": 1404,
+  "raw_archives_verified": 75,
+  "raw_archive_bytes": 3459585416,
+  "remote_download_receipts_verified": 75,
+  "ledger_records": 78,
+  "ledger_complete": true,
+  "quality_certified": false,
+  "archive_payload_verification": "Remote preparation verified every original raw member before download; local whole-archive SHA and bytes match that preparation and persistence receipt."
+}
