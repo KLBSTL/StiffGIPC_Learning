@@ -1,9 +1,0 @@
-{
-  "report": "reports/active/OUTER_EXIT_PROBE_BATCH_20261005.json",
-  "stop_on_failure": true,
-  "runs": [
-    {"name":"outer_exit_native_20261005", "config":{"preset":"toi","steps":35,"timeout_seconds":90,"mas_restrict":"warp","diagnostics":["outer_probe"],"cost_frames":"33-35"}},
-    {"name":"outer_exit_selected_r1_20261005", "config":{"preset":"toi","steps":35,"timeout_seconds":90,"mas_restrict":"warp","diagnostics":["outer_probe"],"cost_frames":"33-35","full_step_exit_probe":"34:2"}},
-    {"name":"outer_exit_selected_r2_20261005", "config":{"preset":"toi","steps":35,"timeout_seconds":90,"mas_restrict":"warp","diagnostics":["outer_probe"],"cost_frames":"33-35","full_step_exit_probe":"34:2"}}
-  ]
-}

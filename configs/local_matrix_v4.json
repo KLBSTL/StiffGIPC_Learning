@@ -1,1 +1,0 @@
-{"name":"local_four_arm_v4","platform":"local","scenes":["cloth_hang_l","cloth_sphere7_l","cloth_table_l","cloth_fixed_bunny_l","bunny_cloth_bunny_l","boxes1920_cloth_l","cloth_stack10_l"],"arms":["base","base_graph","base_toi","base_toi_graph"],"pilot_steps":2,"pilot_timeout":120,"steps":100,"timeout":180,"repeats":3,"trace_stride":100,"tol":0.01,"pcg_tol":0.0001}

@@ -1,0 +1,1610 @@
+[
+  {
+    "Bytes": 208798363.0,
+    "Path": "sources",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 3751
+  },
+  {
+    "Bytes": 302233.0,
+    "Path": "configs",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 93
+  },
+  {
+    "Bytes": 1102362.0,
+    "Path": "tools/active",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 104
+  },
+  {
+    "Bytes": 868772.0,
+    "Path": "references/graph_v3",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 14
+  },
+  {
+    "Bytes": 612287.0,
+    "Path": "references/paper_al",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 23
+  },
+  {
+    "Bytes": 278623.0,
+    "Path": "references/robust_local",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 18
+  },
+  {
+    "Bytes": 3273.0,
+    "Path": "tools/analyze_branch_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 6969.0,
+    "Path": "tools/analyze_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2973.0,
+    "Path": "tools/analyze_bunny_physics.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4971.0,
+    "Path": "tools/analyze_cholesky_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5663.0,
+    "Path": "tools/analyze_events_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5738.0,
+    "Path": "tools/analyze_events_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3117.0,
+    "Path": "tools/analyze_failure_pcg_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2699.0,
+    "Path": "tools/analyze_first_collision.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2891.0,
+    "Path": "tools/analyze_fixture_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3002.0,
+    "Path": "tools/analyze_fixture_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 9746.0,
+    "Path": "tools/analyze_full_energy_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8133.0,
+    "Path": "tools/analyze_local_v45.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8256.0,
+    "Path": "tools/analyze_local_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8256.0,
+    "Path": "tools/analyze_local_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8252.0,
+    "Path": "tools/analyze_local_v50.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8252.0,
+    "Path": "tools/analyze_local_v51.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8252.0,
+    "Path": "tools/analyze_local_v52.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8252.0,
+    "Path": "tools/analyze_local_v53.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 8252.0,
+    "Path": "tools/analyze_local_v54.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3144.0,
+    "Path": "tools/analyze_mas_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7316.0,
+    "Path": "tools/analyze_models_v48.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4173.0,
+    "Path": "tools/analyze_pcg_replay.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 6800.0,
+    "Path": "tools/analyze_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 6015.0,
+    "Path": "tools/analyze_perf_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5284.0,
+    "Path": "tools/analyze_replay_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2273.0,
+    "Path": "tools/analyze_replay_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5462.0,
+    "Path": "tools/analyze_replay_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3555.0,
+    "Path": "tools/analyze_robust_diagnostics.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 11293.0,
+    "Path": "tools/analyze_robust_speed_gap.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2404.0,
+    "Path": "tools/analyze_runs.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4480.0,
+    "Path": "tools/analyze_stages_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2366.0,
+    "Path": "tools/analyze_state_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2743.0,
+    "Path": "tools/analyze_strict_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2174.0,
+    "Path": "tools/analyze_strict_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2054.0,
+    "Path": "tools/analyze_timeout_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3643.0,
+    "Path": "tools/analyze_toi_deformation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4126.0,
+    "Path": "tools/analyze_toi_singularity.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4597.0,
+    "Path": "tools/analyze_toi_work_20261001.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7134.0,
+    "Path": "tools/analyze_v53_cloth.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7336.0,
+    "Path": "tools/analyze_v54_batch.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7748.0,
+    "Path": "tools/analyze_v54_cloth.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5460.0,
+    "Path": "tools/analyze_v54_dt.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7922.0,
+    "Path": "tools/analyze_v54_exit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2662.0,
+    "Path": "tools/analyze_v54_sphere_system.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3262.0,
+    "Path": "tools/audit_bounded_v52.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3949.0,
+    "Path": "tools/audit_initial_guess_v53.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2782.0,
+    "Path": "tools/audit_negative_blocks_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4939.0,
+    "Path": "tools/audit_negative_blocks_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4849.0,
+    "Path": "tools/audit_robust_port_feasibility.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1812.0,
+    "Path": "tools/audit_v54_fixed_obstacles.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1268.0,
+    "Path": "tools/autodl_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1579.0,
+    "Path": "tools/autodl_v32_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2236.0,
+    "Path": "tools/autodl_v34_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1329.0,
+    "Path": "tools/autodl_v36_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1329.0,
+    "Path": "tools/autodl_v37_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1329.0,
+    "Path": "tools/autodl_v39_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1329.0,
+    "Path": "tools/autodl_v41_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1354.0,
+    "Path": "tools/autodl_v43_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1354.0,
+    "Path": "tools/autodl_v44_build.sh",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1386.0,
+    "Path": "tools/baseline_direction_v46.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1991.0,
+    "Path": "tools/benchmark_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2478.0,
+    "Path": "tools/benchmark_events_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2510.0,
+    "Path": "tools/benchmark_events_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4017.0,
+    "Path": "tools/benchmark_local_preconditioners_v33.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5222.0,
+    "Path": "tools/benchmark_local_v45.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2477.0,
+    "Path": "tools/benchmark_pcg_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4674.0,
+    "Path": "tools/benchmark_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3476.0,
+    "Path": "tools/benchmark_perf_v35.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4393.0,
+    "Path": "tools/benchmark_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2615.0,
+    "Path": "tools/benchmark_perf_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3189.0,
+    "Path": "tools/benchmark_perf_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4478.0,
+    "Path": "tools/benchmark_perf_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4849.0,
+    "Path": "tools/benchmark_perf_v43_initial.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4906.0,
+    "Path": "tools/benchmark_perf_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2338.0,
+    "Path": "tools/benchmark_perf_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2070.0,
+    "Path": "tools/benchmark_replay_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2081.0,
+    "Path": "tools/benchmark_replay_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5060.0,
+    "Path": "tools/benchmark_robust_port.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5314.0,
+    "Path": "tools/benchmark_v32_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 576.0,
+    "Path": "tools/check_robust_port_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1900.0,
+    "Path": "tools/check_validator_material.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1402.0,
+    "Path": "tools/check_volume_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5766.0,
+    "Path": "tools/cleanup_autodl_history.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4895.0,
+    "Path": "tools/cleanup_history_20261003.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3257.0,
+    "Path": "tools/cleanup_local_factors_20261004.ps1",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5014.0,
+    "Path": "tools/cleanup_stiffgipc_20261004.ps1",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1789.0,
+    "Path": "tools/collect_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4557.0,
+    "Path": "tools/compare_runs_stdlib.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3504.0,
+    "Path": "tools/compare_runs.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2015.0,
+    "Path": "tools/continue_v54_exit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4477.0,
+    "Path": "tools/curvature_models_v48.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1203.0,
+    "Path": "tools/dedup_factors_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1201.0,
+    "Path": "tools/dump_inverse_v38.cu",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5457.0,
+    "Path": "tools/event_model_v48.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1951.0,
+    "Path": "tools/export_perf_v34_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1222.0,
+    "Path": "tools/export_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1045.0,
+    "Path": "tools/extract_verified_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1085.0,
+    "Path": "tools/extract_verified_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1321.0,
+    "Path": "tools/fetch_al_reference.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3210.0,
+    "Path": "tools/final_verify_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 10319.0,
+    "Path": "tools/finalize_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4124.0,
+    "Path": "tools/finalize_local_v45.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3477.0,
+    "Path": "tools/finalize_models_v48.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1977.0,
+    "Path": "tools/finalize_pcg_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1900.0,
+    "Path": "tools/finalize_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1880.0,
+    "Path": "tools/finalize_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1679.0,
+    "Path": "tools/finalize_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2623.0,
+    "Path": "tools/finalize_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1299.0,
+    "Path": "tools/finalize_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3569.0,
+    "Path": "tools/finalize_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2064.0,
+    "Path": "tools/finalize_v54_batch.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2815.0,
+    "Path": "tools/finalize_v54_dt.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1195.0,
+    "Path": "tools/finish_fixtures_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1522.0,
+    "Path": "tools/fixtures_local_v55.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1522.0,
+    "Path": "tools/fixtures_local_v56.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1310.0,
+    "Path": "tools/freeze_local_v45.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1325.0,
+    "Path": "tools/freeze_local_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1321.0,
+    "Path": "tools/freeze_local_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1312.0,
+    "Path": "tools/freeze_local_v50.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1506.0,
+    "Path": "tools/freeze_local_v51.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1504.0,
+    "Path": "tools/freeze_local_v52.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1504.0,
+    "Path": "tools/freeze_local_v53.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1719.0,
+    "Path": "tools/freeze_local_v54.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1852.0,
+    "Path": "tools/freeze_local_v55.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1859.0,
+    "Path": "tools/freeze_local_v56.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1410.0,
+    "Path": "tools/freeze_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1542.0,
+    "Path": "tools/freeze_port_manifest.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3259.0,
+    "Path": "tools/freeze_robust_reference.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2612.0,
+    "Path": "tools/freeze_scenes.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2442.0,
+    "Path": "tools/freeze_sources.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 806.0,
+    "Path": "tools/freeze_validator.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 591.0,
+    "Path": "tools/generate_mas_inverse_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 792.0,
+    "Path": "tools/generate_mas_wide_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2439.0,
+    "Path": "tools/inspect_warm_first_ccd.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2722.0,
+    "Path": "tools/local_perf_v33.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3073.0,
+    "Path": "tools/mas_spectra_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2100.0,
+    "Path": "tools/package_for_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1991.0,
+    "Path": "tools/package_perf_v34_cuda128_patch.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1587.0,
+    "Path": "tools/package_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1148.0,
+    "Path": "tools/package_v32_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4912.0,
+    "Path": "tools/physical_metrics.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4417.0,
+    "Path": "tools/plot_blocker_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2337.0,
+    "Path": "tools/plot_v32_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4702.0,
+    "Path": "tools/plot_velocity_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5521.0,
+    "Path": "tools/plot_warm_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4472.0,
+    "Path": "tools/precheck_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2283.0,
+    "Path": "tools/precision_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1722.0,
+    "Path": "tools/preflight.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1842.0,
+    "Path": "tools/prepare_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1832.0,
+    "Path": "tools/prepare_perf_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1836.0,
+    "Path": "tools/prepare_perf_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1837.0,
+    "Path": "tools/prepare_perf_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1874.0,
+    "Path": "tools/prepare_perf_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1864.0,
+    "Path": "tools/prepare_perf_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3043.0,
+    "Path": "tools/prepare_replay_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1068.0,
+    "Path": "tools/prepare_replay_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1183.0,
+    "Path": "tools/prepare_replay_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1257.0,
+    "Path": "tools/prepare_strict_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1159.0,
+    "Path": "tools/probe_failure_cg_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1738.0,
+    "Path": "tools/probe_failure_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1901.0,
+    "Path": "tools/probe_precision_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 9350.0,
+    "Path": "tools/probe_robust_standalone.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3745.0,
+    "Path": "tools/profile_perf_v35.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4152.0,
+    "Path": "tools/quality_direction_v46.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 6558.0,
+    "Path": "tools/quality_v53_followup.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2208.0,
+    "Path": "tools/reference_event_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2351.0,
+    "Path": "tools/render_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3404.0,
+    "Path": "tools/render_v53_cloth.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4053.0,
+    "Path": "tools/render_v54_batch.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3412.0,
+    "Path": "tools/render_v54_cloth.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3647.0,
+    "Path": "tools/render_v54_dt.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3256.0,
+    "Path": "tools/render_v54_exit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2732.0,
+    "Path": "tools/render_v54_peaks.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1739.0,
+    "Path": "tools/repeat_smoke_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 10874.0,
+    "Path": "tools/report_blocker_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 19949.0,
+    "Path": "tools/report_local_perf_v33.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5983.0,
+    "Path": "tools/report_matrix.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 17075.0,
+    "Path": "tools/report_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 17153.0,
+    "Path": "tools/report_perf_v35.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7796.0,
+    "Path": "tools/report_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5484.0,
+    "Path": "tools/report_robust_port_probe.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3741.0,
+    "Path": "tools/report_strict_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 20666.0,
+    "Path": "tools/report_v32_autodl.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 21941.0,
+    "Path": "tools/report_v32_results.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 21739.0,
+    "Path": "tools/report_velocity_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 10421.0,
+    "Path": "tools/report_warm_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3168.0,
+    "Path": "tools/review_direction_v46.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5136.0,
+    "Path": "tools/run_blocker_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5881.0,
+    "Path": "tools/run_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5974.0,
+    "Path": "tools/run_bunny_v55.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5976.0,
+    "Path": "tools/run_bunny_v56.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3135.0,
+    "Path": "tools/run_local_perf_v33.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 16128.0,
+    "Path": "tools/run_local.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3362.0,
+    "Path": "tools/run_matrix.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 17798.0,
+    "Path": "tools/run_perf_v34_local_frozen.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 17803.0,
+    "Path": "tools/run_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 18461.0,
+    "Path": "tools/run_perf_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 18824.0,
+    "Path": "tools/run_perf_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 19191.0,
+    "Path": "tools/run_perf_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 19306.0,
+    "Path": "tools/run_perf_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 19690.0,
+    "Path": "tools/run_perf_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 20300.0,
+    "Path": "tools/run_perf_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 22625.0,
+    "Path": "tools/run_perf_v45.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23624.0,
+    "Path": "tools/run_perf_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23636.0,
+    "Path": "tools/run_perf_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23743.0,
+    "Path": "tools/run_perf_v50.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23753.0,
+    "Path": "tools/run_perf_v51.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23869.0,
+    "Path": "tools/run_perf_v52.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23866.0,
+    "Path": "tools/run_perf_v53.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 23996.0,
+    "Path": "tools/run_perf_v54.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1246.0,
+    "Path": "tools/run_reference_event_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1316.0,
+    "Path": "tools/run_reference_v49.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2723.0,
+    "Path": "tools/run_replay_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 17683.0,
+    "Path": "tools/run_robust_port.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1372.0,
+    "Path": "tools/run_strict_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1869.0,
+    "Path": "tools/run_v53_cloth.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1804.0,
+    "Path": "tools/run_v53_reference.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3780.0,
+    "Path": "tools/run_v54_batch.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1961.0,
+    "Path": "tools/run_v54_dt.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5116.0,
+    "Path": "tools/run_v54_exit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1477.0,
+    "Path": "tools/run_v54_perturb.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2452.0,
+    "Path": "tools/run_v54_tests.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7427.0,
+    "Path": "tools/run_velocity_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5647.0,
+    "Path": "tools/run_warm_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3226.0,
+    "Path": "tools/segment_diagnostics.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1294.0,
+    "Path": "tools/source_inventory.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2840.0,
+    "Path": "tools/strict_compare_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1571.0,
+    "Path": "tools/strict_replay_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1849.0,
+    "Path": "tools/summarize_autodl_ablations.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3936.0,
+    "Path": "tools/summarize_cost_trace_active.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1217.0,
+    "Path": "tools/summarize_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4008.0,
+    "Path": "tools/summarize_v47.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3949.0,
+    "Path": "tools/summarize_v54.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1775.0,
+    "Path": "tools/summarize_watched_contact.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1443.0,
+    "Path": "tools/test_toi_port_policy.cpp",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 790.0,
+    "Path": "tools/unpack_perf_results.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4011.0,
+    "Path": "tools/validate_local_perf_v33.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1820.0,
+    "Path": "tools/validate_perf_v34.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2070.0,
+    "Path": "tools/validate_v32_paths.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1699.0,
+    "Path": "tools/validate_v50.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1699.0,
+    "Path": "tools/validate_v51.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1745.0,
+    "Path": "tools/validate_v52.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1744.0,
+    "Path": "tools/validate_v53.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2293.0,
+    "Path": "tools/validate_warm_paths.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5033.0,
+    "Path": "tools/verify_blocker_audit.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2389.0,
+    "Path": "tools/verify_bunny_components.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1813.0,
+    "Path": "tools/verify_paths_v36.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2423.0,
+    "Path": "tools/verify_pcg_v40.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4330.0,
+    "Path": "tools/verify_perf_v37.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3885.0,
+    "Path": "tools/verify_replay_v38.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 540.0,
+    "Path": "tools/verify_upload.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 7391.0,
+    "Path": "tools/verify_v32_autodl_results.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1398.0,
+    "Path": "tools/verify_v32_freeze.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2811.0,
+    "Path": "tools/verify_v39.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 4510.0,
+    "Path": "tools/verify_v41.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3142.0,
+    "Path": "tools/verify_v42.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5131.0,
+    "Path": "tools/verify_v43.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 1959.0,
+    "Path": "tools/verify_v44.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 2816.0,
+    "Path": "tools/verify_v53_base.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 5761.0,
+    "Path": "tools/verify_velocity_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 6256.0,
+    "Path": "tools/verify_warm_ablation.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  },
+  {
+    "Bytes": 3532.0,
+    "Path": "tools/volume_path_metrics.py",
+    "RecoveryTag": "archive/pre-cleanup-20261006",
+    "Files": 1
+  }
+]

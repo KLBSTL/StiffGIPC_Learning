@@ -1,0 +1,2 @@
+# Preserve exact source and protocol bytes on Windows and Linux.
+* -text

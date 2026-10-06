@@ -1,0 +1,2867 @@
+//
+// mlbvh.cu
+// GIPC
+//
+// created by Kemeng Huang on 2022/12/01
+// Copyright (c) 2024 Kemeng Huang. All rights reserved.
+//
+
+#include "mlbvh.cuh"
+#include <cfloat>
+#include <cmath>
+#include "cuda_tools/cuda_tools.h"
+#include <cuda_tools/cuda_cub_wrappers.h>
+#include <iostream>
+#include <fstream>
+#include <utility>
+#include <math/gpu_eigen_libs.cuh>
+#include <limits>
+#include <gipc/cost_trace.h>
+
+__device__ __host__ inline AABB merge(const AABB& lhs, const AABB& rhs) noexcept
+{
+    AABB merged;
+    merged.upper.x = std::max(lhs.upper.x, rhs.upper.x);
+    merged.upper.y = std::max(lhs.upper.y, rhs.upper.y);
+    merged.upper.z = std::max(lhs.upper.z, rhs.upper.z);
+    merged.lower.x = std::min(lhs.lower.x, rhs.lower.x);
+    merged.lower.y = std::min(lhs.lower.y, rhs.lower.y);
+    merged.lower.z = std::min(lhs.lower.z, rhs.lower.z);
+    return merged;
+}
+
+struct MergeAABB
+{
+    __device__ __host__ AABB operator()(const AABB& lhs, const AABB& rhs) const noexcept
+    {
+        return merge(lhs, rhs);
+    }
+};
+
+__global__ void fill_bvh_indices_kernel(uint32_t* indices, int number)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if(i < number)
+        indices[i] = static_cast<uint32_t>(i);
+}
+
+__device__ __host__ inline bool overlap(const AABB& lhs, const AABB& rhs, const double& gapL) noexcept
+{
+    if((rhs.lower.x - lhs.upper.x) >= gapL || (lhs.lower.x - rhs.upper.x) >= gapL)
+        return false;
+    if((rhs.lower.y - lhs.upper.y) >= gapL || (lhs.lower.y - rhs.upper.y) >= gapL)
+        return false;
+    if((rhs.lower.z - lhs.upper.z) >= gapL || (lhs.lower.z - rhs.upper.z) >= gapL)
+        return false;
+    return true;
+}
+
+__device__ __host__ inline double3 centroid(const AABB& box) noexcept
+{
+    double3 c;
+    c.x = (box.upper.x + box.lower.x) * 0.5;
+    c.y = (box.upper.y + box.lower.y) * 0.5;
+    c.z = (box.upper.z + box.lower.z) * 0.5;
+    return c;
+}
+
+__device__ __host__ inline double normalized_axis(double offset, double extent) noexcept
+{
+    return extent > 0.0 ? offset / extent : 0.0;
+}
+
+__device__ __host__ inline std::uint32_t expand_bits(std::uint32_t v) noexcept
+{
+    v = (v * 0x00010001u) & 0xFF0000FFu;
+    v = (v * 0x00000101u) & 0x0F00F00Fu;
+    v = (v * 0x00000011u) & 0xC30C30C3u;
+    v = (v * 0x00000005u) & 0x49249249u;
+    return v;
+}
+
+__device__ __host__ inline std::uint32_t morton_code(double x,
+                                                     double y,
+                                                     double z,
+                                                     double resolution = 1024.0) noexcept
+{
+    x = std::min(std::max(x * resolution, 0.0), resolution - 1.0);
+    y = std::min(std::max(y * resolution, 0.0), resolution - 1.0);
+    z = std::min(std::max(z * resolution, 0.0), resolution - 1.0);
+
+    const std::uint32_t xx = expand_bits(static_cast<std::uint32_t>(x));
+    const std::uint32_t yy = expand_bits(static_cast<std::uint32_t>(y));
+    const std::uint32_t zz = expand_bits(static_cast<std::uint32_t>(z));
+
+    std::uint32_t mchash = ((xx << 2) + (yy << 1) + zz);
+
+    return mchash;
+}
+
+__device__ __host__ void AABB::combines(const double& x, const double& y, const double& z)
+{
+    lower = make_double3(std::min(lower.x, x), std::min(lower.y, y), std::min(lower.z, z));
+    upper = make_double3(std::max(upper.x, x), std::max(upper.y, y), std::max(upper.z, z));
+}
+
+__device__ __host__ void AABB::combines(const double& x,
+                                        const double& y,
+                                        const double& z,
+                                        const double& xx,
+                                        const double& yy,
+                                        const double& zz)
+{
+    lower = make_double3(std::min(lower.x, x), std::min(lower.y, y), std::min(lower.z, z));
+    upper =
+        make_double3(std::max(upper.x, xx), std::max(upper.y, yy), std::max(upper.z, zz));
+}
+
+__host__ __device__ void AABB::combines(const AABB& aabb)
+{
+    lower = make_double3(std::min(lower.x, aabb.lower.x),
+                         std::min(lower.y, aabb.lower.y),
+                         std::min(lower.z, aabb.lower.z));
+    upper = make_double3(std::max(upper.x, aabb.upper.x),
+                         std::max(upper.y, aabb.upper.y),
+                         std::max(upper.z, aabb.upper.z));
+}
+
+__host__ __device__ double3 AABB::center()
+{
+    return make_double3((upper.x + lower.x) * 0.5,
+                        (upper.y + lower.y) * 0.5,
+                        (upper.z + lower.z) * 0.5);
+}
+
+__device__ __host__ AABB::AABB()
+{
+    lower = make_double3(DBL_MAX, DBL_MAX, DBL_MAX);
+    upper = make_double3(-DBL_MAX, -DBL_MAX, -DBL_MAX);
+}
+
+//__device__
+//inline int common_upper_bits(const unsigned int lhs, const unsigned int rhs) noexcept
+//{
+//    return ::__clz(lhs ^ rhs);
+//}
+__device__ inline int common_upper_bits(const unsigned long long int lhs,
+                                        const unsigned long long int rhs) noexcept
+{
+    return ::__clzll(lhs ^ rhs);
+}
+
+
+__device__ inline uint2 determine_range(const uint64_t*    node_code,
+                                        const unsigned int num_leaves,
+                                        unsigned int       idx)
+{
+    if(idx == 0)
+    {
+        return make_uint2(0, num_leaves - 1);
+    }
+
+    // determine direction of the range
+    const uint64_t self_code = node_code[idx];
+    const int      L_delta   = common_upper_bits(self_code, node_code[idx - 1]);
+    const int      R_delta   = common_upper_bits(self_code, node_code[idx + 1]);
+    const int      d         = (R_delta > L_delta) ? 1 : -1;
+
+    // Compute upper bound for the length of the range
+
+    const int delta_min = std::min(L_delta, R_delta);
+    int       l_max     = 2;
+    int       delta     = -1;
+    int       i_tmp     = idx + d * l_max;
+    if(0 <= i_tmp && i_tmp < num_leaves)
+    {
+        delta = common_upper_bits(self_code, node_code[i_tmp]);
+    }
+    while(delta > delta_min)
+    {
+        l_max <<= 1;
+        i_tmp = idx + d * l_max;
+        delta = -1;
+        if(0 <= i_tmp && i_tmp < num_leaves)
+        {
+            delta = common_upper_bits(self_code, node_code[i_tmp]);
+        }
+    }
+
+    // Find the other end by binary search
+    int l = 0;
+    int t = l_max >> 1;
+    while(t > 0)
+    {
+        i_tmp = idx + (l + t) * d;
+        delta = -1;
+        if(0 <= i_tmp && i_tmp < num_leaves)
+        {
+            delta = common_upper_bits(self_code, node_code[i_tmp]);
+        }
+        if(delta > delta_min)
+        {
+            l += t;
+        }
+        t >>= 1;
+    }
+    unsigned int jdx = idx + l * d;
+    if(d < 0)
+    {
+        unsigned int temp_jdx = jdx;
+        jdx                   = idx;
+        idx                   = temp_jdx;
+    }
+    return make_uint2(idx, jdx);
+}
+
+__device__ inline unsigned int find_split(const uint64_t*    node_code,
+                                          const unsigned int num_leaves,
+                                          const unsigned int first,
+                                          const unsigned int last) noexcept
+{
+    const uint64_t first_code = node_code[first];
+    const uint64_t last_code  = node_code[last];
+    if(first_code == last_code)
+    {
+        return (first + last) >> 1;
+    }
+    const int delta_node = common_upper_bits(first_code, last_code);
+
+    // binary search...
+    int split  = first;
+    int stride = last - first;
+    do
+    {
+        stride           = (stride + 1) >> 1;
+        const int middle = split + stride;
+        if(middle < last)
+        {
+            const int delta = common_upper_bits(first_code, node_code[middle]);
+            if(delta > delta_node)
+            {
+                split = middle;
+            }
+        }
+    } while(stride > 1);
+
+    return split;
+}
+
+__device__ void _d_PP(const double3& v0, const double3& v1, double& d)
+{
+    d = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1));
+}
+
+__device__ void _d_PT(const double3& v0, const double3& v1, const double3& v2, const double3& v3, double& d)
+{
+    double3 b    = __GEIGEN__::__v_vec_cross(__GEIGEN__::__minus(v2, v1),
+                                          __GEIGEN__::__minus(v3, v1));
+    double3 test = __GEIGEN__::__minus(v0, v1);
+    double aTb = __GEIGEN__::__v_vec_dot(__GEIGEN__::__minus(v0, v1), b);  //(v0 - v1).dot(b);
+    //printf("%f   %f   %f          %f   %f   %f   %f\n", b.x, b.y, b.z, test.x, test.y, test.z, aTb);
+    d = aTb * aTb / __GEIGEN__::__squaredNorm(b);
+}
+
+__device__ void _d_PE(const double3& v0, const double3& v1, const double3& v2, double& d)
+{
+    d = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+            __GEIGEN__::__minus(v1, v0), __GEIGEN__::__minus(v2, v0)))
+        / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v2, v1));
+}
+
+__device__ void _d_EE(const double3& v0, const double3& v1, const double3& v2, const double3& v3, double& d)
+{
+    double3 b = __GEIGEN__::__v_vec_cross(__GEIGEN__::__minus(v1, v0),
+                                          __GEIGEN__::__minus(v3, v2));  //(v1 - v0).cross(v3 - v2);
+    double aTb = __GEIGEN__::__v_vec_dot(__GEIGEN__::__minus(v2, v0), b);  //(v2 - v0).dot(b);
+    d = aTb * aTb / __GEIGEN__::__squaredNorm(b);
+}
+
+
+__device__ void _d_EEParallel(const double3& v0,
+                              const double3& v1,
+                              const double3& v2,
+                              const double3& v3,
+                              double&        d)
+{
+    double3 b = __GEIGEN__::__v_vec_cross(
+        __GEIGEN__::__v_vec_cross(__GEIGEN__::__minus(v1, v0), __GEIGEN__::__minus(v2, v0)),
+        __GEIGEN__::__minus(v1, v0));
+    double aTb = __GEIGEN__::__v_vec_dot(__GEIGEN__::__minus(v2, v0), b);  //(v2 - v0).dot(b);
+    d = aTb * aTb / __GEIGEN__::__squaredNorm(b);
+}
+
+__device__ double _compute_epx(const double3& v0, const double3& v1, const double3& v2, const double3& v3)
+{
+    return 1e-3 * __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))
+           * __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v2, v3));
+}
+
+__device__ double _compute_epx_cp(const double3& v0,
+                                  const double3& v1,
+                                  const double3& v2,
+                                  const double3& v3)
+{
+    return 1e-3 * __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))
+           * __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v2, v3));
+}
+
+__device__ int _dType_PT(const double3& v0, const double3& v1, const double3& v2, const double3& v3)
+{
+    double3 basis0 = __GEIGEN__::__minus(v2, v1);
+    double3 basis1 = __GEIGEN__::__minus(v3, v1);
+    double3 basis2 = __GEIGEN__::__minus(v0, v1);
+
+    const double3 nVec = __GEIGEN__::__v_vec_cross(basis0, basis1);
+
+    basis1 = __GEIGEN__::__v_vec_cross(basis0, nVec);
+    __GEIGEN__::Matrix3x3d D, D1, D2;
+
+    __GEIGEN__::__set_Mat_val(D,
+                              basis0.x,
+                              basis1.x,
+                              nVec.x,
+                              basis0.y,
+                              basis1.y,
+                              nVec.y,
+                              basis0.z,
+                              basis1.z,
+                              nVec.z);
+    __GEIGEN__::__set_Mat_val(D1,
+                              basis2.x,
+                              basis1.x,
+                              nVec.x,
+                              basis2.y,
+                              basis1.y,
+                              nVec.y,
+                              basis2.z,
+                              basis1.z,
+                              nVec.z);
+    __GEIGEN__::__set_Mat_val(D2,
+                              basis0.x,
+                              basis2.x,
+                              nVec.x,
+                              basis0.y,
+                              basis2.y,
+                              nVec.y,
+                              basis0.z,
+                              basis2.z,
+                              nVec.z);
+
+    double2 param[3];
+    param[0].x = __GEIGEN__::__Determiant(D1) / __GEIGEN__::__Determiant(D);
+    param[0].y = __GEIGEN__::__Determiant(D2) / __GEIGEN__::__Determiant(D);
+
+    if(param[0].x > 0 && param[0].x < 1 && param[0].y >= 0)
+    {
+        return 3;  // PE v1v2
+    }
+    else
+    {
+        basis0 = __GEIGEN__::__minus(v3, v2);
+        basis1 = __GEIGEN__::__v_vec_cross(basis0, nVec);
+        basis2 = __GEIGEN__::__minus(v0, v2);
+
+        __GEIGEN__::__set_Mat_val(D,
+                                  basis0.x,
+                                  basis1.x,
+                                  nVec.x,
+                                  basis0.y,
+                                  basis1.y,
+                                  nVec.y,
+                                  basis0.z,
+                                  basis1.z,
+                                  nVec.z);
+        __GEIGEN__::__set_Mat_val(D1,
+                                  basis2.x,
+                                  basis1.x,
+                                  nVec.x,
+                                  basis2.y,
+                                  basis1.y,
+                                  nVec.y,
+                                  basis2.z,
+                                  basis1.z,
+                                  nVec.z);
+        __GEIGEN__::__set_Mat_val(D2,
+                                  basis0.x,
+                                  basis2.x,
+                                  nVec.x,
+                                  basis0.y,
+                                  basis2.y,
+                                  nVec.y,
+                                  basis0.z,
+                                  basis2.z,
+                                  nVec.z);
+
+        param[1].x = __GEIGEN__::__Determiant(D1) / __GEIGEN__::__Determiant(D);
+        param[1].y = __GEIGEN__::__Determiant(D2) / __GEIGEN__::__Determiant(D);
+
+        if(param[1].x > 0.0 && param[1].x < 1.0 && param[1].y >= 0.0)
+        {
+            return 4;  // PE v2v3
+        }
+        else
+        {
+            basis0 = __GEIGEN__::__minus(v1, v3);
+            basis1 = __GEIGEN__::__v_vec_cross(basis0, nVec);
+            basis2 = __GEIGEN__::__minus(v0, v3);
+
+            __GEIGEN__::__set_Mat_val(D,
+                                      basis0.x,
+                                      basis1.x,
+                                      nVec.x,
+                                      basis0.y,
+                                      basis1.y,
+                                      nVec.y,
+                                      basis0.z,
+                                      basis1.z,
+                                      nVec.z);
+            __GEIGEN__::__set_Mat_val(D1,
+                                      basis2.x,
+                                      basis1.x,
+                                      nVec.x,
+                                      basis2.y,
+                                      basis1.y,
+                                      nVec.y,
+                                      basis2.z,
+                                      basis1.z,
+                                      nVec.z);
+            __GEIGEN__::__set_Mat_val(D2,
+                                      basis0.x,
+                                      basis2.x,
+                                      nVec.x,
+                                      basis0.y,
+                                      basis2.y,
+                                      nVec.y,
+                                      basis0.z,
+                                      basis2.z,
+                                      nVec.z);
+
+            param[2].x = __GEIGEN__::__Determiant(D1) / __GEIGEN__::__Determiant(D);
+            param[2].y = __GEIGEN__::__Determiant(D2) / __GEIGEN__::__Determiant(D);
+
+            if(param[2].x > 0.0 && param[2].x < 1.0 && param[2].y >= 0.0)
+            {
+                return 5;  // PE v3v1
+            }
+            else
+            {
+                if(param[0].x <= 0.0 && param[2].x >= 1.0)
+                {
+                    return 0;  // PP v1
+                }
+                else if(param[1].x <= 0.0 && param[0].x >= 1.0)
+                {
+                    return 1;  // PP v2
+                }
+                else if(param[2].x <= 0.0 && param[1].x >= 1.0)
+                {
+                    return 2;  // PP v3
+                }
+                else
+                {
+                    return 6;  // PT
+                }
+            }
+        }
+    }
+}
+
+__device__ int _dType_EE(const double3& v0, const double3& v1, const double3& v2, const double3& v3)
+{
+    double3 u = __GEIGEN__::__minus(v1, v0);
+    double3 v = __GEIGEN__::__minus(v3, v2);
+    double3 w = __GEIGEN__::__minus(v0, v2);
+
+    double a = __GEIGEN__::__squaredNorm(u);
+    double b = __GEIGEN__::__v_vec_dot(u, v);
+    double c = __GEIGEN__::__squaredNorm(v);
+    double d = __GEIGEN__::__v_vec_dot(u, w);
+    double e = __GEIGEN__::__v_vec_dot(v, w);
+
+    double D  = a * c - b * b;  // always >= 0
+    double tD = D;              // tc = tN / tD, default tD = D >= 0
+    double sN, tN;
+    int    defaultCase = 8;
+    sN                 = (b * e - c * d);
+    if(sN <= 0.0)
+    {  // sc < 0 => the s=0 edge is visible
+        tN          = e;
+        tD          = c;
+        defaultCase = 2;
+    }
+    else if(sN >= D)
+    {  // sc > 1  => the s=1 edge is visible
+        tN          = e + b;
+        tD          = c;
+        defaultCase = 5;
+    }
+    else
+    {
+        tN = (a * e - b * d);
+        if(tN > 0.0 && tN < tD
+           && (__GEIGEN__::__v_vec_dot(w, __GEIGEN__::__v_vec_cross(u, v)) == 0.0
+               || __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(u, v)) < 1.0e-20 * a * c))
+        {
+            if(sN < D / 2)
+            {
+                tN          = e;
+                tD          = c;
+                defaultCase = 2;
+            }
+            else
+            {
+                tN          = e + b;
+                tD          = c;
+                defaultCase = 5;
+            }
+        }
+    }
+
+    if(tN <= 0.0)
+    {
+        if(-d <= 0.0)
+        {
+            return 0;
+        }
+        else if(-d >= a)
+        {
+            return 3;
+        }
+        else
+        {
+            return 6;
+        }
+    }
+    else if(tN >= tD)
+    {
+        if((-d + b) <= 0.0)
+        {
+            return 1;
+        }
+        else if((-d + b) >= a)
+        {
+            return 4;
+        }
+        else
+        {
+            return 7;
+        }
+    }
+
+    return defaultCase;
+}
+
+
+__device__ inline void _checkPTintersection(const double3* _vertexes,
+                                            int            id0,
+                                            int            id1,
+                                            int            id2,
+                                            int            id3,
+                                            const double&   dHat,
+                                            uint32_t*       _cpNum,
+                                            int*            _mInx,
+                                            int4*           _collisionPair,
+                                            int4* _ccd_collisionPair,
+                                            uint32_t pair_capacity) noexcept
+{
+    double3 v0 = _vertexes[id0];
+    double3 v1 = _vertexes[id1];
+    double3 v2 = _vertexes[id2];
+    double3 v3 = _vertexes[id3];
+
+    int dtype = _dType_PT(v0, v1, v2, v3);
+
+    double d = 100;
+    switch(dtype)
+    {
+        case 0: {
+            _d_PP(v0, v1, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, -1, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 2, 1);
+            }
+            break;
+        }
+
+        case 1: {
+            _d_PP(v0, v2, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, -1, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 2, 1);
+            }
+            break;
+        }
+
+        case 2: {
+            _d_PP(v0, v3, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id3, -1, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 2, 1);
+            }
+            break;
+        }
+
+        case 3: {
+            _d_PE(v0, v1, v2, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 3, 1);
+            }
+            break;
+        }
+
+        case 4: {
+            _d_PE(v0, v2, v3, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, id3, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 3, 1);
+            }
+            break;
+        }
+
+        case 5: {
+            _d_PE(v0, v3, v1, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id3, id1, -1);
+                _mInx[cdp_idx]          = atomicAdd(_cpNum + 3, 1);
+            }
+            break;
+        }
+
+        case 6: {
+            _d_PT(v0, v1, v2, v3, d);
+            if(d < dHat)
+            {
+                //printf("%d   %d   %d   %d   %d   %f\n", dtype, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, d);
+                uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                if(cdp_idx >= pair_capacity)
+                    break;  // count only, no write past capacity; host grows the buffer and re-runs
+                _ccd_collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                _collisionPair[cdp_idx] = make_int4(-id0 - 1, id1, id2, id3);
+                //printf("ccbcbcbcbbcbcbbcbcb  %d  %d  %d  %d\n", -id0 - 1, id1, id2, id3);
+                _mInx[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+            }
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+
+__device__ inline void _checkEEintersection(const double3* _vertexes,
+                                            const double3* _rest_vertexes,
+                                            int            id0,
+                                            int            id1,
+                                            int            id2,
+                                            int            id3,
+                                            int            obj_idx,
+                                            const double&   dHat,
+                                            uint32_t*       _cpNum,
+                                            int*            MatIndex,
+                                            int4*           _collisionPair,
+                                            int4*           _ccd_collisionPair,
+                                            int             edgeNum,
+                                            uint32_t        pair_capacity) noexcept
+{
+    double3 v0 = _vertexes[id0];
+    double3 v1 = _vertexes[id1];
+    double3 v2 = _vertexes[id2];
+    double3 v3 = _vertexes[id3];
+
+
+    int    dtype  = _dType_EE(v0, v1, v2, v3);
+    int    add_e  = -1;
+    double d      = 100.0;
+    bool   smooth = false;
+    switch(dtype)
+    {
+        case 0: {
+            _d_PP(v0, v2, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id0 - 1, -id2 - 1, -id1 - 1, -id3 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+            }
+            break;
+        }
+
+        case 1: {
+            _d_PP(v0, v3, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id0 - 1, -id3 - 1, -id1 - 1, -id2 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id3, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id3, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+            }
+            break;
+        }
+
+        case 2: {
+            _d_PE(v0, v2, v3, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id0 - 1, -id2 - 1, id3, -id1 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, id3, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id0 - 1, id2, id3, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+            }
+            break;
+        }
+
+        case 3: {
+            _d_PP(v1, v2, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id1 - 1, -id2 - 1, -id0 - 1, -id3 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id2, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id2, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+            }
+            break;
+        }
+
+        case 4: {
+            _d_PP(v1, v3, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id1 - 1, -id3 - 1, -id0 - 1, -id2 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id3, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id3, -1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 2, 1);
+                }
+            }
+            break;
+        }
+
+        case 5: {
+            _d_PE(v1, v2, v3, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                               _rest_vertexes[id1],
+                                               _rest_vertexes[id2],
+                                               _rest_vertexes[id3]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id1 - 1, -id2 - 1, id3, -id0 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id2, id3, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id1 - 1, id2, id3, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+            }
+            break;
+        }
+
+        case 6: {
+            _d_PE(v2, v0, v1, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v2, v3), __GEIGEN__::__minus(v0, v1))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v2, v3))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id2],
+                                               _rest_vertexes[id3],
+                                               _rest_vertexes[id0],
+                                               _rest_vertexes[id1]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id2 - 1, -id0 - 1, id1, -id3 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id2 - 1, id0, id1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id2 - 1, id0, id1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+            }
+            break;
+        }
+
+        case 7: {
+            _d_PE(v3, v0, v1, d);
+            if(d < dHat)
+            {
+
+                double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                    __GEIGEN__::__minus(v2, v3), __GEIGEN__::__minus(v0, v1))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v2, v3))*/;
+                double eps_x = _compute_epx_cp(_rest_vertexes[id2],
+                                               _rest_vertexes[id3],
+                                               _rest_vertexes[id0],
+                                               _rest_vertexes[id1]);
+                add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+
+                if(add_e <= -2)
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] =
+                            make_int4(-id3 - 1, -id0 - 1, id1, -id2 - 1);
+                        MatIndex[cdp_idx] = atomicAdd(_cpNum + 4, 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(-id3 - 1, id0, id1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+                else
+                {
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx] = make_int4(-id3 - 1, id0, id1, add_e);
+                    MatIndex[cdp_idx] = atomicAdd(_cpNum + 3, 1);
+                }
+            }
+            break;
+        }
+
+        case 8: {
+            _d_EE(v0, v1, v2, v3, d);
+
+            double eeSqureNCross = __GEIGEN__::__squaredNorm(__GEIGEN__::__v_vec_cross(
+                __GEIGEN__::__minus(v0, v1), __GEIGEN__::__minus(v2, v3))) /* / __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(v0, v1))*/;
+            double eps_x = _compute_epx_cp(_rest_vertexes[id0],
+                                           _rest_vertexes[id1],
+                                           _rest_vertexes[id2],
+                                           _rest_vertexes[id3]);
+            add_e        = (eeSqureNCross < eps_x) ? -obj_idx - 2 : -1;
+
+            if(d < dHat)
+            {
+                if(add_e <= -2)
+                {
+                    //printf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\nxxxxxxxxxxx\n");
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    MatIndex[cdp_idx]           = atomicAdd(_cpNum + 4, 1);
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    if(smooth)
+                    {
+                        _collisionPair[cdp_idx] = make_int4(id0, id1, id2, -id3 - 1);
+                        break;
+                    }
+                    _collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                }
+                else
+                {
+
+                    uint32_t cdp_idx            = atomicAdd(_cpNum, 1U);
+                    if(cdp_idx >= pair_capacity)
+                        break;  // count only, no write past capacity; host grows the buffer and re-runs
+                    _ccd_collisionPair[cdp_idx] = make_int4(id0, id1, id2, id3);
+                    _collisionPair[cdp_idx]     = make_int4(id0, id1, id2, id3);
+                    MatIndex[cdp_idx]           = atomicAdd(_cpNum + 4, 1);
+                }
+            }
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+
+
+template <class element_type>
+__global__ void _calcLeafBvs(const double3*      _vertexes,
+                             const element_type* _elements,
+                             AABB*               _bvs,
+                             int                 faceNum,
+                             int                 type = 0)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= faceNum)
+        return;
+    AABB _bv;
+
+    element_type _e = _elements[idx];
+    double3      _v = _vertexes[_e.x];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _v = _vertexes[_e.y];
+    _bv.combines(_v.x, _v.y, _v.z);
+    if(type == 0)
+    {
+        _v = _vertexes[*((uint32_t*)(&_e) + 2)];
+        _bv.combines(_v.x, _v.y, _v.z);
+    }
+    _bvs[idx] = _bv;
+}
+
+template <class element_type>
+__global__ void _calcLeafBvs_ccd(const double3*      _vertexes,
+                                 const double3*      _moveDir,
+                                 double              alpha,
+                                 const element_type* _elements,
+                                 AABB*               _bvs,
+                                 int                 faceNum,
+                                 int                 type = 0)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= faceNum)
+        return;
+    AABB _bv;
+
+    element_type _e   = _elements[idx];
+    double3      _v   = _vertexes[_e.x];
+    double3      _mvD = _moveDir[_e.x];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _bv.combines(_v.x - _mvD.x * alpha, _v.y - _mvD.y * alpha, _v.z - _mvD.z * alpha);
+
+
+    _v   = _vertexes[_e.y];
+    _mvD = _moveDir[_e.y];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _bv.combines(_v.x - _mvD.x * alpha, _v.y - _mvD.y * alpha, _v.z - _mvD.z * alpha);
+    if(type == 0)
+    {
+        _v   = _vertexes[*((uint32_t*)(&_e) + 2)];
+        _mvD = _moveDir[*((uint32_t*)(&_e) + 2)];
+        _bv.combines(_v.x, _v.y, _v.z);
+        _bv.combines(_v.x - _mvD.x * alpha, _v.y - _mvD.y * alpha, _v.z - _mvD.z * alpha);
+    }
+    _bvs[idx] = _bv;
+}
+
+__global__ void _calcMChash(uint64_t* _MChash, AABB* _bvs, int number)
+{
+    uint32_t idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    AABB    maxBv     = _bvs[0];
+    double3 SceneSize = make_double3(maxBv.upper.x - maxBv.lower.x,
+                                     maxBv.upper.y - maxBv.lower.y,
+                                     maxBv.upper.z - maxBv.lower.z);
+    double3 centerP   = _bvs[idx + number - 1].center();
+    double3 offset    = make_double3(centerP.x - maxBv.lower.x,
+                                  centerP.y - maxBv.lower.y,
+                                  centerP.z - maxBv.lower.z);
+
+    //printf("%d   %f     %f     %f\n", offset.x, offset.y, offset.z);
+    uint64_t mc32 = morton_code(normalized_axis(offset.x, SceneSize.x),
+                                normalized_axis(offset.y, SceneSize.y),
+                                normalized_axis(offset.z, SceneSize.z));
+    uint64_t mc64 = ((mc32 << 32) | idx);
+    _MChash[idx]  = mc64;
+}
+
+__global__ void _calcLeafNodes(Node* _nodes, const uint32_t* _indices, int number)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    if(idx < number - 1)
+    {
+        _nodes[idx].left_idx    = 0xFFFFFFFF;
+        _nodes[idx].right_idx   = 0xFFFFFFFF;
+        _nodes[idx].parent_idx  = 0xFFFFFFFF;
+        _nodes[idx].element_idx = 0xFFFFFFFF;
+    }
+    int l_idx                 = idx + number - 1;
+    _nodes[l_idx].left_idx    = 0xFFFFFFFF;
+    _nodes[l_idx].right_idx   = 0xFFFFFFFF;
+    _nodes[l_idx].parent_idx  = 0xFFFFFFFF;
+    _nodes[l_idx].element_idx = _indices[idx];
+}
+
+
+__global__ void _calcInternalNodes(Node* _nodes, const uint64_t* _MChash, int number)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number - 1)
+        return;
+    const uint2        ij    = determine_range(_MChash, number, idx);
+    const unsigned int gamma = find_split(_MChash, number, ij.x, ij.y);
+
+    _nodes[idx].left_idx  = gamma;
+    _nodes[idx].right_idx = gamma + 1;
+    if(std::min(ij.x, ij.y) == gamma)
+    {
+        _nodes[idx].left_idx += number - 1;
+    }
+    if(std::max(ij.x, ij.y) == gamma + 1)
+    {
+        _nodes[idx].right_idx += number - 1;
+    }
+    _nodes[_nodes[idx].left_idx].parent_idx  = idx;
+    _nodes[_nodes[idx].right_idx].parent_idx = idx;
+}
+
+__global__ void _calcInternalAABB(const Node* _nodes, AABB* _bvs, uint32_t* flags, int number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    idx = idx + number - 1;
+
+    uint32_t parent = _nodes[idx].parent_idx;
+    while(parent != 0xFFFFFFFF)  // means idx == 0
+    {
+        const int old = atomicCAS(flags + parent, 0xFFFFFFFF, 0);
+        if(old == 0xFFFFFFFF)
+        {
+            return;
+        }
+
+        const uint32_t lidx = _nodes[parent].left_idx;
+        const uint32_t ridx = _nodes[parent].right_idx;
+
+        const AABB lbox = _bvs[lidx];
+        const AABB rbox = _bvs[ridx];
+        _bvs[parent]    = merge(lbox, rbox);
+
+        __threadfence();
+
+        parent = _nodes[parent].parent_idx;
+    }
+}
+
+__global__ void _sortBvs(const uint32_t* _indices, AABB* _bvs, AABB* _temp_bvs, int number)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if(idx >= number)
+        return;
+    _bvs[idx] = _temp_bvs[_indices[idx]];
+}
+
+__global__ void _selfQuery_vf(const int*      _bodyID,
+                              const int*      _btype,
+                              const double3*  _vertexes,
+                              const uint3*    _faces,
+                              const uint32_t* _surfVerts,
+                              const AABB*     _bvs,
+                              const Node*     _nodes,
+                              int4*           _collisionPair,
+                              int4*           _ccd_collisionPair,
+                              uint32_t*       _cpNum,
+                              int*            MatIndex,
+                              double          dHat,
+                              uint32_t        pair_capacity,
+                              int             number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];  // a unique 64-bit Morton key bounds LBVH depth by 64
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    AABB _bv;
+    idx       = _surfVerts[idx];
+    _bv.upper = _vertexes[idx];
+    _bv.lower = _vertexes[idx];
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
+    const auto root_object = _nodes[0].element_idx;
+    if(root_object != 0xFFFFFFFF)
+    {
+        if(overlap(_bv, _bvs[0], gapl)
+           && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
+           && idx != _faces[root_object].x && idx != _faces[root_object].y
+           && idx != _faces[root_object].z
+           && !(_btype[idx] >= 2 && _btype[_faces[root_object].x] >= 2
+                && _btype[_faces[root_object].y] >= 2
+                && _btype[_faces[root_object].z] >= 2))
+        {
+            _checkPTintersection(_vertexes,
+                                 idx,
+                                 _faces[root_object].x,
+                                 _faces[root_object].y,
+                                 _faces[root_object].z,
+                                 dHat,
+                                 _cpNum,
+                                 MatIndex,
+                                 _collisionPair,
+                                 _ccd_collisionPair,
+                                 pair_capacity);
+        }
+        return;
+    }
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                       && idx != _faces[obj_idx].z)
+                    {
+                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                             && _btype[_faces[obj_idx].y] >= 2
+                             && _btype[_faces[obj_idx].z] >= 2))
+                            _checkPTintersection(_vertexes,
+                                                 idx,
+                                                 _faces[obj_idx].x,
+                                                 _faces[obj_idx].y,
+                                                 _faces[obj_idx].z,
+                                                 dHat,
+                                                 _cpNum,
+                                                 MatIndex,
+                                                 _collisionPair,
+                                                 _ccd_collisionPair,
+                                                 pair_capacity);
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                       && idx != _faces[obj_idx].z)
+                    {
+                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                             && _btype[_faces[obj_idx].y] >= 2
+                             && _btype[_faces[obj_idx].z] >= 2))
+                            _checkPTintersection(_vertexes,
+                                                 idx,
+                                                 _faces[obj_idx].x,
+                                                 _faces[obj_idx].y,
+                                                 _faces[obj_idx].z,
+                                                 dHat,
+                                                 _cpNum,
+                                                 MatIndex,
+                                                 _collisionPair,
+                                                 _ccd_collisionPair,
+                                                 pair_capacity);
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+__global__ void _selfQuery_vf_ccd(const int*      _bodyID,
+                                  const int*      _btype,
+                                  const double3*  _vertexes,
+                                  const double3*  moveDir,
+                                  double          alpha,
+                                  const uint3*    _faces,
+                                  const uint32_t* _surfVerts,
+                                  const AABB*     _bvs,
+                                  const Node*     _nodes,
+                                  int4*           _ccd_collisionPair,
+                                  uint32_t*       _cpNum,
+                                  double          dHat,
+                                  uint32_t        pair_capacity,
+                                  int             number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    AABB _bv;
+    idx                    = _surfVerts[idx];
+    double3 current_vertex = _vertexes[idx];
+    double3 mvD            = moveDir[idx];
+    _bv.upper              = current_vertex;
+    _bv.lower              = current_vertex;
+    _bv.combines(current_vertex.x - mvD.x * alpha,
+                 current_vertex.y - mvD.y * alpha,
+                 current_vertex.z - mvD.z * alpha);
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
+    const auto root_object = _nodes[0].element_idx;
+    if(root_object != 0xFFFFFFFF)
+    {
+        if(overlap(_bv, _bvs[0], gapl)
+           && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
+           && idx != _faces[root_object].x && idx != _faces[root_object].y
+           && idx != _faces[root_object].z
+           && !(_btype[idx] >= 2 && _btype[_faces[root_object].x] >= 2
+                && _btype[_faces[root_object].y] >= 2
+                && _btype[_faces[root_object].z] >= 2))
+        {
+            uint32_t slot = atomicAdd(_cpNum, 1U);
+            if(slot < pair_capacity)
+                _ccd_collisionPair[slot] = make_int4(-idx - 1,
+                                                      _faces[root_object].x,
+                                                      _faces[root_object].y,
+                                                      _faces[root_object].z);
+        }
+        return;
+    }
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+
+__global__ void _selfQuery_ee(const int*     _bodyID,
+                              const int*     _btype,
+                              const double3* _vertexes,
+                              const double3* _rest_vertexes,
+                              const uint2*   _edges,
+                              const AABB*    _bvs,
+                              const Node*    _nodes,
+                              int4*          _collisionPair,
+                              int4*          _ccd_collisionPair,
+                              uint32_t*      _cpNum,
+                              int*           MatIndex,
+                              double         dHat,
+                              uint32_t       pair_capacity,
+                              int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    idx               = idx + number - 1;
+    AABB     _bv      = _bvs[idx];
+    uint32_t self_eid = _nodes[idx].element_idx;
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+
+
+                        if(!(_edges[self_eid].x == _edges[obj_idx].x
+                             || _edges[self_eid].x == _edges[obj_idx].y
+                             || _edges[self_eid].y == _edges[obj_idx].x
+                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
+                        {
+                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
+                            if(!(_btype[_edges[self_eid].x] >= 2
+                                 && _btype[_edges[self_eid].y] >= 2
+                                 && _btype[_edges[obj_idx].x] >= 2
+                                 && _btype[_edges[obj_idx].y] >= 2))
+                                _checkEEintersection(_vertexes,
+                                                     _rest_vertexes,
+                                                     _edges[self_eid].x,
+                                                     _edges[self_eid].y,
+                                                     _edges[obj_idx].x,
+                                                     _edges[obj_idx].y,
+                                                     obj_idx,
+                                                     dHat,
+                                                     _cpNum,
+                                                     MatIndex,
+                                                     _collisionPair,
+                                                     _ccd_collisionPair,
+                                                     number,
+                                                     pair_capacity);
+                        }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_edges[self_eid].x == _edges[obj_idx].x
+                             || _edges[self_eid].x == _edges[obj_idx].y
+                             || _edges[self_eid].y == _edges[obj_idx].x
+                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
+                        {
+                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
+                            if(!(_btype[_edges[self_eid].x] >= 2
+                                 && _btype[_edges[self_eid].y] >= 2
+                                 && _btype[_edges[obj_idx].x] >= 2
+                                 && _btype[_edges[obj_idx].y] >= 2))
+                                _checkEEintersection(_vertexes,
+                                                     _rest_vertexes,
+                                                     _edges[self_eid].x,
+                                                     _edges[self_eid].y,
+                                                     _edges[obj_idx].x,
+                                                     _edges[obj_idx].y,
+                                                     obj_idx,
+                                                     dHat,
+                                                     _cpNum,
+                                                     MatIndex,
+                                                     _collisionPair,
+                                                     _ccd_collisionPair,
+                                                     number,
+                                                     pair_capacity);
+                        }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+__global__ void _selfQuery_ee_ccd(const int*     _bodyID,
+                                  const int*     _btype,
+                                  const double3* _vertexes,
+                                  const double3* moveDir,
+                                  double         alpha,
+                                  const uint2*   _edges,
+                                  const AABB*    _bvs,
+                                  const Node*    _nodes,
+                                  int4*          _ccd_collisionPair,
+                                  uint32_t*      _cpNum,
+                                  double         dHat,
+                                  uint32_t       pair_capacity,
+                                  int            number)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];
+    uint32_t* stack_ptr   = stack;
+    *stack_ptr++          = 0;
+    idx                   = idx + number - 1;
+    AABB     _bv          = _bvs[idx];
+    uint32_t self_eid     = _nodes[idx].element_idx;
+    uint2    current_edge = _edges[self_eid];
+    //double3 edge_tvert0 = __GEIGEN__::__minus(_vertexes[current_edge.x], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.x], alpha));
+    //double3 edge_tvert1 = __GEIGEN__::__minus(_vertexes[current_edge.y], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.y], alpha));
+    //_bv.combines(edge_tvert0.x, edge_tvert0.y, edge_tvert0.z);
+    //_bv.combines(edge_tvert1.x, edge_tvert1.y, edge_tvert1.z);
+    double gapl = sqrt(dHat);
+
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                            }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                            }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+// Capture-only copies preserve legacy disabled kernels and emission order.
+__global__ void _selfQuery_vf_ccd_pool(const int*      _bodyID,
+                                  const int*      _btype,
+                                  const double3*  _vertexes,
+                                  const double3*  moveDir,
+                                  double          alpha,
+                                  const uint3*    _faces,
+                                  const uint32_t* _surfVerts,
+                                  const AABB*     _bvs,
+                                  const Node*     _nodes,
+                                  int4*           _ccd_collisionPair,
+                                  uint32_t*       _cpNum,
+                                  double          dHat,
+                                  uint32_t        pair_capacity,
+                                  int             number,
+                              gipc::IpcContactPoolIdentity* pool,uint32_t pool_epoch)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    AABB _bv;
+    idx                    = _surfVerts[idx];
+    double3 current_vertex = _vertexes[idx];
+    double3 mvD            = moveDir[idx];
+    _bv.upper              = current_vertex;
+    _bv.lower              = current_vertex;
+    _bv.combines(current_vertex.x - mvD.x * alpha,
+                 current_vertex.y - mvD.y * alpha,
+                 current_vertex.z - mvD.z * alpha);
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
+    const auto root_object = _nodes[0].element_idx;
+    if(root_object != 0xFFFFFFFF)
+    {
+        if(overlap(_bv, _bvs[0], gapl)
+           && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
+           && idx != _faces[root_object].x && idx != _faces[root_object].y
+           && idx != _faces[root_object].z
+           && !(_btype[idx] >= 2 && _btype[_faces[root_object].x] >= 2
+                && _btype[_faces[root_object].y] >= 2
+                && _btype[_faces[root_object].z] >= 2))
+        {
+            uint32_t slot = atomicAdd(_cpNum, 1U);
+            if(slot < pair_capacity)
+            {
+                pool[slot]={static_cast<uint32_t>(idx),root_object,0,pool_epoch};
+                _ccd_collisionPair[slot] = make_int4(-idx - 1,
+                                                      _faces[root_object].x,
+                                                      _faces[root_object].y,
+                                                      _faces[root_object].z);
+            }
+        }
+        return;
+    }
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                            {
+                                pool[cdp_idx]={static_cast<uint32_t>(idx),obj_idx,0,pool_epoch};
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            }
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                            {
+                                pool[cdp_idx]={static_cast<uint32_t>(idx),obj_idx,0,pool_epoch};
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            }
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+__global__ void _selfQuery_ee_ccd_pool(const int*     _bodyID,
+                                  const int*     _btype,
+                                  const double3* _vertexes,
+                                  const double3* moveDir,
+                                  double         alpha,
+                                  const uint2*   _edges,
+                                  const AABB*    _bvs,
+                                  const Node*    _nodes,
+                                  int4*          _ccd_collisionPair,
+                                  uint32_t*      _cpNum,
+                                  double         dHat,
+                                  uint32_t       pair_capacity,
+                                  int            number,
+                              gipc::IpcContactPoolIdentity* pool,uint32_t pool_epoch)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[65];
+    uint32_t* stack_ptr   = stack;
+    *stack_ptr++          = 0;
+    idx                   = idx + number - 1;
+    AABB     _bv          = _bvs[idx];
+    uint32_t self_eid     = _nodes[idx].element_idx;
+    uint2    current_edge = _edges[self_eid];
+    //double3 edge_tvert0 = __GEIGEN__::__minus(_vertexes[current_edge.x], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.x], alpha));
+    //double3 edge_tvert1 = __GEIGEN__::__minus(_vertexes[current_edge.y], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.y], alpha));
+    //_bv.combines(edge_tvert0.x, edge_tvert0.y, edge_tvert0.z);
+    //_bv.combines(edge_tvert1.x, edge_tvert1.y, edge_tvert1.z);
+    double gapl = sqrt(dHat);
+
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                {
+                                    pool[cdp_idx]={self_eid,obj_idx,1,pool_epoch};
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                                }
+                            }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(self_eid != obj_idx)
+                {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                {
+                                    pool[cdp_idx]={self_eid,obj_idx,1,pool_epoch};
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                                }
+                            }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
+///////////////////////////////////////host//////////////////////////////////////////////
+
+
+AABB calcMaxBV(AABB* _leafBoxes, AABB* _tempLeafBox, const int& number)
+{
+    if(number <= 0)
+    {
+        std::cerr << "Cannot reduce an empty BVH." << std::endl;
+        std::abort();
+    }
+
+    const AABB* leaves = _leafBoxes + number - 1;
+    cudatool::DeviceReduce().Reduce(leaves, _tempLeafBox, number, MergeAABB{}, AABB{});
+    CUDA_SAFE_CALL(cudaMemcpy(
+        _leafBoxes, _tempLeafBox, sizeof(AABB), cudaMemcpyDeviceToDevice));
+    AABB h_bv;
+    CUDA_SAFE_CALL(cudaMemcpy(&h_bv, _tempLeafBox, sizeof(AABB), cudaMemcpyDeviceToHost));
+    return h_bv;
+}
+
+template <class element_type>
+void calcLeafBvs(const double3*      _vertexes,
+                 const element_type* _faces,
+                 AABB*               _bvs,
+                 const int&          faceNum,
+                 const int&          type)
+{
+    int numbers = faceNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcLeafBvs<<<blockNum, threadNum>>>(_vertexes, _faces, _bvs + numbers - 1, faceNum, type);
+}
+
+template <class element_type>
+void calcLeafBvs_fullCCD(const double3*      _vertexes,
+                         const double3*      _moveDir,
+                         const double&       alpha,
+                         const element_type* _faces,
+                         AABB*               _bvs,
+                         const int&          faceNum,
+                         const int&          type)
+{
+    int numbers = faceNum;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcLeafBvs_ccd<<<blockNum, threadNum>>>(
+        _vertexes, _moveDir, alpha, _faces, _bvs + numbers - 1, faceNum, type);
+}
+
+void calcMChash(uint64_t* _MChash, AABB* _bvs, int number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcMChash<<<blockNum, threadNum>>>(_MChash, _bvs, number);
+}
+
+void calcLeafNodes(Node* _nodes, const uint32_t* _indices, int number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcLeafNodes<<<blockNum, threadNum>>>(_nodes, _indices, number);
+}
+
+void calcInternalNodes(Node* _nodes, const uint64_t* _MChash, int number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    _calcInternalNodes<<<blockNum, threadNum>>>(_nodes, _MChash, number);
+}
+
+void calcInternalAABB(const Node* _nodes, AABB* _bvs, uint32_t* flags, int number)
+{
+    int numbers = number;
+    if(numbers <= 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    //uint32_t* flags;
+    //CUDA_SAFE_CALL(cudaMalloc((void**)&flags, (numbers-1) * sizeof(uint32_t)));
+    CUDA_SAFE_CALL(cudaMemset(flags, 0xFFFFFFFF, sizeof(uint32_t) * (numbers - 1)));
+    _calcInternalAABB<<<blockNum, threadNum>>>(_nodes, _bvs, flags, numbers);
+    //CUDA_SAFE_CALL(cudaFree(flags));
+}
+
+void sortBvs(const uint32_t* _indices, AABB* _bvs, AABB* _temp_bvs, int number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = default_threads;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+    //AABB* _temp_bvs = _tempLeafBox;
+    // CUDA_SAFE_CALL(cudaMalloc((void**)&_temp_bvs, (number) * sizeof(AABB)));
+    CUDA_SAFE_CALL(cudaMemcpy(_temp_bvs,
+                              _bvs + number - 1,
+                              sizeof(AABB) * static_cast<size_t>(number),
+                              cudaMemcpyDeviceToDevice));
+    _sortBvs<<<blockNum, threadNum>>>(_indices, _bvs + number - 1, _temp_bvs, number);
+    //CUDA_SAFE_CALL(cudaFree(_temp_bvs));
+}
+
+
+void selfQuery_ee(const int*     _bodyID,
+                  const int*     _btype,
+                  const double3* _vertexes,
+                  const double3* _rest_vertexes,
+                  const uint2*   _edges,
+                  const AABB*    _bvs,
+                  const Node*    _nodes,
+                  int4*          _collisonPairs,
+                  int4*          _ccd_collisonPairs,
+                  uint32_t*      _cpNum,
+                  int*           MatIndex,
+                  double         dHat,
+                  uint32_t       pair_capacity,
+                  int            number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    _selfQuery_ee<<<blockNum,threadNum>>>(_bodyID,
+                                           _btype,
+                                           _vertexes,
+                                           _rest_vertexes,
+                                           _edges,
+                                           _bvs,
+                                           _nodes,
+                                           _collisonPairs,
+                                           _ccd_collisonPairs,
+                                           _cpNum,
+                                           MatIndex,
+                                           dHat,
+                                           pair_capacity,
+                                           numbers);
+}
+
+void fullCCDselfQuery_ee(const int*     _bodyID,
+                         const int*     _btype,
+                         const double3* _vertexes,
+                         const double3* moveDir,
+                         const double&  alpha,
+                         const uint2*   _edges,
+                         const AABB*    _bvs,
+                         const Node*    _nodes,
+                         int4*          _ccd_collisonPairs,
+                         uint32_t*      _cpNum,
+                         double         dHat,
+                         uint32_t       pair_capacity,
+                         int            number,
+                  gipc::IpcContactPoolIdentity* pool=nullptr,uint32_t pool_epoch=0)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    if(pool)
+    {
+        _selfQuery_ee_ccd_pool<<<blockNum,threadNum>>>(_bodyID, _btype, _vertexes, moveDir, alpha, _edges, _bvs, _nodes, _ccd_collisonPairs, _cpNum, dHat, pair_capacity, numbers,pool,pool_epoch);
+        return;
+    }
+    _selfQuery_ee_ccd<<<blockNum,threadNum>>>(
+        _bodyID, _btype, _vertexes, moveDir, alpha, _edges, _bvs, _nodes, _ccd_collisonPairs, _cpNum, dHat, pair_capacity, numbers);
+}
+
+void selfQuery_vf(const int*      _bodyID,
+                  const int*      _btype,
+                  const double3*  _vertexes,
+                  const uint3*    _faces,
+                  const uint32_t* _surfVerts,
+                  const AABB*     _bvs,
+                  const Node*     _nodes,
+                  int4*           _collisonPairs,
+                  int4*           _ccd_collisonPairs,
+                  uint32_t*       _cpNum,
+                  int*            MatIndex,
+                  double          dHat,
+                  uint32_t        pair_capacity,
+                  int             number)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    _selfQuery_vf<<<blockNum,threadNum>>>(_bodyID,
+                                           _btype,
+                                           _vertexes,
+                                           _faces,
+                                           _surfVerts,
+                                           _bvs,
+                                           _nodes,
+                                           _collisonPairs,
+                                           _ccd_collisonPairs,
+                                           _cpNum,
+                                           MatIndex,
+                                           dHat,
+                                           pair_capacity,
+                                           numbers);
+}
+
+void fullCCDselfQuery_vf(const int*      _bodyID,
+                         const int*      _btype,
+                         const double3*  _vertexes,
+                         const double3*  moveDir,
+                         const double&   alpha,
+                         const uint3*    _faces,
+                         const uint32_t* _surfVerts,
+                         const AABB*     _bvs,
+                         const Node*     _nodes,
+                         int4*           _ccd_collisonPairs,
+                         uint32_t*       _cpNum,
+                         double          dHat,
+                         uint32_t        pair_capacity,
+                         int             number,
+                  gipc::IpcContactPoolIdentity* pool=nullptr,uint32_t pool_epoch=0)
+{
+    int numbers = number;
+    if(numbers < 1)
+        return;
+    const unsigned int threadNum = 256;
+    int                blockNum  = (numbers + threadNum - 1) / threadNum;
+
+    if(pool)
+    {
+        _selfQuery_vf_ccd_pool<<<blockNum,threadNum>>>(_bodyID, _btype, _vertexes, moveDir, alpha, _faces, _surfVerts, _bvs, _nodes, _ccd_collisonPairs, _cpNum, dHat, pair_capacity, numbers,pool,pool_epoch);
+        return;
+    }
+    _selfQuery_vf_ccd<<<blockNum,threadNum>>>(_bodyID,
+                                               _btype,
+                                               _vertexes,
+                                               moveDir,
+                                               alpha,
+                                               _faces,
+                                               _surfVerts,
+                                               _bvs,
+                                               _nodes,
+                                               _ccd_collisonPairs,
+                                               _cpNum,
+                                               dHat,
+                                               pair_capacity,
+                                               numbers);
+}
+
+#include <collision/discrete_bvh.inl>
+#include <collision/ipc_contact_pool.inl>
+
+void LBVHStorage::release()
+{
+    indices.release(); morton_codes.release();
+    sort_indices.release(); sort_morton_codes.release();
+    nodes.release(); bvs.release(); flags.release(); temp_leaf_box.release();
+}
+
+size_t LBVHStorage::capacity_bytes() const
+{
+    return (bvs.capacity() + temp_leaf_box.capacity()) * sizeof(AABB)
+        + nodes.capacity() * sizeof(Node)
+        + (morton_codes.capacity() + sort_morton_codes.capacity()) * sizeof(uint64_t)
+        + (indices.capacity() + sort_indices.capacity() + flags.capacity()) * sizeof(uint32_t);
+}
+
+bool lbvh::select_storage(bool swept)
+{
+    if(swept_storage_active == swept) return false;
+    // DeviceBuffer is move-only. std::swap first moves each destination empty,
+    // so neither move assignment frees a live allocation. Enqueued kernels keep
+    // their original addresses; owner-thread/stream ordering is unchanged.
+    std::swap(_bvs, alternate_storage.bvs);
+    std::swap(_tempLeafBox, alternate_storage.temp_leaf_box);
+    std::swap(_nodes, alternate_storage.nodes);
+    std::swap(_MChash, alternate_storage.morton_codes);
+    std::swap(_indices, alternate_storage.indices);
+    std::swap(_sort_morton_codes, alternate_storage.sort_morton_codes);
+    std::swap(_sort_indices, alternate_storage.sort_indices);
+    std::swap(_flags, alternate_storage.flags);
+    std::swap(scene, alternate_storage.scene);
+    swept_storage_active = swept;
+    return true;
+}
+
+size_t lbvh::swept_cache_capacity_bytes() const
+{
+    if(!swept_storage_active) return alternate_storage.capacity_bytes();
+    return (_bvs.capacity() + _tempLeafBox.capacity()) * sizeof(AABB)
+        + _nodes.capacity() * sizeof(Node)
+        + (_MChash.capacity() + _sort_morton_codes.capacity()) * sizeof(uint64_t)
+        + (_indices.capacity() + _sort_indices.capacity() + _flags.capacity()) * sizeof(uint32_t);
+}
+
+void lbvh::FREE_DEVICE_MEM()
+{
+    invalidate_discrete_topology();
+    select_storage(false);
+    alternate_storage.release();
+    _indices.release();
+    _MChash.release();
+    _sort_indices.release();
+    _sort_morton_codes.release();
+    _nodes.release();
+    _bvs.release();
+    _flags.release();
+    _tempLeafBox.release();
+}
+
+void lbvh::MALLOC_DEVICE_MEM(const int& number)
+{
+    invalidate_discrete_topology();
+    select_storage(false);
+    alternate_storage.release();
+    if(number <= 0)
+    {
+        FREE_DEVICE_MEM();
+        return;
+    }
+    _indices.resize(number);
+    _MChash.resize(number);
+    _sort_indices.release();
+    _sort_morton_codes.release();
+    _nodes.resize(2 * static_cast<size_t>(number) - 1);
+    _bvs.resize(2 * static_cast<size_t>(number) - 1);
+    _tempLeafBox.resize(number);
+    _flags.resize(number > 1 ? static_cast<size_t>(number - 1) : 0);
+}
+
+void lbvh::sort_morton_codes(int number)
+{
+    if(number <= 0)
+        return;
+
+    _sort_morton_codes.resize_discard(static_cast<size_t>(number));
+    _sort_indices.resize_discard(static_cast<size_t>(number));
+    LaunchCudaKernal_default(number, 256, 0, fill_bvh_indices_kernel, _indices.data(), number);
+    cudatool::DeviceRadixSort().SortPairs(_MChash.data(),
+                                          _sort_morton_codes.data(),
+                                          _indices.data(),
+                                          _sort_indices.data(),
+                                          number);
+    std::swap(_MChash, _sort_morton_codes);
+    std::swap(_indices, _sort_indices);
+}
+
+lbvh::~lbvh()
+{
+    //FREE_DEVICE_MEM();
+}
+
+
+void lbvh_f::init(int*       _mbodyID,
+                  int*       _mbtype,
+                  double3*   _mVerts,
+                  uint3*     _mFaces,
+                  uint32_t*  _mSurfVert,
+                  const int& faceNum,
+                  const int& vertNum)
+{
+    _bodyId            = _mbodyID;
+    _faces             = _mFaces;
+    _surfVerts         = _mSurfVert;
+    _vertexes          = _mVerts;
+    face_number        = faceNum;
+    vert_number        = vertNum;
+    _btype             = _mbtype;
+    MALLOC_DEVICE_MEM(face_number);
+}
+
+void lbvh_e::init(int*       _mbodyID,
+                  int*       _mbtype,
+                  double3*   _mVerts,
+                  double3*   _mRest_vertexes,
+                  uint2*     _mEdges,
+                  const int& edgeNum,
+                  const int& vertNum)
+{
+    _bodyId            = _mbodyID;
+    _rest_vertexes     = _mRest_vertexes;
+    _edges             = _mEdges;
+    _vertexes          = _mVerts;
+    edge_number        = edgeNum;
+    vert_number        = vertNum;
+    _btype             = _mbtype;
+    MALLOC_DEVICE_MEM(edge_number);
+}
+
+AABB* lbvh_f::getSceneSize()
+{
+    // This utility overwrites leaf/root storage without preserving a live tree.
+    discrete_select_storage(*this, false);
+    invalidate_discrete_topology();
+    if(face_number == 0)
+    {
+        std::cerr << "A collision scene requires at least one surface face." << std::endl;
+        std::abort();
+    }
+    calcLeafBvs(_vertexes, _faces, _bvs, face_number, 0);
+
+    calcMaxBV(_bvs, _tempLeafBox, face_number);
+    return _bvs;
+}
+
+double lbvh_f::Construct()
+{
+    return discrete_construct(*this);
+}
+
+void lbvh_f::RefitDiscrete()
+{
+    discrete_refit(*this);
+}
+
+double lbvh_f::ConstructRebuild()
+{
+    discrete_select_storage(*this, false);
+    if(gipc::discrete_bvh_config().enabled && face_number > static_cast<uint32_t>(std::numeric_limits<int>::max()))
+        throw std::runtime_error("Ordinary face BVH exceeds the legacy signed element-count range");
+    if(gipc::discrete_bvh_config().enabled && face_number && !discrete_storage_matches(*this))
+        MALLOC_DEVICE_MEM(static_cast<int>(face_number));
+    if(face_number == 0)
+    {
+        std::cerr << "Cannot construct an empty face BVH." << std::endl;
+        std::abort();
+    }
+    calcLeafBvs(_vertexes, _faces, _bvs, face_number, 0);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    scene = calcMaxBV(_bvs, _tempLeafBox, face_number);
+    calcMChash(_MChash, _bvs, face_number);
+    sort_morton_codes(face_number);
+    sortBvs(_indices, _bvs, _tempLeafBox, face_number);
+    calcLeafNodes(_nodes, _indices, face_number);
+    calcInternalNodes(_nodes, _MChash, face_number);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    calcInternalAABB(_nodes, _bvs, _flags, face_number);
+    discrete_note_rebuild(*this);
+    return 0;  //time0 + time1 + time2;
+}
+
+void lbvh_f::RefitFullCCD(const double3* moveDir, const double& alpha)
+{
+    if(gipc::discrete_bvh_config().enabled)
+    {
+        discrete_prepare_swept_storage(*this);
+        if(face_number && !discrete_swept_valid(*this))
+        {
+            ++gipc::discrete_bvh_stats()[0].swept_refit_fallbacks;
+            ConstructFullCCD(moveDir, alpha);
+            return;
+        }
+        if(face_number) ++gipc::discrete_bvh_stats()[0].swept_refits;
+    }
+    else
+    {
+        invalidate_discrete_topology();
+        discrete_state.mode = gipc::DiscreteBVHTreeMode::swept;
+    }
+    if(face_number==0) return;
+    calcLeafBvs_fullCCD(_vertexes,moveDir,alpha,_faces,_bvs,face_number,0);
+    sortBvs(_indices,_bvs,_tempLeafBox,face_number);
+    calcInternalAABB(_nodes,_bvs,_flags,face_number);
+}
+
+double lbvh_f::ConstructFullCCD(const double3* moveDir, const double& alpha)
+{
+    if(gipc::discrete_bvh_config().enabled)
+    {
+        discrete_prepare_swept_storage(*this);
+        swept_state = {};
+    }
+    else
+    {
+        invalidate_discrete_topology();
+        discrete_state.mode = gipc::DiscreteBVHTreeMode::swept;
+    }
+    if(face_number == 0)
+    {
+        std::cerr << "Cannot construct an empty face BVH." << std::endl;
+        std::abort();
+    }
+    calcLeafBvs_fullCCD(_vertexes, moveDir, alpha, _faces, _bvs, face_number, 0);
+    scene = calcMaxBV(_bvs, _tempLeafBox, face_number);
+    calcMChash(_MChash, _bvs, face_number);
+    sort_morton_codes(face_number);
+    sortBvs(_indices, _bvs, _tempLeafBox, face_number);
+
+    calcLeafNodes(_nodes, _indices, face_number);
+
+    calcInternalNodes(_nodes, _MChash, face_number);
+    calcInternalAABB(_nodes, _bvs, _flags, face_number);
+
+    discrete_note_swept_build(*this);
+    return 0;
+}
+
+double lbvh_e::Construct()
+{
+    return discrete_construct(*this);
+}
+
+void lbvh_e::RefitDiscrete()
+{
+    discrete_refit(*this);
+}
+
+double lbvh_e::ConstructRebuild()
+{
+    discrete_select_storage(*this, false);
+    if(gipc::discrete_bvh_config().enabled && edge_number > static_cast<uint32_t>(std::numeric_limits<int>::max()))
+        throw std::runtime_error("Ordinary edge BVH exceeds the legacy signed element-count range");
+    if(gipc::discrete_bvh_config().enabled && edge_number && !discrete_storage_matches(*this))
+        MALLOC_DEVICE_MEM(static_cast<int>(edge_number));
+    if(edge_number == 0)
+    {
+        invalidate_discrete_topology();
+        return 0;
+    }
+
+    /*cudaEvent_t start, end0, end1, end2;
+    cudaEventCreate(&start);
+    cudaEventCreate(&end0);
+    cudaEventCreate(&end1);
+    cudaEventCreate(&end2);
+
+    cudaEventRecord(start);*/
+    calcLeafBvs(_vertexes, _edges, _bvs, edge_number, 1);
+    scene = calcMaxBV(_bvs, _tempLeafBox, edge_number);
+    calcMChash(_MChash, _bvs, edge_number);
+    sort_morton_codes(edge_number);
+    //cudaEventRecord(end0);
+    sortBvs(_indices, _bvs, _tempLeafBox, edge_number);
+
+    //cudaEventRecord(end1);
+
+    calcLeafNodes(_nodes, _indices, edge_number);
+
+    calcInternalNodes(_nodes, _MChash, edge_number);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    calcInternalAABB(_nodes, _bvs, _flags, edge_number);
+    //selfQuery(_vertexes, _edges, _bvs, _nodes, _collisionPair, _cpNum, edge_number);
+    //cudaEventRecord(end2);
+    //CUDA_SAFE_CALL(cudaDeviceSynchronize());
+    /*float time0 = 0, time1 = 0, time2 = 0;
+    cudaEventElapsedTime(&time0, start, end0);
+    cudaEventElapsedTime(&time1, end0, end1);
+    cudaEventElapsedTime(&time2, end1, end2);
+    (cudaEventDestroy(start));
+    (cudaEventDestroy(end0));
+    (cudaEventDestroy(end1));
+    (cudaEventDestroy(end2));*/
+    //std::cout << "sort time: " << time1 << std::endl;
+    discrete_note_rebuild(*this);
+    return 0;  //time0 + time1 + time2;
+    //std::cout << "generation done: " << time0 + time1 + time2 << std::endl;
+}
+
+void lbvh_e::RefitFullCCD(const double3* moveDir, const double& alpha)
+{
+    if(gipc::discrete_bvh_config().enabled)
+    {
+        discrete_prepare_swept_storage(*this);
+        if(edge_number && !discrete_swept_valid(*this))
+        {
+            ++gipc::discrete_bvh_stats()[1].swept_refit_fallbacks;
+            ConstructFullCCD(moveDir, alpha);
+            return;
+        }
+        if(edge_number) ++gipc::discrete_bvh_stats()[1].swept_refits;
+    }
+    else
+    {
+        invalidate_discrete_topology();
+        discrete_state.mode = gipc::DiscreteBVHTreeMode::swept;
+    }
+    if(edge_number==0) return;
+    calcLeafBvs_fullCCD(_vertexes,moveDir,alpha,_edges,_bvs,edge_number,1);
+    sortBvs(_indices,_bvs,_tempLeafBox,edge_number);
+    calcInternalAABB(_nodes,_bvs,_flags,edge_number);
+}
+
+double lbvh_e::ConstructFullCCD(const double3* moveDir, const double& alpha)
+{
+    if(gipc::discrete_bvh_config().enabled)
+    {
+        discrete_prepare_swept_storage(*this);
+        swept_state = {};
+    }
+    else
+    {
+        invalidate_discrete_topology();
+        discrete_state.mode = gipc::DiscreteBVHTreeMode::swept;
+    }
+    if(edge_number == 0)
+        return 0;
+    calcLeafBvs_fullCCD(_vertexes, moveDir, alpha, _edges, _bvs, edge_number, 1);
+    scene = calcMaxBV(_bvs, _tempLeafBox, edge_number);
+    calcMChash(_MChash, _bvs, edge_number);
+    sort_morton_codes(edge_number);
+    sortBvs(_indices, _bvs, _tempLeafBox, edge_number);
+
+    calcLeafNodes(_nodes, _indices, edge_number);
+
+    calcInternalNodes(_nodes, _MChash, edge_number);
+
+    calcInternalAABB(_nodes, _bvs, _flags, edge_number);
+
+    discrete_note_swept_build(*this);
+    return 0;
+}
+
+
+void lbvh_f::SelfCollitionDetect(double    dHat,
+                                 int4*     collision_pairs,
+                                 int4*     ccd_collision_pairs,
+                                 uint32_t* pair_counts,
+                                 int*      matrix_indices,
+                                 uint32_t  pair_capacity)
+{
+    if(face_number == 0 || vert_number == 0)
+        return;
+    discrete_select_query_storage(*this, false);
+    discrete_validate_query(*this, dHat);
+    selfQuery_vf(_bodyId,
+                 _btype,
+                 _vertexes,
+                 _faces,
+                 _surfVerts,
+                 _bvs,
+                 _nodes,
+                 collision_pairs,
+                 ccd_collision_pairs,
+                 pair_counts,
+                 matrix_indices,
+                 dHat,
+                 pair_capacity,
+                 vert_number);
+}
+
+void lbvh_e::SelfCollitionDetect(double    dHat,
+                                 int4*     collision_pairs,
+                                 int4*     ccd_collision_pairs,
+                                 uint32_t* pair_counts,
+                                 int*      matrix_indices,
+                                 uint32_t  pair_capacity)
+{
+    if(edge_number <= 1)
+        return;
+    discrete_select_query_storage(*this, false);
+    discrete_validate_query(*this, dHat);
+    selfQuery_ee(_bodyId,
+                 _btype,
+                 _vertexes,
+                 _rest_vertexes,
+                 _edges,
+                 _bvs,
+                 _nodes,
+                 collision_pairs,
+                 ccd_collision_pairs,
+                 pair_counts,
+                 matrix_indices,
+                 dHat,
+                 pair_capacity,
+                 edge_number);
+}
+
+void lbvh_f::SelfCollitionFullDetect(double         dHat,
+                                     const double3* moveDir,
+                                     const double&  alpha,
+                                     int4*          ccd_collision_pairs,
+                                     uint32_t*      pair_count,
+                                     uint32_t       pair_capacity,
+                                     gipc::IpcContactPoolIdentity* pool)
+{
+    if(face_number == 0 || vert_number == 0)
+        return;
+    discrete_select_query_storage(*this, true);
+    fullCCDselfQuery_vf(_bodyId,
+                        _btype,
+                        _vertexes,
+                        moveDir,
+                        alpha,
+                        _faces,
+                        _surfVerts,
+                        _bvs,
+                        _nodes,
+                        ccd_collision_pairs,
+                        pair_count,
+                        dHat,
+                        pair_capacity,
+                        vert_number,pool,pool?gipc::ipc_contact_pool_capture_epoch():0);
+}
+
+void lbvh_e::SelfCollitionFullDetect(double         dHat,
+                                     const double3* moveDir,
+                                     const double&  alpha,
+                                     int4*          ccd_collision_pairs,
+                                     uint32_t*      pair_count,
+                                     uint32_t       pair_capacity,
+                                     gipc::IpcContactPoolIdentity* pool)
+{
+    if(edge_number <= 1)
+        return;
+    discrete_select_query_storage(*this, true);
+    fullCCDselfQuery_ee(_bodyId,
+                        _btype,
+                        _vertexes,
+                        moveDir,
+                        alpha,
+                        _edges,
+                        _bvs,
+                        _nodes,
+                        ccd_collision_pairs,
+                        pair_count,
+                        dHat,
+                        pair_capacity,
+                        edge_number,pool,pool?gipc::ipc_contact_pool_capture_epoch():0);
+}
+
+
+//#include <cstdio>
+//#include <cstdlib>
+//#include <vector>
+//
+//#include <cuda_runtime.h>
+//#include <cusolverDn.h>
+//#include <random>
+//
+//#include <cstdlib>
+//
+//int main2() {
+//    cusolverDnHandle_t cusolverH = NULL;
+//    cudaStream_t stream = NULL;
+//
+//    const int m = 12;
+//    const int lda = m;
+//    /*
+//     *       | 3.5 0.5 0.0 |
+//     *   A = | 0.5 3.5 0.0 |
+//     *       | 0.0 0.0 2.0 |
+//     *
+//     */
+//    std::vector<double> A;// = { 3.5, 0.5, 0.0, 0.5, 3.5, 0.0, 0.0, 0.0, 2.0 };
+//    //const std::vector<double> lambda = { 2.0, 3.0, 4.0 };
+//    for (int i = 0;i < m;i++) {
+//        for (int j = 0;j < m;j++) {
+//            A.push_back((double)rand() / RAND_MAX);
+//        }
+//    }
+//
+//    std::vector<double> V(lda * m, 0); // eigenvectors
+//    std::vector<double> W(m, 0);       // eigenvalues
+//
+//    double* d_A = nullptr;
+//    double* d_W = nullptr;
+//    int* d_info = nullptr;
+//
+//    int info = 0;
+//
+//    int lwork = 0;            /* size of workspace */
+//    double* d_work = nullptr; /* device workspace*/
+//
+//    std::printf("A = (matlab base-1)\n");
+//    //print_matrix(m, m, A.data(), lda);
+//    std::printf("=====\n");
+//
+//    cudaEvent_t start, end0;
+//    cudaEventCreate(&start);
+//    cudaEventCreate(&end0);
+//
+//
+//    /* step 1: create cusolver handle, bind a stream */
+//    (cusolverDnCreate(&cusolverH));
+//
+//    (cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
+//    (cusolverDnSetStream(cusolverH, stream));
+//
+//    (cudaMalloc(reinterpret_cast<void**>(&d_A), sizeof(double) * A.size()));
+//    (cudaMalloc(reinterpret_cast<void**>(&d_W), sizeof(double) * W.size()));
+//    (cudaMalloc(reinterpret_cast<void**>(&d_info), sizeof(int)));
+//
+//    (
+//        cudaMemcpyAsync(d_A, A.data(), sizeof(double) * A.size(), cudaMemcpyHostToDevice, stream));
+//
+//    // step 3: query working space of syevd
+//    cusolverEigMode_t jobz = CUSOLVER_EIG_MODE_VECTOR; // compute eigenvalues and eigenvectors.
+//    cublasFillMode_t uplo = CUBLAS_FILL_MODE_LOWER;
+//    cudaEventRecord(start);
+//    (cusolverDnDsyevd_bufferSize(cusolverH, jobz, uplo, m, d_A, lda, d_W, &lwork));
+//
+//    (cudaMalloc(reinterpret_cast<void**>(&d_work), sizeof(double) * lwork));
+//
+//    // step 4: compute spectrum
+//    (
+//        cusolverDnDsyevd(cusolverH, jobz, uplo, m, d_A, lda, d_W, d_work, lwork, d_info));
+//    cudaEventRecord(end0);
+//    (
+//        cudaMemcpyAsync(V.data(), d_A, sizeof(double) * V.size(), cudaMemcpyDeviceToHost, stream));
+//    (
+//        cudaMemcpyAsync(W.data(), d_W, sizeof(double) * W.size(), cudaMemcpyDeviceToHost, stream));
+//    (cudaMemcpyAsync(&info, d_info, sizeof(int), cudaMemcpyDeviceToHost, stream));
+//
+//    (cudaStreamSynchronize(stream));
+//
+//
+//
+//    CUDA_SAFE_CALL(cudaDeviceSynchronize());
+//
+//    float time0 = 0, time1 = 0, time2 = 0;
+//    cudaEventElapsedTime(&time0, start, end0);
+//
+//    (cudaEventDestroy(start));
+//    (cudaEventDestroy(end0));
+//
+//    std::printf("after syevd: info = %d  %f\n", info, time0);
+//    if (0 > info) {
+//        std::printf("%d-th parameter is wrong \n", -info);
+//        exit(1);
+//    }
+//
+//    std::printf("eigenvalue = (matlab base-1), ascending order\n");
+//    int idx = 1;
+//    for (auto const& i : W) {
+//        std::printf("W[%i] = %E\n", idx, i);
+//        idx++;
+//    }
+//
+//
+//    (cudaFree(d_A));
+//    (cudaFree(d_W));
+//    (cudaFree(d_info));
+//    (cudaFree(d_work));
+//
+//    (cusolverDnDestroy(cusolverH));
+//
+//    (cudaStreamDestroy(stream));
+//
+//    (cudaDeviceReset());
+//
+//    return EXIT_SUCCESS;
+//}

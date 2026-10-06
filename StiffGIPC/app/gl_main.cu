@@ -1,0 +1,1991 @@
+//
+// gl_main.cpp
+// GIPC
+//
+// created by Kemeng Huang on 2022/12/01
+// Copyright (c) 2024 Kemeng Huang. All rights reserved.
+//
+
+#include "GL/glew.h"
+#include "GL/freeglut.h"
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <cuda_runtime.h>
+#include <map>
+#include "device_launch_parameters.h"
+#include <collision/mlbvh.cuh>
+#include <stdio.h>
+#include <io/load_mesh.h>
+#include "cuda_tools/cuda_tools.h"
+#include <queue>
+#include <fem/femEnergy.cuh>
+#include <math/gpu_eigen_libs.cuh>
+#include <fem/fem_parameters.h>
+#include <core/gipc_path.h>
+#include <core/retired_components.h>
+#include <gipc/type_define.h>
+#include <filesystem>
+#include <gipc/statistics.h>
+#include <gipc/utils/simple_scene_importer.h>
+#include <Eigen/Geometry>
+#include <core/GIPC.cuh>
+#include <linear_system/solver/pcg_solver.h>
+#include <cstdlib>
+#include <chrono>
+#include <iomanip>
+#include <solver/toi_options.h>
+#include <solver/toi_observer.h>
+extern int total_Frames;
+
+auto        assets_dir = std::string{gipc::assets_dir()};
+std::string metis_dir  = assets_dir + "sorted_mesh/";
+double legacy_collision_buffer_scale = 1;  // parsed for file compatibility; unused
+double                   motion_rate = 1;
+mesh_obj                 obj;
+lbvh_f                   bvh_f;
+lbvh_e                   bvh_e;
+GIPC                     ipc;
+device_TetraData         d_tetMesh;
+tetrahedra_obj           tetMesh;
+std::vector<Node>        nodes;
+std::vector<AABB>        bvs;
+std::vector<std::string> obj_pathes;
+int                      initPath  = 0;
+int                      step      = 0;
+int   frameId   = 0;
+int   surfNumId = 0;
+float xRot      = 0.0f;
+float yRot      = 0.f;
+float xTrans    = 0;
+float yTrans    = 0;
+float zTrans    = 0;
+int   ox;
+int   oy;
+int   buttonState;
+float xRotLength    = 0.0f;
+float yRotLength    = 0.0f;
+float window_width  = 1000;
+float window_height = 1000;
+int   s_dimention   = 3;
+bool  saveSurface   = false;
+bool  change        = false;
+bool  screenshot    = false;
+
+bool isSetShader = false;
+
+bool drawbvh     = false;
+bool drawSurface = true;
+
+bool stop = true;
+
+double3 center;
+double3 Ssize;
+
+GLuint PN_vbo_;
+GLuint VAO;
+GLuint color_vbo_;
+//GLuint color_vao_;
+GLuint normal_vbo_;
+//GLuint normal_vao_;
+GLuint v;
+GLuint f;
+GLuint shaderProgram;
+
+int            clothFaceOffset = 0;
+int            bodyVertOffset  = 0;
+double         global_offset   = 1.0;
+std::vector<std::string> files;
+std::vector<int>    file_vert_offsets;
+std::vector<int>    file_tet_offsets;
+
+void Init_CUDA()
+{
+    cudaError_t cudaStatus = cudaSetDevice(0);
+    if(cudaStatus != cudaSuccess)
+    {
+        fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+        exit(0);
+    }
+}
+
+#pragma pack(push, 1)
+typedef struct
+{
+    uint16_t bfType;
+    uint32_t bfSize;
+    uint16_t bfReserved1;
+    uint16_t bfReserved2;
+    uint32_t bfOffBits;
+} mBITMAPFILEHEADER;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct
+{
+    uint32_t biSize;
+    int32_t  biWidth;
+    int32_t  biHeight;
+    uint16_t biPlanes;
+    uint16_t biBitCount;
+    uint32_t biCompression;
+    uint32_t biSizeImage;
+    int32_t  biXPelsPerMeter;
+    int32_t  biYPelsPerMeter;
+    uint32_t biClrUsed;
+    uint32_t biClrImportant;
+} mBITMAPINFOHEADER;
+#pragma pack(pop)
+
+bool WriteBitmapFile(int width, int height, const std::string& file_name, unsigned char* bitmapData)
+{
+    mBITMAPFILEHEADER bitmapFileHeader;
+    memset(&bitmapFileHeader, 0, sizeof(mBITMAPFILEHEADER));
+    bitmapFileHeader.bfSize = sizeof(mBITMAPFILEHEADER);
+    bitmapFileHeader.bfType = 0x4d42;  //BM
+    bitmapFileHeader.bfOffBits = sizeof(mBITMAPFILEHEADER) + sizeof(mBITMAPINFOHEADER);
+
+    mBITMAPINFOHEADER bitmapInfoHeader;
+    memset(&bitmapInfoHeader, 0, sizeof(mBITMAPINFOHEADER));
+    bitmapInfoHeader.biSize        = sizeof(mBITMAPINFOHEADER);
+    bitmapInfoHeader.biWidth       = width;
+    bitmapInfoHeader.biHeight      = height;
+    bitmapInfoHeader.biPlanes      = 1;
+    bitmapInfoHeader.biBitCount    = 24;
+    bitmapInfoHeader.biCompression = 0L;
+    bitmapInfoHeader.biSizeImage   = width * std::abs(height) * 3;
+
+    //////////////////////////////////////////////////////////////////////////
+    FILE*         filePtr;
+    unsigned char tempRGB;
+    int           imageIdx;
+
+    for(imageIdx = 0; imageIdx < (int)bitmapInfoHeader.biSizeImage; imageIdx += 3)
+    {
+        tempRGB                  = bitmapData[imageIdx];
+        bitmapData[imageIdx]     = bitmapData[imageIdx + 2];
+        bitmapData[imageIdx + 2] = tempRGB;
+    }
+
+    filePtr = fopen(file_name.c_str(), "wb");
+    if(NULL == filePtr)
+    {
+        return false;
+    }
+
+    fwrite(&bitmapFileHeader, sizeof(mBITMAPFILEHEADER), 1, filePtr);
+
+    fwrite(&bitmapInfoHeader, sizeof(mBITMAPINFOHEADER), 1, filePtr);
+
+    fwrite(bitmapData, bitmapInfoHeader.biSizeImage, 1, filePtr);
+
+    fclose(filePtr);
+    return true;
+}
+
+void SaveScreenShot(int width, int height, const std::string& file_name)
+{
+    int   data_len    = height * width * 3;  // bytes
+    void* screen_data = malloc(data_len);
+    memset(screen_data, 0, data_len);
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, screen_data);
+    WriteBitmapFile(width, height, file_name + ".bmp", (unsigned char*)screen_data);
+    free(screen_data);
+}
+
+void saveSurfaceMesh(const std::string& path)
+{
+    std::stringstream ss;
+    ss << path;
+    ss.fill('0');
+    ss.width(5);
+    ss << (surfNumId++) / 1;  // / 10;
+    //if (surfNumId % 10 != 0) return;
+    ss << ".obj";
+    std::string file_path = ss.str();
+    std::ofstream    outSurf(file_path);
+
+    std::map<int, int> meshToSurf;
+    outSurf << "s 1" << std::endl;
+    for(int i = 0; i < tetMesh.surfVerts.size(); i++)
+    {
+        const auto& pos = tetMesh.vertexes[tetMesh.surfVerts[i]];
+        outSurf << "v " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+        meshToSurf[tetMesh.surfVerts[i]] = i;
+    }
+
+    for(int i = 0; i < tetMesh.surface.size(); i++)
+    {
+        const auto& tri = tetMesh.surface[i];
+        outSurf << "f " << meshToSurf[tri.x] + 1 << " " << meshToSurf[tri.y] + 1
+                << " " << meshToSurf[tri.z] + 1 << std::endl;
+    }
+    outSurf.close();
+}
+
+
+void saveTets(const std::string& path)
+{
+    int tetIdoffset = 0;
+    for(int ii = 0; ii < 4096; ii++)
+    {
+        //tetMesh.output_tetrahedraMesh
+        std::stringstream ss;
+        ss << path;
+        ss << ii;  // / 10;
+        //if (surfNumId % 10 != 0) return;
+        ss << ".msh";
+        std::string file_path = ss.str();
+        std::ofstream    outmsh1(file_path);
+
+        std::map<int, int> meshToSurf;
+        //outSurf << "s 1" << std::endl;
+        outmsh1 << "$Nodes\n";
+        outmsh1 << file_vert_offsets[ii + 1] - file_vert_offsets[ii] << std::endl;
+        for(int i = 0; i < file_vert_offsets[ii + 1] - file_vert_offsets[ii]; i++)
+        {
+            const auto& pos = tetMesh.vertexes[i + file_vert_offsets[ii]];
+            outmsh1 << i + 1 << " " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+            meshToSurf[i + file_vert_offsets[ii]] = i;
+        }
+        outmsh1 << "$Elements\n";
+        outmsh1 << file_tet_offsets[ii + 1] << std::endl;
+
+        for(int i = 0; i < file_tet_offsets[ii + 1]; i++)
+        {
+            int tetId = i + tetIdoffset;
+            outmsh1 << i + 1 << " 4 0 " << meshToSurf[tetMesh.tetrahedras[tetId].x] + 1
+                    << " " << meshToSurf[tetMesh.tetrahedras[tetId].y] + 1
+                    << " " << meshToSurf[tetMesh.tetrahedras[tetId].z] + 1 << " "
+                    << meshToSurf[tetMesh.tetrahedras[tetId].w] + 1 << std::endl;
+        }
+        tetIdoffset += file_tet_offsets[ii + 1];
+        outmsh1.close();
+    }
+}
+
+void draw_box2D(float ox, float oy, float width, float height)
+{
+    glLineWidth(2.5f);
+    glColor3f(0.8f, 0.8f, 0.8f);
+
+    glBegin(GL_LINES);
+
+    glVertex3f(ox, oy, 0);
+    glVertex3f(ox + width, oy, 0);
+
+    glVertex3f(ox, oy, 0);
+    glVertex3f(ox, oy + height, 0);
+
+    glVertex3f(ox + width, oy, 0);
+    glVertex3f(ox + width, oy + height, 0);
+
+    glVertex3f(ox + width, oy + height, 0);
+    glVertex3f(ox, oy + height, 0);
+
+    glEnd();
+}
+
+void draw_box3D(float ox, float oy, float oz, float width, float height, float length, int boxType = 0)
+{
+    glLineWidth(0.5f);
+    glColor3f(0.8f, 0.8f, 0.1f);
+    if(boxType == 1)
+    {
+        glLineWidth(1.5f);
+        glColor3f(0.8f, 0.8f, 0.8f);
+    }
+    glBegin(GL_LINES);
+
+    glVertex3f(ox, oy, oz);
+    glVertex3f(ox + width, oy, oz);
+
+    glVertex3f(ox, oy, oz);
+    glVertex3f(ox, oy + height, oz);
+
+    glVertex3f(ox, oy, oz);
+    glVertex3f(ox, oy, oz + length);
+
+    glVertex3f(ox + width, oy, oz);
+    glVertex3f(ox + width, oy + height, oz);
+
+    glVertex3f(ox + width, oy + height, oz);
+    glVertex3f(ox, oy + height, oz);
+
+    glVertex3f(ox, oy + height, oz + length);
+    glVertex3f(ox, oy, oz + length);
+
+    glVertex3f(ox, oy + height, oz + length);
+    glVertex3f(ox, oy + height, oz);
+
+    glVertex3f(ox + width, oy, oz);
+    glVertex3f(ox + width, oy, oz + length);
+
+    glVertex3f(ox, oy, oz + length);
+    glVertex3f(ox + width, oy, oz + length);
+
+    glVertex3f(ox + width, oy + height, oz);
+    glVertex3f(ox + width, oy + height, oz + length);
+
+    glVertex3f(ox + width, oy + height, oz + length);
+    glVertex3f(ox + width, oy, oz + length);
+
+    glVertex3f(ox, oy + height, oz + length);
+    glVertex3f(ox + width, oy + height, oz + length);
+
+    glEnd();
+}
+
+void draw_lines(float ox, float oy, float oz, float width, float height, float length)
+{
+    glLineWidth(0.5f);
+    glColor3f(0.8f, 0.8f, 0.8f);
+
+    glBegin(GL_LINES);
+    int numbers = 20;
+    for(int i = 0; i <= numbers; i++)
+    {
+        //glVertex3f(ox, oy, oz);
+        glVertex3f(ox + width * i / numbers, oy, 0);
+        glVertex3f(ox + width * i / numbers, oy + height, 0);
+    }
+
+    for(int i = 0; i <= numbers; i++)
+    {
+        //glVertex3f(ox, oy, oz);
+        glVertex3f(ox, oy + height * i / numbers, 0);
+        glVertex3f(ox + width, oy + height * i / numbers, 0);
+    }
+
+    glEnd();
+
+
+    glLineWidth(1.5f);
+    glColor3f(0.8f, 0.8f, 0.f);
+    glBegin(GL_LINES);
+    glVertex3f(ox + width / 2, oy, 0);
+    glVertex3f(ox + width / 2, oy + height, 0);
+
+    glVertex3f(ox, oy + height / 2, 0);
+    glVertex3f(ox + width, oy + height / 2, 0);
+
+    glEnd();
+}
+
+void draw_mesh3D()
+{
+    glEnable(GL_DEPTH_TEST);
+    glLineWidth(1.5f);
+    glColor3f(0.9f, 0.1f, 0.1f);
+    const std::vector<uint3>& surf = tetMesh.surface;  //obj.faces;
+    glBegin(GL_TRIANGLES);
+
+
+    for(int j = 0; j < tetMesh.surface.size(); j++)
+    {
+        glVertex3f((tetMesh.vertexes[surf[j].x].x),
+                   (tetMesh.vertexes[surf[j].x].y),
+                   (tetMesh.vertexes[surf[j].x].z));
+        glVertex3f((tetMesh.vertexes[surf[j].y].x),
+                   (tetMesh.vertexes[surf[j].y].y),
+                   (tetMesh.vertexes[surf[j].y].z));
+        glVertex3f((tetMesh.vertexes[surf[j].z].x),
+                   (tetMesh.vertexes[surf[j].z].y),
+                   (tetMesh.vertexes[surf[j].z].z));
+    }
+    glEnd();
+
+    glColor3f(0.9f, 0.9f, 0.9f);
+    //glDisable(GL_DEPTH_TEST);
+    glLineWidth(0.1f);
+    glBegin(GL_LINES);
+
+    for(int j = 0; j < tetMesh.surfEdges.size(); j++)
+    {
+        //if ((tetMesh.surfEdges[j].x == 870 && tetMesh.surfEdges[j].y == 965) || (tetMesh.surfEdges[j].x == 965 && tetMesh.surfEdges[j].y == 870)) {
+        //    glColor3f(0.9f, 0.1f, 0.1f);
+        //    glLineWidth(3.4f);
+        //}
+        //else if ((tetMesh.surfEdges[j].x == 870 && tetMesh.surfEdges[j].y == 905) || (tetMesh.surfEdges[j].x == 905 && tetMesh.surfEdges[j].y == 870)) {
+        //    glColor3f(0.9f, 0.9f, 0.1f);
+        //    glLineWidth(3.4f);
+        //}
+
+        glVertex3f((tetMesh.vertexes[tetMesh.surfEdges[j].x].x),
+                   (tetMesh.vertexes[tetMesh.surfEdges[j].x].y),
+                   (tetMesh.vertexes[tetMesh.surfEdges[j].x].z));
+        glVertex3f((tetMesh.vertexes[tetMesh.surfEdges[j].y].x),
+                   (tetMesh.vertexes[tetMesh.surfEdges[j].y].y),
+                   (tetMesh.vertexes[tetMesh.surfEdges[j].y].z));
+
+        glColor3f(0.9f, 0.9f, 0.9f);
+        glLineWidth(0.1f);
+    }
+    glEnd();
+
+    //glColor3f(0.99f, 0.1f, 0.1f);
+    ////glDisable(GL_DEPTH_TEST);
+    //glPointSize(8);
+    //glBegin(GL_POINTS);
+    //glVertex3f((tetMesh.vertexes[2189].x), (tetMesh.vertexes[2189].y), (tetMesh.vertexes[2189].z));
+    //glColor3f(0.99f, 0.99f, 0.1f);
+    //glVertex3f((tetMesh.vertexes[870].x), (tetMesh.vertexes[870].y), (tetMesh.vertexes[870].z));
+    //glVertex3f((tetMesh.vertexes[905].x), (tetMesh.vertexes[905].y), (tetMesh.vertexes[905].z));
+    //glVertex3f((tetMesh.vertexes[965].x), (tetMesh.vertexes[965].y), (tetMesh.vertexes[965].z));
+    //glEnd();
+}
+
+void draw_bvh()
+{
+    int num = (bvs.size() + 1) / 2;
+    for(int j = 0; j < bvs.size(); j++)
+    {
+        int   i = j;
+        float ox, oy, oz, bwidth, bheight, blength;
+        ox      = (bvs[i].lower.x);
+        oy      = (bvs[i].lower.y);
+        oz      = (bvs[i].lower.z);
+        bwidth  = (bvs[i].upper.x - bvs[i].lower.x);
+        bheight = (bvs[i].upper.y - bvs[i].lower.y);
+        blength = (bvs[i].upper.z - bvs[i].lower.z);
+        draw_box3D(ox, oy, oz, bwidth, bheight, blength);
+    }
+}
+
+int            counttt = 0;
+std::vector<float3> getRenderGeometry(int& number)
+{
+
+    std::vector<double3> meshNormal(tetMesh.vertexNum, make_double3(0, 0, 0));
+    number = tetMesh.surface.size();  //meshTemp.surfaceRender.size();
+    std::vector<float3> pos_normal_color(3 * number * 3);
+
+    for(int i = 0; i < number; i++)
+    {
+        //int tetId = meshTemp.surfaceRender[i][3];
+        int v0 = tetMesh.surface[i].x;
+        int v1 = tetMesh.surface[i].y;
+        int v2 = tetMesh.surface[i].z;
+        double3 vt0 = tetMesh.vertexes[v0];  // Vector3d(meshTemp.vertexes[v0][0], meshTemp.vertexes[v0][1], meshTemp.vertexes[v0][2]);
+        double3 vt1 = tetMesh.vertexes[v1];  // Vector3d(meshTemp.vertexes[v1][0], meshTemp.vertexes[v1][1], meshTemp.vertexes[v1][2]);
+        double3 vt2 = tetMesh.vertexes[v2];  // Vector3d(meshTemp.vertexes[v2][0], meshTemp.vertexes[v2][1], meshTemp.vertexes[v2][2]);
+        double3 vec1 = __GEIGEN__::__minus(vt1, vt0);  //vt1 - vt0;
+        double3 vec2 = __GEIGEN__::__minus(vt2, vt0);
+        double3 normal =
+            __GEIGEN__::__normalized(__GEIGEN__::__v_vec_cross(vec1, vec2));  //vec1.cross(vec2).normalized();
+
+        pos_normal_color[i * 9]     = make_float3(vt0.x, vt0.y, vt0.z);
+        pos_normal_color[i * 9 + 3] = make_float3(vt1.x, vt1.y, vt1.z);
+        pos_normal_color[i * 9 + 6] = make_float3(vt2.x, vt2.y, vt2.z);
+
+        pos_normal_color[i * 9 + 2] = make_float3(0.6875f, 0.51953f, 0.38671f);
+        pos_normal_color[i * 9 + 5] = make_float3(0.6875f, 0.51953f, 0.38671f);
+        pos_normal_color[i * 9 + 8] = make_float3(0.6875f, 0.51953f, 0.38671f);
+        //}
+
+
+        meshNormal[v0] = __GEIGEN__::__add(meshNormal[v0], normal);  //normal;
+        meshNormal[v1] = __GEIGEN__::__add(meshNormal[v1], normal);
+        meshNormal[v2] = __GEIGEN__::__add(meshNormal[v2], normal);
+    }
+    for(int i = 0; i < number; i++)
+
+    {
+        int v0 = tetMesh.surface[i].x;
+        int v1 = tetMesh.surface[i].y;
+        int v2 = tetMesh.surface[i].z;
+        //meshNormal[v0].normalize(); meshNormal[v1].normalize(); meshNormal[v2].normalize();
+        pos_normal_color[i * 9 + 1] =
+            make_float3(meshNormal[v0].x, meshNormal[v0].y, meshNormal[v0].z);
+        pos_normal_color[i * 9 + 4] =
+            make_float3(meshNormal[v1].x, meshNormal[v1].y, meshNormal[v1].z);
+        pos_normal_color[i * 9 + 7] =
+            make_float3(meshNormal[v2].x, meshNormal[v2].y, meshNormal[v2].z);
+    }
+
+    return pos_normal_color;
+}
+
+
+void draw_Scene3D()
+{
+    //face.mesh3Ds[0] = mesh3d;
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(xTrans, yTrans, zTrans);
+    glRotatef(xRot, 1.0f, 0.0f, 0.0f);
+    glRotatef(yRot, 0.0f, 1.0f, 0.0f);
+
+    //draw_box3D(-2, -1, -2, 4, 4, 4, 1);
+    if(drawSurface)
+    {
+        draw_mesh3D();
+    }
+    if(drawbvh)
+    {
+        draw_bvh();
+    }
+
+    glPopMatrix();
+
+
+    glutSwapBuffers();
+    //glFlush();
+}
+double mfsum                   = 0;
+double total_time              = 0;
+int    total_cg_iterations     = 0;
+int    total_newton_iterations = 0;
+int    start                   = -1;
+
+void saveScreenPic(const std::string& path)
+{
+    std::stringstream ss;
+    ss << path;
+    ss.fill('0');
+    ss.width(5);
+    ss << step;
+    std::string file_path = ss.str();
+
+    SaveScreenShot(window_width, window_height, file_path);
+}
+
+void initFEM(tetrahedra_obj& mesh)
+{
+
+    double massSum   = 0;
+    double volumeSum = 0;
+    //float  angleX = FEM::PI / 4, angleY = -FEM::PI / 4, angleZ = FEM::PI / 2;
+    //__GEIGEN__::Matrix3x3d rotation, rotationZ, rotationY, rotationX, eigenTest;
+    //__GEIGEN__::__set_Mat_val(rotation, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+    //__GEIGEN__::__set_Mat_val(
+    //    rotationZ, cos(angleZ), -sin(angleZ), 0, sin(angleZ), cos(angleZ), 0, 0, 0, 1);
+    //__GEIGEN__::__set_Mat_val(
+    //    rotationY, cos(angleY), 0, -sin(angleY), 0, 1, 0, sin(angleY), 0, cos(angleY));
+    //__GEIGEN__::__set_Mat_val(
+    //    rotationX, 1, 0, 0, 0, cos(angleX), -sin(angleX), 0, sin(angleX), cos(angleX));
+
+
+    ipc.lengthRateLame = ipc.YoungModulus / (2 * (1 + ipc.PoissonRate));
+    ipc.volumeRateLame = ipc.YoungModulus * ipc.PoissonRate
+                         / ((1 + ipc.PoissonRate) * (1 - 2 * ipc.PoissonRate));
+    ipc.lengthRate   = 4 * ipc.lengthRateLame / 3;
+    ipc.volumeRate   = ipc.volumeRateLame + 5 * ipc.lengthRateLame / 6;
+    ipc.stretchStiff = ipc.clothYoungModulus / (2 * (1 + ipc.PoissonRate));
+
+    ipc.bendStiff = ipc.bendYoungModulus * pow(ipc.clothThickness, 3)
+                    / (24 * (1 - ipc.PoissonRate * ipc.PoissonRate));
+
+    ipc.shearStiff = 0.03 * ipc.stretchStiff * ipc.strainRate;
+
+    printf("ipc.shearStiff: %f\n", ipc.shearStiff);
+
+
+    for(int i = 0; i < mesh.tetrahedraNum; i++)
+    {
+        __GEIGEN__::Matrix3x3d DM;
+        __calculateDms3D_double(mesh.vertexes.data(), mesh.tetrahedras[i], DM);  //calculateDms3D_double(mesh.vertexes, mesh.tetrahedras[i], 0);
+
+        __GEIGEN__::Matrix3x3d DM_inverse;
+        __GEIGEN__::__Inverse(DM, DM_inverse);
+
+        double vlm = calculateVolum(mesh.vertexes.data(), mesh.tetrahedras[i]);
+
+        mesh.masses[mesh.tetrahedras[i].x] += vlm * ipc.density / 4;
+        mesh.masses[mesh.tetrahedras[i].y] += vlm * ipc.density / 4;
+        mesh.masses[mesh.tetrahedras[i].z] += vlm * ipc.density / 4;
+        mesh.masses[mesh.tetrahedras[i].w] += vlm * ipc.density / 4;
+
+        massSum += vlm * ipc.density;
+        volumeSum += vlm;
+        mesh.DM_inverse.push_back(DM_inverse);
+        mesh.volum.push_back(vlm);
+
+
+        double lengthRateLame =
+            mesh.vert_youngth_modules[i] / (2 * (1 + ipc.PoissonRate));
+        double volumeRateLame = mesh.vert_youngth_modules[i] * ipc.PoissonRate
+                                / ((1 + ipc.PoissonRate) * (1 - 2 * ipc.PoissonRate));
+        double lengthRate = 4 * lengthRateLame / 3;
+        double volumeRate = volumeRateLame + 5 * lengthRateLame / 6;
+
+        mesh.lengthRate.push_back(lengthRate);
+        mesh.volumeRate.push_back(volumeRate);
+    }
+
+    for(int i = 0; i < mesh.triangles.size(); i++)
+    {
+        __GEIGEN__::Matrix2x2d DM;
+        __calculateDm2D_double(mesh.vertexes.data(), mesh.triangles[i], DM);
+
+        __GEIGEN__::Matrix2x2d DM_inverse;
+        __GEIGEN__::__Inverse2x2(DM, DM_inverse);
+
+        double area = calculateArea(mesh.vertexes.data(), mesh.triangles[i]);
+        area *= ipc.clothThickness;
+        mesh.area.push_back(area);
+
+
+        mesh.masses[mesh.triangles[i].x] += ipc.clothDensity * area / 3;
+        mesh.masses[mesh.triangles[i].y] += ipc.clothDensity * area / 3;
+        mesh.masses[mesh.triangles[i].z] += ipc.clothDensity * area / 3;
+
+        massSum += area * ipc.clothDensity;
+        volumeSum += area;
+        mesh.tri_DM_inverse.push_back(DM_inverse);
+    }
+
+    mesh.meanMass = massSum / mesh.vertexNum;
+    printf("meanMass: %f\n", mesh.meanMass);
+    mesh.meanVolum = volumeSum / mesh.vertexNum;
+}
+
+void DefaultSettings()
+{
+    // global settings
+    ipc.density        = 1e3;
+    ipc.PoissonRate    = 0.49;
+    //ipc.lengthRateLame = ipc.YoungModulus / (2 * (1 + ipc.PoissonRate));
+    //ipc.volumeRateLame = ipc.YoungModulus * ipc.PoissonRate
+    //                     / ((1 + ipc.PoissonRate) * (1 - 2 * ipc.PoissonRate));
+    //ipc.lengthRate        = 4 * ipc.lengthRateLame / 3;
+    //ipc.volumeRate        = ipc.volumeRateLame + 5 * ipc.lengthRateLame / 6;
+    ipc.frictionRate      = 0.4;
+    ipc.gd_frictionRate   = 0.4;
+    ipc.clothThickness    = 1e-3;
+    ipc.clothYoungModulus = 1e6;
+    ipc.bendYoungModulus  = 1e5;
+    //ipc.stretchStiff      = ipc.clothYoungModulus / (2 * (1 + ipc.PoissonRate));
+    //ipc.shearStiff        = ipc.stretchStiff * 0.3;
+    ipc.clothDensity      = 2e2;
+    ipc.strainRate        = 100;
+    ipc.softMotionRate    = 1e0;
+    ipc.bendStiff         = 3e-4;
+    ipc.Newton_solver_threshold = 1e-2;
+    ipc.pcg_threshold           = 1e-4;
+    ipc.IPC_dt                  = 1e-2;
+    ipc.relative_dhat           = 1e-3;
+    //ipc.bendStiff = ipc.bendYoungModulus * pow(ipc.clothThickness, 3)
+    //                / (24 * (1 - ipc.PoissonRate * ipc.PoissonRate));
+    //ipc.shearStiff = 0.03 * ipc.stretchStiff * ipc.strainRate;
+}
+//int  meshids = 0;
+void LoadSettings()
+{
+    bool successfulRead = false;
+
+    //read file
+    std::ifstream infile;
+
+
+    std::string DEFAULT_CONFIG_FILE =
+        std::string{gipc::assets_dir()} + "scene/parameterSetting.txt";
+
+
+    infile.open(DEFAULT_CONFIG_FILE, std::ifstream::in);
+    if(successfulRead = infile.is_open())
+    {
+        int  tempEnum;
+        char ignoreToken[256];
+
+        // global settings:
+        infile >> ignoreToken >> ipc.density;
+        infile >> ignoreToken >> ipc.PoissonRate;
+        infile >> ignoreToken >> ipc.frictionRate;
+        infile >> ignoreToken >> ipc.gd_frictionRate;
+        infile >> ignoreToken >> ipc.clothThickness;
+        infile >> ignoreToken >> ipc.clothYoungModulus;
+        infile >> ignoreToken >> ipc.bendYoungModulus;
+        //infile >> ignoreToken >> ipc.shearStiff;
+        infile >> ignoreToken >> ipc.clothDensity;
+        infile >> ignoreToken >> ipc.strainRate;
+        infile >> ignoreToken >> ipc.softMotionRate;
+        //infile >> ignoreToken >> ipc.bendStiff;
+        infile >> ignoreToken >> legacy_collision_buffer_scale;
+        infile >> ignoreToken >> motion_rate;
+        infile >> ignoreToken >> ipc.IPC_dt;
+        infile >> ignoreToken >> ipc.pcg_threshold;
+        infile >> ignoreToken >> ipc.Newton_solver_threshold;
+        infile >> ignoreToken >> ipc.relative_dhat;
+        //infile >> ignoreToken >> meshids;
+
+
+        //ipc.shearStiff =
+        infile.close();
+    }
+
+    if(!successfulRead)
+    {
+        std::cerr << "Waning: failed loading settings, set to defaults." << std::endl;
+        DefaultSettings();
+    }
+    if(const char* v=std::getenv("GIPC_NEWTON_TOL")) ipc.Newton_solver_threshold=std::stod(v);
+    if(const char* v=std::getenv("GIPC_PCG_TOL")) ipc.pcg_threshold=std::stod(v);
+    if(const char* v=std::getenv("GIPC_DT")) ipc.IPC_dt=std::stod(v);
+    if(const char* v=std::getenv("GIPC_FRICTION"))
+        ipc.frictionRate=ipc.gd_frictionRate=std::stod(v);
+    if(ipc.Newton_solver_threshold<=0 || ipc.Newton_solver_threshold>=1 ||
+       ipc.pcg_threshold<=0 || ipc.pcg_threshold>=1 || ipc.IPC_dt<=0)
+        throw std::runtime_error("Invalid solver tolerance or timestep");
+}
+
+void set_case1()
+{
+    double                    dist       = 0.2;
+    int                       count      = 4;
+    int                       count_Y    = 4;
+    double                    fem_height = -0.8;
+    double                    abd_height = -0.6;
+    gipc::SimpleSceneImporter importer;
+
+
+    double Youngth_Modulus = 1e4;
+    for(int k = 0; k < count_Y; ++k)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            for(int j = 0; j < count; j++)
+            {
+
+                gipc::Vector2 ij{i, j};
+                gipc::Vector2 pos =
+                    ij * dist - gipc::Vector2::Ones() * dist * (count - 1) / 2.0;
+
+                double3 position_offset =
+                    make_double3(-pos.x(), -abd_height - 2 * dist * k, -pos.y());
+                double          scale     = 0.4;
+                Eigen::Matrix4d transform = Eigen::Matrix4d::Identity();
+                transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+                transform.block<3, 1>(0, 3) = -Eigen::Vector3d(
+                    position_offset.x, position_offset.y, position_offset.z);
+
+                importer.load_geometry(tetMesh,
+                                       3,
+                                       gipc::BodyType::ABD,
+                                       transform,
+                                       1e5,
+                                       assets_dir + "tetMesh/cube.msh",
+                                       ipc.pcg_data.P_type);
+            }
+        }
+    }
+
+    for(int k = 0; k < count_Y; ++k)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            for(int j = 0; j < count; j++)
+            {
+
+                gipc::Vector2 ij{i, j};
+                gipc::Vector2 pos =
+                    ij * dist - gipc::Vector2::Ones() * dist * (count - 1) / 2.0;
+
+                double3 position_offset =
+                    make_double3(-pos.x(), -fem_height - 2 * dist * k, -pos.y());
+                double          scale     = 0.4;
+                Eigen::Matrix4d transform = Eigen::Matrix4d::Identity();
+                transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+                transform.block<3, 1>(0, 3) = -Eigen::Vector3d(
+                    position_offset.x, position_offset.y, position_offset.z);
+
+                importer.load_geometry(tetMesh,
+                                       3,
+                                       gipc::BodyType::FEM,
+                                       transform,
+                                       Youngth_Modulus,
+                                       assets_dir + "tetMesh/cube.msh",
+                                       ipc.pcg_data.P_type);
+            }
+        }
+    }
+}
+
+
+void set_case2()
+{
+    ipc.pcg_data.P_type = 1;
+    gipc::SimpleSceneImporter importer;
+    double                    scale           = 0.2;
+    double3                   position_offset = make_double3(0, -0.5, 0);
+    Eigen::Matrix4d           transform       = Eigen::Matrix4d::Identity();
+    transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+    transform.block<3, 1>(0, 3) =
+        -Eigen::Vector3d(position_offset.x, position_offset.y, position_offset.z);
+
+    double Youngth_Modulus = 1e4;
+    std::string mesh0_path      = assets_dir + "tetMesh/bunny2.msh";
+    importer.load_geometry(tetMesh,
+                           3,
+                           gipc::BodyType::ABD,
+                           transform,
+                           Youngth_Modulus,
+                           mesh0_path,
+                           ipc.pcg_data.P_type);
+
+    position_offset             = make_double3(0, 0.65, 0);
+    transform                   = Eigen::Matrix4d::Identity();
+    transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+    transform.block<3, 1>(0, 3) =
+        -Eigen::Vector3d(position_offset.x, position_offset.y, position_offset.z);
+
+    std::string mesh1_path = mesh0_path;
+    importer.load_geometry(tetMesh,
+                           3,
+                           gipc::BodyType::FEM,
+                           transform,
+                           Youngth_Modulus,
+                           mesh1_path,
+                           ipc.pcg_data.P_type);
+
+
+    position_offset             = make_double3(0, 0, 0);
+    transform                   = Eigen::Matrix4d::Identity();
+    transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * 1.0;
+    transform.block<3, 1>(0, 3) =
+        -Eigen::Vector3d(position_offset.x, position_offset.y, position_offset.z);
+    std::string mesh2_path = assets_dir + "triMesh/cloth_high.obj";
+
+    importer.load_geometry(tetMesh,
+                           2,
+                           gipc::BodyType::FEM,
+                           transform,
+                           1e4,
+                           mesh2_path,
+                           ipc.pcg_data.P_type);
+}
+
+void set_case3()
+{
+
+    gipc::SimpleSceneImporter importer{assets_dir + "scene/json/wrecking-ball-simple.json",
+                                       assets_dir + "tetMesh/wrecking-ball-mesh/",
+                                       gipc::BodyType::ABD};
+    importer.import_scene(tetMesh);
+}
+
+void set_case4()
+{
+    ipc.pcg_data.P_type = 0;
+    gipc::SimpleSceneImporter importer;
+    double                    scale           = 0.6;
+    double3                   position_offset = make_double3(0, 1.0, 0);
+
+    using Transform = Eigen::Transform<double, 3, Eigen::Affine>;
+    Transform t     = Transform::Identity();
+    t.translate(Eigen::Vector3d{0, 1.0, 0});
+    t.scale(scale);
+    t.rotate(Eigen::AngleAxisd(3.1415926 / 2, Eigen::Vector3d::UnitX()));
+    Eigen::Matrix4d transform = t.matrix();
+
+    std::string mesh_path = assets_dir + "triMesh/cloth_high.obj";
+    importer.load_geometry(tetMesh,
+                           2,
+                           gipc::BodyType::FEM,
+                           transform,
+                           1e4,
+                           mesh_path,
+                           ipc.pcg_data.P_type);
+
+    int          fixed_vertex_num = 0;
+    const double eps              = 1e-4;
+    double       max_y            = tetMesh.maxTConer.y;
+    double       min_x            = tetMesh.minTConer.x;
+    double       max_x            = tetMesh.maxTConer.x;
+    for(int i = 0; i < tetMesh.vertexNum; i++)
+    {
+        if(tetMesh.vertexes[i].y > max_y - eps
+           && (tetMesh.vertexes[i].x < min_x + eps || tetMesh.vertexes[i].x > max_x - eps))
+        {
+            tetMesh.boundaryTypies[i] = 1;
+            fixed_vertex_num++;
+        }
+    }
+    std::cout << "fixed vertex num: " << fixed_vertex_num << std::endl;
+}
+
+void set_case5()
+{
+    ipc.pcg_data.P_type = 1;
+    gipc::SimpleSceneImporter importer;
+    double                    scale = 1.0;
+    Eigen::Vector3d           position_offset{0, 0, 0};
+
+    using Transform = Eigen::Transform<double, 3, Eigen::Affine>;
+    Transform t     = Transform::Identity();
+    t.translate(position_offset);
+    t.scale(scale);
+    Eigen::Matrix4d transform = t.matrix();
+
+    std::string mesh_path       = assets_dir + "tetMesh/high_mat.msh";
+    double Youngth_Modulus = 1e4;
+    ipc.PoissonRate        = 0.48;
+    importer.load_geometry(tetMesh,
+                           3,
+                           gipc::BodyType::FEM,
+                           transform,
+                           Youngth_Modulus,
+                           mesh_path,
+                           ipc.pcg_data.P_type);
+
+    // no gravity
+    for(int i = 0; i < tetMesh.vertexes.size(); i++)
+    {
+        tetMesh.apply_gravity[i] = 0;
+    }
+
+    const double eps = 1e-4;
+    for(int i = 0; i < tetMesh.vertexNum; i++)
+    {
+        if(tetMesh.vertexes[i].x < -0.5 + eps || tetMesh.vertexes[i].x > 0.5 - eps)
+        {
+            tetMesh.targetIndex.push_back(i);
+            tetMesh.targetPos.push_back(tetMesh.vertexes[i]);
+        }
+    }
+    tetMesh.softNum = tetMesh.targetIndex.size();
+    std::cout << "soft constraint num: " << tetMesh.softNum << std::endl;
+    ipc.softMotionRate = 1;
+
+    const double angular_vel = 3.14159265358979323846/5;
+    d_tetMesh.update_soft_constraint_functor =
+        [angular_vel](double3 vertex, int step_id, double ipc_dt) -> double3
+    {
+        double3 rotated_vertex = vertex;
+        if(vertex.x < 0)
+        {
+            // rotate along x axis clockwise
+            rotated_vertex = {vertex.x,
+                              vertex.y * std::cos(angular_vel * ipc_dt)
+                                  - vertex.z * std::sin(angular_vel * ipc_dt),
+                              vertex.y * std::sin(angular_vel * ipc_dt)
+                                  + vertex.z * std::cos(angular_vel * ipc_dt)};
+        }
+        if(vertex.x > 0)
+        {
+            // rotate along x axis counterclockwise
+            rotated_vertex = {vertex.x,
+                              vertex.y * std::cos(-angular_vel * ipc_dt)
+                                  - vertex.z * std::sin(-angular_vel * ipc_dt),
+                              vertex.y * std::sin(-angular_vel * ipc_dt)
+                                  + vertex.z * std::cos(-angular_vel * ipc_dt)};
+        }
+        return rotated_vertex;
+    };
+}
+
+void set_case6()
+{
+    ipc.pcg_data.P_type = 1;
+    double scale      = 0.3;
+    double dist       = scale / 2;
+    int    count      = 8;
+    int    count_Y    = 15;
+    double fem_height = global_offset + 1 - 0.8;
+    double abd_height = fem_height - dist;
+
+
+    for(int k = 0; k < count_Y; ++k)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            for(int j = 0; j < count; j++)
+            {
+
+                gipc::Vector2 ij{i, j};
+                gipc::Vector2 pos =
+                    ij * dist - gipc::Vector2::Ones() * dist * (count - 1) / 2.0;
+
+
+                double3 position_offset =
+                    double3{-pos.x(), -abd_height - 2 * dist * k, -pos.y()};
+                Eigen::Matrix4d transform = Eigen::Matrix4d::Identity();
+                transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+                transform.block<3, 1>(0, 3) = -Eigen::Vector3d(
+                    position_offset.x, position_offset.y, position_offset.z);
+                tetMesh.load_tetrahedraMesh(assets_dir + "tetMesh/cube.msh",
+                                            transform,
+                                            1e6,
+                                            gipc::BodyType::ABD);
+            }
+        }
+    }
+
+    for(int k = 0; k < count_Y; ++k)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            for(int j = 0; j < count; j++)
+            {
+                gipc::Vector2 ij{i, j};
+                gipc::Vector2 pos =
+                    ij * dist - gipc::Vector2::Ones() * dist * (count - 1) / 2.0;
+
+                double3 position_offset =
+                    double3{-pos.x(), -fem_height - 2 * dist * k, -pos.y()};
+                Eigen::Matrix4d transform = Eigen::Matrix4d::Identity();
+                transform.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * scale;
+                transform.block<3, 1>(0, 3) = -Eigen::Vector3d(
+                    position_offset.x, position_offset.y, position_offset.z);
+                tetMesh.load_tetrahedraMesh(assets_dir + "tetMesh/cube.msh",
+                                            transform,
+                                            5e4,
+                                            gipc::BodyType::ABD);
+            }
+        }
+    }
+    
+    gipc::SimpleSceneImporter importer;
+    using Transform = Eigen::Transform<double, 3, Eigen::Affine>;
+    Transform t     = Transform::Identity();
+    t.scale(1.5);
+    t.translate(Eigen::Vector3d(0, 0.35, 0));
+    std::string mesh_path = assets_dir + "triMesh/cloth_high.obj";
+    importer.load_geometry(tetMesh,
+                           2,
+                           gipc::BodyType::FEM,
+                           t.matrix(),
+                           1e4,
+                           mesh_path,
+                           ipc.pcg_data.P_type);
+
+    const double eps = 1e-4;
+    for(int i = 0; i < tetMesh.vertexNum; i++)
+    {
+        if(tetMesh.vertexes[i].x < -1.5 + eps || tetMesh.vertexes[i].x > 1.5 - eps)
+        {
+            tetMesh.boundaryTypies[i] = 1;
+        }
+    }
+
+    ipc.relative_dhat = 1e-3;
+    ipc.strainRate    = 1e6;
+}
+
+void setMAS_partition()
+{
+    tetMesh.partId_map_real.resize(tetMesh.part_offset * BANKSIZE, -1);
+    tetMesh.real_map_partId.resize(tetMesh.partId.size());
+    int index = 0;
+    for(int i = 0; i < tetMesh.partId.size(); i++)
+    {
+        tetMesh.partId_map_real[BANKSIZE * tetMesh.partId[i] + index] = i;
+        index++;
+        if(i <= tetMesh.partId.size() - 2)
+        {
+            if(tetMesh.partId[i + 1] != tetMesh.partId[i])
+            {
+                index = 0;
+            }
+        }
+    }
+    index = 0;
+    for(int i = 0; i < tetMesh.partId_map_real.size(); i++)
+    {
+
+        if(tetMesh.partId_map_real[i] == index)
+        {
+            tetMesh.real_map_partId[index] = i;
+            index++;
+        }
+    }
+}
+
+#include "benchmark_scenes.inl"
+
+void initScene()
+{
+    std::filesystem::exists(metis_dir) || std::filesystem::create_directory(metis_dir);
+    ipc.pcg_data.P_type = 1;
+
+    int scene_no = 5;
+    if(const char* value = std::getenv("GIPC_CASE"))
+    {
+        int requested_case = std::atoi(value);
+        if(requested_case < 1 || requested_case > 6)
+        {
+            std::cerr << "GIPC_CASE must be an integer in [1, 6]." << std::endl;
+            std::abort();
+        }
+        scene_no = requested_case - 1;
+    }
+    std::cout << "Running set_case" << scene_no + 1 << std::endl;
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!ABD must be loaded before FEM!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if(const char* selected=std::getenv("GIPC_SCENE"))
+        load_benchmark_scene(selected);
+    else switch(scene_no)
+    {
+        case 0:  // box pipe
+            set_case1();
+            break;
+        case 1:  // soft-rigid-cloth coupling
+            set_case2();
+            break;
+        case 2:  //wrecking ball case
+            set_case3();
+            break;
+        case 3:  //fixed cloth
+            set_case4();
+            break;
+        case 4:  //twisting mat
+            set_case5();
+            break;
+        case 5:  //box pipe large scale and cloth
+            set_case6();
+            break;
+    }
+
+
+    setMAS_partition();
+
+
+    tetMesh.getSurface();
+
+    initFEM(tetMesh);
+    //device_TetraData d_tetMesh;
+    d_tetMesh.Malloc_DEVICE_MEM(tetMesh.vertexNum,
+                                tetMesh.tetrahedraNum,
+                                tetMesh.triangleNum,
+                                tetMesh.softNum,
+                                tetMesh.tri_edges.size(),
+                                tetMesh.abd_fem_count_info.total_body_num());
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.masses,
+                              tetMesh.masses.data(),
+                              tetMesh.vertexNum * sizeof(double),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.apply_gravity,
+                              tetMesh.apply_gravity.data(),
+                              tetMesh.vertexNum * sizeof(int),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.lengthRate,
+                              tetMesh.lengthRate.data(),
+                              tetMesh.tetrahedraNum * sizeof(double),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.volumeRate,
+                              tetMesh.volumeRate.data(),
+                              tetMesh.tetrahedraNum * sizeof(double),
+                              cudaMemcpyHostToDevice));
+
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.volum,
+                              tetMesh.volum.data(),
+                              tetMesh.tetrahedraNum * sizeof(double),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.vertexes,
+                              tetMesh.vertexes.data(),
+                              tetMesh.vertexNum * sizeof(double3),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.o_vertexes,
+                              tetMesh.vertexes.data(),
+                              tetMesh.vertexNum * sizeof(double3),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.tetrahedras,
+                              tetMesh.tetrahedras.data(),
+                              tetMesh.tetrahedraNum * sizeof(uint4),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.DmInverses,
+                              tetMesh.DM_inverse.data(),
+                              tetMesh.tetrahedraNum * sizeof(__GEIGEN__::Matrix3x3d),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.BoundaryType,
+                              tetMesh.boundaryTypies.data(),
+                              tetMesh.vertexNum * sizeof(int),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.velocities,
+                              tetMesh.velocities.data(),
+                              tetMesh.vertexNum * sizeof(double3),
+                              cudaMemcpyHostToDevice));
+
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.targetIndex,
+                              tetMesh.targetIndex.data(),
+                              tetMesh.softNum * sizeof(uint32_t),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.targetVert,
+                              tetMesh.targetPos.data(),
+                              tetMesh.softNum * sizeof(double3),
+                              cudaMemcpyHostToDevice));
+
+    d_tetMesh.host_target_indices  = tetMesh.targetIndex;
+    d_tetMesh.host_target_vertices = tetMesh.targetPos;
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.triDmInverses,
+                              tetMesh.tri_DM_inverse.data(),
+                              tetMesh.triangleNum * sizeof(__GEIGEN__::Matrix2x2d),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.area,
+                              tetMesh.area.data(),
+                              tetMesh.triangleNum * sizeof(double),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.triangles,
+                              tetMesh.triangles.data(),
+                              tetMesh.triangleNum * sizeof(uint3),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.tri_edges,
+                              tetMesh.tri_edges.data(),
+                              tetMesh.tri_edges.size() * sizeof(uint2),
+                              cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.tri_edge_adj_vertex,
+                              tetMesh.tri_edges_adj_points.data(),
+                              tetMesh.tri_edges.size() * sizeof(uint2),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.body_id_to_boundary_type,
+                              tetMesh.body_id_to_is_fixed.data(),
+                              tetMesh.body_id_to_is_fixed.size() * sizeof(int),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.point_id_to_body_id,
+                              tetMesh.point_id_to_body_id.data(),
+                              tetMesh.point_id_to_body_id.size() * sizeof(int),
+                              cudaMemcpyHostToDevice));
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.tet_id_to_body_id,
+                              tetMesh.tet_id_to_body_id.data(),
+                              tetMesh.tet_id_to_body_id.size() * sizeof(int),
+                              cudaMemcpyHostToDevice));
+
+
+    printf("stretchStiff:  %f,  shearStiff:   %f\n", ipc.stretchStiff, ipc.shearStiff);
+
+    ipc.vertexNum      = tetMesh.vertexNum;
+    ipc.tetrahedraNum  = tetMesh.tetrahedraNum;
+    ipc._vertexes      = d_tetMesh.vertexes;
+    ipc._rest_vertexes = d_tetMesh.rest_vertexes;
+    ipc.surf_vertexNum = tetMesh.surfVerts.size();
+    ipc.surface_Num    = tetMesh.surface.size();
+    ipc.edge_Num       = tetMesh.surfEdges.size();
+    ipc.tri_edge_num   = tetMesh.tri_edges.size();
+
+    //ipc.IPC_dt = 0.01 / 1.0;//1.0 / 30;//1.0 / 100;
+    ipc.triangleNum        = tetMesh.triangleNum;
+    ipc.targetVert         = d_tetMesh.targetVert;
+    ipc.targetInd          = d_tetMesh.targetIndex;
+    ipc.softNum            = tetMesh.softNum;
+    ipc.abd_fem_count_info = tetMesh.abd_fem_count_info;
+
+    std::cout << "ABD FEM count info: \n"
+              << ipc.abd_fem_count_info << std::endl;
+
+
+    printf("vertNum: %d      tetraNum: %d      faceNum: %d\n",
+           ipc.vertexNum,
+           ipc.tetrahedraNum,
+           ipc.surface_Num);
+    printf("surfVertNum: %d      surfEdgesNum: %d\n", ipc.surf_vertexNum, ipc.edge_Num);
+
+    //ipc.USE_MAS = false;
+    ipc.MALLOC_DEVICE_MEM();
+    printf("initial collision capacities: DCD=%zu, CCD=%zu\n",
+           ipc._collisonPairs.capacity(),
+           ipc._ccd_collisonPairs.capacity());
+
+    CUDA_SAFE_CALL(cudaMemcpy(
+        ipc._faces, tetMesh.surface.data(), ipc.surface_Num * sizeof(uint3), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(
+        ipc._edges, tetMesh.surfEdges.data(), ipc.edge_Num * sizeof(uint2), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy(ipc._surfVerts,
+                              tetMesh.surfVerts.data(),
+                              ipc.surf_vertexNum * sizeof(uint32_t),
+                              cudaMemcpyHostToDevice));
+    if(!benchmark_fixed_spans.empty())
+    {
+        auto ids=tetMesh.point_id_to_body_id;
+        for(auto span:benchmark_fixed_spans)
+            std::fill(ids.begin()+span.first,ids.begin()+span.second,-2);
+        benchmark_collision_ids.resize(ids.size());
+        CUDA_SAFE_CALL(cudaMemcpy(benchmark_collision_ids.data(),ids.data(),ids.size()*sizeof(int),cudaMemcpyHostToDevice));
+    }
+    ipc.initBVH(d_tetMesh.BoundaryType,benchmark_collision_ids.size()
+                ?benchmark_collision_ids.data():d_tetMesh.point_id_to_body_id.data());
+
+    if(ipc.pcg_data.P_type && true)
+    {
+        int neighborListSize = tetMesh.getVertNeighbors();
+        ipc.pcg_data.MP.initPreconditioner_Neighbor(ipc.vertexNum - tetMesh.abd_vertexOffset,
+                                                    tetMesh.abd_vertexOffset,
+                                                    neighborListSize,
+                                                    tetMesh.part_offset * BANKSIZE);
+
+        ipc.pcg_data.MP.neighborListSize = neighborListSize;
+        CUDA_SAFE_CALL(cudaMemcpy(ipc.pcg_data.MP.d_neighborListInit,
+                                  tetMesh.neighborList.data(),
+                                  neighborListSize * sizeof(unsigned int),
+                                  cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemcpy(ipc.pcg_data.MP.d_neighborStart,
+                                  tetMesh.neighborStart.data(),
+                                  (ipc.vertexNum - tetMesh.abd_vertexOffset) * sizeof(unsigned int),
+                                  cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemcpy(ipc.pcg_data.MP.d_neighborNumInit,
+                                  tetMesh.neighborNum.data(),
+                                  (ipc.vertexNum - tetMesh.abd_vertexOffset) * sizeof(unsigned int),
+                                  cudaMemcpyHostToDevice));
+
+        CUDA_SAFE_CALL(cudaMemcpy(ipc.pcg_data.MP.d_partId_map_real,
+                                  tetMesh.partId_map_real.data(),
+                                  tetMesh.part_offset * BANKSIZE * sizeof(int),
+                                  cudaMemcpyHostToDevice));
+
+        CUDA_SAFE_CALL(cudaMemcpy(ipc.pcg_data.MP.d_real_map_partId,
+                                  tetMesh.real_map_partId.data(),
+                                  tetMesh.real_map_partId.size() * sizeof(int),
+                                  cudaMemcpyHostToDevice));
+
+        ipc.pcg_data.MP.initPreconditioner_Matrix();
+    }
+
+    CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.rest_vertexes,
+                              d_tetMesh.o_vertexes,
+                              ipc.vertexNum * sizeof(double3),
+                              cudaMemcpyDeviceToDevice));
+
+
+#ifdef USE_QUADRATIC_BENDING
+    // Precompute Q matrices for quadratic bending
+    if(tetMesh.tri_edges.size() > 0)
+    {
+        printf("Precomputing Q matrices for quadratic bending (%zu edges)...\n",
+               tetMesh.tri_edges.size());
+
+        // Allocate host memory for Q matrices
+        std::vector<Eigen::Matrix4d> Q_host(tetMesh.tri_edges.size());
+
+        // Download rest positions, edges, and adjacency from device
+        std::vector<double3> rest_verts_host(ipc.vertexNum);
+        CUDA_SAFE_CALL(cudaMemcpy(rest_verts_host.data(),
+                                  d_tetMesh.rest_vertexes,
+                                  ipc.vertexNum * sizeof(double3),
+                                  cudaMemcpyDeviceToHost));
+
+        // Call precomputation function (defined in femEnergy.cu)
+        PrepareQuadBendingQ(rest_verts_host.data(),
+                            tetMesh.tri_edges.data(),
+                            tetMesh.tri_edges_adj_points.data(),  // named tri_edges_adj_points on the CPU side
+                            tetMesh.tri_edges.size(),
+                            Q_host.data());
+
+        // Upload Q matrices to device
+        CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.quad_bending_Q,
+                                  Q_host.data(),
+                                  tetMesh.tri_edges.size() * sizeof(Eigen::Matrix4d),
+                                  cudaMemcpyHostToDevice));
+
+        printf("Quadratic bending Q matrices uploaded successfully.\n");
+
+        // Optional: Print first Q matrix for verification
+        if(tetMesh.tri_edges.size() > 0)
+        {
+            printf("First Q matrix:\n");
+            for(int i = 0; i < 4; i++)
+            {
+                printf("  [%10.6f %10.6f %10.6f %10.6f]\n",
+                       Q_host[0](i, 0),
+                       Q_host[0](i, 1),
+                       Q_host[0](i, 2),
+                       Q_host[0](i, 3));
+            }
+
+            // Check for NaN or Inf
+            int nan_count = 0;
+            int inf_count = 0;
+            for(size_t i = 0; i < Q_host.size(); i++)
+            {
+                for(int r = 0; r < 4; r++)
+                {
+                    for(int c = 0; c < 4; c++)
+                    {
+                        if(std::isnan(Q_host[i](r, c)))
+                            nan_count++;
+                        if(std::isinf(Q_host[i](r, c)))
+                            inf_count++;
+                    }
+                }
+            }
+            if(nan_count > 0 || inf_count > 0)
+            {
+                printf("WARNING: Q matrices contain %d NaN values and %d Inf values!\n",
+                       nan_count,
+                       inf_count);
+            }
+        }
+    }
+#endif
+
+
+    ipc.buildBVH();
+    ipc.init(tetMesh.meanMass, tetMesh.meanVolum, tetMesh.minConer, tetMesh.maxConer);
+
+    printf("bboxDiagSize2: %f\n", ipc.bboxDiagSize2);
+    printf("maxConer: %f  %f   %f           minCorner: %f  %f   %f\n",
+           tetMesh.maxConer.x,
+           tetMesh.maxConer.y,
+           tetMesh.maxConer.z,
+           tetMesh.minConer.x,
+           tetMesh.minConer.y,
+           tetMesh.minConer.z);
+
+    printf("restSNKE: %f\n", ipc.RestNHEnergy);
+    ipc.buildCP();
+
+    ipc._moveDir          = ipc.pcg_data.dx;
+    ipc.animation_subRate = 1.0 / motion_rate;
+    //ipc.animation_fullRate = ipc.animation_subRate;
+    ipc.computeXTilta(d_tetMesh, 1);
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    ipc.create_LinearSystem(d_tetMesh);
+
+    const size_t edge_bvh_node_count =
+        ipc.edge_Num > 0 ? 2 * static_cast<size_t>(ipc.edge_Num) - 1 : 0;
+    bvs.resize(edge_bvh_node_count);
+    nodes.resize(edge_bvh_node_count);
+    if(edge_bvh_node_count > 0)
+    {
+        CUDA_SAFE_CALL(cudaMemcpy(bvs.data(),
+                                  ipc.bvh_e._bvs.data(),
+                                  edge_bvh_node_count * sizeof(AABB),
+                                  cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(nodes.data(),
+                                  ipc.bvh_e._nodes.data(),
+                                  edge_bvh_node_count * sizeof(Node),
+                                  cudaMemcpyDeviceToHost));
+    }
+}
+
+
+void outputAnimationMeshInfo(std::string pathCloth, std::string pathBody)
+{
+    std::stringstream ss;
+    ss << pathCloth;
+    ss.fill('0');
+    ss.width(5);
+    ss << (surfNumId) / 1;  // / 10;
+    //if (surfNumId % 10 != 0) return;
+    ss << ".obj";
+    std::string file_path = ss.str();
+    std::ofstream    outSurf(file_path);
+
+    std::map<int, int> meshToSurf;
+    for(int i = 0; i < bodyVertOffset; i++)
+    {
+        const auto& pos = tetMesh.vertexes[i];
+        outSurf << "v " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+        //meshToSurf[tetMesh.surfVerts[i]] = i;
+    }
+
+    for(int i = 0; i < tetMesh.triangles.size(); i++)
+    {
+        const auto& tri = tetMesh.triangles[i];
+        outSurf << "f " << tri.x + 1 << " " << tri.y + 1 << " " << tri.z + 1 << std::endl;
+    }
+    outSurf.close();
+
+    std::stringstream ss2;
+    ss2 << pathBody;
+    ss2.fill('0');
+    ss2.width(5);
+    ss2 << (surfNumId) / 1;  // / 10;
+    //if (surfNumId % 10 != 0) return;
+    ss2 << ".obj";
+    std::string file_path2 = ss2.str();
+    std::ofstream    outSurf2(file_path2);
+
+    //std::map<int, int> meshToSurf;
+    for(int i = bodyVertOffset; i < tetMesh.vertexes.size(); i++)
+    {
+        const auto& pos = tetMesh.vertexes[i];
+        outSurf2 << "v " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+        //meshToSurf[tetMesh.surfVerts[i]] = i;
+    }
+
+    for(int i = 0; i < clothFaceOffset; i++)
+    {
+        const auto& tri = tetMesh.surface[i];
+        outSurf2 << "f " << tri.x + 1 - bodyVertOffset << " " << tri.y + 1 - bodyVertOffset
+                 << " " << tri.z + 1 - bodyVertOffset << std::endl;
+    }
+    outSurf2.close();
+    surfNumId++;
+}
+bool pri = true;
+void display(void)
+{
+    draw_Scene3D();
+    std::filesystem::exists(std::string{gipc::output_dir()})
+        || std::filesystem::create_directory(std::string{gipc::output_dir()});
+    auto output_path = std::string{gipc::output_dir()} + "saveSurface/";
+
+    std::filesystem::exists(output_path) || std::filesystem::create_directory(output_path);
+
+    //if(stop)
+    //    return;
+
+
+    ipc.IPC_Solver(d_tetMesh);
+
+    if(ipc.animation && true)
+    {
+        std::string filename =
+            "triMesh/body4/postcvpr_big_body_" + std::to_string(frameId + 1) + ".obj";
+        frameId++;
+        tetMesh.load_animation(filename, 1, make_double3(-1, -0.5, -0.5));
+        CUDA_SAFE_CALL(cudaMemcpy(d_tetMesh.targetVert,
+                                  tetMesh.targetPos.data(),
+                                  tetMesh.softNum * sizeof(double3),
+                                  cudaMemcpyHostToDevice));
+    }
+
+
+    if(!bvs.empty())
+    {
+        CUDA_SAFE_CALL(cudaMemcpy(bvs.data(),
+                                  ipc.bvh_e._bvs.data(),
+                                  bvs.size() * sizeof(AABB),
+                                  cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(nodes.data(),
+                                  ipc.bvh_e._nodes.data(),
+                                  nodes.size() * sizeof(Node),
+                                  cudaMemcpyDeviceToHost));
+    }
+    CUDA_SAFE_CALL(cudaMemcpy(tetMesh.vertexes.data(),
+                              ipc._vertexes,
+                              ipc.vertexNum * sizeof(double3),
+                              cudaMemcpyDeviceToHost));
+
+
+    if(screenshot)
+    {
+        std::stringstream ss;
+        ss << "saveScreen/step_";
+        ss.fill('0');
+        ss.width(5);
+        ss << step / 1;
+        std::string file_path = ss.str();
+        SaveScreenShot(window_width, window_height, file_path);
+    }
+    step++;
+    printf("step:  %d\n", step);
+
+    //if(step >= 160)
+    //{
+    //    std::cout << "step: " << step << " finished." << std::endl;
+    //    exit(0);
+    //}
+}
+
+void init(void)
+{
+    Init_CUDA();
+
+    //main2();
+
+    GLenum err = glewInit();
+    if(GLEW_OK != err)
+    {
+        /* Problem: glewInit failed, something is seriously wrong. */
+        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+    }
+    std::cerr << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+
+
+    LoadSettings();
+
+    ipc.build_gipc_system(d_tetMesh);
+
+    initScene();
+
+    if(!isSetShader)
+    {
+        glViewport(0, 0, window_width, window_height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(45.0, (float)window_width / window_height, 10.1f, 500.0);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -3.0f);
+    }
+    else
+    {
+        glGenBuffers(1, &PN_vbo_);
+        glGenVertexArrays(1, &VAO);
+    }
+    //glEnable(GL_DEPTH_TEST);
+}
+
+
+void idle_func()
+{
+    glutPostRedisplay();
+}
+
+void reshape_func(GLint width, GLint height)
+{
+    //window_width = width;
+    //window_height = height;
+
+    glViewport(0, 0, width, height);
+    if(!isSetShader)
+    {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        gluPerspective(45.0, (float)width / height, 0.1, 500.0);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -3.0f);
+    }
+    //glTranslatef(0.5f, 0.5f, -4.0f);
+}
+
+void keyboard_func(unsigned char key, int x, int y)
+{
+    if(key == 'w')
+    {
+        zTrans += .3f;
+    }
+
+    if(key == 's')
+    {
+        zTrans -= .3f;
+    }
+
+    if(key == 'a')
+    {
+        xTrans += .3f;
+    }
+
+    if(key == 'd')
+    {
+        xTrans -= .3f;
+    }
+
+    if(key == 'q')
+    {
+        yTrans -= .3f;
+    }
+
+    if(key == 'e')
+    {
+        yTrans += .3f;
+    }
+
+    if(key == '/')
+    {
+        screenshot = !screenshot;
+    }
+
+    if(key == '9')
+    {
+        saveSurface = !saveSurface;
+    }
+
+    if(key == 'k')
+    {
+        drawSurface = !drawSurface;
+    }
+
+    if(key == 'f')
+    {
+        drawbvh = !drawbvh;
+    }
+
+    if(key == ' ')
+    {
+        stop = !stop;
+    }
+    glutPostRedisplay();
+}
+
+void special_keyboard_func(int key, int x, int y)
+{
+    glutPostRedisplay();
+}
+
+void mouse_func(int button, int state, int x, int y)
+{
+    if(state == GLUT_DOWN)
+    {
+        buttonState = 1;
+    }
+    else if(state == GLUT_UP)
+    {
+        buttonState = 0;
+    }
+
+    ox = x;
+    oy = y;
+
+    glutPostRedisplay();
+}
+
+void motion_func(int x, int y)
+{
+    float dx, dy;
+    dx = (float)(x - ox);
+    dy = (float)(y - oy);
+
+    if(buttonState == 1)
+    {
+        xRot += dy / 5.0f;
+        yRot += dx / 5.0f;
+    }
+
+    ox = x;
+    oy = y;
+
+    glutPostRedisplay();
+}
+
+
+void SpecialKey(GLint key, GLint x, GLint y)
+{
+    if(key == GLUT_KEY_DOWN)
+    {
+        change = true;
+        initPath -= 1;
+        if(initPath < 0)
+        {
+            initPath = obj_pathes.size() - 1;
+        }
+    }
+
+    if(key == GLUT_KEY_UP)
+    {
+        change = true;
+        initPath += 1;
+        if(initPath == obj_pathes.size())
+        {
+            initPath = 0;
+        }
+    }
+    glutPostRedisplay();
+}
+
+
+// Batch trace export is outside the solver timing window.
+int main(int argc, char** argv) try
+{
+    gipc::reject_retired_components();
+    if(const char* output=std::getenv("GIPC_CONTACT_POOL_FIXTURE"))
+        return gipc::ipc_contact_pool_fixture(output);
+    if(const char* output=std::getenv("GIPC_PCG_GUARD_FIXTURE"))
+        return gipc::PCGSolver::guard_fixture(output);
+    if(const char* prefix=std::getenv("GIPC_MAS_REPLAY_FIXTURE"))
+        return MASPreconditioner::replay_fixture(prefix,std::getenv("GIPC_MAS_FIXTURE_OUTPUT"));
+    if(const char* prefix=std::getenv("GIPC_MAS_CHOLESKY_FIXTURE"))
+        return MASPreconditioner::cholesky_fixture(prefix,std::getenv("GIPC_MAS_FIXTURE_OUTPUT"));
+    if(const char* report=std::getenv("GIPC_VALIDATE_COMPONENTS"))
+        return validate_toi_components(report);
+    int batch_steps = 0;
+    if(const char* value = std::getenv("GIPC_STEPS"))
+        batch_steps = std::max(0, std::atoi(value));
+
+    glutInit(&argc, argv);
+    //glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+    glutSetOption(GLUT_MULTISAMPLE, 16);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
+
+    glutInitWindowSize(window_width, window_height);
+    glutInitWindowPosition(0, 0);
+    glutCreateWindow("FEM");
+
+    init();
+
+    if(!ipc.use_toi)
+        gipc::write_resolved_config(gipc::resolved_execution_options(
+            "ipc", ipc.IPC_dt, ipc.Newton_solver_threshold, ipc.pcg_threshold));
+
+    if(batch_steps > 0)
+    {
+        glutHideWindow();
+        if(const char* checkpoint=std::getenv("GIPC_CHECKPOINT_LOAD"))
+            ipc.frame_checkpoint(d_tetMesh,checkpoint,true);
+        auto save_checkpoint=[&]()
+        {
+            const char* directory=std::getenv("GIPC_CHECKPOINT_DIR");
+            const char* frame=std::getenv("GIPC_CHECKPOINT_FRAME");
+            if(directory && frame && total_Frames+1==std::stoi(frame))
+                ipc.frame_checkpoint(d_tetMesh,directory,false);
+        };
+        save_checkpoint();
+        const char* trace_dir = std::getenv("GIPC_TRACE_DIR");
+        std::ofstream frame_log;
+        std::ofstream physical_log;
+        if(trace_dir)
+        {
+            std::filesystem::create_directories(trace_dir);
+            frame_log.open(std::string(trace_dir) + "/frames.csv");
+            frame_log << "frame,solver_ms,candidate_pairs,ground_candidates\n";
+            if(const char* value=std::getenv("GIPC_TRACE_PHYSICS");value && value[0]=='1')
+            {
+                physical_log.open(std::string(trace_dir)+"/physical_energy.csv");
+                physical_log << "frame,fem_potential,cloth_potential,bending_potential\n";
+            }
+            std::ofstream topology(std::string(trace_dir) + "/topology.bin",std::ios::binary);
+            uint32_t counts[3] = {ipc.vertexNum,ipc.surface_Num,ipc.tetrahedraNum};
+            topology.write(reinterpret_cast<char*>(counts),sizeof(counts));
+            std::vector<uint3> faces(ipc.surface_Num);
+            std::vector<uint4> tets(ipc.tetrahedraNum);
+            if(!faces.empty()) checkCudaErrors(cudaMemcpy(faces.data(),ipc._faces.data(),
+                faces.size()*sizeof(uint3),cudaMemcpyDeviceToHost));
+            if(!tets.empty()) checkCudaErrors(cudaMemcpy(tets.data(),d_tetMesh.tetrahedras,
+                tets.size()*sizeof(uint4),cudaMemcpyDeviceToHost));
+            topology.write(reinterpret_cast<char*>(faces.data()),faces.size()*sizeof(uint3));
+            topology.write(reinterpret_cast<char*>(tets.data()),tets.size()*sizeof(uint4));
+            auto save_attribute=[&](const char* filename,const void* source,size_t bytes)
+            {
+                std::vector<unsigned char> data(bytes);
+                if(bytes)checkCudaErrors(cudaMemcpy(data.data(),source,bytes,cudaMemcpyDeviceToHost));
+                std::ofstream out(std::string(trace_dir)+filename,std::ios::binary);
+                out.write(reinterpret_cast<char*>(data.data()),bytes);
+            };
+            save_attribute("/body_ids.bin",d_tetMesh.point_id_to_body_id.data(),ipc.vertexNum*sizeof(int));
+            save_attribute("/boundary_types.bin",d_tetMesh.BoundaryType.data(),ipc.vertexNum*sizeof(int));
+            save_attribute("/masses.bin",d_tetMesh.masses.data(),ipc.vertexNum*sizeof(double));
+            std::ofstream metadata(std::string(trace_dir)+"/metadata.json");
+            metadata << "{\"abd_point_num\":" << ipc.abd_fem_count_info.abd_point_num
+                     << ",\"ground_offset\":-1,\"ground_normal\":[0,1,0]}";
+        }
+        auto dump_frame = [&](int frame)
+        {
+            if(!trace_dir) return;
+            int stride=1;if(const char* value=std::getenv("GIPC_TRACE_STRIDE"))stride=std::max(1,std::atoi(value));
+            if(frame>0 && frame<batch_steps-2 && frame%stride!=0)return;
+            std::vector<double3> state(ipc.vertexNum);
+            checkCudaErrors(cudaMemcpy(state.data(),ipc._vertexes,
+                state.size()*sizeof(double3),cudaMemcpyDeviceToHost));
+            char filename[40]; std::snprintf(filename,sizeof(filename),"/state_%04d.bin",frame);
+            std::ofstream output(std::string(trace_dir)+filename,std::ios::binary);
+            output.write(reinterpret_cast<char*>(state.data()),state.size()*sizeof(double3));
+            if(!output) throw std::runtime_error("Failed to write frame trace");
+            // Diagnostic export outside the solver timer. Keep actual velocities;
+            // finite differences of endpoint positions are not velocity evidence.
+            if(const char* enabled=std::getenv("GIPC_TRACE_VELOCITY"); enabled && enabled[0]=='1')
+            {
+                checkCudaErrors(cudaMemcpy(state.data(), d_tetMesh.velocities,
+                    state.size()*sizeof(double3), cudaMemcpyDeviceToHost));
+                std::snprintf(filename,sizeof(filename),"/velocity_%04d.bin",frame);
+                std::ofstream velocity_output(std::string(trace_dir)+filename,std::ios::binary);
+                velocity_output.write(reinterpret_cast<char*>(state.data()),state.size()*sizeof(double3));
+                if(!velocity_output) throw std::runtime_error("Failed to write velocity trace");
+            }
+        };
+        dump_frame(0);
+        for(int i = 0; i < batch_steps; ++i)
+        {
+            auto start = std::chrono::steady_clock::now();
+            ipc.IPC_Solver(d_tetMesh);
+            checkCudaErrors(cudaDeviceSynchronize());
+            auto stop = std::chrono::steady_clock::now();
+            if(physical_log.is_open())
+            {
+                double fem=ipc.Energy_Add_Reduction_Algorithm(1,d_tetMesh);
+                double cloth=ipc.Energy_Add_Reduction_Algorithm(8,d_tetMesh);
+                double bending=ipc.Energy_Add_Reduction_Algorithm(10,d_tetMesh);
+                physical_log << i+1 << "," << std::setprecision(17) << fem << "," << cloth << "," << bending << "\n";
+                physical_log.flush();
+            }
+            if(const char* value=std::getenv("GIPC_DEFER_STATS");value && value[0]=='1')
+                gipc::Statistics::instance().write_to_file(std::string(gipc::output_dir())+"/stats.json");
+            if(trace_dir) frame_log << i+1 << "," << std::setprecision(17)
+                << std::chrono::duration<double,std::milli>(stop-start).count()
+                << "," << ipc.h_cpNum[0] << "," << ipc.h_gpNum << "\n";
+            dump_frame(i+1);
+            if(trace_dir)frame_log.flush();
+            save_checkpoint();
+        }
+        checkCudaErrors(cudaDeviceSynchronize());
+        std::vector<double3> vertices(ipc.vertexNum);
+        if(const char* checkpoint=std::getenv("GIPC_CHECKPOINT_FINAL_DIR"))
+            ipc.frame_checkpoint(d_tetMesh,checkpoint,false);
+        checkCudaErrors(cudaMemcpy(vertices.data(),
+                                   ipc._vertexes,
+                                   vertices.size() * sizeof(double3),
+                                   cudaMemcpyDeviceToHost));
+        for(size_t i = 0; i < vertices.size(); ++i)
+        {
+            const auto& v = vertices[i];
+            if(!std::isfinite(v.x) || !std::isfinite(v.y) || !std::isfinite(v.z))
+            {
+                std::cerr << "Non-finite vertex at batch frame " << batch_steps
+                          << ", vertex " << i << std::endl;
+                std::quick_exit(3);
+            }
+        }
+        if(const char* dump_path = std::getenv("GIPC_DUMP_STATE"))
+        {
+            std::ofstream output(dump_path, std::ios::binary | std::ios::trunc);
+            output.write(reinterpret_cast<const char*>(vertices.data()),
+                         static_cast<std::streamsize>(vertices.size() * sizeof(double3)));
+            if(!output)
+            {
+                std::cerr << "Failed to write GIPC_DUMP_STATE to " << dump_path << std::endl;
+                std::quick_exit(2);
+            }
+        }
+        // Batch output is complete; close streams before bypassing static
+        // destruction. CUDA-backed globals otherwise destruct after CUDA's
+        // atexit shutdown on Linux and turn a valid run into exit 134.
+        frame_log.close();
+        physical_log.close();
+        d_tetMesh.FREE_DEVICE_MEM();
+        ipc.FREE_DEVICE_MEM();
+        std::cout.flush();
+        std::cerr.flush();
+        std::quick_exit(0);
+    }
+
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
+
+
+    glEnable(GL_MULTISAMPLE);
+    glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+
+
+    glutDisplayFunc(display);
+
+
+    //glutDisplayFunc(display_func);
+    glutReshapeFunc(reshape_func);
+    glutKeyboardFunc(keyboard_func);
+    glutSpecialFunc(&SpecialKey);
+    glutMouseFunc(mouse_func);
+    glutMotionFunc(motion_func);
+    glutIdleFunc(idle_func);
+
+
+    glutMainLoop();
+    //return 0;
+}
+catch(const std::exception& error)
+{
+    std::cerr << "GIPC controlled failure: " << error.what() << std::endl;
+    try
+    {
+        auto& stats=gipc::Statistics::instance();
+        stats.json()["failure"]={{"message",error.what()},{"frame",stats.frame()}};
+        std::filesystem::create_directories(gipc::output_dir());
+        stats.write_to_file(std::string(gipc::output_dir())+"/stats.json");
+    }
+    catch(...) {}
+    std::cerr.flush();
+    std::quick_exit(4);
+}

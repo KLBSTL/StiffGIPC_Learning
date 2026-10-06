@@ -1,8 +1,0 @@
-{
-  "report":"reports/active/WORLD_PENALTY_BOUNDARY_SMOKES_20261005.json",
-  "stop_on_failure":true,
-  "runs":[
-    {"name":"world_penalty_hang_no_abd_smoke","config":{"preset":"toi","scene":"cloth_hang_l","steps":2,"timeout_seconds":15,"mas_restrict":"warp","mu_coordinates":"world_block"}},
-    {"name":"world_penalty_fixed_abd_smoke","config":{"preset":"toi","scene":"cloth_fixed_bunny_l","steps":2,"timeout_seconds":15,"mas_restrict":"warp","mu_coordinates":"world_block"}}
-  ]
-}

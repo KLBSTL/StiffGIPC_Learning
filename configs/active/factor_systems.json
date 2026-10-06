@@ -1,1 +1,0 @@
-{"preset":"toi","steps":35,"timeout_seconds":120,"mas_restrict":"warp","mas_factor_action":"factor_inverse","diagnostics":["fixed"],"fixed_frames":"2,25,34","fixed_directions":"1","fixed_factor_study":true,"trace_velocity":false}

@@ -1,7 +1,0 @@
-{
-  "name":"local_l_pilots_v2",
-  "platform":"local",
-  "scenes":["cloth_hang_l","cloth_table_l","cloth_stack10_l","cloth_fixed_bunny_l","bunny_cloth_bunny_l","boxes1920_cloth_l"],
-  "arms":["base","base_graph","base_toi","base_toi_graph"],
-  "pilot_steps":2,"pilot_timeout":120,"repeats":0,"trace_stride":1
-}

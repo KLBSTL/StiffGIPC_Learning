@@ -1,6 +1,0 @@
-{"report":"reports/active/FACTOR_COST_BATCH.json","stop_on_failure":true,"runs":[
-  {"name":"factor_cost_tri_r1","config":{"preset":"toi","mas_restrict":"warp","diagnostics":["cost"],"trace_velocity":false}},
-  {"name":"factor_cost_inverse_r1","config":{"preset":"toi","mas_restrict":"warp","mas_factor_action":"factor_inverse","diagnostics":["cost"],"trace_velocity":false}},
-  {"name":"factor_cost_inverse_r2","config":{"preset":"toi","mas_restrict":"warp","mas_factor_action":"factor_inverse","diagnostics":["cost"],"trace_velocity":false}},
-  {"name":"factor_cost_tri_r2","config":{"preset":"toi","mas_restrict":"warp","diagnostics":["cost"],"trace_velocity":false}}
-]}
