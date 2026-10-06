@@ -1,0 +1,54 @@
+{
+  "scenes": {
+    "hang": {
+      "calibration": [
+        "ipc_revision_20261005_hang_observed_r1",
+        "ipc_revision_20261005_hang_observed_r2",
+        "ipc_revision_20261005_hang_observed_r3"
+      ],
+      "bounds": {
+        "max_stretch": 1.1288772279548063,
+        "p99_stretch": 1.032410340416372,
+        "fixed_drift_m": 1e-10
+      },
+      "holdout": [
+        {
+          "name": "ipc_revision_20261005_hang_observed_r4",
+          "passed": true
+        },
+        {
+          "name": "ipc_revision_20261005_hang_observed_r5",
+          "passed": true
+        }
+      ],
+      "holdout_passed": true
+    },
+    "fixed_bunny": {
+      "calibration": [
+        "ipc_revision_20261005_fixed_bunny_observed_r1",
+        "ipc_revision_20261005_fixed_bunny_observed_r2",
+        "ipc_revision_20261005_fixed_bunny_observed_r3"
+      ],
+      "bounds": {
+        "max_stretch": 1.0361727662908526,
+        "p99_stretch": 1.0135636480371302,
+        "fixed_drift_m": 1.0000005721958499e-10
+      },
+      "holdout": [
+        {
+          "name": "ipc_revision_20261005_fixed_bunny_observed_r4",
+          "passed": true
+        },
+        {
+          "name": "ipc_revision_20261005_fixed_bunny_observed_r5",
+          "passed": true
+        }
+      ],
+      "holdout_passed": true
+    }
+  },
+  "physical_budget": "No extra material deformation allowed. Numerical comparison floors only.",
+  "position_velocity": "Reported separately as trajectory divergence, not physical truth error; strict independent certification pending CCD.",
+  "old_results_reclassified": false,
+  "performance_certified": false
+}
