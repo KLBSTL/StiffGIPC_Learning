@@ -1,0 +1,435 @@
+{
+  "schema": "local_step4_pool_screen.v1",
+  "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+  "date": "2026-10-06",
+  "resource_change": "User closed unused GPU applications before this new session; prior failures retained.",
+  "all_six_completed": true,
+  "all_material_bounds_passed": true,
+  "from_zero": true,
+  "dt": 0.01,
+  "legacy_cumulative_tol": 0.01,
+  "min_updates": 6,
+  "pcg_rho_tol": 0.0001,
+  "rounds": [
+    {
+      "stage": "hang_r1",
+      "analysis_sha256": "2185049f62d34f36d5c92f7b137571ded7a280f528eea00ac8e368513c8c103c",
+      "hard_and_original_material_bounds_passed": true
+    },
+    {
+      "stage": "hang_r2",
+      "analysis_sha256": "d23f93ade97e97052d13f874aebb1ab2bf5bec6ec006b700305abfc9cd4505ce",
+      "hard_and_original_material_bounds_passed": true
+    },
+    {
+      "stage": "hang_r3",
+      "analysis_sha256": "d91ae92e5491e9d308e7a31b349e73e10317f161a40814ffb40b632eb85ee474",
+      "hard_and_original_material_bounds_passed": true
+    }
+  ],
+  "runs": [
+    {
+      "name": "hang_off_r1",
+      "variant": "off",
+      "solver_ms": 1905.721,
+      "directions": 297,
+      "pcg": 9103,
+      "material": {
+        "max_stretch": 1.1288762132493473,
+        "p99_stretch": 1.0324093371138472,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1905.721,
+          "phase_ms": {
+            "assembly": 287.6259205341339,
+            "pcg": 876.5728335380554,
+            "ccd": 226.39299222826958,
+            "line_search": 424.34393614530563,
+            "state_update": 11.713472021743655
+          },
+          "directions": 297,
+          "pcg_iterations": 9103,
+          "unclassified_ms": 79.0718455324918
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 799.7022000000001,
+          "phase_ms": {
+            "assembly": 163.46931222081184,
+            "pcg": 282.8321921825409,
+            "ccd": 116.00681608915329,
+            "line_search": 212.37795209884644,
+            "state_update": 3.9234240036457777
+          },
+          "directions": 86,
+          "pcg_iterations": 2928,
+          "unclassified_ms": 21.09250340500182
+        }
+      },
+      "initial_free_mib": 5886.0,
+      "memory_budget_mib": 4350.0,
+      "min_observed_free_mib": 3887.0,
+      "config_sha256": "eee942dc15738a59353b3e183f72edfd623cdd9e61c0646e370b35ade3ced2df",
+      "requested_sha256": "8b56aee6e3e61d18caafafd29d4b9526115ae7023671b738d33fcbd279931c80",
+      "result_sha256": "e33788dfba93211912eeb352fe026ea433ef89850c853b9232e97dbef7a20270"
+    },
+    {
+      "name": "hang_on_r1",
+      "variant": "on",
+      "solver_ms": 1838.9386,
+      "directions": 297,
+      "pcg": 9103,
+      "material": {
+        "max_stretch": 1.1288761983652191,
+        "p99_stretch": 1.032409334044345,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1838.9386,
+          "phase_ms": {
+            "assembly": 295.6683195233345,
+            "pcg": 890.2488321065903,
+            "ccd": 288.3035840392113,
+            "line_search": 272.10236889123917,
+            "state_update": 12.233888000249863
+          },
+          "directions": 297,
+          "pcg_iterations": 9103,
+          "unclassified_ms": 80.38160743937487
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 722.5893,
+          "phase_ms": {
+            "assembly": 168.13129490613937,
+            "pcg": 288.66108894348145,
+            "ccd": 135.42223995923996,
+            "line_search": 103.76521641016006,
+            "state_update": 4.366080010309815
+          },
+          "directions": 86,
+          "pcg_iterations": 2928,
+          "unclassified_ms": 22.24337977066932
+        }
+      },
+      "initial_free_mib": 5887.0,
+      "memory_budget_mib": 4351.0,
+      "min_observed_free_mib": 3861.0,
+      "config_sha256": "4de2bcdd6e6652015f8ece28d3e16b05e98e829666e6fa14d2fec12e7164ecec",
+      "requested_sha256": "83eba534570bd1a2fc2f0968dea075271cf59cafa079ae80ac6c8a2a85fc7fda",
+      "result_sha256": "b01335aa09f1b541547d9fefd951e9e4fe394395a6c1c883bf618798b6aa1317"
+    },
+    {
+      "name": "hang_on_r2",
+      "variant": "on",
+      "solver_ms": 1815.5658,
+      "directions": 297,
+      "pcg": 9105,
+      "material": {
+        "max_stretch": 1.128876213400036,
+        "p99_stretch": 1.0324093369199678,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1815.5658,
+          "phase_ms": {
+            "assembly": 289.89427173137665,
+            "pcg": 878.5711045265198,
+            "ccd": 286.9658875465393,
+            "line_search": 268.49014461040497,
+            "state_update": 12.110944019630551
+          },
+          "directions": 297,
+          "pcg_iterations": 9105,
+          "unclassified_ms": 79.53344756552883
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 704.0554999999999,
+          "phase_ms": {
+            "assembly": 166.15263864398003,
+            "pcg": 281.3051199913025,
+            "ccd": 133.85788750648499,
+            "line_search": 98.00406414270401,
+            "state_update": 3.888000000268221
+          },
+          "directions": 86,
+          "pcg_iterations": 2930,
+          "unclassified_ms": 20.847789715260205
+        }
+      },
+      "initial_free_mib": 5899.0,
+      "memory_budget_mib": 4363.0,
+      "min_observed_free_mib": 3873.0,
+      "config_sha256": "4de2bcdd6e6652015f8ece28d3e16b05e98e829666e6fa14d2fec12e7164ecec",
+      "requested_sha256": "60934301c527f5bda0aac241263f8d2568d62279ce6e8d9bf4659fb432bc9171",
+      "result_sha256": "c263e2f2c6a3523a1c5dfd5890cc6d9e9274ad0107081d32692cf0f455588f14"
+    },
+    {
+      "name": "hang_off_r2",
+      "variant": "off",
+      "solver_ms": 1917.2685999999999,
+      "directions": 297,
+      "pcg": 9105,
+      "material": {
+        "max_stretch": 1.1288762254774651,
+        "p99_stretch": 1.0324093400033787,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1917.2685999999999,
+          "phase_ms": {
+            "assembly": 285.93084543943405,
+            "pcg": 881.2543683052063,
+            "ccd": 229.44425585865974,
+            "line_search": 425.8529922366142,
+            "state_update": 13.663776004686952
+          },
+          "directions": 297,
+          "pcg_iterations": 9105,
+          "unclassified_ms": 81.1223621553986
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 799.8298,
+          "phase_ms": {
+            "assembly": 162.0133100748062,
+            "pcg": 282.1002240180969,
+            "ccd": 118.175263941288,
+            "line_search": 210.2846406698227,
+            "state_update": 4.764320010319352
+          },
+          "directions": 86,
+          "pcg_iterations": 2930,
+          "unclassified_ms": 22.4920412856668
+        }
+      },
+      "initial_free_mib": 5899.0,
+      "memory_budget_mib": 4363.0,
+      "min_observed_free_mib": 3899.0,
+      "config_sha256": "eee942dc15738a59353b3e183f72edfd623cdd9e61c0646e370b35ade3ced2df",
+      "requested_sha256": "f7f7b0cd45873ed9393f7a173afb9adf4befb63b86a358caacd853e081e7aad5",
+      "result_sha256": "596a16a56793e24e13cd3d5f4a2769df1ca086a5bf60768a32c02a495a35d7f0"
+    },
+    {
+      "name": "hang_off_r3",
+      "variant": "off",
+      "solver_ms": 1987.8066000000001,
+      "directions": 297,
+      "pcg": 9104,
+      "material": {
+        "max_stretch": 1.1288762055676091,
+        "p99_stretch": 1.0324093358181274,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1987.8066000000001,
+          "phase_ms": {
+            "assembly": 295.94953656196594,
+            "pcg": 910.3415046930313,
+            "ccd": 237.14371141791344,
+            "line_search": 445.7267833352089,
+            "state_update": 13.502079972997308
+          },
+          "directions": 297,
+          "pcg_iterations": 9104,
+          "unclassified_ms": 85.14298401888323
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 824.4271,
+          "phase_ms": {
+            "assembly": 165.65308946371078,
+            "pcg": 290.8795521259308,
+            "ccd": 121.68345540761948,
+            "line_search": 220.6755518913269,
+            "state_update": 4.243487996980548
+          },
+          "directions": 86,
+          "pcg_iterations": 2929,
+          "unclassified_ms": 21.291963114431496
+        }
+      },
+      "initial_free_mib": 5928.0,
+      "memory_budget_mib": 4392.0,
+      "min_observed_free_mib": 3928.0,
+      "config_sha256": "eee942dc15738a59353b3e183f72edfd623cdd9e61c0646e370b35ade3ced2df",
+      "requested_sha256": "f54e93f40f48972b61339f5b29d6af41050e2dd5e96a652a2fdbf78ccd3269f4",
+      "result_sha256": "e0371296755d1e65116728020be73a43a6f79ecb023d36924ca989a0df59ce75"
+    },
+    {
+      "name": "hang_on_r3",
+      "variant": "on",
+      "solver_ms": 1892.7242,
+      "directions": 297,
+      "pcg": 9103,
+      "material": {
+        "max_stretch": 1.1288762170372826,
+        "p99_stretch": 1.0324093376231789,
+        "fixed_drift_m": 0.0
+      },
+      "windows": {
+        "prefix": {
+          "frames": [
+            1,
+            51
+          ],
+          "solver_ms": 1892.7242,
+          "phase_ms": {
+            "assembly": 299.1739846467972,
+            "pcg": 919.0149421691895,
+            "ccd": 298.60547268390656,
+            "line_search": 280.88601565361023,
+            "state_update": 13.285600010305643
+          },
+          "directions": 297,
+          "pcg_iterations": 9103,
+          "unclassified_ms": 81.75818483619105
+        },
+        "contact": {
+          "frames": [
+            41,
+            50
+          ],
+          "solver_ms": 739.5077,
+          "phase_ms": {
+            "assembly": 169.2156483232975,
+            "pcg": 296.6088306903839,
+            "ccd": 141.24860852956772,
+            "line_search": 104.61660796403885,
+            "state_update": 5.442719995975494
+          },
+          "directions": 86,
+          "pcg_iterations": 2928,
+          "unclassified_ms": 22.375284496736526
+        }
+      },
+      "initial_free_mib": 5926.0,
+      "memory_budget_mib": 4390.0,
+      "min_observed_free_mib": 3903.0,
+      "config_sha256": "4de2bcdd6e6652015f8ece28d3e16b05e98e829666e6fa14d2fec12e7164ecec",
+      "requested_sha256": "184fd3644bc731cd2858bb2042c16964fb38ef849e1806b3147003bd573c2aee",
+      "result_sha256": "5d9c5e5fe4ee248f04c8871fc57eb894b3a999497c2739616b2b6b47a8d8a188"
+    }
+  ],
+  "pairs": [
+    {
+      "repeat": 1,
+      "prefix_off_over_on": 1.0363157312593254,
+      "contact_off_over_on": 1.106717467308193,
+      "phase_on_minus_off_ms": {
+        "assembly": 8.042398989200592,
+        "pcg": 13.675998568534851,
+        "ccd": 61.910591810941696,
+        "line_search": -152.24156725406647,
+        "state_update": 0.5204159785062075
+      },
+      "state_difference": {
+        "position": {
+          "max_frame_rms": 2.0846455313439237e-07,
+          "max_vertex": 2.301352610266018e-06
+        },
+        "velocity": {
+          "max_frame_rms": 1.996880541348028e-05,
+          "max_vertex": 0.0002031698636978106
+        }
+      }
+    },
+    {
+      "repeat": 2,
+      "prefix_off_over_on": 1.056017138018352,
+      "contact_off_over_on": 1.1360323156342078,
+      "phase_on_minus_off_ms": {
+        "assembly": 3.9634262919425964,
+        "pcg": -2.6832637786865234,
+        "ccd": 57.52163168787956,
+        "line_search": -157.36284762620926,
+        "state_update": -1.5528319850564003
+      },
+      "state_difference": {
+        "position": {
+          "max_frame_rms": 1.0368889101752614e-05,
+          "max_vertex": 7.94413471130508e-05
+        },
+        "velocity": {
+          "max_frame_rms": 0.0002422217713351082,
+          "max_vertex": 0.0066182754728872275
+        }
+      }
+    },
+    {
+      "repeat": 3,
+      "prefix_off_over_on": 1.0502357395757924,
+      "contact_off_over_on": 1.1148323404881382,
+      "phase_on_minus_off_ms": {
+        "assembly": 3.224448084831238,
+        "pcg": 8.673437476158142,
+        "ccd": 61.46176126599312,
+        "line_search": -164.84076768159866,
+        "state_update": -0.2164799626916647
+      },
+      "state_difference": {
+        "position": {
+          "max_frame_rms": 1.47084588071574e-06,
+          "max_vertex": 1.585370966547068e-05
+        },
+        "velocity": {
+          "max_frame_rms": 6.244654345346721e-05,
+          "max_vertex": 0.0008797688166018436
+        }
+      }
+    }
+  ],
+  "diagnostic_median_off_over_on": 1.0502357395757924,
+  "diagnostic_geometric_mean_off_over_on": 1.047490155660768,
+  "median_fraction_time_saved": 0.0478328223681318,
+  "contact_median_off_over_on": 1.1148323404881382,
+  "formal_confidence_interval": null,
+  "baseline_stiff_in_this_session": false,
+  "independent_accepted_path_ccd_completed": false,
+  "quality_certified": false,
+  "performance_certified": false,
+  "new_default_promoted": false,
+  "scope": "Three complete 51-frame contact-pool off/on diagnostics after resource release; not a Stiff/optimized total speedup, not 100-frame acceptance. Existing frozen quality bounds unchanged."
+}

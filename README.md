@@ -53,12 +53,17 @@ whose filenames differ only in case. The latest Step3 Windows build has a sealed
 source/object/link identity, passing CPU stopping tests, three GPU fixtures and
 20 rejected retired-entry checks. Subsequent Step3 runs completed three fixed-bunny
 cloth pairs and one contact-pool pair in each cloth scene. Fixed-bunny diagnostic
-Stiff/current ratios have a median of 1.475x; pool off/on ratios are 1.071x (fixed)
-and 1.137x (hanging). Full quality/100-frame regression remains pending. Existing
-material bounds did not all pass, and the next hanging run stopped at the unchanged
-GPU memory guard. These are not certified speedups.
+Stiff/current ratios have a median of 1.475x. After the user freed GPU memory,
+Step4 completed all six hanging runs: the incremental pool ratio has a median of
+1.050x over 51 frames and 1.115x over the contact window. The net whole-prefix
+saving is 4.78%, below the declared 5% component threshold. Pool remains default
+off. Two protected Windows Nsight captures now separate actual kernel work from
+CPU waiting; no native solver code changed in Step4. Full quality/100-frame
+regression remains pending, and prior material/resource failures are preserved.
+These are not certified speedups.
 See [`reports/STATUS_20261006.md`](reports/STATUS_20261006.md) for the current result
-and [`reports/local_step3/ROUND_REVIEW.md`](reports/local_step3/ROUND_REVIEW.md)
-for the per-round analysis. The 4090 evidence remains a separate program identity.
+and [`reports/local_step4/ROUND_REVIEW.md`](reports/local_step4/ROUND_REVIEW.md)
+for the per-round analysis and speed-comparison explanation. The 4090 evidence
+remains a separate program identity.
 
 Upstream code retains its original licenses and author attribution.

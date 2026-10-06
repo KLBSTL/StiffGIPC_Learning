@@ -2,7 +2,8 @@
 
 2026-10-06；基于第三批清理后的本机源码。此表是代码能力清单，不表示完整
 质量或性能已认证。最新程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
-三项 GPU 夹具和退休入口检查通过，随后完成9次短窗；100/300帧、独立CCD与
+三项 GPU 夹具和退休入口检查通过，Step3完成9次短窗；Step4另完成6次悬挂
+短窗和2次受保护Nsight捕获。100/300帧、独立CCD与
 完整质量协议仍待验证。结果见
 `../reports/STATUS_20261006.md`，第二、三批变更见对应清理文档。
 
@@ -24,9 +25,15 @@
 
 `tools/bench/plans.py:10–19` 的当前接触池实验使用 IPC＋legacy MAS＋Graph＋
 combined＋普通 BVH 缓存；不能把这里的显式配置说成所有程序默认都开启。
+Step4三轮悬挂池增量中位1.05024×、净省4.783%，没有达到5%组件门槛；
+维护热点证据不足，停止性能调优支线并保持默认关闭。见
+[Step4分析](../reports/local_step4/ROUND_REVIEW.md)。
 
 ## 保留的诊断入口
 
+- 本机受保护Nsight入口：`tools/local/profiler_windows.py` 与专属Windows Job
+  监管；每seal最多两次捕获、原资源限额和共享锁。实际节点成本用只读
+  `tools/local/analyze_profile.py`分析，CPU等待/GPU union分列；不是性能认证。
 - main 早退出：`GIPC_VALIDATE_COMPONENTS`、`GIPC_PCG_GUARD_FIXTURE`、
   `GIPC_CONTACT_POOL_FIXTURE`、`GIPC_MAS_REPLAY_FIXTURE`、
   `GIPC_MAS_CHOLESKY_FIXTURE`（`app/gl_main.cu:1785–1794`）。六历史 M fixture

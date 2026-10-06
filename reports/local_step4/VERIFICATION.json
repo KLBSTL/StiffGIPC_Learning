@@ -1,0 +1,66 @@
+{
+  "schema": "local_step4.verification.v1",
+  "date": "2026-10-06",
+  "active_program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+  "native_source_and_seal_verified": true,
+  "new_native_solver_change": false,
+  "profiles": [
+    {
+      "arm": "off",
+      "result_sha256": "581efc1fd3172b876033fed0b3459440d5a888ed6a3c2c4918500c7412e8bf98",
+      "request_sha256": "ac68660f48907a08413fc731f67697f897409e9dfc7642ca3e103f73269070f6",
+      "recorded_frames": 59,
+      "capture_verified": true,
+      "owned_job_empty": true,
+      "wall_seconds": 14.532000000002881,
+      "cost_scopes": 266,
+      "cpu_nvtx_wall_ms": 161.738546,
+      "gpu_union_ms": 112.626585,
+      "boundary_crossing": 0,
+      "attempt": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_profile_attempts\\846c5d6b2cf8108672d9184093342f58db76a66c17b819949d662de1f5b75542\\attempt1.json"
+    },
+    {
+      "arm": "on",
+      "result_sha256": "076b1ff392816571c426d20eda85b7fa796b5229353255fecfccfad7c9bc3721",
+      "request_sha256": "95cb325239f50d6b48313a541bbe56d3a988e8f4bd7628292320ab58495c336a",
+      "recorded_frames": 59,
+      "capture_verified": true,
+      "owned_job_empty": true,
+      "wall_seconds": 13.859000000000378,
+      "cost_scopes": 290,
+      "cpu_nvtx_wall_ms": 148.197846,
+      "gpu_union_ms": 98.475947,
+      "boundary_crossing": 0,
+      "attempt": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_profile_attempts\\846c5d6b2cf8108672d9184093342f58db76a66c17b819949d662de1f5b75542\\attempt2.json"
+    }
+  ],
+  "profile_attempt_budget": 2,
+  "profile_attempts_used": 2,
+  "cpu_contract_tests": {
+    "independent_local_contracts": 8,
+    "remaining_local_contracts": 37,
+    "total": 45,
+    "passed": true,
+    "initial_combined_module_invocation": "Failed due to historical same-name contracts_test import; independent documented entries passed without tool changes"
+  },
+  "ctest": {
+    "command": "D:/computer/cmake/bin/ctest.exe --test-dir build/local_step3_20261006 -C Release --output-on-failure",
+    "passed": 5,
+    "total": 5
+  },
+  "pool_completed": 6,
+  "pool_steps_each": 51,
+  "pool_old_material_bounds_passed": true,
+  "new_tool_sha256": {
+    "profiler_windows.py": "09393931987efbc43e2230d6f169dc997af7c5260ec88fb5f3bc7625fc21feec",
+    "windows_owned_job.py": "d905c40ee166e39efdd53b5f4639d093bade00e970b72a93ccf3f30bd8e800bc",
+    "profiler_windows_contracts_test.py": "e1cd8bac70681d352b8b34ed193153e3065ae7bd7a2c012486f3c338291a5de9",
+    "analyze_profile.py": "981aa928412584f955011d59388c23b0bbcc3701b183732ead2f2a25ecacb8cf",
+    "analyze_profile_contracts_test.py": "67bb8e0f4c42a701579253e889c2351f49985aaf4580aea2c5027bd71bddbf25"
+  },
+  "quality_certified": false,
+  "performance_certified": false,
+  "two_x_achieved": false,
+  "default_pool": false,
+  "scope": "Local WDDM diagnostic; previous failures preserved. CPU/GPU timing not added. Native solver, materials, quality protocol and sealed runner unchanged."
+}
