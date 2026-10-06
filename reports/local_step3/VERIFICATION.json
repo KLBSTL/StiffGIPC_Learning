@@ -1,0 +1,582 @@
+{
+  "schema": "local_cleanup_verification.v1",
+  "date": "2026-10-06",
+  "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+  "source_object_link_verified": true,
+  "translation_unit_count": 37,
+  "actual_nvcc_source_count": 33,
+  "source_object_map": [
+    {
+      "source": "StiffGIPC/abd_system/abd_sim_data.cu",
+      "source_sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887",
+      "object": "build/local_step3_20261006/gipc.dir/Release/abd_sim_data_2af2e89623df3800.obj",
+      "object_sha256": "d269c2440ce728b0422ca51f88d09655ba963604b4a220116df7709705c81a7f",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system.cu",
+      "source_sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad",
+      "object": "build/local_step3_20261006/gipc.dir/Release/abd_system_566b541f9b834e09.obj",
+      "object_sha256": "18bfcd0cf5de95986b970b9bf56070a68f393ddd6f35e6515f482ca963048a1e",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+      "source_sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9",
+      "object": "build/local_step3_20261006/gipc.dir/Release/cal_abd_energy_4b9755fb4ac53ddd.obj",
+      "object_sha256": "b36e93dfa3b1d1f317e0308d1f0749198721db4ee21b6de04410f50de9348acd",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+      "source_sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441",
+      "object": "build/local_step3_20261006/gipc.dir/Release/cal_q_tilde_6adb0311f26cdf07.obj",
+      "object_sha256": "5ce3750037c9f2c5bb63ed65d0b46890a766703396e2f44c63229a8cc3283286",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+      "source_sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092",
+      "object": "build/local_step3_20261006/gipc.dir/Release/cal_x_from_q_e253453135bad9ba.obj",
+      "object_sha256": "9e44ff6c0338ca6520f98242d4476d110333b88ea843dc326073205227016978",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+      "source_sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407",
+      "object": "build/local_step3_20261006/gipc.dir/Release/setup_abd_system_gradient_and_hessian_5926bcd6814ee7d3.obj",
+      "object_sha256": "f31ca77edfaed08a0b156e8b91dfb2661059b9c37eae896dfa141b91b5ea9eca",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+      "source_sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae",
+      "object": "build/local_step3_20261006/gipc.dir/Release/step_forward_2b5573eaabfd5777.obj",
+      "object_sha256": "36280789b9b3569a4b43b566bfb796adf8b48b7180af06af9711d16a1a6fc3e9",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+      "source_sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e",
+      "object": "build/local_step3_20261006/gipc.dir/Release/update_velocity_f685efa86b9cf73a.obj",
+      "object_sha256": "4a06d9360199c315e9918dce3be37f3447ba76b148f4befb64f1e09aed6fe790",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/app/gl_main.cu",
+      "source_sha256": "edb3149bde743caa78e47d496841cbc034c56c937ef7f8f1255a0bbf5cf466a5",
+      "object": "build/local_step3_20261006/gipc.dir/Release/gl_main_818161e756db8728.obj",
+      "object_sha256": "d137857c548fdc01df1a206a55978251b4010289d414e730ef0b47f1ddd54bbd",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/collision/ACCD.cu",
+      "source_sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea",
+      "object": "build/local_step3_20261006/gipc.dir/Release/ACCD_61a51ec29dbb8999.obj",
+      "object_sha256": "30d641af85c6e4c5939d8e0a87e61bb2991445911b8fd20afa124063a33e887b",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/collision/mlbvh.cu",
+      "source_sha256": "aaac9fc714c08a5c58bc28cae8c9cf71ab1d979c4b934ebc335a037696e4c570",
+      "object": "build/local_step3_20261006/gipc.dir/Release/mlbvh_e3cf2a698788c01d.obj",
+      "object_sha256": "f31667eb1f22d3176425d1b14ca814f009c326afdf8c5c362b8600d694397e29",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/core/GIPC.cu",
+      "source_sha256": "5e4ffa38535ccff16095c9c5d59f005f5b0de9bf4616f8b277c333314e346539",
+      "object": "build/local_step3_20261006/gipc.dir/Release/GIPC_2f10ac02766cf4af.obj",
+      "object_sha256": "f1d28f1087bc666d571462a50c2754664c1999b2541cfb1e4e52e9f333efc7bc",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/core/frame_checkpoint.cu",
+      "source_sha256": "49f1163c066e68e7aad147c4d89bf53c4b29480b8aaa109374b98be6b87ee8a7",
+      "object": "build/local_step3_20261006/gipc.dir/Release/frame_checkpoint_7f13b6d5e567ae46.obj",
+      "object_sha256": "e63a7d46f0a6ceda6610cc85d02d4fd9d904dbf31a807195c40778e48422f739",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/core/gipc_system.cu",
+      "source_sha256": "daee7d903fe9b9181c6bb8a3da5f0350424e6c5148613cd4f82edc49047b00e3",
+      "object": "build/local_step3_20261006/gipc.dir/Release/gipc_system_63bb5d2210cd639e.obj",
+      "object_sha256": "60b67e5b91dc3f75db0562d2436dc1209e8e7d34d27cd4aa37a97af98b8c8025",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/fem/device_fem_data.cu",
+      "source_sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e",
+      "object": "build/local_step3_20261006/gipc.dir/Release/device_fem_data_037e415bbbd87423.obj",
+      "object_sha256": "fe9122490bce89940f5d313e23f49566b96d20270365d21652d5a9a3b803e20e",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/fem/femEnergy.cu",
+      "source_sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1",
+      "object": "build/local_step3_20261006/gipc.dir/Release/femEnergy_b8ff58b8b9af9723.obj",
+      "object_sha256": "7810b173cd0754772463ccea261a00548adcf5faca74e6a7d84dae834be6d12a",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+      "source_sha256": "4095ba4341e0df048108ccce45b355b696ba54f2e3334dc09c33bb472f9b6ba5",
+      "object": "build/local_step3_20261006/gipc.dir/Release/global_linear_system_fa740f045610a68f.obj",
+      "object_sha256": "58c7089a12b8400e34c6eaed84d09a5ca56cd35d8100621e052bbc1be2a80223",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/linear_system/global_matrix.cu",
+      "source_sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e",
+      "object": "build/local_step3_20261006/gipc.dir/Release/global_matrix_374dacf4f25aa9f4.obj",
+      "object_sha256": "346e409464c2fad73e708b58eb1f10356609182114035f6e6a0747ca1f3c3779",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+      "source_sha256": "7da94fb27b0714b65c1bc57f99dba98c4ac08f6df4150cea55771da5127244a4",
+      "object": "build/local_step3_20261006/gipc.dir/Release/i_linear_system_solver_f67e402f090a67b6.obj",
+      "object_sha256": "5f89a40c5dda59ca2057dbb1edb93b70fc0764c0aac64d3830f64eec7de9a28f",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+      "source_sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1",
+      "object": "build/local_step3_20261006/gipc.dir/Release/i_preconditioner_1d10e39e17f95c89.obj",
+      "object_sha256": "a14a9ffd83afd2f387b58e494094de1f0a224cedd49e80f4f2365969239e4ac2",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+      "source_sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca",
+      "object": "build/local_step3_20261006/gipc.dir/Release/linear_subsystem_b2b0e5c0ca33f46a.obj",
+      "object_sha256": "e0c5ede2820cf7a4088bbd38b21a6fcc505cc17eaf43228af6be0d655dcbc535",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+      "source_sha256": "f599ba8958f522fafd56b3229b36fadbd397622425e8177078ae3e89424aeead",
+      "object": "build/local_step3_20261006/gipc.dir/Release/abd_preconditioner_dd31324f591974bd.obj",
+      "object_sha256": "477190d0e8d99c4c40d1a7dcb2c67f08ef6a5366e4676eec887e5d88064e78b9",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+      "source_sha256": "092dd7d3b52adeca8856ce6d3e5a39df420f33b1ec984b36d0ac116f7764675b",
+      "object": "build/local_step3_20261006/gipc.dir/Release/diag_preconditioner_2b0a8bbcad84f90f.obj",
+      "object_sha256": "67cc956c7e317a7d71cf460492e51c309ca7ba129df37001dcd97cc40a60edaf",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+      "source_sha256": "b0cb94e633e617871d26d6c6b7a9253507413e0e4d1ac3a1d51151e01632f407",
+      "object": "build/local_step3_20261006/gipc.dir/Release/fem_mas_preconditioner_81cd002e3ed8c374.obj",
+      "object_sha256": "10ecfcfc9359509941d2fda2abca0bb25fc0547ae04687ed6639c045f74f5630",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/solver/pcg_solver.cu",
+      "source_sha256": "1deea2593200a2a32751a0610c0762f5fcdd546b43f04f2533a59cee9219061f",
+      "object": "build/local_step3_20261006/gipc.dir/Release/pcg_solver_553b2b73d22ecfc4.obj",
+      "object_sha256": "8d6be365178244f617d713326c719b8d7447e9447d4192d950966e096ae6d6b2",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+      "source_sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29",
+      "object": "build/local_step3_20261006/gipc.dir/Release/abd_linear_subsystem_c6811eeba85df1e4.obj",
+      "object_sha256": "84806ab13783467bf146bc3da66cb07c097dd6ba1067e655f38125c881a9e332",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+      "source_sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4",
+      "object": "build/local_step3_20261006/gipc.dir/Release/fem_linear_subsystem_00c0616d1a47a088.obj",
+      "object_sha256": "3d629afec5eac97f89810885d8ac98dd6b05f57ceee27d7d3f4c4578bd3c0e24",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/utils/converter.cu",
+      "source_sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c",
+      "object": "build/local_step3_20261006/gipc.dir/Release/converter_ce477662c3672518.obj",
+      "object_sha256": "8d3d2b5891d83530228a69d2e7bc56445aca707967f8e98c2a3905e2c60b77c4",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/linear_system/utils/spmv.cu",
+      "source_sha256": "76fa87eaf92a836b086d195a8f2647e3f66eb1c2b7b07167fb0a64884432fa23",
+      "object": "build/local_step3_20261006/gipc.dir/Release/spmv_363663a1f27d015e.obj",
+      "object_sha256": "0834886ec463d12e3eb98759eef6908014f645f36ceed3db686f75726afb46c0",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/math/gpu_eigen_libs.cu",
+      "source_sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da",
+      "object": "build/local_step3_20261006/gipc.dir/Release/gpu_eigen_libs_b4976d1011a83ac6.obj",
+      "object_sha256": "39d502c48f87398eff265d9717f8917f9f9b88006a6b76874fd52aa0f872723f",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/solver/MASPreconditioner.cu",
+      "source_sha256": "233f74da8422f283d2ea43f14d45cfc5295f872c3342b5afab75e15b931a103b",
+      "object": "build/local_step3_20261006/gipc.dir/Release/MASPreconditioner_f5a5feb07870b705.obj",
+      "object_sha256": "6412e5492cfc735936984f2c3229f49c0acb7c0a43f2a561813edc0f4f324dce",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/solver/PCG_SOLVER.cu",
+      "source_sha256": "86721c762676cdf8b7943df6d9ca990287899682c3b1a7c6afb4af3acf0b1c24",
+      "object": "build/local_step3_20261006/gipc.dir/Release/PCG_SOLVER_f074f0d849cc0895.obj",
+      "object_sha256": "322350d62578775ed6f8542661c0535e82c63c8af40eccfd66fb8d81abb2066f",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/solver/toi_solver.cu",
+      "source_sha256": "08b6651be67db1ed23ac5cc8c3b2bc1d932874751f194a7d0f9af181a3506e0a",
+      "object": "build/local_step3_20261006/gipc.dir/Release/toi_solver_db5693617459e0e8.obj",
+      "object_sha256": "2e31d034d04f008d71f8f8c180a5f0c1d6668eeecef84d43c3fbb299a68cb58e",
+      "kind": "CudaCompile"
+    },
+    {
+      "source": "StiffGIPC/gipc/statistics.cpp",
+      "source_sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe",
+      "object": "build/local_step3_20261006/gipc.dir/Release/statistics_69731b0a3d2f3911.obj",
+      "object_sha256": "382b4e839cb27981b107b58353cf5651f0c161c8b26b76adf682ddd431c26f6b",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+      "source_sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8",
+      "object": "build/local_step3_20261006/gipc.dir/Release/simple_scene_importer_826bc4b412407db5.obj",
+      "object_sha256": "570938d10cd64613cfe6a5e72a5fc813c10b298387c8afbf63e34b97a824207c",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "StiffGIPC/gipc/utils/timer.cpp",
+      "source_sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e",
+      "object": "build/local_step3_20261006/gipc.dir/Release/timer_057775de16d4ce4a.obj",
+      "object_sha256": "776bca71322b0ab96ab676c1dfe236a129319d3ca22a8c938d4cabbbe66305ac",
+      "kind": "ClCompile"
+    },
+    {
+      "source": "StiffGIPC/io/load_mesh.cpp",
+      "source_sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6",
+      "object": "build/local_step3_20261006/gipc.dir/Release/load_mesh_40f592462f471d09.obj",
+      "object_sha256": "07e60667c75f4b889e5ddbf48975c9cfa697863bcbbcce8f4bcfb7dcde90391e",
+      "kind": "ClCompile"
+    }
+  ],
+  "dlls": [
+    {
+      "name": "freeglut.dll",
+      "sha256": "aa639699ba3bc4732651d8759fbc4dfc2a436c34c03b5d9b9bc288fd8ecf166a",
+      "bytes": 247808
+    },
+    {
+      "name": "glew32.dll",
+      "sha256": "6a30487171c89136869f4154426a1b52cf8b2ec81b8a41944a85b552e1b74f9c",
+      "bytes": 514048
+    }
+  ],
+  "compilers": [
+    {
+      "key": "CMAKE_CXX_COMPILER",
+      "binary_sha256": "4304307e1f0d0528ac13c513183e5cbfa20a7f8de6f0c8e5bc4293661e6d23a4",
+      "version_output": "usage: cl [ option... ] filename... [ /link linkoption... ]\r\nMicrosoft (R) C/C++ Optimizing Compiler Version 19.44.35222 for x64\r\nCopyright (C) Microsoft Corporation.  All rights reserved."
+    },
+    {
+      "key": "CMAKE_CUDA_COMPILER",
+      "binary_sha256": "16dd552eb51b516d59fef29dee19f540749d24dd2f374aaaf0312b9f35084844",
+      "version_output": "nvcc: NVIDIA (R) Cuda compiler driver\r\nCopyright (c) 2005-2025 NVIDIA Corporation\r\nBuilt on Wed_Aug_20_13:58:20_Pacific_Daylight_Time_2025\r\nCuda compilation tools, release 13.0, V13.0.88\r\nBuild cuda_13.0.r13.0/compiler.36424714_0"
+    }
+  ],
+  "local_build_seal": {
+    "path": "build/local_step3_20261006/local_diagnostic_seal.json",
+    "sha256": "846c5d6b2cf8108672d9184093342f58db76a66c17b819949d662de1f5b75542"
+  },
+  "manifest_sha256": "03f1495883bf2b7a3b9aeaef0530cf281008781c509eac09e64456ae6f400e0b",
+  "cpu_checks": [
+    {
+      "command": "D:/computer/cmake/bin/ctest.exe --test-dir build/local_step3_20261006 -C Release -R ipc_budget|ipc_compensated --output-on-failure --timeout 120",
+      "passed": 2,
+      "failed": 0
+    },
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/contracts_test.py -v",
+      "passed": 8,
+      "failed": 0,
+      "test_source_sha256": "b0a28a5d5f059500b715824fd1c5c5902594d1192c2650bdd740116455a24ca4"
+    },
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/fixture_windows_contracts_test.py -v",
+      "passed": 10,
+      "failed": 0,
+      "test_source_sha256": "e92e82f9969cd8a6622ecc7fc7856eccfcb240cf047c13098fafb3a4b419b73e"
+    },
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/cpu_fixed_reference_test.py -v",
+      "passed": 8,
+      "failed": 0,
+      "test_source_sha256": "b2bf9f9a41710cad33c7cc7dccb65bce5ae99286b493f07aff820186076673c6"
+    }
+  ],
+  "gpu_fixtures": [
+    {
+      "kind": "component",
+      "status": "completed",
+      "native_passed": true,
+      "check_count": 46,
+      "identity_unchanged": true,
+      "scope": "GPU AL derivatives and updates; independent warm normal/friction histories on fixed PT input; normalized determinant bound across scales and interior extrema",
+      "result_sha256": "7c732bdaccb6b09768c096de5e49a73797722ee2b815825901abe3efae7750db",
+      "fixture_sha256": "d6e5cc3b94f09f2af50bc39983dddd76c7664f2bd9ef5afd7521ff0f833c849e",
+      "local_directory": "runs/local_step3_fixtures_20261006/component",
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/fixture_windows.py --exe build/local_step3_20261006/Release/gipc.exe --output runs/local_step3_fixtures_20261006/component --kind component --diagnostic-under-desktop-load",
+      "load_controlled": false,
+      "physical_quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "kind": "pcg_guard",
+      "status": "completed",
+      "native_passed": true,
+      "check_count": 15,
+      "identity_unchanged": true,
+      "scope": "Shared host classification and actual graph scalar guard kernels",
+      "result_sha256": "8aeefd334bd6c572a800ebc115c270e0fc1ec1efbf23a1996f1edd286966d0e8",
+      "fixture_sha256": "2c513d227d306339cdcad0ff13fd1a3011844bd6a8bf9385d50795c9d20dd332",
+      "local_directory": "runs/local_step3_fixtures_20261006/pcg_guard",
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/fixture_windows.py --exe build/local_step3_20261006/Release/gipc.exe --output runs/local_step3_fixtures_20261006/pcg_guard --kind pcg_guard --diagnostic-under-desktop-load",
+      "load_controlled": false,
+      "physical_quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "kind": "contact_pool",
+      "status": "completed",
+      "native_passed": true,
+      "check_count": 53,
+      "identity_unchanged": true,
+      "scope": "synthetic raw production queries; no safety CCD or physical simulation skipped",
+      "result_sha256": "641213011398399c3a0430fcf9e2d28a380d53c1ce955b12d0a120cdd11c9c1e",
+      "fixture_sha256": "3ec8117754ad1f2980a443ca40adefe831b5e7a359e7f18bfab0fa151e965867",
+      "local_directory": "runs/local_step3_fixtures_20261006/contact_pool",
+      "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/fixture_windows.py --exe build/local_step3_20261006/Release/gipc.exe --output runs/local_step3_fixtures_20261006/contact_pool --kind contact_pool --diagnostic-under-desktop-load",
+      "load_controlled": false,
+      "physical_quality_certified": false,
+      "performance_certified": false
+    }
+  ],
+  "retired_entries": {
+    "analysis_sha256": "7a484216febd26e5b9fe33fa5bc502ae633aa03c270719e68ddc2ab2b8b0348c",
+    "scope": "Retired requests fail before fixture dispatch, according to ordered source guard and absent sentinel. Not a GPU timeline or production trajectory test.",
+    "cases": [
+      {
+        "key": "GIPC_TOI_INNER_EXIT",
+        "requested_value": "velocity_only",
+        "exit_code": 4,
+        "seconds": 0.2040000000015425,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_TOI_INNER_EXIT=velocity_only is retired after failed convergence/workload experiments; use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation"
+      },
+      {
+        "key": "GIPC_TOI_FULL_STEP_EXIT_PROBE",
+        "requested_value": "1:0",
+        "exit_code": 4,
+        "seconds": 0.18700000000171713,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_TOI_FULL_STEP_EXIT_PROBE is retired after its bounded experiment; use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation"
+      },
+      {
+        "key": "GIPC_TOI_FULL_STEP_EXIT_PROBE",
+        "requested_value": "0",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_TOI_FULL_STEP_EXIT_PROBE is retired after its bounded experiment; use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation"
+      },
+      {
+        "key": "GIPC_TOI_FULL_STEP_EXIT_PROBE",
+        "requested_value": "",
+        "exit_code": 4,
+        "seconds": 0.20300000000133878,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_TOI_FULL_STEP_EXIT_PROBE is retired after its bounded experiment; use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation"
+      },
+      {
+        "key": "GIPC_BOUNDED_CCD",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BOUNDED_CCD is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_BOUNDED_CCD_VALIDATE",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BOUNDED_CCD_VALIDATE is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_BVH_ELIGIBILITY",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.1720000000022992,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BVH_ELIGIBILITY is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_BVH_ELIGIBILITY_VALIDATE",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BVH_ELIGIBILITY_VALIDATE is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_ELIGIBILITY",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.1709999999984575,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_ELIGIBILITY is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_ELIGIBILITY_VALIDATE",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.1720000000022992,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_ELIGIBILITY_VALIDATE is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_MAS_FUSED_DOT",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_MAS_FUSED_DOT is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_FIXED_MAS_DOT_STUDY",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.1720000000022992,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_FIXED_MAS_DOT_STUDY is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_SPMV_FUSED_QUADRATIC",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.18799999999828287,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_SPMV_FUSED_QUADRATIC is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_FIXED_SPMV_QUADRATIC_STUDY",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.18700000000171713,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_FIXED_SPMV_QUADRATIC_STUDY is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_FIXED_LEGACY_RESTRICT_STUDY",
+        "requested_value": "1",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_FIXED_LEGACY_RESTRICT_STUDY is retired after failing performance promotion and is unavailable in this build; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_LEGACY_RESTRICT",
+        "requested_value": "ordered",
+        "exit_code": 4,
+        "seconds": 0.21900000000096043,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_LEGACY_RESTRICT=ordered is retired after failing performance promotion; use archive/pre-cleanup-20261006 to reproduce the historical experiment"
+      },
+      {
+        "key": "GIPC_BOUNDED_CCD_FIXTURE",
+        "requested_value": "",
+        "exit_code": 4,
+        "seconds": 0.17199999999866122,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BOUNDED_CCD_FIXTURE is a retired fixture and is unavailable in this build; use archive/pre-cleanup-20261006 for the historical fixture"
+      },
+      {
+        "key": "GIPC_BVH_ELIGIBILITY_FIXTURE",
+        "requested_value": "0",
+        "exit_code": 4,
+        "seconds": 0.1709999999984575,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_BVH_ELIGIBILITY_FIXTURE is a retired fixture and is unavailable in this build; use archive/pre-cleanup-20261006 for the historical fixture"
+      },
+      {
+        "key": "GIPC_ELIGIBILITY_FIXTURE",
+        "requested_value": "0",
+        "exit_code": 4,
+        "seconds": 0.18800000000192085,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_ELIGIBILITY_FIXTURE is a retired fixture and is unavailable in this build; use archive/pre-cleanup-20261006 for the historical fixture"
+      },
+      {
+        "key": "GIPC_MAS_FUSED_DOT",
+        "requested_value": "invalid",
+        "exit_code": 4,
+        "seconds": 0.18699999999807915,
+        "passed": true,
+        "fixture_output_absent": true,
+        "stdout": "",
+        "stderr": "GIPC controlled failure: GIPC_MAS_FUSED_DOT must be exactly 0 or 1; this component is retired"
+      }
+    ]
+  },
+  "assets_equivalence_passed": true,
+  "prior_quality_gate_unchanged": true,
+  "production_trajectory_completed": false,
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "scope": "Latest Step3 identity and finite fixtures only. Prior Step2 trajectories remain separate. Raw local build/run files are retained outside Git."
+}

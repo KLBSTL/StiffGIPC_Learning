@@ -1,7 +1,9 @@
 # 当前组件与保留边界
 
-2026-10-06；基于第二批清理后的本机源码。此表是代码能力清单，不表示新程序
-已编译、GPU 已通过或性能已认证。第二批变更见 `CODE_CLEANUP_STEP2.md`。
+2026-10-06；基于第三批清理后的本机源码。此表是代码能力清单，不表示完整
+质量或性能已认证。最新程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
+三项 GPU 夹具和退休入口检查通过；完整轨迹仍待验证。结果见
+`../reports/STATUS_20261006.md`，第二、三批变更见对应清理文档。
 
 ## 活动功能
 
@@ -40,21 +42,23 @@ combined＋普通 BVH 缓存；不能把这里的显式配置说成所有程序�
   `app/gl_main.cu:1818–1932`。checkpoint 只是一种入口，未通过续算等价的
   混合状态不能作为算法因果对照，正式轨迹继续从零推进。
 
-## 已退休及剩余可考虑归档项
+## 已退休及保留边界
 
 已从活动实现删除：bounded-request CCD、BVH eligibility、MAS final-dot、
-SpMV+pAp、legacy ordered restriction。`core/retired_components.h` 明确拒绝
+SpMV+pAp、legacy ordered restriction，以及下面两个 AL 退出入口。`core/retired_components.h` 明确拒绝
 启用，历史说明/报告和 Git 恢复入口保留。v55/v56 三角优化没有进入当前标准
 `cholesky_action` 实现，无需在活动源码中重复删除它们。
 
-只列下一次整理可审阅的 **两个** 有明确负面证据入口，本轮不实施第三批：
+以下两个有明确负面证据的入口已在 Step 3 退休；新程序已独立构建，旧已测程序仍保留。静态等价、程序身份和已执行检查见 `CODE_CLEANUP_STEP3.md`：
 
-| 入口 | 证据 | 最小未来边界 |
+| 入口 | 证据 | 已实施边界 |
 |---|---|---|
-| 全局 `GIPC_TOI_INNER_EXIT=velocity_only` | `history/reports/DIRECTION_REVIEW_V46_20261004.md:19`：660次方向/101969 PCG仅推进一次outer；改变原停止语义且未形成可接受结果 | 可退休这一枚举及 `toi_solver.cu:1704` 的对应抑制条件；保留 native、原速度阈值、完整CCD。其它 full_step_only 模式不能因名字接近被一并判失败 |
-| 选定 outer 的 `GIPC_TOI_FULL_STEP_EXIT_PROBE` | `history/reports/active/DEFAULTS_OUTER_RESULTS_20261005.md:64–72`：有限8次内层探针无一致工作量改善，质量仍未通过，按预声明停止 | 可退休解析/分支/专属统计；保留常规 full-step 出口及通用 outer observer。这个探针不应成为长期生产选项 |
+| 全局 `GIPC_TOI_INNER_EXIT=velocity_only` | `history/reports/DIRECTION_REVIEW_V46_20261004.md:19`：660次方向/101969 PCG仅推进一次outer；改变原停止语义且未形成可接受结果 | 删除这一枚举及对应抑制条件；保留 native、full_step_only、原速度阈值、完整CCD；原生启动明确报退休错误 |
+| 选定 outer 的 `GIPC_TOI_FULL_STEP_EXIT_PROBE` | `history/reports/active/DEFAULTS_OUTER_RESULTS_20261005.md:64–72`：有限8次内层探针无一致工作量改善，质量仍未通过，按预声明停止 | 删除解析/状态/专属预算分支；保留常规 full-step 出口及通用 outer observer，旧日志字段固定 null/false；原生启动明确报退休错误 |
 
 其余路径不能仅因“仍是实验”或代码多而定为失败：wide/inverse64 服务数值回归，
 triangular 是稳定参考；factor_inverse/world_block 是用户已选默认；
 gated/compensated、choose_start/restart guard 与完整 AL 后端涉及另行研究的数学
 行为。本轮没有足够的新证据授权把它们合并删除。
+
+保留功能或当前默认开关不代表取得同质量 2× 加速；精度、完整轨迹和受控负载计时仍须分别验收。

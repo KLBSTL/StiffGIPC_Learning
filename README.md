@@ -27,7 +27,8 @@ The active source is standalone; it no longer inherits historical overlays.
 
 The cleanup removes rejected bounded CCD, BVH eligibility, MAS final-dot,
 SpMV quadratic fusion and ordered restriction implementations, their dedicated
-scratch and study branches. Explicit requests fail with a recovery-tag message. Current
+scratch and study branches. The failed AL velocity-only and selected full-step
+exit probes are also retired. Explicit requests fail with a recovery-tag message. Current
 contact-pool reuse remains an experiment with an independent switch, default off.
 IPC legacy stopping, materials and complete CCD remain unchanged.
 
@@ -48,7 +49,14 @@ The current execution target is the local Windows workstation, as requested on
 2026-10-06. See [`docs/LOCAL_EXECUTION_PLAN_20261006.md`](docs/LOCAL_EXECUTION_PLAN_20261006.md)
 and [`docs/CURRENT_COMPONENTS.md`](docs/CURRENT_COMPONENTS.md). Windows builds
 assign independent object names to every source, including the two PCG sources
-whose filenames differ only in case. Native cleanup regression is pending;
-the 4090 Step1 guard evidence does not certify the Step2 Windows program.
+whose filenames differ only in case. The latest Step3 Windows build has a sealed
+source/object/link identity, passing CPU stopping tests, three GPU fixtures and
+20 rejected retired-entry checks. Its full trajectory regression remains pending.
+The preceding Step2 program completed two fixed-bunny cloth pairs with diagnostic
+ratios of 1.34x and 1.65x; existing material bounds did not all pass, and subsequent
+runs stopped at the unchanged GPU memory guard. These are not certified speedups.
+See [`reports/STATUS_20261006.md`](reports/STATUS_20261006.md) for the current result
+and [`reports/local_step2/ROUND_REVIEW.md`](reports/local_step2/ROUND_REVIEW.md)
+for the per-round analysis. The 4090 evidence remains a separate program identity.
 
 Upstream code retains its original licenses and author attribution.

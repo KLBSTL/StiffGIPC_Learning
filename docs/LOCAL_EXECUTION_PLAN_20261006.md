@@ -9,10 +9,15 @@
 单一 `StiffGIPC/`，不再继承历史 overlay；冻结 `baseline/` 独立保留。
 第一批删除 bounded CCD/eligibility，第二批删除 MAS final-dot、SpMV
 二次型融合、ordered restriction 的专属实现、scratch、Graph 签名和 study。
+第三批删除失败的全局 velocity_only 和选定 full-step probe。
 历史报告与失败证据保留。当前原生目录为 151 文件、约 2.23 MB，37 个编译单元。
 
-不能把静态关闭分支一致等同于实际程序验证。新本机构建将检查每源独立
+不能把静态关闭分支一致等同于实际程序验证。两次全新本机构建已检查每源独立
 Windows 对象名、实际编译命令、对象与链接覆盖、源码/输入/程序身份。
+最新 Step3 的 CPU 模块、三项 GPU 夹具和20个退休入口检查通过；Step2有两组
+完整固定兔子配对，之后窗口触发显存保护。完整结果见
+[STATUS_20261006.md](../reports/STATUS_20261006.md)。下述计划不全部标为完成；
+新 Step3 不能继承旧程序的轨迹通过或加速比。
 
 ## 固定执行顺序
 

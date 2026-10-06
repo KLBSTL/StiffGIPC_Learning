@@ -1,0 +1,26 @@
+{
+  "position": {
+    "cloth": {
+      "max_frame_rms": 0.01596904802879271,
+      "max_vertex": 0.16118432775648586,
+      "frames": 60
+    },
+    "ABD": {
+      "max_frame_rms": 6.147364559361889e-18,
+      "max_vertex": 2.7755575615628914e-17,
+      "frames": 60
+    }
+  },
+  "velocity": {
+    "cloth": {
+      "max_frame_rms": 0.3188807575411375,
+      "max_vertex": 2.30926957598305,
+      "frames": 60
+    },
+    "ABD": {
+      "max_frame_rms": 6.147364559361889e-16,
+      "max_vertex": 2.7755575615628914e-15,
+      "frames": 60
+    }
+  }
+}

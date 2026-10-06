@@ -1352,11 +1352,10 @@ int GIPC::solve_subTOI(device_TetraData& mesh)
         }
         rec["restart_minimum_inner_iterations"]=(restart_guard&&restarted_from_safe)?6:0;
         bool solved=false;int inner=0;double direction_norm=std::numeric_limits<double>::infinity();
-        const bool exit_probe=options.exit_probe_frame==total_Frames+1&&options.exit_probe_outer==k;
-        rec["full_step_exit_probe_active"]=exit_probe;
+        rec["full_step_exit_probe_active"]=false; // Retired field retained for historical readers.
         int large_direction_streak=0;
         std::string outer_update_prefix;
-        for(;inner<(exit_probe?8:1024);++inner)
+        for(;inner<1024;++inner)
         {
             gipc::set_solve_inner(inner);
             frame["newton"].push_back(gipc::Json::object());
@@ -1701,8 +1700,7 @@ int GIPC::solve_subTOI(device_TetraData& mesh)
             const bool full_step=r==1 && (robust_velocity_tol==0 || trial_velocity<=100*robust_velocity_tol);
             if(stage_enabled())stage_event("inner_end",{{"outer",k},{"inner",inner},{"newton",nr}});
             const bool allow_velocity=inner_exit!="full_step_only";
-            const bool allow_full=inner_exit!="velocity_only"&&!exit_probe;
-            nr["full_step_exit_probe_active"]=exit_probe;
+            nr["full_step_exit_probe_active"]=false;
             // Replacing the warm trial invalidates its accumulated iteration
             // history for the heuristic full-step exit. Keep the native six
             // iterations, but count them within this restarted subproblem.
@@ -1711,12 +1709,12 @@ int GIPC::solve_subTOI(device_TetraData& mesh)
             const bool full_history_ready=!s.robust_port||(frame["newton"].size()>=6&&restart_ready);
             nr["restart_full_step_guard_active"]=restart_guard&&restarted_from_safe;
             nr["restart_full_step_ready"]=restart_ready;
-            nr["restart_full_step_blocked"]=s.robust_port&&allow_full&&full_step
+            nr["restart_full_step_blocked"]=s.robust_port&&full_step
                 && frame["newton"].size()>=6&&!restart_ready;
-            if((allow_velocity&&velocity_converged) || (allow_full&&full_step&&full_history_ready))
+            if((allow_velocity&&velocity_converged) || (full_step&&full_history_ready))
             {nr["inner_exit_reason"]=(allow_velocity&&velocity_converged)?"velocity_converged":"full_step";solved=true;break;}
         }
-        if(!solved)throw std::runtime_error(exit_probe?"Selected exit probe reached its eight-iteration budget":"TOI subproblem reached inner iteration limit");
+        if(!solved)throw std::runtime_error("TOI subproblem reached inner iteration limit");
         rec["inner_iterations"]=inner+1;
         int nc=s.contacts.size();
         if(outer_probe)

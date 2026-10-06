@@ -11,6 +11,17 @@ namespace gipc
 // Call before any fixture dispatch, scene loading, or GPU initialization.
 inline void reject_retired_components()
 {
+    if(const char* raw=std::getenv("GIPC_TOI_INNER_EXIT"))
+        if(std::string(raw)=="velocity_only")
+            throw std::runtime_error(
+                "GIPC_TOI_INNER_EXIT=velocity_only is retired after failed convergence/workload experiments; "
+                "use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation");
+    // This old diagnostic accepted frame:outer, not a Boolean. Even an empty
+    // value or 0 is an explicit unsupported request; do not silently ignore it.
+    if(std::getenv("GIPC_TOI_FULL_STEP_EXIT_PROBE"))
+        throw std::runtime_error(
+            "GIPC_TOI_FULL_STEP_EXIT_PROBE is retired after its bounded experiment; "
+            "use commit 2befec75b217fdcc424d922719453959f3b212cc for the historical implementation");
     for(const char* name : {"GIPC_BOUNDED_CCD", "GIPC_BOUNDED_CCD_VALIDATE",
                             "GIPC_BVH_ELIGIBILITY", "GIPC_BVH_ELIGIBILITY_VALIDATE",
                             "GIPC_ELIGIBILITY", "GIPC_ELIGIBILITY_VALIDATE",

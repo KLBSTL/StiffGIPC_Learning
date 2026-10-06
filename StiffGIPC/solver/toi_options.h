@@ -52,7 +52,6 @@ struct ToiOptions
     int stall_window=50;
     bool hold_delta=false,movement_exit=true;
     bool choose_start=false,restart_guard=false;
-    int exit_probe_frame=0,exit_probe_outer=-1;
     int blocker_from=0,blocker_to=INT_MAX;
 
     static ToiOptions from_environment(double newton_tol,bool material_requires_noninversion)
@@ -97,8 +96,8 @@ struct ToiOptions
         }
         result.velocity_stop=result.robust_port||toi_flag_one("GIPC_TOI_ROBUST_VELOCITY_STOP");
         result.inner_exit=std::getenv("GIPC_TOI_INNER_EXIT")?std::getenv("GIPC_TOI_INNER_EXIT"):"native";
-        if(result.inner_exit!="native"&&result.inner_exit!="velocity_only"&&result.inner_exit!="full_step_only")
-            throw std::runtime_error("Unknown diagnostic inner exit policy");
+        if(result.inner_exit!="native"&&result.inner_exit!="full_step_only")
+            throw std::runtime_error("TOI inner exit must be native or full_step_only; velocity_only is retired");
         if(result.velocity_stop&&result.trial_velocity_tol==0)
             throw std::runtime_error("Robust velocity stop requires a positive trial velocity tolerance");
         result.remaining_fraction_tol=newton_tol;
@@ -131,20 +130,6 @@ struct ToiOptions
         result.movement_exit=toi_flag_unless_zero("GIPC_TOI_EARLY_TERMINATION");
         result.choose_start=toi_flag_one("GIPC_TOI_CHOOSE_START");
         result.restart_guard=toi_flag_one("GIPC_TOI_RESTART_FULL_STEP_GUARD");
-        // One selected subproblem, diagnostic only. Keep the production
-        // velocity tolerance and use a smaller fixed iteration budget.
-        if(const char* value=std::getenv("GIPC_TOI_FULL_STEP_EXIT_PROBE"))
-        {
-            const std::string target(value);const auto colon=target.find(':');
-            if(colon==std::string::npos||target.find(':',colon+1)!=std::string::npos)
-                throw std::runtime_error("Exit probe requires frame:outer");
-            size_t nf=0,no=0;
-            result.exit_probe_frame=std::stoi(target.substr(0,colon),&nf);
-            result.exit_probe_outer=std::stoi(target.substr(colon+1),&no);
-            if(!result.robust_port||nf!=colon||no!=target.size()-colon-1
-                ||result.exit_probe_frame<1||result.exit_probe_outer<0)
-                throw std::runtime_error("Invalid robust exit probe target");
-        }
         if(const char* value=std::getenv("GIPC_TOI_BLOCKER_AUDIT_FROM"))result.blocker_from=std::stoi(value);
         if(const char* value=std::getenv("GIPC_TOI_BLOCKER_AUDIT_TO"))result.blocker_to=std::stoi(value);
         if(result.blocker_from<0||result.blocker_to<result.blocker_from)
@@ -167,8 +152,7 @@ struct ToiOptions
             {"mu_estimator",mu_coordinates=="world_block"?"0.1*max(movable FEM diagonal, diag((J H_ABD^-1 J^T)^-1))":"historical"},
             {"stall_window",stall_window},{"stall_hold_delta",hold_delta},{"movement_exit",movement_exit},
             {"choose_start",choose_start},{"restart_full_step_guard",restart_guard},
-            {"full_step_exit_probe",exit_probe_frame?Json{{"frame",exit_probe_frame},
-                {"outer",exit_probe_outer},{"max_inner",8}}:Json(nullptr)},
+            {"full_step_exit_probe",nullptr},
             {"choose_start_effective_for_policy",choose_start&&robust_port},
             {"restart_guard_requires_safe_restart",true},
             {"reduced_slack",toi_flag_one("GIPC_TOI_REDUCED_SLACK")},

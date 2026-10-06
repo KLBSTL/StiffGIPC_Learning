@@ -1,0 +1,527 @@
+{
+  "schema": "cpu_fixed_reference.v1",
+  "cpu_only": true,
+  "repeat2_covered": false,
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "tool": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\cpu_fixed_reference.py",
+    "bytes": 16760,
+    "sha256": "193c19108c2b372d2652bafcd444d1b0f0f33440dbb7414599a015637c01ab62"
+  },
+  "cases": [
+    {
+      "case": "fixed_cloth_legacy",
+      "status": "completed",
+      "matrix": {
+        "dofs": 17340,
+        "blocks": 39536,
+        "scalar_nnz": 458832,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 17340,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 1.5987211554602254e-14,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "source_digest": "b87263b06344883067813a13079bc2730b26445d67d773ed590b809e1d3e234c",
+      "exe_sha256": "57fc289968126db380e57ade8d1ce9b63ab73d97009365c6aad07a2f018769b2",
+      "inputs": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_meta.json",
+          "bytes": 6030,
+          "sha256": "286cf3f17bc07b9dddb770f6aebfdd2602ac73f24ee897079ac1a317abd6c265"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_rows.bin",
+          "bytes": 158144,
+          "sha256": "6fc08c49020ff30f75269174b9090969916d606e443fe5c942d4485d224d027b"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_cols.bin",
+          "bytes": 158144,
+          "sha256": "65c46758b477bdd39e8145cbcf230cb4cd4512e1d2dd5cd473dd413e855f5813"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_values.bin",
+          "bytes": 2846592,
+          "sha256": "d6b5eb9f32c2fcdcd9939a5973903d83238dcc65ff9f4a53a2342692f3e60453"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_rhs.bin",
+          "bytes": 138720,
+          "sha256": "76d3dcb45b569e23f50868a5308a0a4c2a4d8675c069f1d023f503f4c7fe870f"
+        },
+        "study": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_study.json",
+          "bytes": 18605,
+          "sha256": "42854133a9e9c0f24957b5fb35a2005bdae338d2a2ecc3e56663a62bec35fcc1"
+        }
+      },
+      "repeat2_covered": false,
+      "coverage": "Only saved repeat=1: rho 1e-4/1e-16 x host/graph; repeat=2 solutions were not exported",
+      "reference_method": "Float64 SuperLU with at most two Decimal50-residual iterative refinements",
+      "residual_method": "Independent Decimal precision=50 scalar CSR dot and norms; no GPU/scipy matvec",
+      "numpy": "2.0.2",
+      "scipy": "1.17.1",
+      "numpy_longdouble_precision_bits": 53,
+      "condition_number_certified": false,
+      "physics_certified": false,
+      "performance_certified": false,
+      "reference": {
+        "relative_l2": 2.87626205562278e-14,
+        "absolute_l2": 3.8228642872546737e-19,
+        "refinement_evaluations": [
+          {
+            "relative_l2": 2.87626205562278e-14,
+            "absolute_l2": 3.8228642872546737e-19
+          }
+        ],
+        "residual_limit": 1e-08,
+        "residual_passed": true,
+        "lu_nnz": 8472044
+      },
+      "saved_solutions": [
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_p1_m0_x.bin",
+            "bytes": 138720,
+            "sha256": "bc63dc59827496d37b3c8c72aa7b11df9d6bf8f7c59a25e2116c0bf8aa334ebb"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.04198429558140417,
+            "absolute_l2": 5.580168326106921e-07
+          },
+          "native_true_relative_residual": 0.04198429558140418,
+          "relative_error_to_cpu_reference": 0.006967366526783392,
+          "max_abs_error_to_cpu_reference": 6.10765724857955e-05,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_p1_m1_x.bin",
+            "bytes": 138720,
+            "sha256": "e9a1339382847b7ee7a546d72d0c39ce9340332ce0331f43ba7bf0bc2b1efc95"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.04198429712377375,
+            "absolute_l2": 5.580168531104568e-07
+          },
+          "native_true_relative_residual": 0.041984297123773676,
+          "relative_error_to_cpu_reference": 0.006967366177822957,
+          "max_abs_error_to_cpu_reference": 6.107653516327933e-05,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 72,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_p3_m0_x.bin",
+            "bytes": 138720,
+            "sha256": "18b79b61cb33f2c7eb61d38fb5767cf6646074e850519ac04007e566c08b17b3"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 4.1623950510825275e-07,
+            "absolute_l2": 5.532274557223401e-12
+          },
+          "native_true_relative_residual": 4.1623950510465916e-07,
+          "relative_error_to_cpu_reference": 3.056111675143966e-08,
+          "max_abs_error_to_cpu_reference": 1.320663009234665e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 72,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_legacy\\fixed\\f2_n1_p3_m1_x.bin",
+            "bytes": 138720,
+            "sha256": "c44be8e902e8e3f6fa66eb9558ba0f2ff703aa4f9f3230aa85416d731ef640e5"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 3.4813884278898824e-07,
+            "absolute_l2": 4.62714287977499e-12
+          },
+          "native_true_relative_residual": 3.4813884278189693e-07,
+          "relative_error_to_cpu_reference": 3.058051891761274e-08,
+          "max_abs_error_to_cpu_reference": 1.3185992608027738e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        }
+      ],
+      "wall_seconds_diagnostic_only": 5.46900000000096,
+      "resource_guard": {
+        "timeout_seconds": 120,
+        "memory_budget_mib": 4096,
+        "peak_sampled_rss_mib": 252.8203125,
+        "elapsed_seconds": 7.03099999999904
+      }
+    },
+    {
+      "case": "fixed_cloth_cholesky",
+      "status": "completed",
+      "matrix": {
+        "dofs": 17340,
+        "blocks": 39536,
+        "scalar_nnz": 458832,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 17340,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 8.881784197001252e-16,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "source_digest": "b87263b06344883067813a13079bc2730b26445d67d773ed590b809e1d3e234c",
+      "exe_sha256": "57fc289968126db380e57ade8d1ce9b63ab73d97009365c6aad07a2f018769b2",
+      "inputs": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_meta.json",
+          "bytes": 6059,
+          "sha256": "ed13bab8a1d3273dae783cb2d637ad08bd0fdc6c5dfb92889743558d5db23ec7"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_rows.bin",
+          "bytes": 158144,
+          "sha256": "6fc08c49020ff30f75269174b9090969916d606e443fe5c942d4485d224d027b"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_cols.bin",
+          "bytes": 158144,
+          "sha256": "65c46758b477bdd39e8145cbcf230cb4cd4512e1d2dd5cd473dd413e855f5813"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_values.bin",
+          "bytes": 2846592,
+          "sha256": "ad3cfe2fd335cc43dfe4b905edcc84cde331ac0208514926bf3736c2821be188"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_rhs.bin",
+          "bytes": 138720,
+          "sha256": "c79358252dc84777e09175d076a1393c2f7452cc121e58aae80a17c3da2440fc"
+        },
+        "study": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_study.json",
+          "bytes": 18586,
+          "sha256": "3b8471db73ce11fe10cab4c92e19d09f747ff3e22a5d73d4af4cc0c51834d28e"
+        }
+      },
+      "repeat2_covered": false,
+      "coverage": "Only saved repeat=1: rho 1e-4/1e-16 x host/graph; repeat=2 solutions were not exported",
+      "reference_method": "Float64 SuperLU with at most two Decimal50-residual iterative refinements",
+      "residual_method": "Independent Decimal precision=50 scalar CSR dot and norms; no GPU/scipy matvec",
+      "numpy": "2.0.2",
+      "scipy": "1.17.1",
+      "numpy_longdouble_precision_bits": 53,
+      "condition_number_certified": false,
+      "physics_certified": false,
+      "performance_certified": false,
+      "reference": {
+        "relative_l2": 2.925166331407594e-14,
+        "absolute_l2": 3.887863374127632e-19,
+        "refinement_evaluations": [
+          {
+            "relative_l2": 2.925166331407594e-14,
+            "absolute_l2": 3.887863374127632e-19
+          }
+        ],
+        "residual_limit": 1e-08,
+        "residual_passed": true,
+        "lu_nnz": 8472044
+      },
+      "saved_solutions": [
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_p1_m0_x.bin",
+            "bytes": 138720,
+            "sha256": "d5c45f6ea25c0abd306e35a7e16e8339d1accdd18638ac0f51f937142dce55ba"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.04198429445956838,
+            "absolute_l2": 5.580168175920427e-07
+          },
+          "native_true_relative_residual": 0.04198429445956832,
+          "relative_error_to_cpu_reference": 0.006967365833435011,
+          "max_abs_error_to_cpu_reference": 6.10765657085904e-05,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_p1_m1_x.bin",
+            "bytes": 138720,
+            "sha256": "be0b05eeec225b3ec967181cef75979b9ddafb2cb76a4144007a5637113e2b1e"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.04198429445956852,
+            "absolute_l2": 5.580168175920445e-07
+          },
+          "native_true_relative_residual": 0.04198429445956835,
+          "relative_error_to_cpu_reference": 0.006967365833435002,
+          "max_abs_error_to_cpu_reference": 6.107656570858953e-05,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 70,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_p3_m0_x.bin",
+            "bytes": 138720,
+            "sha256": "47846ef77ec79d5a77b80a8b1793fc9a5a5c64cb11ed8dcbed6b8fd5aa2eb653"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 2.7383461791925e-07,
+            "absolute_l2": 3.6395591257341735e-12
+          },
+          "native_true_relative_residual": 2.738346179226184e-07,
+          "relative_error_to_cpu_reference": 3.096566519170965e-08,
+          "max_abs_error_to_cpu_reference": 1.3389700991251763e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 70,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_cloth_cholesky\\fixed\\f2_n1_p3_m1_x.bin",
+            "bytes": 138720,
+            "sha256": "789682060a4a23d4f065b7eebd1dc57bac71cba839c929953d59aca9658a763f"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 2.733603144279135e-07,
+            "absolute_l2": 3.6332551178137055e-12
+          },
+          "native_true_relative_residual": 2.7336031442063924e-07,
+          "relative_error_to_cpu_reference": 3.0965377542431916e-08,
+          "max_abs_error_to_cpu_reference": 1.3390136388005598e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        }
+      ],
+      "wall_seconds_diagnostic_only": 5.5459999999984575,
+      "resource_guard": {
+        "timeout_seconds": 120,
+        "memory_budget_mib": 4096,
+        "peak_sampled_rss_mib": 252.99609375,
+        "elapsed_seconds": 6.09400000000096
+      }
+    },
+    {
+      "case": "fixed_mixed_legacy",
+      "status": "completed",
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 136033,
+        "scalar_nnz": 2229870,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 1.1367295993380822e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "source_digest": "b87263b06344883067813a13079bc2730b26445d67d773ed590b809e1d3e234c",
+      "exe_sha256": "57fc289968126db380e57ade8d1ce9b63ab73d97009365c6aad07a2f018769b2",
+      "inputs": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_meta.json",
+          "bytes": 6065,
+          "sha256": "fce001e22a598103cd8a545b3cab71bb96a8401e24da01ca61e5e4d5c7b1e2a0"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_rows.bin",
+          "bytes": 544132,
+          "sha256": "9f62d96bc4167d70c8d52ae5fad5ba21845a9d1007489680c7a4741522abaa20"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_cols.bin",
+          "bytes": 544132,
+          "sha256": "f40c8580e752b08611622ac491eaec4beb801ffaa52495544c3d7ac59d6f6d13"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_values.bin",
+          "bytes": 9794376,
+          "sha256": "c434b5fed01abe0e15d52742a3f7adfecf37e86f5d11edd2ba32df29a3f5ffde"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_rhs.bin",
+          "bytes": 486864,
+          "sha256": "260fe05c70973545bb1fef722f9f8148566cd1c691761f5e4be7807f778bc666"
+        },
+        "study": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_study.json",
+          "bytes": 18692,
+          "sha256": "608aeda8a021d0d252ee14e9bbb48f670c38d75f9884ffb7bab1cf2e77c9a020"
+        }
+      },
+      "repeat2_covered": false,
+      "coverage": "Only saved repeat=1: rho 1e-4/1e-16 x host/graph; repeat=2 solutions were not exported",
+      "reference_method": "Float64 SuperLU with at most two Decimal50-residual iterative refinements",
+      "residual_method": "Independent Decimal precision=50 scalar CSR dot and norms; no GPU/scipy matvec",
+      "numpy": "2.0.2",
+      "scipy": "1.17.1",
+      "numpy_longdouble_precision_bits": 53,
+      "condition_number_certified": false,
+      "physics_certified": false,
+      "performance_certified": false,
+      "reference": {
+        "relative_l2": 5.687667005778667e-16,
+        "absolute_l2": 5.381121377832544e-17,
+        "refinement_evaluations": [
+          {
+            "relative_l2": 5.687667005778667e-16,
+            "absolute_l2": 5.381121377832544e-17
+          }
+        ],
+        "residual_limit": 1e-08,
+        "residual_passed": true,
+        "lu_nnz": 46094186
+      },
+      "saved_solutions": [
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_p1_m0_x.bin",
+            "bytes": 486864,
+            "sha256": "94143feca7c6c515cc711620db20156dacd4f2d409ae02e0ece429f66bde581f"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.0014395835636354967,
+            "absolute_l2": 0.0001361994976426154
+          },
+          "native_true_relative_residual": 0.0014395835636355513,
+          "relative_error_to_cpu_reference": 0.023423902819620573,
+          "max_abs_error_to_cpu_reference": 0.0002073889431095208,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 0.0001,
+          "iterations": 6,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_p1_m1_x.bin",
+            "bytes": 486864,
+            "sha256": "565f8a272a122eda6df0395062613f14e0752c6068a81e4864350b6f4d237a4e"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 0.0014395831199285614,
+            "absolute_l2": 0.00013619945566334914
+          },
+          "native_true_relative_residual": 0.0014395831199286609,
+          "relative_error_to_cpu_reference": 0.023423908491933283,
+          "max_abs_error_to_cpu_reference": 0.00020738895019037102,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": false
+        },
+        {
+          "mode": "host",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 130,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_p3_m0_x.bin",
+            "bytes": 486864,
+            "sha256": "2f3ff75dfb48094cf0d891ffc5eca5e9c0cc3162e1b3fb6ce846b6d5747cb3cb"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 1.0861524892247406e-09,
+            "absolute_l2": 1.0276126175134818e-10
+          },
+          "native_true_relative_residual": 1.0861524925391096e-09,
+          "relative_error_to_cpu_reference": 3.7366201138893134e-08,
+          "max_abs_error_to_cpu_reference": 5.551928694324447e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": true
+        },
+        {
+          "mode": "graph",
+          "repeat": 1,
+          "rho_tolerance": 1e-16,
+          "iterations": 130,
+          "solution": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_step2_fixtures_20261006\\fixed_mixed_legacy\\fixed\\f2_n1_p3_m1_x.bin",
+            "bytes": 486864,
+            "sha256": "3d24b9f57a8f8507ee8cc6ea4e0882ce8ca6784cbf5f501a10fbfa4ea9f0b209"
+          },
+          "cpu_true_residual": {
+            "relative_l2": 1.0804052404135705e-09,
+            "absolute_l2": 1.0221751255839985e-10
+          },
+          "native_true_relative_residual": 1.0804052424653927e-09,
+          "relative_error_to_cpu_reference": 3.731057682821721e-08,
+          "max_abs_error_to_cpu_reference": 5.545460501084722e-10,
+          "exact_zero_row_solution_max_abs": 0.0,
+          "residual_at_most_1e_minus_8": true
+        }
+      ],
+      "wall_seconds_diagnostic_only": 25.17199999999866,
+      "resource_guard": {
+        "timeout_seconds": 120,
+        "memory_budget_mib": 4096,
+        "peak_sampled_rss_mib": 1077.33203125,
+        "elapsed_seconds": 25.82800000000134
+      }
+    }
+  ]
+}

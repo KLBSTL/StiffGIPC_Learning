@@ -1,0 +1,20 @@
+{
+  "position": {
+    "cloth": {
+      "max_frame_rms": 0.015156345613268002,
+      "max_vertex": 0.1506656810946955,
+      "frames": 60
+    },
+    "ABD": {
+      "max_frame_rms": 1.4896439042972407e-17,
+      "max_vertex": 5.721958498152797e-17,
+      "frames": 60
+    }
+  },
+  "velocity": {
+    "available": false,
+    "reason": "Actual export absent in one or both programs",
+    "run_exported_frames": 0,
+    "reference_exported_frames": 0
+  }
+}
