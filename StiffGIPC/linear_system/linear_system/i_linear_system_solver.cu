@@ -5,14 +5,6 @@ namespace gipc
 {
 IterativeSolver::~IterativeSolver() {}
 
-std::string IterativeSolver::spmv_quadratic_unavailable_reason(SizeT count) const
-{return m_system->spmv_quadratic_unavailable_reason(count);}
-SizeT IterativeSolver::spmv_quadratic_partial_count() const
-{return m_system->spmv_quadratic_partial_count();}
-void IterativeSolver::spmv_quadratic(cudatool::CDenseVectorView<Float> x,
-    cudatool::DenseVectorView<Float> y,Float* partials)
-{m_system->spmv_quadratic(x,y,partials);}
-
 void IterativeSolver::spmv(Float                         a,
                            cudatool::CDenseVectorView<Float> x,
                            Float                         b,
@@ -27,16 +19,6 @@ void IterativeSolver::apply_preconditioner(cudatool::DenseVectorView<Float> z,
     m_system->apply_preconditioner(z, r);
 }
 
-
-std::string IterativeSolver::mas_fused_dot_unavailable_reason(SizeT count) const
-{return m_system->mas_fused_dot_unavailable_reason(count);}
-SizeT IterativeSolver::mas_fused_dot_partial_count(SizeT count) const
-{return m_system->mas_fused_dot_partial_count(count);}
-void IterativeSolver::apply_preconditioner_fused_dot(cudatool::DenseVectorView<Float> z,
-    cudatool::CDenseVectorView<Float> r,Float* partials,bool prepared_only) const
-{m_system->apply_preconditioner_fused_dot(z,r,partials,prepared_only);}
-void IterativeSolver::mas_dot_scratch(const std::function<void(void*,size_t)>& visitor) const
-{m_system->mas_dot_scratch(visitor);}
 
 bool IterativeSolver::fused_diag_update_available() const
 {

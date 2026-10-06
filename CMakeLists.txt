@@ -50,6 +50,23 @@ file(GLOB_RECURSE GIPC_HANDER CONFIGURE_DEPENDS
     "StiffGIPC/*.h" "StiffGIPC/*.cuh" "StiffGIPC/*.hpp" "StiffGIPC/*.inl" "StiffGIPC/*.inc")
 target_sources(gipc PRIVATE ${GIPC_SOURCE} ${GIPC_HANDER})
 
+# Windows filenames are case insensitive: PCG_SOLVER.cu and pcg_solver.cu
+# must not share the CUDA MSBuild default object name.
+if(MSVC)
+    foreach(_source IN LISTS GIPC_SOURCE)
+        string(SHA256 _source_key "${_source}")
+        string(SUBSTRING "${_source_key}" 0 16 _source_key)
+        get_filename_component(_stem "${_source}" NAME_WE)
+        if(_source MATCHES "\\.cu$")
+            set_property(SOURCE "${_source}" TARGET_DIRECTORY gipc PROPERTY
+                VS_SETTINGS "CompileOut=$(IntDir)${_stem}_${_source_key}.obj")
+        else()
+            set_property(SOURCE "${_source}" TARGET_DIRECTORY gipc PROPERTY
+                VS_SETTINGS "ObjectFileName=$(IntDir)${_stem}_${_source_key}.obj")
+        endif()
+    endforeach()
+endif()
+
 # add assets and output directory, that we can easily access them in the code
 target_compile_definitions(gipc PRIVATE GIPC_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Assets/")
 target_compile_definitions(gipc PRIVATE GIPC_OUTPUT_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Output/")

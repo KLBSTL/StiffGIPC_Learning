@@ -1,5 +1,11 @@
 # SRBK SpMV + quadratic candidate
 
+**Retired on 2026-10-06:** the active implementation and private study have been
+removed after the paired performance screen did not meet its promotion gate.
+The remainder is historical documentation. Reproduce it from
+`archive/pre-cleanup-20261006`; the current executable rejects either old enable
+or study switch when set to `1`. See `docs/CODE_CLEANUP_STEP2.md`.
+
 Status: implemented as an opt-in candidate; this document does not assert a CUDA build, GPU correctness result, trajectory quality result, or speed improvement. The root runner owns the serial build and experiments.
 
 ## Public switches and actual execution

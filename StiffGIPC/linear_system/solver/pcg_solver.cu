@@ -7,9 +7,6 @@
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/mas_stage_probe_options.h>
-#include <solver/legacy_restrict_options.h>
-#include <solver/mas_fused_dot_options.h>
-#include <solver/spmv_quadratic_options.h>
 #include <cuda_tools/cuda_tools.h>
 #include <cuda_tools/cuda_cub_wrappers.h>
 #include <cub/block/block_reduce.cuh>
@@ -17,6 +14,7 @@
 #include <cub/device/device_reduce.cuh>
 #include <stdexcept>
 #include <limits>
+#include <initializer_list>
 #include <cmath>
 #include <chrono>
 #include <algorithm>
@@ -115,60 +113,6 @@ PCGSolver::PCGSolver(const PCGSolverConfig& cfg)
     : m_config(cfg)
 {
 }
-void PCGSolver::prepare_mas_dot(SizeT count)
-{
-    mas_dot_requested=mas_fused_dot_requested();
-    const bool study_requested=mas_fused_dot_study_requested();
-    auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
-    if(!mas_dot_requested && !study_requested)
-    {
-        mas_dot_supported=false;mas_dot_effective=false;mas_dot_partial_count=0;
-        mas_dot_reason="disabled_by_request";
-        info["mas_fused_dot_requested"]=false;info["mas_fused_dot_effective"]=false;
-        info["mas_fused_dot_fallback_reason"]=mas_dot_reason;
-        info["mas_fused_dot_partial_count"]=0;
-        return;
-    }
-    mas_dot_reason=mas_fused_dot_unavailable_reason(count);
-    mas_dot_supported=mas_dot_reason.empty();
-    mas_dot_effective=mas_dot_requested && mas_dot_supported;
-    mas_dot_partial_count=0;
-    if(mas_dot_supported)
-    {
-        mas_dot_partial_count=mas_fused_dot_partial_count(count);
-        if(mas_dot_partial_count<=0 || mas_dot_partial_count>std::numeric_limits<int>::max())
-            throw std::runtime_error("Invalid fused MAS dot partial count");
-        mas_dot_partials.resize(mas_dot_partial_count);
-        mas_dot_reduce_bytes=0;
-        CUDA_SAFE_CALL(cub::DeviceReduce::Sum(nullptr,mas_dot_reduce_bytes,
-            mas_dot_partials.data(),reduction_result.data(),static_cast<int>(mas_dot_partial_count),
-            cudaStreamPerThread));
-        mas_dot_reduce_storage.resize(mas_dot_reduce_bytes);
-    }
-    info["mas_fused_dot_requested"]=mas_dot_requested;
-    info["mas_fused_dot_effective"]=mas_dot_effective;
-    info["mas_fused_dot_fallback_reason"]=mas_dot_requested?mas_dot_reason:"disabled_by_request";
-    info["mas_fused_dot_partial_count"]=mas_dot_partial_count;
-}
-void PCGSolver::apply_mas_dot(cudatool::DenseVectorView<Float> z,
-    cudatool::CDenseVectorView<Float> r,Float* result,bool prepared_only)
-{
-    if(!mas_dot_supported || mas_dot_partial_count<=0)
-        throw std::runtime_error("MAS fused dot was not prepared before PCG/capture");
-    apply_preconditioner_fused_dot(z,r,mas_dot_partials.data(),prepared_only);
-    CostScope scope("pcg.fused_rho_final_reduce");
-    CUDA_SAFE_CALL(cub::DeviceReduce::Sum(mas_dot_reduce_storage.data(),mas_dot_reduce_bytes,
-        mas_dot_partials.data(),result,static_cast<int>(mas_dot_partial_count),cudaStreamPerThread));
-}
-Float PCGSolver::apply_mas_dot_host(cudatool::DenseVectorView<Float> z,
-    cudatool::CDenseVectorView<Float> r)
-{
-    apply_mas_dot(z,r,reduction_result.data());
-    Float rho=0;
-    CostScope scope("pcg.scalar_readback",false);
-    CUDA_SAFE_CALL(cudaMemcpy(&rho,reduction_result.data(),sizeof(rho),cudaMemcpyDeviceToHost));
-    return rho;
-}
 SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b)
 {
     CostScope cost_entry("pcg.entry_including_diagnostics");
@@ -187,8 +131,17 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     reduction_result.resize_discard(1);
     }
     auto max_iter = static_cast<SizeT>(m_config.max_iter_ratio * b.size());
-    prepare_mas_dot(b.size());
-    prepare_spmv_quadratic(b.size());
+    // Retired candidates remain explicit in the historical output schema.
+    auto& component_info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
+    for(const char* prefix:{"mas_fused_dot","spmv_fused_quadratic"})
+    {
+        const std::string name=prefix;
+        component_info[name+"_requested"]=false;
+        component_info[name+"_effective"]=false;
+        component_info[name+"_available"]=false;
+        component_info[name+"_fallback_reason"]="retired_component";
+        component_info[name+"_partial_count"]=0;
+    }
     SizeT iter=0;
     linear_stage("pcg_workspace_end");
     linear_stage("pcg_loop_begin");
@@ -521,13 +474,12 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 
     {
         //Timer timer{"preconditioner"};
-        if(mas_dot_effective)rz=apply_mas_dot_host(z,r);
-        else apply_preconditioner(z, r);
+        apply_preconditioner(z, r);
     }
 
     {
         //Timer timer{"dot"};
-        if(!mas_dot_effective)rz = My_PCG_General_v_v_Reduction_Algorithm(p.buffer_view().data(),
+        rz = My_PCG_General_v_v_Reduction_Algorithm(p.buffer_view().data(),
                                                     r.buffer_view().data(),
                                                     z.buffer_view().data(),
                                                     reduction_result.data(),
@@ -547,14 +499,13 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
         {
             //Timer timer{"spmv"};
             // Ap = A * p
-            if(!spmv_quadratic_effective)spmv(p.cview(), Ap.view());
+            spmv(p.cview(), Ap.view());
         }
 
         {
             //Timer timer{"dot"};
 
-            Float dot_res = spmv_quadratic_effective ? apply_spmv_quadratic_host(p.cview(),Ap.view()) :
-                My_PCG_General_v_v_Reduction_Algorithm(z.buffer_view().data(),
+            Float dot_res = My_PCG_General_v_v_Reduction_Algorithm(z.buffer_view().data(),
                                                        p.buffer_view().data(),
                                                        Ap.buffer_view().data(),
                                                        reduction_result.data(),
@@ -586,12 +537,11 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
         Float rz_new = 0;
         {
             // The previous-rho stop above retains its original timing.
-            if(mas_dot_effective)rz_new=apply_mas_dot_host(z,r);
-            else apply_preconditioner(z, r);
+            apply_preconditioner(z, r);
         }
         {
             //Timer timer{"dot"};
-            if(!mas_dot_effective)rz_new = My_PCG_General_v_v_Reduction_Algorithm(Ap.buffer_view().data(),
+            rz_new = My_PCG_General_v_v_Reduction_Algorithm(Ap.buffer_view().data(),
                                                             r.buffer_view().data(),
                                                             z.buffer_view().data(),
                                                             reduction_result.data(),
@@ -624,8 +574,5 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 }  // namespace gipc
 
 #include "pcg_graph_impl.inl"
-#include "pcg_mas_dot_study.inl"
-#include "pcg_spmv_quadratic.inl"
-#include "pcg_spmv_quadratic_study.inl"
 #include <linear_system/solver/pcg_guard_fixture.inl>
 #include <linear_system/solver/pcg_fixed_study.inl>

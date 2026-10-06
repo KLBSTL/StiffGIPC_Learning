@@ -2,7 +2,6 @@
 #include <list>
 #include <vector>
 #include <cstdint>
-#include <functional>
 #include <string>
 #include <linear_system/linear_system/linear_subsystem.h>
 #include <cuda_tools/cuda_all.h>
@@ -48,10 +47,6 @@ class IterativeSolver
                         cudatool::CDenseVectorView<Float> b) = 0;
 
     void spmv(Float a, cudatool::CDenseVectorView<Float> x, Float b, cudatool::DenseVectorView<Float> y);
-    std::string spmv_quadratic_unavailable_reason(SizeT count) const;
-    SizeT spmv_quadratic_partial_count() const;
-    void spmv_quadratic(cudatool::CDenseVectorView<Float> x,
-        cudatool::DenseVectorView<Float> y,Float* partials);
     void spmv(cudatool::CDenseVectorView<Float> x, cudatool::DenseVectorView<Float> y)
     {
         spmv(1.0, x, 0.0, y);
@@ -59,11 +54,6 @@ class IterativeSolver
 
     void apply_preconditioner(cudatool::DenseVectorView<Float>  z,
                               cudatool::CDenseVectorView<Float> r) const;
-    std::string mas_fused_dot_unavailable_reason(SizeT count) const;
-    SizeT mas_fused_dot_partial_count(SizeT count) const;
-    void apply_preconditioner_fused_dot(cudatool::DenseVectorView<Float> z,
-        cudatool::CDenseVectorView<Float> r,Float* partials,bool prepared_only=false) const;
-    void mas_dot_scratch(const std::function<void(void*,size_t)>& visitor) const;
     bool fused_diag_update_available() const;
     void fused_diag_update(cudatool::DenseVectorView<Float> x,
                            cudatool::DenseVectorView<Float> r,

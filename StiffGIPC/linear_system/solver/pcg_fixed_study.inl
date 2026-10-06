@@ -19,10 +19,6 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
        !selected("GIPC_FIXED_STUDY_DIRECTIONS",direction,"1,8"))return;
     const std::string prefix=std::string(std::getenv("GIPC_FIXED_STUDY_DIR"))+"/f"+
         std::to_string(frame)+"_n"+std::to_string(direction);
-    if(mas_fused_dot_study_requested())
-    {mas_dot_fixed_study(x,b,prefix);return;}
-    if(spmv_quadratic_study_requested())
-    {spmv_quadratic_fixed_study(x,b,prefix);return;}
     auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
     const auto saved_info=info;const auto saved_config=m_config;
     std::vector<Float> primary(x.size());
@@ -31,11 +27,6 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
     Json study={{"frame",frame},{"direction",direction},{"system",before},
                 {"zero_initial_guess",true},{"runs",Json::array()}};
     attach_solve_context(study);
-    if(legacy_restrict_study())
-    {
-#include <linear_system/solver/pcg_legacy_restrict_study.inl>
-        return;
-    }
     if(const char* enabled=std::getenv("GIPC_FIXED_MAS_STAGE_STUDY");enabled&&std::string(enabled)=="1")
     {
         const auto saved_signature=graph_signature();

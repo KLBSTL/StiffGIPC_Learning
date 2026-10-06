@@ -12,7 +12,6 @@
 #include <gipc/cost_trace.h>
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_stage_probe_options.h>
-#include <solver/mas_fused_dot_kernels.cuh>
 #include <fstream>
 #include <cstring>
 #include <cmath>
@@ -2147,7 +2146,6 @@ __global__ void prepare_hessian_bcoo_sum_kernel(int                   tripletNum
 #include <solver/mas_cholesky.inl>
 #include <solver/mas_restriction.cuh>
 #include <solver/mas_factor_action.cuh>
-#include <solver/legacy_ordered_restrict.cuh>
 
 void MASPreconditioner::prepare_cholesky()
 {
@@ -2186,12 +2184,8 @@ void MASPreconditioner::prepare_cholesky()
     prepare_restriction_map();
 }
 
-void MASPreconditioner::prepare_restriction_map(bool measure)
+void MASPreconditioner::prepare_restriction_map()
 {
-    // Waiting for already queued hierarchy/factor work is common preparation;
-    // measure the additional map work after it, without hiding it in solve time.
-    if(measure)CUDA_SAFE_CALL(cudaDeviceSynchronize());
-    const auto begin=std::chrono::steady_clock::now();
     gipc::linear_stage("mas_restriction_build_begin");
     gipc::CostScope cost_restriction_build("mas.restriction_map_build");
     std::vector<int> part(totalMapNodes);std::vector<__GEIGEN__::itable> coarse(totalNodes);
@@ -2218,7 +2212,6 @@ void MASPreconditioner::prepare_restriction_map(bool measure)
     CUDA_SAFE_CALL(cudaMemcpy(d_restriction_nodes.data(),indices.data(),indices.size()*sizeof(int),cudaMemcpyHostToDevice));
     }
     gipc::linear_stage("mas_restriction_build_end");
-    if(measure)restriction_map_prepare_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();
 }
 
 void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
@@ -2302,10 +2295,6 @@ void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
         gipc::CostScope legacy_factor("mas.legacy_factor");
         __inverse6_P96x96<<<numBlocks2, blockSize2>>>(d_precondMatMas, d_inverseMatMas, number2);
     }
-    if(!wide_apply && (gipc::legacy_ordered_restrict() || gipc::legacy_restrict_study()))
-        prepare_restriction_map(true);
-    if(wide_apply && (gipc::legacy_ordered_restrict() || gipc::legacy_restrict_study()))
-        throw std::runtime_error("Ordered legacy restriction cannot use wide/Cholesky MAS");
 
     //cudaEventRecord(end1);
 
@@ -2330,16 +2319,6 @@ void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
 void MASPreconditioner::BuildMultiLevelR(const double3* R)
 {
     gipc::CostScope cost_restrict("mas.restrict");
-    if(gipc::legacy_ordered_restrict())
-    {
-        if(wide_apply || d_restriction_starts.size()!=size_t(totalNumberClusters+1))
-            throw std::runtime_error("Ordered legacy restriction map was not prepared");
-        legacy_restrict_fine<<<(totalMapNodes+255)/256,256>>>(R,d_multiLevelR.data(),d_partId_map_real.data(),totalMapNodes);
-        if(totalNumberClusters>totalMapNodes)
-            legacy_restrict_coarse<<<(totalNumberClusters-totalMapNodes+7)/8,256>>>(R,d_multiLevelR.data(),
-                d_restriction_starts.data(),d_restriction_nodes.data(),totalMapNodes,totalNumberClusters);
-        return;
-    }
 
 
 #ifdef GROUP
@@ -2405,24 +2384,8 @@ void MASPreconditioner::SchwarzLocalXSym_sym()
         d_precondMatMas, d_multiLevelR, d_multiLevelZ, number);
 }
 
-bool MASPreconditioner::fused_dot_collect_supported() const
+void MASPreconditioner::CollectFinalZ(double3* Z)
 {
-    if(wide_apply || cholesky)return true;
-#ifdef GROUP
-    return true;
-#else
-    return false;
-#endif
-}
-void MASPreconditioner::CollectFinalZ(double3* Z,const double3* R,double* dot_partials)
-{
-    if(dot_partials)
-    {
-        if(!fused_dot_collect_supported())throw std::runtime_error("Fused legacy collect requires GROUP mapping");
-        mas_collect_final_z_dot<<<(totalNodes+255)/256,256>>>(Z,R,d_multiLevelZ.data(),
-            d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes,dot_partials);
-        return;
-    }
     gipc::CostScope cost_prolong("mas.prolong");
     int number = totalNodes;
     if(number < 1)
@@ -2559,26 +2522,11 @@ void MASPreconditioner::setPreconditioner_bcoo(Eigen::Matrix3d* triplet_values,
 
 #include <solver/mas_stage_probe.inl>
 
-void MASPreconditioner::collect_fused_dot(const double3* R,double3* Z,double* dot_partials)
+void MASPreconditioner::preconditioning(const double3* R, double3* Z)
 {
-    if(!fused_dot_collect_supported())throw std::runtime_error("Fused legacy collect requires GROUP mapping");
-    if(!R || !Z || !dot_partials || totalNodes<=0)
-        throw std::runtime_error("Invalid frozen MAS collect/dot input");
-    if(wide_apply || cholesky)
-        mas_collect_final_z_dot<<<(totalNodes+255)/256,256>>>(Z,R,d_multiLevelZ64.data(),
-            d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes,dot_partials);
-    else
-        mas_collect_final_z_dot<<<(totalNodes+255)/256,256>>>(Z,R,d_multiLevelZ.data(),
-            d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes,dot_partials);
-}
-void MASPreconditioner::preconditioning(const double3* R, double3* Z,double* dot_partials)
-{
-    if(dot_partials && !fused_dot_collect_supported())
-        throw std::runtime_error("Fused legacy collect requires GROUP mapping");
     gipc::CostScope cost_apply("mas.apply");
     if(auto* probe=gipc::MasStageProbeRequest::active())
     {
-        if(dot_partials)throw std::runtime_error("MAS stage probe cannot run inside fused rho application");
         if(probe->dispatched)throw std::runtime_error("Multiple MAS owners in one stage probe");
         probe->dispatched=true;
         probe->result=diagnostic_stage_study(R,Z,probe->prefix);
@@ -2609,11 +2557,7 @@ void MASPreconditioner::preconditioning(const double3* R, double3* Z,double* dot
         }
         {
         gipc::CostScope cost_prolong("mas.prolong");
-        if(dot_partials)
-            mas_collect_final_z_dot<<<(totalNodes+255)/256,256>>>(Z,R,d_multiLevelZ64.data(),
-                d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes,dot_partials);
-        else
-            __collectFinalZ_new_wide<<<(totalNodes+DEFAULT_BLOCKSIZE-1)/DEFAULT_BLOCKSIZE,DEFAULT_BLOCKSIZE>>>(Z,d_multiLevelZ64.data(),d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes);
+        __collectFinalZ_new_wide<<<(totalNodes+DEFAULT_BLOCKSIZE-1)/DEFAULT_BLOCKSIZE,DEFAULT_BLOCKSIZE>>>(Z,d_multiLevelZ64.data(),d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes);
         }
         return;
     }
@@ -2643,18 +2587,14 @@ void MASPreconditioner::preconditioning(const double3* R, double3* Z,double* dot
         }
         {
         gipc::CostScope cost_prolong("mas.prolong");
-        if(dot_partials)
-            mas_collect_final_z_dot<<<(totalNodes+255)/256,256>>>(Z,R,d_multiLevelZ64.data(),
-                d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes,dot_partials);
-        else
-            __collectFinalZ_new_wide<<<(totalNodes+DEFAULT_BLOCKSIZE-1)/DEFAULT_BLOCKSIZE,DEFAULT_BLOCKSIZE>>>(
-                Z,d_multiLevelZ64.data(),d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes);
+        __collectFinalZ_new_wide<<<(totalNodes+DEFAULT_BLOCKSIZE-1)/DEFAULT_BLOCKSIZE,DEFAULT_BLOCKSIZE>>>(
+            Z,d_multiLevelZ64.data(),d_coarseTable.data(),d_real_map_partId.data(),levelnum,totalNodes);
         }
         return;
     }
     {
     gipc::CostScope cost_zero("mas.workspace_zero");
-    if(!gipc::legacy_ordered_restrict())CUDA_SAFE_CALL(cudaMemsetAsync(d_multiLevelR + totalMapNodes,
+    CUDA_SAFE_CALL(cudaMemsetAsync(d_multiLevelR + totalMapNodes,
                               0,
                               (totalNumberClusters - totalMapNodes) * sizeof(Eigen::Vector3f), cudaStreamPerThread));
 
@@ -2676,7 +2616,7 @@ void MASPreconditioner::preconditioning(const double3* R, double3* Z,double* dot
     //cudaEventRecord(end1);
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
 
-    CollectFinalZ(Z,R,dot_partials);
+    CollectFinalZ(Z);
     //cudaEventRecord(end2);
 
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());

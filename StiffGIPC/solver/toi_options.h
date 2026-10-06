@@ -2,11 +2,8 @@
 #include <gipc/utils/json.h>
 #include <core/accel_features.h>
 #include <solver/mas_restrict_options.h>
-#include <solver/legacy_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/ipc_options.h>
-#include <solver/mas_fused_dot_options.h>
-#include <solver/spmv_quadratic_options.h>
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
 #include <climits>
@@ -224,16 +221,19 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     // This opt-in does not inherit GIPC_ACCEL_SUITE, and MAS cannot use it.
     result["requested_fused_diag_update"]=toi_flag_one("GIPC_PCG_FUSED_DIAG_UPDATE");
     result["fixed_mas_stage_study"]=toi_flag_one("GIPC_FIXED_MAS_STAGE_STUDY");
-    result["legacy_restrict"]=legacy_ordered_restrict()?"ordered":"atomic";
-    result["fixed_legacy_restrict_study"]=legacy_restrict_study();
+    result["legacy_restrict"]="atomic";
+    result["legacy_ordered_restrict_available"]=false;
+    result["fixed_legacy_restrict_study"]=false;
     // Report candidates are separate opt-ins: configuration is not a claim
     // that a particular system can use the path. PCG/tree logs report usage.
     const auto& discrete=discrete_bvh_config();
     result["report_components"]={
-        {"mas_fused_dot_requested",mas_fused_dot_requested()},
-        {"fixed_mas_dot_study",mas_fused_dot_study_requested()},
-        {"spmv_fused_quadratic_requested",spmv_fused_quadratic_requested()},
-        {"fixed_spmv_quadratic_study",spmv_quadratic_study_requested()},
+        {"mas_fused_dot_requested",false},
+        {"mas_fused_dot_available",false},
+        {"fixed_mas_dot_study",false},
+        {"spmv_fused_quadratic_requested",false},
+        {"spmv_fused_quadratic_available",false},
+        {"fixed_spmv_quadratic_study",false},
         {"discrete_bvh_refit",discrete.enabled},
         {"discrete_bvh_rebuild_interval",discrete.rebuild_interval},
         {"discrete_bvh_validate",discrete.validate},

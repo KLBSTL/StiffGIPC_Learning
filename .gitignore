@@ -14,3 +14,4 @@
 .env.*
 .ssh/
 *.pem
+reports/autodl_step1/guards_analysis.json

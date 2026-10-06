@@ -1,5 +1,11 @@
 # MAS final output and rho fusion
 
+**Retired on 2026-10-06:** the active implementation and private study have been
+removed after the paired performance screen did not meet its promotion gate.
+The remainder is historical documentation. Reproduce it from
+`archive/pre-cleanup-20261006`; the current executable rejects either old enable
+or study switch when set to `1`. See `docs/CODE_CLEANUP_STEP2.md`.
+
 This is report candidate 4.2 only. It is off by default and has no measured
 performance claim. Frozen v50/v54 sources are not edited.
 

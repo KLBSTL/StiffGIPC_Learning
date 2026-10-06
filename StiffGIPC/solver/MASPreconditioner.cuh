@@ -19,7 +19,6 @@
 #include <vector>
 #include <cstdint>
 #include <solver/mas_factor_action_options.h>
-#include <solver/legacy_restrict_options.h>
 
 class MASPreconditioner
 {
@@ -62,8 +61,7 @@ class MASPreconditioner
     cudatool::DeviceBuffer<int> d_factor_inverse_status;
     cudatool::DeviceBuffer<int> d_restriction_starts, d_restriction_nodes;
     void prepare_cholesky();
-    void prepare_restriction_map(bool measure=false);
-    double restriction_map_prepare_ms=0;
+    void prepare_restriction_map();
     gipc::Json diagnostic_stage_study(const double3* R,double3* Z,const std::string& prefix);
     bool precision_initialized = false;
 
@@ -73,8 +71,6 @@ class MASPreconditioner
     bool wide_apply_enabled() const { return wide_apply; }
     bool inverse64_enabled() const { return inverse64; }
     bool cholesky_enabled() const { return cholesky; }
-    bool fused_dot_collect_supported() const;
-    double restriction_map_prepare_time_ms() const { return restriction_map_prepare_ms; }
     // Diagnostic serialization of every owned buffer, including scratch.
     template<class Save> void diagnostic_buffers(Save save) const
     {
@@ -167,13 +163,12 @@ class MASPreconditioner
                              int              offset,
                              int              triplet_number);
 
-    void preconditioning(const double3* R, double3* Z, double* dot_partials=nullptr);
-    void collect_fused_dot(const double3* R,double3* Z,double* dot_partials);
+    void preconditioning(const double3* R, double3* Z);
     void BuildMultiLevelR(const double3* R);  // called in preconditioning
     void SchwarzLocalXSym();                  // called in preconditioning
     void SchwarzLocalXSym_block3();           // called in preconditioning
     void SchwarzLocalXSym_sym();              // called in preconditioning
-    void CollectFinalZ(double3* Z,const double3* R=nullptr,double* dot_partials=nullptr);
+    void CollectFinalZ(double3* Z);
 
     void FreeMAS();
     std::vector<std::uintptr_t> graph_signature() const
@@ -201,7 +196,6 @@ class MASPreconditioner
                 reinterpret_cast<std::uintptr_t>(d_restriction_starts.data()),
                 reinterpret_cast<std::uintptr_t>(d_restriction_nodes.data()),
                 static_cast<std::uintptr_t>(cholesky && gipc::mas_factor_inverse_action()),
-                reinterpret_cast<std::uintptr_t>(d_factor_inverse.data()),
-                static_cast<std::uintptr_t>(!wide_apply && gipc::legacy_ordered_restrict())};
+                reinterpret_cast<std::uintptr_t>(d_factor_inverse.data())};
     }
 };

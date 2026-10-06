@@ -8,7 +8,6 @@ namespace gipc
 {
 namespace
 {
-#include <linear_system/utils/spmv_quadratic_kernel.cuh>
 __global__ void scale_y_kernel(int size, Float b, cudatool::DenseVectorViewer<Float> y)
 {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -121,21 +120,5 @@ void Spmv::warp_reduce_sym_spmv(Float                         a,
                              x.cviewer(),
                              b,
                              y.viewer());
-}
-void Spmv::warp_reduce_sym_spmv_quadratic(Eigen::Matrix3d* values,int* rows,int* cols,
-    int count,cudatool::CDenseVectorView<Float> x,cudatool::DenseVectorView<Float> y,
-    Float* partials)
-{
-    // Separate launch is required: y must be entirely cleared before atomic
-    // additions begin. A grid-wide spin barrier is deliberately not used.
-    if(y.size()>0)LaunchCudaKernal_default(y.size(),256,0,
-        fill_y_zero_kernel,y.size(),y.data());
-    if(count==0)
-    {
-        CUDA_SAFE_CALL(cudaMemsetAsync(partials,0,sizeof(Float),cudaStreamPerThread));
-        return;
-    }
-    warp_reduce_sym_spmv_quadratic_kernel<<<(count-1)/256+1,256>>>(
-        Float(1),values,rows,cols,count,x.cviewer(),y.viewer(),partials);
 }
 }  // namespace gipc

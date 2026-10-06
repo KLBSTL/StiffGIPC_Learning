@@ -13,94 +13,9 @@
 #include <gipc/linear_stage.h>
 #include <gipc/cost_trace.h>
 #include <solver/mas_restrict_options.h>
-#include <solver/legacy_restrict_options.h>
-#include <chrono>
-#include <cub/block/block_reduce.cuh>
-#include <limits>
-
-namespace
-{
-// The MAS interval is omitted, not masked into another full FEM traversal.
-// Every remaining component uses the final global/local preconditioner result.
-__global__ void mas_dot_complement(const double* r,const double* z,
-    int count,int begin,int end,double* partials)
-{
-    const int j=blockIdx.x*blockDim.x+threadIdx.x;
-    const int complement=count-(end-begin);
-    double value=0;
-    if(j<complement){const int i=j<begin?j:j+(end-begin);value=r[i]*z[i];}
-    using Reduce=cub::BlockReduce<double,256>;
-    __shared__ typename Reduce::TempStorage storage;
-    const double result=Reduce(storage).Sum(value);
-    if(threadIdx.x==0)partials[blockIdx.x]=result;
-}
-}
 
 namespace gipc
 {
-std::string GlobalLinearSystem::mas_fused_dot_unavailable_reason(SizeT count) const
-{
-    if(count<=0 || count>std::numeric_limits<int>::max())return "unsupported_vector_size";
-    const MAS_Preconditioner* owner=nullptr;
-    for(const auto& p:m_local_preconditioners)
-        if(auto* mas=dynamic_cast<const MAS_Preconditioner*>(p.get()))
-        {if(owner)return "multiple_MAS_owners";owner=mas;}
-    if(!owner)return "no_MAS_preconditioner";
-    if(!owner->fused_dot_supported())return "legacy_collect_without_GROUP_mapping";
-    if(m_local_preconditioners.back().get()!=owner)return "MAS_is_not_last_local_writer";
-    const auto begin=3LL*owner->get_offset();
-    const auto end=begin+3LL*owner->fused_dot_nodes();
-    if(begin<0 || end<=begin || end>count)return "invalid_MAS_interval";
-    for(const auto& p:m_local_preconditioners)
-    {
-        const auto start=static_cast<long long>(p->m_subsystem->dof_offset()[0]);
-        const auto stop=start+p->m_subsystem->right_hand_side_dof();
-        if(start<0 || stop<start || stop>count)return "invalid_local_interval";
-        if(p.get()==owner)
-        {if(start!=begin || stop!=end)return "MAS_dimension_mismatch";}
-        else if(start<end && stop>begin)return "overlapping_local_MAS_writer";
-    }
-    return {};
-}
-SizeT GlobalLinearSystem::mas_fused_dot_partial_count(SizeT count) const
-{
-    for(const auto& p:m_local_preconditioners)
-        if(auto* mas=dynamic_cast<const MAS_Preconditioner*>(p.get()))
-            return static_cast<SizeT>((static_cast<long long>(mas->fused_dot_nodes())+255)/256+
-                (static_cast<long long>(count)-3LL*mas->fused_dot_nodes()+255)/256);
-    return 0;
-}
-void GlobalLinearSystem::apply_preconditioner_fused_dot(cudatool::DenseVectorView<Float> z,
-    cudatool::CDenseVectorView<Float> r,Float* partials,bool prepared_only)
-{
-    CostScope scope("preconditioner.apply_fused_rho");
-    if(!prepared_only)
-    {
-      if(m_global_preconditioner)m_global_preconditioner->do_apply(r,z);
-      else CUDA_SAFE_CALL(cudaMemcpyAsync(z.data(),r.data(),r.size()*sizeof(Float),
-                                        cudaMemcpyDeviceToDevice,cudaStreamPerThread));
-    }
-    for(auto& p:m_local_preconditioners)
-    {
-        if(auto* mas=dynamic_cast<MAS_Preconditioner*>(p.get()))
-        {
-            const int begin=3*mas->get_offset(),count=3*mas->fused_dot_nodes();
-            mas->apply_fused_dot(r.subview(begin,count),z.subview(begin,count),partials,prepared_only);
-            const int complement=static_cast<int>(r.size())-count;
-            if(complement>0)
-                mas_dot_complement<<<(complement-1)/256+1,256>>>(r.data(),z.data(),
-                    static_cast<int>(r.size()),begin,begin+count,
-                    partials+(mas->fused_dot_nodes()+255)/256);
-        }
-        else if(!prepared_only)p->do_apply(r,z);
-    }
-}
-void GlobalLinearSystem::mas_dot_scratch(const std::function<void(void*,size_t)>& visitor) const
-{
-    for(const auto& p:m_local_preconditioners)
-        if(auto* mas=dynamic_cast<const MAS_Preconditioner*>(p.get()))
-            mas->dot_diagnostic_scratch(visitor);
-}
 bool GlobalLinearSystem::build_linear_system()
 {
     CostScope cost_build("linear.build");
@@ -326,16 +241,7 @@ gipc::SizeT GlobalLinearSystem::solve_linear_system()
     CostFlushAtExit cost_flush;
     CostScope cost_system("linear.total_including_diagnostics");
     linear_stage("system_build_begin");
-    const bool measure_legacy=gipc::legacy_restrict_study();
-    if(measure_legacy)CUDA_SAFE_CALL(cudaDeviceSynchronize());
-    const auto prepare_start=measure_legacy?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
     bool success = build_linear_system();
-    if(measure_legacy)
-    {
-        CUDA_SAFE_CALL(cudaDeviceSynchronize());
-        Statistics::instance().at_current_frame()["newton"].back()["pcg"]["diagnostic_prepare_with_map_ms"]=
-            std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-prepare_start).count();
-    }
     linear_stage("system_build_end");
     if(!success)
         return 0;
@@ -519,29 +425,4 @@ void GlobalLinearSystem::spmv(Float                             a,
                                 y);
 }
 
-std::string GlobalLinearSystem::spmv_quadratic_unavailable_reason(SizeT count) const
-{
-    if(count==0)return "empty_vector";
-    if(count>std::numeric_limits<int>::max())return "scalar_count_exceeds_int32";
-    if(count%3!=0 || count!=m_b.size())return "incompatible_block3_vector_shape";
-    auto* a=gipc_global_triplet;
-    if(!a)return "missing_matrix";
-    if(a->h_unique_key_number<0)return "negative_stored_block_count";
-    if(a->h_unique_key_number>0 && (!a->block_values() || !a->block_row_indices() || !a->block_col_indices()))
-        return "missing_matrix_storage";
-    return {};
-}
-SizeT GlobalLinearSystem::spmv_quadratic_partial_count() const
-{
-    const auto n=gipc_global_triplet->h_unique_key_number;
-    return n>0?(static_cast<SizeT>(n)-1)/256+1:1;
-}
-void GlobalLinearSystem::spmv_quadratic(cudatool::CDenseVectorView<Float> x,
-    cudatool::DenseVectorView<Float> y,Float* partials)
-{
-    CostScope scope("spmv.fused_quadratic");
-    auto* a=gipc_global_triplet;
-    m_spmv.warp_reduce_sym_spmv_quadratic(a->block_values(),a->block_row_indices(),
-        a->block_col_indices(),a->h_unique_key_number,x,y,partials);
-}
 }  // namespace gipc

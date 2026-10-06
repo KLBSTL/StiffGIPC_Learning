@@ -44,33 +44,7 @@ class PCGSolver : public IterativeSolver
     SizeT captured_max_iter = 0;
     Float captured_tol = 0;
     std::uint64_t captures = 0, cache_hits = 0, invalidations = 0;
-    bool mas_dot_requested=false,mas_dot_effective=false,mas_dot_supported=false;
-    std::string mas_dot_reason;
-    SizeT mas_dot_partial_count=0;
-    cudatool::DeviceBuffer<Float> mas_dot_partials;
-    cudatool::DeviceBuffer<unsigned char> mas_dot_reduce_storage;
-    size_t mas_dot_reduce_bytes=0;
-    void prepare_mas_dot(SizeT count);
-    void apply_mas_dot(cudatool::DenseVectorView<Float> z,
-                       cudatool::CDenseVectorView<Float> r,Float* result,bool prepared_only=false);
-    Float apply_mas_dot_host(cudatool::DenseVectorView<Float> z,
-                             cudatool::CDenseVectorView<Float> r);
-    void mas_dot_fixed_study(cudatool::DenseVectorView<Float> x,
-                             cudatool::CDenseVectorView<Float> b,const std::string& prefix);
     void release_graph();
-    bool spmv_quadratic_requested=false,spmv_quadratic_effective=false,spmv_quadratic_supported=false;
-    std::string spmv_quadratic_reason;
-    SizeT spmv_quadratic_partials_count=0;
-    cudatool::DeviceBuffer<Float> spmv_quadratic_partials;
-    cudatool::DeviceBuffer<unsigned char> spmv_quadratic_reduce_storage;
-    size_t spmv_quadratic_reduce_bytes=0;
-    void prepare_spmv_quadratic(SizeT count);
-    void apply_spmv_quadratic(cudatool::CDenseVectorView<Float> input,
-        cudatool::DenseVectorView<Float> output,Float* result);
-    Float apply_spmv_quadratic_host(cudatool::CDenseVectorView<Float> input,
-        cudatool::DenseVectorView<Float> output);
-    void spmv_quadratic_fixed_study(cudatool::DenseVectorView<Float> x,
-        cudatool::CDenseVectorView<Float> b,const std::string& prefix);
     int diagnostic_fixed_iterations = 0;
     int diagnostic_fused_override = -1;
     void fail_pcg(int code,Float rho,Float curvature);

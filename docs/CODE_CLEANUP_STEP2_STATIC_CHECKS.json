@@ -1,0 +1,190 @@
+{
+  "base_commit": "edaf2388c3e8b201ed5b56cd843341aebaa45b54",
+  "scope": "CPU static source-preservation checks only; no compile or GPU",
+  "passed": true,
+  "check_count": 37,
+  "checks": [
+    {
+      "check": "host_PCG_old_false_path_complete",
+      "passed": true
+    },
+    {
+      "check": "__global__ void PCG_vdv_Reduction_unchanged",
+      "passed": true
+    },
+    {
+      "check": "__global__ void update_vector_dx_r_unchanged",
+      "passed": true
+    },
+    {
+      "check": "__global__ void update_vector_c_unchanged",
+      "passed": true
+    },
+    {
+      "check": "double My_PCG_General_v_v_Reduction_Algorithm_unchanged",
+      "passed": true
+    },
+    {
+      "check": "void PCGSolver::fail_pcg_unchanged",
+      "passed": true
+    },
+    {
+      "check": "bool PCGSolver::check_host_rho_unchanged",
+      "passed": true
+    },
+    {
+      "check": "void PCGSolver::operator_audit_unchanged",
+      "passed": true
+    },
+    {
+      "check": "conditional_Graph_complete_false_path_minus_10_retired_key_fields",
+      "passed": true
+    },
+    {
+      "check": "legacy_BuildMultiLevelR_original_atomic_path",
+      "passed": true
+    },
+    {
+      "check": "legacy_collect_original_GROUP_and_nonGROUP_path",
+      "passed": true
+    },
+    {
+      "check": "MAS_preconditioning_all_three_original_false_paths",
+      "passed": true
+    },
+    {
+      "check": "MAS_factor_preparation_original_false_path",
+      "passed": true
+    },
+    {
+      "check": "stable_Cholesky_prepare_unchanged",
+      "passed": true
+    },
+    {
+      "check": "stable_CSR_map_nonmeasuring_path_unchanged",
+      "passed": true
+    },
+    {
+      "check": "MAS_Graph_signature_only_retired_mode_removed",
+      "passed": true
+    },
+    {
+      "check": "MAS_owned_buffer_snapshot_list_unchanged",
+      "passed": true
+    },
+    {
+      "check": "void GlobalLinearSystem::apply_preconditioner(_unchanged",
+      "passed": true
+    },
+    {
+      "check": "void GlobalLinearSystem::spmv(_unchanged",
+      "passed": true
+    },
+    {
+      "check": "std::vector<std::uintptr_t> GlobalLinearSystem::graph_signature() const_unchanged",
+      "passed": true
+    },
+    {
+      "check": "ordinary_SpMV_all_kernels_and_method_unchanged",
+      "passed": true
+    },
+    {
+      "check": "generic_fixed_study_only_retired_dispatch_removed",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_restriction.cuh_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_restrict_options.h_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_cholesky.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_factor_action.cuh_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_factor_action_options.h_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_wide_fixture.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_cholesky_fixture.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/solver/mas_stage_probe.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/linear_system/solver/pcg_guard_fixture.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/core/GIPC.cu_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/collision/ipc_contact_pool.inl_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/collision/mlbvh.cu_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "StiffGIPC/collision/ACCD.cu_byte_identical",
+      "passed": true
+    },
+    {
+      "check": "deleted_12_files_have_no_remaining_native_include",
+      "passed": true
+    },
+    {
+      "check": "native_translation_units_remain_37",
+      "passed": true
+    }
+  ],
+  "deleted_files": [
+    "StiffGIPC/linear_system/solver/pcg_legacy_restrict_study.inl",
+    "StiffGIPC/linear_system/solver/pcg_mas_dot_study.inl",
+    "StiffGIPC/linear_system/solver/pcg_spmv_quadratic.inl",
+    "StiffGIPC/linear_system/solver/pcg_spmv_quadratic_study.inl",
+    "StiffGIPC/linear_system/utils/spmv_quadratic_cpu_check.py",
+    "StiffGIPC/linear_system/utils/spmv_quadratic_kernel.cuh",
+    "StiffGIPC/linear_system/utils/spmv_quadratic_reference.h",
+    "StiffGIPC/solver/legacy_ordered_restrict.cuh",
+    "StiffGIPC/solver/legacy_restrict_options.h",
+    "StiffGIPC/solver/mas_fused_dot_kernels.cuh",
+    "StiffGIPC/solver/mas_fused_dot_options.h",
+    "StiffGIPC/solver/spmv_quadratic_options.h"
+  ],
+  "modified_files_sha256": {
+    "StiffGIPC/core/retired_components.h": "9ba065c604645334146087e53487e46d3f0f3784e02fd663c950e5f9cb31ad46",
+    "StiffGIPC/linear_system/linear_system/global_linear_system.cu": "4095ba4341e0df048108ccce45b355b696ba54f2e3334dc09c33bb472f9b6ba5",
+    "StiffGIPC/linear_system/linear_system/global_linear_system.h": "a88e6019cf8fca2b9730bff5a4ab4be82dad46d6c5c7dd1b05d3dc8aafb96073",
+    "StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu": "7da94fb27b0714b65c1bc57f99dba98c4ac08f6df4150cea55771da5127244a4",
+    "StiffGIPC/linear_system/linear_system/i_linear_system_solver.h": "a44f9ed5c81037450a4bce2454cb9f0babdc469469032c8ed0d70abddfe43e13",
+    "StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu": "b0cb94e633e617871d26d6c6b7a9253507413e0e4d1ac3a1d51151e01632f407",
+    "StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h": "7d20500c3b64bd0a9c43660c11c7cf4805c3feb879d42436d7675d20d01e7805",
+    "StiffGIPC/linear_system/solver/pcg_fixed_study.inl": "51c35cb5597e9c8ce0dd4d35dffb203eb924462b554dea4ea9c1cb7116b0a0f1",
+    "StiffGIPC/linear_system/solver/pcg_graph_impl.inl": "899984d1055f4fa92d8f01d93ecffc085f275f2a08723cfdb0ab48c0b2a8d3ac",
+    "StiffGIPC/linear_system/solver/pcg_solver.cu": "1deea2593200a2a32751a0610c0762f5fcdd546b43f04f2533a59cee9219061f",
+    "StiffGIPC/linear_system/solver/pcg_solver.h": "3df660b21bbcfc197a8d14ec76ed9df079b7b59a05895fbdcaf1b2e3b56ad01c",
+    "StiffGIPC/linear_system/utils/SPMV_FUSED_QUADRATIC.md": "9e8b135e9e84946927d38e9faa7ba49ab4371399f0eb6e0055ac2991948363f9",
+    "StiffGIPC/linear_system/utils/spmv.cu": "76fa87eaf92a836b086d195a8f2647e3f66eb1c2b7b07167fb0a64884432fa23",
+    "StiffGIPC/linear_system/utils/spmv.h": "910aff07078344df5ab0678a868dac74cf379872022dc97d45a06eb892ff30e5",
+    "StiffGIPC/solver/MASPreconditioner.cu": "233f74da8422f283d2ea43f14d45cfc5295f872c3342b5afab75e15b931a103b",
+    "StiffGIPC/solver/MASPreconditioner.cuh": "7a5ef3bca8c2c71f4c0ec062243cfde7810de436ecc58bdd238dc952138a4a40",
+    "StiffGIPC/solver/MAS_FUSED_DOT.md": "e8b624c2bb31f2078f97fd26c90696c219671de4af271a1e98a0ce17c723edbb",
+    "StiffGIPC/solver/toi_options.h": "7e26265bbd16d52a32262bb1d5fd95fbf4da5f5dd3af9bcfa0cfd78008b3edb4"
+  }
+}

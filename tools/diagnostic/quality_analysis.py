@@ -1,0 +1,121 @@
+"""CPU-only material/state comparison; no speed or quality promotion gate."""
+import csv
+import itertools
+import math
+from pathlib import Path
+from quality_plan import ROOT,tasks,plan
+from config import read,expand,digest
+from linux_runner import sha,require,verify_files
+from pool_metrics import metrics,export_evidence,state_comparison,window,pool_evidence
+from validate_run import validate
+
+PROTOCOL=ROOT/'tools/bench/quality_protocol.json'
+
+def validate_base(run):
+    req=read(run/'requested.json');c=req['expanded_config'];r=read(run/'result.json')
+    scene=read(run/'output/scene.json');effective=scene['effective_run'];fields=scene['effective_scalar_fields']
+    pcgs=[n['pcg'] for f in read(run/'output/stats.json')['frames'] for n in f['newton'] if 'pcg' in n]
+    checks={'native_scene':scene['case_id']==c['scene'],'completed':r['status']=='completed',
+            'frames':r['recorded_frames']==c['steps'],'native_preconditioner_mas':fields['preconditioner_type']==1,
+            'dt':effective['dt']==c['dt'],'newton_tol':effective['newton_tol']==c['ipc_newton_tol'],
+            'pcg_tol':effective['pcg_tol']==c['pcg_rho_tol'],'declared_baseline':req['binary']=='base',
+            'no_fabricated_resolved_config':not (run/'resolved_config.json').exists(),
+            'no_unexpected_velocity_export':not list((run/'trace').glob('velocity_*.bin')),
+            'pcg_records_present':bool(pcgs),'pcg_limit_telemetry_present':all('iteration_limit' in p for p in pcgs),
+            'pcg_no_reported_limit_or_breakdown':not any(p.get('iteration_limit') or p.get('breakdown') for p in pcgs)}
+    return {'passed':all(checks.values()),'checks':checks,
+            'scope':'Native scene runtime scalars and preconditioner; official frozen program has no resolved-config contract or actual velocity export.',
+            'resolved_config_available':False,'actual_velocity_available':False,
+            'pcg_breakdown_telemetry_available':bool(pcgs) and all('breakdown' in p for p in pcgs),
+            'unobserved_runtime_settings':['IPC min-updates is retained in baseline source; no runtime resolved record','PCG execution/breakdown telemetry unavailable in baseline; finite exported states do not prove absence of internal breakdown']}
+
+def input_comparison(a,b):
+    names=('trace/topology.bin','trace/masses.bin','trace/boundary_types.bin','trace/body_ids.bin',
+           'trace/state_0000.bin','trace/metadata.json','output/scene.json')
+    rows={name:{'left_sha256':sha(a/name),'right_sha256':sha(b/name)} for name in names}
+    for row in rows.values():row['equal']=row['left_sha256']==row['right_sha256']
+    velocity=all((p/'trace/velocity_0000.bin').is_file() for p in (a,b))
+    if velocity:
+        row={'left_sha256':sha(a/'trace/velocity_0000.bin'),'right_sha256':sha(b/'trace/velocity_0000.bin')}
+        row['equal']=row['left_sha256']==row['right_sha256'];rows['trace/velocity_0000.bin']=row
+    return {'passed':all(row['equal'] for row in rows.values()),'files':rows,
+            'initial_actual_velocity_comparable':velocity,
+            'missing_velocity_reason':None if velocity else 'Baseline does not export actual velocity; no reconstruction from positions.'}
+
+def analyze_run(session,t,seal):
+    run=session/t['name'];row={k:t[k] for k in ('name','variant','repeat','binary')}
+    row.update(hard_checks_passed=False,failures=[])
+    try:
+        req,result=read(run/'requested.json'),read(run/'result.json');c=expand(t['config'])
+        identity=seal['active_manifest'] if t['binary']=='active' else seal['base_manifest']
+        require(req['binary']==t['binary'] and req['expanded_config']==c,'Requested binary/config mismatch')
+        require(req['source_digest']==identity['source_digest'] and req['exe_sha256']==identity['exe_sha256'],'Source/executable identity mismatch')
+        require(result['status']=='completed' and result['recorded_frames']==59,'Incomplete diagnostic run')
+        require(read(run/'output/scene.json')['case_id']==c['scene'],'Wrong native scene')
+        row['configuration']=validate(run) if t['binary']=='active' else validate_base(run)
+        require(row['configuration']['passed'],'Configuration evidence failed')
+        row['actual_positions']=export_evidence(run,59,'state');require(row['actual_positions']['passed'],'Incomplete/nonfinite positions')
+        if t['binary']=='active':
+            row['actual_velocity']=export_evidence(run,59,'velocity');require(row['actual_velocity']['passed'],'Incomplete/nonfinite actual velocity')
+        else:row['actual_velocity']={'available':False,'passed':None,'reason':'Official baseline has no actual velocity export.'}
+        frames=read(run/'output/stats.json')['frames'];require(len(frames)==59,'Incomplete stats')
+        require(not any(f.get('newton_exit')=='iteration_limit' for f in frames),'Native Newton iteration limit reached')
+        if t['binary']=='active':
+            row['pool']=pool_evidence(frames,c['contact_pool'],False)
+            require(row['pool']['passed'],'Pool activation/telemetry failure')
+        with (run/'trace/frames.csv').open() as stream:times=list(csv.DictReader(stream))
+        require([int(t['frame']) for t in times]==list(range(1,60)),'Incomplete timing sequence')
+        require(all(math.isfinite(float(t['solver_ms'])) and float(t['solver_ms'])>0 for t in times),'Invalid timing')
+        row['timing_observation']={'whole':window(frames,times,1,59),'contact_window':window(frames,times,22,59),
+                                   'speedup_claim':False,'scope':'Diagnostic observations only; baseline and active export capabilities differ.'}
+        m=metrics(run);require(m['finite'] and not m['pcg_failures'],'Nonfinite/PCG failure')
+        require(all(v is None or not isinstance(v,(int,float)) or math.isfinite(v) for f in m['frames'] for v in f.values()),'Nonfinite material metric')
+        require(not any(f['fem_nonpositive'] or (f['abd_min_J'] is not None and f['abd_min_J']<=0) for f in m['frames']),'Unexpected element/ABD inversion')
+        require(all(math.isfinite(n['alpha']) for f in frames for n in f['newton'] if 'alpha' in n),'Nonfinite alpha')
+        row['material_by_frame']=m['frames'];row['material']={k:m[k] for k in ('max_stretch','p99_stretch','fixed_drift_m')}
+        bounds=read(PROTOCOL)['scenes']['fixed_bunny']['bounds']
+        row['original_bound_comparison']={k:{'actual':m[k],'bound':b,'excess':m[k]-b,'within_bound':m[k]<=b,
+                 'exceeding_frames':[f['frame'] for f in m['frames'] if f[k]>b]} for k,b in bounds.items()}
+        row['all_original_bounds_satisfied']=all(x['within_bound'] for x in row['original_bound_comparison'].values())
+        row['hard_checks_passed']=True
+    except (ValueError,KeyError,FileNotFoundError,AssertionError,IndexError) as e:
+        row['failures'].append(type(e).__name__+': '+str(e))
+    return row
+
+def analyze(session,seal,batch):
+    require(batch['plan']==plan(),'Batch plan differs')
+    expected=[t['name'] for t in tasks()];recorded=[r['name'] for r in batch['runs']]
+    require(recorded==expected[:len(recorded)] and batch['skipped']==expected[len(recorded):], 'Batch is not the planned prefix')
+    for r in batch['runs']:
+        out=session/r['name'];require(sha(out/'evidence.json')==r['evidence_sha256'],'Evidence ledger changed')
+        verify_files(out,read(out/'evidence.json')['files']);require(read(out/'result.json')==r['result'],'Result changed')
+        require(sha(session/(r['name']+'_check.json'))==r['check_sha256'],'Per-run diagnostic check changed')
+    rows=[analyze_run(session,t,seal) if t['name'] in recorded else
+          {**{k:t[k] for k in ('name','variant','repeat','binary')},'hard_checks_passed':False,'failures':['Not recorded by diagnostic ledger']}
+          for t in tasks()]
+    report={'schema':'fixed_quality_diagnosis_analysis.v1','runs':rows,'comparisons':[],
+            'protocol_sha256':sha(PROTOCOL),'original_guard_sha256':seal['original_guard']['sha256'],
+            'original_guard_remains_failed':True,'diagnosis_complete':len(recorded)==7 and all(r['hard_checks_passed'] for r in rows),
+            'quality_certified':False,'performance_certified':False,'allow_performance_screen':False,'automatic_long_run':False,
+            'source_scope':'Actual binary state exports and native material metrics. No reconstructed velocity, no new quality tolerance.'}
+    good={r['name']:r for r in rows if r['hard_checks_passed']}
+    by_variant={v:[r for r in rows if r['variant']==v and r['hard_checks_passed']] for v in ('off','base','on')}
+    report['observed_ranges']={v:{'completed':len(rs),'required':3 if v!='on' else 1,
+        'bounds':{k:{'min':min(r['material'][k] for r in rs),'max':max(r['material'][k] for r in rs),
+            'old_bound':read(PROTOCOL)['scenes']['fixed_bunny']['bounds'][k],
+            'runs_exceeding_old_bound':[r['name'] for r in rs if not r['original_bound_comparison'][k]['within_bound']]}
+                 for k in ('max_stretch','p99_stretch','fixed_drift_m')} if rs else {}} for v,rs in by_variant.items()}
+    comparisons=[(f'fixed_off_r{i}',f'fixed_base_r{i}') for i in range(1,4)]
+    comparisons += [('fixed_off_r1','fixed_on_r1')]
+    for variant in ('off','base'):
+        comparisons += [(a['name'],b['name']) for a,b in itertools.combinations(by_variant[variant],2)]
+    for a,b in comparisons:
+        if a not in good or b not in good:continue
+        pair={'left':a,'right':b,'initial_inputs':input_comparison(session/a,session/b)}
+        if pair['initial_inputs']['passed']:pair['state_difference']=state_comparison(session/a,session/b)
+        else:report['diagnosis_complete']=False
+        report['comparisons'].append(pair)
+    report['interpretation']=['Observed repeat ranges do not replace or expand the original frozen bounds.',
+        'If off/base also exceed the bound, that identifies a baseline/repetition/environment question; it does not prove on is equivalent.',
+        'One on run does not establish repeatability. The original guard remains failed regardless of this diagnosis.']
+    return report

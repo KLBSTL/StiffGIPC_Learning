@@ -5,36 +5,12 @@
 #include <solver/mas_factor_action_options.h>
 namespace gipc
 {
-int MAS_Preconditioner::fused_dot_nodes() const
-{return MAS_Prec.diagnostic_dimensions()[0];}
-bool MAS_Preconditioner::fused_dot_supported() const
-{return MAS_Prec.fused_dot_collect_supported();}
-void MAS_Preconditioner::apply_fused_dot(cudatool::CDenseVectorView<Float> r,
-    cudatool::DenseVectorView<Float> z,Float* partials,bool prepared_only)
-{
-    if(r.size()!=3*fused_dot_nodes() || z.size()!=r.size() || !partials)
-        throw std::runtime_error("Invalid MAS fused dot ownership range");
-    if(prepared_only)MAS_Prec.collect_fused_dot(reinterpret_cast<const double3*>(r.data()),
-                                             reinterpret_cast<double3*>(z.data()),partials);
-    else MAS_Prec.preconditioning(reinterpret_cast<const double3*>(r.data()),
-                                  reinterpret_cast<double3*>(z.data()),partials);
-}
-void MAS_Preconditioner::dot_diagnostic_scratch(const std::function<void(void*,size_t)>& visitor) const
-{
-    MAS_Prec.diagnostic_buffers([&](const char* name,const void* address,size_t count,size_t item_bytes){
-        const std::string field=name;
-        if(field=="d_multiLevelR" || field=="d_multiLevelZ" ||
-           field=="d_multiLevelR64" || field=="d_multiLevelZ64")
-            visitor(const_cast<void*>(address),count*item_bytes);
-    });
-}
 Json MAS_Preconditioner::diagnostic_snapshot(const std::string& prefix) const
 {
     Json result={{"kind","MAS_full_owned_buffers"},{"offset",get_offset()},
         {"wide_apply",MAS_Prec.wide_apply_enabled()},
         {"inverse64",MAS_Prec.inverse64_enabled()},
         {"cholesky",MAS_Prec.cholesky_enabled()},
-        {"restriction_map_prepare_ms",MAS_Prec.restriction_map_prepare_time_ms()},
         {"factor_action",MAS_Prec.cholesky_enabled()?mas_factor_action_mode():"inactive"},
         {"dimensions",MAS_Prec.diagnostic_dimensions()},
         {"dimension_names",{"nodes","mapped_nodes","levels","collision_offset","clusters","clevel_x","clevel_y","neighbor_list_size"}}};

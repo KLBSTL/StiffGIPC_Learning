@@ -25,8 +25,9 @@ The active source is standalone; it no longer inherits historical overlays.
 | `docs/` | Current execution plan and component decisions |
 | `history/` | Historical reports and program identities, without version copies |
 
-The first cleanup removes the rejected bounded CCD and BVH eligibility runtime
-components. Explicit requests for them fail with a recovery-tag message. Current
+The cleanup removes rejected bounded CCD, BVH eligibility, MAS final-dot,
+SpMV quadratic fusion and ordered restriction implementations, their dedicated
+scratch and study branches. Explicit requests fail with a recovery-tag message. Current
 contact-pool reuse remains an experiment with an independent switch, default off.
 IPC legacy stopping, materials and complete CCD remain unchanged.
 
@@ -42,5 +43,12 @@ Build attempts use fresh directories and preserve complete command logs. Test
 and timing outputs remain outside Git; compact reports and identities are saved.
 Each optimization round is analyzed before advancing. See
 [`docs/EXECUTION_PLAN_20261006.md`](docs/EXECUTION_PLAN_20261006.md).
+
+The current execution target is the local Windows workstation, as requested on
+2026-10-06. See [`docs/LOCAL_EXECUTION_PLAN_20261006.md`](docs/LOCAL_EXECUTION_PLAN_20261006.md)
+and [`docs/CURRENT_COMPONENTS.md`](docs/CURRENT_COMPONENTS.md). Windows builds
+assign independent object names to every source, including the two PCG sources
+whose filenames differ only in case. Native cleanup regression is pending;
+the 4090 Step1 guard evidence does not certify the Step2 Windows program.
 
 Upstream code retains its original licenses and author attribution.

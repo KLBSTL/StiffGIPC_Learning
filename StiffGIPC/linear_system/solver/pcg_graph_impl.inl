@@ -76,7 +76,7 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     const char* fused_env = std::getenv("GIPC_PCG_FUSED_DIAG_UPDATE");
     const bool fused_update = (diagnostic_fused_override>=0 ? diagnostic_fused_override==1 :
                               fused_env && std::strcmp(fused_env, "1") == 0)
-                              && fused_diag_update_available() && !mas_dot_effective;
+                              && fused_diag_update_available();
     graph_scalars.resize(10);
     double* s = graph_scalars.data();
     size_t reduce_bytes = 0;
@@ -92,12 +92,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     };
     r.buffer_view().copy_from(b.buffer_view());
     // Outside capture: assembly, dynamic allocation and warm-up are complete.
-    if(mas_dot_effective)apply_mas_dot(z,r,s);
-    else
-    {
-        apply_preconditioner(z,r);
-        dot(r.buffer_view().data(), z.buffer_view().data(),p.buffer_view().data(),s);
-    }
+    apply_preconditioner(z,r);
+    dot(r.buffer_view().data(), z.buffer_view().data(),p.buffer_view().data(),s);
     p.copy_from(z);
     graph_init<<<1,1>>>(s);
     graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
@@ -125,16 +121,6 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         key.push_back(reinterpret_cast<std::uintptr_t>(address));
     key.push_back(n); key.push_back(reduce_bytes);
     key.push_back(fused_update);
-    key.push_back(mas_dot_effective);
-    key.push_back(mas_dot_partial_count);
-    key.push_back(mas_dot_reduce_bytes);
-    key.push_back(reinterpret_cast<std::uintptr_t>(mas_dot_partials.data()));
-    key.push_back(reinterpret_cast<std::uintptr_t>(mas_dot_reduce_storage.data()));
-    key.push_back(spmv_quadratic_effective);
-    key.push_back(spmv_quadratic_partials_count);
-    key.push_back(spmv_quadratic_reduce_bytes);
-    key.push_back(reinterpret_cast<std::uintptr_t>(spmv_quadratic_partials.data()));
-    key.push_back(reinterpret_cast<std::uintptr_t>(spmv_quadratic_reduce_storage.data()));
     key.push_back(diagnostic_fixed_iterations);
     int device = 0; CUDA_SAFE_CALL(cudaGetDevice(&device)); key.push_back(device);
     if(graph_exec && (key != captured_key || max_iter != captured_max_iter
@@ -167,12 +153,8 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         CostCaptureGuard no_events_in_capture;
         CUDA_SAFE_CALL(cudaStreamBeginCaptureToGraph(cudaStreamPerThread,
             params.conditional.phGraph_out[0],nullptr,nullptr,0,cudaStreamCaptureModeThreadLocal));
-        if(spmv_quadratic_effective)apply_spmv_quadratic(p.cview(),Ap.view(),s+1);
-        else
-        {
-            spmv(p.cview(),Ap.view());
-            dot(p.buffer_view().data(),Ap.buffer_view().data(),z.buffer_view().data(),s+1);
-        }
+        spmv(p.cview(),Ap.view());
+        dot(p.buffer_view().data(),Ap.buffer_view().data(),z.buffer_view().data(),s+1);
         graph_alpha<<<1,1>>>(s);
         if(fused_update)
             fused_diag_update(x, r.view(), p.cview(), Ap.cview(), s + 3, z.view());
@@ -180,11 +162,9 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         {
             graph_dx_r<<<blocks,256>>>(x.buffer_view().data(),r.buffer_view().data(),
                                       p.buffer_view().data(),Ap.buffer_view().data(),s,n);
-            if(mas_dot_effective)apply_mas_dot(z,r,s+2);
-            else apply_preconditioner(z,r);
+            apply_preconditioner(z,r);
         }
-        if(!mas_dot_effective)
-            dot(r.buffer_view().data(),z.buffer_view().data(),Ap.buffer_view().data(),s+2);
+        dot(r.buffer_view().data(),z.buffer_view().data(),Ap.buffer_view().data(),s+2);
         graph_beta<<<1,1>>>(s,m_config.global_tol_rate,diagnostic_fixed_iterations);
         graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
         graph_p_continue<<<blocks,256>>>(p.buffer_view().data(),z.buffer_view().data(),

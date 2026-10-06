@@ -96,11 +96,6 @@ class GlobalLinearSystem
     void distribute_solution();
     void apply_preconditioner(cudatool::DenseVectorView<Float>  z,
                               cudatool::CDenseVectorView<Float> r);
-    std::string mas_fused_dot_unavailable_reason(SizeT count) const;
-    SizeT mas_fused_dot_partial_count(SizeT count) const;
-    void apply_preconditioner_fused_dot(cudatool::DenseVectorView<Float> z,
-        cudatool::CDenseVectorView<Float> r,Float* partials,bool prepared_only=false);
-    void mas_dot_scratch(const std::function<void(void*,size_t)>& visitor) const;
     bool fused_diag_update_available() const;
     void fused_diag_update(cudatool::DenseVectorView<Float> x,
                            cudatool::DenseVectorView<Float> r,
@@ -113,11 +108,6 @@ class GlobalLinearSystem
     std::vector<std::uintptr_t> graph_signature() const;
 
     void spmv(Float a, cudatool::CDenseVectorView<Float> x, Float b, cudatool::DenseVectorView<Float> y);
-    std::string spmv_quadratic_unavailable_reason(SizeT count) const;
-    SizeT spmv_quadratic_partial_count() const;
-    void spmv_quadratic(cudatool::CDenseVectorView<Float> x,
-        cudatool::DenseVectorView<Float> y,Float* partials);
-
     DiagonalSubsystem& _create_subsystem(U<DiagonalSubsystem>&& subsystem);
 
     IterativeSolver& _create_solver(U<IterativeSolver>&& solver);
