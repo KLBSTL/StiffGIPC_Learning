@@ -2,7 +2,17 @@
 
 IPC + CUDA Graph research code for contact cloth and mixed ABD/FEM scenes.
 
-The latest AutoDL RTX 4090 evaluation completed all 75 declared 100-frame runs
+The latest AutoDL RTX 4090 diagnostic completed 16 more 100-frame runs:
+hanging cloth and cloth over one fixed sphere, each at L/M resolutions and
+four execution configurations. Stiff/combined solver ratios were 1.3511x,
+1.3820x, 1.1880x and 1.2198x (hang L/M, sphere L/M). Each arm has one sample;
+no quality or 2x certification is claimed. Graph and other component gains,
+previous paired results, stage costs and material/state differences are listed
+in the [gain review](reports/autodl_resolution_20261007/GAIN_REVIEW.md).
+Native binaries and stopping rules were reused; M input caches were separately
+generated and sealed. Complete raw data is retained and hash verified.
+
+The preceding AutoDL RTX 4090 evaluation completed all 75 declared 100-frame runs
 with seven Stiff/combined pairs per scene. Paired median solver speedups were
 1.3613x (hanging cloth), 1.2860x (fixed-bunny cloth), and 1.1058x (mixed bunny).
 These are diagnostic measurements: independent baseline material holdouts
@@ -48,6 +58,7 @@ The active source is standalone; it no longer inherits historical overlays.
 | `tests/` | Numerical and configuration invariants |
 | `tools/bench/` | Portable, bounded, serial GPU experiments and analysis |
 | `tools/full_eval/` | Sealed four-arm full-run controller, identity checks and analysis |
+| `tools/resolution_eval/` | Bounded two-scene L/M four-arm diagnostic and offline report |
 | `tools/validator/`, `references/tight_inclusion/` | Independent CPU path audit |
 | `docs/` | Current execution plan and component decisions |
 | `history/` | Historical reports and program identities, without version copies |

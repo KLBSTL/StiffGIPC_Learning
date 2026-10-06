@@ -1,0 +1,12 @@
+In file included from /root/stiffgipc_full_20261006_5e2f9bb/runs/resolution_cache_main.cpp:1:
+/root/stiffgipc_full_20261006_5e2f9bb/MeshProcess/metis_partition/src/metis_sort.h:3:6: error: ‘vector’ in namespace ‘std’ does not name a template type
+    3 | std::vector<std::string> metis_sort(std::string obj_path, int dimension);
+      |      ^~~~~~
+/root/stiffgipc_full_20261006_5e2f9bb/MeshProcess/metis_partition/src/metis_sort.h:2:1: note: ‘std::vector’ is defined in header ‘<vector>’; did you forget to ‘#include <vector>’?
+    1 | #include <string>
+  +++ |+#include <vector>
+    2 | 
+/root/stiffgipc_full_20261006_5e2f9bb/runs/resolution_cache_main.cpp: In function ‘int main(int, char**)’:
+/root/stiffgipc_full_20261006_5e2f9bb/runs/resolution_cache_main.cpp:6:18: error: ‘metis_sort’ was not declared in this scope
+    6 |     auto paths = metis_sort(argv[1], 2);
+      |                  ^~~~~~~~~~

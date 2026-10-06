@@ -1,0 +1,13 @@
+vertex num: 10201
+block size: 16
+partitioning...
+partitioning done
+partitioning done
+max block size: 16
+min block size: 14
+non-full-block count: 588
+total block count: 681
+average block size: 14.9794
+calculate sort index...
+export sorted partition ...
+export sorted tri mesh ...

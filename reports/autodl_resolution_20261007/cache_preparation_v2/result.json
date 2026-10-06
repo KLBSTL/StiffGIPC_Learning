@@ -1,0 +1,132 @@
+{
+  "schema": "resolution_cache_preparation.v1",
+  "gpu_run": false,
+  "original_files_unchanged": true,
+  "old_seal_sha256": "9441113796d67f60065529e440994bd9806a93880315cfc424b2b557759b14c0",
+  "caches": [
+    {
+      "scene": "cloth_hang_l",
+      "mesh": "Assets/benchmark_meshes/triMesh/cipc_square2K.obj",
+      "mesh_sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865",
+      "generated": false,
+      "active": [
+        {
+          "path": "Assets/sorted_mesh/cipc_square2K_sorted.16.obj",
+          "bytes": 178764,
+          "sha256": "2e163869f2cbcd2bd5099d556cb35e70749b0aaea981c743f91163673fa756af"
+        },
+        {
+          "path": "Assets/sorted_mesh/cipc_square2K_sorted.16.part",
+          "bytes": 8054,
+          "sha256": "9dbb99942500859a0f70954d15e3782575ea5bc8cbb8fc438589d00251e85dc0"
+        }
+      ],
+      "baseline": [
+        {
+          "path": "baseline/Assets/sorted_mesh/cipc_square2K_sorted.16.obj",
+          "bytes": 178764,
+          "sha256": "2e163869f2cbcd2bd5099d556cb35e70749b0aaea981c743f91163673fa756af"
+        },
+        {
+          "path": "baseline/Assets/sorted_mesh/cipc_square2K_sorted.16.part",
+          "bytes": 8054,
+          "sha256": "9dbb99942500859a0f70954d15e3782575ea5bc8cbb8fc438589d00251e85dc0"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "scene": "cloth_sphere7_l",
+      "mesh": "Assets/benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+      "mesh_sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231",
+      "generated": false,
+      "active": [
+        {
+          "path": "Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.obj",
+          "bytes": 242257,
+          "sha256": "6ecdb77f2c51ea248075cce143cb236adc2f1d4b9e56aa3a108af417d60ac781"
+        },
+        {
+          "path": "Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.part",
+          "bytes": 11359,
+          "sha256": "d02a9ba9f3f5dd94a038b087ab47503e268b02c6a8806c0f37b3db303c5f84aa"
+        }
+      ],
+      "baseline": [
+        {
+          "path": "baseline/Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.obj",
+          "bytes": 242257,
+          "sha256": "6ecdb77f2c51ea248075cce143cb236adc2f1d4b9e56aa3a108af417d60ac781"
+        },
+        {
+          "path": "baseline/Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.part",
+          "bytes": 11359,
+          "sha256": "d02a9ba9f3f5dd94a038b087ab47503e268b02c6a8806c0f37b3db303c5f84aa"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "scene": "cloth_hang_m",
+      "mesh": "Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+      "mesh_sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7",
+      "generated": true,
+      "active": [
+        {
+          "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+          "bytes": 701659,
+          "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+        },
+        {
+          "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+          "bytes": 28727,
+          "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+        }
+      ],
+      "baseline": [
+        {
+          "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+          "bytes": 701659,
+          "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+        },
+        {
+          "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+          "bytes": 28727,
+          "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "scene": "cloth_sphere7_m",
+      "mesh": "Assets/benchmark_meshes/triMesh/square_cloth_10k.obj",
+      "mesh_sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3",
+      "generated": true,
+      "active": [
+        {
+          "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+          "bytes": 946561,
+          "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+        },
+        {
+          "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+          "bytes": 39155,
+          "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+        }
+      ],
+      "baseline": [
+        {
+          "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+          "bytes": 946561,
+          "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+        },
+        {
+          "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+          "bytes": 39155,
+          "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+        }
+      ],
+      "equal": true
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "resolution_download_verification.v1",
+  "archive_relative_path": "runs/resolution_download/resolution_eval_20261007.tar.xz",
+  "archive_bytes": 339863588,
+  "archive_sha256": "5af3257bfa62dbb864d27ecb50fd675c11a36829f27a22ba6cbafd2da014e33c",
+  "inventory_sha256": "9aac143ba525eb6a3a19b8080f94fbd9ab00d0b0eb09f70ff6ad0275eaccf5db",
+  "members_verified": 3208,
+  "uncompressed_bytes_verified": 432239729,
+  "metadata_files_extracted": 300,
+  "all_member_hashes_verified": true,
+  "public_reports_match_archive": {
+    "REPORT.md": true,
+    "RESULTS.json": true,
+    "RUN_INDEX.csv": true
+  },
+  "complete_hard_pass_runs": 16,
+  "verified_ledger_records": 16,
+  "raw_available_in_local_archive": true,
+  "remote_raw_deleted": false,
+  "quality_certified": false,
+  "performance_certified": false
+}

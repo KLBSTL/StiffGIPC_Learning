@@ -1,0 +1,40 @@
+{
+  "command": [
+    "g++",
+    "-O2",
+    "-std=c++17",
+    "-I/root/stiffgipc_full_20261006_5e2f9bb/MeshProcess/metis_partition/src",
+    "-I/usr/include/eigen3",
+    "/root/stiffgipc_full_20261006_5e2f9bb/runs/resolution_cache_main.cpp",
+    "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/metis_partition/libmetis_partition.a",
+    "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/METIS/libmetis/libmetis.a",
+    "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/GKlib/libGKlib.a",
+    "-lm",
+    "-o",
+    "/root/stiffgipc_full_20261006_5e2f9bb/runs/resolution_cache_prepare_v2"
+  ],
+  "inputs": [
+    {
+      "path": "build/active/MeshProcess/External/GKlib/libGKlib.a",
+      "bytes": 446226,
+      "sha256": "3c4f3abdffa18669cefe7dfc81b9cb1545ebf32b13b428ad9fb1fff3fb2c85b1"
+    },
+    {
+      "path": "build/active/MeshProcess/External/METIS/libmetis/libmetis.a",
+      "bytes": 427020,
+      "sha256": "ba0a924e46154739ea1b065f9b273ac7117cd55f4c949c5fa1fd26953951496d"
+    },
+    {
+      "path": "build/active/MeshProcess/metis_partition/libmetis_partition.a",
+      "bytes": 177690,
+      "sha256": "9a2b15297faacd1e05cc198dffc2f0f8f9a43c113415a2402d3bbada2ba5a73c"
+    },
+    {
+      "path": "runs/resolution_cache_main.cpp",
+      "bytes": 252,
+      "sha256": "dd2f3fc4689a6e5822cb3c142274f81594b81fa0452b3e3465658475c3d47473"
+    }
+  ],
+  "exe_sha256": "ce08a9b4bb80df067c529f46ae1d75bcb91da63885d2e45fce2e998501df2050",
+  "gpu_run": false
+}

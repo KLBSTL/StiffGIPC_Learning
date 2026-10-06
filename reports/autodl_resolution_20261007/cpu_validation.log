@@ -1,0 +1,25 @@
+test_changed_embedded_analysis_rejected (report_test.ReportTests.test_changed_embedded_analysis_rejected) ... ok
+test_changed_stats_rejected (report_test.ReportTests.test_changed_stats_rejected) ... ok
+test_failed_case_no_partial_ratios (report_test.ReportTests.test_failed_case_no_partial_ratios) ... ok
+test_four_edges_and_regression_not_hidden (report_test.ReportTests.test_four_edges_and_regression_not_hidden) ... ok
+test_material_is_signed_observation_not_acceptance (report_test.ReportTests.test_material_is_signed_observation_not_acceptance) ... ok
+test_narrow_pairs_not_tight_geometric_or_missing_zero (report_test.ReportTests.test_narrow_pairs_not_tight_geometric_or_missing_zero) ... ok
+test_real_loader_outputs_and_no_overwrite (report_test.ReportTests.test_real_loader_outputs_and_no_overwrite) ... ok
+test_retired_fallback_reasons_remain_explicit (report_test.ReportTests.test_retired_fallback_reasons_remain_explicit) ... ok
+test_unexpected_mas_on_is_not_reported_off (report_test.ReportTests.test_unexpected_mas_on_is_not_reported_off) ... ok
+test_3d_abd_needs_no_cache_but_fem_does (run_test.ResolutionContracts.test_3d_abd_needs_no_cache_but_fem_does) ... ok
+test_additive_inputs_pass_without_rewriting_old_records (run_test.ResolutionContracts.test_additive_inputs_pass_without_rewriting_old_records) ... ok
+test_completed_beyond_deadline_is_hard_failure (run_test.ResolutionContracts.test_completed_beyond_deadline_is_hard_failure) ... ok
+test_exact_sixteen_inputs_and_alternating_order (run_test.ResolutionContracts.test_exact_sixteen_inputs_and_alternating_order) ... ok
+test_excluded_baseline_cache_cannot_become_selected (run_test.ResolutionContracts.test_excluded_baseline_cache_cannot_become_selected) ... ok
+test_extra_original_host_state_edge_records_unavailable_truthfully (run_test.ResolutionContracts.test_extra_original_host_state_edge_records_unavailable_truthfully) ... ok
+test_mutation_new_source_and_asymmetric_cache_rejected (run_test.ResolutionContracts.test_mutation_new_source_and_asymmetric_cache_rejected) ... ok
+test_no_retry_metadata_tamper_and_existing_session (run_test.ResolutionContracts.test_no_retry_metadata_tamper_and_existing_session) ... ok
+test_offline_report_does_not_change_controller_identity (run_test.ResolutionContracts.test_offline_report_does_not_change_controller_identity) ... ok
+test_one_run_then_hard_failure_skips_only_same_case (run_test.ResolutionContracts.test_one_run_then_hard_failure_skips_only_same_case) ... ok
+test_parent_build_proof_reused_and_only_sources_digest_extended (run_test.ResolutionContracts.test_parent_build_proof_reused_and_only_sources_digest_extended) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.698s
+
+OK
