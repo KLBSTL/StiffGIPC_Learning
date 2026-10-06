@@ -40,6 +40,13 @@ def remaining(deadline):
     if value<=0:raise subprocess.TimeoutExpired('owned native budget',120)
     return min(10,value)
 
+def final_status(status,exit_code,elapsed):
+    # A process can finish during the last monitoring sleep. Completion still
+    # has to fit the absolute budget; do not accept that last-poll race.
+    if status!='running':return status
+    if not math.isfinite(elapsed) or not 0<elapsed<=120:return 'timeout'
+    return 'completed' if exit_code==0 else 'failed'
+
 def process_rows(stdout,own_pid,driver_model):
     rows=[];foreign=[]
     for values in csv.reader(stdout.splitlines(),skipinitialspace=True):
@@ -71,7 +78,7 @@ def driver_model(gpu):
 def execute(session,t,identity,gpu):
     c=expand(t['config']);out=child(session,t['name']);require(not out.exists(),'Run output exists')
     (out/'output').mkdir(parents=True);proc=None
-    result={'status':'launcher_failed','recorded_frames':0,'heavy_diagnostics':False,
+    result={'status':'launcher_failed','recorded_frames':0,'heavy_diagnostics':bool(c['diagnostics']),
             'performance_certified':False,'physical_quality_certified':False,'timing_is_diagnostic':True,
             'timing_scope':'Shared Windows desktop diagnostic. Baseline lacks velocity/resolved/breakdown telemetry; no performance certification.'}
     try:
@@ -109,8 +116,9 @@ def execute(session,t,identity,gpu):
                 if status!='running':stop_owned(proc);break
                 time.sleep(max(0,min(.5,deadline-time.monotonic())))
             proc.wait(timeout=10)
-        result.update(status=('completed' if proc.returncode==0 else 'failed') if status=='running' else status,
-                      exit_code=proc.returncode,wall_seconds=time.monotonic()-start,gpu_samples=samples)
+        elapsed=time.monotonic()-start
+        result.update(status=final_status(status,proc.returncode,elapsed),
+                      exit_code=proc.returncode,wall_seconds=elapsed,gpu_samples=samples)
         if (out/'trace/frames.csv').exists():
             with (out/'trace/frames.csv').open() as stream:frames=list(csv.DictReader(stream))
             result.update(recorded_frames=len(frames),solver_seconds=sum(float(f['solver_ms']) for f in frames)/1000)

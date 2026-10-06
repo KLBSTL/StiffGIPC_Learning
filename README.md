@@ -2,6 +2,14 @@
 
 IPC + CUDA Graph research code for contact cloth and mixed ABD/FEM scenes.
 
+The latest local rounds completed 24 BVH interaction runs and two private
+same-state query probes. D1S1 remains the selected execution combination.
+The new optional leaf query order passed 12 analytic GPU cases, but its speed
+potential was too small on fixed cloth and negative on hanging contact cloth;
+raw order remains the default. The fresh 37-unit build passed 69 Python CPU
+checks and all six CTests. No new total Stiff speedup or quality certification
+is claimed. See the [round-by-round review](reports/local_rounds_20261006/ROUND_REVIEW.md).
+
 The first commit preserves the source, configurations, reports, build identities
 and input meshes before the 2026-10-06 cleanup. Recover old implementations with
 the tag [`archive/pre-cleanup-20261006`](https://github.com/KLBSTL/StiffGIPC_Learning/tree/archive/pre-cleanup-20261006).

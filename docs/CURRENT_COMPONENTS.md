@@ -1,11 +1,16 @@
 # 当前组件与保留边界
 
-2026-10-06；基于第三批清理后的本机源码。此表是代码能力清单，不表示完整
-质量或性能已认证。最新程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
+2026-10-06；基于第三批清理及后续有界优化的本机源码。此表是代码能力清单，不表示完整
+质量或性能已认证。冻结Step3程序已全新构建、封存源/对象/链接身份，CPU 停止测试、
 三项 GPU 夹具和退休入口检查通过，Step3完成9次短窗；Step4另完成6次悬挂
 短窗和2次受保护Nsight捕获。100/300帧、独立CCD与
 完整质量协议仍待验证。结果见
 `../reports/STATUS_20261006.md`，第二、三批变更见对应清理文档。
+
+最新多轮又完成24次BVH四臂、2次私有探针；新独立37单元程序`af0822e4…617c`，
+CPU69/CTest6/新查询fixture12项通过。两项性能分支均未达门槛，保持D1S1
+实验组合、raw安全查询及池默认关闭。当前成本与停止决定见
+[逐轮报告](../reports/local_rounds_20261006/ROUND_REVIEW.md)。
 
 ## 活动功能
 
@@ -22,6 +27,7 @@
 | 普通/swept BVH 独立缓存 | `GIPC_DISCRETE_BVH_REFIT`，默认 false，周期8 | `collision/discrete_bvh.h:17–22`；有历史收益但未取得2×同质量认证；见组件实测报告 |
 | swept barrier contact pool | `GIPC_CONTACT_POOL`，默认 false；validate 独立 | `collision/ipc_contact_pool.h:13–27`；保守机器 bounds 检查及不满足回退保留。Step1 四guard的typed/energy与质量结论分开，旧 `allow_next_round=false` 保留；见 `reports/autodl_step1/ROUND0_AND_GUARDS.md` |
 | diagonal update fusion | `GIPC_PCG_FUSED_DIAG_UPDATE`，默认关闭，MAS 不适用 | `pcg_graph_impl.inl`、`tests/diag_fused_update_tests.cu`；只支持相应全局块对角路径，不是本次删除的 MAS-dot |
+| 安全edge查询叶序候选 | `GIPC_EDGE_QUERY_ORDER=raw|leaf`，默认raw、IPC-only | `collision/edge_query_order.h/.inl`；复用完整ordinary face叶排列，12合成case通过；固定f57局部1.152×/悬挂f41局部0.834×，停止性能分支，不加入最快组合 |
 
 `tools/bench/plans.py:10–19` 的当前接触池实验使用 IPC＋legacy MAS＋Graph＋
 combined＋普通 BVH 缓存；不能把这里的显式配置说成所有程序默认都开启。
@@ -46,6 +52,9 @@ Step4三轮悬挂池增量中位1.05024×、净省4.783%，没有达到5%组件�
   它们保留诊断成本和恢复边界，正式计时不能混开。
 - 碰撞/能量同状态核对：`GIPC_AUDIT_REFIT`、`GIPC_AUDIT_ENERGY`、
   `GIPC_DISCRETE_BVH_VALIDATE`、`GIPC_CONTACT_POOL_VALIDATE`。
+- 新安全查询核对：`GIPC_EDGE_ORDER_FIXTURE`；选帧私有探针
+  `GIPC_EDGE_ORDER_PROBE_FRAMES/FILE`，2预热/7对交错；不写原生产scratch，
+  首查询全零的场景证据与合成命中fixture互补。探针整帧不能作速度组。
 - 帧状态/真实速度/物理能量与 checkpoint 观察仍在
   `app/gl_main.cu:1818–1932`。checkpoint 只是一种入口，未通过续算等价的
   混合状态不能作为算法因果对照，正式轨迹继续从零推进。

@@ -1,5 +1,19 @@
 # Windows 本机有限诊断
 
+2026-10-06新增的多轮入口为 `bvh_rounds.py`（24次四臂已完成）、
+只读 `bvh_review.py` 和 `edge_order_rounds.py`（最多两批选帧私有探针）。
+计划与逐步决定见 `docs/LOCAL_OPTIMIZATION_ROUNDS_20261006.md` 和
+`reports/local_rounds_20261006/`。它们复用下述资源门禁，不自动进入下一轮。
+共享runner新增最终elapsed判定，完成在最后轮询间隔内仍不得超过120秒；
+重型诊断标记由实际diagnostics决定，私有探针所在整帧不能作为速度组。
+
+BVH旧程序/原工具收据保留；修改native后必须重新fresh build与seal。
+`edge_query_order=raw|leaf`为独立默认raw配置；`edge_order_probe_frames`必须
+显式配`diagnostics=["edge_order"]`且仅含1/41/57的无重复、有预算子集。
+探针输出到单次目录 `edge_order_probe.jsonl`；raw生产选择不因观测改变。
+GPU合成fixture由CTest `edge_query_order_equivalence`调用，全部GPU串行。
+初始13次接触池系列的说明与命令保留如下，不当作新候选实验计划。
+
 只新增适配层，复用当前仓库冻结的 `tools/bench` 配置/指标和 `tools/diagnostic` 的 Stiff 配置能力验证，不导入历史项目 Python 代码。不会构建、清理、连接远端或自动进入下一轮。
 
 计划共 13 次：fixed59 为 off1/base1、base2/off2、on1/off3/base3 三轮；hang51 为 off/on、on/off、off/on 三轮。均从零开始，dt=.01、minimum=6、Newton/cumulative=.01、rho=1e-4，单次硬预算 120 秒。显存预算保持 min(75% 初始空闲、空闲−1536MiB)，至少 1024MiB；低于 768MiB、磁盘储备低于 1GiB、确证外来 GPU 计算进程或监控失败会停止本次自有进程。启动要求磁盘至少 4GiB。TCC 保持两个 GPU 负载样本不超过 5%、无外来计算 PID；WDDM 的 N/A/权限不足进程显存仅记为未知桌面或计算负载，不能假造外来 CUDA 证据。WDDM 可在较高桌面负载下作资源受保护诊断；另一 gipc 或实际正数计算显存的外来 PID 仍阻断。所有负载样本原样记录，不终止外来进程；全部时间仅诊断，不能认证独占负载或加速比。

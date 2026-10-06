@@ -15,6 +15,7 @@
 #include <map>
 #include "device_launch_parameters.h"
 #include <collision/mlbvh.cuh>
+#include <collision/edge_query_order.h>
 #include <stdio.h>
 #include <io/load_mesh.h>
 #include "cuda_tools/cuda_tools.h"
@@ -1782,6 +1783,8 @@ void SpecialKey(GLint key, GLint x, GLint y)
 int main(int argc, char** argv) try
 {
     gipc::reject_retired_components();
+    if(const char* output=std::getenv("GIPC_EDGE_ORDER_FIXTURE"))
+        return gipc::edge_query_order_fixture(output);
     if(const char* output=std::getenv("GIPC_CONTACT_POOL_FIXTURE"))
         return gipc::ipc_contact_pool_fixture(output);
     if(const char* output=std::getenv("GIPC_PCG_GUARD_FIXTURE"))

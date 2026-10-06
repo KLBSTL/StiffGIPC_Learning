@@ -14,6 +14,15 @@ def validate(run):
     if req['binary']!='active':
         return {'passed':False,'scope':'configuration only','reason':'Frozen program has no resolved config contract'}
     r=read(run/'resolved_config.json')
+    if 'edge_query_order' in r:
+        e=r['edge_query_order']
+        check('edge_query_order.requested',e['requested'],c.get('edge_query_order','raw'))
+        check('edge_query_order.effective',e['effective'],c.get('edge_query_order','raw'))
+        probe=c.get('edge_order_probe_frames')
+        check('edge_query_order.probe_frames',e['probe_frames'],[] if probe is None else list(map(int,probe.split(','))))
+        check('edge_query_order.probe_file',e['probe_file'],'' if probe is None else str(run/'edge_order_probe.jsonl'))
+    elif c.get('edge_query_order','raw')!='raw' or c.get('edge_order_probe_frames') is not None:
+        check('edge_query_order_supported',False,True)
     if 'ipc_stopping' in r:
         for key,target in [('ipc_termination','termination'),('ipc_cumulative_tol','cumulative_tol'),
             ('ipc_min_updates','min_updates'),('ipc_residual_rel_tol','residual_rel_tol'),

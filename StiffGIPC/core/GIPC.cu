@@ -14,6 +14,7 @@
 #include <collision/ACCD.cuh>
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
+#include <collision/edge_query_order.h>
 #include <fem/femEnergy.cuh>
 #include <collision/FrictionUtils.cuh>
 #include <cstdlib>
@@ -8276,6 +8277,151 @@ __global__ void _edgeTriIntersectionQuery(const int*     _btype,
     } while(stack < stack_ptr);
 }
 
+// Candidate clone: only query-face dispatch order and private probe outputs differ.
+template<bool LeafOrder,bool PerFace,bool SingleEdge>
+__global__ void _edgeTriIntersectionQueryOrdered(const int*     _btype,
+                                          const double3* _vertexes,
+                                          const uint2*   _edges,
+                                          const uint3*   _faces,
+                                          const AABB*    _edge_bvs,
+                                          const Node*    _edge_nodes,
+                                          int*           _isIntesect,
+                                          double         dHat,
+                                          int            number,
+                                          const Node*    _face_nodes,
+                                          int*           _face_hits)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+
+    uint32_t  stack[64];
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+
+    const uint32_t face_id = LeafOrder ? _face_nodes[idx+number-1].element_idx : idx;
+    if constexpr(PerFace) _face_hits[face_id]=0;
+    uint3 face = _faces[face_id];
+    //idx = idx + number - 1;
+
+
+    AABB _bv;
+
+    double3 _v = _vertexes[face.x];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _v = _vertexes[face.y];
+    _bv.combines(_v.x, _v.y, _v.z);
+    _v = _vertexes[face.z];
+    _bv.combines(_v.x, _v.y, _v.z);
+
+    //uint32_t self_eid = _edge_nodes[idx].element_idx;
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_edge_bvs[0].upper, _edge_bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = 0;  //sqrt(dHat);
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    if constexpr(SingleEdge)
+    {
+        // Explicit common boundary, same overlap and leaf predicates. No root
+        // children exist for a one-edge tree; never dereference those fields.
+        const uint32_t obj_idx=0;
+        if(_overlap(_bv,_edge_bvs[0],gapl)
+           && !(face.x==_edges[obj_idx].x || face.x==_edges[obj_idx].y
+             || face.y==_edges[obj_idx].x || face.y==_edges[obj_idx].y
+             || face.z==_edges[obj_idx].x || face.z==_edges[obj_idx].y))
+        {
+            if(!(_btype[face.x]>=2 && _btype[face.y]>=2 && _btype[face.z]>=2
+                 && _btype[_edges[obj_idx].x]>=2 && _btype[_edges[obj_idx].y]>=2))
+                if(segTriIntersect(_vertexes[_edges[obj_idx].x],_vertexes[_edges[obj_idx].y],
+                                   _vertexes[face.x],_vertexes[face.y],_vertexes[face.z]))
+                {
+                    *_isIntesect=-1;
+                    if constexpr(PerFace) _face_hits[face_id]=1;
+                }
+        }
+        return;
+    }
+    unsigned int num_found = 0;
+    do
+    {
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _edge_nodes[node_id].left_idx;
+        const uint32_t R_idx   = _edge_nodes[node_id].right_idx;
+
+        if(_overlap(_bv, _edge_bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _edge_nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(!(face.x == _edges[obj_idx].x || face.x == _edges[obj_idx].y
+                     || face.y == _edges[obj_idx].x || face.y == _edges[obj_idx].y
+                     || face.z == _edges[obj_idx].x || face.z == _edges[obj_idx].y))
+                {
+                    if(!(_btype[face.x] >= 2 && _btype[face.y] >= 2
+                         && _btype[face.z] >= 2 && _btype[_edges[obj_idx].x] >= 2
+                         && _btype[_edges[obj_idx].y] >= 2))
+                        if(segTriIntersect(_vertexes[_edges[obj_idx].x],
+                                           _vertexes[_edges[obj_idx].y],
+                                           _vertexes[face.x],
+                                           _vertexes[face.y],
+                                           _vertexes[face.z]))
+                        {
+                            //atomicAdd(_isIntesect, -1);
+                            *_isIntesect = -1;
+                            if constexpr(PerFace) _face_hits[face_id]=1;
+                            //printf("tri: %d %d %d,  edge: %d  %d\n",
+                            //       face.x,
+                            //       face.y,
+                            //       face.z,
+                            //       _edges[obj_idx].x,
+                            //       _edges[obj_idx].y);
+                            return;
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+            }
+        }
+        if(_overlap(_bv, _edge_bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _edge_nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if(!(face.x == _edges[obj_idx].x || face.x == _edges[obj_idx].y
+                     || face.y == _edges[obj_idx].x || face.y == _edges[obj_idx].y
+                     || face.z == _edges[obj_idx].x || face.z == _edges[obj_idx].y))
+                {
+                    if(!(_btype[face.x] >= 2 && _btype[face.y] >= 2
+                         && _btype[face.z] >= 2 && _btype[_edges[obj_idx].x] >= 2
+                         && _btype[_edges[obj_idx].y] >= 2))
+                        if(segTriIntersect(_vertexes[_edges[obj_idx].x],
+                                           _vertexes[_edges[obj_idx].y],
+                                           _vertexes[face.x],
+                                           _vertexes[face.y],
+                                           _vertexes[face.z]))
+                        {
+                            //atomicAdd(_isIntesect, -1);
+                            *_isIntesect = -1;
+                            if constexpr(PerFace) _face_hits[face_id]=1;
+                            //printf("tri: %d %d %d,  edge: %d  %d\n",
+                            //       face.x,
+                            //       face.y,
+                            //       face.z,
+                            //       _edges[obj_idx].x,
+                            //       _edges[obj_idx].y);
+                            return;
+                        }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+            }
+        }
+    } while(stack < stack_ptr);
+}
+
 __global__ void _calFrictionLastH_gd(const double3* _vertexes,
                                      const double*  g_offset,
                                      const double3* g_normal,
@@ -10876,9 +11022,17 @@ bool edgeTriIntersectionQuery(const int*     _btype,
     return false;
 }
 
+#include <collision/edge_query_order.inl>
+
 bool GIPC::checkEdgeTriIntersectionIfAny(device_TetraData& TetMesh)
 {
+    const auto& order=gipc::edge_query_order_options();
+    order.require_ipc(!use_toi);
     _scalar_scratch.resize_discard(1);
+    if(!use_toi && (order.leaf || !order.probe_frames.empty()
+                    || bvh_e.edge_number<2))
+        return edge_order_query(bvh_f,bvh_e,TetMesh.vertexes,_scalar_scratch.data(),
+                                dHat,total_Frames+1,order);
     return edgeTriIntersectionQuery(bvh_e._btype,
                                     TetMesh.vertexes,
                                     bvh_e._edges,

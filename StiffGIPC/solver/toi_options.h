@@ -6,6 +6,7 @@
 #include <solver/ipc_options.h>
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
+#include <collision/edge_query_order.h>
 #include <climits>
 #include <cmath>
 #include <cstdlib>
@@ -198,6 +199,7 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     result["ipc_stopping"]=IpcOptions::read(newton_tol).json();
     result["requested_preconditioner"]=std::getenv("GIPC_PCG_PRECONDITIONER")?Json(std::getenv("GIPC_PCG_PRECONDITIONER")):Json(nullptr);
     result["execution_observed_per_linear_system"]=true;
+    result["edge_query_order"]=edge_query_order_options().json(std::string(backend)=="ipc");
     result["acceleration_features"]=Json::object();
     for(const char* name:{"GIPC_CCD_BVH_REFIT","GIPC_BATCHED_ENERGY","GIPC_ENERGY_REUSE",
         "GIPC_MAS_STATIC_TOPOLOGY"})

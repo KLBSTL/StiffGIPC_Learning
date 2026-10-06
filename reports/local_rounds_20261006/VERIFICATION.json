@@ -1,0 +1,70 @@
+{
+  "schema": "local_optimization_rounds_verification.v1",
+  "native_build": {
+    "exe_sha256": "af0822e414e9615bb549623a5f40f1cfec39db5e3774dc041e7685ba3fd0617c",
+    "source_digest": "041cd0f5b885d8dbee6b13ee7be48f7d20f37eca297bee0fef921a31028d254a",
+    "units": 37,
+    "cuda_units": 33,
+    "cpp_units": 4,
+    "unique_objects": 37,
+    "build_dir": "build/local_edge_order_20261006b",
+    "seal_sha256": "08d2a6185fc39b247542923d5b6ceae0338b205732a536f1f024d7854c6e0f2c",
+    "seal_verified_after_probes": true,
+    "compiler": "CUDA13.0.88/MSVC19.44/SM86",
+    "initial_configure_failure": "Windows SDK access denied by sandbox; original log retained in distinct build directory"
+  },
+  "cpu": {
+    "passed": 69,
+    "logs": [
+      {
+        "path": "runs/local_rounds_cpu_local_contracts_final.log",
+        "tests": 8,
+        "sha256": "7429e459de82397c1f6466c206d29cfe39a6496ba7ec8d16cb966fea15141b2e"
+      },
+      {
+        "path": "runs/local_rounds_cpu_remaining_final.log",
+        "tests": 53,
+        "sha256": "5ce2363049f5986b1d1bf5be17fb6bfcdbbf7a01554bc5a56453da8d3a43ad81"
+      },
+      {
+        "path": "runs/local_rounds_cpu_bench_final.log",
+        "tests": 8,
+        "sha256": "bfe67b014f08eaf9be3f6b6d3e441382b621604572fc5dbb4cb55794b934fef8"
+      }
+    ],
+    "commands": [
+      "tools/local: python contracts_test.py -q",
+      "tools/local: python -m unittest fixture_windows_contracts_test cpu_fixed_reference_test profiler_windows_contracts_test analyze_profile_contracts_test bvh_rounds_test edge_order_test -q",
+      "tools/bench: python -m unittest contracts_test -q"
+    ],
+    "discovery_failure_preserved": "Same contracts_test basename in local and bench; explicit module/script invocation used, no solver failure"
+  },
+  "ctest": {
+    "passed": 6,
+    "command": "ctest --test-dir build/local_edge_order_20261006b -C Release --output-on-failure --timeout 120 --parallel 1",
+    "log_sha256": "c9cb68d5a3221564499932aa044448e986e17a206a9335436e783fcb28c08ca6"
+  },
+  "edge_fixture_cases": 12,
+  "completed_from_zero_runs": {
+    "bvh_four_arm": 24,
+    "private_probes": 2
+  },
+  "scene_frames": {
+    "fixed": 59,
+    "hang": 51
+  },
+  "round_results_sha256": {
+    "BVH_RESULTS.json": "b5c9156d93c1d8678e2f2a7312bd90585c2e4bfbffc8190c1aa283fe7fe7755a",
+    "EDGE_RESULTS.json": "d81250b0194dc4d712d8c8d86b313fe4a7eb2b83bc0e76b8cb8ac6dc5c1d9828"
+  },
+  "normalized_original_edge_query_text": {
+    "equal": true,
+    "sha256": "44a56b7709baccfeb7bd3253c7300f98a15f7a5c48e260c49a28718ca04420bc",
+    "reference_commit": "195c9c8"
+  },
+  "old_guard_changed": false,
+  "quality_certified": false,
+  "performance_certified": false,
+  "autodl_used": false,
+  "long_or_production_on_off_runs": false
+}

@@ -1,5 +1,19 @@
 # 执行状态（2026-10-06 更新）
 
+## 最新：本机有限多轮优化完成，未推广新组合
+
+先冻结计划，再完成两布料D×S四臂各三轮，共24次完整短窗；三个替代组合
+相对当前D1S1的配对中位比均<1，保留D1S1、停止重建策略分支。新增独立
+默认raw的安全edge查询叶序模块、私有逐面探针和12-case GPU fixture。
+新37单元构建SHA `af0822e4…617c`，Python CPU69项/CTest6项/新fixture12项
+通过；两次59/51帧从零探针共71596逐面核对一致。固定f57局部1.152×但
+预计整帧潜力不足1%；悬挂f41局部0.834×、七对全慢，停止性能分支。
+
+修复共享runner最终轮询可遗漏120秒预算的问题，旧收据/材料门槛不修改。
+没有新Stiff总比、生产leaf on/off或100/300帧、AutoDL运行，2×仍未达到或
+认证。详细每轮依据、阶段成本、失败决定与下一批Graph边界验证建议见
+[本轮报告](reports/local_rounds_20261006/ROUND_REVIEW.md)。以下为历史记录。
+
 ## Swept候选池完成实现与守卫，速度筛选因资源保护中止（最新）
 
 实现独立默认关闭contact_pool：只替普通VF/EE query，保留普通BVH/ground/FullCCD/isIntersected、legacy/.01/min6/rho1e-4与材料。generation内捕获原primitive ID/方向/重数，每trial检查内容、映射、实际点/leaf bounds包含；失败回退。新faedd程序37单元/11对象构建核验、18配置契约、分析器自测和9GPU组通过，新fixture53条case含真实ABD 2→4反例、容量重试及poison。

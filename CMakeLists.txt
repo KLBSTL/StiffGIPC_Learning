@@ -169,6 +169,12 @@ add_test(NAME contact_pool_equivalence COMMAND ${CMAKE_COMMAND} -E env
     "GIPC_CONTACT_POOL=1" "GIPC_CONTACT_POOL_VALIDATE=1"
     "GIPC_CONTACT_POOL_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/contact_pool_fixture.json" $<TARGET_FILE:gipc>)
 
+# Standalone order-only query fixture; previous test source files are unchanged.
+add_test(NAME edge_query_order_equivalence COMMAND ${CMAKE_COMMAND} -E env
+    "GIPC_DISCRETE_BVH_REFIT=0"
+    "GIPC_EDGE_ORDER_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/edge_order_fixture.json" $<TARGET_FILE:gipc>)
+set_tests_properties(edge_query_order_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
+
 # Ensure external C libraries use the same dynamic runtime as the executable
 # to avoid LIBCMT/MSVCRT conflicts (MSVC only).
 if(MSVC)

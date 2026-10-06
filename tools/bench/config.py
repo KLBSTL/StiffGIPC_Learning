@@ -33,6 +33,7 @@ DEFAULT = {
     'bvh_eligibility':False, 'bvh_eligibility_validate':False,
     'bounded_ccd':False, 'bounded_ccd_validate':False,
     'contact_pool':False, 'contact_pool_validate':False,
+    'edge_query_order':'raw', 'edge_order_probe_frames':None,
 }
 PRESETS = {
     'base': {}, 'host': {}, 'graph': {'execution': 'conditional_graph'},
@@ -66,6 +67,19 @@ def expand(data):
     if unknown:
         raise ValueError('Unknown configuration keys: ' + str(unknown))
     c = DEFAULT | PRESETS[preset] | data
+    if c['edge_query_order'] not in ('raw','leaf'):
+        raise ValueError('Edge query order must be raw or leaf')
+    probe=c['edge_order_probe_frames']
+    if probe is not None:
+        parts=probe.split(',') if isinstance(probe,str) else []
+        if not parts or any(p not in ('1','41','57') for p in parts) or len(set(parts))!=len(parts):
+            raise ValueError('Edge probe frames must be a unique subset of 1,41,57')
+        if any(int(p)>c['steps'] for p in parts) or 'edge_order' not in c['diagnostics']:
+            raise ValueError('Edge probe requires selected frames in budget and edge_order diagnostic')
+    elif 'edge_order' in c['diagnostics']:
+        raise ValueError('Edge order diagnostic requires explicit probe frames')
+    if c['backend']!='ipc' and (c['edge_query_order']!='raw' or probe is not None):
+        raise ValueError('Edge query order and probe are IPC-only')
     for key in ('mas_fused_dot','fixed_mas_dot_study','discrete_bvh_refit','discrete_bvh_validate',
                 'spmv_fused_quadratic','fixed_spmv_quadratic_study','bvh_eligibility','bvh_eligibility_validate',
                 'bounded_ccd','bounded_ccd_validate',
@@ -132,7 +146,7 @@ def expand(data):
         raise ValueError('Warp restriction requires stable Cholesky MAS')
     if c['mas_factor_action'] not in ('triangular','factor_inverse') or (c['mas_factor_action']=='factor_inverse' and c['mas']!='cholesky'):
         raise ValueError('Factor inverse action requires stable Cholesky MAS')
-    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe'}:
+    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe','edge_order'}:
         raise ValueError('Unknown diagnostic')
     if not isinstance(c['cost_events'],bool) or (not c['cost_events'] and 'cost' not in c['diagnostics']):
         raise ValueError('CPU/NVTX-only cost mode requires cost diagnostics and a boolean flag')
@@ -210,6 +224,8 @@ def matches_requested(saved, requested):
             elif key=='mu_coordinates':expected.pop(key)
     if 'mu_coordinates' not in saved and requested.get('mu_coordinates')=='generalized':
         expected.pop('mu_coordinates')
+    for key in ('edge_query_order','edge_order_probe_frames'):
+        if key not in saved and expected[key]==DEFAULT[key]:expected.pop(key)
     return saved==expected
 
 def environment(c, out):
@@ -228,6 +244,7 @@ def environment(c, out):
         'GIPC_BOUNDED_CCD_VALIDATE':str(int(c['bounded_ccd_validate'])),
         'GIPC_CONTACT_POOL':str(int(c['contact_pool'])),
         'GIPC_CONTACT_POOL_VALIDATE':str(int(c['contact_pool_validate'])),
+        'GIPC_EDGE_QUERY_ORDER':c['edge_query_order'],
         'GIPC_NEWTON_TOL': str(c['ipc_newton_tol']), 'GIPC_PCG_TOL': str(c['pcg_rho_tol']),
         'GIPC_IPC_TERMINATION':c['ipc_termination'], 'GIPC_IPC_CUMULATIVE_TOL':str(c['ipc_cumulative_tol']),
         'GIPC_IPC_MIN_UPDATES':str(c['ipc_min_updates']), 'GIPC_IPC_RESIDUAL_REL_TOL':str(c['ipc_residual_rel_tol']),
@@ -257,6 +274,9 @@ def environment(c, out):
         'GIPC_CCD_BVH_REFIT': str(int(c['refit'])), 'GIPC_BATCHED_ENERGY': str(int(c['batch'])),
         'GIPC_ENERGY_REUSE': str(int(c['reuse'])),
     })
+    if c['edge_order_probe_frames'] is not None:
+        env.update(GIPC_EDGE_ORDER_PROBE_FRAMES=c['edge_order_probe_frames'],
+                   GIPC_EDGE_ORDER_PROBE_FILE=str(out/'edge_order_probe.jsonl'))
     if 'cost' in c['diagnostics']:
         env.update(GIPC_COST_TRACE=str(out / 'cost.jsonl'), GIPC_COST_FRAMES=c['cost_frames'],
                    GIPC_COST_OPERATOR_PROBE=str(int('operator_probe' in c['diagnostics'])),
