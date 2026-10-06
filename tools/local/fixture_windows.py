@@ -238,7 +238,8 @@ def report_evidence(kind, path):
 @contextmanager
 def gpu_lock():
     import msvcrt
-    path = ROOT / 'runs/.gpu.lock'
+    # Share the same byte lock with windows_runner and future profiling tasks.
+    path = ROOT / 'runs/.local_gpu.lock'
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open('a+b') as stream:
         if stream.tell() == 0:

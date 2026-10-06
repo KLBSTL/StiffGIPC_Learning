@@ -51,12 +51,14 @@ and [`docs/CURRENT_COMPONENTS.md`](docs/CURRENT_COMPONENTS.md). Windows builds
 assign independent object names to every source, including the two PCG sources
 whose filenames differ only in case. The latest Step3 Windows build has a sealed
 source/object/link identity, passing CPU stopping tests, three GPU fixtures and
-20 rejected retired-entry checks. Its full trajectory regression remains pending.
-The preceding Step2 program completed two fixed-bunny cloth pairs with diagnostic
-ratios of 1.34x and 1.65x; existing material bounds did not all pass, and subsequent
-runs stopped at the unchanged GPU memory guard. These are not certified speedups.
+20 rejected retired-entry checks. Subsequent Step3 runs completed three fixed-bunny
+cloth pairs and one contact-pool pair in each cloth scene. Fixed-bunny diagnostic
+Stiff/current ratios have a median of 1.475x; pool off/on ratios are 1.071x (fixed)
+and 1.137x (hanging). Full quality/100-frame regression remains pending. Existing
+material bounds did not all pass, and the next hanging run stopped at the unchanged
+GPU memory guard. These are not certified speedups.
 See [`reports/STATUS_20261006.md`](reports/STATUS_20261006.md) for the current result
-and [`reports/local_step2/ROUND_REVIEW.md`](reports/local_step2/ROUND_REVIEW.md)
+and [`reports/local_step3/ROUND_REVIEW.md`](reports/local_step3/ROUND_REVIEW.md)
 for the per-round analysis. The 4090 evidence remains a separate program identity.
 
 Upstream code retains its original licenses and author attribution.

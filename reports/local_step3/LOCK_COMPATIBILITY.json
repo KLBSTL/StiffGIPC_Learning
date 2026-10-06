@@ -1,0 +1,32 @@
+{
+  "schema": "windows_gpu_lock_compatibility.v1",
+  "date": "2026-10-06",
+  "change": "Fixture now shares runs/.local_gpu.lock with scene rounds; no native solver, benchmark plan, budget or protocol edits.",
+  "old_fixture_path": "runs/.gpu.lock",
+  "canonical_path": "runs/.local_gpu.lock",
+  "fixture_source": {
+    "path": "tools/local/fixture_windows.py",
+    "sha256": "3010565cc1d729c47d6b92313c8666f9f10e1ea47a8d62c749b09d406f43a9ab"
+  },
+  "test_source": {
+    "path": "tools/local/fixture_windows_contracts_test.py",
+    "sha256": "da4cec839bd91779a7cb393da567d78298e13c50c1b9857c71744a3812b8de8a"
+  },
+  "round_runner_source": {
+    "path": "tools/local/windows_runner.py",
+    "sha256": "e3536a0bce1e507671ba88794548c15a316051527f227b1156b9127fba654f7e"
+  },
+  "command": "E:/Anaconda/envs/DL/python.exe -X utf8 tools/local/fixture_windows_contracts_test.py -v",
+  "tests_passed": 11,
+  "tests_failed": 0,
+  "actual_windows_byte_lock_covered": true,
+  "covered": [
+    "round-held lock rejects fixture acquisition",
+    "fixture-held lock rejects round acquisition",
+    "each wrapper releases shared byte for later acquisition"
+  ],
+  "native_and_frozen_seal_still_verified": true,
+  "performance_claim": false,
+  "historical_failure_attribution": "All GPU launches were serial under root control. No evidence the earlier lock mismatch caused any resource failure.",
+  "prior_fixture_verification_unchanged": "VERIFICATION.json records the earlier finite GPU fixtures and CPU tests before this tooling patch; it is retained without rewriting its tool hashes."
+}

@@ -17,6 +17,24 @@ def empty_processes(*args, **kwargs):
 
 
 class Contracts(unittest.TestCase):
+    @unittest.skipUnless(f.os.name == 'nt', 'Requires actual Windows byte locking')
+    def test_fixture_and_round_share_actual_gpu_lock(self):
+        import windows_runner as rounds
+        with tempfile.TemporaryDirectory() as folder, patch.object(f, 'ROOT', Path(folder)):
+            with rounds.gpu_lock(Path(folder)):
+                with self.assertRaises(OSError):
+                    with f.gpu_lock():
+                        self.fail('Fixture acquired a lock while a round held it')
+            with f.gpu_lock():
+                with self.assertRaises(OSError):
+                    with rounds.gpu_lock(Path(folder)):
+                        self.fail('Round acquired a lock while a fixture held it')
+            # Both wrappers must release the same byte after leaving the context.
+            with rounds.gpu_lock(Path(folder)):
+                pass
+            with f.gpu_lock():
+                pass
+
     def test_clean_environment_and_native_contracts(self):
         with patch.dict(f.os.environ, {'GIPC_STEPS': '999', 'gipc_retired': '1', 'SAFE': 'yes'}, clear=True):
             env, path = f.fixture_environment('contact_pool', Path('new'))

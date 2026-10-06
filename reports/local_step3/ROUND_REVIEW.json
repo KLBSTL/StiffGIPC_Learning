@@ -1,0 +1,675 @@
+{
+  "schema": "local_step3_round_review.v1",
+  "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+  "session": "runs/local_step3_20261006",
+  "rounds": [
+    {
+      "stage": "fixed_r1",
+      "diagnosis_complete": true,
+      "analysis_sha256": "762e40be2776052cd10fe75fd443c427960abe527afa0b5c4d4c76ae41edba39",
+      "skipped": [],
+      "input_pairs_equal": true,
+      "quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "stage": "fixed_r2",
+      "diagnosis_complete": true,
+      "analysis_sha256": "a5ee29724a6dd475b8186ad48ddc8afe438596650836cab8e77cbf628ecd53f9",
+      "skipped": [],
+      "input_pairs_equal": true,
+      "quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "stage": "fixed_r3",
+      "diagnosis_complete": true,
+      "analysis_sha256": "7de073130e12e03011ab86474845e67e0886aa5ec8bda72aca76347aa1168aae",
+      "skipped": [],
+      "input_pairs_equal": true,
+      "quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "stage": "hang_r1",
+      "diagnosis_complete": true,
+      "analysis_sha256": "105fc798194acc9625ac98ae8c028da5bf7b4aab2771f55da136d1369221128c",
+      "skipped": [],
+      "input_pairs_equal": true,
+      "quality_certified": false,
+      "performance_certified": false
+    },
+    {
+      "stage": "hang_r2",
+      "diagnosis_complete": false,
+      "analysis_sha256": "130f52b9b028a3328f9cac461f7713a5cb8778a384df489268c9a94681ce6d04",
+      "skipped": [
+        "hang_off_r2"
+      ],
+      "input_pairs_equal": true,
+      "quality_certified": false,
+      "performance_certified": false
+    }
+  ],
+  "runs": [
+    {
+      "stage": "fixed_r1",
+      "name": "fixed_off_r1",
+      "variant": "off",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": false,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.0357598673040858,
+        "p99_stretch": 1.0136405318283572,
+        "fixed_drift_m": 6.206335383118183e-17
+      },
+      "requested_sha256": "90fa9caa446ba904182598fcbcfbb36564fc8ddef4a7349182bedfa889ea9b5c",
+      "result_sha256": "596b0ace45b496d53752d5a0a22266643d74b2dd95ad0ee025239d56054696c6",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3725.0,
+      "memory_budget_mib": 2189.0,
+      "min_observed_free_mib": 1608.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 9538.4428,
+      "directions": 327,
+      "pcg_iterations": 19324,
+      "phase_ms": {
+        "assembly": 1339.4603551626205,
+        "pcg": 4293.703325033188,
+        "ccd": 930.8943988084793,
+        "line_search": 2620.6218247413635,
+        "state_update": 40.20652776584029
+      },
+      "phase_percent": {
+        "assembly": 14.04275711715355,
+        "pcg": 45.01472006555606,
+        "ccd": 9.75939593419252,
+        "line_search": 27.474315039571902,
+        "state_update": 0.4215208772425651
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1772,
+      "unclassified_ms": 313.5563684885092,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 0,
+          "reused_queries": 0,
+          "old_queries": 0,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 0,
+          "capture_passes": 0,
+          "generations": 0,
+          "pool_pairs": 0,
+          "vf_pairs": 0,
+          "ee_pairs": 0
+        },
+        "fallback_reasons": {},
+        "pool_bytes_peak": 0,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "fixed_r1",
+      "name": "fixed_base_r1",
+      "variant": "base",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": true,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.0357450517911706,
+        "p99_stretch": 1.0135408768607659,
+        "fixed_drift_m": 3.925231146709438e-17
+      },
+      "requested_sha256": "84528ce9f06240b44c9afe3edd972995d0c54f0deffeb74338b0bc87c42ae54a",
+      "result_sha256": "3be6fe6fc1fa60db835cacd76f1b500f7176658a7a65c9dcc78ddb0f3d888553",
+      "program_sha256": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205",
+      "initial_free_mib": 3749.0,
+      "memory_budget_mib": 2213.0,
+      "min_observed_free_mib": 1620.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 14960.2536,
+      "directions": 327,
+      "pcg_iterations": 19416,
+      "phase_ms": {
+        "assembly": 1438.8397431373596,
+        "pcg": 8348.950144290924,
+        "ccd": 1342.0014081001282,
+        "line_search": 3448.651198387146,
+        "state_update": 46.866016106680036
+      },
+      "phase_percent": {
+        "assembly": 9.617749682648158,
+        "pcg": 55.80754422699709,
+        "ccd": 8.970445581885912,
+        "line_search": 23.05209049656181,
+        "state_update": 0.3132701982182978
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1764,
+      "unclassified_ms": 334.9450899777621
+    },
+    {
+      "stage": "fixed_r2",
+      "name": "fixed_base_r2",
+      "variant": "base",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": false,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.0356963585101757,
+        "p99_stretch": 1.0136285333470803,
+        "fixed_drift_m": 3.925231146709438e-17
+      },
+      "requested_sha256": "a96d134e2d1eefd468afb30c01c98fb8f9cdf941b02ec1c3f9e5be27dd8b2b89",
+      "result_sha256": "1a5f8a44cd74de01d4ca916ef63ebdba3f9eebf63d950f4a63fc1608f3776c0e",
+      "program_sha256": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205",
+      "initial_free_mib": 3734.0,
+      "memory_budget_mib": 2198.0,
+      "min_observed_free_mib": 1629.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 14821.534,
+      "directions": 331,
+      "pcg_iterations": 19520,
+      "phase_ms": {
+        "assembly": 1425.733667254448,
+        "pcg": 8259.927424192429,
+        "ccd": 1329.8997507095337,
+        "line_search": 3441.165913105011,
+        "state_update": 32.64419216662645
+      },
+      "phase_percent": {
+        "assembly": 9.619339450656376,
+        "pcg": 55.729234397683996,
+        "ccd": 8.972753769680883,
+        "line_search": 23.217339805076932,
+        "state_update": 0.22024840456208145
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 2063,
+      "unclassified_ms": 332.163052571952
+    },
+    {
+      "stage": "fixed_r2",
+      "name": "fixed_off_r2",
+      "variant": "off",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": false,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.0374345732771653,
+        "p99_stretch": 1.0135084108356378,
+        "fixed_drift_m": 3.1031676915590914e-17
+      },
+      "requested_sha256": "068e3c82c8c3d4231b8857af09df8ad304ef5b180d9454b0afeafbbd7906ec2b",
+      "result_sha256": "faf2b6fc90d53e19c807f37ddc8bb1a87422cf955efc1a3dad7c9e9440b1b12c",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3735.0,
+      "memory_budget_mib": 2199.0,
+      "min_observed_free_mib": 1609.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 10131.0887,
+      "directions": 330,
+      "pcg_iterations": 19700,
+      "phase_ms": {
+        "assembly": 1402.6309126615524,
+        "pcg": 4617.060920238495,
+        "ccd": 956.670144200325,
+        "line_search": 2786.299869298935,
+        "state_update": 43.90412793494761
+      },
+      "phase_percent": {
+        "assembly": 13.844819191658567,
+        "pcg": 45.57319609923556,
+        "ccd": 9.44291549041837,
+        "line_search": 27.502472358167537,
+        "state_update": 0.4333604140189554
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1809,
+      "unclassified_ms": 324.5227256657454,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 0,
+          "reused_queries": 0,
+          "old_queries": 0,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 0,
+          "capture_passes": 0,
+          "generations": 0,
+          "pool_pairs": 0,
+          "vf_pairs": 0,
+          "ee_pairs": 0
+        },
+        "fallback_reasons": {},
+        "pool_bytes_peak": 0,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "fixed_r3",
+      "name": "fixed_on_r1",
+      "variant": "on",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": false,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.037402562554849,
+        "p99_stretch": 1.013531374477204,
+        "fixed_drift_m": 5.721958498152797e-17
+      },
+      "requested_sha256": "ce69f90e700d800a49e39c2cb8eb947ef0b7476812028597f9efbb173a264fa0",
+      "result_sha256": "a7c26e683e4a8c58213c9524a637824ffbea4b0fca6b8511a20c831565aa9d48",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3734.0,
+      "memory_budget_mib": 2198.0,
+      "min_observed_free_mib": 1548.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 9471.5044,
+      "directions": 324,
+      "pcg_iterations": 19066,
+      "phase_ms": {
+        "assembly": 1496.9863049983978,
+        "pcg": 4864.851977825165,
+        "ccd": 1199.1951051950455,
+        "line_search": 1548.7840980291367,
+        "state_update": 29.151391971856356
+      },
+      "phase_percent": {
+        "assembly": 15.80515873485101,
+        "pcg": 51.36303349893566,
+        "ccd": 12.661083757666264,
+        "line_search": 16.352039049141304,
+        "state_update": 0.30777995491250953
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1660,
+      "unclassified_ms": 332.5355219803987,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 324,
+          "reused_queries": 318,
+          "old_queries": 6,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 648,
+          "capture_passes": 324,
+          "generations": 324,
+          "pool_pairs": 14997170,
+          "vf_pairs": 3289972,
+          "ee_pairs": 11707198
+        },
+        "fallback_reasons": {
+          "bounds_not_contained": 6
+        },
+        "pool_bytes_peak": 40720112,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "fixed_r3",
+      "name": "fixed_off_r3",
+      "variant": "off",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": true,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.035769520365635,
+        "p99_stretch": 1.013290338526928,
+        "fixed_drift_m": 5.721958498152797e-17
+      },
+      "requested_sha256": "807fc5802b3b7292c2a9ce3891c4f39265b6cc2a152ae86988126e956a99f8ed",
+      "result_sha256": "3260cf4aa1042e26c625548a618c2e6414abe4fd139103c4c28a534e1ff55e8e",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3726.0,
+      "memory_budget_mib": 2190.0,
+      "min_observed_free_mib": 1609.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 10147.2227,
+      "directions": 328,
+      "pcg_iterations": 19227,
+      "phase_ms": {
+        "assembly": 1391.3424903154373,
+        "pcg": 4568.675884246826,
+        "ccd": 1033.7984309196472,
+        "line_search": 2766.0062379837036,
+        "state_update": 39.44460807554424
+      },
+      "phase_percent": {
+        "assembly": 13.711559620303172,
+        "pcg": 45.02390476013527,
+        "ccd": 10.1879939120647,
+        "line_search": 27.258751677773894,
+        "state_update": 0.3887231929535186
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1722,
+      "unclassified_ms": 347.9550484588417,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 0,
+          "reused_queries": 0,
+          "old_queries": 0,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 0,
+          "capture_passes": 0,
+          "generations": 0,
+          "pool_pairs": 0,
+          "vf_pairs": 0,
+          "ee_pairs": 0
+        },
+        "fallback_reasons": {},
+        "pool_bytes_peak": 0,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "fixed_r3",
+      "name": "fixed_base_r3",
+      "variant": "base",
+      "status": "completed",
+      "frames": 59,
+      "hard_checks_passed": true,
+      "within_original_bounds": true,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.0355976599353007,
+        "p99_stretch": 1.0133722031852066,
+        "fixed_drift_m": 5.721958498152797e-17
+      },
+      "requested_sha256": "171b691264037dd10f5dd817e4a7166b0c7b35da688981038e806b3fae53bebc",
+      "result_sha256": "cd886fbd69b3b62978368457759163f2af6c51097d3e7633114b06ace537bebe",
+      "program_sha256": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205",
+      "initial_free_mib": 3734.0,
+      "memory_budget_mib": 2198.0,
+      "min_observed_free_mib": 1620.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 14965.3516,
+      "directions": 322,
+      "pcg_iterations": 18985,
+      "phase_ms": {
+        "assembly": 1415.3171217441559,
+        "pcg": 8378.58830857277,
+        "ccd": 1344.3683483600616,
+        "line_search": 3460.5587220191956,
+        "state_update": 35.8887998405844
+      },
+      "phase_percent": {
+        "assembly": 9.45729281592125,
+        "pcg": 55.986578414721436,
+        "ccd": 8.983205903161418,
+        "line_search": 23.12380500314604,
+        "state_update": 0.23981260714639271
+      },
+      "newton_exits": {
+        "movement": 22,
+        "cumulative_toi": 37
+      },
+      "native_self_pair_peak": 1787,
+      "unclassified_ms": 330.6302994632333
+    },
+    {
+      "stage": "hang_r1",
+      "name": "hang_off_r1",
+      "variant": "off",
+      "status": "completed",
+      "frames": 51,
+      "hard_checks_passed": true,
+      "within_original_bounds": true,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.128876212815188,
+        "p99_stretch": 1.032409337327611,
+        "fixed_drift_m": 0.0
+      },
+      "requested_sha256": "f5eacc27afc39388850ce55ec8c3b65692d7dd44cc9a5c37761ac3acaaeea4e6",
+      "result_sha256": "80f859a515fda0b2ed21ef3db04397359a7354ba66f81706cfb6e12e437db81b",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3524.0,
+      "memory_budget_mib": 1988.0,
+      "min_observed_free_mib": 1619.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 3168.7754,
+      "directions": 297,
+      "pcg_iterations": 9103,
+      "phase_ms": {
+        "assembly": 403.0830401778221,
+        "pcg": 1498.3997107744217,
+        "ccd": 382.2589105665684,
+        "line_search": 720.1250238418579,
+        "state_update": 32.97622393257916
+      },
+      "phase_percent": {
+        "assembly": 12.720467350820197,
+        "pcg": 47.28639684511631,
+        "ccd": 12.063300875365556,
+        "line_search": 22.725656852860507,
+        "state_update": 1.040661447087072
+      },
+      "newton_exits": {
+        "movement": 21,
+        "cumulative_toi": 30
+      },
+      "native_self_pair_peak": 7411,
+      "unclassified_ms": 131.93249070675074,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 0,
+          "reused_queries": 0,
+          "old_queries": 0,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 0,
+          "capture_passes": 0,
+          "generations": 0,
+          "pool_pairs": 0,
+          "vf_pairs": 0,
+          "ee_pairs": 0
+        },
+        "fallback_reasons": {},
+        "pool_bytes_peak": 0,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "hang_r1",
+      "name": "hang_on_r1",
+      "variant": "on",
+      "status": "completed",
+      "frames": 51,
+      "hard_checks_passed": true,
+      "within_original_bounds": true,
+      "failures": [],
+      "material": {
+        "max_stretch": 1.1288762120110114,
+        "p99_stretch": 1.0324093373344445,
+        "fixed_drift_m": 0.0
+      },
+      "requested_sha256": "f57fceb3fd0358bf32a58d92fa3ff333ce6054fc4b816abfcdf22eda892a00a3",
+      "result_sha256": "dfa2e451c12867c01ada794f80e6eb6cfc3a661a851adbee6bfe7c5435388f5a",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3449.0,
+      "memory_budget_mib": 1913.0,
+      "min_observed_free_mib": 1548.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification.",
+      "solver_ms": 2786.7039,
+      "directions": 297,
+      "pcg_iterations": 9104,
+      "phase_ms": {
+        "assembly": 374.1004493832588,
+        "pcg": 1382.5990742444992,
+        "ccd": 434.5231674313545,
+        "line_search": 446.8960971236229,
+        "state_update": 33.51913602091372
+      },
+      "phase_percent": {
+        "assembly": 13.424477906793715,
+        "pcg": 49.61413640841064,
+        "ccd": 15.59272829206413,
+        "line_search": 16.036727013717638,
+        "state_update": 1.2028237381414553
+      },
+      "newton_exits": {
+        "movement": 21,
+        "cumulative_toi": 30
+      },
+      "native_self_pair_peak": 7411,
+      "unclassified_ms": 115.06597579635081,
+      "pool": {
+        "complete_contract": true,
+        "passed": true,
+        "totals": {
+          "attempts": 298,
+          "reused_queries": 297,
+          "old_queries": 1,
+          "validation_calls": 0,
+          "validation_passed": 0,
+          "validation_failed": 0,
+          "pairs_compared": 0,
+          "nonempty_validation_calls": 0,
+          "production_overflow_queries": 0,
+          "prepare_calls": 594,
+          "capture_passes": 297,
+          "generations": 297,
+          "pool_pairs": 1752182,
+          "vf_pairs": 368914,
+          "ee_pairs": 1383268
+        },
+        "fallback_reasons": {
+          "bounds_not_contained": 1
+        },
+        "pool_bytes_peak": 25798096,
+        "production_overflow_scope": "Measured only by validation reference.count > caller capacity; when validate=false this is not the total production overflow count"
+      }
+    },
+    {
+      "stage": "hang_r2",
+      "name": "hang_on_r2",
+      "variant": "on",
+      "status": "memory_budget",
+      "frames": 40,
+      "hard_checks_passed": false,
+      "within_original_bounds": null,
+      "failures": [
+        "ValueError: Incomplete or failed run"
+      ],
+      "material": null,
+      "requested_sha256": "62d3b5c19445ee0f5a1eaaea36623ffe300f5873e65ccf8299b10d84e1c01991",
+      "result_sha256": "2a04aa0f5b101fa0a3cc924a9043c3f4bf80f76bebc437ef581ea6d2c1ab6ee3",
+      "program_sha256": "b2ad19884fc01b81827d560f9f1984346b5488851995c2fd495f7427eac0f812",
+      "initial_free_mib": 3081.0,
+      "memory_budget_mib": 1545.0,
+      "min_observed_free_mib": 1059.0,
+      "scope": "Complete runs only inform diagnostic time. Shared Windows desktop load; no physical quality or performance certification."
+    }
+  ],
+  "fixed_off_diagnostic": {
+    "paired_stiff_over_off": [
+      1.5684167650509997,
+      1.4629754450772896,
+      1.4748224260417582
+    ],
+    "median": 1.4748224260417582,
+    "geometric_mean": 1.5013412431317004,
+    "formal_confidence_interval": null
+  },
+  "fixed_pool_diagnostic": {
+    "off_over_on": 1.071342235769853,
+    "fraction_time_saved": 0.06659145265433075,
+    "same_round_stiff_over_on": 1.580039555279096,
+    "phase_delta_on_minus_off_ms": {
+      "assembly": 105.64381468296051,
+      "pcg": 296.1760935783386,
+      "ccd": 165.39667427539825,
+      "line_search": -1217.222139954567,
+      "state_update": -10.293216103687882
+    }
+  },
+  "hang_pool_diagnostic": {
+    "off_over_on": 1.13710516571208,
+    "fraction_time_saved": 0.12057386585366703,
+    "phase_delta_on_minus_off_ms": {
+      "assembly": -28.982590794563293,
+      "pcg": -115.80063652992249,
+      "ccd": 52.26425686478615,
+      "line_search": -273.228926718235,
+      "state_update": 0.5429120883345604
+    }
+  },
+  "attempted": 10,
+  "completed": 9,
+  "resource_failed": 1,
+  "not_started": [
+    "hang_off_r2",
+    "hang_off_r3",
+    "hang_on_r3"
+  ],
+  "new_defaults_promoted": false,
+  "two_x_achieved_or_certified": false,
+  "quality_certified": false,
+  "performance_certified": false,
+  "scope": "Current Step3 only, all from zero with unchanged frozen protocol. Prior Step2 results remain separate; raw logs, trajectories and failure receipts retained outside Git."
+}
