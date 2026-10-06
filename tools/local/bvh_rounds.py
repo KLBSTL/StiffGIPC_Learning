@@ -1,8 +1,11 @@
 """One explicit four-arm BVH round; reuse the sealed Windows runner unchanged."""
 import argparse
+import hashlib
 import itertools
 import json
+import math
 import os
+import subprocess
 from pathlib import Path
 from local_plan import ROOT, tasks as reference_tasks
 from config import read, expand, digest
@@ -16,6 +19,9 @@ from pool_metrics import state_comparison
 ORDERS = {1: ('D1S1', 'D0S1', 'D0S0', 'D1S0'),
           2: ('D1S0', 'D0S0', 'D0S1', 'D1S1'),
           3: ('D1S0', 'D1S1', 'D0S1', 'D0S0')}
+V1_COMMIT = 'd155290f75409c300f20c65864888d47b59b76c7'
+V1_TOOLS = {'bvh_rounds.py': '6d751076d97be771131a1c96efdf7748ff141a5b0e1089ff725edae55228ae9c',
+            'bvh_rounds_test.py': 'da5a51539f8b9e50807ed976bd07b1f00d90670f223421afb7bf23f364d0d29e'}
 
 
 def plan():
@@ -44,13 +50,42 @@ def code_identity():
     return {n: sha(Path(__file__).parent / n) for n in ('bvh_rounds.py', 'bvh_rounds_test.py')}
 
 
+def verify_tools(recorded, current):
+    if recorded == current: return
+    # Only the initial two rounds may retain the exact archived controller.
+    # Do not rewrite their receipts or silently accept arbitrary older tooling.
+    require(recorded == V1_TOOLS, 'Previous controller identity is unsupported')
+    for name, expected in recorded.items():
+        result = subprocess.run(['git', '-c', 'safe.directory=' + ROOT.as_posix(), 'show',
+                                 V1_COMMIT + ':tools/local/' + name], cwd=ROOT,
+                                capture_output=True, timeout=10, check=True)
+        require(hashlib.sha256(result.stdout).hexdigest() == expected, 'Archived controller differs')
+
+
+def within_time_budget(result):
+    wall = result.get('wall_seconds')
+    return type(wall) in (float, int) and math.isfinite(wall) and 0 < wall <= 120
+
+
+def time_guard(row, result):
+    if not within_time_budget(result):
+        row['hard_checks_passed'] = False
+        row['failures'].append('Absolute elapsed deadline invalid/exceeded; raw result preserved')
+    return row
+
+
 def verify_stage(folder, seal_sha, tools):
     receipt, batch, analysis = (read(folder / n) for n in ('receipt.json', 'batch.json', 'analysis.json'))
-    require(receipt['seal_sha256'] == seal_sha and receipt['tools'] == tools, 'Seal/tool changed')
+    require(receipt['seal_sha256'] == seal_sha, 'Seal changed')
+    verify_tools(receipt['tools'], tools)
     require(receipt['batch_sha256'] == sha(folder / 'batch.json') and
             receipt['analysis_sha256'] == sha(folder / 'analysis.json'), 'Receipt changed')
     require(batch['plan'] == plan() and analysis['diagnosis_complete'], 'Previous failed/incomplete round')
     expected = tasks(batch['scene'], batch['repeat'])
+    require(analysis['plan'] == plan() and analysis['scene'] == batch['scene'] and
+            analysis['repeat'] == batch['repeat'] and
+            [r['name'] for r in analysis['runs']] == [t['name'] for t in expected] and
+            all(r['hard_checks_passed'] for r in analysis['runs']), 'Analysis identity/ledger differs')
     require(folder.name == f"{batch['scene']}_r{batch['repeat']}" and not batch['skipped'] and
             [r['name'] for r in batch['runs']] == [t['name'] for t in expected], 'Previous ledger differs')
     for row in batch['runs']:
@@ -58,6 +93,12 @@ def verify_stage(folder, seal_sha, tools):
         require(sha(out / 'evidence.json') == row['evidence_sha256'], 'Run evidence changed')
         verify_files(out, read(out / 'evidence.json')['files'])
         require(read(out / 'result.json') == row['result'], 'Run result changed')
+        require(within_time_budget(row['result']), 'Previous run exceeded elapsed deadline')
+        check = folder / (row['name'] + '_check.json')
+        if receipt['tools'] != V1_TOOLS:
+            require(sha(check) == row['check_sha256'], 'Per-run interpretation changed')
+        observed = next(r for r in analysis['runs'] if r['name'] == row['name'])
+        require(compact(read(check)) == observed, 'Per-run interpretation/summary differs')
     return receipt
 
 
@@ -106,10 +147,11 @@ def run(root, seal_path, session, scene, repeat, reviewed, gpu=0):
         rows = []
         for t in ts:
             result = execute(folder, t, seal['programs']['active'], gpu)
-            row = analyze_one(folder, t, seal)
+            row = time_guard(analyze_one(folder, t, seal), result)
             write_new(folder / (t['name'] + '_check.json'), row)
             batch['runs'].append({'name': t['name'], 'result': result,
-                                 'evidence_sha256': sha(folder / t['name'] / 'evidence.json')})
+                                 'evidence_sha256': sha(folder / t['name'] / 'evidence.json'),
+                                 'check_sha256': sha(folder / (t['name'] + '_check.json'))})
             rows.append(row)
             if not row['hard_checks_passed']:
                 break

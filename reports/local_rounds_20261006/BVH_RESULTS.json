@@ -1,0 +1,1109 @@
+{
+  "schema": "bvh_four_arm_review.v1",
+  "complete_runs": 24,
+  "stage_analysis_sha256": {
+    "fixed_r1": "ef1cb09002cb9d0b742a51244cb7568ef0544c98f8f9b2caf5a606823cf89bb5",
+    "fixed_r2": "13f9d9b562f7de530c91cec9d5aa9a3ff90fc4c40e0a2b08938dee39c9100589",
+    "fixed_r3": "14d18baddde23f17d82ac5660b501a1f6578628feac98961a75e243b036fd5dc",
+    "hang_r1": "44a0a076aa463a1b6c5b4e1c8ae37a45e349121820490814237d258cd87bd3ea",
+    "hang_r2": "4f450778d0acee3701082bb2967b2d4a53e7ccda8fc7b9b3eec0eda44696c9ca",
+    "hang_r3": "b499b67423173c503bd66a1bc277d082d1371d43143b26491ef3cb0528f4d92b"
+  },
+  "scenes": {
+    "fixed": {
+      "frames": 59,
+      "arms": {
+        "D1S1": {
+          "solver_ms": [
+            7728.4019,
+            7350.0367,
+            7328.3115
+          ],
+          "paired_speedups": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median_speedup": 1.0,
+          "median_net_time_saving": 0.0,
+          "faster_pairs": 0,
+          "directions": [
+            334,
+            319,
+            335
+          ],
+          "pcg_iterations": [
+            19854,
+            18869,
+            19760
+          ],
+          "material_passes": [
+            false,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pcg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "ccd": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "line_search": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "state_update": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "unclassified": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cross_arm_state_difference": [],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D0S1": {
+          "solver_ms": [
+            7954.3277,
+            7940.4104,
+            7233.9885
+          ],
+          "paired_speedups": [
+            0.9715971219038411,
+            0.9256494727275053,
+            1.0130388650742255
+          ],
+          "median_speedup": 0.9715971219038411,
+          "median_net_time_saving": -0.029233184676899393,
+          "faster_pairs": 1,
+          "directions": [
+            328,
+            325,
+            325
+          ],
+          "pcg_iterations": [
+            19483,
+            19155,
+            19267
+          ],
+          "material_passes": [
+            true,
+            true,
+            false
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              -5.794075131416321,
+              47.15398633480072,
+              -50.36185681819916
+            ],
+            "pcg": [
+              -18.876659393310547,
+              162.65144801139832,
+              -133.33654236793518
+            ],
+            "ccd": [
+              -30.58143723011017,
+              21.70230543613434,
+              -48.650941491127014
+            ],
+            "line_search": [
+              292.5246350765228,
+              353.19401717185974,
+              131.92060470581055
+            ],
+            "state_update": [
+              1.4571840949356556,
+              -1.9700799640268087,
+              2.752608012408018
+            ],
+            "unclassified": [
+              -12.803847416621466,
+              7.6420230098337925,
+              3.353127959043377
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.010602778614939629,
+                  "max_vertex": 0.06814963493143784,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.3025515821533665e-17,
+                  "max_vertex": 5.721958498152797e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.29230586439623496,
+                  "max_vertex": 2.9170364422275377,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.3025515821533666e-15,
+                  "max_vertex": 5.721958498152797e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.008128714183675613,
+                  "max_vertex": 0.04345280642003277,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.2108042010544789e-17,
+                  "max_vertex": 5.551115123125783e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.2093599490542821,
+                  "max_vertex": 2.015517968636135,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.2108042010544788e-15,
+                  "max_vertex": 5.551115123125783e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.01409845595159923,
+                  "max_vertex": 0.047514923736497044,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.489601802434294e-17,
+                  "max_vertex": 6.206335383118183e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.26220352618685033,
+                  "max_vertex": 1.6290932765722963,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.489601802434294e-15,
+                  "max_vertex": 6.2063353831181824e-15,
+                  "frames": 60
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D0S0": {
+          "solver_ms": [
+            8046.4681,
+            7700.3092,
+            7580.1906
+          ],
+          "paired_speedups": [
+            0.9604713277866596,
+            0.9545118915484588,
+            0.9667714028193434
+          ],
+          "median_speedup": 0.9604713277866596,
+          "median_net_time_saving": -0.04115549425554588,
+          "faster_pairs": 0,
+          "directions": [
+            324,
+            320,
+            326
+          ],
+          "pcg_iterations": [
+            18984,
+            18881,
+            19100
+          ],
+          "material_passes": [
+            false,
+            false,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              3.55801784992218,
+              2.290560245513916,
+              -18.33315885066986
+            ],
+            "pcg": [
+              -131.11663484573364,
+              -28.592164754867554,
+              -128.14566254615784
+            ],
+            "ccd": [
+              250.02780747413635,
+              210.8095704317093,
+              192.20473682880402
+            ],
+            "line_search": [
+              226.16482734680176,
+              190.54294228553772,
+              185.38093090057373
+            ],
+            "state_update": [
+              4.478175913915038,
+              -4.786815857514739,
+              1.7209598924964666
+            ],
+            "unclassified": [
+              -35.04599373904148,
+              -19.991592350378596,
+              19.051293774953592
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.009569357394283785,
+                  "max_vertex": 0.05153129163113046,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 3.920831636945268e-18,
+                  "max_vertex": 2.7755575615628914e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.25030108198143225,
+                  "max_vertex": 2.8633769743210715,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 3.920831636945268e-16,
+                  "max_vertex": 2.7755575615628914e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.010319740391327324,
+                  "max_vertex": 0.05588167991944142,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.279309991251221e-17,
+                  "max_vertex": 5.721958498152797e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.21980699783931448,
+                  "max_vertex": 2.41924829723728,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.279309991251221e-15,
+                  "max_vertex": 5.721958498152797e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.011946255914113246,
+                  "max_vertex": 0.0628238700990864,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.8337668818196554e-17,
+                  "max_vertex": 1.1443916996305594e-16,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.2664188528084612,
+                  "max_vertex": 2.5311513350920665,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.833766881819655e-15,
+                  "max_vertex": 1.1443916996305594e-14,
+                  "frames": 60
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D1S0": {
+          "solver_ms": [
+            7557.5624,
+            7868.5235999999995,
+            7592.0905999999995
+          ],
+          "paired_speedups": [
+            1.0226051061119918,
+            0.9341062025918052,
+            0.9652560653056486
+          ],
+          "median_speedup": 0.9652560653056486,
+          "median_net_time_saving": -0.03599452616063048,
+          "faster_pairs": 1,
+          "directions": [
+            319,
+            326,
+            330
+          ],
+          "pcg_iterations": [
+            18596,
+            19384,
+            19405
+          ],
+          "material_passes": [
+            true,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              -35.164830923080444,
+              36.76403450965881,
+              -9.937439441680908
+            ],
+            "pcg": [
+              -215.22316455841064,
+              78.21017742156982,
+              -37.151679277420044
+            ],
+            "ccd": [
+              206.90204846858978,
+              290.1716140508652,
+              252.98172748088837
+            ],
+            "line_search": [
+              -85.78330445289612,
+              111.99458885192871,
+              37.06909155845642
+            ],
+            "state_update": [
+              2.195167975500226,
+              -3.372127987444401,
+              1.2489920128136873
+            ],
+            "unclassified": [
+              -43.765416509702845,
+              4.718613153421757,
+              19.56840766694222
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.0067540359616384965,
+                  "max_vertex": 0.06923643401460802,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.4896439042972407e-17,
+                  "max_vertex": 5.721958498152797e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.21233746196166975,
+                  "max_vertex": 2.327640863036131,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.4896439042972409e-15,
+                  "max_vertex": 5.721958498152797e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.0072347384221890755,
+                  "max_vertex": 0.04061195794423109,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 3.092397129622863e-18,
+                  "max_vertex": 1.3877787807814457e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.19707998996290724,
+                  "max_vertex": 1.899129986335072,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 3.092397129622863e-16,
+                  "max_vertex": 1.3877787807814457e-15,
+                  "frames": 60
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 0.014926664458414566,
+                  "max_vertex": 0.06478888529770596,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.3621719917082989e-17,
+                  "max_vertex": 6.206335383118183e-17,
+                  "frames": 60
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.35628151647059547,
+                  "max_vertex": 2.978624705267722,
+                  "frames": 60
+                },
+                "ABD": {
+                  "max_frame_rms": 1.362171991708299e-15,
+                  "max_vertex": 6.2063353831181824e-15,
+                  "frames": 60
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        }
+      },
+      "reference_self_repeat_differences": [
+        {
+          "rounds": [
+            1,
+            2
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.010560283073953363,
+                "max_vertex": 0.04025233410075586,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.3132161494785783e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 60
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 0.24930030883462462,
+                "max_vertex": 2.789086573676641,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.3132161494785783e-15,
+                "max_vertex": 6.2063353831181824e-15,
+                "frames": 60
+              }
+            }
+          }
+        },
+        {
+          "rounds": [
+            1,
+            3
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.009220768154989614,
+                "max_vertex": 0.05843170067922301,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.5350036672128304e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 60
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 0.20880654177276817,
+                "max_vertex": 2.51123493549753,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.5350036672128304e-15,
+                "max_vertex": 6.2063353831181824e-15,
+                "frames": 60
+              }
+            }
+          }
+        },
+        {
+          "rounds": [
+            2,
+            3
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.015010268714569237,
+                "max_vertex": 0.06107419177159644,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.3639940007397244e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 60
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 0.26518348771592426,
+                "max_vertex": 1.8513938387519218,
+                "frames": 60
+              },
+              "ABD": {
+                "max_frame_rms": 1.3639940007397243e-15,
+                "max_vertex": 6.2063353831181824e-15,
+                "frames": 60
+              }
+            }
+          }
+        }
+      ]
+    },
+    "hang": {
+      "frames": 51,
+      "arms": {
+        "D1S1": {
+          "solver_ms": [
+            2791.6538,
+            2530.8045,
+            2499.7123
+          ],
+          "paired_speedups": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median_speedup": 1.0,
+          "median_net_time_saving": 0.0,
+          "faster_pairs": 0,
+          "directions": [
+            297,
+            297,
+            297
+          ],
+          "pcg_iterations": [
+            9101,
+            9105,
+            9099
+          ],
+          "material_passes": [
+            true,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pcg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "ccd": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "line_search": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "state_update": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "unclassified": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cross_arm_state_difference": [],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D0S1": {
+          "solver_ms": [
+            2926.4604,
+            2673.8477,
+            2645.3055
+          ],
+          "paired_speedups": [
+            0.9539352727957638,
+            0.9465028617748125,
+            0.9449616688885273
+          ],
+          "median_speedup": 0.9465028617748125,
+          "median_net_time_saving": -0.056520841495263596,
+          "faster_pairs": 0,
+          "directions": [
+            297,
+            297,
+            297
+          ],
+          "pcg_iterations": [
+            9099,
+            9106,
+            9102
+          ],
+          "material_passes": [
+            true,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              -13.323744088411331,
+              6.853986203670502,
+              0.6873602569103241
+            ],
+            "pcg": [
+              3.5239354372024536,
+              -11.795613169670105,
+              19.294780731201172
+            ],
+            "ccd": [
+              1.3673926889896393,
+              31.29484724998474,
+              -4.334527343511581
+            ],
+            "line_search": [
+              141.3392944931984,
+              124.75155335664749,
+              119.89571231603622
+            ],
+            "state_update": [
+              3.9729921519756317,
+              -1.7792318984866142,
+              0.8105600196868181
+            ],
+            "unclassified": [
+              -2.073270682954899,
+              -6.2823417421464,
+              9.23931401967684
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 8.269018668197223e-07,
+                  "max_vertex": 4.549825450116876e-06,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 4.081487668947767e-05,
+                  "max_vertex": 0.00045357733320399834,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 2.2132047292980547e-06,
+                  "max_vertex": 2.7277419688772006e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 6.776175509911106e-05,
+                  "max_vertex": 0.0022711888999561837,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 9.997912480846603e-06,
+                  "max_vertex": 6.49737647489475e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.0002413293447436678,
+                  "max_vertex": 0.005139768349266673,
+                  "frames": 52
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D0S0": {
+          "solver_ms": [
+            2981.2042,
+            2858.4105,
+            2896.1916
+          ],
+          "paired_speedups": [
+            0.9364181762524016,
+            0.8853887501462789,
+            0.8631032214857608
+          ],
+          "median_speedup": 0.8853887501462789,
+          "median_net_time_saving": -0.12944737533065065,
+          "faster_pairs": 0,
+          "directions": [
+            297,
+            297,
+            297
+          ],
+          "pcg_iterations": [
+            9105,
+            9104,
+            9103
+          ],
+          "material_passes": [
+            true,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              -23.665475219488144,
+              -9.600830614566803,
+              0.8407379388809204
+            ],
+            "pcg": [
+              -87.12451696395874,
+              -1.6001625061035156,
+              56.159552216529846
+            ],
+            "ccd": [
+              205.65110459923744,
+              211.92079916596413,
+              189.51260814070702
+            ],
+            "line_search": [
+              103.57782405614853,
+              124.2139236330986,
+              143.12240141630173
+            ],
+            "state_update": [
+              -1.0144640635699034,
+              4.348832169547677,
+              1.3111681919544935
+            ],
+            "unclassified": [
+              -7.874072408369102,
+              -1.6765618479403201,
+              5.532832095625963
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 2.3581830344177463e-06,
+                  "max_vertex": 1.808639438851311e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 8.719580614634444e-05,
+                  "max_vertex": 0.0007567208147678426,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 1.858809426865085e-06,
+                  "max_vertex": 1.4185575447721523e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.00010212016700595107,
+                  "max_vertex": 0.0011360449974675184,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 1.0858871626540314e-05,
+                  "max_vertex": 7.435738824134906e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.00024751952816772285,
+                  "max_vertex": 0.005818065603081157,
+                  "frames": 52
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        },
+        "D1S0": {
+          "solver_ms": [
+            2899.7077,
+            2692.6735,
+            2704.2021
+          ],
+          "paired_speedups": [
+            0.9627362785566284,
+            0.939885396428494,
+            0.924380725834064
+          ],
+          "median_speedup": 0.939885396428494,
+          "median_net_time_saving": -0.06395950378624637,
+          "faster_pairs": 0,
+          "directions": [
+            297,
+            297,
+            297
+          ],
+          "pcg_iterations": [
+            9104,
+            9108,
+            9104
+          ],
+          "material_passes": [
+            true,
+            true,
+            true
+          ],
+          "phase_delta_ms_candidate_minus_reference": {
+            "assembly": [
+              -10.175457835197449,
+              -5.671615689992905,
+              -7.370366305112839
+            ],
+            "pcg": [
+              -35.041441917419434,
+              -25.85315239429474,
+              30.602203130722046
+            ],
+            "ccd": [
+              226.19059374928474,
+              217.64806386828423,
+              197.18681463599205
+            ],
+            "line_search": [
+              -56.38710314035416,
+              -27.027420938014984,
+              -19.604448199272156
+            ],
+            "state_update": [
+              -6.294047877192497,
+              6.974464165046811,
+              1.0590398106724024
+            ],
+            "unclassified": [
+              -10.238642979121323,
+              -4.201339011028722,
+              2.616556926998328
+            ]
+          },
+          "cross_arm_state_difference": [
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 1.0927871510404922e-05,
+                  "max_vertex": 8.73584258940511e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.00025283728744358397,
+                  "max_vertex": 0.0071667343323060795,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 3.1362605596728585e-06,
+                  "max_vertex": 4.3573637720875494e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.00010602615327341609,
+                  "max_vertex": 0.003672957399430878,
+                  "frames": 52
+                }
+              }
+            },
+            {
+              "position": {
+                "cloth": {
+                  "max_frame_rms": 3.387318593031637e-06,
+                  "max_vertex": 2.5757287390600576e-05,
+                  "frames": 52
+                }
+              },
+              "velocity": {
+                "cloth": {
+                  "max_frame_rms": 0.00010142998250447512,
+                  "max_vertex": 0.0008937429099137766,
+                  "frames": 52
+                }
+              }
+            }
+          ],
+          "eligible_for_further_quality_checks": false,
+          "retained_as_optimization": false
+        }
+      },
+      "reference_self_repeat_differences": [
+        {
+          "rounds": [
+            1,
+            2
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 3.476619125751624e-06,
+                "max_vertex": 2.4647217325014365e-05,
+                "frames": 52
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 9.815347904007647e-05,
+                "max_vertex": 0.0011969133578841624,
+                "frames": 52
+              }
+            }
+          }
+        },
+        {
+          "rounds": [
+            1,
+            3
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 1.1094079430780613e-06,
+                "max_vertex": 1.3657422213975472e-05,
+                "frames": 52
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 5.1220246172859354e-05,
+                "max_vertex": 0.0013146292061122398,
+                "frames": 52
+              }
+            }
+          }
+        },
+        {
+          "rounds": [
+            2,
+            3
+          ],
+          "initial_inputs_equal": true,
+          "state_difference": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 3.4597955291214193e-06,
+                "max_vertex": 2.420044287223058e-05,
+                "frames": 52
+              }
+            },
+            "velocity": {
+              "cloth": {
+                "max_frame_rms": 9.803199485255647e-05,
+                "max_vertex": 0.0007854343885189022,
+                "frames": 52
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "two_scene_median_speedup_geometric_mean": {
+    "D0S1": 0.958967912067008,
+    "D0S0": 0.9221662043581772,
+    "D1S0": 0.9524862621554223
+  },
+  "decision": "Keep D1S1; stop BVH combination branch without interval grid",
+  "quality_certified": false,
+  "performance_certified": false,
+  "scope": "Shared WDDM, 59/51 frames from zero, no new Stiff denominator. Old material bounds unchanged; repeat ranges are observations, not certification. Phase counters omit separately labelled exit assembly; unclassified includes it."
+}
