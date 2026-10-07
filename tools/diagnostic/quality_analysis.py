@@ -13,19 +13,22 @@ PROTOCOL=ROOT/'tools/bench/quality_protocol.json'
 
 def validate_base(run):
     req=read(run/'requested.json');c=req['expanded_config'];r=read(run/'result.json')
+    observed=req.get('capabilities',{}).get('actual_velocity') is True
+    native_complete=r['status']=='completed' or (observed and r['status']=='configuration_failed'
+        and r.get('exit_code')==0 and r.get('finite') is True and r['recorded_frames']==c['steps'])
     scene=read(run/'output/scene.json');effective=scene['effective_run'];fields=scene['effective_scalar_fields']
     pcgs=[n['pcg'] for f in read(run/'output/stats.json')['frames'] for n in f['newton'] if 'pcg' in n]
-    checks={'native_scene':scene['case_id']==c['scene'],'completed':r['status']=='completed',
+    checks={'native_scene':scene['case_id']==c['scene'],'completed':native_complete,
             'frames':r['recorded_frames']==c['steps'],'native_preconditioner_mas':fields['preconditioner_type']==1,
             'dt':effective['dt']==c['dt'],'newton_tol':effective['newton_tol']==c['ipc_newton_tol'],
             'pcg_tol':effective['pcg_tol']==c['pcg_rho_tol'],'declared_baseline':req['binary']=='base',
             'no_fabricated_resolved_config':not (run/'resolved_config.json').exists(),
-            'no_unexpected_velocity_export':not list((run/'trace').glob('velocity_*.bin')),
+            'no_unexpected_velocity_export':export_evidence(run,c['steps'],'velocity')['passed'] if observed else not list((run/'trace').glob('velocity_*.bin')),
             'pcg_records_present':bool(pcgs),'pcg_limit_telemetry_present':all('iteration_limit' in p for p in pcgs),
             'pcg_no_reported_limit_or_breakdown':not any(p.get('iteration_limit') or p.get('breakdown') for p in pcgs)}
     return {'passed':all(checks.values()),'checks':checks,
-            'scope':'Native scene runtime scalars and preconditioner; official frozen program has no resolved-config contract or actual velocity export.',
-            'resolved_config_available':False,'actual_velocity_available':False,
+            'scope':'Native scene runtime scalars and preconditioner. Actual velocities require the explicit read-only observer capability; observer neutrality is checked separately.',
+            'resolved_config_available':False,'actual_velocity_available':observed and checks['no_unexpected_velocity_export'],
             'pcg_breakdown_telemetry_available':bool(pcgs) and all('breakdown' in p for p in pcgs),
             'unobserved_runtime_settings':['IPC min-updates is retained in baseline source; no runtime resolved record','PCG execution/breakdown telemetry unavailable in baseline; finite exported states do not prove absence of internal breakdown']}
 

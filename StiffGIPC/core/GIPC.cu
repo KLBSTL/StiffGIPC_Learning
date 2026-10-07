@@ -10760,6 +10760,8 @@ double GIPC::Energy_Add_Reduction_Algorithm(int type, device_TetraData& TetMesh,
     int                blockNum  = (numbers + threadNum - 1) / threadNum;
 
     unsigned int sharedMsize = sizeof(double) * (threadNum >> 5);
+    {
+    gipc::CostScope cost_production("ipc.energy_production",true,type);
     switch(type)
     {
         case 0:
@@ -10862,8 +10864,10 @@ double GIPC::Energy_Add_Reduction_Algorithm(int type, device_TetraData& TetMesh,
 #endif
             break;
     }
+    }
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
     if(defer_reduction) return 0;
+    gipc::CostScope cost_reduction("ipc.energy_scalar_reduce_and_readback",true,type);
     return reduce_sum_to_host(queue, blockNum, pcg_data.prepare_reduction_scalar());
 }
 
@@ -10898,9 +10902,14 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
         {
             Energy_Add_Reduction_Algorithm(types[i],TetMesh,partials.data()+offsets[i],true);
             size_t required=bytes;
+            gipc::CostScope cost_reduce("ipc.energy_batch_reduce",true,types[i]);
             CUDA_SAFE_CALL(cub::DeviceReduce::Sum(storage.data(),required,partials.data()+offsets[i],results.data()+i,blocks[i],cudaStreamPerThread));
         }
-        double c[9];CUDA_SAFE_CALL(cudaMemcpy(c,results.data(),sizeof(c),cudaMemcpyDeviceToHost));
+        double c[9];
+        {
+            gipc::CostScope cost_readback("ipc.energy_batch_readback");
+            CUDA_SAFE_CALL(cudaMemcpy(c,results.data(),sizeof(c),cudaMemcpyDeviceToHost));
+        }
         double energy=c[0];
         energy+=m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
         energy+=m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
@@ -11093,6 +11102,7 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
     gipc::CostScope cost("ipc.line_search");
     wait_device();
     bool   stopped       = false;
+    int energy_evaluations=cached_energy ? 0 : 1;
     double lastEnergyVal = cached_energy ? *cached_energy : computeEnergy(TetMesh);
     if(cached_energy && std::getenv("GIPC_AUDIT_ENERGY") && std::getenv("GIPC_AUDIT_ENERGY")[0]=='1')
     {
@@ -11122,6 +11132,7 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
     // preserve production tuple order, type indices and all five counters.
     // Compare the actual Armijo branch as well as total and self-barrier energy.
     auto evaluate_trial_energy=[&]() {
+        ++energy_evaluations;
         const double energy=computeEnergy(TetMesh);
         const auto reference=gipc::ipc_contact_pool_reference();
         if(!reference.valid)return energy;
@@ -11254,6 +11265,12 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 
     if(accepted_energy) *accepted_energy=testingE;
 
+    auto& observation=gipc::Statistics::instance().at_current_frame()["newton"].back();
+    observation["energy_evaluations"]=energy_evaluations;
+    observation["energy_backtracks"]=numOfLineSearch;
+    observation["intersection_backtracks"]=numOfIntersect;
+    observation["initial_energy_reused"]=cached_energy!=nullptr;
+
     gipc::ipc_contact_pool_end();
 
     return stopped;
@@ -11325,6 +11342,9 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
               << std::endl;
 
     stats_at_current_frame["newton"] = gipc::Json::array();
+    // Cumulative termination follows an accepted update and does not assemble
+    // another system. Movement termination below overwrites this actual zero.
+    stats_at_current_frame["ipc_exit_assembly_ms"] = 0.0;
     gipc::set_solve_frame(total_Frames+1);
     gipc::CostFlushAtExit ipc_cost_flush;
 
