@@ -1,0 +1,15 @@
+{
+  "cpu_only": true,
+  "extra_gpu_runs": 0,
+  "previous_snapshot": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\frozen_tools\\report_cost_audit.capability_v2.py.txt",
+    "bytes": 5390,
+    "sha256": "7a2aa820bbf9d98a90973dece20102af394b7a38db741106119272441c38d62b"
+  },
+  "current": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_cost_audit.py",
+    "bytes": 5396,
+    "sha256": "473b142b431b3263f0691dc47fc9c1b44b1e832f14577f787e2535ec53373cea"
+  },
+  "change": "Only seal constant updated after all GPU runs; reconstructed v2 bytes match both immutable cost plans."
+}
