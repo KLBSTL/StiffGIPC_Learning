@@ -1,0 +1,188 @@
+{
+  "sphere": {
+    "schema": "report.profile.attribution.v1",
+    "sqlite": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report_execution_20261007\\profile_sphere_f49_node\\nsight.sqlite",
+      "bytes": 2478080,
+      "sha256": "a4925b8aca624d08c2d95fda995b641c02c7cb49a24e947e82cf3b619eebfe25"
+    },
+    "analyzer": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_profile_attribution.py",
+      "bytes": 4820,
+      "sha256": "9368c6c75e69fa4ca5eb9d52f549d263f95ce435300452cb36c78560f0a6b85e"
+    },
+    "captured_frame_cpu_ms": 466.073969,
+    "gpu_work_union_including_whole_graph": {
+      "count": 16931,
+      "sum_ms": 260.88207,
+      "union_ms": 260.88207,
+      "first_start_ns": 18006518,
+      "last_end_ns": 483046158,
+      "first_to_last_span_ms": 465.03964,
+      "gaps_between_activities_ms": 204.15757
+    },
+    "whole_graph": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "outside_graph_kernels": {
+      "count": 3317,
+      "sum_ms": 215.851165,
+      "union_ms": 215.851165,
+      "first_start_ns": 18012182,
+      "last_end_ns": 483046158,
+      "first_to_last_span_ms": 465.033976,
+      "gaps_between_activities_ms": 249.182811
+    },
+    "energy_kernel_owners": {
+      "ipc.energy_production": {
+        "count": 155,
+        "sum_ms": 2.37289,
+        "union_ms": 2.37289,
+        "first_start_ns": 36377600,
+        "last_end_ns": 478886746,
+        "first_to_last_span_ms": 442.509146,
+        "gaps_between_activities_ms": 440.136256
+      },
+      "ipc.energy_batch_reduce": {
+        "count": 155,
+        "sum_ms": 0.277055,
+        "union_ms": 0.277055,
+        "first_start_ns": 36382944,
+        "last_end_ns": 478889882,
+        "first_to_last_span_ms": 442.506938,
+        "gaps_between_activities_ms": 442.229883
+      },
+      "ipc.energy_evaluation": {
+        "count": 124,
+        "sum_ms": 0.233311,
+        "union_ms": 0.233311,
+        "first_start_ns": 36538432,
+        "last_end_ns": 479004090,
+        "first_to_last_span_ms": 442.465658,
+        "gaps_between_activities_ms": 442.232347
+      }
+    },
+    "all_cub_kernels_upper_bound": {
+      "count": 1606,
+      "sum_ms": 4.462512,
+      "union_ms": 4.462512,
+      "first_start_ns": 18141813,
+      "last_end_ns": 482828175,
+      "first_to_last_span_ms": 464.686362,
+      "gaps_between_activities_ms": 460.22385
+    },
+    "spmv_kernels": {
+      "count": 1274,
+      "sum_ms": 10.549158,
+      "union_ms": 10.549158,
+      "first_start_ns": 27662842,
+      "last_end_ns": 466542174,
+      "first_to_last_span_ms": 438.879332,
+      "gaps_between_activities_ms": 428.330174
+    },
+    "outside_graph_kernel_count": 3317,
+    "outside_graph_without_unique_runtime_count": 0,
+    "graph_internal_operator_attribution_available": true,
+    "performance_certified": false,
+    "scope": "Captured diagnostic frame only. GPU interval union includes whole Graph trace and clips boundaries. Energy ownership requires unique runtime correlation; Graph nodes remain excluded. CPU/GPU/waits are not additive; no whole-scene speedup inferred."
+  },
+  "fixed": {
+    "schema": "report.profile.attribution.v1",
+    "sqlite": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report_execution_20261007\\profile_fixed_f65_graph\\nsight.sqlite",
+      "bytes": 708608,
+      "sha256": "ab3207d6363067342e8052ef730526ff16a7bbc9b6aa8d3d6ea3b0fd0553a8e3"
+    },
+    "analyzer": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_profile_attribution.py",
+      "bytes": 4820,
+      "sha256": "9368c6c75e69fa4ca5eb9d52f549d263f95ce435300452cb36c78560f0a6b85e"
+    },
+    "captured_frame_cpu_ms": 182.335909,
+    "gpu_work_union_including_whole_graph": {
+      "count": 1833,
+      "sum_ms": 133.028199,
+      "union_ms": 133.028199,
+      "first_start_ns": 16534634,
+      "last_end_ns": 197781801,
+      "first_to_last_span_ms": 181.247167,
+      "gaps_between_activities_ms": 48.218968
+    },
+    "whole_graph": {
+      "count": 6,
+      "sum_ms": 46.553619,
+      "union_ms": 46.553619,
+      "first_start_ns": 28842341,
+      "last_end_ns": 183510803,
+      "first_to_last_span_ms": 154.668462,
+      "gaps_between_activities_ms": 108.114843
+    },
+    "outside_graph_kernels": {
+      "count": 1146,
+      "sum_ms": 85.395797,
+      "union_ms": 85.395797,
+      "first_start_ns": 16541482,
+      "last_end_ns": 197781801,
+      "first_to_last_span_ms": 181.240319,
+      "gaps_between_activities_ms": 95.844522
+    },
+    "energy_kernel_owners": {
+      "ipc.energy_production": {
+        "count": 49,
+        "sum_ms": 0.92291,
+        "union_ms": 0.92291,
+        "first_start_ns": 44411126,
+        "last_end_ns": 195705839,
+        "first_to_last_span_ms": 151.294713,
+        "gaps_between_activities_ms": 150.371803
+      },
+      "ipc.energy_batch_reduce": {
+        "count": 49,
+        "sum_ms": 0.09072,
+        "union_ms": 0.09072,
+        "first_start_ns": 44416182,
+        "last_end_ns": 195709039,
+        "first_to_last_span_ms": 151.292857,
+        "gaps_between_activities_ms": 151.202137
+      },
+      "ipc.energy_evaluation": {
+        "count": 28,
+        "sum_ms": 0.052608,
+        "union_ms": 0.052608,
+        "first_start_ns": 44858964,
+        "last_end_ns": 197176042,
+        "first_to_last_span_ms": 152.317078,
+        "gaps_between_activities_ms": 152.26447
+      }
+    },
+    "all_cub_kernels_upper_bound": {
+      "count": 103,
+      "sum_ms": 0.236703,
+      "union_ms": 0.236703,
+      "first_start_ns": 19628800,
+      "last_end_ns": 197680073,
+      "first_to_last_span_ms": 178.051273,
+      "gaps_between_activities_ms": 177.81457
+    },
+    "spmv_kernels": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "outside_graph_kernel_count": 1146,
+    "outside_graph_without_unique_runtime_count": 0,
+    "graph_internal_operator_attribution_available": false,
+    "performance_certified": false,
+    "scope": "Captured diagnostic frame only. GPU interval union includes whole Graph trace and clips boundaries. Energy ownership requires unique runtime correlation; Graph nodes remain excluded. CPU/GPU/waits are not additive; no whole-scene speedup inferred."
+  }
+}

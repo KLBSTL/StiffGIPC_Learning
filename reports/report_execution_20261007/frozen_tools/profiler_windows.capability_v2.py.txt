@@ -89,28 +89,15 @@ def resource_reason(sample, before_free, budget, disk_free, foreign):
     return None
 
 
-def reserve_attempt(root, seal_sha, output, mode, exe_sha=None):
+def reserve_attempt(root, seal_sha, output, mode):
     # Called with the existing GPU lock held. Slots are immutable and failures
     # consume their slot; no hidden retry or change to the original round plan.
-    if exe_sha is not None:
-        # A CPU-only tool/seal revision cannot reset a native program's budget.
-        # Migrate prior seal-keyed receipts using their immutable request.
-        require(len(exe_sha)==64 and all(c in '0123456789abcdef' for c in exe_sha), 'Invalid program identity')
-        consumed=[]
-        for path in (root/'runs/local_profile_attempts').glob('*/attempt*.json'):
-            receipt=read(path);program=receipt.get('exe_sha256')
-            if program is None:
-                request=Path(receipt['output'])/'requested.json'
-                require(request.is_file(),'Historical profile receipt lacks program identity; budget unresolved')
-                program=read(request)['exe_sha256']
-            if program==exe_sha:consumed.append(path)
-        require(len(consumed)<2,'Two profiling launch attempts already consumed for this native program')
-    folder = child(root, 'runs/local_profile_attempts/' + (exe_sha or seal_sha))
+    folder = child(root, 'runs/local_profile_attempts/' + seal_sha)
     folder.mkdir(parents=True, exist_ok=True)
     for i in (1, 2):
         path = folder / f'attempt{i}.json'
         if not path.exists():
-            write_new(path, {'seal_sha256': seal_sha, 'exe_sha256':exe_sha, 'output': str(output), 'profile': mode,
+            write_new(path, {'seal_sha256': seal_sha, 'output': str(output), 'profile': mode,
                              'attempt': i, 'max_attempts': 2, 'owner_pid': os.getpid()})
             return record(path)
     raise ValueError('Two profiling launch attempts already reserved for this seal; no automatic budget extension')
@@ -195,7 +182,7 @@ def execute(root, seal_path, reference, out, mode, nsys, gpu, selected_frame=57)
             exe = Path(identity['exe']['path']); env = environment(c, out)
             env['CUDA_VISIBLE_DEVICES'] = before[-1]['uuid']
             command = nsys_command(nsys, exe, out, mode)
-            attempt = reserve_attempt(root, sha(seal_path), out, mode, identity['exe']['sha256'])
+            attempt = reserve_attempt(root, sha(seal_path), out, mode)
             write_new(out/'requested.json', {'requested_config': c, 'expanded_config': c, 'config_sha256': digest(c),
                 'binary': 'active', 'source_digest': identity['source_digest'], 'exe_sha256': identity['exe']['sha256'],
                 'reference_run': str(reference), 'reference_evidence': reference_ids, 'seal': record(seal_path),

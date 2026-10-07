@@ -1,0 +1,14 @@
+{
+  "before": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_rounds.py",
+    "bytes": 14564,
+    "sha256": "5f89209b278177f56293da8175c3a03e6e2a8b57fbf5b62f98ceb0e67a7a9314"
+  },
+  "after": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_rounds.py",
+    "bytes": 14564,
+    "sha256": "5f89209b278177f56293da8175c3a03e6e2a8b57fbf5b62f98ceb0e67a7a9314"
+  },
+  "gpu_runs_started": false,
+  "reason": "Add independent original velocity observation before the first simulation launch."
+}

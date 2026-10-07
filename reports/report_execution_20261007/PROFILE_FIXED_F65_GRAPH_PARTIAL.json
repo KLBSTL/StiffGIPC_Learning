@@ -1,0 +1,1947 @@
+{
+  "schema": "local.profile.v1",
+  "read_only": true,
+  "selected_physical_frame": 65,
+  "performance_certified": false,
+  "sources_sha256": {
+    "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report_execution_20261007\\profile_fixed_f65_graph\\nsight.sqlite": "ab3207d6363067342e8052ef730526ff16a7bbc9b6aa8d3d6ea3b0fd0553a8e3",
+    "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report_execution_20261007\\profile_fixed_f65_graph\\cost.jsonl": "f0bfd551f6ddcb9ac8735afae0713ab32c3032480e39f72b290fe99b4482501d"
+  },
+  "analyzer_sha256": "981aa928412584f955011d59388c23b0bbcc3701b183732ead2f2a25ecacb8cf",
+  "donor_sha256": {
+    "stiff_toi_cudagraph_20260929/tools/active/contact_linear_profile.py": "f70bd5af57a4ed9e6bcbd9e387de66adf4ad28d42e48c372067d562d146f9376",
+    "stiff_toi_cudagraph_20260929/tools/active/analyze_ipc_light_cost.py": "651774f6989a96ffd37023af27e35b86b0e1294355e6e78eadf0646afe94428a"
+  },
+  "raw_physical_nvtx_ranges": 1,
+  "canonical_physical_nvtx_ranges": 1,
+  "frame_identity_basis": "One native outermost cost record for the selected frame and one canonical completed NVTX physical-frame range. NVTX itself has no numeric frame ID; retain launcher configuration evidence.",
+  "missing_activity_tables": [],
+  "cpu": {
+    "physical_frame_nvtx_wall_ms": 182.335909,
+    "native_physical_frame_cpu_submit_ms": 182.3251,
+    "native_gpu_events_enabled": false,
+    "cost_record_count": 367,
+    "nvtx_envelopes": [
+      {
+        "stage": "abd.apply",
+        "instances": 6,
+        "cpu_union_ms": 0.053337,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "abd.prepare",
+        "instances": 6,
+        "cpu_union_ms": 0.111481,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.discrete_bvh_build",
+        "instances": 6,
+        "cpu_union_ms": 2.251778,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.discrete_bvh_policy_rebuild",
+        "instances": 2,
+        "cpu_union_ms": 0.704693,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.discrete_bvh_policy_refit",
+        "instances": 10,
+        "cpu_union_ms": 1.529787,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.discrete_query",
+        "instances": 6,
+        "cpu_union_ms": 26.104912,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.ground_ccd",
+        "instances": 6,
+        "cpu_union_ms": 1.503922,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.self_ccd",
+        "instances": 8,
+        "cpu_union_ms": 2.470486,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.swept_bvh_build_or_refit",
+        "instances": 6,
+        "cpu_union_ms": 0.729365,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "collision.swept_query",
+        "instances": 6,
+        "cpu_union_ms": 12.762682,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "global_preconditioner.prepare",
+        "instances": 6,
+        "cpu_union_ms": 0.002452,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.capture_and_instantiate",
+        "instances": 6,
+        "cpu_union_ms": 1.28731,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.entry",
+        "instances": 6,
+        "cpu_union_ms": 59.323018,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.final_readback",
+        "instances": 6,
+        "cpu_union_ms": 47.098407,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.initial_readback",
+        "instances": 6,
+        "cpu_union_ms": 9.301485,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.replay",
+        "instances": 6,
+        "cpu_union_ms": 0.373791,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "graph.signature_and_invalidation",
+        "instances": 6,
+        "cpu_union_ms": 0.464241,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.energy_batch_readback",
+        "instances": 7,
+        "cpu_union_ms": 2.163607,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.energy_batch_reduce",
+        "instances": 49,
+        "cpu_union_ms": 0.461945,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.energy_evaluation",
+        "instances": 7,
+        "cpu_union_ms": 8.249192,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.energy_production",
+        "instances": 49,
+        "cpu_union_ms": 0.577707,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.gradient_hessian_assembly",
+        "instances": 6,
+        "cpu_union_ms": 15.258145,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.line_search",
+        "instances": 6,
+        "cpu_union_ms": 51.007557,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.newton_iteration",
+        "instances": 6,
+        "cpu_union_ms": 176.821537,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "ipc.physical_frame",
+        "instances": 1,
+        "cpu_union_ms": 182.335909,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "linear.build",
+        "instances": 6,
+        "cpu_union_ms": 21.800136,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "linear.distribute",
+        "instances": 6,
+        "cpu_union_ms": 1.271026,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "linear.matrix_convert",
+        "instances": 6,
+        "cpu_union_ms": 10.084906,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "linear.rhs",
+        "instances": 6,
+        "cpu_union_ms": 0.17624,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "linear.total_including_diagnostics",
+        "instances": 6,
+        "cpu_union_ms": 83.731631,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "local_preconditioner.apply",
+        "instances": 6,
+        "cpu_union_ms": 0.238738,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "local_preconditioner.prepare",
+        "instances": 6,
+        "cpu_union_ms": 10.701909,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.apply",
+        "instances": 6,
+        "cpu_union_ms": 0.235256,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.hierarchy",
+        "instances": 6,
+        "cpu_union_ms": 8.260745,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.legacy_factor",
+        "instances": 6,
+        "cpu_union_ms": 0.047086,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.local_action",
+        "instances": 6,
+        "cpu_union_ms": 0.04623,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.numeric_aggregate",
+        "instances": 6,
+        "cpu_union_ms": 0.044073,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.numeric_fill",
+        "instances": 6,
+        "cpu_union_ms": 0.054211,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.prepare",
+        "instances": 6,
+        "cpu_union_ms": 8.53178,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.prolong",
+        "instances": 6,
+        "cpu_union_ms": 0.043462,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.restrict",
+        "instances": 6,
+        "cpu_union_ms": 0.048053,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "mas.workspace_zero",
+        "instances": 6,
+        "cpu_union_ms": 0.085979,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "pcg.entry_including_diagnostics",
+        "instances": 6,
+        "cpu_union_ms": 60.307068,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "pcg.production_loop",
+        "instances": 6,
+        "cpu_union_ms": 59.329728,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "pcg.reduce_device",
+        "instances": 6,
+        "cpu_union_ms": 0.098862,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "pcg.workspace",
+        "instances": 6,
+        "cpu_union_ms": 0.052603,
+        "inclusive_not_additive": true
+      },
+      {
+        "stage": "preconditioner.apply",
+        "instances": 6,
+        "cpu_union_ms": 0.367001,
+        "inclusive_not_additive": true
+      }
+    ],
+    "cuda_runtime_table_available": true,
+    "runtime_api_union_ms": 175.697582,
+    "explicit_wait_api_union_ms": 3.975325,
+    "memcpy_api_union_including_possible_wait_ms": 156.862418
+  },
+  "gpu": {
+    "all_gpu_activity": {
+      "count": 1827,
+      "sum_ms": 86.47458,
+      "union_ms": 86.47458,
+      "first_start_ns": 16534634,
+      "last_end_ns": 197781801,
+      "first_to_last_span_ms": 181.247167,
+      "gaps_between_activities_ms": 94.772587
+    },
+    "categories": {
+      "abd.local_action": {
+        "count": 6,
+        "sum_ms": 0.032608,
+        "union_ms": 0.032608,
+        "first_start_ns": 28362630,
+        "last_end_ns": 174627534,
+        "first_to_last_span_ms": 146.264904,
+        "gaps_between_activities_ms": 146.232296
+      },
+      "collision.bvh": {
+        "count": 80,
+        "sum_ms": 1.63231,
+        "union_ms": 1.63231,
+        "first_start_ns": 41062400,
+        "last_end_ns": 187832742,
+        "first_to_last_span_ms": 146.770342,
+        "gaps_between_activities_ms": 145.138032
+      },
+      "collision.discrete_query": {
+        "count": 18,
+        "sum_ms": 23.912632,
+        "union_ms": 23.912632,
+        "first_start_ns": 46941774,
+        "last_end_ns": 194821297,
+        "first_to_last_span_ms": 147.879523,
+        "gaps_between_activities_ms": 123.966891
+      },
+      "collision.swept_query": {
+        "count": 12,
+        "sum_ms": 10.635585,
+        "union_ms": 10.635585,
+        "first_start_ns": 41255167,
+        "last_end_ns": 187322920,
+        "first_to_last_span_ms": 146.067753,
+        "gaps_between_activities_ms": 135.432168
+      },
+      "contact.gradient_hessian": {
+        "count": 14,
+        "sum_ms": 2.421272,
+        "union_ms": 2.421272,
+        "first_start_ns": 19536609,
+        "last_end_ns": 165450378,
+        "first_to_last_span_ms": 145.913769,
+        "gaps_between_activities_ms": 143.492497
+      },
+      "mas.inverse_prepare": {
+        "count": 6,
+        "sum_ms": 7.223176,
+        "union_ms": 7.223176,
+        "first_start_ns": 27532745,
+        "last_end_ns": 174610190,
+        "first_to_last_span_ms": 147.077445,
+        "gaps_between_activities_ms": 139.854269
+      },
+      "mas.local_action": {
+        "count": 6,
+        "sum_ms": 0.039328,
+        "union_ms": 0.039328,
+        "first_start_ns": 28381798,
+        "last_end_ns": 174650094,
+        "first_to_last_span_ms": 146.268296,
+        "gaps_between_activities_ms": 146.228968
+      },
+      "mas.numeric_reduce": {
+        "count": 6,
+        "sum_ms": 0.273184,
+        "union_ms": 0.273184,
+        "first_start_ns": 27485321,
+        "last_end_ns": 173781457,
+        "first_to_last_span_ms": 146.296136,
+        "gaps_between_activities_ms": 146.022952
+      },
+      "mas.numeric_scatter": {
+        "count": 6,
+        "sum_ms": 1.908666,
+        "union_ms": 1.908666,
+        "first_start_ns": 27165450,
+        "last_end_ns": 173734193,
+        "first_to_last_span_ms": 146.568743,
+        "gaps_between_activities_ms": 144.660077
+      },
+      "mas.prolong": {
+        "count": 6,
+        "sum_ms": 0.013696,
+        "union_ms": 0.013696,
+        "first_start_ns": 28392038,
+        "last_end_ns": 174653774,
+        "first_to_last_span_ms": 146.261736,
+        "gaps_between_activities_ms": 146.24804
+      },
+      "mas.restrict": {
+        "count": 6,
+        "sum_ms": 0.033696,
+        "union_ms": 0.033696,
+        "first_start_ns": 28374758,
+        "last_end_ns": 174640366,
+        "first_to_last_span_ms": 146.265608,
+        "gaps_between_activities_ms": 146.231912
+      },
+      "matrix.convert": {
+        "count": 78,
+        "sum_ms": 4.773713,
+        "union_ms": 4.773713,
+        "first_start_ns": 21351067,
+        "last_end_ns": 170572666,
+        "first_to_last_span_ms": 149.221599,
+        "gaps_between_activities_ms": 144.447886
+      },
+      "memory.memcpy": {
+        "count": 294,
+        "sum_ms": 0.572416,
+        "union_ms": 0.572416,
+        "first_start_ns": 19669408,
+        "last_end_ns": 197714889,
+        "first_to_last_span_ms": 178.045481,
+        "gaps_between_activities_ms": 177.473065
+      },
+      "memory.memset": {
+        "count": 387,
+        "sum_ms": 0.506367,
+        "union_ms": 0.506367,
+        "first_start_ns": 16534634,
+        "last_end_ns": 197497577,
+        "first_to_last_span_ms": 180.962943,
+        "gaps_between_activities_ms": 180.456576
+      },
+      "pcg.control_and_validation": {
+        "count": 12,
+        "sum_ms": 0.015008,
+        "union_ms": 0.015008,
+        "first_start_ns": 28451430,
+        "last_end_ns": 174712910,
+        "first_to_last_span_ms": 146.26148,
+        "gaps_between_activities_ms": 146.246472
+      },
+      "pcg.dot_partial": {
+        "count": 6,
+        "sum_ms": 0.014368,
+        "union_ms": 0.014368,
+        "first_start_ns": 28395718,
+        "last_end_ns": 174658094,
+        "first_to_last_span_ms": 146.262376,
+        "gaps_between_activities_ms": 146.248008
+      },
+      "reduce.cub_unspecified_operand": {
+        "count": 103,
+        "sum_ms": 0.236703,
+        "union_ms": 0.236703,
+        "first_start_ns": 19628800,
+        "last_end_ns": 197680073,
+        "first_to_last_span_ms": 178.051273,
+        "gaps_between_activities_ms": 177.81457
+      },
+      "unknown_kernel": {
+        "count": 781,
+        "sum_ms": 32.229852,
+        "union_ms": 32.229852,
+        "first_start_ns": 16541482,
+        "last_end_ns": 197781801,
+        "first_to_last_span_ms": 181.240319,
+        "gaps_between_activities_ms": 149.010467
+      }
+    },
+    "cross_category_union_overlap_ms": 0,
+    "sum_minus_union_ms": 0
+  },
+  "kernel_symbols": [
+    {
+      "symbol": "_selfQuery_ee(const int *, const int *, const double3 *, const double3 *, const uint2 *, const AABB *, const Node *, int4 *, int4 *, unsigned int *, int *, double, unsigned int, int)",
+      "category": "collision.discrete_query",
+      "count": 6,
+      "sum_ms": 16.047665,
+      "union_ms": 16.047665,
+      "first_start_ns": 47868299,
+      "last_end_ns": 194815665,
+      "first_to_last_span_ms": 146.947366,
+      "gaps_between_activities_ms": 130.899701
+    },
+    {
+      "symbol": "_edgeTriIntersectionQuery(const int *, const double3 *, const uint2 *, const uint3 *, const AABB *, const Node *, int *, double, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 12.093723,
+      "union_ms": 12.093723,
+      "first_start_ns": 45652530,
+      "last_end_ns": 191685787,
+      "first_to_last_span_ms": 146.033257,
+      "gaps_between_activities_ms": 133.939534
+    },
+    {
+      "symbol": "_selfQuery_ee_ccd(const int *, const int *, const double3 *, const double3 *, double, const uint2 *, const AABB *, const Node *, int4 *, unsigned int *, double, unsigned int, int)",
+      "category": "collision.swept_query",
+      "count": 6,
+      "sum_ms": 8.44788,
+      "union_ms": 8.44788,
+      "first_start_ns": 41534718,
+      "last_end_ns": 187322920,
+      "first_to_last_span_ms": 145.788202,
+      "gaps_between_activities_ms": 137.340322
+    },
+    {
+      "symbol": "_selfQuery_vf(const int *, const int *, const double3 *, const uint3 *, const unsigned int *, const AABB *, const Node *, int4 *, int4 *, unsigned int *, int *, double, unsigned int, int)",
+      "category": "collision.discrete_query",
+      "count": 6,
+      "sum_ms": 7.843207,
+      "union_ms": 7.843207,
+      "first_start_ns": 46941774,
+      "last_end_ns": 192954167,
+      "first_to_last_span_ms": 146.012393,
+      "gaps_between_activities_ms": 138.169186
+    },
+    {
+      "symbol": "__inverse6_P96x96(__GEIGEN__::MasMatrixSymf *, __GEIGEN__::MasMatrixSymT *, int)",
+      "category": "mas.inverse_prepare",
+      "count": 6,
+      "sum_ms": 7.223176,
+      "union_ms": 7.223176,
+      "first_start_ns": 27532745,
+      "last_end_ns": 174610190,
+      "first_to_last_span_ms": 147.077445,
+      "gaps_between_activities_ms": 139.854269
+    },
+    {
+      "symbol": "_calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d *, const double3 *, const uint3 *, const double *, double3 *, int, double, double, double, int, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, double, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 5.373552,
+      "union_ms": 5.373552,
+      "first_start_ns": 22586519,
+      "last_end_ns": 168958815,
+      "first_to_last_span_ms": 146.372296,
+      "gaps_between_activities_ms": 140.998744
+    },
+    {
+      "symbol": "<unnamed>::set_dst_val_kernel(int, unsigned int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *)",
+      "category": "matrix.convert",
+      "count": 18,
+      "sum_ms": 4.575089,
+      "union_ms": 4.575089,
+      "first_start_ns": 21752058,
+      "last_end_ns": 170546426,
+      "first_to_last_span_ms": 148.794368,
+      "gaps_between_activities_ms": 144.219279
+    },
+    {
+      "symbol": "_calculate_fem_gradient(__GEIGEN__::Matrix3x3d *, const double3 *, const uint4 *, const double *, double3 *, int, double *, double *, double)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 2.984279,
+      "union_ms": 2.984279,
+      "first_start_ns": 16550122,
+      "last_end_ns": 19534401,
+      "first_to_last_span_ms": 2.984279,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::radix_sort::DeviceRadixSortOnesweepKernel<cub::CUB_300001_SM_860::detail::radix::policy_hub<unsigned long long, unsigned int, unsigned int>::Policy1000, (cub::CUB_300001_SM_860::SortOrder)0, unsigned long long, unsigned int, unsigned int, int, int, cub::CUB_300001_SM_860::detail::identity_decomposer_t>(T7 *, T7 *, T5 *, const T5 *, T3 *, const T3 *, T4 *, const T4 *, T6, int, int, T8)",
+      "category": "unknown_kernel",
+      "count": 160,
+      "sum_ms": 2.420218,
+      "union_ms": 2.420218,
+      "first_start_ns": 21412955,
+      "last_end_ns": 169762141,
+      "first_to_last_span_ms": 148.349186,
+      "gaps_between_activities_ms": 145.928968
+    },
+    {
+      "symbol": "_calBarrierGradientAndHessian(const double3 *, const double3 *, const int4 *, double3 *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, unsigned int *, int *, double, double, int, int, int, int)",
+      "category": "contact.gradient_hessian",
+      "count": 6,
+      "sum_ms": 2.306393,
+      "union_ms": 2.306393,
+      "first_start_ns": 20795293,
+      "last_end_ns": 164658028,
+      "first_to_last_span_ms": 143.862735,
+      "gaps_between_activities_ms": 141.556342
+    },
+    {
+      "symbol": "_selfQuery_vf_ccd(const int *, const int *, const double3 *, const double3 *, double, const uint3 *, const unsigned int *, const AABB *, const Node *, int4 *, unsigned int *, double, unsigned int, int)",
+      "category": "collision.swept_query",
+      "count": 6,
+      "sum_ms": 2.187705,
+      "union_ms": 2.187705,
+      "first_start_ns": 41255167,
+      "last_end_ns": 186502858,
+      "first_to_last_span_ms": 145.247691,
+      "gaps_between_activities_ms": 143.059986
+    },
+    {
+      "symbol": "gipc::<unnamed>::cal_abd_system_preconditioner_kernel2(int, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)12, (int)0, (int)12, (int)12>>)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 1.954746,
+      "union_ms": 1.954746,
+      "first_start_ns": 23446933,
+      "last_end_ns": 169556445,
+      "first_to_last_span_ms": 146.109512,
+      "gaps_between_activities_ms": 144.154766
+    },
+    {
+      "symbol": "<unnamed>::prepare_hessian_bcoo_kernel(int, int, int, int *, __GEIGEN__::MasMatrixSymT *, int *, unsigned int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *)",
+      "category": "mas.numeric_scatter",
+      "count": 6,
+      "sum_ms": 1.908666,
+      "union_ms": 1.908666,
+      "first_start_ns": 27165450,
+      "last_end_ns": 173734193,
+      "first_to_last_span_ms": 146.568743,
+      "gaps_between_activities_ms": 144.660077
+    },
+    {
+      "symbol": "gipc::write_barrier_hessian(Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, gipc::ABDJacobi *, const int *, const BodyBoundaryType *, int, int, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 1.028476,
+      "union_ms": 1.028476,
+      "first_start_ns": 21911417,
+      "last_end_ns": 167778083,
+      "first_to_last_span_ms": 145.866666,
+      "gaps_between_activities_ms": 144.83819
+    },
+    {
+      "symbol": "_calcInternalAABB(const Node *, AABB *, unsigned int *, int)",
+      "category": "collision.bvh",
+      "count": 24,
+      "sum_ms": 0.953337,
+      "union_ms": 0.953337,
+      "first_start_ns": 41129472,
+      "last_end_ns": 187832742,
+      "first_to_last_span_ms": 146.70327,
+      "gaps_between_activities_ms": 145.749933
+    },
+    {
+      "symbol": "_cub_reduct_self_step(const double3 *, const int4 *, const double3 *, double *, double, int)",
+      "category": "unknown_kernel",
+      "count": 8,
+      "sum_ms": 0.946749,
+      "union_ms": 0.946749,
+      "first_start_ns": 40890400,
+      "last_end_ns": 185748141,
+      "first_to_last_span_ms": 144.857741,
+      "gaps_between_activities_ms": 143.910992
+    },
+    {
+      "symbol": "_calculate_quad_bending_gradient_hessian(const double3 *, const double3 *, const uint2 *, const uint2 *, const Eigen::Matrix<double, (int)4, (int)4, (int)0, (int)4, (int)4> *, double3 *, int, double, int, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, double, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.80211,
+      "union_ms": 0.80211,
+      "first_start_ns": 22451064,
+      "last_end_ns": 168278945,
+      "first_to_last_span_ms": 145.827881,
+      "gaps_between_activities_ms": 145.025771
+    },
+    {
+      "symbol": "_calFrictionHessian(const double3 *, const double3 *, const int4 *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, unsigned int *, int, double, double2 *, __GEIGEN__::Matrix3x2d *, double, double *, double, int, int, int, int, int, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.770365,
+      "union_ms": 0.770365,
+      "first_start_ns": 21209180,
+      "last_end_ns": 164822156,
+      "first_to_last_span_ms": 143.612976,
+      "gaps_between_activities_ms": 142.842611
+    },
+    {
+      "symbol": "void cudatool::parallel::<unnamed>::fast_segmental_reduce_ptr_kernel<double, (int)3, (int)3, (int)128, (int)32, cudatool::Plus<double>>(int, unsigned int *, Eigen::Matrix<T1, T2, T3, (Eigen::StorageOptions)0|T2==(int)1&&T3!=(int)1?(Eigen::StorageOptions)1:T3==(int)1&&T2!=(int)1?(Eigen::StorageOptions)0:(Eigen::StorageOptions)0, T2, T3> *, Eigen::Matrix<T1, T2, T3, (Eigen::StorageOptions)0|T2==(int)1&&T3!=(int)1?(Eigen::StorageOptions)1:T3==(int)1&&T2!=(int)1?(Eigen::StorageOptions)0:(Eigen::StorageOptions)0, T2, T3> *, T6)",
+      "category": "unknown_kernel",
+      "count": 18,
+      "sum_ms": 0.661148,
+      "union_ms": 0.661148,
+      "first_start_ns": 21881338,
+      "last_end_ns": 171278424,
+      "first_to_last_span_ms": 149.397086,
+      "gaps_between_activities_ms": 148.735938
+    },
+    {
+      "symbol": "_calFrictionGradient(const double3 *, const double3 *, const int4 *, double3 *, int, double, double2 *, __GEIGEN__::Matrix3x2d *, double, double *, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.553791,
+      "union_ms": 0.553791,
+      "first_start_ns": 21183548,
+      "last_end_ns": 164677868,
+      "first_to_last_span_ms": 143.49432,
+      "gaps_between_activities_ms": 142.940529
+    },
+    {
+      "symbol": "_get_triangleFEMEnergy_Reduction_3D(double *, const double3 *, const uint3 *, const __GEIGEN__::Matrix2x2d *, const double *, int, double, double, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.487807,
+      "union_ms": 0.487807,
+      "first_start_ns": 44419670,
+      "last_end_ns": 195622831,
+      "first_to_last_span_ms": 151.203161,
+      "gaps_between_activities_ms": 150.715354
+    },
+    {
+      "symbol": "_sortBvs(const unsigned int *, AABB *, AABB *, int)",
+      "category": "collision.bvh",
+      "count": 24,
+      "sum_ms": 0.284864,
+      "union_ms": 0.284864,
+      "first_start_ns": 41089120,
+      "last_end_ns": 187775463,
+      "first_to_last_span_ms": 146.686343,
+      "gaps_between_activities_ms": 146.401479
+    },
+    {
+      "symbol": "<unnamed>::prepare_hessian_bcoo_sum_kernel(int, int, int *, __GEIGEN__::MasMatrixSymT *, int *, unsigned int *, int *)",
+      "category": "mas.numeric_reduce",
+      "count": 6,
+      "sum_ms": 0.273184,
+      "union_ms": 0.273184,
+      "first_start_ns": 27485321,
+      "last_end_ns": 173781457,
+      "first_to_last_span_ms": 146.296136,
+      "gaps_between_activities_ms": 146.022952
+    },
+    {
+      "symbol": "_getQuadBendingEnergy_Reduction(double *, const double3 *, const double3 *, const uint2 *, const uint2 *, const Eigen::Matrix<double, (int)4, (int)4, (int)0, (int)4, (int)4> *, int, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.144511,
+      "union_ms": 0.144511,
+      "first_start_ns": 44495061,
+      "last_end_ns": 195648943,
+      "first_to_last_span_ms": 151.153882,
+      "gaps_between_activities_ms": 151.009371
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::radix_sort::DeviceRadixSortSingleTileKernel<cub::CUB_300001_SM_860::detail::radix::policy_hub<unsigned long long, unsigned int, unsigned int>::Policy1000, (cub::CUB_300001_SM_860::SortOrder)0, unsigned long long, unsigned int, unsigned int, cub::CUB_300001_SM_860::detail::identity_decomposer_t>(const T3 *, T3 *, const T4 *, T4 *, T5, int, int, T6)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.129311,
+      "union_ms": 0.129311,
+      "first_start_ns": 21728570,
+      "last_end_ns": 167428772,
+      "first_to_last_span_ms": 145.700202,
+      "gaps_between_activities_ms": 145.570891
+    },
+    {
+      "symbol": "_getBarrierEnergy_Reduction_3D(double *, const double3 *, const double3 *, int4 *, double, double, int)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.116352,
+      "union_ms": 0.116352,
+      "first_start_ns": 44521589,
+      "last_end_ns": 195670671,
+      "first_to_last_span_ms": 151.149082,
+      "gaps_between_activities_ms": 151.03273
+    },
+    {
+      "symbol": "void _calcLeafBvs_ccd<uint3>(const double3 *, const double3 *, double, const T1 *, AABB *, int, int)",
+      "category": "collision.bvh",
+      "count": 6,
+      "sum_ms": 0.105151,
+      "union_ms": 0.105151,
+      "first_start_ns": 41062400,
+      "last_end_ns": 186091500,
+      "first_to_last_span_ms": 145.0291,
+      "gaps_between_activities_ms": 144.923949
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::scan::DeviceScanKernel<cub::CUB_300001_SM_860::detail::scan::policy_hub<unsigned int, unsigned int, unsigned int, unsigned int, cuda::std::__4::plus<void>>::Policy1000, const unsigned int *, unsigned int *, cub::CUB_300001_SM_860::ScanTileState<unsigned int, (bool)1>, cuda::std::__4::plus<void>, cub::CUB_300001_SM_860::detail::InputValue<unsigned int, unsigned int *>, unsigned int, unsigned int, (bool)0, unsigned int>(T2, T3, T4, int, T5, T6, T7)",
+      "category": "unknown_kernel",
+      "count": 42,
+      "sum_ms": 0.104255,
+      "union_ms": 0.104255,
+      "first_start_ns": 21767354,
+      "last_end_ns": 173331666,
+      "first_to_last_span_ms": 151.564312,
+      "gaps_between_activities_ms": 151.460057
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceSingleTileKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<double, unsigned int, cuda::std::__4::plus<void>>::Policy1000, double *, double *, unsigned int, cuda::std::__4::plus<void>, double, double, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 55,
+      "sum_ms": 0.102496,
+      "union_ms": 0.102496,
+      "first_start_ns": 28400262,
+      "last_end_ns": 195709039,
+      "first_to_last_span_ms": 167.308777,
+      "gaps_between_activities_ms": 167.206281
+    },
+    {
+      "symbol": "gipc::<unnamed>::setup_abd_system_hessian_abd_fem_kernel(int, cudatool::CDense1D<int>, cudatool::CDense1D<int>, cudatool::CDense1D<gipc::ABDJacobi>, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, const Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, const int *, const int *, int, cudatool::CDense1D<BodyBoundaryType>, int, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.100448,
+      "union_ms": 0.100448,
+      "first_start_ns": 22083033,
+      "last_end_ns": 167796387,
+      "first_to_last_span_ms": 145.713354,
+      "gaps_between_activities_ms": 145.612906
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::radix_sort::DeviceRadixSortHistogramKernel<cub::CUB_300001_SM_860::detail::radix::policy_hub<unsigned long long, unsigned int, unsigned int>::Policy1000, (cub::CUB_300001_SM_860::SortOrder)0, unsigned long long, unsigned int, cub::CUB_300001_SM_860::detail::identity_decomposer_t>(T4 *, const T3 *, T4, int, int, T5)",
+      "category": "unknown_kernel",
+      "count": 20,
+      "sum_ms": 0.096928,
+      "union_ms": 0.096928,
+      "first_start_ns": 21392859,
+      "last_end_ns": 169580349,
+      "first_to_last_span_ms": 148.18749,
+      "gaps_between_activities_ms": 148.090562
+    },
+    {
+      "symbol": "void _calcLeafBvs_ccd<uint2>(const double3 *, const double3 *, double, const T1 *, AABB *, int, int)",
+      "category": "collision.bvh",
+      "count": 6,
+      "sum_ms": 0.091678,
+      "union_ms": 0.091678,
+      "first_start_ns": 41162304,
+      "last_end_ns": 186163883,
+      "first_to_last_span_ms": 145.001579,
+      "gaps_between_activities_ms": 144.909901
+    },
+    {
+      "symbol": "adjust_fem_fem_contact_indices_kernel(int, int *, int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.082655,
+      "union_ms": 0.082655,
+      "first_start_ns": 22435928,
+      "last_end_ns": 168143618,
+      "first_to_last_span_ms": 145.70769,
+      "gaps_between_activities_ms": 145.625035
+    },
+    {
+      "symbol": "<unnamed>::compute_hash_and_index_kernel(int, int *, int *, unsigned long long *, unsigned int *)",
+      "category": "matrix.convert",
+      "count": 18,
+      "sum_ms": 0.0792,
+      "union_ms": 0.0792,
+      "first_start_ns": 21720442,
+      "last_end_ns": 169567869,
+      "first_to_last_span_ms": 147.847427,
+      "gaps_between_activities_ms": 147.768227
+    },
+    {
+      "symbol": "_buildCollisionConnection_new(unsigned int *, const int *, const int4 *, const int *, int, int, int, int)",
+      "category": "unknown_kernel",
+      "count": 30,
+      "sum_ms": 0.078528,
+      "union_ms": 0.078528,
+      "first_start_ns": 26372300,
+      "last_end_ns": 173259154,
+      "first_to_last_span_ms": 146.886854,
+      "gaps_between_activities_ms": 146.808326
+    },
+    {
+      "symbol": "_calBarrierGradient(const double3 *, const double3 *, const int4 *, double3 *, double, double, int)",
+      "category": "contact.gradient_hessian",
+      "count": 1,
+      "sum_ms": 0.077919,
+      "union_ms": 0.077919,
+      "first_start_ns": 19542593,
+      "last_end_ns": 19620512,
+      "first_to_last_span_ms": 0.077919,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_getFrictionEnergy_Reduction_3D(double *, const double3 *, const double3 *, const int4 *, int, double, const double2 *, const __GEIGEN__::Matrix3x2d *, const double *, double, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.076448,
+      "union_ms": 0.076448,
+      "first_start_ns": 44554581,
+      "last_end_ns": 195696687,
+      "first_to_last_span_ms": 151.142106,
+      "gaps_between_activities_ms": 151.065658
+    },
+    {
+      "symbol": "_buildConnectMaskLx_new(const unsigned int *, unsigned int *, unsigned int *, int *, unsigned int *, const unsigned int *, int, int *, int, int)",
+      "category": "unknown_kernel",
+      "count": 24,
+      "sum_ms": 0.071776,
+      "union_ms": 0.071776,
+      "first_start_ns": 26391756,
+      "last_end_ns": 173249362,
+      "first_to_last_span_ms": 146.857606,
+      "gaps_between_activities_ms": 146.78583
+    },
+    {
+      "symbol": "void _calcLeafBvs<uint2>(const double3 *, const T1 *, AABB *, int, int)",
+      "category": "collision.bvh",
+      "count": 6,
+      "sum_ms": 0.067744,
+      "union_ms": 0.067744,
+      "first_start_ns": 45448947,
+      "last_end_ns": 187748999,
+      "first_to_last_span_ms": 142.300052,
+      "gaps_between_activities_ms": 142.232308
+    },
+    {
+      "symbol": "void _calcLeafBvs<uint3>(const double3 *, const T1 *, AABB *, int, int)",
+      "category": "collision.bvh",
+      "count": 6,
+      "sum_ms": 0.060032,
+      "union_ms": 0.060032,
+      "first_start_ns": 45301523,
+      "last_end_ns": 187558119,
+      "first_to_last_span_ms": 142.256596,
+      "gaps_between_activities_ms": 142.196564
+    },
+    {
+      "symbol": "<unnamed>::compute_sorted_partition_kernel(int, unsigned int *, unsigned long long *)",
+      "category": "matrix.convert",
+      "count": 18,
+      "sum_ms": 0.059072,
+      "union_ms": 0.059072,
+      "first_start_ns": 21756858,
+      "last_end_ns": 170555994,
+      "first_to_last_span_ms": 148.799136,
+      "gaps_between_activities_ms": 148.740064
+    },
+    {
+      "symbol": "_calFrictionHessian_gd(const double3 *, const double3 *, const double3 *, const unsigned int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, int, double, double, double *, int, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.053984,
+      "union_ms": 0.053984,
+      "first_start_ns": 21339035,
+      "last_end_ns": 165443402,
+      "first_to_last_span_ms": 144.104367,
+      "gaps_between_activities_ms": 144.050383
+    },
+    {
+      "symbol": "_reorder_triplets(int *, int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, const unsigned int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.053952,
+      "union_ms": 0.053952,
+      "first_start_ns": 21527387,
+      "last_end_ns": 167017797,
+      "first_to_last_span_ms": 145.49041,
+      "gaps_between_activities_ms": 145.436458
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceSingleTileKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<double, unsigned int, cuda::__4::maximum<void>>::Policy1000, const double *, double *, unsigned int, cuda::__4::maximum<void>, double, double, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 26,
+      "sum_ms": 0.052863,
+      "union_ms": 0.052863,
+      "first_start_ns": 23299381,
+      "last_end_ns": 187402920,
+      "first_to_last_span_ms": 164.103539,
+      "gaps_between_activities_ms": 164.050676
+    },
+    {
+      "symbol": "_calSelfCloseVal(const double3 *, const int4 *, int4 *, double *, unsigned int *, double, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.052288,
+      "union_ms": 0.052288,
+      "first_start_ns": 52196958,
+      "last_end_ns": 197512553,
+      "first_to_last_span_ms": 145.315595,
+      "gaps_between_activities_ms": 145.263307
+    },
+    {
+      "symbol": "gipc::cal_dx_from_dq_double3_kernel(int, cudatool::BufferViewT<(bool)0, double3>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)1, int>, cudatool::BufferViewT<(bool)0, gipc::ABDJacobi>)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.052128,
+      "union_ms": 0.052128,
+      "first_start_ns": 40765921,
+      "last_end_ns": 184182257,
+      "first_to_last_span_ms": 143.416336,
+      "gaps_between_activities_ms": 143.364208
+    },
+    {
+      "symbol": "<unnamed>::set_row_col_from_partition_kernel(int, int *, int *, unsigned long long *, unsigned int *)",
+      "category": "matrix.convert",
+      "count": 18,
+      "sum_ms": 0.047424,
+      "union_ms": 0.047424,
+      "first_start_ns": 21800826,
+      "last_end_ns": 170572666,
+      "first_to_last_span_ms": 148.77184,
+      "gaps_between_activities_ms": 148.724416
+    },
+    {
+      "symbol": "zero_fem_boundary_hessian_kernel(int, int *, int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.044767,
+      "union_ms": 0.044767,
+      "first_start_ns": 23278325,
+      "last_end_ns": 168968511,
+      "first_to_last_span_ms": 145.690186,
+      "gaps_between_activities_ms": 145.645419
+    },
+    {
+      "symbol": "_computeGroundEnergy_Reduction(double *, const double3 *, const double *, const double3 *, const unsigned int *, double, double, int)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.042464,
+      "union_ms": 0.042464,
+      "first_start_ns": 44543861,
+      "last_end_ns": 195681359,
+      "first_to_last_span_ms": 151.137498,
+      "gaps_between_activities_ms": 151.095034
+    },
+    {
+      "symbol": "_calKineticGradient(double3 *, double3 *, double3 *, double *, int)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.041152,
+      "union_ms": 0.041152,
+      "first_start_ns": 16541482,
+      "last_end_ns": 164266701,
+      "first_to_last_span_ms": 147.725219,
+      "gaps_between_activities_ms": 147.684067
+    },
+    {
+      "symbol": "_calFrictionLastH_DistAndTan(const double3 *, const int4 *, double *, double2 *, __GEIGEN__::Matrix3x2d *, int4 *, double, double, unsigned int *, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.040863,
+      "union_ms": 0.040863,
+      "first_start_ns": 20542430,
+      "last_end_ns": 20583293,
+      "first_to_last_span_ms": 0.040863,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::scan::DeviceScanInitKernel<cub::CUB_300001_SM_860::ScanTileState<unsigned int, (bool)1>>(T1, int)",
+      "category": "unknown_kernel",
+      "count": 42,
+      "sum_ms": 0.040448,
+      "union_ms": 0.040448,
+      "first_start_ns": 21759354,
+      "last_end_ns": 173323090,
+      "first_to_last_span_ms": 151.563736,
+      "gaps_between_activities_ms": 151.523288
+    },
+    {
+      "symbol": "_nextLevelCluster(unsigned int *, unsigned int *, int)",
+      "category": "unknown_kernel",
+      "count": 24,
+      "sum_ms": 0.039775,
+      "union_ms": 0.039775,
+      "first_start_ns": 26736843,
+      "last_end_ns": 173315154,
+      "first_to_last_span_ms": 146.578311,
+      "gaps_between_activities_ms": 146.538536
+    },
+    {
+      "symbol": "_schwarzLocalXSym6(const __GEIGEN__::MasMatrixSymf *, const Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> *, float3 *, int)",
+      "category": "mas.local_action",
+      "count": 6,
+      "sum_ms": 0.039328,
+      "union_ms": 0.039328,
+      "first_start_ns": 28381798,
+      "last_end_ns": 174650094,
+      "first_to_last_span_ms": 146.268296,
+      "gaps_between_activities_ms": 146.228968
+    },
+    {
+      "symbol": "gipc::write_abd_body_hessian(Eigen::Matrix<double, (int)12, (int)12, (int)0, (int)12, (int)12> *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.038784,
+      "union_ms": 0.038784,
+      "first_start_ns": 21886201,
+      "last_end_ns": 167589859,
+      "first_to_last_span_ms": 145.703658,
+      "gaps_between_activities_ms": 145.664874
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<AABB, unsigned int, MergeAABB>::Policy1000, const AABB *, unsigned int, MergeAABB, AABB, cuda::std::__4::__identity>(T2, T5 *, T3, cub::CUB_300001_SM_860::GridEvenShare<T3>, T4, T6)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 2,
+      "sum_ms": 0.038048,
+      "union_ms": 0.038048,
+      "first_start_ns": 126104928,
+      "last_end_ns": 126498143,
+      "first_to_last_span_ms": 0.393215,
+      "gaps_between_activities_ms": 0.355167
+    },
+    {
+      "symbol": "_calcMChash(unsigned long long *, AABB *, int)",
+      "category": "collision.bvh",
+      "count": 2,
+      "sum_ms": 0.035424,
+      "union_ms": 0.035424,
+      "first_start_ns": 126180320,
+      "last_end_ns": 126568063,
+      "first_to_last_span_ms": 0.387743,
+      "gaps_between_activities_ms": 0.352319
+    },
+    {
+      "symbol": "_cub_reduct_cfl(const double3 *, double *, const unsigned int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.034079,
+      "union_ms": 0.034079,
+      "first_start_ns": 42967610,
+      "last_end_ns": 187399240,
+      "first_to_last_span_ms": 144.43163,
+      "gaps_between_activities_ms": 144.397551
+    },
+    {
+      "symbol": "__buildMultiLevelR_optimized_new(const double3 *, Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> *, int *, int *, unsigned int *, int *, int, int)",
+      "category": "mas.restrict",
+      "count": 6,
+      "sum_ms": 0.033696,
+      "union_ms": 0.033696,
+      "first_start_ns": 28374758,
+      "last_end_ns": 174640366,
+      "first_to_last_span_ms": 146.265608,
+      "gaps_between_activities_ms": 146.231912
+    },
+    {
+      "symbol": "_prefixSumLx(int2 *, unsigned int *, unsigned int *, unsigned int *, int *, int, int, int)",
+      "category": "unknown_kernel",
+      "count": 24,
+      "sum_ms": 0.033216,
+      "union_ms": 0.033216,
+      "first_start_ns": 26746827,
+      "last_end_ns": 173340082,
+      "first_to_last_span_ms": 146.593255,
+      "gaps_between_activities_ms": 146.560039
+    },
+    {
+      "symbol": "<unnamed>::abd_preconditioner_apply_kernel(int, cudatool::CDenseVectorViewer<double>, cudatool::DenseVectorViewer<double>, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)12, (int)0, (int)12, (int)12>>)",
+      "category": "abd.local_action",
+      "count": 6,
+      "sum_ms": 0.032608,
+      "union_ms": 0.032608,
+      "first_start_ns": 28362630,
+      "last_end_ns": 174627534,
+      "first_to_last_span_ms": 146.264904,
+      "gaps_between_activities_ms": 146.232296
+    },
+    {
+      "symbol": "_computeGroundGradientAndHessian(const double3 *, const double *, const double3 *, const unsigned int *, double3 *, unsigned int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int *, int *, double, double, int, int)",
+      "category": "contact.gradient_hessian",
+      "count": 6,
+      "sum_ms": 0.032384,
+      "union_ms": 0.032384,
+      "first_start_ns": 21343835,
+      "last_end_ns": 165450378,
+      "first_to_last_span_ms": 144.106543,
+      "gaps_between_activities_ms": 144.074159
+    },
+    {
+      "symbol": "_cub_reduct_ground_step(const double3 *, const unsigned int *, const double *, const double3 *, const double3 *, double *, double, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.03168,
+      "union_ms": 0.03168,
+      "first_start_ns": 40826817,
+      "last_end_ns": 185073775,
+      "first_to_last_span_ms": 144.246958,
+      "gaps_between_activities_ms": 144.215278
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceSingleTileKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<double, unsigned int, cuda::std::__4::plus<void>>::Policy1000, const double *, double *, unsigned int, cuda::std::__4::plus<void>, double, double, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 16,
+      "sum_ms": 0.031424,
+      "union_ms": 0.031424,
+      "first_start_ns": 19628800,
+      "last_end_ns": 197176042,
+      "first_to_last_span_ms": 177.547242,
+      "gaps_between_activities_ms": 177.515818
+    },
+    {
+      "symbol": "_getFrictionEnergy_gd_Reduction_3D(double *, const double3 *, const double3 *, const double3 *, const unsigned int *, int, double, const double *, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.031104,
+      "union_ms": 0.031104,
+      "first_start_ns": 44572277,
+      "last_end_ns": 195705839,
+      "first_to_last_span_ms": 151.133562,
+      "gaps_between_activities_ms": 151.102458
+    },
+    {
+      "symbol": "setup_fem_mass_triplets_kernel(int, double *, int *, int *, Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, int, int, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.030176,
+      "union_ms": 0.030176,
+      "first_start_ns": 23287477,
+      "last_end_ns": 168975007,
+      "first_to_last_span_ms": 145.68753,
+      "gaps_between_activities_ms": 145.657354
+    },
+    {
+      "symbol": "_computeNextLevel(int *, unsigned int *, int, int)",
+      "category": "unknown_kernel",
+      "count": 24,
+      "sum_ms": 0.029792,
+      "union_ms": 0.029792,
+      "first_start_ns": 26750219,
+      "last_end_ns": 173342642,
+      "first_to_last_span_ms": 146.592423,
+      "gaps_between_activities_ms": 146.562631
+    },
+    {
+      "symbol": "gipc::<unnamed>::cal_abd_body_gradient_and_hessian_kernel(int, cudatool::CDense1D<BodyBoundaryType>, cudatool::CDense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::CDense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::CDense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::CDense1D<gipc::ABDJacobiDyadicMass>, cudatool::CDense1D<double>, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::DenseVectorViewer<double>, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)12, (int)0, (int)12, (int)12>>, double, double, double, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.025984,
+      "union_ms": 0.025984,
+      "first_start_ns": 21706458,
+      "last_end_ns": 167399812,
+      "first_to_last_span_ms": 145.693354,
+      "gaps_between_activities_ms": 145.66737
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::radix_sort::DeviceRadixSortExclusiveSumKernel<cub::CUB_300001_SM_860::detail::radix::policy_hub<unsigned long long, unsigned int, unsigned int>::Policy1000, unsigned int>(T2 *)",
+      "category": "unknown_kernel",
+      "count": 20,
+      "sum_ms": 0.024736,
+      "union_ms": 0.024736,
+      "first_start_ns": 21398491,
+      "last_end_ns": 169583133,
+      "first_to_last_span_ms": 148.184642,
+      "gaps_between_activities_ms": 148.159906
+    },
+    {
+      "symbol": "_cub_reduct_max_double3_to_double(const double3 *, double *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.02464,
+      "union_ms": 0.02464,
+      "first_start_ns": 23293909,
+      "last_end_ns": 168980511,
+      "first_to_last_span_ms": 145.686602,
+      "gaps_between_activities_ms": 145.661962
+    },
+    {
+      "symbol": "_getKineticEnergy_Reduction_3D(double3 *, double3 *, double *, double *, int)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.024224,
+      "union_ms": 0.024224,
+      "first_start_ns": 44411126,
+      "last_end_ns": 195547663,
+      "first_to_last_span_ms": 151.136537,
+      "gaps_between_activities_ms": 151.112313
+    },
+    {
+      "symbol": "gipc::step_forward_vertices_kernel(int, cudatool::BufferViewT<(bool)0, double3>, cudatool::BufferViewT<(bool)1, int>, cudatool::BufferViewT<(bool)0, gipc::ABDJacobi>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.023808,
+      "union_ms": 0.023808,
+      "first_start_ns": 45289779,
+      "last_end_ns": 187540807,
+      "first_to_last_span_ms": 142.251028,
+      "gaps_between_activities_ms": 142.22722
+    },
+    {
+      "symbol": "_calFrictionGradient_gd(const double3 *, const double3 *, const double3 *, const unsigned int *, double3 *, int, double, double, double *, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.022688,
+      "union_ms": 0.022688,
+      "first_start_ns": 21202876,
+      "last_end_ns": 164683532,
+      "first_to_last_span_ms": 143.480656,
+      "gaps_between_activities_ms": 143.457968
+    },
+    {
+      "symbol": "_GroundCollisionDetect(const double3 *, const unsigned int *, const double *, const double3 *, unsigned int *, unsigned int *, double, int)",
+      "category": "collision.discrete_query",
+      "count": 6,
+      "sum_ms": 0.02176,
+      "union_ms": 0.02176,
+      "first_start_ns": 51564928,
+      "last_end_ns": 194821297,
+      "first_to_last_span_ms": 143.256369,
+      "gaps_between_activities_ms": 143.234609
+    },
+    {
+      "symbol": "_buildCML0_new(const unsigned int *, unsigned int *, unsigned int *, unsigned int *, int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.020512,
+      "union_ms": 0.020512,
+      "first_start_ns": 26366892,
+      "last_end_ns": 171882838,
+      "first_to_last_span_ms": 145.515946,
+      "gaps_between_activities_ms": 145.495434
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::select::DeviceSelectSweepKernel<cub::CUB_300001_SM_860::detail::select::policy_hub<unsigned int, unsigned int, int, (bool)0, (cub::CUB_300001_SM_860::SelectImpl)0>::Policy1000, const unsigned int *, const unsigned int *, unsigned int *, int *, cub::CUB_300001_SM_860::ScanTileState<int, (bool)1>, cub::CUB_300001_SM_860::NullType, cub::CUB_300001_SM_860::NullType, int, cub::CUB_300001_SM_860::detail::select::streaming_context_t<long long, (bool)1>, (cub::CUB_300001_SM_860::SelectImpl)0>(T2, T3, T4, T5, T6, T7, T8, T9, int, T10, cub::CUB_300001_SM_860::detail::vsmem_t)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.020352,
+      "union_ms": 0.020352,
+      "first_start_ns": 25776878,
+      "last_end_ns": 171290712,
+      "first_to_last_span_ms": 145.513834,
+      "gaps_between_activities_ms": 145.493482
+    },
+    {
+      "symbol": "_calcInternalNodes(Node *, const unsigned long long *, int)",
+      "category": "collision.bvh",
+      "count": 2,
+      "sum_ms": 0.019616,
+      "union_ms": 0.019616,
+      "first_start_ns": 126417055,
+      "last_end_ns": 126788222,
+      "first_to_last_span_ms": 0.371167,
+      "gaps_between_activities_ms": 0.351551
+    },
+    {
+      "symbol": "<unnamed>::fem_assemble_kernel(int, cudatool::Dense1D<double3>, cudatool::Dense1D<double3>, cudatool::CDense1D<int>, cudatool::DenseVectorViewer<double>)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.01616,
+      "union_ms": 0.01616,
+      "first_start_ns": 23406773,
+      "last_end_ns": 169188159,
+      "first_to_last_span_ms": 145.781386,
+      "gaps_between_activities_ms": 145.765226
+    },
+    {
+      "symbol": "_checkGroundIntersection(const double3 *, const double *, const double3 *, const unsigned int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.015296,
+      "union_ms": 0.015296,
+      "first_start_ns": 45601106,
+      "last_end_ns": 187920326,
+      "first_to_last_span_ms": 142.31922,
+      "gaps_between_activities_ms": 142.303924
+    },
+    {
+      "symbol": "<unnamed>::calculate_subsystem_bcoo_indices_kernel(int, int *, int *, unsigned long long, unsigned long long, unsigned int *, unsigned int *)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.014816,
+      "union_ms": 0.014816,
+      "first_start_ns": 25769390,
+      "last_end_ns": 171282392,
+      "first_to_last_span_ms": 145.513002,
+      "gaps_between_activities_ms": 145.498186
+    },
+    {
+      "symbol": "_stepForward(double3 *, double3 *, double3 *, int *, double, bool, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.014656,
+      "union_ms": 0.014656,
+      "first_start_ns": 45277427,
+      "last_end_ns": 187515815,
+      "first_to_last_span_ms": 142.238388,
+      "gaps_between_activities_ms": 142.223732
+    },
+    {
+      "symbol": "PCG_vdv_Reduction(double *, const double *, const double *, int)",
+      "category": "pcg.dot_partial",
+      "count": 6,
+      "sum_ms": 0.014368,
+      "union_ms": 0.014368,
+      "first_start_ns": 28395718,
+      "last_end_ns": 174658094,
+      "first_to_last_span_ms": 146.262376,
+      "gaps_between_activities_ms": 146.248008
+    },
+    {
+      "symbol": "_aggregationKernel(int *, __GEIGEN__::itable *, int *, int, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.014176,
+      "union_ms": 0.014176,
+      "first_start_ns": 27149450,
+      "last_end_ns": 173403122,
+      "first_to_last_span_ms": 146.253672,
+      "gaps_between_activities_ms": 146.239496
+    },
+    {
+      "symbol": "_preparePrefixSumL0_new(int *, unsigned int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.014144,
+      "union_ms": 0.014144,
+      "first_start_ns": 26376396,
+      "last_end_ns": 171890774,
+      "first_to_last_span_ms": 145.514378,
+      "gaps_between_activities_ms": 145.500234
+    },
+    {
+      "symbol": "__collectFinalZ_new(double3 *, const float3 *, const __GEIGEN__::itable *, int *, int, int)",
+      "category": "mas.prolong",
+      "count": 6,
+      "sum_ms": 0.013696,
+      "union_ms": 0.013696,
+      "first_start_ns": 28392038,
+      "last_end_ns": 174653774,
+      "first_to_last_span_ms": 146.261736,
+      "gaps_between_activities_ms": 146.24804
+    },
+    {
+      "symbol": "gipc::cal_abd_shape_energy_kernel(int, cudatool::BufferViewT<(bool)0, double>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double, cudatool::BufferViewT<(bool)0, double>, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.013248,
+      "union_ms": 0.013248,
+      "first_start_ns": 45185075,
+      "last_end_ns": 197172362,
+      "first_to_last_span_ms": 151.987287,
+      "gaps_between_activities_ms": 151.974039
+    },
+    {
+      "symbol": "<unnamed>::abd_retrieve_solution_kernel(int, cudatool::CDenseVectorViewer<double>, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.012928,
+      "union_ms": 0.012928,
+      "first_start_ns": 40761857,
+      "last_end_ns": 184171761,
+      "first_to_last_span_ms": 143.409904,
+      "gaps_between_activities_ms": 143.396976
+    },
+    {
+      "symbol": "_set_hash_value(const int *, const int *, unsigned int *, unsigned long long *, int, int)",
+      "category": "matrix.convert",
+      "count": 6,
+      "sum_ms": 0.012928,
+      "union_ms": 0.012928,
+      "first_start_ns": 21351067,
+      "last_end_ns": 165454762,
+      "first_to_last_span_ms": 144.103695,
+      "gaps_between_activities_ms": 144.090767
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::scan::DeviceScanKernel<cub::CUB_300001_SM_860::detail::scan::policy_hub<int, int, int, unsigned int, cuda::std::__4::plus<void>>::Policy1000, const int *, int *, cub::CUB_300001_SM_860::ScanTileState<int, (bool)1>, cuda::std::__4::plus<void>, cub::CUB_300001_SM_860::detail::InputValue<int, int *>, unsigned int, int, (bool)0, int>(T2, T3, T4, int, T5, T6, T7)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.012608,
+      "union_ms": 0.012608,
+      "first_start_ns": 26382604,
+      "last_end_ns": 171896886,
+      "first_to_last_span_ms": 145.514282,
+      "gaps_between_activities_ms": 145.501674
+    },
+    {
+      "symbol": "_calcLeafNodes(Node *, const unsigned int *, int)",
+      "category": "collision.bvh",
+      "count": 2,
+      "sum_ms": 0.012384,
+      "union_ms": 0.012384,
+      "first_start_ns": 126409919,
+      "last_end_ns": 126775806,
+      "first_to_last_span_ms": 0.365887,
+      "gaps_between_activities_ms": 0.353503
+    },
+    {
+      "symbol": "_computeGroundCloseVal(const double3 *, const double *, const double3 *, const unsigned int *, double, unsigned int *, double *, unsigned int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.01216,
+      "union_ms": 0.01216,
+      "first_start_ns": 52188638,
+      "last_end_ns": 197501993,
+      "first_to_last_span_ms": 145.313355,
+      "gaps_between_activities_ms": 145.301195
+    },
+    {
+      "symbol": "gipc::cal_abd_kinetic_energy_kernel(int, cudatool::BufferViewT<(bool)0, double>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, gipc::ABDJacobiDyadicMass>, cudatool::BufferViewT<(bool)1, BodyBoundaryType>, double, double, double)",
+      "category": "unknown_kernel",
+      "count": 7,
+      "sum_ms": 0.011872,
+      "union_ms": 0.011872,
+      "first_start_ns": 44858964,
+      "last_end_ns": 196289133,
+      "first_to_last_span_ms": 151.430169,
+      "gaps_between_activities_ms": 151.418297
+    },
+    {
+      "symbol": "<unnamed>::fem_retrieve_solution_kernel(int, cudatool::CDenseVectorViewer<double>, cudatool::Dense1D<double3>, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.011456,
+      "union_ms": 0.011456,
+      "first_start_ns": 40775905,
+      "last_end_ns": 184185585,
+      "first_to_last_span_ms": 143.40968,
+      "gaps_between_activities_ms": 143.398224
+    },
+    {
+      "symbol": "gipc::<unnamed>::cal_abd_system_preconditioner_kernel1(int, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)12, (int)0, (int)12, (int)12>>, const Eigen::Matrix<double, (int)3, (int)3, (int)0, (int)3, (int)3> *, const int *, const int *)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.010304,
+      "union_ms": 0.010304,
+      "first_start_ns": 23443637,
+      "last_end_ns": 169223838,
+      "first_to_last_span_ms": 145.780201,
+      "gaps_between_activities_ms": 145.769897
+    },
+    {
+      "symbol": "_buildLevel1_new(int2 *, int *, int *, const unsigned int *, const int *, const int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.009248,
+      "union_ms": 0.009248,
+      "first_start_ns": 26386188,
+      "last_end_ns": 171899958,
+      "first_to_last_span_ms": 145.51377,
+      "gaps_between_activities_ms": 145.504522
+    },
+    {
+      "symbol": "_cub_reduct_MSelfDist(const double3 *, const int4 *, double2 *, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.009184,
+      "union_ms": 0.009184,
+      "first_start_ns": 197667913,
+      "last_end_ns": 197677097,
+      "first_to_last_span_ms": 0.009184,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "gipc::<unnamed>::cal_abd_system_barrier_gradient_double3_kernel(int, cudatool::CDense1D<int>, cudatool::CDense1D<double3>, cudatool::Dense1D<Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::DenseVectorViewer<double>, cudatool::CDense1D<BodyBoundaryType>, cudatool::CDense1D<gipc::ABDJacobi>)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.009184,
+      "union_ms": 0.009184,
+      "first_start_ns": 21712282,
+      "last_end_ns": 167402852,
+      "first_to_last_span_ms": 145.69057,
+      "gaps_between_activities_ms": 145.681386
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceSingleTileKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<AABB, unsigned int, MergeAABB>::Policy1000, AABB *, AABB *, int, MergeAABB, AABB, AABB, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 2,
+      "sum_ms": 0.008512,
+      "union_ms": 0.008512,
+      "first_start_ns": 126125312,
+      "last_end_ns": 126504159,
+      "first_to_last_span_ms": 0.378847,
+      "gaps_between_activities_ms": 0.370335
+    },
+    {
+      "symbol": "<unnamed>::abd_assemble_gradient_kernel(int, cudatool::DenseVectorViewer<double>, cudatool::CDenseVectorViewer<double>)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.007872,
+      "union_ms": 0.007872,
+      "first_start_ns": 23403285,
+      "last_end_ns": 169171167,
+      "first_to_last_span_ms": 145.767882,
+      "gaps_between_activities_ms": 145.76001
+    },
+    {
+      "symbol": "_partition_collision_triplets(const unsigned long long *, int *, int *, int *, int *, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.007776,
+      "union_ms": 0.007776,
+      "first_start_ns": 21556474,
+      "last_end_ns": 167028069,
+      "first_to_last_span_ms": 145.471595,
+      "gaps_between_activities_ms": 145.463819
+    },
+    {
+      "symbol": "<unnamed>::graph_init(double *)",
+      "category": "pcg.control_and_validation",
+      "count": 6,
+      "sum_ms": 0.007712,
+      "union_ms": 0.007712,
+      "first_start_ns": 28451430,
+      "last_end_ns": 174709678,
+      "first_to_last_span_ms": 146.258248,
+      "gaps_between_activities_ms": 146.250536
+    },
+    {
+      "symbol": "void cudatool::details::buffer_fill_kernel<double>(T1 *, unsigned long long, T1)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.007424,
+      "union_ms": 0.007424,
+      "first_start_ns": 28352550,
+      "last_end_ns": 174612942,
+      "first_to_last_span_ms": 146.260392,
+      "gaps_between_activities_ms": 146.252968
+    },
+    {
+      "symbol": "<unnamed>::graph_check_zero_rho(const double *, int, double *)",
+      "category": "pcg.control_and_validation",
+      "count": 6,
+      "sum_ms": 0.007296,
+      "union_ms": 0.007296,
+      "first_start_ns": 28454214,
+      "last_end_ns": 174712910,
+      "first_to_last_span_ms": 146.258696,
+      "gaps_between_activities_ms": 146.2514
+    },
+    {
+      "symbol": "gipc::step_forward_q_kernel(int, cudatool::BufferViewT<(bool)1, BodyBoundaryType>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.007264,
+      "union_ms": 0.007264,
+      "first_start_ns": 45281683,
+      "last_end_ns": 187524455,
+      "first_to_last_span_ms": 142.242772,
+      "gaps_between_activities_ms": 142.235508
+    },
+    {
+      "symbol": "_updateVelocities(double3 *, double3 *, double3 *, int *, double, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.007136,
+      "union_ms": 0.007136,
+      "first_start_ns": 197760809,
+      "last_end_ns": 197767945,
+      "first_to_last_span_ms": 0.007136,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::scan::DeviceCompactInitKernel<cub::CUB_300001_SM_860::ScanTileState<int, (bool)1>, int *>(T1, int, T2)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.005696,
+      "union_ms": 0.005696,
+      "first_start_ns": 25773678,
+      "last_end_ns": 171285784,
+      "first_to_last_span_ms": 145.512106,
+      "gaps_between_activities_ms": 145.50641
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::scan::DeviceScanInitKernel<cub::CUB_300001_SM_860::ScanTileState<int, (bool)1>>(T1, int)",
+      "category": "unknown_kernel",
+      "count": 6,
+      "sum_ms": 0.005664,
+      "union_ms": 0.005664,
+      "first_start_ns": 26380108,
+      "last_end_ns": 171893238,
+      "first_to_last_span_ms": 145.51313,
+      "gaps_between_activities_ms": 145.507466
+    },
+    {
+      "symbol": "_cub_reduct_dot(const double3 *, const double3 *, double *, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.004832,
+      "union_ms": 0.004832,
+      "first_start_ns": 19621952,
+      "last_end_ns": 19626784,
+      "first_to_last_span_ms": 0.004832,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_computeXTilta(int *, double3 *, double3 *, double3 *, int *, double, double, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.0048,
+      "union_ms": 0.0048,
+      "first_start_ns": 197773769,
+      "last_end_ns": 197778569,
+      "first_to_last_span_ms": 0.0048,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_computeGroundGradient(const double3 *, const double *, const double3 *, const unsigned int *, double3 *, unsigned int *, double, double, int)",
+      "category": "contact.gradient_hessian",
+      "count": 1,
+      "sum_ms": 0.004576,
+      "union_ms": 0.004576,
+      "first_start_ns": 19536609,
+      "last_end_ns": 19541185,
+      "first_to_last_span_ms": 0.004576,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_cub_reduct_squared_norm(const double3 *, double *, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.00432,
+      "union_ms": 0.00432,
+      "first_start_ns": 20208831,
+      "last_end_ns": 20213151,
+      "first_to_last_span_ms": 0.00432,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_calFrictionLastH_gd(const double3 *, const double *, const double3 *, const unsigned int *, double *, unsigned int *, double, double, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.003456,
+      "union_ms": 0.003456,
+      "first_start_ns": 20652189,
+      "last_end_ns": 20655645,
+      "first_to_last_span_ms": 0.003456,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "void cub::CUB_300001_SM_860::detail::reduce::DeviceReduceSingleTileKernel<cub::CUB_300001_SM_860::detail::reduce::policy_hub<double2, unsigned int, <unnamed>::MaxDouble2>::Policy1000, const double2 *, double2 *, unsigned int, <unnamed>::MaxDouble2, double2, double2, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+      "category": "reduce.cub_unspecified_operand",
+      "count": 2,
+      "sum_ms": 0.00336,
+      "union_ms": 0.00336,
+      "first_start_ns": 197629993,
+      "last_end_ns": 197680073,
+      "first_to_last_span_ms": 0.05008,
+      "gaps_between_activities_ms": 0.04672
+    },
+    {
+      "symbol": "gipc::update_velocity_kernel(int, cudatool::BufferViewT<(bool)1, BodyBoundaryType>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.00256,
+      "union_ms": 0.00256,
+      "first_start_ns": 197769673,
+      "last_end_ns": 197772233,
+      "first_to_last_span_ms": 0.00256,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "_cub_reduct_MGroundDist(const double3 *, const double *, const double3 *, const unsigned int *, double2 *, int)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.002144,
+      "union_ms": 0.002144,
+      "first_start_ns": 197620937,
+      "last_end_ns": 197623081,
+      "first_to_last_span_ms": 0.002144,
+      "gaps_between_activities_ms": 0.0
+    },
+    {
+      "symbol": "fill_bvh_indices_kernel(unsigned int *, int)",
+      "category": "collision.bvh",
+      "count": 2,
+      "sum_ms": 0.00208,
+      "union_ms": 0.00208,
+      "first_start_ns": 126198208,
+      "last_end_ns": 126571487,
+      "first_to_last_span_ms": 0.373279,
+      "gaps_between_activities_ms": 0.371199
+    },
+    {
+      "symbol": "gipc::cal_q_tilde_kernel(int, cudatool::BufferViewT<(bool)1, BodyBoundaryType>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, cudatool::BufferViewT<(bool)0, Eigen::Matrix<double, (int)12, (int)1, (int)0, (int)12, (int)1>>, double)",
+      "category": "unknown_kernel",
+      "count": 1,
+      "sum_ms": 0.001696,
+      "union_ms": 0.001696,
+      "first_start_ns": 197780105,
+      "last_end_ns": 197781801,
+      "first_to_last_span_ms": 0.001696,
+      "gaps_between_activities_ms": 0.0
+    }
+  ],
+  "unknown_kernel": {
+    "count": 781,
+    "sum_ms": 32.229852,
+    "union_ms": 32.229852,
+    "first_start_ns": 16541482,
+    "last_end_ns": 197781801,
+    "first_to_last_span_ms": 181.240319,
+    "gaps_between_activities_ms": 149.010467
+  },
+  "graph": {
+    "graph_node_field_available": true,
+    "node_activity": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "node_without_unique_runtime": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "node_without_runtime_launch_owner": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "node_internal_nvtx_operator_unattributed": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "node_unknown_kernel_symbol": {
+      "count": 0,
+      "sum_ms": 0.0,
+      "union_ms": 0.0,
+      "first_start_ns": null,
+      "last_end_ns": null,
+      "first_to_last_span_ms": 0.0,
+      "gaps_between_activities_ms": 0.0
+    },
+    "all_gpu_busy_in_first_last_node_span_ms": 0.0,
+    "node_span_uncovered_by_captured_gpu_ms": 0
+  },
+  "boundary_crossing_activity_records": 0,
+  "activity_records_outside_selected_frame": 0,
+  "classification_rules": {
+    "mas.numeric_scatter": [
+      "prepare_hessian_bcoo_kernel"
+    ],
+    "mas.numeric_reduce": [
+      "prepare_hessian_bcoo_sum_kernel"
+    ],
+    "mas.inverse_prepare": [
+      "__inverse6_P96x96",
+      "__inverse6_P96x96_typed",
+      "invert_cholesky_factor"
+    ],
+    "mas.factor_prepare": [
+      "symmetric_cholesky"
+    ],
+    "mas.restrict": [
+      "__buildMultiLevelR_optimized_new",
+      "__buildMultiLevelR_optimized_new_wide",
+      "deterministic_restrict",
+      "warp_deterministic_restrict"
+    ],
+    "mas.local_action": [
+      "_schwarzLocalXSym6",
+      "_schwarzLocalXSym6_wide",
+      "cholesky_action",
+      "factor_inverse_action"
+    ],
+    "mas.prolong": [
+      "__collectFinalZ_new",
+      "__collectFinalZ_new_wide"
+    ],
+    "mas.prolong_fused_dot": [
+      "mas_collect_final_z_dot"
+    ],
+    "abd.local_action": [
+      "abd_preconditioner_apply_kernel"
+    ],
+    "spmv": [
+      "warp_reduce_sym_spmv_kernel",
+      "scale_y_kernel",
+      "fill_y_zero_kernel"
+    ],
+    "pcg.dot_partial": [
+      "PCG_vdv_Reduction"
+    ],
+    "pcg.vector_update": [
+      "graph_dx_r",
+      "update_vector_dx_r",
+      "update_vector_c"
+    ],
+    "pcg.vector_and_condition": [
+      "graph_p_continue"
+    ],
+    "pcg.control_and_validation": [
+      "graph_alpha",
+      "graph_beta",
+      "graph_init",
+      "graph_check_zero_rho",
+      "audit_residual"
+    ],
+    "matrix.convert": [
+      "compute_hash_and_index_kernel",
+      "set_dst_val_kernel",
+      "set_row_col_from_unique_key_kernel",
+      "compute_sorted_partition_kernel",
+      "set_row_col_from_partition_kernel",
+      "setup_ge2sym_kernel",
+      "finalize_ge2sym_kernel",
+      "_set_hash_value"
+    ],
+    "collision.discrete_query": [
+      "_selfQuery_vf",
+      "_selfQuery_ee",
+      "_GroundCollisionDetect"
+    ],
+    "collision.swept_query": [
+      "_selfQuery_vf_ccd",
+      "_selfQuery_ee_ccd",
+      "_selfQuery_vf_ccd_pool",
+      "_selfQuery_ee_ccd_pool"
+    ],
+    "collision.bvh": [
+      "fill_bvh_indices_kernel",
+      "_calcLeafBvs",
+      "_calcLeafBvs_ccd",
+      "_calcMChash",
+      "_calcLeafNodes",
+      "_calcInternalNodes",
+      "_calcInternalAABB",
+      "_sortBvs"
+    ],
+    "contact.gradient_hessian": [
+      "_calBarrierHessian",
+      "_calBarrierGradientAndHessian",
+      "_calBarrierGradient",
+      "_computeGroundGradientAndHessian",
+      "_computeGroundGradient"
+    ]
+  },
+  "scope": {
+    "gpu": "Kernel-symbol allowlist classification partitions real clipped activity records. Unknown kernels and unspecified CUB operands remain visible. Category sums count overlapping work; union is covered wall time.",
+    "cpu": "NVTX stage unions are inclusive envelopes, not additive component costs. Parent and child envelopes are never summed into a total.",
+    "waits": "CUDA API intervals include GPU waits and overlap device work. Never add CPU API or NVTX wall time to GPU time.",
+    "graph": "Kernel symbols identify operations independently of NVTX. A replay launch owner never identifies internal graph-node CostScopes; internal NVTX attribution remains unresolved even with a runtime correlation.",
+    "gaps": "Uncovered spans include scheduling, dependencies and unobserved activity; they are not proven removable host overhead or predicted speedup.",
+    "capture": "Only the selected CPU/NVTX frame timeline window is measured. Asynchronous work can cross its boundaries; clipping is not causal ownership of every GPU operation by that frame. Full-scene cost, occupancy, dropped records and capture completeness are not inferred."
+  }
+}

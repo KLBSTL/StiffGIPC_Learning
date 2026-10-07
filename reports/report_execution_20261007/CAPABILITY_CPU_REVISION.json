@@ -1,0 +1,25 @@
+{
+  "old_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_observer_20261007_v2\\report_seal.json",
+    "bytes": 414232,
+    "sha256": "6c7190ecdf6ff2f911b8a8d455fb363ae8130b62ae76d1306eaefa47081044dd"
+  },
+  "new_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_observer_20261007_v2\\report_seal_capability_v2.json",
+    "bytes": 414232,
+    "sha256": "ecdd0b1afb672459d3a2643070bf823c0529c0956ad4f75a901f12792bd31434"
+  },
+  "before_controller": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_rounds.py",
+    "bytes": 14564,
+    "sha256": "5f89209b278177f56293da8175c3a03e6e2a8b57fbf5b62f98ceb0e67a7a9314"
+  },
+  "after_controller": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_rounds.py",
+    "bytes": 14753,
+    "sha256": "7cd3c3eb128bf4003c669db5ad74a8b64230cf719558bc7167d034e0e4cc7768"
+  },
+  "native_programs_unchanged": true,
+  "gpu_replay": false,
+  "reason": "Explicit baseline observation capability permits real velocity files. The completed first observed trajectory is reanalyzed only; raw configuration_failed result remains intact."
+}

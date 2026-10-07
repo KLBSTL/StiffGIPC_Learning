@@ -1,0 +1,1546 @@
+{
+  "ablation_fixed": {
+    "stage": "ablation_fixed",
+    "completed_runs": 24,
+    "quality_certified": false,
+    "performance_certified": false,
+    "components": {
+      "refit": {
+        "paired_ratios": [
+          1.0675749461288284,
+          1.0572887694276132,
+          1.0275200169802237
+        ],
+        "paired_median": 1.0572887694276132,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "batch": {
+        "paired_ratios": [
+          1.0394031000048802,
+          0.9946952113017556,
+          1.016033911001017
+        ],
+        "paired_median": 1.016033911001017,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "reuse": {
+        "paired_ratios": [
+          0.9894687599204101,
+          0.9838347671790527,
+          1.0539796394647578
+        ],
+        "paired_median": 0.9894687599204101,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "discrete": {
+        "paired_ratios": [
+          1.0279884977401814,
+          1.0587183929590078,
+          1.0349276916486572
+        ],
+        "paired_median": 1.0349276916486572,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      }
+    }
+  },
+  "ablation_sphere": {
+    "stage": "ablation_sphere",
+    "completed_runs": 24,
+    "quality_certified": false,
+    "performance_certified": false,
+    "components": {
+      "refit": {
+        "paired_ratios": [
+          1.0477680398988582,
+          1.261468980777473,
+          0.9364435200805487
+        ],
+        "paired_median": 1.0477680398988582,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "batch": {
+        "paired_ratios": [
+          0.9689406563117394,
+          0.940886596092393,
+          0.9833567821289458
+        ],
+        "paired_median": 0.9689406563117394,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "reuse": {
+        "paired_ratios": [
+          1.0290211022894986,
+          1.043101084169587,
+          0.9621880100013501
+        ],
+        "paired_median": 1.0290211022894986,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      },
+      "discrete": {
+        "paired_ratios": [
+          1.0091294457664197,
+          1.0636538995129416,
+          0.9746976284146391
+        ],
+        "paired_median": 1.0091294457664197,
+        "scope": "Adjacent alternating paired runs; WDDM and workload differences remain diagnostic."
+      }
+    }
+  },
+  "observation": {
+    "program": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_base_observer_20261007_v2\\frozen_base\\Release\\gipc.exe",
+      "bytes": 9170432,
+      "sha256": "4d0540489f049d75aac605f129c7fcaecd3ff0a246a1a97bc528730febeaf6b4"
+    },
+    "comparisons": [
+      {
+        "scene": "sphere",
+        "repeat": 1,
+        "actual_velocity": true,
+        "input": {
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+              "right_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+              "right_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+              "right_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+              "right_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+              "right_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+              "right_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+              "right_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        "material": {
+          "passed": false,
+          "metrics": {
+            "max_stretch": {
+              "actual": 1.0244411843494925,
+              "applicable": true,
+              "bound": 1.0198858883109119,
+              "calibration_min": 1.0193471549440967,
+              "calibration_max": 1.0198858883109119,
+              "signed_worsening_gap": 0.004555296038580625,
+              "tolerance": 1e-12,
+              "passed": false
+            },
+            "p99_stretch": {
+              "actual": 1.0141764795994626,
+              "applicable": true,
+              "bound": 1.014177930099365,
+              "calibration_min": 1.0141761839222898,
+              "calibration_max": 1.014177930099365,
+              "signed_worsening_gap": -1.4504999024111953e-06,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fixed_drift_m": {
+              "actual": 3.0814879110195774e-33,
+              "applicable": true,
+              "bound": 6.162975822039155e-33,
+              "calibration_min": 0.0,
+              "calibration_max": 6.162975822039155e-33,
+              "signed_worsening_gap": -3.0814879110195774e-33,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_min_J": {
+              "actual": null,
+              "applicable": false,
+              "signed_worsening_gap": null,
+              "passed": true,
+              "reason": "No such elements in calibration; cannot invent a numerical bound."
+            },
+            "fem_nonpositive_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_nonpositive_frame_sum": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_negative_volume_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_min_J": {
+              "actual": 1.0,
+              "applicable": true,
+              "bound": 1.0,
+              "calibration_min": 1.0,
+              "calibration_max": 1.0,
+              "signed_worsening_gap": -0.0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_nonpositive_frames": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            }
+          },
+          "frozen_bounds_sha256": "12c6ad8727611f8a318c3f628162259f90b4aeea953d624737edef5db3688b1f",
+          "quality_certified": false
+        },
+        "directions": 563,
+        "pcg_iterations": 24018,
+        "original_directions": 549,
+        "original_pcg_iterations": 23261,
+        "endpoint_neutrality_certified": false,
+        "scope": "Read-only frontend change; fresh compiler identity and finite actual velocity verified. Material range comparison does not prove trajectory equivalence."
+      },
+      {
+        "scene": "sphere",
+        "repeat": 2,
+        "actual_velocity": true,
+        "input": {
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+              "right_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+              "right_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+              "right_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+              "right_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+              "right_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+              "right_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+              "right_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        "material": {
+          "passed": true,
+          "metrics": {
+            "max_stretch": {
+              "actual": 1.0192537104266943,
+              "applicable": true,
+              "bound": 1.0198858883109119,
+              "calibration_min": 1.0193471549440967,
+              "calibration_max": 1.0198858883109119,
+              "signed_worsening_gap": -0.0006321778842175441,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "p99_stretch": {
+              "actual": 1.0141771026823092,
+              "applicable": true,
+              "bound": 1.014177930099365,
+              "calibration_min": 1.0141761839222898,
+              "calibration_max": 1.014177930099365,
+              "signed_worsening_gap": -8.274170557598381e-07,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fixed_drift_m": {
+              "actual": 0.0,
+              "applicable": true,
+              "bound": 6.162975822039155e-33,
+              "calibration_min": 0.0,
+              "calibration_max": 6.162975822039155e-33,
+              "signed_worsening_gap": -6.162975822039155e-33,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_min_J": {
+              "actual": null,
+              "applicable": false,
+              "signed_worsening_gap": null,
+              "passed": true,
+              "reason": "No such elements in calibration; cannot invent a numerical bound."
+            },
+            "fem_nonpositive_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_nonpositive_frame_sum": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_negative_volume_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_min_J": {
+              "actual": 1.0,
+              "applicable": true,
+              "bound": 1.0,
+              "calibration_min": 1.0,
+              "calibration_max": 1.0,
+              "signed_worsening_gap": -0.0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_nonpositive_frames": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            }
+          },
+          "frozen_bounds_sha256": "12c6ad8727611f8a318c3f628162259f90b4aeea953d624737edef5db3688b1f",
+          "quality_certified": false
+        },
+        "directions": 568,
+        "pcg_iterations": 24871,
+        "original_directions": 562,
+        "original_pcg_iterations": 24206,
+        "endpoint_neutrality_certified": false,
+        "scope": "Read-only frontend change; fresh compiler identity and finite actual velocity verified. Material range comparison does not prove trajectory equivalence."
+      },
+      {
+        "scene": "fixed",
+        "repeat": 1,
+        "actual_velocity": true,
+        "input": {
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+              "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+              "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+              "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+              "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+              "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+              "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+              "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        "material": {
+          "passed": false,
+          "metrics": {
+            "max_stretch": {
+              "actual": 1.0357334924833477,
+              "applicable": true,
+              "bound": 1.0532672254544293,
+              "calibration_min": 1.035610992514692,
+              "calibration_max": 1.0532672254544293,
+              "signed_worsening_gap": -0.017533732971081628,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "p99_stretch": {
+              "actual": 1.0136083203406585,
+              "applicable": true,
+              "bound": 1.0134291257787573,
+              "calibration_min": 1.0132700808003627,
+              "calibration_max": 1.0134291257787573,
+              "signed_worsening_gap": 0.00017919456190118588,
+              "tolerance": 1e-12,
+              "passed": false
+            },
+            "fixed_drift_m": {
+              "actual": 3.925231146709438e-17,
+              "applicable": true,
+              "bound": 6.206335383118183e-17,
+              "calibration_min": 3.1031676915590914e-17,
+              "calibration_max": 6.206335383118183e-17,
+              "signed_worsening_gap": -2.281104236408745e-17,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_min_J": {
+              "actual": null,
+              "applicable": false,
+              "signed_worsening_gap": null,
+              "passed": true,
+              "reason": "No such elements in calibration; cannot invent a numerical bound."
+            },
+            "fem_nonpositive_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_nonpositive_frame_sum": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_negative_volume_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_min_J": {
+              "actual": 0.9999999999999875,
+              "applicable": true,
+              "bound": 0.9999999999999698,
+              "calibration_min": 0.9999999999999698,
+              "calibration_max": 0.9999999999999905,
+              "signed_worsening_gap": -1.765254609153999e-14,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_nonpositive_frames": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            }
+          },
+          "frozen_bounds_sha256": "7edd35a466ef06770919fb48bec2aa2aae5f3f6b7a9605b5ff30ebb1d466f3c6",
+          "quality_certified": false
+        },
+        "directions": 590,
+        "pcg_iterations": 37908,
+        "original_directions": 580,
+        "original_pcg_iterations": 36994,
+        "endpoint_neutrality_certified": false,
+        "scope": "Read-only frontend change; fresh compiler identity and finite actual velocity verified. Material range comparison does not prove trajectory equivalence."
+      },
+      {
+        "scene": "fixed",
+        "repeat": 2,
+        "actual_velocity": true,
+        "input": {
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+              "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+              "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+              "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+              "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+              "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+              "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+              "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        "material": {
+          "passed": true,
+          "metrics": {
+            "max_stretch": {
+              "actual": 1.0374507281994707,
+              "applicable": true,
+              "bound": 1.0532672254544293,
+              "calibration_min": 1.035610992514692,
+              "calibration_max": 1.0532672254544293,
+              "signed_worsening_gap": -0.015816497254958595,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "p99_stretch": {
+              "actual": 1.0133525130038286,
+              "applicable": true,
+              "bound": 1.0134291257787573,
+              "calibration_min": 1.0132700808003627,
+              "calibration_max": 1.0134291257787573,
+              "signed_worsening_gap": -7.661277492876373e-05,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fixed_drift_m": {
+              "actual": 3.925231146709438e-17,
+              "applicable": true,
+              "bound": 6.206335383118183e-17,
+              "calibration_min": 3.1031676915590914e-17,
+              "calibration_max": 6.206335383118183e-17,
+              "signed_worsening_gap": -2.281104236408745e-17,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_min_J": {
+              "actual": null,
+              "applicable": false,
+              "signed_worsening_gap": null,
+              "passed": true,
+              "reason": "No such elements in calibration; cannot invent a numerical bound."
+            },
+            "fem_nonpositive_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_nonpositive_frame_sum": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "fem_negative_volume_peak": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_min_J": {
+              "actual": 0.9999999999999899,
+              "applicable": true,
+              "bound": 0.9999999999999698,
+              "calibration_min": 0.9999999999999698,
+              "calibration_max": 0.9999999999999905,
+              "signed_worsening_gap": -2.0095036745715333e-14,
+              "tolerance": 1e-12,
+              "passed": true
+            },
+            "abd_nonpositive_frames": {
+              "actual": 0,
+              "applicable": true,
+              "bound": 0,
+              "calibration_min": 0,
+              "calibration_max": 0,
+              "signed_worsening_gap": 0,
+              "tolerance": 1e-12,
+              "passed": true
+            }
+          },
+          "frozen_bounds_sha256": "7edd35a466ef06770919fb48bec2aa2aae5f3f6b7a9605b5ff30ebb1d466f3c6",
+          "quality_certified": false
+        },
+        "directions": 611,
+        "pcg_iterations": 39282,
+        "original_directions": 591,
+        "original_pcg_iterations": 38235,
+        "endpoint_neutrality_certified": false,
+        "scope": "Read-only frontend change; fresh compiler identity and finite actual velocity verified. Material range comparison does not prove trajectory equivalence."
+      }
+    ],
+    "actual_velocity_available": true,
+    "quality_certified": false,
+    "performance_denominator": false
+  },
+  "reference": {
+    "stage": "reference",
+    "completed_runs": 10,
+    "quality_certified": false,
+    "performance_certified": false,
+    "scenes": {
+      "sphere": {
+        "frozen_bounds": {
+          "bounds": {
+            "max_stretch": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 1.0193471549440967,
+              "max": 1.0198858883109119
+            },
+            "p99_stretch": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 1.0141761839222898,
+              "max": 1.014177930099365
+            },
+            "fixed_drift_m": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0.0,
+              "max": 6.162975822039155e-33
+            },
+            "fem_min_J": {
+              "applicable": false,
+              "worse_direction": -1,
+              "min": null,
+              "max": null
+            },
+            "fem_nonpositive_peak": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "fem_nonpositive_frame_sum": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "fem_negative_volume_peak": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "abd_min_J": {
+              "applicable": true,
+              "worse_direction": -1,
+              "min": 1.0,
+              "max": 1.0
+            },
+            "abd_nonpositive_frames": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            }
+          },
+          "comparison_absolute_tolerance": 1e-12,
+          "source_runs": [
+            "calibration_sphere_base_1",
+            "calibration_sphere_base_2",
+            "calibration_sphere_base_3"
+          ],
+          "source_analysis_sha256": [
+            null,
+            null,
+            null
+          ],
+          "scope": "First three independent Stiff whole-run material summaries only; later baseline/candidate runs never widen bounds.",
+          "sha256": "12c6ad8727611f8a318c3f628162259f90b4aeea953d624737edef5db3688b1f"
+        },
+        "holdouts": [
+          {
+            "passed": true,
+            "metrics": {
+              "max_stretch": {
+                "actual": 1.0191514327614406,
+                "applicable": true,
+                "bound": 1.0198858883109119,
+                "calibration_min": 1.0193471549440967,
+                "calibration_max": 1.0198858883109119,
+                "signed_worsening_gap": -0.000734455549471269,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "p99_stretch": {
+                "actual": 1.0141767799846357,
+                "applicable": true,
+                "bound": 1.014177930099365,
+                "calibration_min": 1.0141761839222898,
+                "calibration_max": 1.014177930099365,
+                "signed_worsening_gap": -1.1501147292314329e-06,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fixed_drift_m": {
+                "actual": 3.0814879110195774e-33,
+                "applicable": true,
+                "bound": 6.162975822039155e-33,
+                "calibration_min": 0.0,
+                "calibration_max": 6.162975822039155e-33,
+                "signed_worsening_gap": -3.0814879110195774e-33,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_min_J": {
+                "actual": null,
+                "applicable": false,
+                "signed_worsening_gap": null,
+                "passed": true,
+                "reason": "No such elements in calibration; cannot invent a numerical bound."
+              },
+              "fem_nonpositive_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_nonpositive_frame_sum": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_negative_volume_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_min_J": {
+                "actual": 1.0,
+                "applicable": true,
+                "bound": 1.0,
+                "calibration_min": 1.0,
+                "calibration_max": 1.0,
+                "signed_worsening_gap": -0.0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_nonpositive_frames": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              }
+            },
+            "frozen_bounds_sha256": "12c6ad8727611f8a318c3f628162259f90b4aeea953d624737edef5db3688b1f",
+            "quality_certified": false
+          },
+          {
+            "passed": true,
+            "metrics": {
+              "max_stretch": {
+                "actual": 1.0189787635468655,
+                "applicable": true,
+                "bound": 1.0198858883109119,
+                "calibration_min": 1.0193471549440967,
+                "calibration_max": 1.0198858883109119,
+                "signed_worsening_gap": -0.0009071247640464186,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "p99_stretch": {
+                "actual": 1.0141769783720354,
+                "applicable": true,
+                "bound": 1.014177930099365,
+                "calibration_min": 1.0141761839222898,
+                "calibration_max": 1.014177930099365,
+                "signed_worsening_gap": -9.517273296122397e-07,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fixed_drift_m": {
+                "actual": 0.0,
+                "applicable": true,
+                "bound": 6.162975822039155e-33,
+                "calibration_min": 0.0,
+                "calibration_max": 6.162975822039155e-33,
+                "signed_worsening_gap": -6.162975822039155e-33,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_min_J": {
+                "actual": null,
+                "applicable": false,
+                "signed_worsening_gap": null,
+                "passed": true,
+                "reason": "No such elements in calibration; cannot invent a numerical bound."
+              },
+              "fem_nonpositive_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_nonpositive_frame_sum": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_negative_volume_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_min_J": {
+                "actual": 1.0,
+                "applicable": true,
+                "bound": 1.0,
+                "calibration_min": 1.0,
+                "calibration_max": 1.0,
+                "signed_worsening_gap": -0.0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_nonpositive_frames": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              }
+            },
+            "frozen_bounds_sha256": "12c6ad8727611f8a318c3f628162259f90b4aeea953d624737edef5db3688b1f",
+            "quality_certified": false
+          }
+        ],
+        "material_eligible": true,
+        "actual_velocity_available": false,
+        "quality_certification_eligible": false
+      },
+      "fixed": {
+        "frozen_bounds": {
+          "bounds": {
+            "max_stretch": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 1.035610992514692,
+              "max": 1.0532672254544293
+            },
+            "p99_stretch": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 1.0132700808003627,
+              "max": 1.0134291257787573
+            },
+            "fixed_drift_m": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 3.1031676915590914e-17,
+              "max": 6.206335383118183e-17
+            },
+            "fem_min_J": {
+              "applicable": false,
+              "worse_direction": -1,
+              "min": null,
+              "max": null
+            },
+            "fem_nonpositive_peak": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "fem_nonpositive_frame_sum": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "fem_negative_volume_peak": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            },
+            "abd_min_J": {
+              "applicable": true,
+              "worse_direction": -1,
+              "min": 0.9999999999999698,
+              "max": 0.9999999999999905
+            },
+            "abd_nonpositive_frames": {
+              "applicable": true,
+              "worse_direction": 1,
+              "min": 0,
+              "max": 0
+            }
+          },
+          "comparison_absolute_tolerance": 1e-12,
+          "source_runs": [
+            "calibration_fixed_base_1",
+            "calibration_fixed_base_2",
+            "calibration_fixed_base_3"
+          ],
+          "source_analysis_sha256": [
+            null,
+            null,
+            null
+          ],
+          "scope": "First three independent Stiff whole-run material summaries only; later baseline/candidate runs never widen bounds.",
+          "sha256": "7edd35a466ef06770919fb48bec2aa2aae5f3f6b7a9605b5ff30ebb1d466f3c6"
+        },
+        "holdouts": [
+          {
+            "passed": false,
+            "metrics": {
+              "max_stretch": {
+                "actual": 1.0357698854432105,
+                "applicable": true,
+                "bound": 1.0532672254544293,
+                "calibration_min": 1.035610992514692,
+                "calibration_max": 1.0532672254544293,
+                "signed_worsening_gap": -0.01749734001121883,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "p99_stretch": {
+                "actual": 1.013475619545706,
+                "applicable": true,
+                "bound": 1.0134291257787573,
+                "calibration_min": 1.0132700808003627,
+                "calibration_max": 1.0134291257787573,
+                "signed_worsening_gap": 4.649376694865204e-05,
+                "tolerance": 1e-12,
+                "passed": false
+              },
+              "fixed_drift_m": {
+                "actual": 3.1031676915590914e-17,
+                "applicable": true,
+                "bound": 6.206335383118183e-17,
+                "calibration_min": 3.1031676915590914e-17,
+                "calibration_max": 6.206335383118183e-17,
+                "signed_worsening_gap": -3.1031676915590914e-17,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_min_J": {
+                "actual": null,
+                "applicable": false,
+                "signed_worsening_gap": null,
+                "passed": true,
+                "reason": "No such elements in calibration; cannot invent a numerical bound."
+              },
+              "fem_nonpositive_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_nonpositive_frame_sum": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_negative_volume_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_min_J": {
+                "actual": 0.9999999999999905,
+                "applicable": true,
+                "bound": 0.9999999999999698,
+                "calibration_min": 0.9999999999999698,
+                "calibration_max": 0.9999999999999905,
+                "signed_worsening_gap": -2.0650148258027912e-14,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_nonpositive_frames": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              }
+            },
+            "frozen_bounds_sha256": "7edd35a466ef06770919fb48bec2aa2aae5f3f6b7a9605b5ff30ebb1d466f3c6",
+            "quality_certified": false
+          },
+          {
+            "passed": false,
+            "metrics": {
+              "max_stretch": {
+                "actual": 1.0357119805747725,
+                "applicable": true,
+                "bound": 1.0532672254544293,
+                "calibration_min": 1.035610992514692,
+                "calibration_max": 1.0532672254544293,
+                "signed_worsening_gap": -0.01755524487965676,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "p99_stretch": {
+                "actual": 1.0135802871115234,
+                "applicable": true,
+                "bound": 1.0134291257787573,
+                "calibration_min": 1.0132700808003627,
+                "calibration_max": 1.0134291257787573,
+                "signed_worsening_gap": 0.0001511613327660477,
+                "tolerance": 1e-12,
+                "passed": false
+              },
+              "fixed_drift_m": {
+                "actual": 3.1031676915590914e-17,
+                "applicable": true,
+                "bound": 6.206335383118183e-17,
+                "calibration_min": 3.1031676915590914e-17,
+                "calibration_max": 6.206335383118183e-17,
+                "signed_worsening_gap": -3.1031676915590914e-17,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_min_J": {
+                "actual": null,
+                "applicable": false,
+                "signed_worsening_gap": null,
+                "passed": true,
+                "reason": "No such elements in calibration; cannot invent a numerical bound."
+              },
+              "fem_nonpositive_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_nonpositive_frame_sum": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "fem_negative_volume_peak": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_min_J": {
+                "actual": 0.9999999999999899,
+                "applicable": true,
+                "bound": 0.9999999999999698,
+                "calibration_min": 0.9999999999999698,
+                "calibration_max": 0.9999999999999905,
+                "signed_worsening_gap": -2.0095036745715333e-14,
+                "tolerance": 1e-12,
+                "passed": true
+              },
+              "abd_nonpositive_frames": {
+                "actual": 0,
+                "applicable": true,
+                "bound": 0,
+                "calibration_min": 0,
+                "calibration_max": 0,
+                "signed_worsening_gap": 0,
+                "tolerance": 1e-12,
+                "passed": true
+              }
+            },
+            "frozen_bounds_sha256": "7edd35a466ef06770919fb48bec2aa2aae5f3f6b7a9605b5ff30ebb1d466f3c6",
+            "quality_certified": false
+          }
+        ],
+        "material_eligible": false,
+        "actual_velocity_available": false,
+        "quality_certification_eligible": false
+      }
+    }
+  },
+  "screen": {
+    "stage": "screen",
+    "completed_runs": 12,
+    "quality_certified": false,
+    "performance_certified": false,
+    "scenes": {
+      "sphere": {
+        "paired_ratios": [
+          1.111902430939468,
+          1.210062230781967,
+          1.1517368311473768
+        ],
+        "paired_median": 1.1517368311473768,
+        "net_saving": 0.13174609602109744,
+        "complete": true,
+        "allow_ablation": true,
+        "input_identities": [
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "right_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "right_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "right_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "right_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "right_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "right_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "right_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "right_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          },
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "right_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "right_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "right_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "right_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "right_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "right_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "right_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "right_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          },
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "right_sha256": "97562b1695c8583dc37fadf74213688d095c65a593d6fa488df0b968e7376d35",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "right_sha256": "cc03e1e6201e09cf0560254f872ccbbeb52bd20a357c0582eb54d5f71a58cd5c",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "right_sha256": "affb2e349122b87f504db1de6dad9d49ea4ea022cab850ce6b1ba4fa37851b2d",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "right_sha256": "8cc88131c650fd70f58a5888102369da16992716129863bd4e69bde59ef77344",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "right_sha256": "aa6aa449f3eb2fdc8b0a9404ea00558d4e6a5a8c448fcf3f6d7e686446d7e5c4",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "right_sha256": "34efd58804b60ddf1296776fb0e6ac3cba74b74b122f6e3769cab0c57833204d",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "right_sha256": "7e7d7fa7d56ec7b76a878de436954c9133cdb14fb3b67dca4c11af1707ae711b",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "right_sha256": "97849988e33125e7836de74d97ba4fbb1ec66b5b929dd375dc43d44c2f7e17f5",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          }
+        ]
+      },
+      "fixed": {
+        "paired_ratios": [
+          1.1075286034180871,
+          1.0930004482475975,
+          1.1134510781320164
+        ],
+        "paired_median": 1.1075286034180871,
+        "net_saving": 0.09708878225467876,
+        "complete": true,
+        "allow_ablation": true,
+        "input_identities": [
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "right_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          },
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "right_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          },
+          {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              },
+              "trace/velocity_0000.bin": {
+                "left_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "right_sha256": "9a8a412147ffb330c9d9d836e072849c834c47ad865f1b83fa9fba9e99154bbb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": true,
+            "missing_velocity_reason": null
+          }
+        ]
+      }
+    }
+  }
+}

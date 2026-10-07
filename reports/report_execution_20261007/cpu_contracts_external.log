@@ -1,0 +1,21 @@
+======================================================================
+ERROR: contracts_test (unittest.loader._FailedTest.contracts_test)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: contracts_test
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\contracts_test.py", line 13, in <module>
+    from quality_contracts_test import fixture as synthetic_run
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\diagnostic\quality_contracts_test.py", line 13, in <module>
+    from contracts_test import make_run as synthetic_run
+ImportError: cannot import name 'make_run' from partially initialized module 'contracts_test' (most likely due to a circular import) (E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\contracts_test.py)
+
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.185s
+
+FAILED (errors=1)

@@ -1,0 +1,143 @@
+{
+  "schema": "report.baseline.object.audit.v1",
+  "project": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.vcxproj",
+    "bytes": 85059,
+    "sha256": "b9f24b71a3bb93000cf2240f9e442e41c8dbec2ae8f613a77eaf26ab36d33115"
+  },
+  "link_tracking": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\gipc.tlog\\link.read.1.tlog",
+    "bytes": 26802,
+    "sha256": "a4baf21af5570ad87c86fe4b46ff54a14f5d33f273defd461d2ef0284a51caab"
+  },
+  "mapping": [
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_sim_data.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\abd_sim_data.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\abd_system.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\cal_abd_energy.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\cal_abd_energy.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\cal_q_tilde.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\cal_q_tilde.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\cal_x_from_q.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\cal_x_from_q.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\setup_abd_system_gradient_and_hessian.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\setup_abd_system_gradient_and_hessian.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\step_forward.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\step_forward.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\abd_system\\abd_system_function\\update_velocity.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\update_velocity.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\app\\gl_main.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\gl_main.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\collision\\ACCD.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\ACCD.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\collision\\mlbvh.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\mlbvh.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\core\\GIPC.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\GIPC.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\core\\gipc_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\gipc_system.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\fem\\device_fem_data.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\device_fem_data.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\fem\\femEnergy.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\femEnergy.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\linear_system\\global_linear_system.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\global_linear_system.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\linear_system\\global_matrix.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\global_matrix.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\linear_system\\i_linear_system_solver.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\i_linear_system_solver.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\linear_system\\i_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\i_preconditioner.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\linear_system\\linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\linear_subsystem.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\preconditioner\\abd_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\abd_preconditioner.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\preconditioner\\diag_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\diag_preconditioner.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\preconditioner\\fem_mas_preconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\fem_mas_preconditioner.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\solver\\pcg_solver.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\StiffGIPC\\linear_system\\solver\\pcg_solver.cu.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\subsystem\\abd_linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\abd_linear_subsystem.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\subsystem\\fem_linear_subsystem.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\fem_linear_subsystem.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\utils\\converter.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\converter.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\linear_system\\utils\\spmv.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\spmv.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\math\\gpu_eigen_libs.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\gpu_eigen_libs.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\solver\\MASPreconditioner.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\MASPreconditioner.obj"
+    },
+    {
+      "source": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\sources\\stiff_base\\StiffGIPC\\solver\\PCG_SOLVER.cu",
+      "object": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.dir\\Release\\StiffGIPC\\solver\\PCG_SOLVER.cu.obj"
+    }
+  ],
+  "unique_resolved_object_paths": true,
+  "all_objects_present": false,
+  "all_objects_in_link": true,
+  "scope": "CUDA-only per-source Release object paths and link tracking. Legacy C++ has no per-source object override and is not inferred here. Basename duplicates do not imply collisions; original PCG CUDA object directories differ. Historical complete compilation and observer neutrality are not inferred."
+}

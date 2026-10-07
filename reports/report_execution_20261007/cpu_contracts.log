@@ -1,0 +1,93 @@
+======================================================================
+ERROR: contracts_test (unittest.loader._FailedTest.contracts_test)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: contracts_test
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\contracts_test.py", line 13, in <module>
+    from quality_contracts_test import fixture as synthetic_run
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\diagnostic\quality_contracts_test.py", line 13, in <module>
+    from contracts_test import make_run as synthetic_run
+ImportError: cannot import name 'make_run' from partially initialized module 'contracts_test' (most likely due to a circular import) (E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\contracts_test.py)
+
+
+======================================================================
+ERROR: test_exception_cleanup_kills_owned_children (profiler_windows_contracts_test.RealJobTests.test_exception_cleanup_kills_owned_children)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 158, in test_exception_cleanup_kills_owned_children
+    job.launch([sys.executable,'-c','import time;time.sleep(40)'],root,os.environ.copy(),log)
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\windows_owned_job.py", line 121, in launch
+    executable = str(Path(command[0]).resolve(strict=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1240, in resolve
+    s = self._flavour.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen ntpath>", line 739, in realpath
+PermissionError: [WinError 5] 拒绝访问。: 'E:\\Anaconda\\envs\\DL\\python.exe'
+
+======================================================================
+ERROR: test_parent_child_grandchild_termination_and_foreign_job_survival (profiler_windows_contracts_test.RealJobTests.test_parent_child_grandchild_termination_and_foreign_job_survival)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 128, in test_parent_child_grandchild_termination_and_foreign_job_survival
+    foreign.launch([sys.executable,'-c','import time;time.sleep(40)'],root,os.environ.copy(),log2)
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\windows_owned_job.py", line 121, in launch
+    executable = str(Path(command[0]).resolve(strict=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1240, in resolve
+    s = self._flavour.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen ntpath>", line 739, in realpath
+PermissionError: [WinError 5] 拒绝访问。: 'E:\\Anaconda\\envs\\DL\\python.exe'
+
+======================================================================
+ERROR: test_root_exit_is_not_tree_exit (profiler_windows_contracts_test.RealJobTests.test_root_exit_is_not_tree_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 173, in test_root_exit_is_not_tree_exit
+    job.launch([sys.executable,'-c',parent],root,os.environ.copy(),log)
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\windows_owned_job.py", line 121, in launch
+    executable = str(Path(command[0]).resolve(strict=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1240, in resolve
+    s = self._flavour.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen ntpath>", line 739, in realpath
+PermissionError: [WinError 5] 拒绝访问。: 'E:\\Anaconda\\envs\\DL\\python.exe'
+
+======================================================================
+FAIL: test_assignment_failure_never_resumes_or_leaks (profiler_windows_contracts_test.RealJobTests.test_assignment_failure_never_resumes_or_leaks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 148, in test_assignment_failure_never_resumes_or_leaks
+    self.assertEqual(job.lifecycle,['created_suspended'])
+AssertionError: Lists differ: [] != ['created_suspended']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'created_suspended'
+
+- []
++ ['created_suspended']
+
+======================================================================
+FAIL: test_launcher_monitor_failure_records_and_kills_tree (profiler_windows_contracts_test.RealJobTests.test_launcher_monitor_failure_records_and_kills_tree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 209, in test_launcher_monitor_failure_records_and_kills_tree
+    self.assertEqual(result['raw_status'],'launched')
+AssertionError: 'not_launched' != 'launched'
+- not_launched
+? ----
++ launched
+
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.017s
+
+FAILED (failures=2, errors=4)

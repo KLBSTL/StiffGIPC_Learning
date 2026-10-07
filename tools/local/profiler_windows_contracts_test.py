@@ -20,6 +20,31 @@ from windows_owned_job import OwnedJob
 
 
 class ConfigurationTests(unittest.TestCase):
+    def test_program_budget_survives_seal_revision(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            reserve_attempt(root,'a'*64,root/'out1','node','b'*64)
+            reserve_attempt(root,'c'*64,root/'out2','graph','b'*64)
+            with self.assertRaises(ValueError):
+                reserve_attempt(root,'d'*64,root/'out3','node','b'*64)
+            reserve_attempt(root,'d'*64,root/'other','node','e'*64)
+
+    def test_old_seal_receipts_migrate_without_resetting_budget(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            for i in (1,2):
+                out=root/f'old{i}';out.mkdir()
+                (out/'requested.json').write_text(json.dumps({'exe_sha256':'b'*64}),encoding='utf-8')
+                reserve_attempt(root,'a'*64,out,'node')
+            with self.assertRaises(ValueError):
+                reserve_attempt(root,'c'*64,root/'new','graph','b'*64)
+
+    def test_unidentified_historical_attempt_is_not_free_budget(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);reserve_attempt(root,'a'*64,root/'absent','node')
+            with self.assertRaises(ValueError):
+                reserve_attempt(root,'c'*64,root/'new','graph','b'*64)
+
     def reference(self):
         c = expand({'scene':'cloth_fixed_bunny_l', 'preset':'combined', 'steps':59,
                     'diagnostics':[], 'profile':'none', 'timeout_seconds':120,
@@ -186,7 +211,7 @@ time.sleep(40)
             marker=root/'child.json';held=[];api=OwnedJob()
             childcode='import os,json,time;from pathlib import Path;Path('+repr(str(marker))+').write_text(json.dumps({"pid":os.getpid()}));time.sleep(40)'
             parent='import subprocess,sys,time;subprocess.Popen([sys.executable,"-c",'+repr(childcode)+']);time.sleep(40)'
-            identity={'exe':{'path':sys.executable,'sha256':'cpu-test'},'source_digest':'cpu-test'}
+            identity={'exe':{'path':sys.executable,'sha256':'b'*64},'source_digest':'cpu-test'}
             c=ConfigurationTests().reference()[0]['expanded_config']
             calls=[]
             def monitor(*args):

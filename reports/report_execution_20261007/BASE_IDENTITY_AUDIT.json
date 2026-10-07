@@ -1,0 +1,63 @@
+{
+  "schema": "report.baseline.identity.audit.v1",
+  "source_records": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\CMakeCache.txt",
+      "bytes": 42515,
+      "sha256": "bcfd0d9f4a9b0778cc5babb384e8c5a6fa9b47c16260440728fc5e7d26da1e42"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\gipc.vcxproj",
+      "bytes": 85059,
+      "sha256": "b9f24b71a3bb93000cf2240f9e442e41c8dbec2ae8f613a77eaf26ab36d33115"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_base_observer_20261007_v2\\CMakeCache.txt",
+      "bytes": 43089,
+      "sha256": "182002f5b78863413438a49189598b6597e3e5eb6e5d5f349ba985f7fdec6145"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_base_observer_20261007_v2\\frozen_base\\gipc.vcxproj",
+      "bytes": 80556,
+      "sha256": "d5e35dc66612da0ab11c3df46677a799394374099345c592c80f8916fd394f95"
+    }
+  ],
+  "selected_flags_original": {
+    "CMAKE_CUDA_ARCHITECTURES": "86",
+    "CMAKE_CUDA_FLAGS_RELEASE": "-Xcompiler=\"-O2 -Ob2\" -DNDEBUG",
+    "CMAKE_CXX_FLAGS_RELEASE": "/O2 /Ob2 /DNDEBUG",
+    "CMAKE_CUDA_COMPILER": null,
+    "CMAKE_CXX_COMPILER": null,
+    "CMAKE_MSVC_RUNTIME_LIBRARY": null
+  },
+  "selected_flags_observer": {
+    "CMAKE_CUDA_ARCHITECTURES": "86",
+    "CMAKE_CUDA_FLAGS_RELEASE": "-Xcompiler=\"-O2 -Ob2\" -DNDEBUG",
+    "CMAKE_CXX_FLAGS_RELEASE": "/O2 /Ob2 /DNDEBUG",
+    "CMAKE_CUDA_COMPILER": null,
+    "CMAKE_CXX_COMPILER": null,
+    "CMAKE_MSVC_RUNTIME_LIBRARY": null
+  },
+  "selected_flags_equal": {
+    "CMAKE_CUDA_ARCHITECTURES": true,
+    "CMAKE_CUDA_FLAGS_RELEASE": true,
+    "CMAKE_CXX_FLAGS_RELEASE": true,
+    "CMAKE_CUDA_COMPILER": true,
+    "CMAKE_CXX_COMPILER": true,
+    "CMAKE_MSVC_RUNTIME_LIBRARY": true
+  },
+  "original_units": {
+    "source_count": 35,
+    "basename_collisions": {
+      "pcg_solver.cu": 2
+    }
+  },
+  "observed_units": {
+    "source_count": 35,
+    "basename_collisions": {
+      "pcg_solver.cu": 2
+    }
+  },
+  "observation_neutrality_certified": false,
+  "scope": "Current cached flags/source inventories only. Observer identity.json proves its fresh commands and linked unique objects. Retained original hash is frozen; its historical partial-build logs do not prove a fresh matching build. Material/work/trajectory differences remain separately reported, without attributing them to a compiler or export operation."
+}

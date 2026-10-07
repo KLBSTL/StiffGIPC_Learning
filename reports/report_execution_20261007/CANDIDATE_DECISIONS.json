@@ -1,0 +1,56 @@
+{
+  "schema": "report.candidate.decisions.v1",
+  "sources": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\COST_sphere.json",
+      "bytes": 216548,
+      "sha256": "f102c002be99b2e64a71ab04cd0f8070c6ddeb1f0155ede118e36720956104ad"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\COST_fixed.json",
+      "bytes": 217484,
+      "sha256": "e8971fdc57f4fa707d219c017e4f39c1dfe22f91b4fff8768000b6d5d76258c9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\PROFILE_ATTRIBUTION.json",
+      "bytes": 6797,
+      "sha256": "13447fee7f7c9a71f029e4da1f5842401bff00f53d0165469871ed652da1679d"
+    }
+  ],
+  "threshold": {
+    "whole_solve_fraction": 0.1,
+    "ideal_half_saving": 0.05,
+    "whole_energy_or_linear_local_improvement": 0.15,
+    "whole_scene_increment": 0.05
+  },
+  "A": {
+    "status": "skipped_in_this_round",
+    "label": "Supports low priority; whole-scene hotspot threshold not established",
+    "implemented": false,
+    "new_flags_added": false,
+    "gpu_energy_reduce_ms": {
+      "sphere": 0.277055,
+      "fixed": 0.09072
+    },
+    "scope": "Keep energy production and ABD paths; these do not belong to the proposed segmented CUB reduction."
+  },
+  "B": {
+    "status": "skipped_in_this_round",
+    "label": "Whole-scene value remains unverified; no startup gate",
+    "implemented": false,
+    "new_flags_added": false,
+    "sphere_selected_frame_spmv_ms": 10.549158,
+    "sphere_selected_gpu_fraction": 0.04043650067634008,
+    "fixed_internal_spmv_ms": null,
+    "scope": "One selected frame is not an exact whole-scene breakdown. Whole Graph trace does not attribute internal nodes. No permanent rejection of row_gather."
+  },
+  "final_confirmation": {
+    "started": false,
+    "reason": "No qualified new candidate; frozen material and observer-neutrality protocols not passed",
+    "seven_pair_four_arm": false,
+    "accepted_path_ccd": false,
+    "cloth_300_frames": false,
+    "mixed_compatibility": false
+  },
+  "default_changes": 0
+}

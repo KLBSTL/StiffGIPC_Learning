@@ -1,0 +1,68 @@
+{
+  "schema": "report.post_run.cpu_revision.v1",
+  "old_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_observer_20261007_v2\\report_seal_capability_v2.json",
+    "bytes": 414232,
+    "sha256": "ecdd0b1afb672459d3a2643070bf823c0529c0956ad4f75a901f12792bd31434"
+  },
+  "new_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report_observer_20261007_v2\\report_seal_final_capability_v3.json",
+    "bytes": 414389,
+    "sha256": "12cc05bb1579657a4dce7c44c5184048ecc3bfea9055c44e9bbcb42475705516"
+  },
+  "changes": {
+    "quality_analysis": {
+      "previous_snapshot": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\frozen_tools\\quality_analysis.capability_v2.py.txt",
+        "bytes": 10419,
+        "sha256": "4d3306d2f3d3a18c0eb6c4a2d2c4c13fe41ab61d50283dca24d8ea27bd0596eb"
+      },
+      "current": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\diagnostic\\quality_analysis.py",
+        "bytes": 10496,
+        "sha256": "4e926fd63151ca644f9fba57e473f45708d84364209965509bc36af903238bc5"
+      }
+    },
+    "profiler_windows": {
+      "previous_snapshot": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\frozen_tools\\profiler_windows.capability_v2.py.txt",
+        "bytes": 19125,
+        "sha256": "14482603dfe76eab9b3801af2f37f2336d0e223ec8588f2f82e5be0b08a16b10"
+      },
+      "current": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\profiler_windows.py",
+        "bytes": 20086,
+        "sha256": "765917f0e318f68f9b6cfbb8a97d1cc27bdb79850f4a23936b76eae4597534cd"
+      }
+    },
+    "report_rounds": {
+      "previous_snapshot": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report_execution_20261007\\frozen_tools\\report_rounds.capability_v2.py.txt",
+        "bytes": 14753,
+        "sha256": "7cd3c3eb128bf4003c669db5ad74a8b64230cf719558bc7167d034e0e4cc7768"
+      },
+      "current": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\tools\\local\\report_rounds.py",
+        "bytes": 14759,
+        "sha256": "4ff9a204870e1addd7a92ec7ce3c3d3ca6d7cb45ca153a18ff08d58d0d7fd08c"
+      }
+    }
+  },
+  "native_programs_unchanged": true,
+  "physical_configs_unchanged": true,
+  "cpu_only": true,
+  "extra_gpu_runs": 0,
+  "closed_profile_receipts": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_profile_attempts\\ecdd0b1afb672459d3a2643070bf823c0529c0956ad4f75a901f12792bd31434\\attempt1.json",
+      "bytes": 312,
+      "sha256": "f0b5d43d8e5b6dc21f3c8814038494301b6946d12162f0855bc749f27f2912a0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\local_profile_attempts\\ecdd0b1afb672459d3a2643070bf823c0529c0956ad4f75a901f12792bd31434\\attempt2.json",
+      "bytes": 313,
+      "sha256": "66a7b92f759c22f20911fc6154513e4bd34101aedfa507edd7ca629e3d55aaf8"
+    }
+  ],
+  "reason": "Correct actual-velocity capability metadata; preserve two-capture budget across seal revisions. CPU monitor fixture updated to a valid synthetic hash. Old GPU evidence and status remain untouched."
+}

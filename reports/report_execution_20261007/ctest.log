@@ -1,0 +1,19 @@
+Test project E:/university_class/ComputerGraphics/GIPC/StiffGIPC_Learning/build/report_observer_20261007_v2
+    Start 1: diag_fused_update_equivalence
+1/7 Test #1: diag_fused_update_equivalence ....   Passed    0.24 sec
+    Start 2: pcg_guard_boundaries
+2/7 Test #2: pcg_guard_boundaries .............   Passed    1.07 sec
+    Start 3: ipc_budget_invariants
+3/7 Test #3: ipc_budget_invariants ............   Passed    0.08 sec
+    Start 4: ipc_compensated_controller
+4/7 Test #4: ipc_compensated_controller .......   Passed    0.08 sec
+    Start 5: contact_pool_equivalence
+5/7 Test #5: contact_pool_equivalence .........   Passed    0.41 sec
+    Start 6: edge_query_order_equivalence
+6/7 Test #6: edge_query_order_equivalence .....   Passed    0.42 sec
+    Start 7: pcg_chunk_stop_equivalence
+7/7 Test #7: pcg_chunk_stop_equivalence .......   Passed    0.48 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =   2.80 sec

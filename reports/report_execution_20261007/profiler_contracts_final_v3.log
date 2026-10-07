@@ -1,0 +1,17 @@
+............F..
+======================================================================
+FAIL: test_launcher_monitor_failure_records_and_kills_tree (__main__.RealJobTests.test_launcher_monitor_failure_records_and_kills_tree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\profiler_windows_contracts_test.py", line 234, in test_launcher_monitor_failure_records_and_kills_tree
+    self.assertEqual(result['raw_status'],'launched')
+AssertionError: 'not_launched' != 'launched'
+- not_launched
+? ----
++ launched
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.924s
+
+FAILED (failures=1)
