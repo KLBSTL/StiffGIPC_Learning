@@ -15,7 +15,7 @@ import unittest
 from unittest.mock import patch
 
 from profiler_windows import (ROOT, capture_evidence, derive_config, digest, expand, execute,
-    nsys_command, owned_process_rows, remaining, reserve_attempt, resource_reason)
+    nsys_command, owned_process_rows, remaining, reserve_attempt, resource_reason,solver_succeeded)
 from windows_owned_job import OwnedJob
 
 
@@ -68,6 +68,29 @@ class ConfigurationTests(unittest.TestCase):
             with self.assertRaises(ValueError): derive_config(req,res,'node')
         req,res=self.reference();req['config_sha256']='changed'
         with self.assertRaises(ValueError): derive_config(req,res,'node')
+
+    def test_explicit_120_frame_180_second_reference_scopes(self):
+        for scene in ('cloth_fixed_bunny_m','cloth_fixed_bunny_l','cloth_sphere7_l'):
+            req,res=self.reference();c=expand(dict(req['expanded_config'],scene=scene,steps=120,timeout_seconds=180))
+            req.update(expanded_config=c,config_sha256=digest(c));res['recorded_frames']=120
+            out=derive_config(req,res,'node',65)
+            self.assertEqual((out['scene'],out['steps'],out['timeout_seconds'],out['cost_frames']),(scene,120,180,'65'))
+            self.assertEqual({k for k in c if c[k]!=out[k]}, {'diagnostics','cost_frames','cost_events','profile'})
+            c['timeout_seconds']=120;req['config_sha256']=digest(c)
+            with self.assertRaises(ValueError):derive_config(req,res,'node',65)
+        with patch('profiler_windows.time.monotonic',return_value=100):
+            with self.assertRaises(subprocess.TimeoutExpired) as error:remaining(100,180)
+            self.assertEqual(error.exception.timeout,180)
+
+    def test_exited_image_gap_never_substitutes_for_explicit_solver_evidence(self):
+        exe=Path('gipc.exe')
+        unknown={'image':None,'exit_code':0}
+        solver={'image':str(exe),'exit_code':0}
+        self.assertTrue(solver_succeeded([unknown,solver],exe))
+        self.assertFalse(solver_succeeded([unknown],exe))
+        self.assertFalse(solver_succeeded([unknown,dict(solver,exit_code=4)],exe))
+        with self.assertRaisesRegex(ValueError,'Live owned process image'):
+            solver_succeeded([{'image':None,'exit_code':None},solver],exe)
 
     def test_nsys_contract_and_absolute_deadline(self):
         command=nsys_command(Path('nsys.exe'),Path('gipc.exe'),Path('out'),'node')

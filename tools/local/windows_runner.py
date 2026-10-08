@@ -19,6 +19,7 @@ from local_identity import create_seal,verify_seal,verify
 from local_analysis import analyze_one,analyze_round
 from quality_analysis import validate_base
 from validate_run import validate
+from windows_owned_job import OwnedJob
 
 @contextmanager
 def gpu_lock(root):
@@ -35,16 +36,16 @@ def stop_owned(proc):
     # Popen keeps the exact Windows process handle; never terminate a foreign PID.
     if proc is not None and proc.poll() is None:proc.kill();proc.wait(timeout=10)
 
-def remaining(deadline):
+def remaining(deadline,timeout_seconds=120):
     value=deadline-time.monotonic()
-    if value<=0:raise subprocess.TimeoutExpired('owned native budget',120)
+    if value<=0:raise subprocess.TimeoutExpired('owned native budget',timeout_seconds)
     return min(10,value)
 
-def final_status(status,exit_code,elapsed):
+def final_status(status,exit_code,elapsed,timeout_seconds=120):
     # A process can finish during the last monitoring sleep. Completion still
     # has to fit the absolute budget; do not accept that last-poll race.
     if status!='running':return status
-    if not math.isfinite(elapsed) or not 0<elapsed<=120:return 'timeout'
+    if not math.isfinite(elapsed) or not 0<elapsed<=timeout_seconds:return 'timeout'
     return 'completed' if exit_code==0 else 'failed'
 
 def process_rows(stdout,own_pid,driver_model):
@@ -64,10 +65,17 @@ def process_rows(stdout,own_pid,driver_model):
                      'classification':'owned' if pid==own_pid else 'foreign_compute_evidence' if blocking else 'unknown_WDDM_desktop_or_compute'})
     return {'rows':rows,'blocking_foreign_pids':foreign,'unknown_load':any(r['classification']=='unknown_WDDM_desktop_or_compute' for r in rows)}
 
-def gpu_processes(gpu,own_pid,driver_model,timeout=10):
+def gpu_processes(gpu,own_pid,driver_model,timeout=10,ownership=None):
     result=subprocess.run(['nvidia-smi','-i',str(gpu),'--query-compute-apps=pid,process_name,used_gpu_memory',
                            '--format=csv,noheader,nounits'],capture_output=True,text=True,check=True,timeout=timeout)
-    return process_rows(result.stdout,own_pid,driver_model)
+    rows=process_rows(result.stdout,own_pid,driver_model)
+    if ownership is not None:
+        for row in rows['rows']:
+            if ownership(row['pid']):
+                row.update(owned=True,blocking_foreign_compute=False,classification='owned_job_member')
+        rows['blocking_foreign_pids']=[r['pid'] for r in rows['rows'] if r['blocking_foreign_compute']]
+        rows['unknown_load']=any(r['classification']=='unknown_WDDM_desktop_or_compute' for r in rows['rows'])
+    return rows
 
 def driver_model(gpu):
     result=subprocess.run(['nvidia-smi','-i',str(gpu),'--query-gpu=driver_model.current','--format=csv,noheader,nounits'],
@@ -81,12 +89,15 @@ def prepare_run_output(out,config):
     if 'fixed' in config['diagnostics']:(out/'fixed').mkdir()
 
 def execute(session,t,identity,gpu):
-    c=expand(t['config']);out=child(session,t['name']);prepare_run_output(out,c);proc=None
+    c=expand(t['config']);out=child(session,t['name']);prepare_run_output(out,c);job=None
+    timeout_seconds=c['timeout_seconds']
     result={'status':'launcher_failed','recorded_frames':0,'heavy_diagnostics':bool(c['diagnostics']),
             'performance_certified':False,'physical_quality_certified':False,'timing_is_diagnostic':True,
+            'timeout_seconds':timeout_seconds,
             'timing_scope':'Shared Windows desktop diagnostic. Baseline lacks velocity/resolved/breakdown telemetry; no performance certification.'}
     try:
         mode=driver_model(gpu);before=[gpu_query(gpu)];time.sleep(.25);before.append(gpu_query(gpu));process_before=gpu_processes(gpu,None,mode)
+        require(before[0]['uuid']==before[1]['uuid'],'GPU identity changed during preflight')
         require(not process_before['blocking_foreign_pids'] and (mode=='WDDM' or all(g['utilization.gpu']<=5 for g in before)),
                 'Confirmed foreign compute/load gate failed; no process stopped')
         result.update(gpu_driver_model=mode,desktop_load_uncontrolled=mode=='WDDM',prelaunch_processes=process_before)
@@ -99,30 +110,36 @@ def execute(session,t,identity,gpu):
              'source_digest':identity['source_digest'],'exe_sha256':identity['exe']['sha256'],
              'runner_sha256':sha(__file__),'command':[str(exe)],'gpu_index':gpu,'gpu_before':before,'memory_budget_mib':budget,
              'environment':{k:v for k,v in env.items() if k.startswith('GIPC_')},'from_zero':True,'capabilities':identity['capabilities'],
-             'gpu_driver_model':mode,'gpu_processes_before':process_before,'desktop_load_uncontrolled':mode=='WDDM'}
+             'gpu_driver_model':mode,'gpu_processes_before':process_before,'desktop_load_uncontrolled':mode=='WDDM',
+             'resource_policy':{'absolute_timeout_seconds':timeout_seconds,'memory_budget_mib':budget,
+                 'memory_budget_formula':'min(.75*free_before,free_before-1536) >=1024 MiB',
+                 'memory_free_min_mib':768,'disk_before_bytes':4*1024**3,'disk_during_bytes':1024**3,
+                 'sample_interval_seconds':.5,'cleanup_grace_seconds':5}}
         write_new(out/'requested.json',req);write_new(out/'build_manifest.json',identity)
-        start=time.monotonic();deadline=start+120;status='running';samples=[]
+        start=time.monotonic();deadline=start+timeout_seconds;status='running';samples=[]
         with (out/'run.log').open('xb') as log:
-            startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=0
-            proc=subprocess.Popen([str(exe)],cwd=out,env=env,stdout=log,stderr=subprocess.STDOUT,
-                                  startupinfo=startup,creationflags=subprocess.CREATE_NO_WINDOW)
-            write_new(out/'process.json',{'pid':proc.pid,'exe':str(exe)})
-            while proc.poll() is None:
+            job=OwnedJob();job.launch([str(exe)],out,env,log)
+            write_new(out/'process.json',{'pid':job.pid,'exe':str(exe),'lifecycle':job.lifecycle,
+                'ownership':'Windows Job; suspended assignment; kill-on-close; no breakaway'})
+            while not job.finished():
                 try:
-                    sample=gpu_query(gpu,timeout=remaining(deadline))
-                    processes=gpu_processes(gpu,proc.pid,mode,timeout=remaining(deadline));foreign=processes['blocking_foreign_pids']
-                    remaining(deadline)
+                    job.observe()
+                    sample=gpu_query(gpu,timeout=remaining(deadline,timeout_seconds))
+                    require(sample['uuid']==before[-1]['uuid'],'GPU identity changed during native run')
+                    processes=gpu_processes(gpu,None,mode,timeout=remaining(deadline,timeout_seconds),ownership=job.owns_pid)
+                    foreign=processes['blocking_foreign_pids'];remaining(deadline,timeout_seconds)
                 except subprocess.TimeoutExpired:
-                    status='timeout' if time.monotonic()>=deadline else 'monitor_timeout';stop_owned(proc);break
+                    status='timeout' if time.monotonic()>=deadline else 'monitor_timeout';job.terminate();break
                 samples.append(sample|{'gpu_processes':processes,'foreign_compute_pids':foreign})
                 status=('foreign_gpu_load' if foreign else 'disk_reserve' if shutil.disk_usage(session).free<1024**3 else
                         'memory_budget' if sample['memory.free']<768 or free-sample['memory.free']>budget else 'running')
-                if status!='running':stop_owned(proc);break
+                if status!='running':job.terminate();break
+                if job.poll() not in (None,0):status='failed';job.terminate();break
                 time.sleep(max(0,min(.5,deadline-time.monotonic())))
-            proc.wait(timeout=10)
+            process_log=job.observe();exit_code=job.poll()
         elapsed=time.monotonic()-start
-        result.update(status=final_status(status,proc.returncode,elapsed),
-                      exit_code=proc.returncode,wall_seconds=elapsed,gpu_samples=samples)
+        result.update(status=final_status(status,exit_code,elapsed,timeout_seconds),
+                      exit_code=exit_code,wall_seconds=elapsed,gpu_samples=samples,owned_processes=process_log)
         if (out/'trace/frames.csv').exists():
             with (out/'trace/frames.csv').open() as stream:frames=list(csv.DictReader(stream))
             result.update(recorded_frames=len(frames),solver_seconds=sum(float(f['solver_ms']) for f in frames)/1000)
@@ -131,7 +148,17 @@ def execute(session,t,identity,gpu):
         if result['status']=='completed' and (result['recorded_frames']!=c['steps'] or not result.get('finite')):result['status']='incomplete_or_nonfinite'
         verify(identity['sources']+[identity['exe']]+identity['dlls'])
     except Exception as e:result.update(status='launcher_or_monitor_failed',error=type(e).__name__+': '+str(e))
-    finally:stop_owned(proc);write_new(out/'result.json',result)
+    finally:
+        if job is not None:
+            try:
+                if not job.finished():job.terminate()
+                result['owned_processes']=job.observe();result['cleanup_owned_job_empty']=job.finished()
+                result['root_exit_code_after_cleanup']=job.poll()
+            except BaseException as e:result.update(status='cleanup_failed',cleanup_error=type(e).__name__+': '+str(e))
+            finally:
+                try:job.close()
+                except BaseException as e:result.update(status='cleanup_failed',close_error=type(e).__name__+': '+str(e))
+        write_new(out/'result.json',result)
     if result['status']=='completed':
         try:check=validate(out) if t['binary']=='active' else validate_base(out)
         except Exception as e:check={'passed':False,'error':type(e).__name__+': '+str(e)}

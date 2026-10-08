@@ -35,8 +35,9 @@ def derive_config(request, result, mode, selected_frame=57):
     require(expand(c) == c and request['config_sha256'] == digest(c), 'Reference configuration identity differs')
     require(request['binary'] == 'active' and result['status'] == 'completed' and
             result['recorded_frames'] == c['steps'] and result.get('finite') is True, 'Completed finite active reference required')
-    require((c['scene'],c['steps']) in {('cloth_fixed_bunny_l',59),
-            ('cloth_fixed_bunny_l',100),('cloth_sphere7_l',100)} and c['timeout_seconds'] == 120 and
+    require((c['scene'],c['steps'],c['timeout_seconds']) in {('cloth_fixed_bunny_l',59,120),
+            ('cloth_fixed_bunny_l',100,120),('cloth_sphere7_l',100,120),
+            ('cloth_fixed_bunny_m',120,180),('cloth_fixed_bunny_l',120,180),('cloth_sphere7_l',120,180)} and
             c['backend'] == 'ipc' and c['execution'] == 'conditional_graph', 'Unsupported reference scope')
     require(type(selected_frame) is int and 1<=selected_frame<=c['steps'], 'Invalid capture frame')
     require(c['diagnostics'] == [] and c['profile'] == 'none' and not c['contact_pool_validate'], 'Reference is instrumented')
@@ -58,10 +59,19 @@ def nsys_command(nsys, exe, out, mode):
             '--cuda-graph-trace=' + mode, '--output=' + str(out / 'nsight'), str(exe)]
 
 
-def remaining(deadline):
+def remaining(deadline,timeout_seconds=TIMEOUT):
     left = deadline - time.monotonic()
-    if left <= 0: raise subprocess.TimeoutExpired('owned profiler tree', TIMEOUT)
+    if left <= 0: raise subprocess.TimeoutExpired('owned profiler tree', timeout_seconds)
     return min(10, left)
+
+
+def solver_succeeded(process_log,exe):
+    # Exited helpers may lose their image query before first observation. They
+    # cannot prove the solver ran; at least one explicit solver image is needed.
+    require(all(p.get('image') or p.get('exit_code') is not None for p in process_log),
+            'Live owned process image unavailable')
+    solver=[p for p in process_log if p.get('image') and Path(p['image']).resolve()==exe.resolve()]
+    return bool(solver) and all(p['exit_code']==0 for p in solver)
 
 
 def owned_process_rows(stdout, mode, ownership):
@@ -118,6 +128,8 @@ def reserve_attempt(root, seal_sha, output, mode, exe_sha=None):
 
 def prepare(root, seal_path, reference, mode, nsys, selected_frame=57):
     seal = verify_seal(root, seal_path)
+    require(seal['schema'] in ('windows_cloth_seal.v1','windows_execution_observation.v1'),
+            'Unsupported profiler observation seal')
     identity = seal['programs']['active']
     require(identity['kind']=='active' and Path(identity['source_root']).resolve()==root.resolve() and
             Path(identity['exe']['path']).resolve().is_relative_to((root / 'build').resolve()),
@@ -182,6 +194,7 @@ def execute(root, seal_path, reference, out, mode, nsys, gpu, selected_frame=57)
         (out/'output').mkdir(parents=True)
         try:
             seal, identity, c, profiler, own, reference_ids = prepare(root, seal_path, reference, mode, nsys, selected_frame)
+            timeout_seconds=c['timeout_seconds'];result['timeout_seconds']=timeout_seconds
             model = driver_model(gpu)
             before = [gpu_query(gpu)]; time.sleep(.25); before.append(gpu_query(gpu))
             pre = processes(gpu, model, lambda pid: False, 10)
@@ -202,12 +215,12 @@ def execute(root, seal_path, reference, out, mode, nsys, gpu, selected_frame=57)
                 'diagnostic_delta_keys': sorted(DIAGNOSTIC_KEYS), 'from_zero': True, 'command': command,
                 'profiler': profiler, 'new_tools': own, 'attempt': attempt, 'gpu_index': gpu,
                 'environment': {k:v for k,v in env.items() if k.startswith('GIPC_') or k == 'CUDA_VISIBLE_DEVICES'},
-                'resource_policy': {'absolute_timeout_seconds': TIMEOUT, 'memory_budget_mib': budget,
+                'resource_policy': {'absolute_timeout_seconds': timeout_seconds, 'memory_budget_mib': budget,
                     'memory_budget_formula': 'min(.75*free_before,free_before-1536) >=1024 MiB',
                     'memory_free_min_mib': 768, 'disk_before_bytes': 4*1024**3, 'disk_during_bytes': 1024**3,
                     'sample_interval_seconds': .5, 'cleanup_grace_seconds': 5, 'max_launch_attempts_per_seal': 2}})
             write_new(out/'build_manifest.json', identity)
-            started = time.monotonic(); deadline = started + TIMEOUT
+            started = time.monotonic(); deadline = started + timeout_seconds
             job = OwnedJob()
             status = 'running'
             with (out/'run.log').open('xb') as log:
@@ -217,12 +230,12 @@ def execute(root, seal_path, reference, out, mode, nsys, gpu, selected_frame=57)
                                              'ownership': 'Windows Job; suspended assignment; kill-on-close; no breakaway'})
                 while not job.finished():
                     try:
-                        remaining(deadline)
+                        remaining(deadline,timeout_seconds)
                         process_log = job.observe()
-                        sample = gpu_query(gpu, timeout=remaining(deadline))
+                        sample = gpu_query(gpu, timeout=remaining(deadline,timeout_seconds))
                         require(sample['uuid'] == before[-1]['uuid'], 'GPU identity changed during profiling')
-                        current = processes(gpu, model, job.owns_pid, remaining(deadline))
-                        remaining(deadline)
+                        current = processes(gpu, model, job.owns_pid, remaining(deadline,timeout_seconds))
+                        remaining(deadline,timeout_seconds)
                         samples.append(sample | {'elapsed_seconds': time.monotonic()-started, 'gpu_processes': current})
                         reason = resource_reason(sample, free, budget, shutil.disk_usage(out).free, current['blocking_foreign_pids'])
                         if reason:
@@ -236,9 +249,9 @@ def execute(root, seal_path, reference, out, mode, nsys, gpu, selected_frame=57)
                 process_log = job.observe()
                 exit_code = job.poll()
                 if status == 'running':
-                    status = 'completed' if exit_code == 0 else 'profiler_failed'
-                    solver = [p for p in process_log if Path(p['image']).resolve() == exe.resolve()]
-                    if not solver or any(p['exit_code'] != 0 for p in solver): status = 'solver_not_observed_or_failed'
+                    status = ('timeout' if time.monotonic()-started>timeout_seconds else
+                              'completed' if exit_code == 0 else 'profiler_failed')
+                    if status=='completed' and not solver_succeeded(process_log,exe):status='solver_not_observed_or_failed'
             result.update(raw_status=status, status=status, exit_code=exit_code,
                           wall_seconds=time.monotonic()-started, owned_processes=process_log)
             verify_seal(root, seal_path); verify(own + reference_ids)
@@ -299,7 +312,7 @@ def main():
     if a.action == 'plan':
         _, identity, c, profiler, _, _ = prepare(root, seal, reference, a.mode, a.nsys,a.frame)
         print(json.dumps({'config': c, 'command': nsys_command(a.nsys, Path(identity['exe']['path']), out, a.mode),
-                          'profiler': profiler, 'gpu_started': False, 'timeout_seconds': TIMEOUT}, indent=2))
+                          'profiler': profiler, 'gpu_started': False, 'timeout_seconds': c['timeout_seconds']}, indent=2))
         return 0
     result = execute(root, seal, reference, out, a.mode, a.nsys, a.gpu,a.frame)
     print(json.dumps({'status': result['status'], 'capture_verified': result['capture_verified'],
