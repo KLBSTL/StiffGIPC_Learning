@@ -188,6 +188,40 @@ add_executable(line_search_acceptance_test tests/line_search_acceptance_test.cpp
 target_compile_features(line_search_acceptance_test PRIVATE cxx_std_17)
 target_include_directories(line_search_acceptance_test PRIVATE StiffGIPC/)
 add_test(NAME line_search_acceptance COMMAND line_search_acceptance_test)
+add_executable(linear_structure_probe_contract_test tests/linear_structure_probe_contract_test.cpp)
+target_compile_features(linear_structure_probe_contract_test PRIVATE cxx_std_17)
+target_include_directories(linear_structure_probe_contract_test PRIVATE StiffGIPC/)
+add_test(NAME linear_structure_probe_contract COMMAND linear_structure_probe_contract_test)
+add_executable(linear_structure_probe_gpu_test
+    tests/linear_structure_probe_gpu_test.cu
+    StiffGIPC/linear_system/utils/converter.cu
+    StiffGIPC/gipc/utils/timer.cpp)
+target_compile_features(linear_structure_probe_gpu_test PRIVATE cxx_std_17 cuda_std_17)
+target_include_directories(linear_structure_probe_gpu_test PRIVATE StiffGIPC/)
+target_link_libraries(linear_structure_probe_gpu_test PRIVATE Eigen3::Eigen CUDA::cudart nlohmann_json::nlohmann_json)
+foreach(_eigen_include IN LISTS _eigen_includes)
+    get_filename_component(_eigen_parent "${_eigen_include}" DIRECTORY)
+    target_include_directories(linear_structure_probe_gpu_test PRIVATE "${_eigen_parent}")
+endforeach()
+if(CUDAToolkit_VERSION_MAJOR GREATER_EQUAL 13)
+    target_include_directories(linear_structure_probe_gpu_test PRIVATE ${CUDAToolkit_INCLUDE_DIRS}/cccl)
+endif()
+target_compile_options(linear_structure_probe_gpu_test PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:--default-stream=per-thread;--expt-relaxed-constexpr>
+    $<$<AND:$<COMPILE_LANGUAGE:CUDA>,$<CXX_COMPILER_ID:MSVC>>:-Xcompiler=/Zc:preprocessor>
+    $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/Zc:preprocessor>)
+set_target_properties(linear_structure_probe_gpu_test PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
+add_test(NAME linear_structure_probe_gpu COMMAND linear_structure_probe_gpu_test)
+set_tests_properties(linear_structure_probe_gpu PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
+add_executable(bvh_query_probe_contract_test tests/bvh_query_probe_contract_test.cpp)
+target_compile_features(bvh_query_probe_contract_test PRIVATE cxx_std_17)
+target_include_directories(bvh_query_probe_contract_test PRIVATE StiffGIPC/)
+target_link_libraries(bvh_query_probe_contract_test PRIVATE nlohmann_json::nlohmann_json)
+add_test(NAME bvh_query_probe_contract COMMAND bvh_query_probe_contract_test)
+add_test(NAME bvh_query_probe_equivalence COMMAND ${CMAKE_COMMAND} -E env
+    "GIPC_CONTACT_BACKEND=ipc" "GIPC_BVH_QUERY_PROBE=0"
+    "GIPC_BVH_QUERY_PROBE_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/bvh_query_probe_fixture.json" $<TARGET_FILE:gipc>)
+set_tests_properties(bvh_query_probe_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 foreach(_case zero_alpha nan_alpha nonfinite_baseline report_write_failure)
     add_test(NAME line_search_failure_${_case} COMMAND ${CMAKE_COMMAND}
         "-DGIPC_BINARY=$<TARGET_FILE:gipc>"

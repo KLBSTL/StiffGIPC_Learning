@@ -1261,6 +1261,159 @@ __global__ void _sortBvs(const uint32_t* _indices, AABB* _bvs, AABB* _temp_bvs, 
     _bvs[idx] = _temp_bvs[_indices[idx]];
 }
 
+template<bool Probe>
+__device__ __forceinline__ void _selfQuery_vf_body(const int*      _bodyID,
+                              const int*      _btype,
+                              const double3*  _vertexes,
+                              const uint3*    _faces,
+                              const uint32_t* _surfVerts,
+                              const AABB*     _bvs,
+                              const Node*     _nodes,
+                              int4*           _collisionPair,
+                              int4*           _ccd_collisionPair,
+                              uint32_t*       _cpNum,
+                              int*            MatIndex,
+                              double          dHat,
+                              uint32_t        pair_capacity,
+                              int             number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace,uint32_t trace_stride)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if(idx >= number)
+        return;
+    gipc::BvhQueryCounter<Probe> counter(records,static_cast<uint32_t>(idx),leaf_trace,trace_stride);
+
+    uint32_t  stack[65];  // a unique 64-bit Morton key bounds LBVH depth by 64
+    uint32_t* stack_ptr = stack;
+    *stack_ptr++        = 0;
+    if constexpr(Probe) counter.stack(1);
+
+    AABB _bv;
+    idx       = _surfVerts[idx];
+    if constexpr(Probe) counter.id(static_cast<uint32_t>(idx));
+    _bv.upper = _vertexes[idx];
+    _bv.lower = _vertexes[idx];
+    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
+    //printf("%f\n", bboxDiagSize2);
+    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
+    const auto root_object = _nodes[0].element_idx;
+    if(root_object != 0xFFFFFFFF)
+    {
+        if constexpr(Probe) counter.node();
+        const bool root_overlap=overlap(_bv, _bvs[0], gapl);
+        if constexpr(Probe) {if(root_overlap)counter.leaf(root_object);}
+        if(root_overlap
+           && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
+           && idx != _faces[root_object].x && idx != _faces[root_object].y
+           && idx != _faces[root_object].z
+           && !(_btype[idx] >= 2 && _btype[_faces[root_object].x] >= 2
+                && _btype[_faces[root_object].y] >= 2
+                && _btype[_faces[root_object].z] >= 2))
+        {
+            if constexpr(Probe) counter.narrow();
+            _checkPTintersection(_vertexes,
+                                 idx,
+                                 _faces[root_object].x,
+                                 _faces[root_object].y,
+                                 _faces[root_object].z,
+                                 dHat,
+                                 _cpNum,
+                                 MatIndex,
+                                 _collisionPair,
+                                 _ccd_collisionPair,
+                                 pair_capacity);
+        }
+        if constexpr(Probe) counter.finish();
+        return;
+    }
+    //double dHat = gapl * gapl;// *bboxDiagSize2;
+    unsigned int num_found = 0;
+    do
+    {
+        if constexpr(Probe) counter.pop();
+        const uint32_t node_id = *--stack_ptr;
+        const uint32_t L_idx   = _nodes[node_id].left_idx;
+        const uint32_t R_idx   = _nodes[node_id].right_idx;
+
+        if constexpr(Probe) counter.node();
+        if(overlap(_bv, _bvs[L_idx], gapl))
+        {
+            const auto obj_idx = _nodes[L_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if constexpr(Probe) counter.leaf(obj_idx);
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                       && idx != _faces[obj_idx].z)
+                    {
+                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                             && _btype[_faces[obj_idx].y] >= 2
+                             && _btype[_faces[obj_idx].z] >= 2))
+                        {
+                            if constexpr(Probe) counter.narrow();
+                            _checkPTintersection(_vertexes,
+                                                 idx,
+                                                 _faces[obj_idx].x,
+                                                 _faces[obj_idx].y,
+                                                 _faces[obj_idx].z,
+                                                 dHat,
+                                                 _cpNum,
+                                                 MatIndex,
+                                                 _collisionPair,
+                                                 _ccd_collisionPair,
+                                                 pair_capacity);
+                        }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = L_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
+            }
+        }
+        if constexpr(Probe) counter.node();
+        if(overlap(_bv, _bvs[R_idx], gapl))
+        {
+            const auto obj_idx = _nodes[R_idx].element_idx;
+            if(obj_idx != 0xFFFFFFFF)
+            {
+                if constexpr(Probe) counter.leaf(obj_idx);
+                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                {
+                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                       && idx != _faces[obj_idx].z)
+                    {
+                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                             && _btype[_faces[obj_idx].y] >= 2
+                             && _btype[_faces[obj_idx].z] >= 2))
+                        {
+                            if constexpr(Probe) counter.narrow();
+                            _checkPTintersection(_vertexes,
+                                                 idx,
+                                                 _faces[obj_idx].x,
+                                                 _faces[obj_idx].y,
+                                                 _faces[obj_idx].z,
+                                                 dHat,
+                                                 _cpNum,
+                                                 MatIndex,
+                                                 _collisionPair,
+                                                 _ccd_collisionPair,
+                                                 pair_capacity);
+                        }
+                    }
+                }
+            }
+            else  // the node is not a leaf.
+            {
+                *stack_ptr++ = R_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
+            }
+        }
+    } while(stack < stack_ptr);
+    if constexpr(Probe) counter.finish();
+}
+
 __global__ void _selfQuery_vf(const int*      _bodyID,
                               const int*      _btype,
                               const double3*  _vertexes,
@@ -1276,25 +1429,73 @@ __global__ void _selfQuery_vf(const int*      _bodyID,
                               uint32_t        pair_capacity,
                               int             number)
 {
+    _selfQuery_vf_body<false>(_bodyID,_btype,_vertexes,_faces,_surfVerts,_bvs,_nodes,_collisionPair,_ccd_collisionPair,_cpNum,MatIndex,dHat,pair_capacity,number,nullptr,nullptr,0);
+}
+
+__global__ void _selfQuery_vf_probe(const int*      _bodyID,
+                              const int*      _btype,
+                              const double3*  _vertexes,
+                              const uint3*    _faces,
+                              const uint32_t* _surfVerts,
+                              const AABB*     _bvs,
+                              const Node*     _nodes,
+                              int4*           _collisionPair,
+                              int4*           _ccd_collisionPair,
+                              uint32_t*       _cpNum,
+                              int*            MatIndex,
+                              double          dHat,
+                              uint32_t        pair_capacity,
+                              int             number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace=nullptr,uint32_t trace_stride=0)
+{
+    _selfQuery_vf_body<true>(_bodyID,_btype,_vertexes,_faces,_surfVerts,_bvs,_nodes,_collisionPair,_ccd_collisionPair,_cpNum,MatIndex,dHat,pair_capacity,number,records,leaf_trace,trace_stride);
+}
+
+template<bool Probe>
+__device__ __forceinline__ void _selfQuery_vf_ccd_body(const int*      _bodyID,
+                                  const int*      _btype,
+                                  const double3*  _vertexes,
+                                  const double3*  moveDir,
+                                  double          alpha,
+                                  const uint3*    _faces,
+                                  const uint32_t* _surfVerts,
+                                  const AABB*     _bvs,
+                                  const Node*     _nodes,
+                                  int4*           _ccd_collisionPair,
+                                  uint32_t*       _cpNum,
+                                  double          dHat,
+                                  uint32_t        pair_capacity,
+                                  int             number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace,uint32_t trace_stride)
+{
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
         return;
+    gipc::BvhQueryCounter<Probe> counter(records,static_cast<uint32_t>(idx),leaf_trace,trace_stride);
 
-    uint32_t  stack[65];  // a unique 64-bit Morton key bounds LBVH depth by 64
+    uint32_t  stack[65];
     uint32_t* stack_ptr = stack;
     *stack_ptr++        = 0;
+    if constexpr(Probe) counter.stack(1);
 
     AABB _bv;
-    idx       = _surfVerts[idx];
-    _bv.upper = _vertexes[idx];
-    _bv.lower = _vertexes[idx];
+    idx                    = _surfVerts[idx];
+    if constexpr(Probe) counter.id(static_cast<uint32_t>(idx));
+    double3 current_vertex = _vertexes[idx];
+    double3 mvD            = moveDir[idx];
+    _bv.upper              = current_vertex;
+    _bv.lower              = current_vertex;
+    _bv.combines(current_vertex.x - mvD.x * alpha,
+                 current_vertex.y - mvD.y * alpha,
+                 current_vertex.z - mvD.z * alpha);
     //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
     //printf("%f\n", bboxDiagSize2);
     double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
     const auto root_object = _nodes[0].element_idx;
     if(root_object != 0xFFFFFFFF)
     {
-        if(overlap(_bv, _bvs[0], gapl)
+        if constexpr(Probe) counter.node();
+        const bool root_overlap=overlap(_bv, _bvs[0], gapl);
+        if constexpr(Probe) {if(root_overlap)counter.leaf(root_object);}
+        if(root_overlap
            && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
            && idx != _faces[root_object].x && idx != _faces[root_object].y
            && idx != _faces[root_object].z
@@ -1302,93 +1503,92 @@ __global__ void _selfQuery_vf(const int*      _bodyID,
                 && _btype[_faces[root_object].y] >= 2
                 && _btype[_faces[root_object].z] >= 2))
         {
-            _checkPTintersection(_vertexes,
-                                 idx,
-                                 _faces[root_object].x,
-                                 _faces[root_object].y,
-                                 _faces[root_object].z,
-                                 dHat,
-                                 _cpNum,
-                                 MatIndex,
-                                 _collisionPair,
-                                 _ccd_collisionPair,
-                                 pair_capacity);
+            uint32_t slot = atomicAdd(_cpNum, 1U);
+            if(slot < pair_capacity)
+                _ccd_collisionPair[slot] = make_int4(-idx - 1,
+                                                      _faces[root_object].x,
+                                                      _faces[root_object].y,
+                                                      _faces[root_object].z);
         }
+        if constexpr(Probe) counter.finish();
         return;
     }
     //double dHat = gapl * gapl;// *bboxDiagSize2;
     unsigned int num_found = 0;
     do
     {
+        if constexpr(Probe) counter.pop();
         const uint32_t node_id = *--stack_ptr;
         const uint32_t L_idx   = _nodes[node_id].left_idx;
         const uint32_t R_idx   = _nodes[node_id].right_idx;
 
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[L_idx], gapl))
         {
             const auto obj_idx = _nodes[L_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
+                if constexpr(Probe) counter.leaf(obj_idx);
                 if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
                 {
-                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
-                       && idx != _faces[obj_idx].z)
-                    {
-                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
-                             && _btype[_faces[obj_idx].y] >= 2
-                             && _btype[_faces[obj_idx].z] >= 2))
-                            _checkPTintersection(_vertexes,
-                                                 idx,
-                                                 _faces[obj_idx].x,
-                                                 _faces[obj_idx].y,
-                                                 _faces[obj_idx].z,
-                                                 dHat,
-                                                 _cpNum,
-                                                 MatIndex,
-                                                 _collisionPair,
-                                                 _ccd_collisionPair,
-                                                 pair_capacity);
-                    }
+
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = L_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[R_idx], gapl))
         {
             const auto obj_idx = _nodes[R_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
+                if constexpr(Probe) counter.leaf(obj_idx);
                 if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
                 {
-                    if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
-                       && idx != _faces[obj_idx].z)
-                    {
-                        if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
-                             && _btype[_faces[obj_idx].y] >= 2
-                             && _btype[_faces[obj_idx].z] >= 2))
-                            _checkPTintersection(_vertexes,
-                                                 idx,
-                                                 _faces[obj_idx].x,
-                                                 _faces[obj_idx].y,
-                                                 _faces[obj_idx].z,
-                                                 dHat,
-                                                 _cpNum,
-                                                 MatIndex,
-                                                 _collisionPair,
-                                                 _ccd_collisionPair,
-                                                 pair_capacity);
-                    }
+                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
+                         && _btype[_faces[obj_idx].y] >= 2
+                         && _btype[_faces[obj_idx].z] >= 2))
+                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
+                           && idx != _faces[obj_idx].z)
+                        {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                            if(cdp_idx < pair_capacity)
+                                _ccd_collisionPair[cdp_idx] =
+                                    make_int4(-idx - 1,
+                                              _faces[obj_idx].x,
+                                              _faces[obj_idx].y,
+                                              _faces[obj_idx].z);
+                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                        }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = R_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
     } while(stack < stack_ptr);
+    if constexpr(Probe) counter.finish();
 }
 
 __global__ void _selfQuery_vf_ccd(const int*      _bodyID,
@@ -1406,116 +1606,173 @@ __global__ void _selfQuery_vf_ccd(const int*      _bodyID,
                                   uint32_t        pair_capacity,
                                   int             number)
 {
+    _selfQuery_vf_ccd_body<false>(_bodyID,_btype,_vertexes,moveDir,alpha,_faces,_surfVerts,_bvs,_nodes,_ccd_collisionPair,_cpNum,dHat,pair_capacity,number,nullptr,nullptr,0);
+}
+
+__global__ void _selfQuery_vf_ccd_probe(const int*      _bodyID,
+                                  const int*      _btype,
+                                  const double3*  _vertexes,
+                                  const double3*  moveDir,
+                                  double          alpha,
+                                  const uint3*    _faces,
+                                  const uint32_t* _surfVerts,
+                                  const AABB*     _bvs,
+                                  const Node*     _nodes,
+                                  int4*           _ccd_collisionPair,
+                                  uint32_t*       _cpNum,
+                                  double          dHat,
+                                  uint32_t        pair_capacity,
+                                  int             number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace=nullptr,uint32_t trace_stride=0)
+{
+    _selfQuery_vf_ccd_body<true>(_bodyID,_btype,_vertexes,moveDir,alpha,_faces,_surfVerts,_bvs,_nodes,_ccd_collisionPair,_cpNum,dHat,pair_capacity,number,records,leaf_trace,trace_stride);
+}
+
+
+template<bool Probe>
+__device__ __forceinline__ void _selfQuery_ee_body(const int*     _bodyID,
+                              const int*     _btype,
+                              const double3* _vertexes,
+                              const double3* _rest_vertexes,
+                              const uint2*   _edges,
+                              const AABB*    _bvs,
+                              const Node*    _nodes,
+                              int4*          _collisionPair,
+                              int4*          _ccd_collisionPair,
+                              uint32_t*      _cpNum,
+                              int*           MatIndex,
+                              double         dHat,
+                              uint32_t       pair_capacity,
+                              int            number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace,uint32_t trace_stride)
+{
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
         return;
+    gipc::BvhQueryCounter<Probe> counter(records,static_cast<uint32_t>(idx),leaf_trace,trace_stride);
 
     uint32_t  stack[65];
     uint32_t* stack_ptr = stack;
     *stack_ptr++        = 0;
+    if constexpr(Probe) counter.stack(1);
 
-    AABB _bv;
-    idx                    = _surfVerts[idx];
-    double3 current_vertex = _vertexes[idx];
-    double3 mvD            = moveDir[idx];
-    _bv.upper              = current_vertex;
-    _bv.lower              = current_vertex;
-    _bv.combines(current_vertex.x - mvD.x * alpha,
-                 current_vertex.y - mvD.y * alpha,
-                 current_vertex.z - mvD.z * alpha);
+    idx               = idx + number - 1;
+    AABB     _bv      = _bvs[idx];
+    uint32_t self_eid = _nodes[idx].element_idx;
+    if constexpr(Probe) counter.id(self_eid);
     //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
     //printf("%f\n", bboxDiagSize2);
     double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
-    const auto root_object = _nodes[0].element_idx;
-    if(root_object != 0xFFFFFFFF)
-    {
-        if(overlap(_bv, _bvs[0], gapl)
-           && ((_bodyID[idx] != _bodyID[_faces[root_object].x]) || (_bodyID[idx] == -1))
-           && idx != _faces[root_object].x && idx != _faces[root_object].y
-           && idx != _faces[root_object].z
-           && !(_btype[idx] >= 2 && _btype[_faces[root_object].x] >= 2
-                && _btype[_faces[root_object].y] >= 2
-                && _btype[_faces[root_object].z] >= 2))
-        {
-            uint32_t slot = atomicAdd(_cpNum, 1U);
-            if(slot < pair_capacity)
-                _ccd_collisionPair[slot] = make_int4(-idx - 1,
-                                                      _faces[root_object].x,
-                                                      _faces[root_object].y,
-                                                      _faces[root_object].z);
-        }
-        return;
-    }
     //double dHat = gapl * gapl;// *bboxDiagSize2;
     unsigned int num_found = 0;
     do
     {
+        if constexpr(Probe) counter.pop();
         const uint32_t node_id = *--stack_ptr;
         const uint32_t L_idx   = _nodes[node_id].left_idx;
         const uint32_t R_idx   = _nodes[node_id].right_idx;
 
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[L_idx], gapl))
         {
             const auto obj_idx = _nodes[L_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
-                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                if constexpr(Probe) counter.leaf(obj_idx);
+                if(self_eid != obj_idx)
                 {
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
 
-                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
-                         && _btype[_faces[obj_idx].y] >= 2
-                         && _btype[_faces[obj_idx].z] >= 2))
-                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
-                           && idx != _faces[obj_idx].z)
+
+                        if(!(_edges[self_eid].x == _edges[obj_idx].x
+                             || _edges[self_eid].x == _edges[obj_idx].y
+                             || _edges[self_eid].y == _edges[obj_idx].x
+                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
                         {
-                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
-                            if(cdp_idx < pair_capacity)
-                                _ccd_collisionPair[cdp_idx] =
-                                    make_int4(-idx - 1,
-                                              _faces[obj_idx].x,
-                                              _faces[obj_idx].y,
-                                              _faces[obj_idx].z);
-                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
+                            if(!(_btype[_edges[self_eid].x] >= 2
+                                 && _btype[_edges[self_eid].y] >= 2
+                                 && _btype[_edges[obj_idx].x] >= 2
+                                 && _btype[_edges[obj_idx].y] >= 2))
+                            {
+                                if constexpr(Probe) counter.narrow();
+                                _checkEEintersection(_vertexes,
+                                                     _rest_vertexes,
+                                                     _edges[self_eid].x,
+                                                     _edges[self_eid].y,
+                                                     _edges[obj_idx].x,
+                                                     _edges[obj_idx].y,
+                                                     obj_idx,
+                                                     dHat,
+                                                     _cpNum,
+                                                     MatIndex,
+                                                     _collisionPair,
+                                                     _ccd_collisionPair,
+                                                     number,
+                                                     pair_capacity);
+                            }
                         }
+                    }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = L_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[R_idx], gapl))
         {
             const auto obj_idx = _nodes[R_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
-                if((_bodyID[idx] != _bodyID[_faces[obj_idx].x]) || (_bodyID[idx] == -1))
+                if constexpr(Probe) counter.leaf(obj_idx);
+                if(self_eid != obj_idx)
                 {
-                    if(!(_btype[idx] >= 2 && _btype[_faces[obj_idx].x] >= 2
-                         && _btype[_faces[obj_idx].y] >= 2
-                         && _btype[_faces[obj_idx].z] >= 2))
-                        if(idx != _faces[obj_idx].x && idx != _faces[obj_idx].y
-                           && idx != _faces[obj_idx].z)
+                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
+                       || (_bodyID[_edges[self_eid].x] == -1))
+                    {
+                        if(!(_edges[self_eid].x == _edges[obj_idx].x
+                             || _edges[self_eid].x == _edges[obj_idx].y
+                             || _edges[self_eid].y == _edges[obj_idx].x
+                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
                         {
-                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
-                            if(cdp_idx < pair_capacity)
-                                _ccd_collisionPair[cdp_idx] =
-                                    make_int4(-idx - 1,
-                                              _faces[obj_idx].x,
-                                              _faces[obj_idx].y,
-                                              _faces[obj_idx].z);
-                            //_checkPTintersection_fullCCD(_vertexes, idx, _faces[obj_idx].x, _faces[obj_idx].y, _faces[obj_idx].z, dHat, _cpNum, _ccd_collisionPair);
+                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
+                            if(!(_btype[_edges[self_eid].x] >= 2
+                                 && _btype[_edges[self_eid].y] >= 2
+                                 && _btype[_edges[obj_idx].x] >= 2
+                                 && _btype[_edges[obj_idx].y] >= 2))
+                            {
+                                if constexpr(Probe) counter.narrow();
+                                _checkEEintersection(_vertexes,
+                                                     _rest_vertexes,
+                                                     _edges[self_eid].x,
+                                                     _edges[self_eid].y,
+                                                     _edges[obj_idx].x,
+                                                     _edges[obj_idx].y,
+                                                     obj_idx,
+                                                     dHat,
+                                                     _cpNum,
+                                                     MatIndex,
+                                                     _collisionPair,
+                                                     _ccd_collisionPair,
+                                                     number,
+                                                     pair_capacity);
+                            }
                         }
+                    }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = R_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
     } while(stack < stack_ptr);
+    if constexpr(Probe) counter.finish();
 }
-
 
 __global__ void _selfQuery_ee(const int*     _bodyID,
                               const int*     _btype,
@@ -1532,117 +1789,148 @@ __global__ void _selfQuery_ee(const int*     _bodyID,
                               uint32_t       pair_capacity,
                               int            number)
 {
+    _selfQuery_ee_body<false>(_bodyID,_btype,_vertexes,_rest_vertexes,_edges,_bvs,_nodes,_collisionPair,_ccd_collisionPair,_cpNum,MatIndex,dHat,pair_capacity,number,nullptr,nullptr,0);
+}
+
+__global__ void _selfQuery_ee_probe(const int*     _bodyID,
+                              const int*     _btype,
+                              const double3* _vertexes,
+                              const double3* _rest_vertexes,
+                              const uint2*   _edges,
+                              const AABB*    _bvs,
+                              const Node*    _nodes,
+                              int4*          _collisionPair,
+                              int4*          _ccd_collisionPair,
+                              uint32_t*      _cpNum,
+                              int*           MatIndex,
+                              double         dHat,
+                              uint32_t       pair_capacity,
+                              int            number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace=nullptr,uint32_t trace_stride=0)
+{
+    _selfQuery_ee_body<true>(_bodyID,_btype,_vertexes,_rest_vertexes,_edges,_bvs,_nodes,_collisionPair,_ccd_collisionPair,_cpNum,MatIndex,dHat,pair_capacity,number,records,leaf_trace,trace_stride);
+}
+
+template<bool Probe>
+__device__ __forceinline__ void _selfQuery_ee_ccd_body(const int*     _bodyID,
+                                  const int*     _btype,
+                                  const double3* _vertexes,
+                                  const double3* moveDir,
+                                  double         alpha,
+                                  const uint2*   _edges,
+                                  const AABB*    _bvs,
+                                  const Node*    _nodes,
+                                  int4*          _ccd_collisionPair,
+                                  uint32_t*      _cpNum,
+                                  double         dHat,
+                                  uint32_t       pair_capacity,
+                                  int            number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace,uint32_t trace_stride)
+{
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
         return;
+    gipc::BvhQueryCounter<Probe> counter(records,static_cast<uint32_t>(idx),leaf_trace,trace_stride);
 
     uint32_t  stack[65];
-    uint32_t* stack_ptr = stack;
-    *stack_ptr++        = 0;
+    uint32_t* stack_ptr   = stack;
+    *stack_ptr++          = 0;
+    if constexpr(Probe) counter.stack(1);
+    idx                   = idx + number - 1;
+    AABB     _bv          = _bvs[idx];
+    uint32_t self_eid     = _nodes[idx].element_idx;
+    if constexpr(Probe) counter.id(self_eid);
+    uint2    current_edge = _edges[self_eid];
+    //double3 edge_tvert0 = __GEIGEN__::__minus(_vertexes[current_edge.x], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.x], alpha));
+    //double3 edge_tvert1 = __GEIGEN__::__minus(_vertexes[current_edge.y], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.y], alpha));
+    //_bv.combines(edge_tvert0.x, edge_tvert0.y, edge_tvert0.z);
+    //_bv.combines(edge_tvert1.x, edge_tvert1.y, edge_tvert1.z);
+    double gapl = sqrt(dHat);
 
-    idx               = idx + number - 1;
-    AABB     _bv      = _bvs[idx];
-    uint32_t self_eid = _nodes[idx].element_idx;
-    //double bboxDiagSize2 = __GEIGEN__::__squaredNorm(__GEIGEN__::__minus(_bvs[0].upper, _bvs[0].lower));
-    //printf("%f\n", bboxDiagSize2);
-    double gapl = sqrt(dHat);  //0.001 * sqrt(bboxDiagSize2);
-    //double dHat = gapl * gapl;// *bboxDiagSize2;
     unsigned int num_found = 0;
     do
     {
+        if constexpr(Probe) counter.pop();
         const uint32_t node_id = *--stack_ptr;
         const uint32_t L_idx   = _nodes[node_id].left_idx;
         const uint32_t R_idx   = _nodes[node_id].right_idx;
 
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[L_idx], gapl))
         {
             const auto obj_idx = _nodes[L_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
+                if constexpr(Probe) counter.leaf(obj_idx);
                 if(self_eid != obj_idx)
                 {
                     if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
                        || (_bodyID[_edges[self_eid].x] == -1))
                     {
-
-
-                        if(!(_edges[self_eid].x == _edges[obj_idx].x
-                             || _edges[self_eid].x == _edges[obj_idx].y
-                             || _edges[self_eid].y == _edges[obj_idx].x
-                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
-                        {
-                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
-                            if(!(_btype[_edges[self_eid].x] >= 2
-                                 && _btype[_edges[self_eid].y] >= 2
-                                 && _btype[_edges[obj_idx].x] >= 2
-                                 && _btype[_edges[obj_idx].y] >= 2))
-                                _checkEEintersection(_vertexes,
-                                                     _rest_vertexes,
-                                                     _edges[self_eid].x,
-                                                     _edges[self_eid].y,
-                                                     _edges[obj_idx].x,
-                                                     _edges[obj_idx].y,
-                                                     obj_idx,
-                                                     dHat,
-                                                     _cpNum,
-                                                     MatIndex,
-                                                     _collisionPair,
-                                                     _ccd_collisionPair,
-                                                     number,
-                                                     pair_capacity);
-                        }
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                            }
                     }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = L_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
+        if constexpr(Probe) counter.node();
         if(overlap(_bv, _bvs[R_idx], gapl))
         {
             const auto obj_idx = _nodes[R_idx].element_idx;
             if(obj_idx != 0xFFFFFFFF)
             {
+                if constexpr(Probe) counter.leaf(obj_idx);
                 if(self_eid != obj_idx)
                 {
                     if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
                        || (_bodyID[_edges[self_eid].x] == -1))
                     {
-                        if(!(_edges[self_eid].x == _edges[obj_idx].x
-                             || _edges[self_eid].x == _edges[obj_idx].y
-                             || _edges[self_eid].y == _edges[obj_idx].x
-                             || _edges[self_eid].y == _edges[obj_idx].y || obj_idx < self_eid))
-                        {
-                            //printf("%d   %d   %d   %d\n", _edges[self_eid].x, _edges[self_eid].y, _edges[obj_idx].x, _edges[obj_idx].y);
-                            if(!(_btype[_edges[self_eid].x] >= 2
-                                 && _btype[_edges[self_eid].y] >= 2
-                                 && _btype[_edges[obj_idx].x] >= 2
-                                 && _btype[_edges[obj_idx].y] >= 2))
-                                _checkEEintersection(_vertexes,
-                                                     _rest_vertexes,
-                                                     _edges[self_eid].x,
-                                                     _edges[self_eid].y,
-                                                     _edges[obj_idx].x,
-                                                     _edges[obj_idx].y,
-                                                     obj_idx,
-                                                     dHat,
-                                                     _cpNum,
-                                                     MatIndex,
-                                                     _collisionPair,
-                                                     _ccd_collisionPair,
-                                                     number,
-                                                     pair_capacity);
-                        }
+                        if(!(_btype[_edges[self_eid].x] >= 2
+                             && _btype[_edges[self_eid].y] >= 2
+                             && _btype[_edges[obj_idx].x] >= 2
+                             && _btype[_edges[obj_idx].y] >= 2))
+                            if(!(current_edge.x == _edges[obj_idx].x
+                                 || current_edge.x == _edges[obj_idx].y
+                                 || current_edge.y == _edges[obj_idx].x
+                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
+                            {
+                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
+                                if(cdp_idx < pair_capacity)
+                                    _ccd_collisionPair[cdp_idx] =
+                                        make_int4(current_edge.x,
+                                                  current_edge.y,
+                                                  _edges[obj_idx].x,
+                                                  _edges[obj_idx].y);
+                            }
                     }
                 }
             }
             else  // the node is not a leaf.
             {
                 *stack_ptr++ = R_idx;
+                if constexpr(Probe) counter.stack(static_cast<uint32_t>(stack_ptr-stack));
             }
         }
     } while(stack < stack_ptr);
+    if constexpr(Probe) counter.finish();
 }
 
 __global__ void _selfQuery_ee_ccd(const int*     _bodyID,
@@ -1659,101 +1947,24 @@ __global__ void _selfQuery_ee_ccd(const int*     _bodyID,
                                   uint32_t       pair_capacity,
                                   int            number)
 {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if(idx >= number)
-        return;
+    _selfQuery_ee_ccd_body<false>(_bodyID,_btype,_vertexes,moveDir,alpha,_edges,_bvs,_nodes,_ccd_collisionPair,_cpNum,dHat,pair_capacity,number,nullptr,nullptr,0);
+}
 
-    uint32_t  stack[65];
-    uint32_t* stack_ptr   = stack;
-    *stack_ptr++          = 0;
-    idx                   = idx + number - 1;
-    AABB     _bv          = _bvs[idx];
-    uint32_t self_eid     = _nodes[idx].element_idx;
-    uint2    current_edge = _edges[self_eid];
-    //double3 edge_tvert0 = __GEIGEN__::__minus(_vertexes[current_edge.x], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.x], alpha));
-    //double3 edge_tvert1 = __GEIGEN__::__minus(_vertexes[current_edge.y], __GEIGEN__::__s_vec_multiply(moveDir[current_edge.y], alpha));
-    //_bv.combines(edge_tvert0.x, edge_tvert0.y, edge_tvert0.z);
-    //_bv.combines(edge_tvert1.x, edge_tvert1.y, edge_tvert1.z);
-    double gapl = sqrt(dHat);
-
-    unsigned int num_found = 0;
-    do
-    {
-        const uint32_t node_id = *--stack_ptr;
-        const uint32_t L_idx   = _nodes[node_id].left_idx;
-        const uint32_t R_idx   = _nodes[node_id].right_idx;
-
-        if(overlap(_bv, _bvs[L_idx], gapl))
-        {
-            const auto obj_idx = _nodes[L_idx].element_idx;
-            if(obj_idx != 0xFFFFFFFF)
-            {
-                if(self_eid != obj_idx)
-                {
-                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
-                       || (_bodyID[_edges[self_eid].x] == -1))
-                    {
-                        if(!(_btype[_edges[self_eid].x] >= 2
-                             && _btype[_edges[self_eid].y] >= 2
-                             && _btype[_edges[obj_idx].x] >= 2
-                             && _btype[_edges[obj_idx].y] >= 2))
-                            if(!(current_edge.x == _edges[obj_idx].x
-                                 || current_edge.x == _edges[obj_idx].y
-                                 || current_edge.y == _edges[obj_idx].x
-                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
-                            {
-                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
-                                if(cdp_idx < pair_capacity)
-                                    _ccd_collisionPair[cdp_idx] =
-                                        make_int4(current_edge.x,
-                                                  current_edge.y,
-                                                  _edges[obj_idx].x,
-                                                  _edges[obj_idx].y);
-                            }
-                    }
-                }
-            }
-            else  // the node is not a leaf.
-            {
-                *stack_ptr++ = L_idx;
-            }
-        }
-        if(overlap(_bv, _bvs[R_idx], gapl))
-        {
-            const auto obj_idx = _nodes[R_idx].element_idx;
-            if(obj_idx != 0xFFFFFFFF)
-            {
-                if(self_eid != obj_idx)
-                {
-                    if((_bodyID[_edges[self_eid].x] != _bodyID[_edges[obj_idx].x])
-                       || (_bodyID[_edges[self_eid].x] == -1))
-                    {
-                        if(!(_btype[_edges[self_eid].x] >= 2
-                             && _btype[_edges[self_eid].y] >= 2
-                             && _btype[_edges[obj_idx].x] >= 2
-                             && _btype[_edges[obj_idx].y] >= 2))
-                            if(!(current_edge.x == _edges[obj_idx].x
-                                 || current_edge.x == _edges[obj_idx].y
-                                 || current_edge.y == _edges[obj_idx].x
-                                 || current_edge.y == _edges[obj_idx].y || obj_idx < self_eid))
-                            {
-                            uint32_t cdp_idx = atomicAdd(_cpNum, 1U);
-                                if(cdp_idx < pair_capacity)
-                                    _ccd_collisionPair[cdp_idx] =
-                                        make_int4(current_edge.x,
-                                                  current_edge.y,
-                                                  _edges[obj_idx].x,
-                                                  _edges[obj_idx].y);
-                            }
-                    }
-                }
-            }
-            else  // the node is not a leaf.
-            {
-                *stack_ptr++ = R_idx;
-            }
-        }
-    } while(stack < stack_ptr);
+__global__ void _selfQuery_ee_ccd_probe(const int*     _bodyID,
+                                  const int*     _btype,
+                                  const double3* _vertexes,
+                                  const double3* moveDir,
+                                  double         alpha,
+                                  const uint2*   _edges,
+                                  const AABB*    _bvs,
+                                  const Node*    _nodes,
+                                  int4*          _ccd_collisionPair,
+                                  uint32_t*      _cpNum,
+                                  double         dHat,
+                                  uint32_t       pair_capacity,
+                                  int            number, gipc::BvhQueryRecord* records,uint32_t* leaf_trace=nullptr,uint32_t trace_stride=0)
+{
+    _selfQuery_ee_ccd_body<true>(_bodyID,_btype,_vertexes,moveDir,alpha,_edges,_bvs,_nodes,_ccd_collisionPair,_cpNum,dHat,pair_capacity,number,records,leaf_trace,trace_stride);
 }
 
 // Capture-only copies preserve legacy disabled kernels and emission order.
@@ -2274,6 +2485,7 @@ void fullCCDselfQuery_vf(const int*      _bodyID,
 
 #include <collision/discrete_bvh.inl>
 #include <collision/ipc_contact_pool.inl>
+#include <collision/bvh_query_probe.inl>
 
 void LBVHStorage::release()
 {

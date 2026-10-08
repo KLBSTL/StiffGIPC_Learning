@@ -301,4 +301,41 @@ class GraphConfigContracts(unittest.TestCase):
                 dump(base/'resolved_config.json',resolved)
                 self.assertEqual(validate(base)['passed'],actual is True)
 
+class StructureQueryProbeContracts(unittest.TestCase):
+    def test_observers_default_off_and_ranges_expand(self):
+        env=environment(expand({}),Path('fixture'))
+        self.assertNotIn('GIPC_LINEAR_STRUCTURE_PROBE',env)
+        self.assertNotIn('GIPC_BVH_QUERY_PROBE',env)
+        c=expand({'steps':5,'diagnostics':['cost','structure_probe','bvh_query_probe'],
+                  'cost_frames':'1-3,3,5'})
+        env=environment(c,Path('fixture'))
+        self.assertEqual(env['GIPC_LINEAR_STRUCTURE_PROBE'],'1')
+        self.assertEqual(env['GIPC_BVH_QUERY_PROBE_FRAMES'],'1,2,3,5')
+
+    def test_observers_reject_wrong_backend_or_profile(self):
+        for name in ('structure_probe','bvh_query_probe'):
+            for overrides in ({'diagnostics':[name]},
+                              {'backend':'toi_al'}, {'profile':'node'}):
+                with self.subTest(name=name,overrides=overrides),self.assertRaises(ValueError):
+                    expand({'diagnostics':['cost',name]}|overrides)
+        c=expand({'steps':3,'diagnostics':['cost','bvh_query_probe'],'cost_frames':'1-4'})
+        with self.assertRaises(ValueError):environment(c,Path('fixture'))
+
+    def test_observer_resolved_contract_and_old_disabled_result(self):
+        with tempfile.TemporaryDirectory() as name:
+            base=Path(name);make_graph_config_run(base)
+            self.assertTrue(validate(base)['passed'])
+            req=runner.read(base/'requested.json')
+            req['expanded_config']=expand({'preset':'graph','steps':1,
+                'diagnostics':['cost','structure_probe'],'cost_frames':'1'})
+            dump(base/'requested.json',req)
+            self.assertFalse(validate(base)['passed'])
+            r=runner.read(base/'resolved_config.json')
+            r['linear_structure_probe']={'requested':True,'effective':True,'gpu_events':True,
+                'include_converted_structure':True,'numerical_path':'unchanged_full_conversion'}
+            dump(base/'resolved_config.json',r)
+            self.assertTrue(validate(base)['passed'])
+            r['linear_structure_probe']['effective']=False;dump(base/'resolved_config.json',r)
+            self.assertFalse(validate(base)['passed'])
+
 if __name__=='__main__':unittest.main()

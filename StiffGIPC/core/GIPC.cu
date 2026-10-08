@@ -13,6 +13,7 @@
 #include <fem/fem_parameters.h>
 #include <collision/ACCD.cuh>
 #include <collision/discrete_bvh.h>
+#include <collision/bvh_query_probe.h>
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
 #include <fem/femEnergy.cuh>
@@ -9126,6 +9127,16 @@ void GIPC::buildCP()
             _collisonPairs.resize(h_cpNum[0]);
             _ccd_collisonPairs.resize(h_cpNum[0]);
             _MatIndex.resize(h_cpNum[0]);
+            if(gipc::bvh_query_probe_options().enabled && !pool_used
+               && std::strcmp(gipc::cost_trace_state().sample_kind,"production")==0)
+            {
+                gipc::bvh_query_probe_options().require_ipc(!use_toi);
+                gipc::BvhDcdProductionView view{};
+                view.pairs=_collisonPairs.data();view.ccd=_ccd_collisonPairs.data();
+                view.matrix_indices=_MatIndex.data();
+                std::copy(h_cpNum,h_cpNum+5,view.counts);
+                gipc::bvh_query_probe_dcd(bvh_f,bvh_e,dHat,view,total_Frames+1);
+            }
             break;
         }
 
@@ -9172,6 +9183,13 @@ void GIPC::buildFullCP(const double& alpha)
         {
             _ccd_collisonPairs.resize(h_ccd_cpNum);
             gipc::ipc_contact_pool_seal(h_ccd_cpNum);
+            if(gipc::bvh_query_probe_options().enabled && !pool_sidecar
+               && std::strcmp(gipc::cost_trace_state().sample_kind,"production")==0)
+            {
+                gipc::bvh_query_probe_options().require_ipc(!use_toi);
+                gipc::BvhFullCcdProductionView view{_ccd_collisonPairs.data(),h_ccd_cpNum};
+                gipc::bvh_query_probe_fullccd(bvh_f,bvh_e,_moveDir,alpha,dHat,view,total_Frames+1);
+            }
             break;
         }
 

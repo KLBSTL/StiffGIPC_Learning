@@ -14,6 +14,7 @@
 #include <cuda_tools/cuda_buffer_view.h>
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
+#include <collision/bvh_query_probe.h>
 #include "device_launch_parameters.h"
 
 struct AABB
@@ -168,6 +169,28 @@ class lbvh_e : public lbvh
                                    uint32_t       pair_capacity,
                                    gipc::IpcContactPoolIdentity* pool=nullptr);
 };
+
+namespace gipc
+{
+// Borrow successful production ranges only for this synchronous diagnostic.
+// Call only after the legacy production query, never after pool reuse/audit.
+struct BvhDcdProductionView
+{
+    const int4* pairs=nullptr;
+    const int4* ccd=nullptr;
+    const int* matrix_indices=nullptr;
+    uint32_t counts[5]={};
+};
+struct BvhFullCcdProductionView
+{
+    const int4* ccd=nullptr;
+    uint32_t count=0;
+};
+void bvh_query_probe_dcd(const lbvh_f&,const lbvh_e&,double dHat,
+    const BvhDcdProductionView&,int frame);
+void bvh_query_probe_fullccd(const lbvh_f&,const lbvh_e&,const double3* direction,
+    double alpha,double dHat,const BvhFullCcdProductionView&,int frame);
+}
 
 __device__ void _d_PP(const double3& v0, const double3& v1, double& d);
 

@@ -1837,6 +1837,8 @@ int main(int argc, char** argv) try
     }
     if(const char* output=std::getenv("GIPC_EDGE_ORDER_FIXTURE"))
         return gipc::edge_query_order_fixture(output);
+    if(const char* output=std::getenv("GIPC_BVH_QUERY_PROBE_FIXTURE"))
+        return gipc::bvh_query_probe_fixture(output);
     if(const char* output=std::getenv("GIPC_CONTACT_POOL_FIXTURE"))
         return gipc::ipc_contact_pool_fixture(output);
     if(const char* output=std::getenv("GIPC_PCG_CHUNK_GUARD_FIXTURE"))

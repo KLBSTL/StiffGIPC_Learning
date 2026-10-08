@@ -7,6 +7,8 @@
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
+#include <collision/bvh_query_probe.h>
+#include <solver/linear_structure_probe_options.h>
 #include <linear_system/solver/pcg_graph_options.h>
 #include <climits>
 #include <cmath>
@@ -202,6 +204,9 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     result["requested_preconditioner"]=std::getenv("GIPC_PCG_PRECONDITIONER")?Json(std::getenv("GIPC_PCG_PRECONDITIONER")):Json(nullptr);
     result["execution_observed_per_linear_system"]=true;
     result["edge_query_order"]=edge_query_order_options().json(std::string(backend)=="ipc");
+    result["linear_structure_probe"]=linear_structure_probe_options_json();
+    bvh_query_probe_options().require_ipc(std::string(backend)=="ipc");
+    result["bvh_query_probe"]=bvh_query_probe_options().json();
     result["acceleration_features"]=Json::object();
     for(const char* name:{"GIPC_CCD_BVH_REFIT","GIPC_BATCHED_ENERGY","GIPC_ENERGY_REUSE",
         "GIPC_MAS_STATIC_TOPOLOGY"})

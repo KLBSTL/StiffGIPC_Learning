@@ -37,6 +37,28 @@ def validate(run):
         check('edge_query_order.probe_file',e['probe_file'],'' if probe is None else str(run/'edge_order_probe.jsonl'))
     elif c.get('edge_query_order','raw')!='raw' or c.get('edge_order_probe_frames') is not None:
         check('edge_query_order_supported',False,True)
+    structure_requested='structure_probe' in c.get('diagnostics',[])
+    if 'linear_structure_probe' in r:
+        probe=r['linear_structure_probe']
+        for key in ('requested','effective'):
+            check('linear_structure_probe.'+key,probe.get(key),structure_requested)
+        check('linear_structure_probe.gpu_events',probe.get('gpu_events'),structure_requested and c.get('cost_events',True))
+        check('linear_structure_probe.include_converted_structure',probe.get('include_converted_structure'),True)
+        check('linear_structure_probe.numerical_path',probe.get('numerical_path'),'unchanged_full_conversion')
+    elif structure_requested:
+        check('linear_structure_probe_supported',False,True)
+    query_requested='bvh_query_probe' in c.get('diagnostics',[])
+    if 'bvh_query_probe' in r:
+        probe=r['bvh_query_probe']
+        check('bvh_query_probe.enabled',probe.get('enabled'),query_requested)
+        check('bvh_query_probe.file',probe.get('file'),str(run/'bvh_query_probe.jsonl') if query_requested else '')
+        check('bvh_query_probe.production_outputs_untouched',probe.get('production_outputs_untouched'),True)
+        if query_requested:
+            from config import environment
+            expected=list(map(int,environment(c,run)['GIPC_BVH_QUERY_PROBE_FRAMES'].split(',')))
+            check('bvh_query_probe.frames',probe.get('frames'),expected)
+    elif query_requested:
+        check('bvh_query_probe_supported',False,True)
     if 'ipc_stopping' in r:
         for key,target in [('ipc_termination','termination'),('ipc_cumulative_tol','cumulative_tol'),
             ('ipc_min_updates','min_updates'),('ipc_residual_rel_tol','residual_rel_tol'),

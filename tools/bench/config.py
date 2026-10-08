@@ -152,7 +152,7 @@ def expand(data):
         raise ValueError('Warp restriction requires stable Cholesky MAS')
     if c['mas_factor_action'] not in ('triangular','factor_inverse') or (c['mas_factor_action']=='factor_inverse' and c['mas']!='cholesky'):
         raise ValueError('Factor inverse action requires stable Cholesky MAS')
-    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe','edge_order'}:
+    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe','edge_order','structure_probe','bvh_query_probe'}:
         raise ValueError('Unknown diagnostic')
     if not isinstance(c['cost_events'],bool) or (not c['cost_events'] and 'cost' not in c['diagnostics']):
         raise ValueError('CPU/NVTX-only cost mode requires cost diagnostics and a boolean flag')
@@ -165,6 +165,9 @@ def expand(data):
             raise ValueError('Exit probe requires an observed TOI subproblem in the frame budget')
     if 'operator_probe' in c['diagnostics'] and 'cost' not in c['diagnostics']:
         raise ValueError('operator_probe requires cost')
+    if set(c['diagnostics']) & {'structure_probe','bvh_query_probe'}:
+        if c['backend']!='ipc' or 'cost' not in c['diagnostics'] or c['profile']!='none':
+            raise ValueError('Structure/query probes require standalone IPC cost diagnostics')
     if c['fixed_restrict_study'] and ('fixed' not in c['diagnostics'] or c['mas']!='cholesky'):
         raise ValueError('Restriction pair study requires fixed-system Cholesky diagnostics')
     if c['fixed_factor_study'] and ('fixed' not in c['diagnostics'] or c['mas']!='cholesky'):
@@ -296,6 +299,18 @@ def environment(c, out):
         env.update(GIPC_COST_TRACE=str(out / 'cost.jsonl'), GIPC_COST_FRAMES=c['cost_frames'],
                    GIPC_COST_OPERATOR_PROBE=str(int('operator_probe' in c['diagnostics'])),
                    GIPC_COST_EVENTS=str(int(c['cost_events'])))
+    if 'structure_probe' in c['diagnostics']:
+        env.update(GIPC_LINEAR_STRUCTURE_PROBE='1')
+    if 'bvh_query_probe' in c['diagnostics']:
+        frames=set()
+        for item in c['cost_frames'].split(','):
+            limits=list(map(int,item.split('-')))
+            if len(limits)==1:limits.append(limits[0])
+            if len(limits)!=2 or not 1<=limits[0]<=limits[1]<=c['steps']:
+                raise ValueError('Query probe range exceeds frame budget')
+            frames.update(range(limits[0],limits[1]+1))
+        env.update(GIPC_BVH_QUERY_PROBE='1',GIPC_BVH_QUERY_PROBE_FRAMES=','.join(map(str,sorted(frames))),
+                   GIPC_BVH_QUERY_PROBE_FILE=str(out/'bvh_query_probe.jsonl'))
     if 'outer_probe' in c['diagnostics']:
         env.update(GIPC_TOI_OUTER_PROBE=str(out/'outer_probe.jsonl'),GIPC_TOI_OUTER_PROBE_FRAMES=c['cost_frames'])
     if c['full_step_exit_probe'] is not None:

@@ -13,6 +13,7 @@
 #include <gipc/linear_stage.h>
 #include <gipc/cost_trace.h>
 #include <solver/mas_restrict_options.h>
+#include <solver/linear_structure_probe_options.h>
 
 namespace gipc
 {
@@ -382,10 +383,25 @@ void GlobalLinearSystem::convert_new()
     gipc_global_triplet->ensure_triplet_capacity(2 * final_triplet_count);
     gipc_global_triplet->resize_conversion_scratch(final_triplet_count);
 
+    auto probe_config=linear_structure_probe_options();
+    probe_config.enabled=probe_config.enabled && cost_trace_selected();
+    m_converter.configure_structure_probe(probe_config);
+
     m_converter.convert(*gipc_global_triplet,
                         0,
                         gipc_global_triplet->global_triplet_offset,
                         gipc_global_triplet->global_triplet_offset);
+
+    if(probe_config.enabled)
+    {
+        const auto* result=m_converter.last_structure_probe();
+        if(!result || !result->observed)
+            throw std::runtime_error("Enabled linear structure probe did not observe conversion");
+        auto& newtons=Statistics::instance().at_current_frame()["newton"];
+        if(!newtons.is_array() || newtons.empty())
+            throw std::runtime_error("Linear structure observation has no Newton owner");
+        newtons.back()["linear_structure_probe"]=linear_structure_probe_json(*result);
+    }
 
     // Conversion has compacted the matrix into the prefix. Keep the
     // allocation, but expose only live unique blocks to downstream users.

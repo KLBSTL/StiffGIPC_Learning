@@ -1,4 +1,5 @@
 #include <linear_system/utils/converter.h>
+#include <linear_system/utils/linear_structure_probe.cuh>
 #include <cuda_tools/cuda_all.h>
 #include <gipc/utils/timer.h>
 #include <gipc/utils/parallel_algorithm/fast_segmental_reduce.h>
@@ -135,6 +136,31 @@ __global__ void finalize_ge2sym_kernel(int              unique_count,
 namespace gipc
 {
 
+Converter::Converter() = default;
+Converter::~Converter() = default;
+Converter::Converter(Converter&&) noexcept = default;
+Converter& Converter::operator=(Converter&&) noexcept = default;
+
+void Converter::configure_structure_probe(const LinearStructureProbeConfig& config)
+{
+    // Constructing/configuring a disabled Converter requires no diagnostic
+    // allocation or CUDA call. Retain existing snapshots across pause only as
+    // storage; configure(false) invalidates their observation metadata.
+    if(!structure_probe_ && config.enabled)
+        structure_probe_ = std::make_unique<LinearStructureProbe>();
+    if(structure_probe_) structure_probe_->configure(config);
+}
+
+void Converter::reset_structure_probe() noexcept
+{
+    if(structure_probe_) structure_probe_->reset();
+}
+
+const LinearStructureProbeResult* Converter::last_structure_probe() const noexcept
+{
+    return structure_probe_ ? structure_probe_->last_result() : nullptr;
+}
+
 void Converter::convert(GIPCTripletMatrix& global_triplets,
                         const int&         start,
                         const int&         length,
@@ -142,7 +168,20 @@ void Converter::convert(GIPCTripletMatrix& global_triplets,
 {
     gipc::Timer timer("convert3x3");
     if(length < 1)
+    {
+        if(structure_probe_ && structure_probe_->enabled())
+        {
+            if(length == 0)
+            {
+                structure_probe_->observe_raw(reinterpret_cast<std::uintptr_t>(&global_triplets),
+                    static_cast<size_t>(start), 0, static_cast<size_t>(out_start_id), nullptr, nullptr,
+                    global_triplets.block_rows(), global_triplets.block_cols());
+                structure_probe_->observe_converted(nullptr, nullptr, 0, nullptr, nullptr);
+            }
+            else structure_probe_->reset(); // An unobserved invalid request creates a gap.
+        }
         return;
+    }
     if(start < 0 || out_start_id < 0)
     {
         std::cerr << "Triplet conversion received a negative input/output offset."
@@ -169,6 +208,12 @@ void Converter::convert(GIPCTripletMatrix& global_triplets,
 
     global_triplets.prepare_conversion_workspace(input_begin, item_count, output_begin);
 
+    if(structure_probe_ && structure_probe_->enabled())
+        structure_probe_->observe_raw(reinterpret_cast<std::uintptr_t>(&global_triplets),
+            input_begin, item_count, output_begin,
+            global_triplets.block_row_indices(start), global_triplets.block_col_indices(start),
+            global_triplets.block_rows(), global_triplets.block_cols());
+
     _radix_sort_indices_and_blocks(global_triplets, start, length, out_start_id);
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
 
@@ -179,6 +224,10 @@ void Converter::convert(GIPCTripletMatrix& global_triplets,
 
 
     _make_unique_block_warp_reduction(global_triplets, start, length, out_start_id);
+    if(structure_probe_ && structure_probe_->enabled())
+        structure_probe_->observe_converted(global_triplets.block_sort_index(),
+            global_triplets.block_index(), static_cast<size_t>(global_triplets.h_unique_key_number),
+            global_triplets.block_row_indices(start), global_triplets.block_col_indices(start));
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
 }
 
