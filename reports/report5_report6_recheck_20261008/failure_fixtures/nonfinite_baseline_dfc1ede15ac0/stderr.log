@@ -1,0 +1,2 @@
+IPC line search failure: nonfinite_baseline_energy, baseline=inf, trial=nan, threshold=inf, alpha=1, energy_backtracks=0, intersection_backtracks=0
+GIPC controlled failure: IPC line search failure: nonfinite_baseline_energy

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\reports\report5_report6_audit_20261008\verify_fixes.py", line 98, in <module>
+    main()
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\reports\report5_report6_audit_20261008\verify_fixes.py", line 74, in main
+    job.observe()
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\windows_owned_job.py", line 226, in observe
+    _check(self.api.QueryFullProcessImageNameW(handle, 0, text, C.byref(size)), 'Member image')
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\windows_owned_job.py", line 93, in _check
+    raise C.WinError(C.get_last_error(), name)
+PermissionError: [WinError 5] Member image

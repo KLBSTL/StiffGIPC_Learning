@@ -1,0 +1,6 @@
+Test project E:/university_class/ComputerGraphics/GIPC/StiffGIPC_Learning/build/report56_recheck_final_20261008
+      Start  1: diag_fused_update_equivalence
+ 1/13 Test  #1: diag_fused_update_equivalence ..............   Passed    0.20 sec
+      Start  2: sym_spmv_equivalence
+ 2/13 Test  #2: sym_spmv_equivalence .......................   Passed    0.23 sec
+      Start  3: pcg_guard_boundaries

@@ -1,0 +1,3 @@
+IPC line search failure: invalid_alpha, baseline=10, trial=nan, threshold=10, alpha=0, energy_backtracks=0, intersection_backtracks=0
+GIPC controlled failure: IPC line search failure: invalid_alpha
+GIPC failure report could not be saved: ios_base::failbit set: iostream stream error

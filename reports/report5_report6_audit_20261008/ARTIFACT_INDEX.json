@@ -1,0 +1,86 @@
+{
+  "artifacts": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\ANALYSIS_AND_PLAN.md",
+      "bytes": 26593,
+      "sha256": "b8b2156533a44eda5dbb5e6f224a882b287d5e961bc22131616b0a5fe23aeafc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\COLLISION_ENERGY_AUDIT.md",
+      "bytes": 25550,
+      "sha256": "98dbf5e7271990190092fe9e2d6850fbd838bba769d8bcc9e6d57e3dce916bb6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\CONTRACTS.log",
+      "bytes": 124,
+      "sha256": "ec7b5d6fe9843de58b1168ff7d5073c1b5a5a2ac41a52617928ca6f4a66de062"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\COST_BUDGET.json",
+      "bytes": 5896,
+      "sha256": "a6ca939f2f9bf2abb71d969670bdb01e216c4ad283928f2bd7233a9206a62799"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\cost_budget.py",
+      "bytes": 3659,
+      "sha256": "a22a49d2b42c6ef3aa9c3956671a0cc330f65f6148e4caab616e9e877fab1b60"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\full_ctest.log",
+      "bytes": 1148,
+      "sha256": "87e4b5941aff026e969385b7ef0919bb8f687506ef858f21d809565cb66f85a8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\GRAPH_DATAFLOW_AUDIT.md",
+      "bytes": 21442,
+      "sha256": "c2560ca246fd2fa518d454bc01e7532ec72e8a0b83dd1e6da1d8e3f0ca2b6a50"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\IMPLEMENTATION_AND_VALIDATION.md",
+      "bytes": 6549,
+      "sha256": "d69478b1356f5dbc5c037d80424b424260d7ee1ae0f2bfb30bb4dee6cb6e000f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\LINEAR_AUDIT.md",
+      "bytes": 26510,
+      "sha256": "9153c599968cf74c948cdff5866da432ebd956ee759a53b5fc5c8e5242698fda"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\narrow_ctest.log",
+      "bytes": 393,
+      "sha256": "37e6d4abe2661197ce156a50fd5bf35c847e0b89bbda29b6090b156cc441572e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\narrow_memcheck.log",
+      "bytes": 140,
+      "sha256": "292a26ba970efce9c2da65edc6c6df6b6ab1ce6af52c03a2bf750b803e24ca2d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\narrow_racecheck.log",
+      "bytes": 178,
+      "sha256": "b8a6978fe6c79e694ada5509dd39503d5ca5cbe8aace66a369c0cd4d63a3fe34"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\narrow_synccheck.log",
+      "bytes": 140,
+      "sha256": "292a26ba970efce9c2da65edc6c6df6b6ab1ce6af52c03a2bf750b803e24ca2d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\smoke_fixes.py",
+      "bytes": 3758,
+      "sha256": "d8e0495da95958c6ec15f3bddb3bbc32b3c05d2f78be8cf513c8c0f378e34c50"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\VALIDATION_RECEIPT.json",
+      "bytes": 484221,
+      "sha256": "456b87b73bfd2a63ae376a498648bd48bf5756ac71191277f8e1e74ad353f3b7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report5_report6_audit_20261008\\verify_fixes.py",
+      "bytes": 4733,
+      "sha256": "f9ecca96313c0dde171f939ddfc30507d8cda60bd08140cf9e1e3d663f6998fd"
+    }
+  ],
+  "verification_program_sha256": "14017344bd0d19b2ffa3bb28259dcbb509e09c1c0ee06571a29b803b7ac9d310",
+  "root_head": "9192ad1b8637757290440ff5ae16e01d301465e2"
+}

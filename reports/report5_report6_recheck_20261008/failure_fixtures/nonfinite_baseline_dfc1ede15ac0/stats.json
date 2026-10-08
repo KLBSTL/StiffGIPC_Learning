@@ -1,0 +1,33 @@
+{
+    "line_search_failure_fixture": {
+        "case": "nonfinite_baseline",
+        "entry_guard_only": true
+    },
+    "frames": [
+        {
+            "newton": [
+                {
+                    "line_search_failure": {
+                        "reason": "nonfinite_baseline_energy",
+                        "baseline_energy": null,
+                        "trial_energy": null,
+                        "baseline_finite": false,
+                        "trial_finite": false,
+                        "trial_energy_matches_state": false,
+                        "acceptance_threshold": null,
+                        "alpha": 1.0,
+                        "cfl_alpha": 1.0,
+                        "energy_backtracks": 0,
+                        "intersection_backtracks": 0,
+                        "energy_evaluations": 0,
+                        "backtrack_budget": 9
+                    }
+                }
+            ]
+        }
+    ],
+    "failure": {
+        "message": "IPC line search failure: nonfinite_baseline_energy",
+        "frame": 0
+    }
+}

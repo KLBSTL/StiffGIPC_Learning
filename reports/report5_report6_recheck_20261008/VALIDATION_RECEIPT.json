@@ -1,0 +1,315 @@
+{
+  "scope": "Correctness integration and normal-path smoke; no speed ratio/physical quality certification",
+  "code_commit": "bdedab7bea0f4edc6a3ff906ad7d52a631f4802b",
+  "runner_commit": "61d1028e7dd723c52db480092b892d1ac1408714",
+  "build_manifest": {
+    "path": "build/report56_recheck_final_20261008/windows_manifest.json",
+    "bytes": 281736,
+    "sha256": "b847b5f3a365b3e332870ccb192e0bae29987da30f843158cd30399d36b34513"
+  },
+  "program": {
+    "path": "build/report56_recheck_final_20261008/Release/gipc.exe",
+    "bytes": 11067904,
+    "sha256": "0241124167cc9f2f770f4f7b71d2844b71f6878b7be2525e3dde0cc24bb18f29"
+  },
+  "source_and_assets_digest": "b4402578b4c968f789adbfd1841c189804ca286e2a38ee13eda6d05ef04aebe2",
+  "sources": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 9831,
+      "sha256": "b687faffe78d617988150df387f61f8eebf4ad44ca472390a351ad97e9c8726d"
+    },
+    {
+      "path": "StiffGIPC/app/gl_main.cu",
+      "bytes": 73991,
+      "sha256": "3141a60c2db6b0d87fa0e6505d3e2df54f2538f513b24704d563ce0c9786e515"
+    },
+    {
+      "path": "StiffGIPC/core/GIPC.cu",
+      "bytes": 516419,
+      "sha256": "29603609e8c24dafb460bb10d1f6786d8531860635c46739d079c66ecfd97813"
+    },
+    {
+      "path": "StiffGIPC/gipc/statistics.cpp",
+      "bytes": 420,
+      "sha256": "dda7a7bfded436e63398f347c394608d0137c5b8203887bce7f7dcdb900ea216"
+    },
+    {
+      "path": "StiffGIPC/linear_system/utils/spmv.cu",
+      "bytes": 4459,
+      "sha256": "e6ba57b385a42afd6a4f6828b38928dc3d0a80349923eb2d2cac02f98d928f10"
+    },
+    {
+      "path": "StiffGIPC/cuda_tools/scoped_cuda_events.h",
+      "bytes": 1214,
+      "sha256": "39804d8fa958e27e49d3fc6d1853d0a661c874002027d15f6aca734f6f9027ef"
+    },
+    {
+      "path": "StiffGIPC/solver/line_search_acceptance.h",
+      "bytes": 2326,
+      "sha256": "8642a9634aa3a3b9f0fd06e21b85ed120be71cd1747af9c3de791cbdd0176f82"
+    },
+    {
+      "path": "tests/check_line_search_failure.cmake",
+      "bytes": 2871,
+      "sha256": "a053eeff851c7acc07d40d5923db46b820f0b727bda618418544d430c0278d84"
+    },
+    {
+      "path": "tests/line_search_acceptance_test.cpp",
+      "bytes": 5011,
+      "sha256": "965422dfdeeea6f5a0b523cab328be597d9f75a62b847f8c3fd134c06f921591"
+    },
+    {
+      "path": "tests/sym_spmv_tests.cu",
+      "bytes": 8021,
+      "sha256": "8d1cfc7ecdff24baa9428290073b41e561890538d679e1eda8548c06425f2156"
+    },
+    {
+      "path": "tools/local/windows_owned_job.py",
+      "bytes": 14537,
+      "sha256": "aba900a01a245b3d95e9272a07d86eb5545a01d33474cdfa374cffa71275135d"
+    }
+  ],
+  "native_units": 37,
+  "ctest": {
+    "passed": 13,
+    "total": 13,
+    "commands": [
+      {
+        "argv": [
+          "D:\\computer\\cmake\\bin\\ctest.exe",
+          "--test-dir",
+          "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report56_recheck_final_20261008",
+          "-C",
+          "Release",
+          "--output-on-failure"
+        ],
+        "status": "passed",
+        "exit_code": 0,
+        "wall_seconds": 3.313000000000102
+      }
+    ],
+    "original_receipt": {
+      "path": "runs/report56_recheck_20261008/full_after_runner_fix/RESULT.json",
+      "bytes": 15092,
+      "sha256": "4bd92f3c4f8a38eebb40642be5eede078a672c496679dd8b5676f2c15bbab11c"
+    }
+  },
+  "cpu_tests": {
+    "job_observation": 6,
+    "bench_contracts": 20,
+    "local_contracts": 9
+  },
+  "failure_fixtures": [
+    {
+      "case": "nan_alpha_45bd9c06a142",
+      "stderr": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/nan_alpha_45bd9c06a142/stderr.log",
+        "bytes": 202,
+        "sha256": "126b9c9832d3435b6d898b983a06a0aad3a7a2a832833a8c5268c0e75eee2c84"
+      },
+      "report": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/nan_alpha_45bd9c06a142/stats.json",
+        "bytes": 1063,
+        "sha256": "9c512f006b50b1c7549e005d38991da3ddeb956308ac7e0cfa6bbcff8962c1e9"
+      }
+    },
+    {
+      "case": "nonfinite_baseline_dfc1ede15ac0",
+      "stderr": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/nonfinite_baseline_dfc1ede15ac0/stderr.log",
+        "bytes": 226,
+        "sha256": "4ca6fae11174fcef5948961508934b6eee0ca799f91ccaf2324cc129692c0fc2"
+      },
+      "report": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/nonfinite_baseline_dfc1ede15ac0/stats.json",
+        "bytes": 1096,
+        "sha256": "9dcb1cb99e2c999f2770fe64bd8f275ae86ba91017eea66a4eaacbb095fa69c4"
+      }
+    },
+    {
+      "case": "report_write_failure_9ef7555000b8",
+      "stderr": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/report_write_failure_9ef7555000b8/stderr.log",
+        "bytes": 286,
+        "sha256": "eb1461abf5aaa846cc28628dbba058c79fd6a6fccb26135d5571460242eeb084"
+      }
+    },
+    {
+      "case": "zero_alpha_29650ba4fbbf",
+      "stderr": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/zero_alpha_29650ba4fbbf/stderr.log",
+        "bytes": 200,
+        "sha256": "e2e0ed89391f8b4db8ee7c07c1565adc9197b6500a3cc937a4a8e1e944387b61"
+      },
+      "report": {
+        "path": "reports/report5_report6_recheck_20261008/failure_fixtures/zero_alpha_29650ba4fbbf/stats.json",
+        "bytes": 1063,
+        "sha256": "e57a778c6b2ff8569d68ef937155c1f469163056a08ea35b90773836790ad812"
+      }
+    }
+  ],
+  "smoke": [
+    {
+      "name": "sphere_graph",
+      "config": {
+        "scene": "cloth_sphere7_l",
+        "steps": 30,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "pcg_graph_chunk": 1,
+        "ipc_newton_tol": 0.01,
+        "toi_remaining_fraction_tol": 0.01,
+        "toi_trial_velocity_tol": 0.05,
+        "pcg_rho_tol": 0.0001,
+        "refit": false,
+        "batch": false,
+        "reuse": false,
+        "choose_start": false,
+        "restart_guard": false,
+        "mu_mode": "diagonal",
+        "mu_coordinates": "generalized",
+        "diagnostics": [],
+        "cost_frames": "1-3,24-26,33-35",
+        "fixed_frames": "2,25,34",
+        "fixed_directions": "1",
+        "trace_velocity": true,
+        "profile": "none",
+        "mas_restrict": "serial",
+        "fixed_restrict_study": false,
+        "mas_factor_action": "triangular",
+        "fixed_factor_study": false,
+        "fixed_graph_chunk_study": false,
+        "full_step_exit_probe": null,
+        "ipc_termination": "legacy",
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "ipc_residual_rel_tol": 0.03,
+        "ipc_residual_floor": 1e-30,
+        "ipc_residual_shadow": false,
+        "ipc_terminal_audit_frame": 0,
+        "ipc_residual_cpu_audit": false,
+        "fixed_mas_stage_study": false,
+        "legacy_restrict": "atomic",
+        "fixed_legacy_restrict_study": false,
+        "cost_events": true,
+        "mas_fused_dot": false,
+        "fixed_mas_dot_study": false,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": false,
+        "spmv_fused_quadratic": false,
+        "fixed_spmv_quadratic_study": false,
+        "bvh_eligibility": false,
+        "bvh_eligibility_validate": false,
+        "bounded_ccd": false,
+        "bounded_ccd_validate": false,
+        "contact_pool": false,
+        "contact_pool_validate": false,
+        "edge_query_order": "raw",
+        "edge_order_probe_frames": null
+      },
+      "guards_passed": true,
+      "directions": 109,
+      "pcg_iterations": 2323,
+      "max_energy_backtracks": 1,
+      "max_intersection_backtracks": 0
+    },
+    {
+      "name": "fixed_all",
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "steps": 60,
+        "dt": 0.01,
+        "timeout_seconds": 120,
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "pcg_graph_chunk": 1,
+        "ipc_newton_tol": 0.01,
+        "toi_remaining_fraction_tol": 0.01,
+        "toi_trial_velocity_tol": 0.05,
+        "pcg_rho_tol": 0.0001,
+        "refit": true,
+        "batch": true,
+        "reuse": true,
+        "choose_start": false,
+        "restart_guard": false,
+        "mu_mode": "diagonal",
+        "mu_coordinates": "generalized",
+        "diagnostics": [],
+        "cost_frames": "1-3,24-26,33-35",
+        "fixed_frames": "2,25,34",
+        "fixed_directions": "1",
+        "trace_velocity": true,
+        "profile": "none",
+        "mas_restrict": "serial",
+        "fixed_restrict_study": false,
+        "mas_factor_action": "triangular",
+        "fixed_factor_study": false,
+        "fixed_graph_chunk_study": false,
+        "full_step_exit_probe": null,
+        "ipc_termination": "legacy",
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "ipc_residual_rel_tol": 0.03,
+        "ipc_residual_floor": 1e-30,
+        "ipc_residual_shadow": false,
+        "ipc_terminal_audit_frame": 0,
+        "ipc_residual_cpu_audit": false,
+        "fixed_mas_stage_study": false,
+        "legacy_restrict": "atomic",
+        "fixed_legacy_restrict_study": false,
+        "cost_events": true,
+        "mas_fused_dot": false,
+        "fixed_mas_dot_study": false,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "discrete_bvh_validate": false,
+        "spmv_fused_quadratic": false,
+        "fixed_spmv_quadratic_study": false,
+        "bvh_eligibility": false,
+        "bvh_eligibility_validate": false,
+        "bounded_ccd": false,
+        "bounded_ccd_validate": false,
+        "contact_pool": false,
+        "contact_pool_validate": false,
+        "edge_query_order": "raw",
+        "edge_order_probe_frames": null
+      },
+      "guards_passed": true,
+      "directions": 340,
+      "pcg_iterations": 20582,
+      "max_energy_backtracks": 1,
+      "max_intersection_backtracks": 0
+    }
+  ],
+  "smoke_original_receipt": {
+    "path": "runs/report56_recheck_20261008/smoke/SUMMARY.json",
+    "bytes": 225881,
+    "sha256": "10b40fd2e45f32f96111091a670fe27896edecd2acafd7ddeca802052b4d3aee"
+  },
+  "interrupted_first_attempt": {
+    "status": "observer_error; not a passing run",
+    "error": "PermissionError: [WinError 5] Member image",
+    "original_receipt": {
+      "path": "runs/report56_recheck_20261008/full/RESULT.json",
+      "bytes": 10765,
+      "sha256": "73c4201646c2034b33b019b7571d5717b5534fda5a5982f6117104140fba6a6b"
+    },
+    "retained": true,
+    "superseded_after_explicit_runner_fix": true
+  },
+  "prior_sealed_artifacts_verified": 16,
+  "coverage_gaps": [
+    "No native type-1 changed-state backtrack fixture",
+    "No full-trajectory ninth-backtrack failure fixture",
+    "Display catch statically reviewed, not injected through a FreeGLUT session",
+    "Healthy CUDA entry guard only; CUDA_SAFE_CALL abort behavior unchanged",
+    "No new paired speed, material calibration or independent accepted-path CCD",
+    "No re-run of prior three Sanitizer checks for the new binary"
+  ]
+}

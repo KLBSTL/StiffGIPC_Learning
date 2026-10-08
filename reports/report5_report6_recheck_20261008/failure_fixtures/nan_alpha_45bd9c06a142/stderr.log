@@ -1,0 +1,2 @@
+IPC line search failure: invalid_alpha, baseline=10, trial=nan, threshold=10, alpha=nan, energy_backtracks=0, intersection_backtracks=0
+GIPC controlled failure: IPC line search failure: invalid_alpha

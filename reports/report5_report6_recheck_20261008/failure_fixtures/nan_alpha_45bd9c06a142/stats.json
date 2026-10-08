@@ -1,0 +1,33 @@
+{
+    "line_search_failure_fixture": {
+        "case": "nan_alpha",
+        "entry_guard_only": true
+    },
+    "frames": [
+        {
+            "newton": [
+                {
+                    "line_search_failure": {
+                        "reason": "invalid_alpha",
+                        "baseline_energy": 10.0,
+                        "trial_energy": null,
+                        "baseline_finite": true,
+                        "trial_finite": false,
+                        "trial_energy_matches_state": false,
+                        "acceptance_threshold": 10.0,
+                        "alpha": null,
+                        "cfl_alpha": 1.0,
+                        "energy_backtracks": 0,
+                        "intersection_backtracks": 0,
+                        "energy_evaluations": 0,
+                        "backtrack_budget": 9
+                    }
+                }
+            ]
+        }
+    ],
+    "failure": {
+        "message": "IPC line search failure: invalid_alpha",
+        "frame": 0
+    }
+}
