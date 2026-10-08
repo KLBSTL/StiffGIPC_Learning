@@ -1,0 +1,2 @@
+["/root/miniconda3/bin/python", "tools/build_linux.py", "--kind", "active", "--jobs", "4"]
+{"build": "completed", "kind": "active", "executable": "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/build/active/gipc"}

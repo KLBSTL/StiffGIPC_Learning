@@ -1,0 +1,98 @@
+{
+  "gpu_run": false,
+  "added_files": [
+    {
+      "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+      "bytes": 946561,
+      "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+    },
+    {
+      "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+      "bytes": 39155,
+      "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+    },
+    {
+      "path": "Assets/sorted_mesh/square_cloth_23k_sorted.16.obj",
+      "bytes": 2202340,
+      "sha256": "284bfaa8a8cef0f92065969c71e03fb7a0acb601f1f3cdd9b763e5fb2e8d7d64"
+    },
+    {
+      "path": "Assets/sorted_mesh/square_cloth_23k_sorted.16.part",
+      "bytes": 97370,
+      "sha256": "58ca7fe327db3ace3ba579e41de055ca8e6715442f3e8266bbae23a1badcfd5b"
+    },
+    {
+      "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+      "bytes": 701659,
+      "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+    },
+    {
+      "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+      "bytes": 28727,
+      "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+      "bytes": 946561,
+      "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+      "bytes": 39155,
+      "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/square_cloth_23k_sorted.16.obj",
+      "bytes": 2202340,
+      "sha256": "284bfaa8a8cef0f92065969c71e03fb7a0acb601f1f3cdd9b763e5fb2e8d7d64"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/square_cloth_23k_sorted.16.part",
+      "bytes": 97370,
+      "sha256": "58ca7fe327db3ace3ba579e41de055ca8e6715442f3e8266bbae23a1badcfd5b"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+      "bytes": 701659,
+      "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+    },
+    {
+      "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+      "bytes": 28727,
+      "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+    }
+  ],
+  "command": [
+    "/usr/bin/g++",
+    "-O2",
+    "-std=c++17",
+    "-I/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/MeshProcess/metis_partition/src",
+    "-I/usr/include/eigen3",
+    "-I/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/MeshProcess/External/METIS/include",
+    "-DOUTPUT_DIR=\"/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/Assets/sorted_mesh/\"",
+    "-DASSETS_DIR=\"/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/Assets/\"",
+    "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/runs/cache_preparation/main.cpp",
+    "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/MeshProcess/metis_partition/src/mesh.cpp",
+    "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/MeshProcess/metis_partition/src/metis_sort.cpp",
+    "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/MeshProcess/metis_partition/src/node_edge_model.cpp",
+    "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/METIS/libmetis/libmetis.a",
+    "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/GKlib/libGKlib.a",
+    "-lm",
+    "-o",
+    "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/runs/cache_preparation/prepare"
+  ],
+  "library_inputs": [
+    {
+      "path": "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/METIS/libmetis/libmetis.a",
+      "sha256": "ba0a924e46154739ea1b065f9b273ac7117cd55f4c949c5fa1fd26953951496d",
+      "bytes": 427020
+    },
+    {
+      "path": "/root/stiffgipc_full_20261006_5e2f9bb/build/active/MeshProcess/External/GKlib/libGKlib.a",
+      "sha256": "3c4f3abdffa18669cefe7dfc81b9cb1545ebf32b13b428ad9fb1fff3fb2c85b1",
+      "bytes": 446226
+    }
+  ],
+  "prepare_exe_sha256": "4bbd0d474bbefeedb9e5cb2c42fd9ebee3a5b3c676520dc8bbc39c3b57db0992",
+  "compiler_sha256": "d7122fd9a7a8fe12d12c00c54d3a6fbebcb3e9285cf675709674e751d900fc63"
+}

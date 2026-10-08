@@ -1,0 +1,18 @@
+{
+  "pid": 7019,
+  "build_pid": 2760,
+  "planned_runs": 21,
+  "recorded_runs": 21,
+  "automatic_retry": false,
+  "total_timeout_seconds": 6000,
+  "stage": "completed",
+  "elapsed_seconds": 355.02095363568515,
+  "current_index": 21,
+  "current_task": "21_bunny_cloth_bunny_l_all",
+  "last_result": "completed",
+  "last_hard_checks_passed": true,
+  "last_failures": [],
+  "report": "reports/autodl_seven_20261008/RESULTS.json",
+  "completed_native_runs": 21,
+  "hard_checks_passed": 21
+}

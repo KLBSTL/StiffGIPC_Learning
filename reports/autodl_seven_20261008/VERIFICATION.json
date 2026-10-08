@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "cpu_only": true,
+  "scenes": 7,
+  "complete_120_frame_runs": 21,
+  "configuration_program_input_and_ratio_checks": true,
+  "quality_certified": false,
+  "performance_certified": false,
+  "raw_trajectory_rehash_scope": "Original raw was verified on AutoDL by the sealed controller. This offline check uses downloaded reports; raw trajectories not downloaded.",
+  "actual_supervisor_start_available": false,
+  "files": [
+    {
+      "path": "RESULTS.json",
+      "sha256": "0eca7c58938487832ad49023f571d1ddea632a11039195a9cd13e4ae4aec0020"
+    },
+    {
+      "path": "SEAL.json",
+      "sha256": "5a368ba1ee6de5e4d2f314ef0392d636dca561fd3e42560bea00ed74591d1c6a"
+    },
+    {
+      "path": "BUILD_IDENTITY.json",
+      "sha256": "2fa6d18ed1ea636c862cec1310816c6733c9bcb05378547df5db6ee50c28d354"
+    },
+    {
+      "path": "TIMINGS.csv",
+      "sha256": "6ff5d5100cefe1e79958b6348fbcc7145be77f9f561b5283756d87775999af60"
+    },
+    {
+      "path": "STATUS.json",
+      "sha256": "d0be24e5b508dd1d6df1339121dba8dcf1a957ed1a3918abd7e758ebdf2b7602"
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "cc7237c9dac234c40887c1bb7586beb691d829ce757723bcfa66519984911fa5"
+    },
+    {
+      "path": "ANALYSIS.md",
+      "sha256": "1cefd201406bc13b4b4a29c92b221b500572a061b60b132b3a61caa74772ac3c"
+    },
+    {
+      "path": "PLAN.md",
+      "sha256": "a01916c1565ee25f8919fa2ac517906ba4a0bf306793059a4cf6e7936471f01a"
+    },
+    {
+      "path": "DOWNLOAD_RECEIPT.json",
+      "sha256": "ea90f871738d806011e39fd96ee4086e3e2d681e49a993376cb9915471b82f8e"
+    }
+  ],
+  "verifier_sha256": "aac0b35a2792c61d4978c2a74d9cd9c6ae8b2d48426c78dc41a7754c8cbaf467"
+}

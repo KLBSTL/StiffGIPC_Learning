@@ -1,0 +1,4356 @@
+{
+  "schema": "seven_eval.v1",
+  "tasks": [
+    {
+      "index": 1,
+      "name": "01_cloth_hang_l_base",
+      "scene_key": "cloth_hang_l",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "1cdfe5204c9143bdf5141226228524c599c7cfbdbae8f43a6e769e76dba11511"
+    },
+    {
+      "index": 2,
+      "name": "02_cloth_hang_l_graph",
+      "scene_key": "cloth_hang_l",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "adf074fc1bead465d3a85b05e459345feae8b8072e160a14a3a201adef38e162"
+    },
+    {
+      "index": 3,
+      "name": "03_cloth_hang_l_all",
+      "scene_key": "cloth_hang_l",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_l",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "a8dc450d6112549a133231649a8b3cef7932cbe25a741f324d1819685626b7e7"
+    },
+    {
+      "index": 4,
+      "name": "04_cloth_hang_m_graph",
+      "scene_key": "cloth_hang_m",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "b433d177d43ab91eb82fee8ef7e6acd25161b1578796ef386c23328699755f5e"
+    },
+    {
+      "index": 5,
+      "name": "05_cloth_hang_m_all",
+      "scene_key": "cloth_hang_m",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_m",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "94c5352f1761ab9091654e97ec2cb5dd68278f6efd3d7327b6a754686d08253f"
+    },
+    {
+      "index": 6,
+      "name": "06_cloth_hang_m_base",
+      "scene_key": "cloth_hang_m",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_hang_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "992b5862428575343c8f594444608c07ca520518bd81e730d91c41b39bb5e917"
+    },
+    {
+      "index": 7,
+      "name": "07_cloth_sphere7_l_all",
+      "scene_key": "cloth_sphere7_l",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_l",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "27d4033b11c3a110d9e1b4e82e1f5da68e887683aa16a9789803140dde88381e"
+    },
+    {
+      "index": 8,
+      "name": "08_cloth_sphere7_l_base",
+      "scene_key": "cloth_sphere7_l",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "1f2acb9fc4bfd67fc94de08a5a3ff1e2bf898cca8613b80e4966ff616c247d5c"
+    },
+    {
+      "index": 9,
+      "name": "09_cloth_sphere7_l_graph",
+      "scene_key": "cloth_sphere7_l",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "adcb632f4f7ac51db63d6b4a016413b24233fb07e77fb49766cd9a38e0e8a58d"
+    },
+    {
+      "index": 10,
+      "name": "10_cloth_sphere7_m_base",
+      "scene_key": "cloth_sphere7_m",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "418b83439eb899c9dfffeb63b9eda064a16b956f48e91511f4f512a8b4c3799a"
+    },
+    {
+      "index": 11,
+      "name": "11_cloth_sphere7_m_graph",
+      "scene_key": "cloth_sphere7_m",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "2928dc3f8af3208277036bbe6fa8474697f5da02020dbdc3c7fcb26a4b32fa09"
+    },
+    {
+      "index": 12,
+      "name": "12_cloth_sphere7_m_all",
+      "scene_key": "cloth_sphere7_m",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_sphere7_m",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "2c43e4f32322272c768558baa720fd48a39f0c7244abb5bb1aad875bf606deab"
+    },
+    {
+      "index": 13,
+      "name": "13_cloth_fixed_bunny_l_graph",
+      "scene_key": "cloth_fixed_bunny_l",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "a521dbfd9ed8968b5619957386793be3dbfe941a5f4a9040b8749d86852a0cc6"
+    },
+    {
+      "index": 14,
+      "name": "14_cloth_fixed_bunny_l_all",
+      "scene_key": "cloth_fixed_bunny_l",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "aef8f563dec7f1e52c14786d982c2e0a6656aff0c99bdac26a61e2ed125980af"
+    },
+    {
+      "index": 15,
+      "name": "15_cloth_fixed_bunny_l_base",
+      "scene_key": "cloth_fixed_bunny_l",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "e7384e04ed35a2de28531fa5358f4b5dab50b1dafb322184bbfb415e7c250ebc"
+    },
+    {
+      "index": 16,
+      "name": "16_cloth_fixed_bunny_m_all",
+      "scene_key": "cloth_fixed_bunny_m",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_m",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "d15cbcaf00a6e8f3cc0302cc60b59bbcc8ce6fa15b57af3e9f371de8c122940f"
+    },
+    {
+      "index": 17,
+      "name": "17_cloth_fixed_bunny_m_base",
+      "scene_key": "cloth_fixed_bunny_m",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "6aa93a2963f7de0ddb94af3db511476d92389708220ac429731491b67833d215"
+    },
+    {
+      "index": 18,
+      "name": "18_cloth_fixed_bunny_m_graph",
+      "scene_key": "cloth_fixed_bunny_m",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "cloth_fixed_bunny_m",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "16fbdc3197908bd85e4fd7de6e98aaa7ced9c46709a4e7ceee1a474d895514c3"
+    },
+    {
+      "index": 19,
+      "name": "19_bunny_cloth_bunny_l_base",
+      "scene_key": "bunny_cloth_bunny_l",
+      "arm": "base",
+      "variant": "base",
+      "binary": "base",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "host",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": false,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "85703abfe684e613e283225849d920e05971e369115b04bd075a8d0d45c556e4"
+    },
+    {
+      "index": 20,
+      "name": "20_bunny_cloth_bunny_l_graph",
+      "scene_key": "bunny_cloth_bunny_l",
+      "arm": "graph",
+      "variant": "graph",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "base",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": false,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "a69b4ffa456dec42cafb265f7016ec7f0f5981256964952a8b436e67745710dc"
+    },
+    {
+      "index": 21,
+      "name": "21_bunny_cloth_bunny_l_all",
+      "scene_key": "bunny_cloth_bunny_l",
+      "arm": "all",
+      "variant": "all",
+      "binary": "active",
+      "phase": "single_diagnostic",
+      "repeat": 1,
+      "config": {
+        "scene": "bunny_cloth_bunny_l",
+        "preset": "combined",
+        "backend": "ipc",
+        "execution": "conditional_graph",
+        "mas": "legacy",
+        "steps": 120,
+        "dt": 0.01,
+        "timeout_seconds": 180,
+        "ipc_termination": "legacy",
+        "ipc_newton_tol": 0.01,
+        "ipc_cumulative_tol": 0.01,
+        "ipc_min_updates": 6,
+        "pcg_rho_tol": 0.0001,
+        "pcg_graph_chunk": 1,
+        "discrete_bvh_refit": true,
+        "discrete_bvh_rebuild_interval": 8,
+        "contact_pool": false,
+        "trace_velocity": true,
+        "diagnostics": [],
+        "profile": "none"
+      },
+      "expanded_config_sha256": "41a52d8aff06787d2fcf7e48b93217005184f257caf53c3f842d40bf6ee6a1a1"
+    }
+  ],
+  "frames": 120,
+  "maximum_runs": 21,
+  "automatic_retry": false,
+  "automatic_advance": true,
+  "timeout_seconds": 180,
+  "controller_files": [
+    {
+      "path": "tools/bench/config.py",
+      "bytes": 22502,
+      "sha256": "ff48c914bf308cfccff4b99515b017ca0aecde72dd773590d8da08256b3de07f"
+    },
+    {
+      "path": "tools/bench/contracts_test.py",
+      "bytes": 19249,
+      "sha256": "804343cb05f770dbbd349977f9f032f164e03fc2a49c808ae565a4216b4c80b9"
+    },
+    {
+      "path": "tools/bench/linux_runner.py",
+      "bytes": 17110,
+      "sha256": "a3a926f606d03bb14ae28f65a98d1e011cedb2d3b6e353ccf04aa34d8349fb93"
+    },
+    {
+      "path": "tools/bench/plans.py",
+      "bytes": 2694,
+      "sha256": "b5a4972e1128b8bc68f2b83992cdc20a9b4a577c162a76c2c4fd4e4c9f50fb24"
+    },
+    {
+      "path": "tools/bench/pool_analysis.py",
+      "bytes": 9020,
+      "sha256": "4848b3c86990c83c575e164ecc9cf79f1b97a6e64af6cfc567452b712498301e"
+    },
+    {
+      "path": "tools/bench/pool_metrics.py",
+      "bytes": 16033,
+      "sha256": "cd41927a6eeb17875431fba82440355aa40ba423811d9111750f544e5b2939ba"
+    },
+    {
+      "path": "tools/bench/validate_run.py",
+      "bytes": 10320,
+      "sha256": "3939c7c3430c6e7d4ef1c0bc4d273926ea97607733b5a5ad3f29aadaba5292dd"
+    },
+    {
+      "path": "tools/diagnostic/fixed_quality.py",
+      "bytes": 19034,
+      "sha256": "113b1ec5a64720e6cf4ec22a910140f3ab3a8b3b14e7482f7277fc5f40379264"
+    },
+    {
+      "path": "tools/diagnostic/quality_analysis.py",
+      "bytes": 10496,
+      "sha256": "4e926fd63151ca644f9fba57e473f45708d84364209965509bc36af903238bc5"
+    },
+    {
+      "path": "tools/diagnostic/quality_contracts_test.py",
+      "bytes": 11490,
+      "sha256": "b56e7c52ca861c05acab5111717ff2bec8baf9f1d40779b7a43fe8a0fbe079c1"
+    },
+    {
+      "path": "tools/diagnostic/quality_plan.py",
+      "bytes": 1909,
+      "sha256": "4ecb9e0a0da03fcef0722f0c703142122d9a6667cc7884ad80d2e443e49d511e"
+    },
+    {
+      "path": "tools/full_eval/analysis.py",
+      "bytes": 32483,
+      "sha256": "73cfc92363ff7e4e5df2e6cd6349b957296dc9d12d58e2cfe10321db71aa4303"
+    },
+    {
+      "path": "tools/full_eval/analysis_test.py",
+      "bytes": 11132,
+      "sha256": "c5efdb48edd40e93257f58a452532ec619fb430057bb1a38f58683456f390e70"
+    },
+    {
+      "path": "tools/full_eval/archive_raw.py",
+      "bytes": 6257,
+      "sha256": "cecae46aee82d044a16168c3093aafdd3b27f7d1ac32d2ab6088198f93c4ffd8"
+    },
+    {
+      "path": "tools/full_eval/archive_raw_test.py",
+      "bytes": 3059,
+      "sha256": "7f8b7a7dffc65976a54599b17faef240fb8c9a4b724b817a870bf9c7642c80a3"
+    },
+    {
+      "path": "tools/full_eval/build_identity.py",
+      "bytes": 27829,
+      "sha256": "6125d9972258edfcff77bec443880916ccb6ea4cae2f577bf875fbc4ba6dd0d2"
+    },
+    {
+      "path": "tools/full_eval/build_identity_test.py",
+      "bytes": 17166,
+      "sha256": "b4b0c2640b7f8e47f736f8d78643bdcf507646b7bfe85558ac1ddedae7201e49"
+    },
+    {
+      "path": "tools/full_eval/plan.py",
+      "bytes": 4410,
+      "sha256": "56a3ec5bfae2ff272a17323ed135da7cebeb3393155e9ebc7fafb133afbefee9"
+    },
+    {
+      "path": "tools/full_eval/runner.py",
+      "bytes": 21499,
+      "sha256": "2c776248d3866955dc3529b4936d27f329365a98723c4e2ebaed84bab01d65ca"
+    },
+    {
+      "path": "tools/full_eval/runner_test.py",
+      "bytes": 16562,
+      "sha256": "c1f62bddda29b75ab748f88198ba1555dbf051c4456dcded41a8d951ffae6dbc"
+    },
+    {
+      "path": "tools/seven_eval/batch.py",
+      "bytes": 3633,
+      "sha256": "1f18952c55e3b124f89f74a96b61c212f21387245d910b4db93758efaad4f70b"
+    },
+    {
+      "path": "tools/seven_eval/deploy.py",
+      "bytes": 7561,
+      "sha256": "e2fd755ad4de42c74232a09a84b276ab736eca814b20b565aedd54a43af84e02"
+    },
+    {
+      "path": "tools/seven_eval/run.py",
+      "bytes": 13044,
+      "sha256": "35e3d26a5642e88e828e92ca3f9becb6fb1d0af056136ce22a714e5ef0b9154a"
+    },
+    {
+      "path": "tools/seven_eval/run_test.py",
+      "bytes": 4153,
+      "sha256": "f35ecb75788854ba4d9ac63ede2ced517308de5a7934e05564bd370d7da6fc30"
+    }
+  ],
+  "build_identity_sha256": "2fa6d18ed1ea636c862cec1310816c6733c9bcb05378547df5db6ee50c28d354",
+  "selected_inputs": [
+    {
+      "scene": "cloth_hang_l",
+      "files": [
+        {
+          "path": "benchmark_meshes/triMesh/cipc_square2K.obj",
+          "bytes": 112113,
+          "sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865"
+        },
+        {
+          "path": "benchmark_scenes/cloth_hang_l.json",
+          "bytes": 3241,
+          "sha256": "ae6b7015346e9a46162a2e0a874a483fecf48523a52e8ba83caf4244f31ae68b"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/cipc_square2K_sorted.16.obj",
+          "bytes": 178764,
+          "sha256": "2e163869f2cbcd2bd5099d556cb35e70749b0aaea981c743f91163673fa756af"
+        },
+        {
+          "path": "sorted_mesh/cipc_square2K_sorted.16.part",
+          "bytes": 8054,
+          "sha256": "9dbb99942500859a0f70954d15e3782575ea5bc8cbb8fc438589d00251e85dc0"
+        }
+      ]
+    },
+    {
+      "scene": "cloth_hang_m",
+      "files": [
+        {
+          "path": "benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+          "bytes": 561043,
+          "sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7"
+        },
+        {
+          "path": "benchmark_scenes/cloth_hang_m.json",
+          "bytes": 3141,
+          "sha256": "1277cd3d0efc9cf62ff0915752e11832d0a30a47e540a97769933efc56de9f3a"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+          "bytes": 701659,
+          "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+        },
+        {
+          "path": "sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+          "bytes": 28727,
+          "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+        }
+      ]
+    },
+    {
+      "scene": "cloth_sphere7_l",
+      "files": [
+        {
+          "path": "benchmark_meshes/tetMesh/abd_sphere.msh",
+          "bytes": 50518,
+          "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209"
+        },
+        {
+          "path": "benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+          "bytes": 193014,
+          "sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231"
+        },
+        {
+          "path": "benchmark_scenes/cloth_sphere7_l.json",
+          "bytes": 4382,
+          "sha256": "959bdc17f67688a3512f8f815da52fd37ee2751e0a202120cd8b7f0cf5964a9a"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_51_1p6m_sorted.16.obj",
+          "bytes": 242257,
+          "sha256": "6ecdb77f2c51ea248075cce143cb236adc2f1d4b9e56aa3a108af417d60ac781"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_51_1p6m_sorted.16.part",
+          "bytes": 11359,
+          "sha256": "d02a9ba9f3f5dd94a038b087ab47503e268b02c6a8806c0f37b3db303c5f84aa"
+        }
+      ]
+    },
+    {
+      "scene": "cloth_sphere7_m",
+      "files": [
+        {
+          "path": "benchmark_meshes/tetMesh/abd_sphere.msh",
+          "bytes": 50518,
+          "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209"
+        },
+        {
+          "path": "benchmark_meshes/triMesh/square_cloth_10k.obj",
+          "bytes": 669929,
+          "sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3"
+        },
+        {
+          "path": "benchmark_scenes/cloth_sphere7_m.json",
+          "bytes": 4500,
+          "sha256": "9515bb7af4d9e48e01ce3ed95196ba2acfe3c9c926428adaa33b257719502eac"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/square_cloth_10k_sorted.16.obj",
+          "bytes": 946561,
+          "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+        },
+        {
+          "path": "sorted_mesh/square_cloth_10k_sorted.16.part",
+          "bytes": 39155,
+          "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+        }
+      ]
+    },
+    {
+      "scene": "cloth_fixed_bunny_l",
+      "files": [
+        {
+          "path": "benchmark_meshes/tetMesh/bunny2.msh",
+          "bytes": 3748616,
+          "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+        },
+        {
+          "path": "benchmark_meshes/triMesh/stiff4_grid_76_1p6m.obj",
+          "bytes": 445464,
+          "sha256": "638f828c6d2558d5afa08b7c49a79ee1077d9251bfc7c3cf08a06d8bb94e9b8b"
+        },
+        {
+          "path": "benchmark_scenes/cloth_fixed_bunny_l.json",
+          "bytes": 4493,
+          "sha256": "3ec7bce27b7f297e93b5efe911e84771205f75b6f116b22bc17baa0d17afe3a2"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_76_1p6m_sorted.16.obj",
+          "bytes": 548381,
+          "sha256": "06afdac32e87084c62c61eb850d1a358349fb93e7b2c6343d928254f36006bdf"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_76_1p6m_sorted.16.part",
+          "bytes": 27232,
+          "sha256": "a300e06115cedd2c81b7903d0bfa9230d532c16de1c1a54a9f0475db9aa08cf0"
+        }
+      ]
+    },
+    {
+      "scene": "cloth_fixed_bunny_m",
+      "files": [
+        {
+          "path": "benchmark_meshes/tetMesh/bunny2.msh",
+          "bytes": 3748616,
+          "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+        },
+        {
+          "path": "benchmark_meshes/triMesh/square_cloth_23k.obj",
+          "bytes": 1852524,
+          "sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4"
+        },
+        {
+          "path": "benchmark_scenes/cloth_fixed_bunny_m.json",
+          "bytes": 4610,
+          "sha256": "4a502ee4a4ff5e7ff2ac3401d9df8e3373389be3eef2a5ce944620ac78fd425a"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/square_cloth_23k_sorted.16.obj",
+          "bytes": 2202340,
+          "sha256": "284bfaa8a8cef0f92065969c71e03fb7a0acb601f1f3cdd9b763e5fb2e8d7d64"
+        },
+        {
+          "path": "sorted_mesh/square_cloth_23k_sorted.16.part",
+          "bytes": 97370,
+          "sha256": "58ca7fe327db3ace3ba579e41de055ca8e6715442f3e8266bbae23a1badcfd5b"
+        }
+      ]
+    },
+    {
+      "scene": "bunny_cloth_bunny_l",
+      "files": [
+        {
+          "path": "benchmark_meshes/tetMesh/bunny2.msh",
+          "bytes": 3748616,
+          "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+        },
+        {
+          "path": "benchmark_meshes/triMesh/stiff4_grid_33_2m.obj",
+          "bytes": 46875,
+          "sha256": "bc8b2ab47c3ed0d7aab116aa7461058b3941b96ae352c935ff25bc0f75aed3c9"
+        },
+        {
+          "path": "benchmark_scenes/bunny_cloth_bunny_l.json",
+          "bytes": 3806,
+          "sha256": "12fbca80f65e508713154e30de54723b2beb30b8c6d7875c9d7dcc6f7043d6d9"
+        },
+        {
+          "path": "scene/parameterSetting.txt",
+          "bytes": 793,
+          "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+        },
+        {
+          "path": "sorted_mesh/bunny2_sorted.16.msh",
+          "bytes": 3848168,
+          "sha256": "5eb8096f45a19deb4da78365da31af9d9519adc1cf274613854da5b8178c8659"
+        },
+        {
+          "path": "sorted_mesh/bunny2_sorted.16.part",
+          "bytes": 98511,
+          "sha256": "353877fd84264a025bfcb24bb52fb6844756e3ba72924f14effc1fcfb5078a4f"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_33_2m_sorted.16.obj",
+          "bytes": 97038,
+          "sha256": "002c2f36c8d10ab2772dd43f8e50c7f729b3ba7f8e4f1f43def4ee90a0e45e4c"
+        },
+        {
+          "path": "sorted_mesh/stiff4_grid_33_2m_sorted.16.part",
+          "bytes": 4199,
+          "sha256": "efc01f2750d209585f88090a1751e6d45333fa627f3e88b0becce4ea004851bd"
+        }
+      ]
+    }
+  ],
+  "active_manifest": {
+    "sources": [
+      {
+        "path": "Assets/benchmark_meshes/tetMesh/abd_sphere.msh",
+        "bytes": 50518,
+        "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209"
+      },
+      {
+        "path": "Assets/benchmark_meshes/tetMesh/bunny2.msh",
+        "bytes": 3748616,
+        "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+      },
+      {
+        "path": "Assets/benchmark_meshes/tetMesh/cube.msh",
+        "bytes": 246,
+        "sha256": "be610c96c51a47e382ee00baea1685775b3a898aa2ccc44f770ab360dcbe2280"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/cipc_square2K.obj",
+        "bytes": 112113,
+        "sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/cipc_table.obj",
+        "bytes": 483580,
+        "sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/cloth_high.obj",
+        "bytes": 212335,
+        "sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/square_cloth_10k.obj",
+        "bytes": 669929,
+        "sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/square_cloth_23k.obj",
+        "bytes": 1852524,
+        "sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_129_2m.obj",
+        "bytes": 938177,
+        "sha256": "2d6f67484e5d1f1fc88b0aa63b28a6b005053ccc659c0f9cc46bb62663abf253"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_201_1p6m.obj",
+        "bytes": 3273527,
+        "sha256": "cb08afd248b34cae12d2d91802741e05f8f4ab19a3150943b1ef008e23e7d1da"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_301_1p6m.obj",
+        "bytes": 7566167,
+        "sha256": "9312468242565c9abef9bdf912e0c4b2a5ef50da74374ed7b52e06b70c1948fc"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_33_2m.obj",
+        "bytes": 46875,
+        "sha256": "bc8b2ab47c3ed0d7aab116aa7461058b3941b96ae352c935ff25bc0f75aed3c9"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+        "bytes": 193014,
+        "sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_grid_76_1p6m.obj",
+        "bytes": 445464,
+        "sha256": "638f828c6d2558d5afa08b7c49a79ee1077d9251bfc7c3cf08a06d8bb94e9b8b"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+        "bytes": 561043,
+        "sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7"
+      },
+      {
+        "path": "Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide2.obj",
+        "bytes": 2393989,
+        "sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644"
+      },
+      {
+        "path": "Assets/benchmark_scenes/boxes1920_cloth_h.json",
+        "bytes": 588960,
+        "sha256": "56f6bda4878b8181473724a16081c61dded161d1bff334b548462577a1510088"
+      },
+      {
+        "path": "Assets/benchmark_scenes/boxes1920_cloth_l.json",
+        "bytes": 588956,
+        "sha256": "a25d32bcaf9e380a5884de3f13cfeefcbb1f338b45c09bcd6ee3f6fdac7c441d"
+      },
+      {
+        "path": "Assets/benchmark_scenes/boxes1920_cloth_m.json",
+        "bytes": 588941,
+        "sha256": "8b537dd620a0c07677eb59a151b4b4f0189d52d909232c28d5046ca0b60472fc"
+      },
+      {
+        "path": "Assets/benchmark_scenes/bunny_cloth_bunny_h.json",
+        "bytes": 3809,
+        "sha256": "758db20db0613357263bfc8ab84842ecca88b666e5d5bcb5f0a53001ea1ddc30"
+      },
+      {
+        "path": "Assets/benchmark_scenes/bunny_cloth_bunny_l.json",
+        "bytes": 3806,
+        "sha256": "12fbca80f65e508713154e30de54723b2beb30b8c6d7875c9d7dcc6f7043d6d9"
+      },
+      {
+        "path": "Assets/benchmark_scenes/bunny_cloth_bunny_m.json",
+        "bytes": 3789,
+        "sha256": "c0f2902652b0c2affa3d62bc7c74d44fd64c72382088958ba8beed591c5db5fb"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_fixed_bunny_h.json",
+        "bytes": 4499,
+        "sha256": "495f9444a8ffcf18a5b2bac31e085663596fa0913e36a580f2d95904a19b1ee0"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_fixed_bunny_l.json",
+        "bytes": 4493,
+        "sha256": "3ec7bce27b7f297e93b5efe911e84771205f75b6f116b22bc17baa0d17afe3a2"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_fixed_bunny_m.json",
+        "bytes": 4610,
+        "sha256": "4a502ee4a4ff5e7ff2ac3401d9df8e3373389be3eef2a5ce944620ac78fd425a"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_hang_h.json",
+        "bytes": 3142,
+        "sha256": "b842e374df246e6cbf8d0b94b2b5b627a5248dc9da0f666e47e585b108158695"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_hang_l.json",
+        "bytes": 3241,
+        "sha256": "ae6b7015346e9a46162a2e0a874a483fecf48523a52e8ba83caf4244f31ae68b"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_hang_m.json",
+        "bytes": 3141,
+        "sha256": "1277cd3d0efc9cf62ff0915752e11832d0a30a47e540a97769933efc56de9f3a"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_sphere7_h.json",
+        "bytes": 4388,
+        "sha256": "f8d3a19131739b12f77876982b5b56066f31082f1e07789e161c09a6abde8ace"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_sphere7_l.json",
+        "bytes": 4382,
+        "sha256": "959bdc17f67688a3512f8f815da52fd37ee2751e0a202120cd8b7f0cf5964a9a"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_sphere7_m.json",
+        "bytes": 4500,
+        "sha256": "9515bb7af4d9e48e01ce3ed95196ba2acfe3c9c926428adaa33b257719502eac"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_stack10_h.json",
+        "bytes": 15810,
+        "sha256": "6bd19692065ff1ff3301159dc8cb6ab25a5bc4cee5e0fe314dc5588419066c34"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_stack10_l.json",
+        "bytes": 15786,
+        "sha256": "76a5b54416210291259f24c9e42f4024860f1d7c8adca76bdac13639c54045f1"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_stack10_m.json",
+        "bytes": 15851,
+        "sha256": "f47057d574bf4794358a055ea1aaec38975a96a508d0413a72fabdadb87a2901"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_table_h.json",
+        "bytes": 4479,
+        "sha256": "c80ff7dce69950dedbfce3eb49ada42af640dfce7873b1e3f80de5d0a9fe10e3"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_table_l.json",
+        "bytes": 4475,
+        "sha256": "e16b84c3b1552e86e3037ac9d7e76adeed6efa2d2a7f56078ae809649eb9896d"
+      },
+      {
+        "path": "Assets/benchmark_scenes/cloth_table_m.json",
+        "bytes": 4591,
+        "sha256": "0daa71806bd8c3e2363bfa1013153e45417ce3c99e8cb97397b764cd9b0f7f28"
+      },
+      {
+        "path": "Assets/scene/abd_system_config.json",
+        "bytes": 56,
+        "sha256": "da1d86488832bc5dba126953f8623bd74a8d68b74e3d799fe41c4673a0dc637b"
+      },
+      {
+        "path": "Assets/scene/json/wrecking-ball-box.json",
+        "bytes": 102827,
+        "sha256": "9def9fd2c1b68e2a958ad380d939a3ad0ad72ed73ffdcf08d0f704f4dd8478b0"
+      },
+      {
+        "path": "Assets/scene/json/wrecking-ball-simple.json",
+        "bytes": 105980,
+        "sha256": "31de033ccf5263d86a21fb85a080215d7391671b07f0d0a9be9d9bb8df94083a"
+      },
+      {
+        "path": "Assets/scene/parameterSetting.txt",
+        "bytes": 793,
+        "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+      },
+      {
+        "path": "Assets/scene/temp.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Assets/sorted_mesh/bunny2_sorted.16.msh",
+        "bytes": 3848168,
+        "sha256": "5eb8096f45a19deb4da78365da31af9d9519adc1cf274613854da5b8178c8659"
+      },
+      {
+        "path": "Assets/sorted_mesh/bunny2_sorted.16.part",
+        "bytes": 98511,
+        "sha256": "353877fd84264a025bfcb24bb52fb6844756e3ba72924f14effc1fcfb5078a4f"
+      },
+      {
+        "path": "Assets/sorted_mesh/cipc_square2K_sorted.16.obj",
+        "bytes": 178764,
+        "sha256": "2e163869f2cbcd2bd5099d556cb35e70749b0aaea981c743f91163673fa756af"
+      },
+      {
+        "path": "Assets/sorted_mesh/cipc_square2K_sorted.16.part",
+        "bytes": 8054,
+        "sha256": "9dbb99942500859a0f70954d15e3782575ea5bc8cbb8fc438589d00251e85dc0"
+      },
+      {
+        "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+        "bytes": 946561,
+        "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+      },
+      {
+        "path": "Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+        "bytes": 39155,
+        "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+      },
+      {
+        "path": "Assets/sorted_mesh/square_cloth_23k_sorted.16.obj",
+        "bytes": 2202340,
+        "sha256": "284bfaa8a8cef0f92065969c71e03fb7a0acb601f1f3cdd9b763e5fb2e8d7d64"
+      },
+      {
+        "path": "Assets/sorted_mesh/square_cloth_23k_sorted.16.part",
+        "bytes": 97370,
+        "sha256": "58ca7fe327db3ace3ba579e41de055ca8e6715442f3e8266bbae23a1badcfd5b"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_33_2m_sorted.16.obj",
+        "bytes": 97038,
+        "sha256": "002c2f36c8d10ab2772dd43f8e50c7f729b3ba7f8e4f1f43def4ee90a0e45e4c"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_33_2m_sorted.16.part",
+        "bytes": 4199,
+        "sha256": "efc01f2750d209585f88090a1751e6d45333fa627f3e88b0becce4ea004851bd"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.obj",
+        "bytes": 242257,
+        "sha256": "6ecdb77f2c51ea248075cce143cb236adc2f1d4b9e56aa3a108af417d60ac781"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.part",
+        "bytes": 11359,
+        "sha256": "d02a9ba9f3f5dd94a038b087ab47503e268b02c6a8806c0f37b3db303c5f84aa"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_76_1p6m_sorted.16.obj",
+        "bytes": 548381,
+        "sha256": "06afdac32e87084c62c61eb850d1a358349fb93e7b2c6343d928254f36006bdf"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_grid_76_1p6m_sorted.16.part",
+        "bytes": 27232,
+        "sha256": "a300e06115cedd2c81b7903d0bfa9230d532c16de1c1a54a9f0475db9aa08cf0"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+        "bytes": 701659,
+        "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+      },
+      {
+        "path": "Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+        "bytes": 28727,
+        "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+      },
+      {
+        "path": "Assets/teaser.JPG",
+        "bytes": 265573,
+        "sha256": "b6b5811e4321f0a7cb54aa900a8d56f1c876e4cb907d412309675bbb2e00edf0"
+      },
+      {
+        "path": "Assets/tetMesh/bunny10.msh",
+        "bytes": 32999837,
+        "sha256": "e47e085115a99bfd9449277134bb494337136985d9785e832a86e50c26021d5f"
+      },
+      {
+        "path": "Assets/tetMesh/bunny2.msh",
+        "bytes": 3847753,
+        "sha256": "819d674817b95011ffd831cdec89f387beee266ee6bbc41040c2f625376151ca"
+      },
+      {
+        "path": "Assets/tetMesh/cube.msh",
+        "bytes": 266,
+        "sha256": "a4ed6661fe833ccd72d04fd74f3230f1dd8421870d2c0698a54a8430bd01d341"
+      },
+      {
+        "path": "Assets/tetMesh/high_mat.msh",
+        "bytes": 6239699,
+        "sha256": "04b3e495d0a8948e1827e706ae8201ee314efdae2067e76117ba37cfeeafcebf"
+      },
+      {
+        "path": "Assets/tetMesh/wrecking-ball-mesh/cube.obj_.msh",
+        "bytes": 232,
+        "sha256": "dbf2fef8d6d80437972dc4f2c692c50ddf430849f4dfeb13d3f73b839e8a413e"
+      },
+      {
+        "path": "Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/ball.obj_.msh",
+        "bytes": 347404,
+        "sha256": "f70daf358b4c60268e9d344dd112626eb3918687bc8546d23383dd901df716fd"
+      },
+      {
+        "path": "Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/link.obj_.msh",
+        "bytes": 74049,
+        "sha256": "8ad143e0880dc404dcdbcc0c669de0f30e222127b9eef08f1dac349c85e5dd4e"
+      },
+      {
+        "path": "Assets/triMesh/cloth_high.obj",
+        "bytes": 224752,
+        "sha256": "0f20741edac2a28cc020c0f9cf044e1f9116ab2b3f7b669e2d5f0f91974d10f3"
+      },
+      {
+        "path": "CMakeLists.txt",
+        "bytes": 7984,
+        "sha256": "ac488a9e43065cbab1697519b1b59db2456ad5c9e00e1f282c5ed01bd4f477f1"
+      },
+      {
+        "path": "FLATTEN_SOURCE_MAP.json",
+        "bytes": 163129,
+        "sha256": "061d0740757bb65ebf375e31ba31c178058c59265d627d56d5d8a1703cf74b0e"
+      },
+      {
+        "path": "MeshProcess/CMakeLists.txt",
+        "bytes": 443,
+        "sha256": "4c5b6386752a172088b6ee3a5cfef01d59cf9d47c1db2d243a63cb47c40e4cc2"
+      },
+      {
+        "path": "MeshProcess/External/CMakeLists.txt",
+        "bytes": 367,
+        "sha256": "25bbc6dd3e0d2eb6c17e491c9ec5c0fab94b726db24fcf89619980acf40c1238"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/CMakeLists.txt",
+        "bytes": 5886,
+        "sha256": "86a9422f1f4885d3674b64630e8da57dbd41d76835d706f21aa6774cc83689f8"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/LICENSE.txt",
+        "bytes": 659,
+        "sha256": "b7a2c8e49ab17746e2e9a2eb670c3a190dcb5525f7de606fc31e67b3b4b5c6bd"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/cmake/GKlibSystem.cmake",
+        "bytes": 1435,
+        "sha256": "37134ba28ad78ca83ec30271cf9547963e09e0c1e1428ab32073d584b9e452ab"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/GKlib.h",
+        "bytes": 1508,
+        "sha256": "b830ec088bb3ae200f49d14bcefb1a94d9eaa34bcb26e38f761b01d003316d6d"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_arch.h",
+        "bytes": 1502,
+        "sha256": "9181bb3a80c4aa41cc4fcb7c7f6ef58bb3c63fb32674dd4dd400c6b27b55aeac"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_defs.h",
+        "bytes": 2148,
+        "sha256": "361175ac86d023d0a431e4d1e2a5e0f325512f6fc8a02fb513e7d57764cf686c"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_externs.h",
+        "bytes": 700,
+        "sha256": "e45f95384dc05e1f3aa7ff295bf22244f27593ad0c1298c3a3f7d1d1c1fdea65"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_getopt.h",
+        "bytes": 2400,
+        "sha256": "cd21e90789c3c06daf2a1fbc0191dcea44d167648f2a36cdf5b89042fe5afb94"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_macros.h",
+        "bytes": 6447,
+        "sha256": "5f788c6a977af2725aebd64ffb43bf4c656d1eeb55707f17bf42bee27c981940"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkblas.h",
+        "bytes": 5897,
+        "sha256": "510fcde844c96ff41e92ecffd8b59347fabf24519131fae24fa2e01c04fb6449"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkmemory.h",
+        "bytes": 4331,
+        "sha256": "f765fedac4151f5b385acc9d1370c123a4b17df39d27034ae63a5394be7bab18"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkpqueue.h",
+        "bytes": 12196,
+        "sha256": "59914e9359cb21be5cb948788698794284372ebb97e2ad6b357c8bf9a401fb47"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkpqueue2.h",
+        "bytes": 6047,
+        "sha256": "0dce3d223ef9a73016b8b60556d389a338fb822eaf2b9ba50f39a29018ceff88"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkrandom.h",
+        "bytes": 3786,
+        "sha256": "c8f2b3e3138edd6b1b43c330db7ea0a70028e2a01904eac1b73728fa5696af80"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mksort.h",
+        "bytes": 10525,
+        "sha256": "1ffcf7d782ea5187fc985c67ebc8c83addd1c875f6083b514ec1051d5ec9773c"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_mkutils.h",
+        "bytes": 988,
+        "sha256": "cf79db8c81909ddcc92ec44fef49f723dfd3917540ccb95c83128ecbacea0789"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_ms_inttypes.h",
+        "bytes": 8181,
+        "sha256": "9dc1c97981ae7c2cd5786ea68a164ad9fec321991d29ab1cfcdd4bf83d588fdf"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_ms_stat.h",
+        "bytes": 557,
+        "sha256": "cedfe170fb9eadb48ce0051dbb1f7cc18900f08b027c74f0e6587e684de00d7e"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_ms_stdint.h",
+        "bytes": 7268,
+        "sha256": "21582dac040c5f7a8d1f205a41e78b4c91768564ec460192b0b60eabef9a9d9c"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_proto.h",
+        "bytes": 16944,
+        "sha256": "305afdc4c1e7d07bbfb72ed400aa052d295196988663824e5542047b26e4b157"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_struct.h",
+        "bytes": 10322,
+        "sha256": "d7828a03502dd5e83fddde15b705e7a8cd92e907fada439e0c39e236029a0576"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gk_types.h",
+        "bytes": 1548,
+        "sha256": "946a96412d9cf5d5aa6e80768f9db64b8a7c4d1484c56d95bf8f8041bb15142a"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/gkregex.h",
+        "bytes": 21823,
+        "sha256": "0537c6abe40f342133b60ae15f24650034fdf37afa2393b6997f4dce057dbeb9"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/include/win32/adapt.h",
+        "bytes": 253,
+        "sha256": "80bfa150409259ca86b8e669f2a22f503dfa35a82a9b76e6b3f38a7956cb8584"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/b64.c",
+        "bytes": 3152,
+        "sha256": "d1d71c678863942fa03ef284ddbb91adf79bb51ded225b365290a7c7cae66291"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/blas.c",
+        "bytes": 1187,
+        "sha256": "b315b834abe0ecf39a5470c3e007f8522796225849cc6f4388ee5029c7c01e6a"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/cache.c",
+        "bytes": 3482,
+        "sha256": "648d4e07fdfd801c55bca2c6a3ce16ec269c6b6aab85cc1a06fed7074ed7e193"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/csr.c",
+        "bytes": 109512,
+        "sha256": "d59721a97c25b4ca8f0dff077e1d44a530793b6e25257612f17a28e60da3e2bd"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/error.c",
+        "bytes": 6157,
+        "sha256": "88eee0d8a64409b7d94343317c8af87757b981272982a8e6a877bd9e62a65e5f"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/evaluate.c",
+        "bytes": 3095,
+        "sha256": "8601a1f0a83001c63d115e117f4035a874740770be9beefa5da28f2be462e07d"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/fkvkselect.c",
+        "bytes": 3418,
+        "sha256": "ab7476cc2d181ca9535a5270d896b43ebd8cf08b85f27a8be2b6e8c1b5c8498c"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/fs.c",
+        "bytes": 6739,
+        "sha256": "0e4007d4135e100b070f46229d357de8ce193362990d7fefa17c07fde0d144a7"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/getopt.c",
+        "bytes": 31484,
+        "sha256": "9266fb8c28b8fabccf6f7aea50f3cb944f794527479c18710ff960ad35aef7bc"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/gk_util.c",
+        "bytes": 2903,
+        "sha256": "78492919a9833b891762aaa63b2bfe64bddda10eaaa33fb1316349251b66fb2b"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/gkregex.c",
+        "bytes": 321869,
+        "sha256": "51ba681bcfac877beb1ba02b72f389fe63ef5b3ad8b35fa2b7148fb0acf0707c"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/graph.c",
+        "bytes": 64665,
+        "sha256": "adcade791d9d1b86313b6504b9c2c16f4211b7443697add9fe5a07a504a700ab"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/htable.c",
+        "bytes": 7129,
+        "sha256": "62e7a63c8435713bc6e6c5e7fa93a7ded2dff8c98eeaf4ddeb7d3c83aae054e4"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/io.c",
+        "bytes": 19057,
+        "sha256": "5bf8ebd37129366d4699cfe2cec069bb15af8ad9878d8633a08653a26a6af262"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/itemsets.c",
+        "bytes": 7220,
+        "sha256": "d65d6d687d2445632d28ca87d13c4c53c9b525aa33c4da4a6133e2b47d0ff098"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/mcore.c",
+        "bytes": 12339,
+        "sha256": "6fc1a5502281d3cb0044049a51d7781a64a24de84711b0bf5dcd443cf6474366"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/memory.c",
+        "bytes": 8882,
+        "sha256": "8b97b3e59487fef74c31c5029447135d43759efca1f1e8ab9eadb0c87b881704"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/pqueue.c",
+        "bytes": 1172,
+        "sha256": "e89724c61c95e6e275b14ee0ba9f10c0b355c9051001ca09f716530f53a67a63"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/random.c",
+        "bytes": 4206,
+        "sha256": "727b545b7c78e73b4031822526e4d862ee1248d1ffcb0e7ddf60ee1fc59c677d"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/rw.c",
+        "bytes": 3204,
+        "sha256": "8440be768e2e3d650ae511e8cb4a328a2b99aa5cc34fa1b3893d1c2d8e202fd5"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/seq.c",
+        "bytes": 4429,
+        "sha256": "9d0e098f0809034acd316b1c177d117e685b011fc2e608aceb4ecb02f95ebefe"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/sort.c",
+        "bytes": 14268,
+        "sha256": "cc5241c586d0c393dd82446a11bbefc46a1ba32c59cf9256463d8132f62dbecd"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/string.c",
+        "bytes": 16162,
+        "sha256": "98452d2a599209dd717e6b14cea886a83de7c1f58d5e5d0e75253cb0a74f7b60"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/timers.c",
+        "bytes": 1231,
+        "sha256": "723a2b705095e814c0b79c47c8835de7bc9f3f33b106928a8373b1f1d8499470"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/tokenizer.c",
+        "bytes": 2168,
+        "sha256": "51f8e86f35e8a770e280baa1ce8906b41f06550b60936b8dd3559a3f2b02bb0d"
+      },
+      {
+        "path": "MeshProcess/External/GKlib/src/win32/adapt.c",
+        "bytes": 174,
+        "sha256": "bc183f5a6be42f23939a4b57faa651a563b550f16ed2d79546ee03e15e846e0c"
+      },
+      {
+        "path": "MeshProcess/External/METIS/CMakeLists.txt",
+        "bytes": 331,
+        "sha256": "885ff8761e65e757856bfcc681d73664eea2eed98e7420742a9f9552a7a2f044"
+      },
+      {
+        "path": "MeshProcess/External/METIS/LICENSE",
+        "bytes": 659,
+        "sha256": "0ae4ac9049ec1b05c29a2eef542dc9fd674f09d45a65abeb7257fb4862b5f1f8"
+      },
+      {
+        "path": "MeshProcess/External/METIS/include/CMakeLists.txt",
+        "bytes": 74,
+        "sha256": "ee6a66abf24d9404d602a17185b6cdd0b0729c36d7962a67153e92079f5a21a1"
+      },
+      {
+        "path": "MeshProcess/External/METIS/include/metis.h",
+        "bytes": 10880,
+        "sha256": "03b5b2d5613e94a262b57b056898568e45cc871a9abd2dff3603cd3e4020d1a8"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/CMakeLists.txt",
+        "bytes": 219,
+        "sha256": "7704581d5eb2ad9c533dc2dc7d4ee08f6614998eab7cfc3b20be812303b27307"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/auxapi.c",
+        "bytes": 1168,
+        "sha256": "001d5b14c2945eb79ee46aa5f8599c5666e90ab7702068de4bdb1a50916743af"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/balance.c",
+        "bytes": 16935,
+        "sha256": "0bc7875daf47883fc69188a8c870ad196dec140fbb7730b53cd72bda1a5f4781"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/bucketsort.c",
+        "bytes": 1025,
+        "sha256": "2eccdd4f8dbd29743fd0f516dab1e59c88a424312a28ee9f5a5502097479c41c"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/checkgraph.c",
+        "bytes": 7706,
+        "sha256": "db0630d393358d282fb180741dfaf569ab66a8683868ffdb5e69497d47842be5"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/coarsen.c",
+        "bytes": 35662,
+        "sha256": "49890e454b20409d999bd1086663b2f2a7e00c5d9740822cf6b017d8e786e767"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/compress.c",
+        "bytes": 6390,
+        "sha256": "2029c0aa710bc5839c8c1b2f5fb2e2763ecb113edc765e94320d78fe80a27de1"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/contig.c",
+        "bytes": 22007,
+        "sha256": "f322e35de73aeb1d91b8938d71dd0902832caeade224f35c453c92ee2983e423"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/debug.c",
+        "bytes": 13004,
+        "sha256": "841b646994ae11d2a61ffacb35f77677b609ee302c3d079b14a14f0de588655e"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/defs.h",
+        "bytes": 2075,
+        "sha256": "2a44073bf56799f528f8c97cea249dcee5c268427cf22464cd60bea2d38b06f3"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/fm.c",
+        "bytes": 19426,
+        "sha256": "3b45abb947c2fa3922d8c7dcbdea5f3198e0863df632a4ab1c85d7348638fdd7"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/fortran.c",
+        "bytes": 3560,
+        "sha256": "761f16f235ad55955b3d53541eb4fe2f67d7ef34e53c68914cc7f25b4e5d0ec9"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/frename.c",
+        "bytes": 3562,
+        "sha256": "1549cffb3b2767a73c6f5c780c5da0f7adb5d5d80fe60a5ddf58026837f555df"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/gklib.c",
+        "bytes": 3393,
+        "sha256": "d47018da038228e9af982c03a9cf7ade0e93ca9dc389552593420f912b62630a"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/gklib_defs.h",
+        "bytes": 1684,
+        "sha256": "27229ce6923b92dece9a42cad15587337f8c84aab04bccaa448cfc8756869d2f"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/gklib_rename.h",
+        "bytes": 4140,
+        "sha256": "eae1a06b2767c66274bc3d2149ef72f9c15552174a65240dffdb10ac92f32b15"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/graph.c",
+        "bytes": 12633,
+        "sha256": "14b3115dc74031c196668e66f3ecdbfb979fc91a5159f15c2ad4e43d6e43d63f"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/initpart.c",
+        "bytes": 18838,
+        "sha256": "a1500455ea68ccf8bec79ee39f9a4c8420af4b7f2c08419340e6c8f4a5e8056a"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/kmetis.c",
+        "bytes": 16809,
+        "sha256": "7f49a03a21fe26c545b48c3428d8b25ba74918cb726edc6a07fb3f2ed0aacb7b"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/kwayfm.c",
+        "bytes": 77470,
+        "sha256": "f55ffbc34df4dd87bc9e4cea5f93f5d988f967cf5fc00c6689f2a6042b239e6f"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/kwayrefine.c",
+        "bytes": 21188,
+        "sha256": "3e2f54a56e6d1dfe978afb18dbd82cdf18a838a6cf1511c822233f3e74cffaec"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/macros.h",
+        "bytes": 8623,
+        "sha256": "bb6010166fa66f9780514eface0b7d55afd8a5777785b9d6e8edd7e942fc34e8"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/mcutil.c",
+        "bytes": 9139,
+        "sha256": "9722bb357da6df383f5a47ecf7bdd36dd739e47917b292ab06570e47a234361e"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/mesh.c",
+        "bytes": 13070,
+        "sha256": "5f1e077c7107b6a855d0b847526a60450e7bffe5596875167e99c2335dfe7558"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/meshpart.c",
+        "bytes": 7888,
+        "sha256": "c49c5da79ccb3e5bd18b6a6394c206418494e83231ed26b2e347f751d08c784c"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/metislib.h",
+        "bytes": 700,
+        "sha256": "9263c74e9808ea8e84af3120468ef0626a5c4dbb6828b8d5d8169b1cb5aaa3b0"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/minconn.c",
+        "bytes": 23977,
+        "sha256": "9cd85b7e1a9b4f0a0c8e95d3daafd3ceef591e19bd82d799992cb9644203d62e"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/mincover.c",
+        "bytes": 7526,
+        "sha256": "924a8413101113e3b758b3313a6bd2c47608acdbd0de59c64b01056c6b5a33c0"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/mmd.c",
+        "bytes": 21737,
+        "sha256": "4aeeb04fbdd90f50ebcb7c24b7c6cd0af1143d1cbbb791f0d9b979d45bcff2bf"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/ometis.c",
+        "bytes": 21515,
+        "sha256": "3059be6aa0030d84bdb08d64473d77901d621c16ee77d2bcf536fa7fcdd97f84"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/options.c",
+        "bytes": 19098,
+        "sha256": "943aeff2ca01073f2b5d23e41b5ea97f13380fdeed05b412f374f755557f6bba"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/parmetis.c",
+        "bytes": 26970,
+        "sha256": "025be52e1ecdaad28c33ae180ddf3a455d866c88ccdb8434fc6cf5e046feabe5"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/pmetis.c",
+        "bytes": 12760,
+        "sha256": "9ae324386fe50f87636f44cf86d86fdf93002757d718e5f33cd11e26c1af6a81"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/proto.h",
+        "bytes": 15157,
+        "sha256": "94f6ff16f990bce47aed481ca827d3a91c2e28e0d1f2b4912d569b3af6b0aefb"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/refine.c",
+        "bytes": 6090,
+        "sha256": "f3177f2987f765230775ddc09a9865b7569e390efee14e3a801bb1e000c4463d"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/rename.h",
+        "bytes": 12230,
+        "sha256": "b1166f3407a24db47b6c0142e67a19558e10746530774dbef8a69c409604cab4"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/separator.c",
+        "bytes": 5017,
+        "sha256": "e2545c4c51be5421d897a36d26267a0d8f035a0ccb6e04a2d8c0951413a52ea9"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/sfm.c",
+        "bytes": 20648,
+        "sha256": "688d5413d35920a5c84bdb6d6e83052d7f1891ade72c62c253e6e1cf87923af9"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/srefine.c",
+        "bytes": 5077,
+        "sha256": "3bd3e7bba19cd4811564245dd948ee08ce1648ecfaf3983980d3a9428c9d7f59"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/stat.c",
+        "bytes": 5942,
+        "sha256": "d097c203270433748529243495e9c90205079c25dddd3648ef92d58cd0b913ab"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/stdheaders.h",
+        "bytes": 514,
+        "sha256": "aba5ccefd9d16a008c8ebb0a192924ee8e52a9d790db717e9ca9e38f1f6568be"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/struct.h",
+        "bytes": 9862,
+        "sha256": "438f5095476e4dc9839efc73bf87f64b4b346207640d26e50354ab7d9f3358d0"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/timing.c",
+        "bytes": 2412,
+        "sha256": "c38aba5da374b863a53ad21fe69ef7773b41a2d0d726e1fc58431ffb0c8a1fd9"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/util.c",
+        "bytes": 3120,
+        "sha256": "0bfbebc1cb63b33ac8296bfc209dde0b4e1ca639f80df62414d55ffc6fc7fb04"
+      },
+      {
+        "path": "MeshProcess/External/METIS/libmetis/wspace.c",
+        "bytes": 7717,
+        "sha256": "406eec610526a6288659a352bb35d3c5cdff02024181e195cc8997ccf74a5f5b"
+      },
+      {
+        "path": "MeshProcess/metis_partition/CMakeLists.txt",
+        "bytes": 1016,
+        "sha256": "be22645aa7651dafb67a26d1569524485136e62a84e213e4e1ca9835996e8522"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/main.cpp",
+        "bytes": 439,
+        "sha256": "7bb385a9aac781ae7701eec9e6e4b5fedf3679be402b8fb6a94b2151304dd07c"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/mesh.cpp",
+        "bytes": 23400,
+        "sha256": "4ee0f2e8071657b40deaf6815ffb53798ead3704081ba4d33c39d4d0a6c922fb"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/mesh.h",
+        "bytes": 1840,
+        "sha256": "b87aa57416bf4cbe9a6c0ffb726cd0fcf2c02676ba1d6a85103a73d98d531b2a"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/metis_sort.cpp",
+        "bytes": 15323,
+        "sha256": "9f74e512a9ceb01abdd058afdf421953bf01fee58f8aa4a7a37e85d4633cf8dd"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/metis_sort.h",
+        "bytes": 94,
+        "sha256": "e5facb0a470f852fe93fa4a3a970f905eefea093ce3bc536bdc788f2fe11673a"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/node_edge_model.cpp",
+        "bytes": 1375,
+        "sha256": "9d43a9c8844f4d920e18259517e8dd9518847fd4c38816a793043a92de4fa1df"
+      },
+      {
+        "path": "MeshProcess/metis_partition/src/node_edge_model.h",
+        "bytes": 623,
+        "sha256": "fa13c3beaacdada87e6eede0fd0f6560858300e297b0f9507b09741d65b9173c"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_energy.h",
+        "bytes": 1350,
+        "sha256": "5bb0169286de1504c37ca3132e7af0b0d8369c94e0b9c04ef7b3f2745c817a88"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_jacobi_matrix.h",
+        "bytes": 5944,
+        "sha256": "8cb871d0d198c65e3a4897d5545ec34c0a5a9c167b8058f30af3963d2d36cded"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_sim_data.cu",
+        "bytes": 4004,
+        "sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_sim_data.h",
+        "bytes": 6755,
+        "sha256": "39e2ba652d24adc4a1390077af8b8ae77447294529c0fcc223e62e39697bd1aa"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system.cu",
+        "bytes": 37967,
+        "sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system.h",
+        "bytes": 11303,
+        "sha256": "c40d93700d19bc55d8c1e017a36072e95565b0117624633cd230519bcbf81274"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+        "bytes": 7065,
+        "sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+        "bytes": 2964,
+        "sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+        "bytes": 7292,
+        "sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+        "bytes": 33832,
+        "sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+        "bytes": 3892,
+        "sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+        "bytes": 1887,
+        "sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e"
+      },
+      {
+        "path": "StiffGIPC/abd_system/abd_system_parms.h",
+        "bytes": 515,
+        "sha256": "30ce99a06878dbcacfdb60a937255d1cd40daaa3a7af5f83a4ad2386ba53e52c"
+      },
+      {
+        "path": "StiffGIPC/abd_system/details/abd_energy.inl",
+        "bytes": 75035,
+        "sha256": "66e6adc346ce17c51092efe35f3ccff7b24648321323d9e5af60f542ea162fcd"
+      },
+      {
+        "path": "StiffGIPC/abd_system/details/abd_jacobi_matrix.inl",
+        "bytes": 8162,
+        "sha256": "422babedb38e18134144247cca64915df3faf926157d4969422fd413ea020e64"
+      },
+      {
+        "path": "StiffGIPC/app/benchmark_scenes.inl",
+        "bytes": 5195,
+        "sha256": "afea8caf40b2f5374d17d31868bb6d3367dc1370992334766ceb5a9eec88aacb"
+      },
+      {
+        "path": "StiffGIPC/app/gl_main.cu",
+        "bytes": 72034,
+        "sha256": "0d14aecd4726cfc339c329fb3f54beeb45908a138132e740503eebd5f3c93fb4"
+      },
+      {
+        "path": "StiffGIPC/collision/ACCD.cu",
+        "bytes": 28249,
+        "sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea"
+      },
+      {
+        "path": "StiffGIPC/collision/ACCD.cuh",
+        "bytes": 1804,
+        "sha256": "abde8441335005ed875bb77aa171fbbb4b47c694671a2b0f01990ecfe3039127"
+      },
+      {
+        "path": "StiffGIPC/collision/DISCRETE_BVH_REFIT.md",
+        "bytes": 12701,
+        "sha256": "e1b8d66bc2540897a2d352f642268b7be58771d6f2e4a1d39dcf1ef13761c6d7"
+      },
+      {
+        "path": "StiffGIPC/collision/FrictionUtils.cuh",
+        "bytes": 17970,
+        "sha256": "e8c72359674ae1a7ebb34c6349fbc2d1460a1e69fc86db6fe629cce04d2d44a1"
+      },
+      {
+        "path": "StiffGIPC/collision/discrete_bvh.h",
+        "bytes": 5701,
+        "sha256": "1fc20a9df8da480fae03e07be7e7645890fa7c19383639e59d370819d7c765a5"
+      },
+      {
+        "path": "StiffGIPC/collision/discrete_bvh.inl",
+        "bytes": 18018,
+        "sha256": "d5e8518ea8f688568018ba4bb4932952d468c36bcb89066001bc795b6f44993e"
+      },
+      {
+        "path": "StiffGIPC/collision/edge_query_order.h",
+        "bytes": 3103,
+        "sha256": "d25c7c78fb69515ff13c9d079bcd1d45b45bc25bfbf862a07b2f785571c83bc1"
+      },
+      {
+        "path": "StiffGIPC/collision/edge_query_order.inl",
+        "bytes": 19943,
+        "sha256": "f864eed07106cb2ae0d4818036f65d1368d96ef523ba8b051f22f1d878c8495e"
+      },
+      {
+        "path": "StiffGIPC/collision/ipc_bounded_ccd.md",
+        "bytes": 8663,
+        "sha256": "5ad9386e916394005f6a5a36f29a8d57bc9a58e9ee576f8bbe40e523755f5901"
+      },
+      {
+        "path": "StiffGIPC/collision/ipc_contact_pool.h",
+        "bytes": 2124,
+        "sha256": "7dc4b58530390b57166cd8a23dd20b34aa62aad23c33f4645d7e83efb9c925b9"
+      },
+      {
+        "path": "StiffGIPC/collision/ipc_contact_pool.inl",
+        "bytes": 40403,
+        "sha256": "0c2e6e14992e3aba7cbcafaf2071982d3a91d6a413bd987e0cfddbbe4f216bf3"
+      },
+      {
+        "path": "StiffGIPC/collision/ipc_contact_pool.md",
+        "bytes": 9465,
+        "sha256": "b6933df12600914530f94ee14db9ca94d9fc4fb65ca03ee0df4055b94feda9ce"
+      },
+      {
+        "path": "StiffGIPC/collision/mlbvh.cu",
+        "bytes": 115967,
+        "sha256": "aaac9fc714c08a5c58bc28cae8c9cf71ab1d979c4b934ebc335a037696e4c570"
+      },
+      {
+        "path": "StiffGIPC/collision/mlbvh.cuh",
+        "bytes": 7669,
+        "sha256": "1b84d0923801bf2fd586b9fa48a649f4e077ef2e5ca52c1ed6628a1e3e1ecde4"
+      },
+      {
+        "path": "StiffGIPC/collision/query_eligibility.md",
+        "bytes": 7833,
+        "sha256": "84294edc0ea345986847a8e1fb06fa24b64ea58da9e8293315c4039f79a93b9e"
+      },
+      {
+        "path": "StiffGIPC/core/GIPC.cu",
+        "bytes": 513583,
+        "sha256": "fb1d8766a595bfc848bff7317d8170029d7f1f077c961c90b5fbdd5efc474021"
+      },
+      {
+        "path": "StiffGIPC/core/GIPC.cuh",
+        "bytes": 9385,
+        "sha256": "3c6d339830f57405d0f49e84074e45b53e40b7c5f7f26440027f55e87b967bf1"
+      },
+      {
+        "path": "StiffGIPC/core/GIPC_PDerivative.cuh",
+        "bytes": 221500,
+        "sha256": "0a044b885ed3f0c9a2e870b05903cb415c2aa0890c4765c7c7479f2d35ce6fe1"
+      },
+      {
+        "path": "StiffGIPC/core/accel_features.h",
+        "bytes": 276,
+        "sha256": "be65408f0f53dde8239c4fcaf0cf6bb2b14e60f4a4c9253e4a866c563a8c76c2"
+      },
+      {
+        "path": "StiffGIPC/core/body_boundary_type.h",
+        "bytes": 103,
+        "sha256": "23b94c866964b29f969e243eaf889465bbf3f6d28b2001d0f22eb9ab3359bf1c"
+      },
+      {
+        "path": "StiffGIPC/core/frame_checkpoint.cu",
+        "bytes": 12633,
+        "sha256": "49f1163c066e68e7aad147c4d89bf53c4b29480b8aaa109374b98be6b87ee8a7"
+      },
+      {
+        "path": "StiffGIPC/core/gipc_path.h",
+        "bytes": 337,
+        "sha256": "519bbe020dc0f5e6415a9f237d2f90a3694abd57a13afabd695ac2c99bb2e822"
+      },
+      {
+        "path": "StiffGIPC/core/gipc_system.cu",
+        "bytes": 3393,
+        "sha256": "7ab738e17dd5e8b73a770add899631849e7185c1e11f4d2a7e81999ccda299ba"
+      },
+      {
+        "path": "StiffGIPC/core/retired_components.h",
+        "bytes": 3060,
+        "sha256": "9486429d7cf621a35e3be2277ab9e4b97aa89be92ab14999c3dd8a9bfaa7324b"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_all.h",
+        "bytes": 400,
+        "sha256": "dfa3e64042343d3fff90411f4c35701c0080852d69e593af670b337791e7eb09"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_atomic.h",
+        "bytes": 766,
+        "sha256": "52754e9df742937f98609c29263387601dba7ccd09e7cc98323e803af6b2994c"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_buffer_view.h",
+        "bytes": 20951,
+        "sha256": "4f8d4c2ce51fd2bb800c11b6f5965954ba2b7f6801a72d2d126f357f252ff632"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_cub_wrappers.h",
+        "bytes": 8395,
+        "sha256": "a18c5d5c26aa0b87e9f713e4838b8dbee3ce09fe3e65a62fba836c2c2fd33cf0"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_debug.h",
+        "bytes": 1674,
+        "sha256": "3146663a760b1738a57f6907e45f7ad3ba16956feae0ddbc4d9d0a3868ee0894"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_def.h",
+        "bytes": 736,
+        "sha256": "d4db23b958cec3de66dd825ae208b9a0628d2c71818f5e46e9cbf9d2103c45c3"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_dense_vector.h",
+        "bytes": 9991,
+        "sha256": "286a9b9c53512d03143fd1925a3663611f9e3fc2e4407ecb2baf7632bed1cd02"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_eigen.h",
+        "bytes": 6795,
+        "sha256": "ef3d0ca59e0e5a2dff4125fcfd2cf59d5fb973c8a4a763aeaa131d191201bb60"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_linear_system.h",
+        "bytes": 5206,
+        "sha256": "589182bcbeaf8a0ae0060d45d915961a4e909be3f84561bf42d57b3f694bf7d5"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_tools.h",
+        "bytes": 2783,
+        "sha256": "6448f7db6eca41dff622e10c3315920fb23907185499ead2f1cbacdaaae9679d"
+      },
+      {
+        "path": "StiffGIPC/cuda_tools/cuda_vec_utils.h",
+        "bytes": 235,
+        "sha256": "f82624dac7fd1ff136b2ac2aa848fdfb5753eeae0b9b3c456b9406951c1f1b77"
+      },
+      {
+        "path": "StiffGIPC/fem/device_fem_data.cu",
+        "bytes": 3906,
+        "sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e"
+      },
+      {
+        "path": "StiffGIPC/fem/device_fem_data.cuh",
+        "bytes": 2982,
+        "sha256": "e772fde35c81d1401cba1915a233eeeab8cbbb680b217adf9685f636330c342c"
+      },
+      {
+        "path": "StiffGIPC/fem/femEnergy.cu",
+        "bytes": 111083,
+        "sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1"
+      },
+      {
+        "path": "StiffGIPC/fem/femEnergy.cuh",
+        "bytes": 15041,
+        "sha256": "76f1895483cc6013fb9fcdf6470d3167b7b728882cbc9ae42a1f903639e0f692"
+      },
+      {
+        "path": "StiffGIPC/fem/fem_parameters.h",
+        "bytes": 1210,
+        "sha256": "fe982f3f334cd76c41576c827c00af814590377d35d61ec329cf962974f2ff10"
+      },
+      {
+        "path": "StiffGIPC/gipc/abd_fem_count_info.h",
+        "bytes": 1906,
+        "sha256": "ee0e96958fcbed78eb6c1f20e145ae1d294d9e9a71c6f197cafe30b101512f76"
+      },
+      {
+        "path": "StiffGIPC/gipc/body_type.h",
+        "bytes": 86,
+        "sha256": "d69b67728a86bf5063c8e90e220a8a82ec860535e352f613626b1a0095546380"
+      },
+      {
+        "path": "StiffGIPC/gipc/cost_trace.h",
+        "bytes": 9930,
+        "sha256": "ed8c83ba9a44b75a1bde2531a7935ef77e7007eaaeb5df4006cc197732467794"
+      },
+      {
+        "path": "StiffGIPC/gipc/gipc.h",
+        "bytes": 506,
+        "sha256": "f4d6cd548ce448d82afecfc80ce1278bbc3165fe462533e3471c40d57fd79554"
+      },
+      {
+        "path": "StiffGIPC/gipc/linear_stage.h",
+        "bytes": 1067,
+        "sha256": "53ad477fa067405438734fb15a673ba72a214ba2705dc1b5d48457a9d10a9a5d"
+      },
+      {
+        "path": "StiffGIPC/gipc/statistics.cpp",
+        "bytes": 253,
+        "sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe"
+      },
+      {
+        "path": "StiffGIPC/gipc/statistics.h",
+        "bytes": 635,
+        "sha256": "f80f907893d99bd924ad8136e641a8d806a7b9b803cdc1f80c325862e77bda16"
+      },
+      {
+        "path": "StiffGIPC/gipc/tet_local_info.h",
+        "bytes": 3701,
+        "sha256": "ab8d4cb8e17e73f687fd26f79d20952f7bcd9c47038985f0614edd1e29c0eaea"
+      },
+      {
+        "path": "StiffGIPC/gipc/type_define.h",
+        "bytes": 1325,
+        "sha256": "3477f1aa8c90c4e0a6fd56abd1a11880254ea33178fcd8fb2cadae50b2943dc5"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/cuda_vec_to_eigen.h",
+        "bytes": 1908,
+        "sha256": "3ddc904360b42c8246f197f70cf64e56bb100e8adcfab70e86ad24c82716e720"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/details/cuda_vec_to_eigen.inl",
+        "bytes": 784,
+        "sha256": "2b3e35068437da45122758deeac4cc51def5a2748e2905cc7a4be04fd2ab34c5"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/details/print_buffer.inl",
+        "bytes": 2668,
+        "sha256": "97a1c8848ab964bcc1b0f096b2c43710b3000da517d1a52b740124a26a16771c"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/host_log.h",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/json.h",
+        "bytes": 106,
+        "sha256": "46ec5962e9e55c72c5baafc2671647eaf218d85789aecc9edc26d4970e9a1432"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/math.h",
+        "bytes": 1976,
+        "sha256": "12d3ad4e8a699643e9144999c26a7a2f431b180d44b046eaebc5219b2587cd20"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/details/fast_segmental_reduce.inl",
+        "bytes": 10411,
+        "sha256": "f51d9c1ec462ef41a0e5a616fd31f157e09fde4aafaa9da31e46ea14c1032fc0"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/details/scatter.inl",
+        "bytes": 1893,
+        "sha256": "3de6bdee3d6cc590a0bbdbcee3b82f23fbd9ed25c8a3691a01855ac6093f4eed"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/details/transform.inl",
+        "bytes": 2602,
+        "sha256": "9ecf89bfaf0afb04b3490d25cbdd5bf9f262df24413e604671ab960187d42ee8"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/details/unique_reduce.inl",
+        "bytes": 3397,
+        "sha256": "d81c8f24d807de3e9178eee3a335f827200663066f06fb7f0dfe4bbc5c2a31f8"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/fast_segmental_reduce.h",
+        "bytes": 1345,
+        "sha256": "d7431a06935d85e7d7f41e978852908eab324a86da811204cc10326b8b2b5f54"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/scatter.h",
+        "bytes": 436,
+        "sha256": "d75b4b38cfc3ebd2cc4a586352e524b6f12bf170cb8e079116b084a2ec300ed6"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/transform.h",
+        "bytes": 623,
+        "sha256": "34ebafa04a596a112db8a25c6ea31ee8fe2eaed99fdc03956b11dac3300c9d3a"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/parallel_algorithm/unique_reduce.h",
+        "bytes": 838,
+        "sha256": "07b1cbecbbecc142108692d785cf0bb935b01a7b1041ea03a2e534004bcf4ea2"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/print_buffer.h",
+        "bytes": 700,
+        "sha256": "2839ce6aee5f3f792bac5c2d810a5058380f740dec834213659cba4624ed78da"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+        "bytes": 4880,
+        "sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/simple_scene_importer.h",
+        "bytes": 1108,
+        "sha256": "77b379470dc2c1eac17e18c9f03e899ebaf06a87a64d9286b28dabe7729fffc5"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/timer.cpp",
+        "bytes": 9233,
+        "sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e"
+      },
+      {
+        "path": "StiffGIPC/gipc/utils/timer.h",
+        "bytes": 3467,
+        "sha256": "580be914d34d1a782bfccfd91c75e17879fc3f993ed5b4b5e110116d2e207743"
+      },
+      {
+        "path": "StiffGIPC/io/load_mesh.cpp",
+        "bytes": 46570,
+        "sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6"
+      },
+      {
+        "path": "StiffGIPC/io/load_mesh.h",
+        "bytes": 6558,
+        "sha256": "431848e78803854bf01567dbfbc5cb4e9d97ba514e3ee54f6f10ec063fdaa73f"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+        "bytes": 17441,
+        "sha256": "22ddecec8a080301dc180eba2c8eb1adcdf989eace6613322566dca743fac53b"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/global_linear_system.h",
+        "bytes": 4330,
+        "sha256": "2b481da95fe504d974d664c7cde24e5da4b67f668d7de4c2328d04bee6b70068"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/global_matrix.cu",
+        "bytes": 1760,
+        "sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/global_matrix.h",
+        "bytes": 11403,
+        "sha256": "5407c30d009e21c40136091ebc30c975edba4a4b7194499c259f826081bc06d4"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+        "bytes": 1614,
+        "sha256": "678c39654c513408574f5912a943a3ab219a016c607cfb3e52af159e1622d87f"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/i_linear_system_solver.h",
+        "bytes": 2980,
+        "sha256": "1e5b06487e03ee8ee76547165f2fd09725f3f2d1dfc489a96d28d03b6d863eb9"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+        "bytes": 4360,
+        "sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/i_preconditioner.h",
+        "bytes": 3439,
+        "sha256": "e0b74f2f4b77d9b9d5b04e452c78a5c06675b68428f24176dbea5205e9d9555d"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+        "bytes": 1966,
+        "sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca"
+      },
+      {
+        "path": "StiffGIPC/linear_system/linear_system/linear_subsystem.h",
+        "bytes": 5380,
+        "sha256": "e72517bc23c4c4668dadadae155c3aa9981c2a6543f87d47dbfcf81270be7a09"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+        "bytes": 2167,
+        "sha256": "f599ba8958f522fafd56b3229b36fadbd397622425e8177078ae3e89424aeead"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/abd_preconditioner.h",
+        "bytes": 690,
+        "sha256": "262c1f8ebd25f6e6e98071752956cb760706d804e61b9d95d1cbada1a57ca665"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/diag_fused_update.cuh",
+        "bytes": 841,
+        "sha256": "efdcbf96d0ada1c1c56c057aaf7db32c2db226e4dcef5f3cd9598aeb602db021"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+        "bytes": 4304,
+        "sha256": "092dd7d3b52adeca8856ce6d3e5a39df420f33b1ec984b36d0ac116f7764675b"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/diag_preconditioner.h",
+        "bytes": 1055,
+        "sha256": "d64febd392749a4d075ac400a74b30540d08be001cea27021b87fb64c4593da3"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+        "bytes": 4209,
+        "sha256": "102f69b4f2755651677d1741a5801055da9a7d3f0464d698a3c8a1ac31f10fb5"
+      },
+      {
+        "path": "StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h",
+        "bytes": 1247,
+        "sha256": "644d725e9b97e80cd2a79091c0a8e1c13c6883f8dda33aa67fc333f1513e332e"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_chunk_fixture.inl",
+        "bytes": 14366,
+        "sha256": "bc18e6bc12aca083ebe100c59881ce7120b46faaa961013a890df1d8999ecf03"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_chunk_study.inl",
+        "bytes": 19475,
+        "sha256": "a3b3710bae1cfc8b83ba2bd63430325e4aef04b83fd80d364d882e0e85fd5e02"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_fixed_study.inl",
+        "bytes": 15272,
+        "sha256": "e804a80bf7bc55ae5637376205432e6a18d47d6acafac19bbca2f3b4c5ad12b9"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_graph_impl.inl",
+        "bytes": 14228,
+        "sha256": "c7aca3c4edb0f29ce503b910d03f43a112e247b2e11c94a00fefcc4204451f94"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_graph_options.h",
+        "bytes": 822,
+        "sha256": "b58e13b378afdd1ccd9449d98a4aa3f2abacdfa3c8485255c73aa1a6e6c0b0ec"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_guard.h",
+        "bytes": 713,
+        "sha256": "6a036be8df71107bb96cae07e8871375e1d79d4dfeaad720239d0169d134a7a8"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_guard_fixture.inl",
+        "bytes": 2805,
+        "sha256": "226e026beaab1ee9f0410430a017bef93cfc3a2539c055cd1cc76cdb471c6b20"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_solver.cu",
+        "bytes": 28815,
+        "sha256": "03728283cca5c84b2e391d6c7c0cfe5ae7920b2838249af0d8ee3f41ec399604"
+      },
+      {
+        "path": "StiffGIPC/linear_system/solver/pcg_solver.h",
+        "bytes": 2605,
+        "sha256": "e5421a8e57bb5ea6382589ef53bf59dc5685d44bbce37d7c732226b77ac87826"
+      },
+      {
+        "path": "StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+        "bytes": 2966,
+        "sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29"
+      },
+      {
+        "path": "StiffGIPC/linear_system/subsystem/abd_linear_subsystem.h",
+        "bytes": 945,
+        "sha256": "0140d341440ae99c1dc51705dd0fe622dfb3c16da71550753ef3392fadc607f9"
+      },
+      {
+        "path": "StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+        "bytes": 4774,
+        "sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4"
+      },
+      {
+        "path": "StiffGIPC/linear_system/subsystem/fem_linear_subsystem.h",
+        "bytes": 1139,
+        "sha256": "888e7d5225a78ff2ebbf6da188f652622604900ad0107ed088b7cc0516c82445"
+      },
+      {
+        "path": "StiffGIPC/linear_system/utils/SPMV_FUSED_QUADRATIC.md",
+        "bytes": 8894,
+        "sha256": "9e8b135e9e84946927d38e9faa7ba49ab4371399f0eb6e0055ac2991948363f9"
+      },
+      {
+        "path": "StiffGIPC/linear_system/utils/converter.cu",
+        "bytes": 14031,
+        "sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c"
+      },
+      {
+        "path": "StiffGIPC/linear_system/utils/converter.h",
+        "bytes": 1333,
+        "sha256": "1312437621380de2eb95818a39eb086992705f4c666a229e88924ab6237e7a62"
+      },
+      {
+        "path": "StiffGIPC/linear_system/utils/spmv.cu",
+        "bytes": 4272,
+        "sha256": "76fa87eaf92a836b086d195a8f2647e3f66eb1c2b7b07167fb0a64884432fa23"
+      },
+      {
+        "path": "StiffGIPC/linear_system/utils/spmv.h",
+        "bytes": 692,
+        "sha256": "910aff07078344df5ab0678a868dac74cf379872022dc97d45a06eb892ff30e5"
+      },
+      {
+        "path": "StiffGIPC/math/QRSVD.hpp",
+        "bytes": 10177,
+        "sha256": "623976e7481e6a66f5627a0ce8ee6cfd5a4197c543bc6f7f38941def9c986e09"
+      },
+      {
+        "path": "StiffGIPC/math/eigen_data.h",
+        "bytes": 2351,
+        "sha256": "032609328e1d102de120da80cd92224355e983969cc9262c4a05a128590ec40b"
+      },
+      {
+        "path": "StiffGIPC/math/givens.hpp",
+        "bytes": 7002,
+        "sha256": "ec06b4bebbd04042ce0dcfc0617748cca46139ea4039d0537da829be5ae717d0"
+      },
+      {
+        "path": "StiffGIPC/math/gpu_eigen_libs.cu",
+        "bytes": 53228,
+        "sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da"
+      },
+      {
+        "path": "StiffGIPC/math/gpu_eigen_libs.cuh",
+        "bytes": 15577,
+        "sha256": "224e70a52712f26a55c465f98cb9ddcc8108e680d61b2c97c0bfb85b4e2cc08a"
+      },
+      {
+        "path": "StiffGIPC/solver/IPC_COMPENSATED_TOI.md",
+        "bytes": 6053,
+        "sha256": "6d2a85ea1c7a25f409f6d47a9b0495f8b9be27e9d3e244ebec9facd46c47b2bf"
+      },
+      {
+        "path": "StiffGIPC/solver/MASPreconditioner.cu",
+        "bytes": 99123,
+        "sha256": "233f74da8422f283d2ea43f14d45cfc5295f872c3342b5afab75e15b931a103b"
+      },
+      {
+        "path": "StiffGIPC/solver/MASPreconditioner.cuh",
+        "bytes": 10028,
+        "sha256": "7a5ef3bca8c2c71f4c0ec062243cfde7810de436ecc58bdd238dc952138a4a40"
+      },
+      {
+        "path": "StiffGIPC/solver/MAS_FUSED_DOT.md",
+        "bytes": 5976,
+        "sha256": "e8b624c2bb31f2078f97fd26c90696c219671de4af271a1e98a0ce17c723edbb"
+      },
+      {
+        "path": "StiffGIPC/solver/PCG_SOLVER.cu",
+        "bytes": 1222,
+        "sha256": "86721c762676cdf8b7943df6d9ca990287899682c3b1a7c6afb4af3acf0b1c24"
+      },
+      {
+        "path": "StiffGIPC/solver/PCG_SOLVER.cuh",
+        "bytes": 878,
+        "sha256": "4495934da2a7404244e1f1025df2a98bbfd4bbb586dbd492c527d9c2954db978"
+      },
+      {
+        "path": "StiffGIPC/solver/ipc_budget.h",
+        "bytes": 2328,
+        "sha256": "0b8fd0acf790ccde3412c62b42a3d807f1088bb981ca2f9bd3327fe0b8858b0d"
+      },
+      {
+        "path": "StiffGIPC/solver/ipc_options.h",
+        "bytes": 3487,
+        "sha256": "022d02c284d99e2452bd5e2eea792a54a7e8cb7a78f9a039e0f676eb665aa06a"
+      },
+      {
+        "path": "StiffGIPC/solver/ipc_residual.inl",
+        "bytes": 3671,
+        "sha256": "cfab0cedc8e76ca209d3cf7b113a4f82c75ac2bf5001ec80f41caa6cdbf50003"
+      },
+      {
+        "path": "StiffGIPC/solver/ipc_residual_controller.h",
+        "bytes": 4490,
+        "sha256": "00007663a499bc8296959f1c8df276cfa25e9f96499e52e24d180f04e37d0a41"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_cholesky.inl",
+        "bytes": 2598,
+        "sha256": "76aae694236985b0d3f5a4bf2377b1575a9a0ea27afa40a5ea74fc99d65849bd"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_cholesky_fixture.inl",
+        "bytes": 12125,
+        "sha256": "068066a44fe8726f296219bf9bb245d97a0e75df4686a954644503ab95c6b059"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_factor_action.cuh",
+        "bytes": 2774,
+        "sha256": "f391097b664e4d5f435d4cf0f62653b644ec8f9ea3e07f6b085a767ab244f225"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_factor_action_options.h",
+        "bytes": 2042,
+        "sha256": "830f0edd555ad3426d22a2de943b80d65fe0ba76cbc287486b19d5d2708ba7ce"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_inverse64_kernel.inl",
+        "bytes": 2782,
+        "sha256": "43b7a7983089a8690906fab6a3f06b7c0e4777d85542f636047c4a834469f966"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_restrict_options.h",
+        "bytes": 1041,
+        "sha256": "b67ea4a35d90976b6e93c84b1d474d16e370eeaadbc3aa8f718be65d2ac349e6"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_restriction.cuh",
+        "bytes": 1216,
+        "sha256": "a3bca990fcd9cf246e2d93e985a16f8183d607f08741d39b499bcf37ccbcd513"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_stage_probe.inl",
+        "bytes": 6747,
+        "sha256": "3a83cac90168323b35f8bef5163ec3fd3ddb145060af8401aa1895de7f0dee41"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_stage_probe_options.h",
+        "bytes": 785,
+        "sha256": "9f494e40564a6c90794645107e2197fcc95a973ca216351b046874f76b6bebcd"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_wide_fixture.inl",
+        "bytes": 7534,
+        "sha256": "c59a80ae8f2245cfda12ee6559544d287306427bba57133d928f4f4c2a4c6931"
+      },
+      {
+        "path": "StiffGIPC/solver/mas_wide_kernels.inl",
+        "bytes": 8392,
+        "sha256": "299dc174545112c62f08b9d35954c37a5ef5f6c37c7f0d15eeb42921d8b7339b"
+      },
+      {
+        "path": "StiffGIPC/solver/solve_context.h",
+        "bytes": 1767,
+        "sha256": "973bcfa9f7e19be484ae52d3469ecbafa57331d9b0267dfcf8a48facd11d9be0"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_observer.h",
+        "bytes": 3446,
+        "sha256": "d52270303b417f6858dcec2acd06d6f5a47193d77388d63ea2e04b4923dc2a39"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_options.h",
+        "bytes": 15225,
+        "sha256": "4e2ca5a87e7e39f136416ad2361d3e0e30b715dab41984b65030fec6588117fc"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_penalty_scale.h",
+        "bytes": 1087,
+        "sha256": "b2cb1932117b7df32dc4436fd141d3a366f0bada0232f317595c3d2c5101fe3c"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_port_policy.cuh",
+        "bytes": 639,
+        "sha256": "cb85d376faa674bdbcdb54fc500d114ba20a712e89286ec2e6e80ea53966a403"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_solver.cu",
+        "bytes": 136142,
+        "sha256": "08b6651be67db1ed23ac5cc8c3b2bc1d932874751f194a7d0f9af181a3506e0a"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_solver.cuh",
+        "bytes": 1343,
+        "sha256": "c6afa9ad2065a7e4f4c9a1579ceb5b1e15d19eb046dae6f6a0b07eb206d2b9e9"
+      },
+      {
+        "path": "StiffGIPC/solver/toi_volume_step.cuh",
+        "bytes": 3285,
+        "sha256": "ee8bd612b7bb3308432b55af2e3cb8f167d27bc08f39868a51502731b7740710"
+      },
+      {
+        "path": "tests/diag_fused_update_tests.cu",
+        "bytes": 4948,
+        "sha256": "6dc9ce770f033f82272d49ade47f8d8710df3b95e36f37863c996edb00c6e821"
+      },
+      {
+        "path": "tests/ipc_budget_test.cpp",
+        "bytes": 1544,
+        "sha256": "af89a5f5a26d9075f9d5911f29605ab01a8f306d66a1db195cdc72927d74d34a"
+      },
+      {
+        "path": "tests/ipc_residual_controller_test.cpp",
+        "bytes": 7568,
+        "sha256": "ee29d8576d2adba64b2bebee0ea620afc69ac7a842285e9a0adf31045c8a414c"
+      },
+      {
+        "path": "tools/bench/README.md",
+        "bytes": 4358,
+        "sha256": "40f8b1eb9281e7c5b7ce5ce340128583e64d7c6621022ca095de7d00068ddb91"
+      },
+      {
+        "path": "tools/bench/config.py",
+        "bytes": 22502,
+        "sha256": "ff48c914bf308cfccff4b99515b017ca0aecde72dd773590d8da08256b3de07f"
+      },
+      {
+        "path": "tools/bench/contracts_test.py",
+        "bytes": 19249,
+        "sha256": "804343cb05f770dbbd349977f9f032f164e03fc2a49c808ae565a4216b4c80b9"
+      },
+      {
+        "path": "tools/bench/linux_runner.py",
+        "bytes": 17110,
+        "sha256": "a3a926f606d03bb14ae28f65a98d1e011cedb2d3b6e353ccf04aa34d8349fb93"
+      },
+      {
+        "path": "tools/bench/plans.py",
+        "bytes": 2694,
+        "sha256": "b5a4972e1128b8bc68f2b83992cdc20a9b4a577c162a76c2c4fd4e4c9f50fb24"
+      },
+      {
+        "path": "tools/bench/pool_analysis.py",
+        "bytes": 9020,
+        "sha256": "4848b3c86990c83c575e164ecc9cf79f1b97a6e64af6cfc567452b712498301e"
+      },
+      {
+        "path": "tools/bench/pool_metrics.py",
+        "bytes": 16033,
+        "sha256": "cd41927a6eeb17875431fba82440355aa40ba423811d9111750f544e5b2939ba"
+      },
+      {
+        "path": "tools/bench/quality_protocol.json",
+        "bytes": 1671,
+        "sha256": "1cfb9045d6988fa606b8bb76afdd71e20661ef602c84296c49cdda9a0d07d78f"
+      },
+      {
+        "path": "tools/bench/validate_run.py",
+        "bytes": 10320,
+        "sha256": "3939c7c3430c6e7d4ef1c0bc4d273926ea97607733b5a5ad3f29aadaba5292dd"
+      }
+    ],
+    "source_digest": "bbd415d5136dc99d30903e8a5938dfafd56d39f71fb3f1249ba629a8430cc15a",
+    "exe_path": "build/active/gipc",
+    "exe_sha256": "2ed42d700045689f7fd2af4c4c1a00823daddcd4efb418915c7398db79736f0c",
+    "build_evidence": [
+      {
+        "path": "build/active/.ninja_log",
+        "bytes": 13093,
+        "sha256": "b6496bd955c69f80d9ae4d49370761ff65a2eebd66c8ca3ae64a0d91c20780e4"
+      },
+      {
+        "path": "build/active/CMakeCache.txt",
+        "bytes": 35465,
+        "sha256": "3e68ee0fd80bf3a230fe8023bd05c9bc5b61fad3d176d8bb592f97618001311f"
+      },
+      {
+        "path": "build/active/CMakeFiles/rules.ninja",
+        "bytes": 7480,
+        "sha256": "3663ca11f06d1605e0b46c4f58ecfc90b7189640bd034be694031e137bf84eef"
+      },
+      {
+        "path": "build/active/build.ninja",
+        "bytes": 175950,
+        "sha256": "0e0512e6dd662124fe6b916de0db037b2e08d023727f347e96a9f9e452d14a08"
+      },
+      {
+        "path": "build/active/compile_commands.json",
+        "bytes": 100820,
+        "sha256": "7953575b6ebbc574aaed9361fb85f246772b8520c05272d10c2d989dee8899de"
+      },
+      {
+        "path": "build_logs/active/build.log",
+        "bytes": 62284,
+        "sha256": "4c232d9b1fb65ffd56f72402fa7f3a5d2d9239bf53c83be467a7880505791289"
+      },
+      {
+        "path": "build_logs/active/configure.log",
+        "bytes": 2196,
+        "sha256": "3004fe0c2b6508411e09b9c974b063054cf59ac128a9827134629699e34180a5"
+      }
+    ],
+    "compile_source_count": 37
+  },
+  "base_manifest": {
+    "sources": [
+      {
+        "path": "baseline/Assets/benchmark_meshes/tetMesh/abd_sphere.msh",
+        "bytes": 50518,
+        "sha256": "78ace9e4c21dead0d51a4d7d60486f1a5dfcef6abf0d392cd663aeba0655b209"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/tetMesh/bunny2.msh",
+        "bytes": 3748616,
+        "sha256": "ccdaf349c7eea951f596e9bfbd24755dc6b490c1d46b26a8295cf7099e5969aa"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/tetMesh/cube.msh",
+        "bytes": 246,
+        "sha256": "be610c96c51a47e382ee00baea1685775b3a898aa2ccc44f770ab360dcbe2280"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/cipc_square2K.obj",
+        "bytes": 112113,
+        "sha256": "3eb14317630a03ec5973ee3d4cae45eef849a2d9c332f66077552060c9041865"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/cipc_table.obj",
+        "bytes": 483580,
+        "sha256": "19ed138b545a3efb4ad45faf7aaa5f7d37717104f97507eb1d1b4a1754840972"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/cloth_high.obj",
+        "bytes": 212335,
+        "sha256": "ec4c79ee2c41b31537c328c2be1014139bd240118d5a94e0be706926fecda2ed"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/square_cloth_10k.obj",
+        "bytes": 669929,
+        "sha256": "c6f30c0e9cd7c16540982b0989d45c15e1fc583b5afda3d375c42004c1b338d3"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/square_cloth_23k.obj",
+        "bytes": 1852524,
+        "sha256": "1c99c015ca6c5852ad7650b9725d4f6e359289f67dea759dfaf6f88aa11883e4"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_129_2m.obj",
+        "bytes": 938177,
+        "sha256": "2d6f67484e5d1f1fc88b0aa63b28a6b005053ccc659c0f9cc46bb62663abf253"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_201_1p6m.obj",
+        "bytes": 3273527,
+        "sha256": "cb08afd248b34cae12d2d91802741e05f8f4ab19a3150943b1ef008e23e7d1da"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_301_1p6m.obj",
+        "bytes": 7566167,
+        "sha256": "9312468242565c9abef9bdf912e0c4b2a5ef50da74374ed7b52e06b70c1948fc"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_33_2m.obj",
+        "bytes": 46875,
+        "sha256": "bc8b2ab47c3ed0d7aab116aa7461058b3941b96ae352c935ff25bc0f75aed3c9"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_51_1p6m.obj",
+        "bytes": 193014,
+        "sha256": "3dd5b2ec11bc889a891bfdf4b856fb887fcc04f56d4d62f1bb52b6b7187c5231"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_grid_76_1p6m.obj",
+        "bytes": 445464,
+        "sha256": "638f828c6d2558d5afa08b7c49a79ee1077d9251bfc7c3cf08a06d8bb94e9b8b"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide1.obj",
+        "bytes": 561043,
+        "sha256": "08f22ef707e8d7242c6ee78f2aa69dedca6d5616adcd001c50885570108accf7"
+      },
+      {
+        "path": "baseline/Assets/benchmark_meshes/triMesh/stiff4_hang_subdivide2.obj",
+        "bytes": 2393989,
+        "sha256": "3778e4d8b08014dea110ce8a450ddc18f4621e26f4749517b4c3349f7b63c644"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/boxes1920_cloth_h.json",
+        "bytes": 588960,
+        "sha256": "56f6bda4878b8181473724a16081c61dded161d1bff334b548462577a1510088"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/boxes1920_cloth_l.json",
+        "bytes": 588956,
+        "sha256": "a25d32bcaf9e380a5884de3f13cfeefcbb1f338b45c09bcd6ee3f6fdac7c441d"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/boxes1920_cloth_m.json",
+        "bytes": 588941,
+        "sha256": "8b537dd620a0c07677eb59a151b4b4f0189d52d909232c28d5046ca0b60472fc"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/bunny_cloth_bunny_h.json",
+        "bytes": 3809,
+        "sha256": "758db20db0613357263bfc8ab84842ecca88b666e5d5bcb5f0a53001ea1ddc30"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/bunny_cloth_bunny_l.json",
+        "bytes": 3806,
+        "sha256": "12fbca80f65e508713154e30de54723b2beb30b8c6d7875c9d7dcc6f7043d6d9"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/bunny_cloth_bunny_m.json",
+        "bytes": 3789,
+        "sha256": "c0f2902652b0c2affa3d62bc7c74d44fd64c72382088958ba8beed591c5db5fb"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_fixed_bunny_h.json",
+        "bytes": 4499,
+        "sha256": "495f9444a8ffcf18a5b2bac31e085663596fa0913e36a580f2d95904a19b1ee0"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_fixed_bunny_l.json",
+        "bytes": 4493,
+        "sha256": "3ec7bce27b7f297e93b5efe911e84771205f75b6f116b22bc17baa0d17afe3a2"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_fixed_bunny_m.json",
+        "bytes": 4610,
+        "sha256": "4a502ee4a4ff5e7ff2ac3401d9df8e3373389be3eef2a5ce944620ac78fd425a"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_hang_h.json",
+        "bytes": 3142,
+        "sha256": "b842e374df246e6cbf8d0b94b2b5b627a5248dc9da0f666e47e585b108158695"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_hang_l.json",
+        "bytes": 3241,
+        "sha256": "ae6b7015346e9a46162a2e0a874a483fecf48523a52e8ba83caf4244f31ae68b"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_hang_m.json",
+        "bytes": 3141,
+        "sha256": "1277cd3d0efc9cf62ff0915752e11832d0a30a47e540a97769933efc56de9f3a"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_sphere7_h.json",
+        "bytes": 4388,
+        "sha256": "f8d3a19131739b12f77876982b5b56066f31082f1e07789e161c09a6abde8ace"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_sphere7_l.json",
+        "bytes": 4382,
+        "sha256": "959bdc17f67688a3512f8f815da52fd37ee2751e0a202120cd8b7f0cf5964a9a"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_sphere7_m.json",
+        "bytes": 4500,
+        "sha256": "9515bb7af4d9e48e01ce3ed95196ba2acfe3c9c926428adaa33b257719502eac"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_stack10_h.json",
+        "bytes": 15810,
+        "sha256": "6bd19692065ff1ff3301159dc8cb6ab25a5bc4cee5e0fe314dc5588419066c34"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_stack10_l.json",
+        "bytes": 15786,
+        "sha256": "76a5b54416210291259f24c9e42f4024860f1d7c8adca76bdac13639c54045f1"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_stack10_m.json",
+        "bytes": 15851,
+        "sha256": "f47057d574bf4794358a055ea1aaec38975a96a508d0413a72fabdadb87a2901"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_table_h.json",
+        "bytes": 4479,
+        "sha256": "c80ff7dce69950dedbfce3eb49ada42af640dfce7873b1e3f80de5d0a9fe10e3"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_table_l.json",
+        "bytes": 4475,
+        "sha256": "e16b84c3b1552e86e3037ac9d7e76adeed6efa2d2a7f56078ae809649eb9896d"
+      },
+      {
+        "path": "baseline/Assets/benchmark_scenes/cloth_table_m.json",
+        "bytes": 4591,
+        "sha256": "0daa71806bd8c3e2363bfa1013153e45417ce3c99e8cb97397b764cd9b0f7f28"
+      },
+      {
+        "path": "baseline/Assets/scene/abd_system_config.json",
+        "bytes": 56,
+        "sha256": "da1d86488832bc5dba126953f8623bd74a8d68b74e3d799fe41c4673a0dc637b"
+      },
+      {
+        "path": "baseline/Assets/scene/json/wrecking-ball-box.json",
+        "bytes": 102827,
+        "sha256": "9def9fd2c1b68e2a958ad380d939a3ad0ad72ed73ffdcf08d0f704f4dd8478b0"
+      },
+      {
+        "path": "baseline/Assets/scene/json/wrecking-ball-simple.json",
+        "bytes": 105980,
+        "sha256": "31de033ccf5263d86a21fb85a080215d7391671b07f0d0a9be9d9bb8df94083a"
+      },
+      {
+        "path": "baseline/Assets/scene/parameterSetting.txt",
+        "bytes": 793,
+        "sha256": "442cddd8fb5405e8c005c750eec664bc0e882bf5fb2c9d588dff39a4d6473ec6"
+      },
+      {
+        "path": "baseline/Assets/scene/temp.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/bunny2_sorted.16.msh",
+        "bytes": 3848168,
+        "sha256": "5eb8096f45a19deb4da78365da31af9d9519adc1cf274613854da5b8178c8659"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/bunny2_sorted.16.part",
+        "bytes": 98511,
+        "sha256": "353877fd84264a025bfcb24bb52fb6844756e3ba72924f14effc1fcfb5078a4f"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cipc_square2K_sorted.16.obj",
+        "bytes": 178764,
+        "sha256": "2e163869f2cbcd2bd5099d556cb35e70749b0aaea981c743f91163673fa756af"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cipc_square2K_sorted.16.part",
+        "bytes": 8054,
+        "sha256": "9dbb99942500859a0f70954d15e3782575ea5bc8cbb8fc438589d00251e85dc0"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cipc_table_sorted.16.obj",
+        "bytes": 644338,
+        "sha256": "50d7574cad033d9f47134ddb4415db3084f22a090add5e201da7e17ffbb21f9d"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cipc_table_sorted.16.part",
+        "bytes": 31917,
+        "sha256": "b56dd75226e134d8637e41b16200b5d7240647fae8e7935678171375dff243b3"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cloth_high_sorted.16.obj",
+        "bytes": 224847,
+        "sha256": "94ee6c892cdadbba824088d6000c02fd5690844c6c81cddd0c9bc06479b6d69c"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cloth_high_sorted.16.part",
+        "bytes": 19480,
+        "sha256": "2efee22f285b77edb1a91f2b30187e4956abffce9502c81992c77dbf80543b26"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cube_sorted.16.msh",
+        "bytes": 266,
+        "sha256": "a4ed6661fe833ccd72d04fd74f3230f1dd8421870d2c0698a54a8430bd01d341"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/cube_sorted.16.part",
+        "bytes": 24,
+        "sha256": "147080b1bceba1cb05feab4f44e818d78c9afb422fc5e6150d347234b3ad7b3f"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/high_mat_sorted.16.msh",
+        "bytes": 7489691,
+        "sha256": "57d57953563c0d2656e8f97574074c630c4dafb2625bd838f88b26b51088aff4"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/high_mat_sorted.16.part",
+        "bytes": 253339,
+        "sha256": "778fa1498666a7a325e0210ca545bf6548f3fd50e2d8bf25b675a7210be7a22e"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.obj",
+        "bytes": 946561,
+        "sha256": "577ae9d7b8e9ac78a56a14fb995d2e1db10ca8f981bcb14881bd78ab964b1ce5"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/square_cloth_10k_sorted.16.part",
+        "bytes": 39155,
+        "sha256": "5c56a875ad5027a323939a392208672bf8ee43932edcf67853a9f84af0cb6ddf"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/square_cloth_23k_sorted.16.obj",
+        "bytes": 2202340,
+        "sha256": "284bfaa8a8cef0f92065969c71e03fb7a0acb601f1f3cdd9b763e5fb2e8d7d64"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/square_cloth_23k_sorted.16.part",
+        "bytes": 97370,
+        "sha256": "58ca7fe327db3ace3ba579e41de055ca8e6715442f3e8266bbae23a1badcfd5b"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_33_2m_sorted.16.obj",
+        "bytes": 97038,
+        "sha256": "002c2f36c8d10ab2772dd43f8e50c7f729b3ba7f8e4f1f43def4ee90a0e45e4c"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_33_2m_sorted.16.part",
+        "bytes": 4199,
+        "sha256": "efc01f2750d209585f88090a1751e6d45333fa627f3e88b0becce4ea004851bd"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.obj",
+        "bytes": 242257,
+        "sha256": "6ecdb77f2c51ea248075cce143cb236adc2f1d4b9e56aa3a108af417d60ac781"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_51_1p6m_sorted.16.part",
+        "bytes": 11359,
+        "sha256": "d02a9ba9f3f5dd94a038b087ab47503e268b02c6a8806c0f37b3db303c5f84aa"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_76_1p6m_sorted.16.obj",
+        "bytes": 548381,
+        "sha256": "06afdac32e87084c62c61eb850d1a358349fb93e7b2c6343d928254f36006bdf"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_grid_76_1p6m_sorted.16.part",
+        "bytes": 27232,
+        "sha256": "a300e06115cedd2c81b7903d0bfa9230d532c16de1c1a54a9f0475db9aa08cf0"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.obj",
+        "bytes": 701659,
+        "sha256": "47a170190c560c865363a2be1d8c8efc82a522d51a8a7c1823d840fab356b524"
+      },
+      {
+        "path": "baseline/Assets/sorted_mesh/stiff4_hang_subdivide1_sorted.16.part",
+        "bytes": 28727,
+        "sha256": "73997c64932d2164c52e4b0fb2ee6a7f032bbbfe6c92716d965d56293ff75ade"
+      },
+      {
+        "path": "baseline/Assets/teaser.JPG",
+        "bytes": 265573,
+        "sha256": "b6b5811e4321f0a7cb54aa900a8d56f1c876e4cb907d412309675bbb2e00edf0"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/bunny10.msh",
+        "bytes": 32999837,
+        "sha256": "e47e085115a99bfd9449277134bb494337136985d9785e832a86e50c26021d5f"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/bunny2.msh",
+        "bytes": 3847753,
+        "sha256": "819d674817b95011ffd831cdec89f387beee266ee6bbc41040c2f625376151ca"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/cube.msh",
+        "bytes": 266,
+        "sha256": "a4ed6661fe833ccd72d04fd74f3230f1dd8421870d2c0698a54a8430bd01d341"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/high_mat.msh",
+        "bytes": 6239699,
+        "sha256": "04b3e495d0a8948e1827e706ae8201ee314efdae2067e76117ba37cfeeafcebf"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/wrecking-ball-mesh/cube.obj_.msh",
+        "bytes": 232,
+        "sha256": "dbf2fef8d6d80437972dc4f2c692c50ddf430849f4dfeb13d3f73b839e8a413e"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/ball.obj_.msh",
+        "bytes": 347404,
+        "sha256": "f70daf358b4c60268e9d344dd112626eb3918687bc8546d23383dd901df716fd"
+      },
+      {
+        "path": "baseline/Assets/tetMesh/wrecking-ball-mesh/wrecking-ball/link.obj_.msh",
+        "bytes": 74049,
+        "sha256": "8ad143e0880dc404dcdbcc0c669de0f30e222127b9eef08f1dac349c85e5dd4e"
+      },
+      {
+        "path": "baseline/Assets/triMesh/cloth_high.obj",
+        "bytes": 224752,
+        "sha256": "0f20741edac2a28cc020c0f9cf044e1f9116ab2b3f7b669e2d5f0f91974d10f3"
+      },
+      {
+        "path": "baseline/CMakeLists.txt",
+        "bytes": 4394,
+        "sha256": "03975802c239c0a3ce64730cb6a1c1220c1b2a90f8cbe3db68f58fac04cf7252"
+      },
+      {
+        "path": "baseline/MeshProcess/CMakeLists.txt",
+        "bytes": 443,
+        "sha256": "4c5b6386752a172088b6ee3a5cfef01d59cf9d47c1db2d243a63cb47c40e4cc2"
+      },
+      {
+        "path": "baseline/MeshProcess/External/CMakeLists.txt",
+        "bytes": 367,
+        "sha256": "25bbc6dd3e0d2eb6c17e491c9ec5c0fab94b726db24fcf89619980acf40c1238"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/CMakeLists.txt",
+        "bytes": 5886,
+        "sha256": "86a9422f1f4885d3674b64630e8da57dbd41d76835d706f21aa6774cc83689f8"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/LICENSE.txt",
+        "bytes": 659,
+        "sha256": "b7a2c8e49ab17746e2e9a2eb670c3a190dcb5525f7de606fc31e67b3b4b5c6bd"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/cmake/GKlibSystem.cmake",
+        "bytes": 1435,
+        "sha256": "37134ba28ad78ca83ec30271cf9547963e09e0c1e1428ab32073d584b9e452ab"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/GKlib.h",
+        "bytes": 1508,
+        "sha256": "b830ec088bb3ae200f49d14bcefb1a94d9eaa34bcb26e38f761b01d003316d6d"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_arch.h",
+        "bytes": 1502,
+        "sha256": "9181bb3a80c4aa41cc4fcb7c7f6ef58bb3c63fb32674dd4dd400c6b27b55aeac"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_defs.h",
+        "bytes": 2148,
+        "sha256": "361175ac86d023d0a431e4d1e2a5e0f325512f6fc8a02fb513e7d57764cf686c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_externs.h",
+        "bytes": 700,
+        "sha256": "e45f95384dc05e1f3aa7ff295bf22244f27593ad0c1298c3a3f7d1d1c1fdea65"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_getopt.h",
+        "bytes": 2400,
+        "sha256": "cd21e90789c3c06daf2a1fbc0191dcea44d167648f2a36cdf5b89042fe5afb94"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_macros.h",
+        "bytes": 6447,
+        "sha256": "5f788c6a977af2725aebd64ffb43bf4c656d1eeb55707f17bf42bee27c981940"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkblas.h",
+        "bytes": 5897,
+        "sha256": "510fcde844c96ff41e92ecffd8b59347fabf24519131fae24fa2e01c04fb6449"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkmemory.h",
+        "bytes": 4331,
+        "sha256": "f765fedac4151f5b385acc9d1370c123a4b17df39d27034ae63a5394be7bab18"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkpqueue.h",
+        "bytes": 12196,
+        "sha256": "59914e9359cb21be5cb948788698794284372ebb97e2ad6b357c8bf9a401fb47"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkpqueue2.h",
+        "bytes": 6047,
+        "sha256": "0dce3d223ef9a73016b8b60556d389a338fb822eaf2b9ba50f39a29018ceff88"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkrandom.h",
+        "bytes": 3786,
+        "sha256": "c8f2b3e3138edd6b1b43c330db7ea0a70028e2a01904eac1b73728fa5696af80"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mksort.h",
+        "bytes": 10525,
+        "sha256": "1ffcf7d782ea5187fc985c67ebc8c83addd1c875f6083b514ec1051d5ec9773c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_mkutils.h",
+        "bytes": 988,
+        "sha256": "cf79db8c81909ddcc92ec44fef49f723dfd3917540ccb95c83128ecbacea0789"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_ms_inttypes.h",
+        "bytes": 8181,
+        "sha256": "9dc1c97981ae7c2cd5786ea68a164ad9fec321991d29ab1cfcdd4bf83d588fdf"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_ms_stat.h",
+        "bytes": 557,
+        "sha256": "cedfe170fb9eadb48ce0051dbb1f7cc18900f08b027c74f0e6587e684de00d7e"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_ms_stdint.h",
+        "bytes": 7268,
+        "sha256": "21582dac040c5f7a8d1f205a41e78b4c91768564ec460192b0b60eabef9a9d9c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_proto.h",
+        "bytes": 16944,
+        "sha256": "305afdc4c1e7d07bbfb72ed400aa052d295196988663824e5542047b26e4b157"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_struct.h",
+        "bytes": 10322,
+        "sha256": "d7828a03502dd5e83fddde15b705e7a8cd92e907fada439e0c39e236029a0576"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gk_types.h",
+        "bytes": 1548,
+        "sha256": "946a96412d9cf5d5aa6e80768f9db64b8a7c4d1484c56d95bf8f8041bb15142a"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/gkregex.h",
+        "bytes": 21823,
+        "sha256": "0537c6abe40f342133b60ae15f24650034fdf37afa2393b6997f4dce057dbeb9"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/include/win32/adapt.h",
+        "bytes": 253,
+        "sha256": "80bfa150409259ca86b8e669f2a22f503dfa35a82a9b76e6b3f38a7956cb8584"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/b64.c",
+        "bytes": 3152,
+        "sha256": "d1d71c678863942fa03ef284ddbb91adf79bb51ded225b365290a7c7cae66291"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/blas.c",
+        "bytes": 1187,
+        "sha256": "b315b834abe0ecf39a5470c3e007f8522796225849cc6f4388ee5029c7c01e6a"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/cache.c",
+        "bytes": 3482,
+        "sha256": "648d4e07fdfd801c55bca2c6a3ce16ec269c6b6aab85cc1a06fed7074ed7e193"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/csr.c",
+        "bytes": 109512,
+        "sha256": "d59721a97c25b4ca8f0dff077e1d44a530793b6e25257612f17a28e60da3e2bd"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/error.c",
+        "bytes": 6157,
+        "sha256": "88eee0d8a64409b7d94343317c8af87757b981272982a8e6a877bd9e62a65e5f"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/evaluate.c",
+        "bytes": 3095,
+        "sha256": "8601a1f0a83001c63d115e117f4035a874740770be9beefa5da28f2be462e07d"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/fkvkselect.c",
+        "bytes": 3418,
+        "sha256": "ab7476cc2d181ca9535a5270d896b43ebd8cf08b85f27a8be2b6e8c1b5c8498c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/fs.c",
+        "bytes": 6739,
+        "sha256": "0e4007d4135e100b070f46229d357de8ce193362990d7fefa17c07fde0d144a7"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/getopt.c",
+        "bytes": 31484,
+        "sha256": "9266fb8c28b8fabccf6f7aea50f3cb944f794527479c18710ff960ad35aef7bc"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/gk_util.c",
+        "bytes": 2903,
+        "sha256": "78492919a9833b891762aaa63b2bfe64bddda10eaaa33fb1316349251b66fb2b"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/gkregex.c",
+        "bytes": 321869,
+        "sha256": "51ba681bcfac877beb1ba02b72f389fe63ef5b3ad8b35fa2b7148fb0acf0707c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/graph.c",
+        "bytes": 64665,
+        "sha256": "adcade791d9d1b86313b6504b9c2c16f4211b7443697add9fe5a07a504a700ab"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/htable.c",
+        "bytes": 7129,
+        "sha256": "62e7a63c8435713bc6e6c5e7fa93a7ded2dff8c98eeaf4ddeb7d3c83aae054e4"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/io.c",
+        "bytes": 19057,
+        "sha256": "5bf8ebd37129366d4699cfe2cec069bb15af8ad9878d8633a08653a26a6af262"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/itemsets.c",
+        "bytes": 7220,
+        "sha256": "d65d6d687d2445632d28ca87d13c4c53c9b525aa33c4da4a6133e2b47d0ff098"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/mcore.c",
+        "bytes": 12339,
+        "sha256": "6fc1a5502281d3cb0044049a51d7781a64a24de84711b0bf5dcd443cf6474366"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/memory.c",
+        "bytes": 8882,
+        "sha256": "8b97b3e59487fef74c31c5029447135d43759efca1f1e8ab9eadb0c87b881704"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/pqueue.c",
+        "bytes": 1172,
+        "sha256": "e89724c61c95e6e275b14ee0ba9f10c0b355c9051001ca09f716530f53a67a63"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/random.c",
+        "bytes": 4206,
+        "sha256": "727b545b7c78e73b4031822526e4d862ee1248d1ffcb0e7ddf60ee1fc59c677d"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/rw.c",
+        "bytes": 3204,
+        "sha256": "8440be768e2e3d650ae511e8cb4a328a2b99aa5cc34fa1b3893d1c2d8e202fd5"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/seq.c",
+        "bytes": 4429,
+        "sha256": "9d0e098f0809034acd316b1c177d117e685b011fc2e608aceb4ecb02f95ebefe"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/sort.c",
+        "bytes": 14268,
+        "sha256": "cc5241c586d0c393dd82446a11bbefc46a1ba32c59cf9256463d8132f62dbecd"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/string.c",
+        "bytes": 16162,
+        "sha256": "98452d2a599209dd717e6b14cea886a83de7c1f58d5e5d0e75253cb0a74f7b60"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/timers.c",
+        "bytes": 1231,
+        "sha256": "723a2b705095e814c0b79c47c8835de7bc9f3f33b106928a8373b1f1d8499470"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/tokenizer.c",
+        "bytes": 2168,
+        "sha256": "51f8e86f35e8a770e280baa1ce8906b41f06550b60936b8dd3559a3f2b02bb0d"
+      },
+      {
+        "path": "baseline/MeshProcess/External/GKlib/src/win32/adapt.c",
+        "bytes": 174,
+        "sha256": "bc183f5a6be42f23939a4b57faa651a563b550f16ed2d79546ee03e15e846e0c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/CMakeLists.txt",
+        "bytes": 331,
+        "sha256": "885ff8761e65e757856bfcc681d73664eea2eed98e7420742a9f9552a7a2f044"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/LICENSE",
+        "bytes": 659,
+        "sha256": "0ae4ac9049ec1b05c29a2eef542dc9fd674f09d45a65abeb7257fb4862b5f1f8"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/include/CMakeLists.txt",
+        "bytes": 74,
+        "sha256": "ee6a66abf24d9404d602a17185b6cdd0b0729c36d7962a67153e92079f5a21a1"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/include/metis.h",
+        "bytes": 10880,
+        "sha256": "03b5b2d5613e94a262b57b056898568e45cc871a9abd2dff3603cd3e4020d1a8"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/CMakeLists.txt",
+        "bytes": 219,
+        "sha256": "7704581d5eb2ad9c533dc2dc7d4ee08f6614998eab7cfc3b20be812303b27307"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/auxapi.c",
+        "bytes": 1168,
+        "sha256": "001d5b14c2945eb79ee46aa5f8599c5666e90ab7702068de4bdb1a50916743af"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/balance.c",
+        "bytes": 16935,
+        "sha256": "0bc7875daf47883fc69188a8c870ad196dec140fbb7730b53cd72bda1a5f4781"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/bucketsort.c",
+        "bytes": 1025,
+        "sha256": "2eccdd4f8dbd29743fd0f516dab1e59c88a424312a28ee9f5a5502097479c41c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/checkgraph.c",
+        "bytes": 7706,
+        "sha256": "db0630d393358d282fb180741dfaf569ab66a8683868ffdb5e69497d47842be5"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/coarsen.c",
+        "bytes": 35662,
+        "sha256": "49890e454b20409d999bd1086663b2f2a7e00c5d9740822cf6b017d8e786e767"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/compress.c",
+        "bytes": 6390,
+        "sha256": "2029c0aa710bc5839c8c1b2f5fb2e2763ecb113edc765e94320d78fe80a27de1"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/contig.c",
+        "bytes": 22007,
+        "sha256": "f322e35de73aeb1d91b8938d71dd0902832caeade224f35c453c92ee2983e423"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/debug.c",
+        "bytes": 13004,
+        "sha256": "841b646994ae11d2a61ffacb35f77677b609ee302c3d079b14a14f0de588655e"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/defs.h",
+        "bytes": 2075,
+        "sha256": "2a44073bf56799f528f8c97cea249dcee5c268427cf22464cd60bea2d38b06f3"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/fm.c",
+        "bytes": 19426,
+        "sha256": "3b45abb947c2fa3922d8c7dcbdea5f3198e0863df632a4ab1c85d7348638fdd7"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/fortran.c",
+        "bytes": 3560,
+        "sha256": "761f16f235ad55955b3d53541eb4fe2f67d7ef34e53c68914cc7f25b4e5d0ec9"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/frename.c",
+        "bytes": 3562,
+        "sha256": "1549cffb3b2767a73c6f5c780c5da0f7adb5d5d80fe60a5ddf58026837f555df"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/gklib.c",
+        "bytes": 3393,
+        "sha256": "d47018da038228e9af982c03a9cf7ade0e93ca9dc389552593420f912b62630a"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/gklib_defs.h",
+        "bytes": 1684,
+        "sha256": "27229ce6923b92dece9a42cad15587337f8c84aab04bccaa448cfc8756869d2f"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/gklib_rename.h",
+        "bytes": 4140,
+        "sha256": "eae1a06b2767c66274bc3d2149ef72f9c15552174a65240dffdb10ac92f32b15"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/graph.c",
+        "bytes": 12633,
+        "sha256": "14b3115dc74031c196668e66f3ecdbfb979fc91a5159f15c2ad4e43d6e43d63f"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/initpart.c",
+        "bytes": 18838,
+        "sha256": "a1500455ea68ccf8bec79ee39f9a4c8420af4b7f2c08419340e6c8f4a5e8056a"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/kmetis.c",
+        "bytes": 16809,
+        "sha256": "7f49a03a21fe26c545b48c3428d8b25ba74918cb726edc6a07fb3f2ed0aacb7b"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/kwayfm.c",
+        "bytes": 77470,
+        "sha256": "f55ffbc34df4dd87bc9e4cea5f93f5d988f967cf5fc00c6689f2a6042b239e6f"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/kwayrefine.c",
+        "bytes": 21188,
+        "sha256": "3e2f54a56e6d1dfe978afb18dbd82cdf18a838a6cf1511c822233f3e74cffaec"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/macros.h",
+        "bytes": 8623,
+        "sha256": "bb6010166fa66f9780514eface0b7d55afd8a5777785b9d6e8edd7e942fc34e8"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/mcutil.c",
+        "bytes": 9139,
+        "sha256": "9722bb357da6df383f5a47ecf7bdd36dd739e47917b292ab06570e47a234361e"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/mesh.c",
+        "bytes": 13070,
+        "sha256": "5f1e077c7107b6a855d0b847526a60450e7bffe5596875167e99c2335dfe7558"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/meshpart.c",
+        "bytes": 7888,
+        "sha256": "c49c5da79ccb3e5bd18b6a6394c206418494e83231ed26b2e347f751d08c784c"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/metislib.h",
+        "bytes": 700,
+        "sha256": "9263c74e9808ea8e84af3120468ef0626a5c4dbb6828b8d5d8169b1cb5aaa3b0"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/minconn.c",
+        "bytes": 23977,
+        "sha256": "9cd85b7e1a9b4f0a0c8e95d3daafd3ceef591e19bd82d799992cb9644203d62e"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/mincover.c",
+        "bytes": 7526,
+        "sha256": "924a8413101113e3b758b3313a6bd2c47608acdbd0de59c64b01056c6b5a33c0"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/mmd.c",
+        "bytes": 21737,
+        "sha256": "4aeeb04fbdd90f50ebcb7c24b7c6cd0af1143d1cbbb791f0d9b979d45bcff2bf"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/ometis.c",
+        "bytes": 21515,
+        "sha256": "3059be6aa0030d84bdb08d64473d77901d621c16ee77d2bcf536fa7fcdd97f84"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/options.c",
+        "bytes": 19098,
+        "sha256": "943aeff2ca01073f2b5d23e41b5ea97f13380fdeed05b412f374f755557f6bba"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/parmetis.c",
+        "bytes": 26970,
+        "sha256": "025be52e1ecdaad28c33ae180ddf3a455d866c88ccdb8434fc6cf5e046feabe5"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/pmetis.c",
+        "bytes": 12760,
+        "sha256": "9ae324386fe50f87636f44cf86d86fdf93002757d718e5f33cd11e26c1af6a81"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/proto.h",
+        "bytes": 15157,
+        "sha256": "94f6ff16f990bce47aed481ca827d3a91c2e28e0d1f2b4912d569b3af6b0aefb"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/refine.c",
+        "bytes": 6090,
+        "sha256": "f3177f2987f765230775ddc09a9865b7569e390efee14e3a801bb1e000c4463d"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/rename.h",
+        "bytes": 12230,
+        "sha256": "b1166f3407a24db47b6c0142e67a19558e10746530774dbef8a69c409604cab4"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/separator.c",
+        "bytes": 5017,
+        "sha256": "e2545c4c51be5421d897a36d26267a0d8f035a0ccb6e04a2d8c0951413a52ea9"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/sfm.c",
+        "bytes": 20648,
+        "sha256": "688d5413d35920a5c84bdb6d6e83052d7f1891ade72c62c253e6e1cf87923af9"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/srefine.c",
+        "bytes": 5077,
+        "sha256": "3bd3e7bba19cd4811564245dd948ee08ce1648ecfaf3983980d3a9428c9d7f59"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/stat.c",
+        "bytes": 5942,
+        "sha256": "d097c203270433748529243495e9c90205079c25dddd3648ef92d58cd0b913ab"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/stdheaders.h",
+        "bytes": 514,
+        "sha256": "aba5ccefd9d16a008c8ebb0a192924ee8e52a9d790db717e9ca9e38f1f6568be"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/struct.h",
+        "bytes": 9862,
+        "sha256": "438f5095476e4dc9839efc73bf87f64b4b346207640d26e50354ab7d9f3358d0"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/timing.c",
+        "bytes": 2412,
+        "sha256": "c38aba5da374b863a53ad21fe69ef7773b41a2d0d726e1fc58431ffb0c8a1fd9"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/util.c",
+        "bytes": 3120,
+        "sha256": "0bfbebc1cb63b33ac8296bfc209dde0b4e1ca639f80df62414d55ffc6fc7fb04"
+      },
+      {
+        "path": "baseline/MeshProcess/External/METIS/libmetis/wspace.c",
+        "bytes": 7717,
+        "sha256": "406eec610526a6288659a352bb35d3c5cdff02024181e195cc8997ccf74a5f5b"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/CMakeLists.txt",
+        "bytes": 1016,
+        "sha256": "be22645aa7651dafb67a26d1569524485136e62a84e213e4e1ca9835996e8522"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/main.cpp",
+        "bytes": 439,
+        "sha256": "7bb385a9aac781ae7701eec9e6e4b5fedf3679be402b8fb6a94b2151304dd07c"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/mesh.cpp",
+        "bytes": 23400,
+        "sha256": "4ee0f2e8071657b40deaf6815ffb53798ead3704081ba4d33c39d4d0a6c922fb"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/mesh.h",
+        "bytes": 1840,
+        "sha256": "b87aa57416bf4cbe9a6c0ffb726cd0fcf2c02676ba1d6a85103a73d98d531b2a"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/metis_sort.cpp",
+        "bytes": 15323,
+        "sha256": "9f74e512a9ceb01abdd058afdf421953bf01fee58f8aa4a7a37e85d4633cf8dd"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/metis_sort.h",
+        "bytes": 94,
+        "sha256": "e5facb0a470f852fe93fa4a3a970f905eefea093ce3bc536bdc788f2fe11673a"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/node_edge_model.cpp",
+        "bytes": 1375,
+        "sha256": "9d43a9c8844f4d920e18259517e8dd9518847fd4c38816a793043a92de4fa1df"
+      },
+      {
+        "path": "baseline/MeshProcess/metis_partition/src/node_edge_model.h",
+        "bytes": 623,
+        "sha256": "fa13c3beaacdada87e6eede0fd0f6560858300e297b0f9507b09741d65b9173c"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_energy.h",
+        "bytes": 1350,
+        "sha256": "5bb0169286de1504c37ca3132e7af0b0d8369c94e0b9c04ef7b3f2745c817a88"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_jacobi_matrix.h",
+        "bytes": 5944,
+        "sha256": "8cb871d0d198c65e3a4897d5545ec34c0a5a9c167b8058f30af3963d2d36cded"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_sim_data.cu",
+        "bytes": 4004,
+        "sha256": "d4f5c41e47c0bf166759aae1cbb22f6441dc05e950abd424ae4c909eb1a17887"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_sim_data.h",
+        "bytes": 6755,
+        "sha256": "39e2ba652d24adc4a1390077af8b8ae77447294529c0fcc223e62e39697bd1aa"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system.cu",
+        "bytes": 37967,
+        "sha256": "cb6c3ed9cac64122a76bba8e8c3e9a9988a4c2899ac786d7146db800dd356cad"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system.h",
+        "bytes": 11303,
+        "sha256": "c40d93700d19bc55d8c1e017a36072e95565b0117624633cd230519bcbf81274"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu",
+        "bytes": 7065,
+        "sha256": "3b16ef6ed8a956166124c06b5246f97e08a09ef702e21716de90aca0e8cab1a9"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu",
+        "bytes": 2964,
+        "sha256": "f0cdbfab0dfddb88ff8d3cdb7dfb0d212586b50c7a8d934d49e752fa470be441"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu",
+        "bytes": 7292,
+        "sha256": "8622ff9a9fb97c9a7d56112f17265e98d911c182280d1886a24347ba6a4ae092"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu",
+        "bytes": 33832,
+        "sha256": "8838ccacc8b70a3b1d4c3dfe47ef48bb27c009e81c4e912c3d8a432a1194d407"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/step_forward.cu",
+        "bytes": 3892,
+        "sha256": "484765d237af130ba5a0162d154532163ee5cdba38d10fac9c5d308b333304ae"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_function/update_velocity.cu",
+        "bytes": 1887,
+        "sha256": "ada97dc0f641f280a28258d5a1433103df3b2a6049d769865575f5a40b9a193e"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/abd_system_parms.h",
+        "bytes": 515,
+        "sha256": "30ce99a06878dbcacfdb60a937255d1cd40daaa3a7af5f83a4ad2386ba53e52c"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/details/abd_energy.inl",
+        "bytes": 75035,
+        "sha256": "66e6adc346ce17c51092efe35f3ccff7b24648321323d9e5af60f542ea162fcd"
+      },
+      {
+        "path": "baseline/StiffGIPC/abd_system/details/abd_jacobi_matrix.inl",
+        "bytes": 8162,
+        "sha256": "422babedb38e18134144247cca64915df3faf926157d4969422fd413ea020e64"
+      },
+      {
+        "path": "baseline/StiffGIPC/app/benchmark_scenes.inl",
+        "bytes": 5195,
+        "sha256": "afea8caf40b2f5374d17d31868bb6d3367dc1370992334766ceb5a9eec88aacb"
+      },
+      {
+        "path": "baseline/StiffGIPC/app/gl_main.cu",
+        "bytes": 69126,
+        "sha256": "1273570708c222cdc188e9d95ced7f07d36efafabcd9610f2790e2117a4c4896"
+      },
+      {
+        "path": "baseline/StiffGIPC/collision/ACCD.cu",
+        "bytes": 28249,
+        "sha256": "b9c7ef6ce46e32313d9fabaaed4b397f626e527c8947d139ce925f600148acea"
+      },
+      {
+        "path": "baseline/StiffGIPC/collision/ACCD.cuh",
+        "bytes": 1804,
+        "sha256": "abde8441335005ed875bb77aa171fbbb4b47c694671a2b0f01990ecfe3039127"
+      },
+      {
+        "path": "baseline/StiffGIPC/collision/FrictionUtils.cuh",
+        "bytes": 17970,
+        "sha256": "e8c72359674ae1a7ebb34c6349fbc2d1460a1e69fc86db6fe629cce04d2d44a1"
+      },
+      {
+        "path": "baseline/StiffGIPC/collision/mlbvh.cu",
+        "bytes": 98032,
+        "sha256": "101e012d36320501b440b1b0224ec3eaffa7f0fc7dd88815024511321d915f75"
+      },
+      {
+        "path": "baseline/StiffGIPC/collision/mlbvh.cuh",
+        "bytes": 5593,
+        "sha256": "8e5457d3217cefcf6ad20ec52f1982758992dca4c5b3651a7a68817709ede528"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/GIPC.cu",
+        "bytes": 486280,
+        "sha256": "0a82376652ffe1387fb033abf2da94cc97932c16c8535203c2f39691c5130cf0"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/GIPC.cuh",
+        "bytes": 8814,
+        "sha256": "f5b9620f947dbfc8762371273495cd9eb9ad4e5d4490ae4f9e308017fb4e4367"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/GIPC_PDerivative.cuh",
+        "bytes": 221500,
+        "sha256": "0a044b885ed3f0c9a2e870b05903cb415c2aa0890c4765c7c7479f2d35ce6fe1"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/body_boundary_type.h",
+        "bytes": 103,
+        "sha256": "23b94c866964b29f969e243eaf889465bbf3f6d28b2001d0f22eb9ab3359bf1c"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/gipc_path.h",
+        "bytes": 337,
+        "sha256": "519bbe020dc0f5e6415a9f237d2f90a3694abd57a13afabd695ac2c99bb2e822"
+      },
+      {
+        "path": "baseline/StiffGIPC/core/gipc_system.cu",
+        "bytes": 2364,
+        "sha256": "721f13beb35be01907f57f667c22295e5ae689a460c757450e6e35702f63bb27"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_all.h",
+        "bytes": 400,
+        "sha256": "dfa3e64042343d3fff90411f4c35701c0080852d69e593af670b337791e7eb09"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_atomic.h",
+        "bytes": 766,
+        "sha256": "52754e9df742937f98609c29263387601dba7ccd09e7cc98323e803af6b2994c"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_buffer_view.h",
+        "bytes": 20951,
+        "sha256": "4f8d4c2ce51fd2bb800c11b6f5965954ba2b7f6801a72d2d126f357f252ff632"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_cub_wrappers.h",
+        "bytes": 8395,
+        "sha256": "a18c5d5c26aa0b87e9f713e4838b8dbee3ce09fe3e65a62fba836c2c2fd33cf0"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_debug.h",
+        "bytes": 1674,
+        "sha256": "3146663a760b1738a57f6907e45f7ad3ba16956feae0ddbc4d9d0a3868ee0894"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_def.h",
+        "bytes": 736,
+        "sha256": "d4db23b958cec3de66dd825ae208b9a0628d2c71818f5e46e9cbf9d2103c45c3"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_dense_vector.h",
+        "bytes": 9991,
+        "sha256": "286a9b9c53512d03143fd1925a3663611f9e3fc2e4407ecb2baf7632bed1cd02"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_eigen.h",
+        "bytes": 6795,
+        "sha256": "ef3d0ca59e0e5a2dff4125fcfd2cf59d5fb973c8a4a763aeaa131d191201bb60"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_linear_system.h",
+        "bytes": 5206,
+        "sha256": "589182bcbeaf8a0ae0060d45d915961a4e909be3f84561bf42d57b3f694bf7d5"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_tools.h",
+        "bytes": 2783,
+        "sha256": "6448f7db6eca41dff622e10c3315920fb23907185499ead2f1cbacdaaae9679d"
+      },
+      {
+        "path": "baseline/StiffGIPC/cuda_tools/cuda_vec_utils.h",
+        "bytes": 235,
+        "sha256": "f82624dac7fd1ff136b2ac2aa848fdfb5753eeae0b9b3c456b9406951c1f1b77"
+      },
+      {
+        "path": "baseline/StiffGIPC/fem/device_fem_data.cu",
+        "bytes": 3906,
+        "sha256": "f7fa37bc8b80b51a3d36d7e61167dc98e21c128bee6ae75c8cb677aea080f77e"
+      },
+      {
+        "path": "baseline/StiffGIPC/fem/device_fem_data.cuh",
+        "bytes": 2982,
+        "sha256": "e772fde35c81d1401cba1915a233eeeab8cbbb680b217adf9685f636330c342c"
+      },
+      {
+        "path": "baseline/StiffGIPC/fem/femEnergy.cu",
+        "bytes": 111083,
+        "sha256": "bdbedffc0414f9b4692f2bef325f622234eef84ee39e66ee52861d3a28fb5df1"
+      },
+      {
+        "path": "baseline/StiffGIPC/fem/femEnergy.cuh",
+        "bytes": 15041,
+        "sha256": "76f1895483cc6013fb9fcdf6470d3167b7b728882cbc9ae42a1f903639e0f692"
+      },
+      {
+        "path": "baseline/StiffGIPC/fem/fem_parameters.h",
+        "bytes": 1210,
+        "sha256": "fe982f3f334cd76c41576c827c00af814590377d35d61ec329cf962974f2ff10"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/abd_fem_count_info.h",
+        "bytes": 1906,
+        "sha256": "ee0e96958fcbed78eb6c1f20e145ae1d294d9e9a71c6f197cafe30b101512f76"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/body_type.h",
+        "bytes": 86,
+        "sha256": "d69b67728a86bf5063c8e90e220a8a82ec860535e352f613626b1a0095546380"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/gipc.h",
+        "bytes": 506,
+        "sha256": "f4d6cd548ce448d82afecfc80ce1278bbc3165fe462533e3471c40d57fd79554"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/statistics.cpp",
+        "bytes": 253,
+        "sha256": "9c155c787fcdbcaa464b5d345ea9a866cffc15fcbf0e7e5eb86481577bceacfe"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/statistics.h",
+        "bytes": 635,
+        "sha256": "f80f907893d99bd924ad8136e641a8d806a7b9b803cdc1f80c325862e77bda16"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/tet_local_info.h",
+        "bytes": 3701,
+        "sha256": "ab8d4cb8e17e73f687fd26f79d20952f7bcd9c47038985f0614edd1e29c0eaea"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/type_define.h",
+        "bytes": 1325,
+        "sha256": "3477f1aa8c90c4e0a6fd56abd1a11880254ea33178fcd8fb2cadae50b2943dc5"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/cuda_vec_to_eigen.h",
+        "bytes": 1908,
+        "sha256": "3ddc904360b42c8246f197f70cf64e56bb100e8adcfab70e86ad24c82716e720"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/details/cuda_vec_to_eigen.inl",
+        "bytes": 784,
+        "sha256": "2b3e35068437da45122758deeac4cc51def5a2748e2905cc7a4be04fd2ab34c5"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/details/print_buffer.inl",
+        "bytes": 2668,
+        "sha256": "97a1c8848ab964bcc1b0f096b2c43710b3000da517d1a52b740124a26a16771c"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/host_log.h",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/json.h",
+        "bytes": 106,
+        "sha256": "46ec5962e9e55c72c5baafc2671647eaf218d85789aecc9edc26d4970e9a1432"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/math.h",
+        "bytes": 1976,
+        "sha256": "12d3ad4e8a699643e9144999c26a7a2f431b180d44b046eaebc5219b2587cd20"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/details/fast_segmental_reduce.inl",
+        "bytes": 10411,
+        "sha256": "f51d9c1ec462ef41a0e5a616fd31f157e09fde4aafaa9da31e46ea14c1032fc0"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/details/scatter.inl",
+        "bytes": 1893,
+        "sha256": "3de6bdee3d6cc590a0bbdbcee3b82f23fbd9ed25c8a3691a01855ac6093f4eed"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/details/transform.inl",
+        "bytes": 2602,
+        "sha256": "9ecf89bfaf0afb04b3490d25cbdd5bf9f262df24413e604671ab960187d42ee8"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/details/unique_reduce.inl",
+        "bytes": 3397,
+        "sha256": "d81c8f24d807de3e9178eee3a335f827200663066f06fb7f0dfe4bbc5c2a31f8"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/fast_segmental_reduce.h",
+        "bytes": 1345,
+        "sha256": "d7431a06935d85e7d7f41e978852908eab324a86da811204cc10326b8b2b5f54"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/scatter.h",
+        "bytes": 436,
+        "sha256": "d75b4b38cfc3ebd2cc4a586352e524b6f12bf170cb8e079116b084a2ec300ed6"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/transform.h",
+        "bytes": 623,
+        "sha256": "34ebafa04a596a112db8a25c6ea31ee8fe2eaed99fdc03956b11dac3300c9d3a"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/parallel_algorithm/unique_reduce.h",
+        "bytes": 838,
+        "sha256": "07b1cbecbbecc142108692d785cf0bb935b01a7b1041ea03a2e534004bcf4ea2"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/print_buffer.h",
+        "bytes": 700,
+        "sha256": "2839ce6aee5f3f792bac5c2d810a5058380f740dec834213659cba4624ed78da"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+        "bytes": 4880,
+        "sha256": "c18625f57cb5718bfa75d34b4ef7b2405fd9990abe7b6c82bc141383134edff8"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/simple_scene_importer.h",
+        "bytes": 1108,
+        "sha256": "77b379470dc2c1eac17e18c9f03e899ebaf06a87a64d9286b28dabe7729fffc5"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/timer.cpp",
+        "bytes": 9233,
+        "sha256": "936386e95c67a229fffbc9accb4d1e2d682046f271246b39e782b2ee83325c7e"
+      },
+      {
+        "path": "baseline/StiffGIPC/gipc/utils/timer.h",
+        "bytes": 3467,
+        "sha256": "580be914d34d1a782bfccfd91c75e17879fc3f993ed5b4b5e110116d2e207743"
+      },
+      {
+        "path": "baseline/StiffGIPC/io/load_mesh.cpp",
+        "bytes": 46570,
+        "sha256": "218c3bd24c35ee2c914b1e837835b469d1880be5a016ce0320868a2f8f69e0d6"
+      },
+      {
+        "path": "baseline/StiffGIPC/io/load_mesh.h",
+        "bytes": 6558,
+        "sha256": "431848e78803854bf01567dbfbc5cb4e9d97ba514e3ee54f6f10ec063fdaa73f"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/global_linear_system.cu",
+        "bytes": 6752,
+        "sha256": "db5ef8a3be5aba7ba8c4f4d8a3190bb09c65ba24c95a62fa9f8816b5fdc07f50"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/global_linear_system.h",
+        "bytes": 3596,
+        "sha256": "5372c57ecab24e4a770c70c91ed4b3708c4d355d5bde9b2ccc78758b64bf81d6"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/global_matrix.cu",
+        "bytes": 1760,
+        "sha256": "6a6305b17c40ab8afcf52d95a51fe89c6613c8bade38f8614d04d17f9140c30e"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/global_matrix.h",
+        "bytes": 11403,
+        "sha256": "5407c30d009e21c40136091ebc30c975edba4a4b7194499c259f826081bc06d4"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu",
+        "bytes": 824,
+        "sha256": "0992e5887e63009b644d2850933ebd2297fdabf5fb31687cbec556360ca76658"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/i_linear_system_solver.h",
+        "bytes": 2358,
+        "sha256": "c6fa5bf2d76bb5029d3e820ec9f83312e42f599edb2e0506bd70997899d021f5"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/i_preconditioner.cu",
+        "bytes": 4360,
+        "sha256": "091348a912474f7c3181f03c139630f569bc5772058b290a598d2937efff9bc1"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/i_preconditioner.h",
+        "bytes": 3259,
+        "sha256": "f09b2061928c5b45967abbd14157d57ae50db046495a08e6221ea4d02bca3b17"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/linear_subsystem.cu",
+        "bytes": 1966,
+        "sha256": "ccaf95fe388f17975b75b8b15bb1ed40703ef452db09f56473a33973688326ca"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/linear_system/linear_subsystem.h",
+        "bytes": 5380,
+        "sha256": "e72517bc23c4c4668dadadae155c3aa9981c2a6543f87d47dbfcf81270be7a09"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu",
+        "bytes": 1860,
+        "sha256": "e1cd83f0074abdd0f4680f6bfc013715db6a820259a8a805cafce976f03b0a4d"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/abd_preconditioner.h",
+        "bytes": 625,
+        "sha256": "551a79cea46c7efb2e879466a65f8d212cb793f6ff9dfa120d25bc6fd1342f53"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu",
+        "bytes": 3404,
+        "sha256": "83ae9b6928471da1473fca9d2bff720b89bc9c842a47b357449a1c8a7ac4ce59"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/diag_preconditioner.h",
+        "bytes": 533,
+        "sha256": "0780985e1e62261b7959f20f72a625c172251162592b5ce373a3e35ebf3c49a9"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu",
+        "bytes": 1640,
+        "sha256": "c700847fbd5faad5ad88580a9265167b4fa5b56780d929e9de565ea824da59aa"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.h",
+        "bytes": 1071,
+        "sha256": "8626ea5a3426a0c63d3adb583e9ba5295fed5269df9eb34447594375cd5927a8"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/solver/pcg_solver.cu",
+        "bytes": 7137,
+        "sha256": "0390b6b789213159b0d2bb1cc49487c001fed00f1fdeebbf67c520cdfd326347"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/solver/pcg_solver.h",
+        "bytes": 1237,
+        "sha256": "69d408e2d6414691e6c73624e5ab8ed345ac3f49aa8de7f73dd404271b8dcaaa"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu",
+        "bytes": 2966,
+        "sha256": "96892a68025d0222d7dc5324a5d5fab3c7dafffc3c9e16716600c6053ec47c29"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.h",
+        "bytes": 945,
+        "sha256": "0140d341440ae99c1dc51705dd0fe622dfb3c16da71550753ef3392fadc607f9"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu",
+        "bytes": 4774,
+        "sha256": "43eb6a4d92f247a5e905eb7a154a59d5db46683f973a440fd56dcce370ac4be4"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.h",
+        "bytes": 1139,
+        "sha256": "888e7d5225a78ff2ebbf6da188f652622604900ad0107ed088b7cc0516c82445"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/utils/converter.cu",
+        "bytes": 14031,
+        "sha256": "f0c7a3af66dfa7e0befa5fbc63855ed01222242f24276d454d2e089951a5d13c"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/utils/converter.h",
+        "bytes": 1333,
+        "sha256": "1312437621380de2eb95818a39eb086992705f4c666a229e88924ab6237e7a62"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/utils/spmv.cu",
+        "bytes": 4357,
+        "sha256": "be5629ce3c25790d39913939bf934c04e6a1ebb9d89439a55ce7011b5c6d142d"
+      },
+      {
+        "path": "baseline/StiffGIPC/linear_system/utils/spmv.h",
+        "bytes": 714,
+        "sha256": "67fdc573f54a3b0b0e09ff260682979cfc93dd2b1c92374c219cd4a1e5f01479"
+      },
+      {
+        "path": "baseline/StiffGIPC/math/QRSVD.hpp",
+        "bytes": 10177,
+        "sha256": "623976e7481e6a66f5627a0ce8ee6cfd5a4197c543bc6f7f38941def9c986e09"
+      },
+      {
+        "path": "baseline/StiffGIPC/math/eigen_data.h",
+        "bytes": 2351,
+        "sha256": "032609328e1d102de120da80cd92224355e983969cc9262c4a05a128590ec40b"
+      },
+      {
+        "path": "baseline/StiffGIPC/math/givens.hpp",
+        "bytes": 7002,
+        "sha256": "ec06b4bebbd04042ce0dcfc0617748cca46139ea4039d0537da829be5ae717d0"
+      },
+      {
+        "path": "baseline/StiffGIPC/math/gpu_eigen_libs.cu",
+        "bytes": 53228,
+        "sha256": "21f6cc9ccbfe79f8ac5d68f4df2fc3301d643d7056e243c60187515953b1a8da"
+      },
+      {
+        "path": "baseline/StiffGIPC/math/gpu_eigen_libs.cuh",
+        "bytes": 15577,
+        "sha256": "224e70a52712f26a55c465f98cb9ddcc8108e680d61b2c97c0bfb85b4e2cc08a"
+      },
+      {
+        "path": "baseline/StiffGIPC/solver/MASPreconditioner.cu",
+        "bytes": 87320,
+        "sha256": "1364bdb7082c7f9755ac59292d828a2a9f39d4d141b489065ddfb9fe58a1c335"
+      },
+      {
+        "path": "baseline/StiffGIPC/solver/MASPreconditioner.cuh",
+        "bytes": 5778,
+        "sha256": "845bc4c9362b35aaafcfad7b902c2d1f93f8bd8a8af83362772035ecf183ba84"
+      },
+      {
+        "path": "baseline/StiffGIPC/solver/PCG_SOLVER.cu",
+        "bytes": 1267,
+        "sha256": "946e0407d13459fa62cfd5c83d99185a09acb79390c97a36bbbde5cc731fc21f"
+      },
+      {
+        "path": "baseline/StiffGIPC/solver/PCG_SOLVER.cuh",
+        "bytes": 904,
+        "sha256": "8c73f99b35e01c2d0a6ca5e8bac80088ca9778c88f4d721b5f810bbc74c9353b"
+      }
+    ],
+    "source_digest": "e4d4fa3adc81312a943a281ee81722f1b686706dfe79de78488c3cd695eb87ab",
+    "exe_path": "build/base/gipc",
+    "exe_sha256": "547becfaac618a9b51c549f245135ab941eb8d49d081467a70e07e27db625260",
+    "build_evidence": [
+      {
+        "path": "build/base/.ninja_log",
+        "bytes": 12285,
+        "sha256": "b8f4a32872410ca73e8bde30c3f133847b1fb054cc0bd79cd0d4ef96e6454353"
+      },
+      {
+        "path": "build/base/CMakeCache.txt",
+        "bytes": 35491,
+        "sha256": "e512d3b2edc51e696737e063ea94f1cb8955ecbddf84c1b572503751d79a500b"
+      },
+      {
+        "path": "build/base/CMakeFiles/rules.ninja",
+        "bytes": 5424,
+        "sha256": "6cbbe16c7d2534b40334ef48d170f8c834f11bb41d7613c77f690c3020f11d43"
+      },
+      {
+        "path": "build/base/build.ninja",
+        "bytes": 168965,
+        "sha256": "6cad43815d7a6ca260f964363e9c1ea12aba3e336fe9b33ea47ce34798ac8b5e"
+      },
+      {
+        "path": "build/base/compile_commands.json",
+        "bytes": 101009,
+        "sha256": "583f6767c54fa14de5f9d124d746ac9aa82f8a7805538c6f927e38d42a3ef3b2"
+      },
+      {
+        "path": "build_logs/base/build.log",
+        "bytes": 37854,
+        "sha256": "bffbf5b0ca49ac1195804463a5c0f6b9343907d39dfdd3fcdb775ed44e8ff2c5"
+      },
+      {
+        "path": "build_logs/base/configure.log",
+        "bytes": 2201,
+        "sha256": "67e482a71c78e5467670691d976892c006ea9c1922b88b995f3006bc5b0ede0e"
+      }
+    ],
+    "compile_source_count": 35
+  },
+  "quality_certified": false,
+  "performance_certified": false,
+  "solver_commit": "3d8c15e"
+}

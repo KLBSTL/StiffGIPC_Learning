@@ -1,0 +1,11 @@
+{
+  "pid": 5649,
+  "build_pid": 2760,
+  "planned_runs": 21,
+  "recorded_runs": 0,
+  "automatic_retry": false,
+  "total_timeout_seconds": 6000,
+  "stage": "stopped",
+  "elapsed_seconds": 0.00026289094239473343,
+  "error": "ValueError: Build owner exited before identity was produced"
+}

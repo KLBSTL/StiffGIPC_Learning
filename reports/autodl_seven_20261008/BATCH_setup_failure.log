@@ -1,0 +1,12 @@
+{"pid": 5649, "build_pid": 2760, "planned_runs": 21, "recorded_runs": 0, "automatic_retry": false, "total_timeout_seconds": 6000, "stage": "waiting_for_build", "elapsed_seconds": 4.732981324195862e-06}
+{"pid": 5649, "build_pid": 2760, "planned_runs": 21, "recorded_runs": 0, "automatic_retry": false, "total_timeout_seconds": 6000, "stage": "stopped", "elapsed_seconds": 0.00026289094239473343, "error": "ValueError: Build owner exited before identity was produced"}
+Traceback (most recent call last):
+  File "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/tools/seven_eval/batch.py", line 65, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/tools/seven_eval/batch.py", line 41, in main
+    suite.require(Path(f'/proc/{a.build_pid}/cmdline').exists(),'Build owner exited before identity was produced')
+  File "/root/autodl-tmp/stiffgipc_seven_20261008_3d8c15e/tools/bench/linux_runner.py", line 24, in require
+    if not value: raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Build owner exited before identity was produced
