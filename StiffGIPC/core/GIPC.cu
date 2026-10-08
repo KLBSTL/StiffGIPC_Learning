@@ -28,6 +28,7 @@
 #include <gipc/utils/timer.h>
 
 #include <cuda_tools/cuda_all.h>
+#include <cuda_tools/scoped_cuda_events.h>
 #include <core/accel_features.h>
 #include <cub/device/device_reduce.cuh>
 #include <cub/block/block_reduce.cuh>
@@ -35,6 +36,7 @@
 #include <solver/ipc_options.h>
 #include <solver/ipc_budget.h>
 #include <solver/ipc_residual_controller.h>
+#include <solver/line_search_acceptance.h>
 #include <optional>
 #include <solver/ipc_residual.inl>
 using namespace Eigen;
@@ -11101,9 +11103,33 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 {
     gipc::CostScope cost("ipc.line_search");
     wait_device();
-    bool   stopped       = false;
     int energy_evaluations=cached_energy ? 0 : 1;
+    int numOfLineSearch = 0;
+    int numOfIntersect = 0;
+    int insectNum = 0;
+    double c1m = 0.0;
+    double testingE = std::numeric_limits<double>::quiet_NaN();
+    bool trial_energy_current = false;
     double lastEnergyVal = cached_energy ? *cached_energy : computeEnergy(TetMesh);
+    auto fail_line_search=[&](const char* reason,double threshold) {
+        auto& observation=gipc::Statistics::instance().at_current_frame()["newton"].back();
+        observation["line_search_failure"]={
+            {"reason",reason},{"baseline_energy",lastEnergyVal},{"trial_energy",testingE},
+            {"baseline_finite",std::isfinite(lastEnergyVal)},{"trial_finite",std::isfinite(testingE)},
+            {"trial_energy_matches_state",trial_energy_current},{"acceptance_threshold",threshold},
+            {"alpha",alpha},{"cfl_alpha",cfl_alpha},{"energy_backtracks",numOfLineSearch},
+            {"intersection_backtracks",numOfIntersect},{"energy_evaluations",energy_evaluations},
+            {"backtrack_budget",gipc::ipc_line_search_backtrack_budget}};
+        gipc::ipc_contact_pool_end();
+        std::cerr << "IPC line search failure: " << reason << ", baseline=" << lastEnergyVal
+                  << ", trial=" << testingE << ", threshold=" << threshold
+                  << ", alpha=" << alpha << ", energy_backtracks=" << numOfLineSearch
+                  << ", intersection_backtracks=" << numOfIntersect << std::endl;
+        throw std::runtime_error(std::string("IPC line search failure: ")+reason);
+    };
+    auto initial_check=gipc::check_line_search_acceptance(lastEnergyVal,lastEnergyVal,c1m,alpha,0);
+    if(initial_check.action==gipc::LineSearchAction::fail)
+        fail_line_search(initial_check.reason,initial_check.threshold);
     if(cached_energy && std::getenv("GIPC_AUDIT_ENERGY") && std::getenv("GIPC_AUDIT_ENERGY")[0]=='1')
     {
         double reference=computeEnergy(TetMesh);
@@ -11111,12 +11137,24 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
         if(!std::isfinite(relative)||relative>1e-10)throw std::runtime_error("Reused/scalar energy mismatch");
     }
 
-    double c1m         = 0.0;
     double armijoParam = 0;
     if(armijoParam > 0.0)
     {
         c1m += armijoParam * Energy_Add_Reduction_Algorithm(3, TetMesh);
     }
+    initial_check=gipc::check_line_search_acceptance(lastEnergyVal,lastEnergyVal,c1m,alpha,0);
+    if(initial_check.action==gipc::LineSearchAction::fail)
+        fail_line_search(initial_check.reason,initial_check.threshold);
+
+    auto half_step=[&](bool intersection) {
+        double next=0;
+        if(!gipc::line_search_half_step(alpha,
+            intersection?cfl_alpha:std::numeric_limits<double>::infinity(),next))
+            fail_line_search(intersection?"intersection_step_no_progress":"energy_step_no_progress",
+                lastEnergyVal+c1m*alpha);
+        alpha=next;
+        trial_energy_current=false;
+    };
 
     CUDA_SAFE_CALL(cudaMemcpy(TetMesh.temp_double3Mem,
                               TetMesh.vertexes,
@@ -11134,6 +11172,7 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
     auto evaluate_trial_energy=[&]() {
         ++energy_evaluations;
         const double energy=computeEnergy(TetMesh);
+        trial_energy_current=true;
         const auto reference=gipc::ipc_contact_pool_reference();
         if(!reference.valid)return energy;
         gipc::CostScope audit_cost("collision.contact_pool.energy_audit");
@@ -11194,18 +11233,14 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 
     buildBVH();
 
-    int numOfIntersect = 0;
-    int insectNum      = 0;
-
     bool checkInterset = true;
 
     while(checkInterset && isIntersected(TetMesh))
     {
         printf("type 0 intersection happened 0:  %d\n", insectNum);
         insectNum++;
-        alpha /= 2.0;
+        half_step(true);
         numOfIntersect++;
-        alpha = std::min(cfl_alpha, alpha);
         step_forward(TetMesh, alpha, false);
         gipc::ipc_contact_pool_set_trial(alpha);
         buildBVH();
@@ -11214,53 +11249,61 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 
     buildCP();
 
-    double testingE = evaluate_trial_energy();
-
-    int    numOfLineSearch = 0;
+    testingE = evaluate_trial_energy();
     double LFStepSize      = alpha;
 
     std::cout.precision(18);
     constexpr int report_line_search_threshold = 8;
+    static_assert(gipc::ipc_line_search_backtrack_budget==report_line_search_threshold+1);
 
-    while((testingE > lastEnergyVal + c1m * alpha) && numOfLineSearch <= report_line_search_threshold)
+    for(;;)
     {
-        //std::cout << "[" << numOfLineSearch << "]   testE:    " << testingE
-        //          << "      lastEnergyVal:        " << lastEnergyVal << std::endl;
-        alpha /= 2.0;
-        ++numOfLineSearch;
-
-        step_forward(TetMesh, alpha, false);
-        gipc::ipc_contact_pool_set_trial(alpha);
-        buildBVH();
-        buildCP();
-        testingE = evaluate_trial_energy();
-    }
-    if(numOfLineSearch > report_line_search_threshold)
-        printf("!!!!!!!!!!!!!!!!!!!linesearch number is a bit high, lineSearchCount=%d !!!!!!!!!!!!!!!!!!!!!!\n",
-               numOfLineSearch);
-
-
-    if(alpha < LFStepSize)
-    {
-        bool needRecomputeCS = false;
-        while(checkInterset && isIntersected(TetMesh))
+        auto acceptance=gipc::check_line_search_acceptance(lastEnergyVal,testingE,c1m,alpha,numOfLineSearch);
+        if(acceptance.action==gipc::LineSearchAction::fail)
+            fail_line_search(acceptance.reason,acceptance.threshold);
+        while(acceptance.action==gipc::LineSearchAction::backtrack)
         {
-            printf("type 1 intersection happened 1:  %d\n", insectNum);
-            insectNum++;
-            alpha /= 2.0;
-            numOfIntersect++;
-            alpha = std::min(cfl_alpha, alpha);
-
+            half_step(false);
+            ++numOfLineSearch;
             step_forward(TetMesh, alpha, false);
             gipc::ipc_contact_pool_set_trial(alpha);
             buildBVH();
-            needRecomputeCS = true;
-        }
-        if(needRecomputeCS)
-        {
             buildCP();
-            if(accepted_energy) testingE=evaluate_trial_energy();
+            testingE = evaluate_trial_energy();
+            acceptance=gipc::check_line_search_acceptance(lastEnergyVal,testingE,c1m,alpha,numOfLineSearch);
+            if(acceptance.action==gipc::LineSearchAction::fail)
+                fail_line_search(acceptance.reason,acceptance.threshold);
         }
+        if(numOfLineSearch > report_line_search_threshold)
+            printf("!!!!!!!!!!!!!!!!!!!linesearch number is a bit high, lineSearchCount=%d !!!!!!!!!!!!!!!!!!!!!!\n",
+                   numOfLineSearch);
+
+        if(alpha < LFStepSize)
+        {
+            bool needRecomputeCS = false;
+            while(checkInterset && isIntersected(TetMesh))
+            {
+                printf("type 1 intersection happened 1:  %d\n", insectNum);
+                insectNum++;
+                half_step(true);
+                numOfIntersect++;
+                step_forward(TetMesh, alpha, false);
+                gipc::ipc_contact_pool_set_trial(alpha);
+                buildBVH();
+                needRecomputeCS = true;
+            }
+            if(needRecomputeCS)
+            {
+                buildCP();
+                // A changed safe state needs its own energy even when reuse is off.
+                testingE=evaluate_trial_energy();
+                acceptance=gipc::check_line_search_acceptance(lastEnergyVal,testingE,c1m,alpha,numOfLineSearch);
+                if(acceptance.action==gipc::LineSearchAction::fail)
+                    fail_line_search(acceptance.reason,acceptance.threshold);
+                if(acceptance.action==gipc::LineSearchAction::backtrack)continue;
+            }
+        }
+        break;
     }
 
     if(accepted_energy) *accepted_energy=testingE;
@@ -11273,7 +11316,9 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 
     gipc::ipc_contact_pool_end();
 
-    return stopped;
+    // The legacy bool API is retained; callers never used its false result.
+    // Invalid acceptance exits by exception, never by a success return.
+    return false;
 }
 
 
@@ -11406,13 +11451,10 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         totalCollisionPairs += h_cpNum[0];
         maxCOllisionPairNum =
             (maxCOllisionPairNum > h_cpNum[0]) ? maxCOllisionPairNum : h_cpNum[0];
-        cudaEvent_t start, end0, end1, end2, end3, end4;
-        cudaEventCreate(&start);
-        cudaEventCreate(&end0);
-        cudaEventCreate(&end1);
-        cudaEventCreate(&end2);
-        cudaEventCreate(&end3);
-        cudaEventCreate(&end4);
+        gipc::ScopedCudaEvents<6> timing_events;
+        const auto start=timing_events[0], end0=timing_events[1],
+                   end1=timing_events[2], end2=timing_events[3],
+                   end3=timing_events[4], end4=timing_events[5];
 
         //printf("\n\n\ncollision num  %d\n\n\n", h_cpNum[0]+h_gpNum);
 
@@ -11449,7 +11491,6 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             cudaEventRecord(end0);cudaEventSynchronize(end0);
             float terminal_assembly=0;cudaEventElapsedTime(&terminal_assembly,start,end0);
             stats_at_current_frame["ipc_exit_assembly_ms"]=terminal_assembly;
-            for(auto event:{start,end0,end1,end2,end3,end4})cudaEventDestroy(event);
             stats_at_current_frame["newton"].back()["exit"]="movement";
             stats_at_current_frame["newton_exit"]="movement";
             break;
@@ -11461,7 +11502,6 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             cudaEventRecord(end0);cudaEventSynchronize(end0);
             float terminal_assembly=0;cudaEventElapsedTime(&terminal_assembly,start,end0);
             stats_at_current_frame["ipc_exit_assembly_ms"]=terminal_assembly;
-            for(auto event:{start,end0,end1,end2,end3,end4})cudaEventDestroy(event);
             break;
         }
         cudaEventRecord(end0);
@@ -11509,7 +11549,7 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
 
         const double old_kappa=Kappa;
         bool reuse_energy=gipc_accel_feature("GIPC_ENERGY_REUSE");
-        bool isStop = lineSearch(TetMesh, alpha, alpha_CFL,
+        lineSearch(TetMesh, alpha, alpha_CFL,
             reuse_energy && energy_valid ? &accepted_energy : nullptr,
             reuse_energy ? &accepted_energy : nullptr);
 
@@ -11542,12 +11582,6 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         //       time22,
         //       time33,
         //       time44);
-        (cudaEventDestroy(start));
-        (cudaEventDestroy(end0));
-        (cudaEventDestroy(end1));
-        (cudaEventDestroy(end2));
-        (cudaEventDestroy(end3));
-        (cudaEventDestroy(end4));
         totalTimeStep += alpha;
         if(k + 1 >= Kmin)
         {
@@ -11678,9 +11712,8 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
     gipc::CostFlushAtExit frame_cost_flush;
     gipc::CostScope frame_cost("ipc.physical_frame");
     //double animation_fullRate = 0;
-    cudaEvent_t start, end0;
-    cudaEventCreate(&start);
-    cudaEventCreate(&end0);
+    gipc::ScopedCudaEvents<2> timing_events;
+    const auto start=timing_events[0], end0=timing_events[1];
     double alpha = 1;
     cudaEventRecord(start);
     //    if(isRotate&&total_Frames*IPC_dt>=2.2){

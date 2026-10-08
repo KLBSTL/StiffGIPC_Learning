@@ -33,8 +33,7 @@ __global__ void warp_reduce_sym_spmv_kernel(Float            a,
 {
     using WarpReduceFloat = cub::WarpReduce<Float, 32>;
     auto global_thread_id = blockDim.x * blockIdx.x + threadIdx.x;
-    if(global_thread_id >= triplet_count)
-        return;
+    const bool valid = global_thread_id < triplet_count;
     auto thread_id_in_block = threadIdx.x;
     auto warp_id            = thread_id_in_block / 32;
     auto lane_id            = thread_id_in_block & (32 - 1);
@@ -43,15 +42,16 @@ __global__ void warp_reduce_sym_spmv_kernel(Float            a,
 
     int     prev_i = -1;
     int     i      = -1;
-    char    flags;
-    Vector3 vec;
+    char    flags = 1;  // Invalid lanes delimit the last real segment.
+    Vector3 vec = Vector3::Zero();
 
     // set the previous row index
-    if(global_thread_id > 0)
+    if(valid && global_thread_id > 0)
     {
         prev_i = rows[global_thread_id - 1];
     }
 
+    if(valid)
     {
         i                = rows[global_thread_id];
         auto j           = cols[global_thread_id];
@@ -65,19 +65,20 @@ __global__ void warp_reduce_sym_spmv_kernel(Float            a,
         }
     }
 
-    if((lane_id == 0) || (prev_i != i))
-        flags = 1;
-    else
-        flags = 0;
+    if(valid)
+        flags = (lane_id == 0) || (prev_i != i);
 
+    // CUB's 32-lane collective requires every lane, including the tail.
     vec.x() = WarpReduceFloat(temp_storage_float[warp_id])
                   .HeadSegmentedReduce(vec.x(), flags, cudatool::Plus<Float>{});
+    __syncwarp();
     vec.y() = WarpReduceFloat(temp_storage_float[warp_id])
                   .HeadSegmentedReduce(vec.y(), flags, cudatool::Plus<Float>{});
+    __syncwarp();
     vec.z() = WarpReduceFloat(temp_storage_float[warp_id])
                   .HeadSegmentedReduce(vec.z(), flags, cudatool::Plus<Float>{});
 
-    if(flags)
+    if(valid && flags)
     {
         auto seg_y  = y.segment<3>(i * 3);
         auto result = a * vec;

@@ -1,0 +1,55 @@
+cmake_minimum_required(VERSION 3.19)
+if(NOT EXISTS "${GIPC_BINARY}" OR NOT DEFINED OUTPUT_ROOT)
+    message(FATAL_ERROR "Missing binary/output root")
+endif()
+if(NOT FIXTURE_CASE MATCHES "^(zero_alpha|nan_alpha|nonfinite_baseline|report_write_failure)$")
+    message(FATAL_ERROR "Unknown failure case")
+endif()
+# Separate attempts preserve previous failure evidence on repeated CTest runs.
+string(RANDOM LENGTH 12 ALPHABET 0123456789abcdef _attempt)
+set(_root "${OUTPUT_ROOT}/${FIXTURE_CASE}_${_attempt}")
+file(MAKE_DIRECTORY "${_root}")
+set(_output "${_root}/output")
+set(_mode "${FIXTURE_CASE}")
+if(FIXTURE_CASE STREQUAL "report_write_failure")
+    set(_mode zero_alpha)
+    file(MAKE_DIRECTORY "${_output}")
+    # Force the ofstream open to fail without relying on OS permissions.
+    file(MAKE_DIRECTORY "${_output}/stats.json")
+endif()
+execute_process(COMMAND "${CMAKE_COMMAND}" -E env
+    "GIPC_LINE_SEARCH_FAILURE_FIXTURE=${_mode}"
+    "GIPC_OUTPUT_PATH=${_output}"
+    "GIPC_COST_TRACE="
+    "${GIPC_BINARY}"
+    RESULT_VARIABLE _exit OUTPUT_FILE "${_root}/stdout.log"
+    ERROR_FILE "${_root}/stderr.log" TIMEOUT 90)
+file(READ "${_root}/stderr.log" _stderr)
+if(NOT "${_exit}" STREQUAL "4" OR NOT _stderr MATCHES "GIPC controlled failure: IPC line search failure:")
+    message(FATAL_ERROR "Expected controlled exit 4, got ${_exit}; evidence: ${_root}")
+endif()
+if(FIXTURE_CASE STREQUAL "report_write_failure")
+    if(NOT _stderr MATCHES "GIPC failure report could not be saved:")
+        message(FATAL_ERROR "Persistence error was swallowed; evidence: ${_root}")
+    endif()
+else()
+    file(READ "${_output}/stats.json" _report)
+    string(JSON _reason GET "${_report}" frames 0 newton 0 line_search_failure reason)
+    string(JSON _frame GET "${_report}" failure frame)
+    string(JSON _message GET "${_report}" failure message)
+    string(JSON _evaluations GET "${_report}" frames 0 newton 0 line_search_failure energy_evaluations)
+    string(JSON _backtracks GET "${_report}" frames 0 newton 0 line_search_failure energy_backtracks)
+    string(JSON _trial_current GET "${_report}" frames 0 newton 0 line_search_failure trial_energy_matches_state)
+    string(JSON _trial GET "${_report}" frames 0 newton 0 line_search_failure trial_energy)
+    if(FIXTURE_CASE STREQUAL "nonfinite_baseline")
+        set(_expected nonfinite_baseline_energy)
+    else()
+        set(_expected invalid_alpha)
+    endif()
+    if(NOT _reason STREQUAL _expected OR NOT _message STREQUAL "IPC line search failure: ${_expected}"
+       OR NOT "${_frame}" STREQUAL "0" OR NOT "${_evaluations}" STREQUAL "0"
+       OR NOT "${_backtracks}" STREQUAL "0" OR _trial_current OR NOT _trial STREQUAL "")
+        message(FATAL_ERROR "Wrong failure record; evidence: ${_root}")
+    endif()
+endif()
+message(STATUS "${FIXTURE_CASE}: controlled exit and diagnostic checks passed; evidence: ${_root}")

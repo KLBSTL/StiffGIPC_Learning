@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)    
+cmake_minimum_required(VERSION 3.19)
 # support relative path, cuda_std_17, archive manipulation
 
 # project meta
@@ -152,6 +152,25 @@ target_compile_options(diag_fused_update_tests PRIVATE
 set_target_properties(diag_fused_update_tests PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 enable_testing()
 add_test(NAME diag_fused_update_equivalence COMMAND diag_fused_update_tests)
+add_executable(sym_spmv_tests
+    tests/sym_spmv_tests.cu
+    StiffGIPC/linear_system/utils/spmv.cu)
+target_compile_features(sym_spmv_tests PRIVATE cuda_std_17)
+target_include_directories(sym_spmv_tests PRIVATE StiffGIPC/)
+target_link_libraries(sym_spmv_tests PRIVATE Eigen3::Eigen CUDA::cudart)
+foreach(_eigen_include IN LISTS _eigen_includes)
+    get_filename_component(_eigen_parent "${_eigen_include}" DIRECTORY)
+    target_include_directories(sym_spmv_tests PRIVATE "${_eigen_parent}")
+endforeach()
+if(CUDAToolkit_VERSION_MAJOR GREATER_EQUAL 13)
+    target_include_directories(sym_spmv_tests PRIVATE ${CUDAToolkit_INCLUDE_DIRS}/cccl)
+endif()
+target_compile_options(sym_spmv_tests PRIVATE
+    --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr
+    $<$<CXX_COMPILER_ID:MSVC>:-Xcompiler=/Zc:preprocessor>)
+set_target_properties(sym_spmv_tests PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
+add_test(NAME sym_spmv_equivalence COMMAND sym_spmv_tests)
+set_tests_properties(sym_spmv_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 add_test(NAME pcg_guard_boundaries COMMAND ${CMAKE_COMMAND} -E env
     "GIPC_PCG_GUARD_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/pcg_guard_fixture.json" $<TARGET_FILE:gipc>)
 
@@ -165,6 +184,18 @@ target_compile_features(ipc_residual_controller_test PRIVATE cxx_std_17)
 target_include_directories(ipc_residual_controller_test PRIVATE StiffGIPC/)
 target_link_libraries(ipc_residual_controller_test PRIVATE nlohmann_json::nlohmann_json)
 add_test(NAME ipc_compensated_controller COMMAND ipc_residual_controller_test)
+add_executable(line_search_acceptance_test tests/line_search_acceptance_test.cpp)
+target_compile_features(line_search_acceptance_test PRIVATE cxx_std_17)
+target_include_directories(line_search_acceptance_test PRIVATE StiffGIPC/)
+add_test(NAME line_search_acceptance COMMAND line_search_acceptance_test)
+foreach(_case zero_alpha nan_alpha nonfinite_baseline report_write_failure)
+    add_test(NAME line_search_failure_${_case} COMMAND ${CMAKE_COMMAND}
+        "-DGIPC_BINARY=$<TARGET_FILE:gipc>"
+        "-DFIXTURE_CASE=${_case}"
+        "-DOUTPUT_ROOT=${CMAKE_CURRENT_BINARY_DIR}/line_search_failures"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/check_line_search_failure.cmake")
+    set_tests_properties(line_search_failure_${_case} PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
+endforeach()
 add_test(NAME contact_pool_equivalence COMMAND ${CMAKE_COMMAND} -E env
     "GIPC_CONTACT_POOL=1" "GIPC_CONTACT_POOL_VALIDATE=1"
     "GIPC_CONTACT_POOL_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/contact_pool_fixture.json" $<TARGET_FILE:gipc>)

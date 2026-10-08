@@ -35,6 +35,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <iomanip>
+#include <limits>
 #include <solver/toi_options.h>
 #include <solver/toi_observer.h>
 extern int total_Frames;
@@ -1523,7 +1524,33 @@ void outputAnimationMeshInfo(std::string pathCloth, std::string pathBody)
     surfNumId++;
 }
 bool pri = true;
-void display(void)
+// Keep solver exceptions inside the C++ callback boundary instead of relying
+// on unwinding through FreeGLUT's C frames. Batch and interactive runs share
+// the same nonzero exit and diagnostic persistence policy.
+[[noreturn]] void controlled_failure(const std::exception& error) noexcept
+{
+    std::cerr << "GIPC controlled failure: " << error.what() << std::endl;
+    try
+    {
+        auto& stats=gipc::Statistics::instance();
+        stats.json()["failure"]={{"message",error.what()},{"frame",stats.frame()}};
+        std::filesystem::create_directories(gipc::output_dir());
+        stats.write_to_file(std::string(gipc::output_dir())+"/stats.json");
+    }
+    catch(const std::exception& save_error)
+    {
+        std::cerr << "GIPC failure report could not be saved: " << save_error.what() << std::endl;
+    }
+    catch(...)
+    {
+        std::cerr << "GIPC failure report could not be saved: unknown error" << std::endl;
+    }
+    std::cout.flush();
+    std::cerr.flush();
+    std::quick_exit(4);
+}
+
+void display(void) try
 {
     draw_Scene3D();
     std::filesystem::exists(std::string{gipc::output_dir()})
@@ -1586,6 +1613,10 @@ void display(void)
     //    std::cout << "step: " << step << " finished." << std::endl;
     //    exit(0);
     //}
+}
+catch(const std::exception& error)
+{
+    controlled_failure(error);
 }
 
 void init(void)
@@ -1783,6 +1814,27 @@ void SpecialKey(GLint key, GLint x, GLint y)
 int main(int argc, char** argv) try
 {
     gipc::reject_retired_components();
+    if(const char* mode=std::getenv("GIPC_LINE_SEARCH_FAILURE_FIXTURE"))
+    {
+        // Exercise the actual lineSearch entry guard and application handler.
+        // Invalid input is rejected before any mesh/ABD access or trial step.
+        // There is no injected branch in the production Newton loop.
+        double alpha=1, baseline=10;
+        const std::string test_case=mode;
+        if(test_case=="zero_alpha") alpha=0;
+        else if(test_case=="nan_alpha") alpha=std::numeric_limits<double>::quiet_NaN();
+        else if(test_case=="nonfinite_baseline") baseline=std::numeric_limits<double>::infinity();
+        else throw std::runtime_error("Unknown line search failure fixture");
+        auto& stats=gipc::Statistics::instance();
+        stats.frame(0);
+        stats.json()["line_search_failure_fixture"]={{"case",test_case},{"entry_guard_only",true}};
+        stats.at_current_frame()["newton"]=gipc::Json::array({gipc::Json::object()});
+        double accepted_energy=-123;
+        ipc.lineSearch(d_tetMesh,alpha,1,&baseline,&accepted_energy);
+        // A successful return would mean that an invalid step escaped the guard.
+        std::cerr << "Invalid line search fixture returned successfully" << std::endl;
+        std::quick_exit(5);
+    }
     if(const char* output=std::getenv("GIPC_EDGE_ORDER_FIXTURE"))
         return gipc::edge_query_order_fixture(output);
     if(const char* output=std::getenv("GIPC_CONTACT_POOL_FIXTURE"))
@@ -1982,15 +2034,5 @@ int main(int argc, char** argv) try
 }
 catch(const std::exception& error)
 {
-    std::cerr << "GIPC controlled failure: " << error.what() << std::endl;
-    try
-    {
-        auto& stats=gipc::Statistics::instance();
-        stats.json()["failure"]={{"message",error.what()},{"frame",stats.frame()}};
-        std::filesystem::create_directories(gipc::output_dir());
-        stats.write_to_file(std::string(gipc::output_dir())+"/stats.json");
-    }
-    catch(...) {}
-    std::cerr.flush();
-    std::quick_exit(4);
+    controlled_failure(error);
 }
