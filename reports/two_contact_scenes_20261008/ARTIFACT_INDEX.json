@@ -1,0 +1,66 @@
+{
+  "schema": "two_contact_scenes.artifacts.v1",
+  "files": [
+    {
+      "path": "ANALYSIS.json",
+      "bytes": 82429,
+      "sha256": "7bed2597727df61da7236c29eb4ab3d9bd06a7474e89f2bd0863b3cbcbaa39ae"
+    },
+    {
+      "path": "analysis.log",
+      "bytes": 6146,
+      "sha256": "501c2e35552c33a4e3b5c595ff45917d41162f7d41411f05cd1583986dd7ff76"
+    },
+    {
+      "path": "analyze_two_scenes.py",
+      "bytes": 9603,
+      "sha256": "0f075e4e8352ae4e645e82efa7b6888a8c9165b96bb209ba9e394eb62dee99ff"
+    },
+    {
+      "path": "BENCHMARK_CONFIG.json",
+      "bytes": 44186,
+      "sha256": "66cd4b725f59825bc6cf069f71558a8ba6753f413f4bf2f8c2e2ff53f4498c38"
+    },
+    {
+      "path": "CACHE_PAUSE.md",
+      "bytes": 974,
+      "sha256": "886759bc4d534ece42e97d8498caccbb6aad85bcec210b4aa601551c8747acae"
+    },
+    {
+      "path": "controller_v1.py.txt",
+      "bytes": 9917,
+      "sha256": "77717165408436f94f311515b6c1248f327326053541c9b7a0702496c3cfd3a8"
+    },
+    {
+      "path": "FINAL_VALIDATION.json",
+      "bytes": 908,
+      "sha256": "4c1172d37df17ceb44b7956e83aff6bc8ed9b9cef93e0337a031487a85180f84"
+    },
+    {
+      "path": "init.log",
+      "bytes": 42,
+      "sha256": "6244ffb6cabd589d27c964098c91adfca7c3c33d070864a25c4cc6fafbdfb355"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 1684,
+      "sha256": "5af556e147399740c6eb52aeff347b5354ed9237050678c56f89c4fd3c8aa90b"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 7846,
+      "sha256": "3d38ea39d8065198e3e7e5e52c47688aa834209e6ce99f5c170b6f545622afe4"
+    },
+    {
+      "path": "RESULTS.json",
+      "bytes": 729894,
+      "sha256": "4f3e7948cfd66e38431281ef73fe05f7b8ba082aff36eedd722d6197b43fd3a5"
+    },
+    {
+      "path": "run_two_scenes.py",
+      "bytes": 13115,
+      "sha256": "f02350bb02910439706056023a50d0f02e75025ed782f74c491b26c25a8f0651"
+    }
+  ],
+  "public_data_scope": "Reports, configs, tools and hashes; no raw trajectories, binaries or process telemetry."
+}

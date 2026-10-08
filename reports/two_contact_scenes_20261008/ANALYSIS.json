@@ -1,0 +1,2221 @@
+{
+  "schema": "two_contact_scenes.analysis.v1",
+  "status": "partial_stage_with_two_valid_scenes",
+  "planned_runs": 18,
+  "completed_runs": 17,
+  "failures": [
+    {
+      "name": "cloth_stack10_l_graph_r3",
+      "status": "memory_budget",
+      "recorded_frames": 47,
+      "included_in_speed": false,
+      "memory_budget_mib": 4975.5,
+      "memory_free_before_mib": 6634.0,
+      "memory_free_at_stop_mib": 1400.0,
+      "cleanup_owned_job_empty": true,
+      "evidence_sha256": "940479169d896ac3ac902b2fcccab0d43129f830fd12167a606cae431fb27fb8",
+      "scope": "Total-device allocation delta exceeded guard; no inference that a numerical solver failure or a specific foreign process caused it."
+    }
+  ],
+  "scenes": [
+    {
+      "scene": "cloth_table_l",
+      "complete_primary_repeats": [
+        1,
+        2,
+        3
+      ],
+      "completed_per_arm": {
+        "base": 3,
+        "graph": 3,
+        "all": 3
+      },
+      "excluded_complete_rows": [],
+      "median_solver_seconds": {
+        "base": 21.810719799999998,
+        "graph": 18.8929595,
+        "all": 17.788190999999998
+      },
+      "paired_ratios": [
+        {
+          "repeat": 1,
+          "stiff_over_graph": 1.1661860616343023,
+          "stiff_over_all": 1.2118752828772752,
+          "graph_over_all": 1.0391783290386303
+        },
+        {
+          "repeat": 2,
+          "stiff_over_graph": 1.1552113367945345,
+          "stiff_over_all": 1.2125370849652821,
+          "graph_over_all": 1.0496236024914838
+        },
+        {
+          "repeat": 3,
+          "stiff_over_graph": 1.1460578513643025,
+          "stiff_over_all": 1.275142807042515,
+          "graph_over_all": 1.1126338914955698
+        }
+      ],
+      "paired_medians": {
+        "stiff_over_graph": 1.1552113367945345,
+        "stiff_over_all": 1.2125370849652821,
+        "graph_over_all": 1.0496236024914838
+      },
+      "solver_seconds_range": {
+        "base": [
+          21.557069,
+          21.825361
+        ],
+        "graph": [
+          18.485102599999998,
+          19.031080999999997
+        ],
+        "all": [
+          17.1045311,
+          17.9997472
+        ]
+      },
+      "phase_ms_medians": {
+        "base": {
+          "assembly": 4826.321117639542,
+          "pcg": 11174.58511686325,
+          "ccd": 1293.8412467241287,
+          "line_search": 3738.9905319213867,
+          "state_update": 30.234527928754687
+        },
+        "graph": {
+          "assembly": 4811.009685754776,
+          "pcg": 8163.747530937195,
+          "ccd": 1349.620159983635,
+          "line_search": 3797.0316154956818,
+          "state_update": 34.963967993855476
+        },
+        "all": {
+          "assembly": 4806.816669464111,
+          "pcg": 8064.90051984787,
+          "ccd": 996.5051188468933,
+          "line_search": 3144.685154914856,
+          "state_update": 43.82489592395723
+        }
+      },
+      "workload_medians": {
+        "base": {
+          "directions": 564,
+          "pcg_iterations": 28809,
+          "energy_evaluations": null,
+          "energy_backtracks": null
+        },
+        "graph": {
+          "directions": 566,
+          "pcg_iterations": 28954,
+          "energy_evaluations": 1132,
+          "energy_backtracks": 0
+        },
+        "all": {
+          "directions": 564,
+          "pcg_iterations": 28820,
+          "energy_evaluations": 684,
+          "energy_backtracks": 0
+        }
+      },
+      "material_ranges": {
+        "base": {
+          "max_stretch": [
+            1.0186936031730407,
+            1.0186940843889385
+          ],
+          "p99_stretch": [
+            1.0061390166618829,
+            1.006140800288472
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "graph": {
+          "max_stretch": [
+            1.0186936896880288,
+            1.0186947154586667
+          ],
+          "p99_stretch": [
+            1.0060678249018058,
+            1.0061399762441066
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "all": {
+          "max_stretch": [
+            1.0186937705133734,
+            1.0186938391242926
+          ],
+          "p99_stretch": [
+            1.0061389958241742,
+            1.0061417841273885
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "physical_inputs": [
+        {
+          "repeat": 1,
+          "left": "base",
+          "right": "graph",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 1,
+          "left": "base",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 1,
+          "left": "graph",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            },
+            "trace/velocity_0000.bin": {
+              "left_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "right_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": true,
+          "missing_velocity_reason": null
+        },
+        {
+          "repeat": 2,
+          "left": "base",
+          "right": "graph",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 2,
+          "left": "base",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 2,
+          "left": "graph",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            },
+            "trace/velocity_0000.bin": {
+              "left_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "right_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": true,
+          "missing_velocity_reason": null
+        },
+        {
+          "repeat": 3,
+          "left": "base",
+          "right": "graph",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 3,
+          "left": "base",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 3,
+          "left": "graph",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "right_sha256": "5af5f34e6899d89f9e5cdd3a069ec20e77e215cfc0e0ce4e34e32cfa370da0d2",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "right_sha256": "b0bddb680c8c7dfe10413a313fd14bf12cead47f652b33ba33b69e23c379265d",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "right_sha256": "6380705d120dbb3cd849a369e4f4fc307a7ce7a1eb235fe13ee5e4b9c85ddd2a",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "right_sha256": "1e0b2e796d74a568311e26e79c572ceb183bddb3a25584e610e06e0766916620",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "right_sha256": "416d3b4cdfb8efaf3e6673057f464ce7d70410b608361c2270482ba9b3bb8e92",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "right_sha256": "41e8b6ef648e962bb0dbe0761036a112155c9852df4e3e0a337f577ed3714eca",
+              "equal": true
+            },
+            "trace/velocity_0000.bin": {
+              "left_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "right_sha256": "077575011f49ddaaa7efda23da9b98f5d6eb80706b391d0536d7bf5db9c08ae5",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": true,
+          "missing_velocity_reason": null
+        }
+      ]
+    },
+    {
+      "scene": "cloth_stack10_l",
+      "complete_primary_repeats": [
+        1,
+        2
+      ],
+      "completed_per_arm": {
+        "base": 3,
+        "graph": 2,
+        "all": 3
+      },
+      "excluded_complete_rows": [
+        "cloth_stack10_l_all_r3",
+        "cloth_stack10_l_base_r3"
+      ],
+      "median_solver_seconds": {
+        "base": 65.49505005,
+        "graph": 64.65902915000001,
+        "all": 63.58657765
+      },
+      "paired_ratios": [
+        {
+          "repeat": 1,
+          "stiff_over_graph": 0.9960598718719744,
+          "stiff_over_all": 1.0176872963326107,
+          "graph_over_all": 1.0217129763695731
+        },
+        {
+          "repeat": 2,
+          "stiff_over_graph": 1.030103925120694,
+          "stiff_over_all": 1.0424431061901478,
+          "graph_over_all": 1.0119785788293236
+        }
+      ],
+      "paired_medians": {
+        "stiff_over_graph": 1.0130818984963343,
+        "stiff_over_all": 1.0300652012613791,
+        "graph_over_all": 1.0168457775994484
+      },
+      "solver_seconds_range": {
+        "base": [
+          64.9801756,
+          66.0099245
+        ],
+        "graph": [
+          64.0808397,
+          65.2372186
+        ],
+        "all": [
+          63.3223282,
+          63.850827100000004
+        ]
+      },
+      "phase_ms_medians": {
+        "base": {
+          "assembly": 20638.406138420105,
+          "pcg": 25292.999826431274,
+          "ccd": 4211.166578650475,
+          "line_search": 10678.168401479721,
+          "state_update": 90.70849606301636
+        },
+        "graph": {
+          "assembly": 20580.040956497192,
+          "pcg": 24384.213859558105,
+          "ccd": 4252.845628619194,
+          "line_search": 10733.813138246536,
+          "state_update": 92.57291191071272
+        },
+        "all": {
+          "assembly": 20762.53578853607,
+          "pcg": 24586.580907821655,
+          "ccd": 3808.5281435847282,
+          "line_search": 9680.536134004593,
+          "state_update": 117.95131169911474
+        }
+      },
+      "workload_medians": {
+        "base": {
+          "directions": 602.5,
+          "pcg_iterations": 11234.0,
+          "energy_evaluations": null,
+          "energy_backtracks": null
+        },
+        "graph": {
+          "directions": 600.5,
+          "pcg_iterations": 11205.5,
+          "energy_evaluations": 1201.0,
+          "energy_backtracks": 0.0
+        },
+        "all": {
+          "directions": 602.0,
+          "pcg_iterations": 11391.5,
+          "energy_evaluations": 722.0,
+          "energy_backtracks": 0.0
+        }
+      },
+      "material_ranges": {
+        "base": {
+          "max_stretch": [
+            1.004831788334558,
+            1.0057133649932262
+          ],
+          "p99_stretch": [
+            1.0010672074471654,
+            1.0011037047470859
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        },
+        "graph": {
+          "max_stretch": [
+            1.0055623560618643,
+            1.0064726049470982
+          ],
+          "p99_stretch": [
+            1.0010545976439467,
+            1.001088573776978
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        },
+        "all": {
+          "max_stretch": [
+            1.0052965302155568,
+            1.0071094530165707
+          ],
+          "p99_stretch": [
+            1.0010185514964616,
+            1.0010895573812963
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        }
+      },
+      "physical_inputs": [
+        {
+          "repeat": 1,
+          "left": "base",
+          "right": "graph",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 1,
+          "left": "base",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 1,
+          "left": "graph",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            },
+            "trace/velocity_0000.bin": {
+              "left_sha256": "ad5d1e472d1267539f2ea845029ff02b784b919ee794d30058b87c069175c7e1",
+              "right_sha256": "ad5d1e472d1267539f2ea845029ff02b784b919ee794d30058b87c069175c7e1",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": true,
+          "missing_velocity_reason": null
+        },
+        {
+          "repeat": 2,
+          "left": "base",
+          "right": "graph",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 2,
+          "left": "base",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": false,
+          "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+        },
+        {
+          "repeat": 2,
+          "left": "graph",
+          "right": "all",
+          "passed": true,
+          "files": {
+            "trace/topology.bin": {
+              "left_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "right_sha256": "d2821d8e08c6eb245e619917087686eed33a38e0fd5077a78480178fc039d97f",
+              "equal": true
+            },
+            "trace/masses.bin": {
+              "left_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "right_sha256": "d8544600b87ab4a982fc633ca4987cd4a9b35c10bd9df7a66755b06b653587a3",
+              "equal": true
+            },
+            "trace/boundary_types.bin": {
+              "left_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "right_sha256": "81eb2a1adb33cae0d077574e328e20def0a8a7f90a18f8a4840f1de89ec94315",
+              "equal": true
+            },
+            "trace/body_ids.bin": {
+              "left_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "right_sha256": "666bf459b9f04db38888b4387f8e0b14b22ee5592f6b7cdd0fdc329b88d14625",
+              "equal": true
+            },
+            "trace/state_0000.bin": {
+              "left_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "right_sha256": "04b324e9a7f0a698b29867b5b2b35b0f4106fc842b5f1e6864a302e2b3b82a43",
+              "equal": true
+            },
+            "trace/metadata.json": {
+              "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+              "equal": true
+            },
+            "output/scene.json": {
+              "left_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "right_sha256": "9b23d01a6e07a7921917f08a9db9fef213a4bf66860f47b57d35fe0fe359d6d6",
+              "equal": true
+            },
+            "trace/velocity_0000.bin": {
+              "left_sha256": "ad5d1e472d1267539f2ea845029ff02b784b919ee794d30058b87c069175c7e1",
+              "right_sha256": "ad5d1e472d1267539f2ea845029ff02b784b919ee794d30058b87c069175c7e1",
+              "equal": true
+            }
+          },
+          "initial_actual_velocity_comparable": true,
+          "missing_velocity_reason": null
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "name": "cloth_table_l_base_r1",
+      "scene": "cloth_table_l",
+      "arm": "base",
+      "repeat": 1,
+      "solver_seconds": 21.557069,
+      "wall_seconds": 23.0779999999977,
+      "material": {
+        "max_stretch": 1.0186940843889385,
+        "p99_stretch": 1.006140800288472,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4729.100863933563,
+        "pcg": 11123.108172893524,
+        "ccd": 1293.8412467241287,
+        "line_search": 3691.400545358658,
+        "state_update": 29.507711999118328
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28809
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24284,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "d59147a1746aa27f11796242610cb2664f5c1c65c596d725e2fbfb3b1f880114"
+    },
+    {
+      "name": "cloth_table_l_graph_r1",
+      "scene": "cloth_table_l",
+      "arm": "graph",
+      "repeat": 1,
+      "solver_seconds": 18.485102599999998,
+      "wall_seconds": 21.39099999999962,
+      "material": {
+        "max_stretch": 1.018694197483728,
+        "p99_stretch": 1.0060678249018058,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 65,
+        "cumulative_toi": 55
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4758.825824022293,
+        "pcg": 7984.569312572479,
+        "ccd": 1292.9680317640305,
+        "line_search": 3715.1208639144897,
+        "state_update": 34.39257613942027
+      },
+      "directions": 566,
+      "pcg_iterations": {
+        "observed_records": 566,
+        "expected_records": 566,
+        "complete": true,
+        "total": 28954
+      },
+      "energy_evaluations": {
+        "observed_records": 566,
+        "expected_records": 566,
+        "complete": true,
+        "total": 1132
+      },
+      "energy_backtracks": {
+        "observed_records": 566,
+        "expected_records": 566,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 566,
+        "expected_records": 566,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 566,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "305551d9f95aa2841037102d574ea11b82a82ad37d4527cd6ee91dfb82871332"
+    },
+    {
+      "name": "cloth_table_l_all_r1",
+      "scene": "cloth_table_l",
+      "arm": "all",
+      "repeat": 1,
+      "solver_seconds": 17.788190999999998,
+      "wall_seconds": 20.10900000000038,
+      "material": {
+        "max_stretch": 1.0186938050932581,
+        "p99_stretch": 1.0061389958241742,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4806.816669464111,
+        "pcg": 8064.90051984787,
+        "ccd": 996.5051188468933,
+        "line_search": 3144.685154914856,
+        "state_update": 45.46140801534057
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28808
+      },
+      "energy_evaluations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 684
+      },
+      "energy_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 564,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "b4b633839162a44191a3d400c1d3cef800f9b8e7403bf955c6e253e08db787fa"
+    },
+    {
+      "name": "cloth_stack10_l_base_r1",
+      "scene": "cloth_stack10_l",
+      "arm": "base",
+      "repeat": 1,
+      "solver_seconds": 64.9801756,
+      "wall_seconds": 66.89099999999962,
+      "material": {
+        "max_stretch": 1.0057133649932262,
+        "p99_stretch": 1.0010672074471654,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 90,
+        "cumulative_toi": 30
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20434.561892986298,
+        "pcg": 25104.994522094727,
+        "ccd": 4189.952258348465,
+        "line_search": 10582.705711364746,
+        "state_update": 88.3339519686997
+      },
+      "directions": 600,
+      "pcg_iterations": {
+        "observed_records": 600,
+        "expected_records": 600,
+        "complete": true,
+        "total": 11205
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 600,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 600,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 600,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 256506,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "5acd8219becec3a78a762192dc7b383565a85a275260aa3a33f4b639e0c5b0be"
+    },
+    {
+      "name": "cloth_stack10_l_graph_r1",
+      "scene": "cloth_stack10_l",
+      "arm": "graph",
+      "repeat": 1,
+      "solver_seconds": 65.2372186,
+      "wall_seconds": 68.21799999999712,
+      "material": {
+        "max_stretch": 1.0064726049470982,
+        "p99_stretch": 1.001088573776978,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20795.80834531784,
+        "pcg": 24602.607709884644,
+        "ccd": 4282.315901041031,
+        "line_search": 10851.630743026733,
+        "state_update": 93.8425599578768
+      },
+      "directions": 606,
+      "pcg_iterations": {
+        "observed_records": 606,
+        "expected_records": 606,
+        "complete": true,
+        "total": 11237
+      },
+      "energy_evaluations": {
+        "observed_records": 606,
+        "expected_records": 606,
+        "complete": true,
+        "total": 1212
+      },
+      "energy_backtracks": {
+        "observed_records": 606,
+        "expected_records": 606,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 606,
+        "expected_records": 606,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 606,
+      "active_pair_peak": 256140,
+      "active_pair_frames": 91,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 254780,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "1940129a070c0d17b51abfe0ac66d1446b718cda27105d2c4acb8c1fe9b838b8"
+    },
+    {
+      "name": "cloth_stack10_l_all_r1",
+      "scene": "cloth_stack10_l",
+      "arm": "all",
+      "repeat": 1,
+      "solver_seconds": 63.850827100000004,
+      "wall_seconds": 66.76499999999942,
+      "material": {
+        "max_stretch": 1.0052965302155568,
+        "p99_stretch": 1.0010895573812963,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20907.948836803436,
+        "pcg": 24681.711248397827,
+        "ccd": 3799.99666762352,
+        "line_search": 9719.547277450562,
+        "state_update": 119.25001557171345
+      },
+      "directions": 605,
+      "pcg_iterations": {
+        "observed_records": 605,
+        "expected_records": 605,
+        "complete": true,
+        "total": 11421
+      },
+      "energy_evaluations": {
+        "observed_records": 605,
+        "expected_records": 605,
+        "complete": true,
+        "total": 725
+      },
+      "energy_backtracks": {
+        "observed_records": 605,
+        "expected_records": 605,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 605,
+        "expected_records": 605,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 605,
+      "active_pair_peak": 255965,
+      "active_pair_frames": 91,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 253888,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "ff502226aefb67967f956f8084b7c1cf24d22071c427a4d96d88fbfa839f4349"
+    },
+    {
+      "name": "cloth_table_l_graph_r2",
+      "scene": "cloth_table_l",
+      "arm": "graph",
+      "repeat": 2,
+      "solver_seconds": 18.8929595,
+      "wall_seconds": 20.84299999999712,
+      "material": {
+        "max_stretch": 1.0186936896880288,
+        "p99_stretch": 1.0061399762441066,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4811.009685754776,
+        "pcg": 8163.747530937195,
+        "ccd": 1353.0558741092682,
+        "line_search": 3797.0316154956818,
+        "state_update": 35.847552044317126
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28812
+      },
+      "energy_evaluations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 1128
+      },
+      "energy_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 564,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "84fcfdec2b03469825658ccec05739eb02de2012ade469e58d91d3f771c0c6b7"
+    },
+    {
+      "name": "cloth_table_l_all_r2",
+      "scene": "cloth_table_l",
+      "arm": "all",
+      "repeat": 2,
+      "solver_seconds": 17.9997472,
+      "wall_seconds": 20.28099999999904,
+      "material": {
+        "max_stretch": 1.0186937705133734,
+        "p99_stretch": 1.0061397788683486,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4847.029278278351,
+        "pcg": 8149.265509128571,
+        "ccd": 1031.6823043227196,
+        "line_search": 3179.379425764084,
+        "state_update": 43.82489592395723
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28824
+      },
+      "energy_evaluations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 684
+      },
+      "energy_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 564,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24284,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "e45d5de3075c71a92361c80075ec0393061d4577d7b399f5aeed72acfa1ee6b5"
+    },
+    {
+      "name": "cloth_table_l_base_r2",
+      "scene": "cloth_table_l",
+      "arm": "base",
+      "repeat": 2,
+      "solver_seconds": 21.825361,
+      "wall_seconds": 23.59400000000096,
+      "material": {
+        "max_stretch": 1.0186937498033517,
+        "p99_stretch": 1.0061398543614692,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4826.321117639542,
+        "pcg": 11219.34031200409,
+        "ccd": 1293.2062077522278,
+        "line_search": 3745.273563146591,
+        "state_update": 32.85379191674292
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28816
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "e118667be9cfe7236c772e1f337078fca25d16306d49f6fe06c060661b0d9cd1"
+    },
+    {
+      "name": "cloth_stack10_l_graph_r2",
+      "scene": "cloth_stack10_l",
+      "arm": "graph",
+      "repeat": 2,
+      "solver_seconds": 64.0808397,
+      "wall_seconds": 67.375,
+      "material": {
+        "max_stretch": 1.0055623560618643,
+        "p99_stretch": 1.0010545976439467,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20364.273567676544,
+        "pcg": 24165.820009231567,
+        "ccd": 4223.375356197357,
+        "line_search": 10615.99553346634,
+        "state_update": 91.30326386354864
+      },
+      "directions": 595,
+      "pcg_iterations": {
+        "observed_records": 595,
+        "expected_records": 595,
+        "complete": true,
+        "total": 11174
+      },
+      "energy_evaluations": {
+        "observed_records": 595,
+        "expected_records": 595,
+        "complete": true,
+        "total": 1190
+      },
+      "energy_backtracks": {
+        "observed_records": 595,
+        "expected_records": 595,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 595,
+        "expected_records": 595,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 595,
+      "active_pair_peak": 255891,
+      "active_pair_frames": 91,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 254714,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "100dd0fb3ef6e3dfff56657cf116e652111398b38b3576f6f2882342ae094f34"
+    },
+    {
+      "name": "cloth_stack10_l_all_r2",
+      "scene": "cloth_stack10_l",
+      "arm": "all",
+      "repeat": 2,
+      "solver_seconds": 63.3223282,
+      "wall_seconds": 66.31300000000192,
+      "material": {
+        "max_stretch": 1.0071094530165707,
+        "p99_stretch": 1.0010185514964616,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 90,
+        "cumulative_toi": 30
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20617.122740268707,
+        "pcg": 24491.450567245483,
+        "ccd": 3817.0596195459366,
+        "line_search": 9641.524990558624,
+        "state_update": 116.65260782651603
+      },
+      "directions": 599,
+      "pcg_iterations": {
+        "observed_records": 599,
+        "expected_records": 599,
+        "complete": true,
+        "total": 11362
+      },
+      "energy_evaluations": {
+        "observed_records": 599,
+        "expected_records": 599,
+        "complete": true,
+        "total": 719
+      },
+      "energy_backtracks": {
+        "observed_records": 599,
+        "expected_records": 599,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 599,
+        "expected_records": 599,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 599,
+      "active_pair_peak": 256699,
+      "active_pair_frames": 91,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 256252,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "90638eb26d52e74b1d7365840a62692e3e5b88814bcadcf28b09a77370a048c2"
+    },
+    {
+      "name": "cloth_stack10_l_base_r2",
+      "scene": "cloth_stack10_l",
+      "arm": "base",
+      "repeat": 2,
+      "solver_seconds": 66.0099245,
+      "wall_seconds": 68.14099999999962,
+      "material": {
+        "max_stretch": 1.004831788334558,
+        "p99_stretch": 1.0011037047470859,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20842.250383853912,
+        "pcg": 25481.005130767822,
+        "ccd": 4232.380898952484,
+        "line_search": 10773.631091594696,
+        "state_update": 93.08304015733302
+      },
+      "directions": 605,
+      "pcg_iterations": {
+        "observed_records": 605,
+        "expected_records": 605,
+        "complete": true,
+        "total": 11263
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 605,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 605,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 605,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 254601,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "4929437aee42643520ec0bb4fe5994d2dbb93f00ddea2347a3a26c597f6f03ca"
+    },
+    {
+      "name": "cloth_table_l_all_r3",
+      "scene": "cloth_table_l",
+      "arm": "all",
+      "repeat": 3,
+      "solver_seconds": 17.1045311,
+      "wall_seconds": 19.625,
+      "material": {
+        "max_stretch": 1.0186938391242926,
+        "p99_stretch": 1.0061417841273885,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4597.948222875595,
+        "pcg": 7693.501863002777,
+        "ccd": 991.351776778698,
+        "line_search": 3034.335812330246,
+        "state_update": 40.961376093328
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28820
+      },
+      "energy_evaluations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 684
+      },
+      "energy_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 564,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24284,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "6ca1dfe8460ac01aa71d69375a9322e4a992371c4dfade8705a082f0a1252a1c"
+    },
+    {
+      "name": "cloth_table_l_base_r3",
+      "scene": "cloth_table_l",
+      "arm": "base",
+      "repeat": 3,
+      "solver_seconds": 21.810719799999998,
+      "wall_seconds": 23.53099999999904,
+      "material": {
+        "max_stretch": 1.0186936031730407,
+        "p99_stretch": 1.0061390166618829,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 67,
+        "cumulative_toi": 53
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4855.2941172122955,
+        "pcg": 11174.58511686325,
+        "ccd": 1312.3188487291336,
+        "line_search": 3738.9905319213867,
+        "state_update": 30.234527928754687
+      },
+      "directions": 564,
+      "pcg_iterations": {
+        "observed_records": 564,
+        "expected_records": 564,
+        "complete": true,
+        "total": 28795
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 564,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "2f34dffa9fd137456047e8a027ef6956f80439edbcf489360e00b6027672fe98"
+    },
+    {
+      "name": "cloth_table_l_graph_r3",
+      "scene": "cloth_table_l",
+      "arm": "graph",
+      "repeat": 3,
+      "solver_seconds": 19.031080999999997,
+      "wall_seconds": 21.48400000000038,
+      "material": {
+        "max_stretch": 1.0186947154586667,
+        "p99_stretch": 1.0060678731618273,
+        "fixed_drift_m": 0.0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 69,
+        "cumulative_toi": 51
+      },
+      "vertices": 12488,
+      "faces": 24670,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 4831.321179628372,
+        "pcg": 8217.125344753265,
+        "ccd": 1349.620159983635,
+        "line_search": 3837.5537950992584,
+        "state_update": 34.963967993855476
+      },
+      "directions": 568,
+      "pcg_iterations": {
+        "observed_records": 568,
+        "expected_records": 568,
+        "complete": true,
+        "total": 29072
+      },
+      "energy_evaluations": {
+        "observed_records": 568,
+        "expected_records": 568,
+        "complete": true,
+        "total": 1136
+      },
+      "energy_backtracks": {
+        "observed_records": 568,
+        "expected_records": 568,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 568,
+        "expected_records": 568,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 568,
+      "active_pair_peak": 24872,
+      "active_pair_frames": 99,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 24288,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "e0d2b755208dec9148c5f35e831036b8ae15a3ee6a152a185f4685777c63efa3"
+    },
+    {
+      "name": "cloth_stack10_l_all_r3",
+      "scene": "cloth_stack10_l",
+      "arm": "all",
+      "repeat": 3,
+      "solver_seconds": 62.8039297,
+      "wall_seconds": 65.59400000000096,
+      "material": {
+        "max_stretch": 1.0055740623999014,
+        "p99_stretch": 1.0011016640423098,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20527.771471500397,
+        "pcg": 24245.11075592041,
+        "ccd": 3742.759904026985,
+        "line_search": 9551.983900547028,
+        "state_update": 105.88726415671408
+      },
+      "directions": 596,
+      "pcg_iterations": {
+        "observed_records": 596,
+        "expected_records": 596,
+        "complete": true,
+        "total": 11174
+      },
+      "energy_evaluations": {
+        "observed_records": 596,
+        "expected_records": 596,
+        "complete": true,
+        "total": 716
+      },
+      "energy_backtracks": {
+        "observed_records": 596,
+        "expected_records": 596,
+        "complete": true,
+        "total": 0
+      },
+      "intersection_backtracks": {
+        "observed_records": 596,
+        "expected_records": 596,
+        "complete": true,
+        "total": 0
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 596,
+      "active_pair_peak": 256173,
+      "active_pair_frames": 91,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 255061,
+      "actual_velocity_available": true,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "006206687d434cddc8ea55f60b757dd7651f1d80fa77cdbc43b0d3454af47bc8"
+    },
+    {
+      "name": "cloth_stack10_l_base_r3",
+      "scene": "cloth_stack10_l",
+      "arm": "base",
+      "repeat": 3,
+      "solver_seconds": 64.775999,
+      "wall_seconds": 66.9529999999977,
+      "material": {
+        "max_stretch": 1.0054815418227736,
+        "p99_stretch": 1.0012457465202056,
+        "fixed_drift_m": 0,
+        "fem_min_J": null,
+        "fem_nonpositive_peak": 0,
+        "fem_nonpositive_frame_sum": 0,
+        "fem_negative_volume_peak": 0,
+        "abd_min_J": null,
+        "abd_nonpositive_frames": 0
+      },
+      "exits": {
+        "movement": 89,
+        "cumulative_toi": 31
+      },
+      "vertices": 26010,
+      "faces": 50000,
+      "tets": 0,
+      "phases_ms": {
+        "assembly": 20315.33706665039,
+        "pcg": 25063.784589767456,
+        "ccd": 4193.436099767685,
+        "line_search": 10579.229900360107,
+        "state_update": 93.20393585599959
+      },
+      "directions": 604,
+      "pcg_iterations": {
+        "observed_records": 604,
+        "expected_records": 604,
+        "complete": true,
+        "total": 11419
+      },
+      "energy_evaluations": {
+        "observed_records": 0,
+        "expected_records": 604,
+        "complete": false,
+        "total": null
+      },
+      "energy_backtracks": {
+        "observed_records": 0,
+        "expected_records": 604,
+        "complete": false,
+        "total": null
+      },
+      "intersection_backtracks": {
+        "observed_records": 0,
+        "expected_records": 604,
+        "complete": false,
+        "total": null
+      },
+      "energy_counter_scope": "PCG direction/update rows; standalone movement exit rows do not execute a line search.",
+      "active_pair_observed_records": 0,
+      "active_pair_peak": null,
+      "active_pair_frames": null,
+      "native_geometry_frames": 120,
+      "native_self_pair_peak": 254519,
+      "actual_velocity_available": false,
+      "hard_checks_passed": true,
+      "breakdown_telemetry_complete": false,
+      "evidence_sha256": "373ccd226068e39d3412ce2cc3bfbf38fc024cf7d894e1a9f2c094da557fe4d0"
+    }
+  ],
+  "performance_certified": false,
+  "quality_certified": false,
+  "scope": "Shared WDDM diagnostic, same numeric configuration, three rotated pairs. Missing base energy/breakdown/velocity remain unobserved; no independent CCD or held-out material certification.",
+  "program_identity": {
+    "active": {
+      "exe": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report56_stage1_verified_20261008\\Release\\gipc.exe",
+        "bytes": 11312128,
+        "sha256": "d4da6bd5ec8544b87d0f7b77f67c6bb02a95c2afa19a24a8a6013f69d89f3902"
+      },
+      "source_digest": "a40ee52ec07cf59fe81d2c3c876e079aa44da7f8039b3a7b0bcde3d0ba60b584",
+      "capabilities": {
+        "resolved_config": true,
+        "actual_velocity": true
+      }
+    },
+    "base": {
+      "exe": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\Release\\gipc.exe",
+        "bytes": 9167872,
+        "sha256": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205"
+      },
+      "source_digest": "a2918133f8262b6e1b92fd6b89bfdbc82a5e79f3a53a51aa91cbcad3def2c44f",
+      "capabilities": {
+        "resolved_config": false,
+        "actual_velocity": false
+      }
+    }
+  },
+  "original_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\two_contact_scenes_20261008\\IDENTITY.json",
+    "bytes": 441993,
+    "sha256": "65c04e3dbb98408515a76c88bb8381ba40d51664d3a57fe7b4d1271b82ea70fe"
+  },
+  "resume_seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\two_contact_scenes_20261008\\RESUME_IDENTITY.json",
+    "bytes": 2074,
+    "sha256": "3fa57e556c9fccd4035a89e599f5723aa7f6e7c175330308f71998db5a7c53d8"
+  },
+  "derived_runtime_inputs": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\Assets\\sorted_mesh\\cipc_table_sorted.16.obj",
+      "bytes": 644338,
+      "sha256": "50d7574cad033d9f47134ddb4415db3084f22a090add5e201da7e17ffbb21f9d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\Assets\\sorted_mesh\\cipc_table_sorted.16.part",
+      "bytes": 31917,
+      "sha256": "b56dd75226e134d8637e41b16200b5d7240647fae8e7935678171375dff243b3"
+    }
+  ]
+}

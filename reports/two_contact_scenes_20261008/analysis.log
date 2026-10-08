@@ -1,0 +1,228 @@
+{
+  "completed": 17,
+  "failures": [
+    {
+      "name": "cloth_stack10_l_graph_r3",
+      "status": "memory_budget",
+      "recorded_frames": 47,
+      "included_in_speed": false,
+      "memory_budget_mib": 4975.5,
+      "memory_free_before_mib": 6634.0,
+      "memory_free_at_stop_mib": 1400.0,
+      "cleanup_owned_job_empty": true,
+      "evidence_sha256": "940479169d896ac3ac902b2fcccab0d43129f830fd12167a606cae431fb27fb8",
+      "scope": "Total-device allocation delta exceeded guard; no inference that a numerical solver failure or a specific foreign process caused it."
+    }
+  ],
+  "scenes": [
+    {
+      "scene": "cloth_table_l",
+      "complete_primary_repeats": [
+        1,
+        2,
+        3
+      ],
+      "median_solver_seconds": {
+        "base": 21.810719799999998,
+        "graph": 18.8929595,
+        "all": 17.788190999999998
+      },
+      "paired_medians": {
+        "stiff_over_graph": 1.1552113367945345,
+        "stiff_over_all": 1.2125370849652821,
+        "graph_over_all": 1.0496236024914838
+      },
+      "workload_medians": {
+        "base": {
+          "directions": 564,
+          "pcg_iterations": 28809,
+          "energy_evaluations": null,
+          "energy_backtracks": null
+        },
+        "graph": {
+          "directions": 566,
+          "pcg_iterations": 28954,
+          "energy_evaluations": 1132,
+          "energy_backtracks": 0
+        },
+        "all": {
+          "directions": 564,
+          "pcg_iterations": 28820,
+          "energy_evaluations": 684,
+          "energy_backtracks": 0
+        }
+      },
+      "phase_ms_medians": {
+        "base": {
+          "assembly": 4826.321117639542,
+          "pcg": 11174.58511686325,
+          "ccd": 1293.8412467241287,
+          "line_search": 3738.9905319213867,
+          "state_update": 30.234527928754687
+        },
+        "graph": {
+          "assembly": 4811.009685754776,
+          "pcg": 8163.747530937195,
+          "ccd": 1349.620159983635,
+          "line_search": 3797.0316154956818,
+          "state_update": 34.963967993855476
+        },
+        "all": {
+          "assembly": 4806.816669464111,
+          "pcg": 8064.90051984787,
+          "ccd": 996.5051188468933,
+          "line_search": 3144.685154914856,
+          "state_update": 43.82489592395723
+        }
+      },
+      "material_ranges": {
+        "base": {
+          "max_stretch": [
+            1.0186936031730407,
+            1.0186940843889385
+          ],
+          "p99_stretch": [
+            1.0061390166618829,
+            1.006140800288472
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "graph": {
+          "max_stretch": [
+            1.0186936896880288,
+            1.0186947154586667
+          ],
+          "p99_stretch": [
+            1.0060678249018058,
+            1.0061399762441066
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "all": {
+          "max_stretch": [
+            1.0186937705133734,
+            1.0186938391242926
+          ],
+          "p99_stretch": [
+            1.0061389958241742,
+            1.0061417841273885
+          ],
+          "fixed_drift_m": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "scene": "cloth_stack10_l",
+      "complete_primary_repeats": [
+        1,
+        2
+      ],
+      "median_solver_seconds": {
+        "base": 65.49505005,
+        "graph": 64.65902915000001,
+        "all": 63.58657765
+      },
+      "paired_medians": {
+        "stiff_over_graph": 1.0130818984963343,
+        "stiff_over_all": 1.0300652012613791,
+        "graph_over_all": 1.0168457775994484
+      },
+      "workload_medians": {
+        "base": {
+          "directions": 602.5,
+          "pcg_iterations": 11234.0,
+          "energy_evaluations": null,
+          "energy_backtracks": null
+        },
+        "graph": {
+          "directions": 600.5,
+          "pcg_iterations": 11205.5,
+          "energy_evaluations": 1201.0,
+          "energy_backtracks": 0.0
+        },
+        "all": {
+          "directions": 602.0,
+          "pcg_iterations": 11391.5,
+          "energy_evaluations": 722.0,
+          "energy_backtracks": 0.0
+        }
+      },
+      "phase_ms_medians": {
+        "base": {
+          "assembly": 20638.406138420105,
+          "pcg": 25292.999826431274,
+          "ccd": 4211.166578650475,
+          "line_search": 10678.168401479721,
+          "state_update": 90.70849606301636
+        },
+        "graph": {
+          "assembly": 20580.040956497192,
+          "pcg": 24384.213859558105,
+          "ccd": 4252.845628619194,
+          "line_search": 10733.813138246536,
+          "state_update": 92.57291191071272
+        },
+        "all": {
+          "assembly": 20762.53578853607,
+          "pcg": 24586.580907821655,
+          "ccd": 3808.5281435847282,
+          "line_search": 9680.536134004593,
+          "state_update": 117.95131169911474
+        }
+      },
+      "material_ranges": {
+        "base": {
+          "max_stretch": [
+            1.004831788334558,
+            1.0057133649932262
+          ],
+          "p99_stretch": [
+            1.0010672074471654,
+            1.0011037047470859
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        },
+        "graph": {
+          "max_stretch": [
+            1.0055623560618643,
+            1.0064726049470982
+          ],
+          "p99_stretch": [
+            1.0010545976439467,
+            1.001088573776978
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        },
+        "all": {
+          "max_stretch": [
+            1.0052965302155568,
+            1.0071094530165707
+          ],
+          "p99_stretch": [
+            1.0010185514964616,
+            1.0010895573812963
+          ],
+          "fixed_drift_m": [
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

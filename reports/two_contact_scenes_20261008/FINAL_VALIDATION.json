@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "compiled_program_sources_objects_link_exe_compilers_unchanged": true,
+  "tool_receipts_unchanged": true,
+  "explicit_derived_inputs": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\Assets\\sorted_mesh\\cipc_table_sorted.16.obj",
+      "bytes": 644338,
+      "sha256": "50d7574cad033d9f47134ddb4415db3084f22a090add5e201da7e17ffbb21f9d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\Assets\\sorted_mesh\\cipc_table_sorted.16.part",
+      "bytes": 31917,
+      "sha256": "b56dd75226e134d8637e41b16200b5d7240647fae8e7935678171375dff243b3"
+    }
+  ],
+  "python_syntax_checks": 2,
+  "missing_counter_checks": 3,
+  "completed_native_runs": 17,
+  "resource_failed_native_runs": 1,
+  "repeated_native_runs": 0,
+  "performance_certified": false,
+  "quality_certified": false
+}
