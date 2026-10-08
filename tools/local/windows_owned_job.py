@@ -223,9 +223,18 @@ class OwnedJob:
                 identity = (pid, created)
                 if identity in self.members: continue
                 text = C.create_unicode_buffer(32768); size = W.DWORD(len(text))
-                _check(self.api.QueryFullProcessImageNameW(handle, 0, text, C.byref(size)), 'Member image')
+                image_ok = self.api.QueryFullProcessImageNameW(handle, 0, text, C.byref(size))
+                image_error = 0 if image_ok else C.get_last_error()
+                if not image_ok and self.exit_code(handle) is None:
+                    # A live member whose identity cannot be inspected still
+                    # fails closed. Only a signalled exact process handle can
+                    # explain this race; PID/name guesses are never sufficient.
+                    raise C.WinError(image_error, 'Member image')
                 self.members[identity] = {'pid': pid, 'creation_time_100ns': created,
-                                          'image': text.value, '_handle': handle}
+                                          'image': text.value if image_ok else None,
+                                          'image_query_error': image_error,
+                                          'exited_before_image_query': not bool(image_ok),
+                                          '_handle': handle}
                 retained = True
             finally:
                 if not retained: self.api.CloseHandle(handle)
