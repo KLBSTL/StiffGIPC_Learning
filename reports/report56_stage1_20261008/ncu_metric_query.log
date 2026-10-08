@@ -1,0 +1,556 @@
+Chip ga104
+------------------------------------------------------------------------------- --------------- --------------- ----------------------------------------------------------------------
+Metric Name                                                                     Metric Type     Metric Unit     Metric Description                                                    
+------------------------------------------------------------------------------- --------------- --------------- ----------------------------------------------------------------------
+gpu__time_duration.avg                                                          Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg across all sub-unit instances)                     
+gpu__time_duration.avg.peak_sustained                                           Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg peak sustained rate across all sub-unit instances) 
+gpu__time_duration.avg.peak_sustained_active                                    Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.avg.peak_sustained_active.per_second                         Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.avg.peak_sustained_elapsed                                   Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.avg.peak_sustained_elapsed.per_second                        Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.avg.per_cycle_active                                         Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.avg.per_cycle_elapsed                                        Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.avg.per_second                                               Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+gpu__time_duration.avg.pct_of_peak_sustained_active                             Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+gpu__time_duration.avg.pct_of_peak_sustained_elapsed                            Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+gpu__time_duration.max                                                          Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max across all sub-unit instances)                     
+gpu__time_duration.max.peak_sustained                                           Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max peak sustained rate across all sub-unit instances) 
+gpu__time_duration.max.peak_sustained_active                                    Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.max.peak_sustained_active.per_second                         Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.max.peak_sustained_elapsed                                   Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.max.peak_sustained_elapsed.per_second                        Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.max.per_cycle_active                                         Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.max.per_cycle_elapsed                                        Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.max.per_second                                               Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+gpu__time_duration.max.pct_of_peak_sustained_active                             Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+gpu__time_duration.max.pct_of_peak_sustained_elapsed                            Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+gpu__time_duration.min                                                          Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min across all sub-unit instances)                     
+gpu__time_duration.min.peak_sustained                                           Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min peak sustained rate across all sub-unit instances) 
+gpu__time_duration.min.peak_sustained_active                                    Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.min.peak_sustained_active.per_second                         Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.min.peak_sustained_elapsed                                   Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.min.peak_sustained_elapsed.per_second                        Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.min.per_cycle_active                                         Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.min.per_cycle_elapsed                                        Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.min.per_second                                               Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+gpu__time_duration.min.pct_of_peak_sustained_active                             Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+gpu__time_duration.min.pct_of_peak_sustained_elapsed                            Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+gpu__time_duration.sum                                                          Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum across all sub-unit instances)                     
+gpu__time_duration.sum.peak_sustained                                           Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum peak sustained rate across all sub-unit instances) 
+gpu__time_duration.sum.peak_sustained_active                                    Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.sum.peak_sustained_active.per_second                         Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.sum.peak_sustained_elapsed                                   Counter         ns              equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+gpu__time_duration.sum.peak_sustained_elapsed.per_second                        Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+gpu__time_duration.sum.per_cycle_active                                         Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.sum.per_cycle_elapsed                                        Counter         ns/cycle        equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+gpu__time_duration.sum.per_second                                               Counter         ns/s            equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+gpu__time_duration.sum.pct_of_peak_sustained_active                             Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+gpu__time_duration.sum.pct_of_peak_sustained_elapsed                            Counter         %               equals to gpu__time_duration_measured_user if collectable, otherwise  
+                                                                                                                equals to gpu__time_duration_measured_wallclock (This counter metric  
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg                                   Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.peak_sustained                    Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.peak_sustained_active             Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.peak_sustained_elapsed            Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.per_second                        Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.avg.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max                                   Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.peak_sustained                    Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.peak_sustained_active             Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.peak_sustained_elapsed            Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.per_second                        Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.max.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min                                   Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.peak_sustained                    Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.peak_sustained_active             Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.peak_sustained_elapsed            Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.per_second                        Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.min.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum                                   Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.peak_sustained                    Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.peak_sustained_active             Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.peak_sustained_elapsed            Counter         sector          # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.per_second                        Counter         sector/s        # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local loads (This counter metric           
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg                                   Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.peak_sustained                    Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.peak_sustained_active             Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.peak_sustained_elapsed            Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.per_second                        Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.avg.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the avg percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max                                   Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.peak_sustained                    Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.peak_sustained_active             Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.peak_sustained_elapsed            Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.per_second                        Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.max.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the max percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min                                   Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.peak_sustained                    Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.peak_sustained_active             Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.peak_sustained_elapsed            Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.per_second                        Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.min.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the min percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum                                   Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum across all sub-unit instances)                     
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.peak_sustained                    Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum peak sustained rate across all sub-unit instances) 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.peak_sustained_active             Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.peak_sustained_active.per_second  Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum peak sustained rate achieved during unit active    
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.peak_sustained_elapsed            Counter         sector          # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.peak_sustained_elapsed.per_second Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum peak sustained rate achieved during elapsed        
+                                                                                                                cycles per second across all sub-unit instances)                      
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.per_cycle_active                  Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum of the number of operations per unit active cycle  
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.per_cycle_elapsed                 Counter         sector/cycle    # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum of the number of operations per elapsed cycle      
+                                                                                                                across all sub-unit instances)                                        
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.per_second                        Counter         sector/s        # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum of the number of operations per second across all  
+                                                                                                                sub-unit instances)                                                   
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.pct_of_peak_sustained_active      Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during unit active cycles across all sub-unit instances)              
+l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum.pct_of_peak_sustained_elapsed     Counter         %               # of sectors requested for local stores (This counter metric          
+                                                                                                                represents the sum percent of the peak sustained rate achieved        
+                                                                                                                during elapsed cycles across all sub-unit instances)                  
+sm__warps_active.avg                                                            Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg across all sub-unit instances)                                    
+sm__warps_active.avg.peak_sustained                                             Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg peak sustained rate across all sub-unit instances)                
+sm__warps_active.avg.peak_sustained_active                                      Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg peak sustained rate achieved during unit active cycles across     
+                                                                                                                all sub-unit instances)                                               
+sm__warps_active.avg.peak_sustained_active.per_second                           Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg peak sustained rate achieved during unit active cycles per        
+                                                                                                                second across all sub-unit instances)                                 
+sm__warps_active.avg.peak_sustained_elapsed                                     Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg peak sustained rate achieved during elapsed cycles across all     
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.avg.peak_sustained_elapsed.per_second                          Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg peak sustained rate achieved during elapsed cycles per second     
+                                                                                                                across all sub-unit instances)                                        
+sm__warps_active.avg.per_cycle_active                                           Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg of the number of operations per unit active cycle across all      
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.avg.per_cycle_elapsed                                          Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg of the number of operations per elapsed cycle across all          
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.avg.per_second                                                 Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg of the number of operations per second across all sub-unit        
+                                                                                                                instances)                                                            
+sm__warps_active.avg.pct_of_peak_sustained_active                               Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg percent of the peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.avg.pct_of_peak_sustained_elapsed                              Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                avg percent of the peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.max                                                            Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max across all sub-unit instances)                                    
+sm__warps_active.max.peak_sustained                                             Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max peak sustained rate across all sub-unit instances)                
+sm__warps_active.max.peak_sustained_active                                      Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max peak sustained rate achieved during unit active cycles across     
+                                                                                                                all sub-unit instances)                                               
+sm__warps_active.max.peak_sustained_active.per_second                           Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max peak sustained rate achieved during unit active cycles per        
+                                                                                                                second across all sub-unit instances)                                 
+sm__warps_active.max.peak_sustained_elapsed                                     Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max peak sustained rate achieved during elapsed cycles across all     
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.max.peak_sustained_elapsed.per_second                          Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max peak sustained rate achieved during elapsed cycles per second     
+                                                                                                                across all sub-unit instances)                                        
+sm__warps_active.max.per_cycle_active                                           Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max of the number of operations per unit active cycle across all      
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.max.per_cycle_elapsed                                          Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max of the number of operations per elapsed cycle across all          
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.max.per_second                                                 Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max of the number of operations per second across all sub-unit        
+                                                                                                                instances)                                                            
+sm__warps_active.max.pct_of_peak_sustained_active                               Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max percent of the peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.max.pct_of_peak_sustained_elapsed                              Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                max percent of the peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.min                                                            Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min across all sub-unit instances)                                    
+sm__warps_active.min.peak_sustained                                             Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min peak sustained rate across all sub-unit instances)                
+sm__warps_active.min.peak_sustained_active                                      Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min peak sustained rate achieved during unit active cycles across     
+                                                                                                                all sub-unit instances)                                               
+sm__warps_active.min.peak_sustained_active.per_second                           Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min peak sustained rate achieved during unit active cycles per        
+                                                                                                                second across all sub-unit instances)                                 
+sm__warps_active.min.peak_sustained_elapsed                                     Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min peak sustained rate achieved during elapsed cycles across all     
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.min.peak_sustained_elapsed.per_second                          Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min peak sustained rate achieved during elapsed cycles per second     
+                                                                                                                across all sub-unit instances)                                        
+sm__warps_active.min.per_cycle_active                                           Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min of the number of operations per unit active cycle across all      
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.min.per_cycle_elapsed                                          Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min of the number of operations per elapsed cycle across all          
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.min.per_second                                                 Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min of the number of operations per second across all sub-unit        
+                                                                                                                instances)                                                            
+sm__warps_active.min.pct_of_peak_sustained_active                               Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min percent of the peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.min.pct_of_peak_sustained_elapsed                              Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                min percent of the peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.sum                                                            Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum across all sub-unit instances)                                    
+sm__warps_active.sum.peak_sustained                                             Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum peak sustained rate across all sub-unit instances)                
+sm__warps_active.sum.peak_sustained_active                                      Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum peak sustained rate achieved during unit active cycles across     
+                                                                                                                all sub-unit instances)                                               
+sm__warps_active.sum.peak_sustained_active.per_second                           Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum peak sustained rate achieved during unit active cycles per        
+                                                                                                                second across all sub-unit instances)                                 
+sm__warps_active.sum.peak_sustained_elapsed                                     Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum peak sustained rate achieved during elapsed cycles across all     
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.sum.peak_sustained_elapsed.per_second                          Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum peak sustained rate achieved during elapsed cycles per second     
+                                                                                                                across all sub-unit instances)                                        
+sm__warps_active.sum.per_cycle_active                                           Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum of the number of operations per unit active cycle across all      
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.sum.per_cycle_elapsed                                          Counter         warp            cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum of the number of operations per elapsed cycle across all          
+                                                                                                                sub-unit instances)                                                   
+sm__warps_active.sum.per_second                                                 Counter         warp/s          cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum of the number of operations per second across all sub-unit        
+                                                                                                                instances)                                                            
+sm__warps_active.sum.pct_of_peak_sustained_active                               Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum percent of the peak sustained rate achieved during unit active    
+                                                                                                                cycles across all sub-unit instances)                                 
+sm__warps_active.sum.pct_of_peak_sustained_elapsed                              Counter         %               cumulative # of warps in flight (This counter metric represents the   
+                                                                                                                sum percent of the peak sustained rate achieved during elapsed        
+                                                                                                                cycles across all sub-unit instances)                                 
+smsp__warp_issue_stalled_long_scoreboard_per_warp_active.max_rate               Ratio                           proportion of warps per cycle, waiting for a scoreboard dependency on 
+                                                                                                                L1TEX (local, global, surface, tex) operation (This ratio metric      
+                                                                                                                represents the ratio's maximum value across all sub-unit instances)   
+smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                    Ratio           %               proportion of warps per cycle, waiting for a scoreboard dependency on 
+                                                                                                                L1TEX (local, global, surface, tex) operation (This ratio metric      
+                                                                                                                represents the value expressed as a percentage across all sub-unit    
+                                                                                                                instances)                                                            
+smsp__warp_issue_stalled_long_scoreboard_per_warp_active.ratio                  Ratio                           proportion of warps per cycle, waiting for a scoreboard dependency on 
+                                                                                                                L1TEX (local, global, surface, tex) operation (This ratio metric      
+                                                                                                                represents the value expressed as a ratio across all sub-unit         
+                                                                                                                instances)                                                            
+

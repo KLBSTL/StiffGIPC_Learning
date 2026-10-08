@@ -1,0 +1,54 @@
+{
+  "schema": "report56_stage1_tools_validation.v1",
+  "date": "2026-10-08",
+  "cwd": "E:/university_class/ComputerGraphics/GIPC/StiffGIPC_Learning",
+  "scope": "CPU contracts, real Windows CPU process-tree cleanup, read-only configuration review, and byte-exact verification of the existing frozen reference. No GPU query or workload, native build, baseline edit, or Git commit was performed by this agent.",
+  "tests": [
+    {
+      "command": "& 'E:/Anaconda/envs/DL/python.exe' tools/local/contracts_test.py -v",
+      "exit_code": 0,
+      "passed": 14,
+      "seconds": 3.441,
+      "coverage": "Configured 180/600-second deadlines; legacy 120-second budget; ordinary launcher owned-Job cleanup after monitor failure; exact snapshot recovery; CRLF/LF mismatch rejection; runtime Assets and snapshot tamper rejection."
+    },
+    {
+      "command": "& 'E:/Anaconda/envs/DL/python.exe' tools/local/profiler_windows_contracts_test.py -v",
+      "exit_code": 0,
+      "passed": 17,
+      "seconds": 1.103,
+      "coverage": "120-frame/180-second finite scene whitelist; unchanged two-attempt budget per executable; unchanged resource thresholds; exited image gaps require explicit successful solver image; real Windows CPU parent/child/grandchild termination and foreign Job survival."
+    },
+    {
+      "command": "& 'E:/Anaconda/envs/DL/python.exe' tools/bench/contracts_test.py -v",
+      "exit_code": 0,
+      "passed": 23,
+      "seconds": 2.529,
+      "coverage": "Existing configuration/identity/Graph contracts and three new StructureQueryProbeContracts for default-off environment, frame ranges, standalone IPC/profile restrictions, requested/resolved structure probe mismatch rejection, and old disabled results."
+    }
+  ],
+  "total_passed": 54,
+  "patch_check": {
+    "command": "git diff --check -- tools/local/local_identity.py tools/local/windows_runner.py tools/local/profiler_windows.py tools/local/contracts_test.py tools/local/profiler_windows_contracts_test.py",
+    "exit_code": 0
+  },
+  "frozen_reference": {
+    "path": "E:/university_class/ComputerGraphics/GIPC/StiffGIPC_Learning/build/report56_recheck_final_20261008/frozen_native_inputs/snapshot_identity.json",
+    "verification": "Passed verify_active_sources(identity) and verify(identity.sources + identity.build_evidence + identity.objects + [identity.exe] + identity.dlls + compiler binary records), using CPU hashing only.",
+    "source_records": 329,
+    "frozen_source_mapping": 268,
+    "live_runtime_assets": 61,
+    "source_digest": "b4402578b4c968f789adbfd1841c189804ca286e2a38ee13eda6d05ef04aebe2",
+    "exe_sha256": "0241124167cc9f2f770f4f7b71d2844b71f6878b7be2525e3dde0cc24bb18f29",
+    "git_recovered_files": 2,
+    "git_source_commit": "3663d22cc027f19d0a547eeda9fedb97975c64de",
+    "recovery_scope": "Only converter.cu/h required original raw Git blob recovery; each byte count and SHA256 matched the previously verified identity and both retained build inventories. New probe files were excluded from the reference inventory."
+  },
+  "review": {
+    "identity_checks_relaxed": false,
+    "resource_thresholds_relaxed": false,
+    "automatic_retry_added": false,
+    "default_diagnostics_changed": false,
+    "reference_budget": "120 frames, 180 seconds per run; old requests retain 120 seconds. Configuration-driven ordinary execution also supports 300 frames/600 seconds without changing the existing finite profiler whitelist.",
+    "limitations": "CPU contracts and source review do not establish native diagnostic GPU safety, physical quality equivalence, or performance certification. WDDM load attribution limitations and the original failed quality gate remain unchanged."
+  }
+}

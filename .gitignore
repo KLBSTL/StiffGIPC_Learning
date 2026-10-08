@@ -15,4 +15,5 @@
 .ssh/
 *.pem
 reports/autodl_step1/guards_analysis.json
+reports/report56_stage1_20261008/BASELINE_REVIEW.json
 timeCost.txt

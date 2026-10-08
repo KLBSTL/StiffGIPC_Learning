@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "cpu_contract_tests": 56,
+  "rows": [
+    {
+      "name": "bench",
+      "tests": 23,
+      "status": "passed",
+      "log": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\bench_contracts_final.log",
+        "bytes": 127,
+        "sha256": "c94d52a31160f6195af24bed788cf2d4e4ebd0f003e8d58c95b9a9a86b87a907"
+      }
+    },
+    {
+      "name": "local",
+      "tests": 16,
+      "status": "passed",
+      "log": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\local_contracts_final.log",
+        "bytes": 194,
+        "sha256": "cad61b2133204c4b68f51ed5e83aa1e487e578ba51dd8cdab6b69b02556028d0"
+      }
+    },
+    {
+      "name": "profiler",
+      "tests": 17,
+      "status": "passed",
+      "log": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profiler_contracts_final.log",
+        "bytes": 121,
+        "sha256": "fefd3ff50a959aa92201b02d0184c6e669d32d9e33a2d4a6bc40a6433b4c33c4"
+      }
+    },
+    {
+      "name": "structure_analyzer",
+      "checks": [
+        "adjacent_denominator",
+        "first_shape_gap_exclusions",
+        "canonical_not_mapping_partition",
+        "nonfinite_rejection",
+        "empty_distribution",
+        "missing_gpu_not_zero"
+      ],
+      "status": "passed",
+      "log": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\structure_analyzer_self_test.log",
+        "bytes": 199,
+        "sha256": "0ecab70dc7e45826b9f87e3149e3089b2bba0a82e453ee2d5c80c74a8f6f164e"
+      }
+    }
+  ],
+  "scope": "CPU contracts only; native GPU checks recorded separately, no quality or performance certification",
+  "final_structure_analyzer": {
+    "status": "passed",
+    "checks": [
+      "adjacent_denominator",
+      "first_shape_gap_exclusions",
+      "canonical_not_mapping_partition",
+      "nonfinite_rejection",
+      "empty_distribution",
+      "missing_gpu_not_zero",
+      "actual_body_vector_rms_max",
+      "nonfinite_actual_trajectory_rejection"
+    ],
+    "log": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\structure_analyzer_self_test_final.log",
+      "bytes": 270,
+      "sha256": "1985ee066acea7271171a27a5e5f54d3e685346619eb22c975c20a96bdf32461"
+    }
+  }
+}

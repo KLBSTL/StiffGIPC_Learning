@@ -1,0 +1,39 @@
+{
+  "schema": "report56_structure_query_validation.v1",
+  "scope": "CPU-only analysis of immutable, already closed probe/control and historical all-arm evidence. No native, existing tool, PLAN, controller, build, GPU or Git operations.",
+  "analyzer_sha256": "069759a869fd1957b69cb375c4bdeabd00b5c06b07fd55fbac95d9a6f41c2b2d",
+  "analysis_json_sha256": "286af167e17639a1351a0626c429f227092e4d90c6bf825260a3fed8faa857a1",
+  "analysis_markdown_sha256": "0394af42f00d43720d75e034eb47310c739741c461c1f699c26107ded6ab1af3",
+  "commands": [
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -B reports/report56_stage1_20261008/analyze_structure_queries.py --self-test",
+      "exit_code": 0,
+      "checks": 8,
+      "result": "passed"
+    },
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -B reports/report56_stage1_20261008/analyze_structure_queries.py --require-complete",
+      "exit_code": 0,
+      "result": "data_complete=true; both scenes validated_completed"
+    },
+    {
+      "command": "E:/Anaconda/envs/DL/python.exe -B - (independent NumPy double3 cross-check supplied on stdin)",
+      "exit_code": 0,
+      "result": "passed",
+      "numeric_and_bitwise_checks": 13616,
+      "trajectory_files_hash_verified_in_pair_reads": 3872,
+      "scope": "2 same-program on/off pairs and 6 old-program all-repeat pairs, all 121 state and actual velocity exports, both body types",
+      "numeric_method": "NumPy sqrt(mean(sum(delta*delta, axis=1))) and max(sqrt(sum(delta*delta, axis=1))), independently checked against scalar hypot/fsum report calculations",
+      "numeric_cross_implementation_rtol": 1e-12,
+      "numeric_cross_implementation_atol": 0,
+      "tolerance_scope": "Floating-point reduction rounding only. Byte equality and closed SHA256 checks remain exact. This is not a neutrality or physical quality threshold."
+    }
+  ],
+  "same_program_observer_control_bitwise_equal": false,
+  "production_bvh_tuple_samples_passed": 480,
+  "production_bvh_tuple_samples_total": 480,
+  "per_system_hessian_rhs_preconditioner_before_after_checksum_available": false,
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "diagnostic_neutrality_certified": false
+}

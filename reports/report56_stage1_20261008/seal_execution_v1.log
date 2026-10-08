@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\reports\report56_stage1_20261008\seal_round.py", line 72, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\reports\report56_stage1_20261008\seal_round.py", line 17, in main
+    verify(identity['sources'] + identity['build_evidence'] + identity['objects'] +
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\local\local_identity.py", line 17, in verify
+    for r in rows:require(record(Path(r['path']))==r,'Identity changed: '+r['path'])
+                                      ~^^^^^^^^
+KeyError: 'path'

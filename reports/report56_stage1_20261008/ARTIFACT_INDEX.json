@@ -1,0 +1,355 @@
+{
+  "schema": "report56.round_artifacts.v1",
+  "artifacts": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_profile_costs.py",
+      "bytes": 27019,
+      "sha256": "cbdcf83f8f86a8c842b2b1a285a1ec1823e85cd55f17cfae874fe0c3b191a6ad"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_query_branch.py",
+      "bytes": 32298,
+      "sha256": "a0e4a7df7bc590280cf43f2f180a7bcf3a00c54ccf2393f596b459fd128d21bd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_query_counters.py",
+      "bytes": 5986,
+      "sha256": "ee97ae03944126195d87441c4625c245a1b3bc6cfd0f87ca8543f2aeb416fda4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_reference_costs.py",
+      "bytes": 25149,
+      "sha256": "03a1448aa4db0c8f942b7488c818158ea68455317979bf6b2f3ed5aee246ab49"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_structure_queries.py",
+      "bytes": 48111,
+      "sha256": "069759a869fd1957b69cb375c4bdeabd00b5c06b07fd55fbac95d9a6f41c2b2d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\BASELINE_MATERIAL_PROTOCOL.json",
+      "bytes": 4720,
+      "sha256": "9e0d06d085cb8f947e8046dfd4109ae3484be6ea2cdbcc0577f69bffa3dab249"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\baseline_review_execution.log",
+      "bytes": 366,
+      "sha256": "23a1edfa5008b70133b5dd71aae9fe8adda65dd90c7dfe74fb57ba7be1685248"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\BASELINE_REVIEW_SUMMARY.json",
+      "bytes": 6984,
+      "sha256": "ce1f0901ee6c86831749aed5d3e1c2b03eda5d8fecad395a4b131571a82608e4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\bench_contracts_final.log",
+      "bytes": 127,
+      "sha256": "c94d52a31160f6195af24bed788cf2d4e4ebd0f003e8d58c95b9a9a86b87a907"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\COUNTER_CAPTURE_SOURCE_SNAPSHOT.json",
+      "bytes": 779,
+      "sha256": "ff0db289f87145895a297ee1176d6c6f03adabb2cdd187ec6fc9d6cbe4381a34"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\counter_parser_fix_validation.log",
+      "bytes": 60,
+      "sha256": "1173092419c260a5161932615d519569e6ba2dbcd4b338cb2f5b695e43a8bf4f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\CPU_VALIDATION.json",
+      "bytes": 2560,
+      "sha256": "581da61773aec1ba38b8979c60d20120940d50778f941bbb495818ca48f7ed4e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\frozen_resource_usage.log",
+      "bytes": 74419,
+      "sha256": "f890749fe1737fea5b9a9bf76f1b3a267235682d6ff65756a07f56b77a4bdad8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\FULL_CTEST.log",
+      "bytes": 2340,
+      "sha256": "786e942c3bc562a0965d8786a6cc2a317e1d05d4f54c41cad93dc2098e71aa97"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\inspect_query_sass.py",
+      "bytes": 8335,
+      "sha256": "d09f6500020b77407b2b97a9846b481e69a8c675f896cf4bac6a63dadc7e41e7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\LINEAR_BRANCH_DECISION.md",
+      "bytes": 22837,
+      "sha256": "8dfeb3dad585009ca44a743594b3af4819cca3ec00990aa920b5cab3924d4a59"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\LINEAR_PROBE_DESIGN.md",
+      "bytes": 9263,
+      "sha256": "0c131cdb176840d5ed0e2b80d0a87f25ec59bd381f1139aa3d96c8d4b06033ad"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\local_contracts_final.log",
+      "bytes": 194,
+      "sha256": "cad61b2133204c4b68f51ed5e83aa1e487e578ba51dd8cdab6b69b02556028d0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\LOCAL_EVIDENCE_INDEX.json",
+      "bytes": 96652,
+      "sha256": "78c4e1806caf986f3cb162b48fb5f1b4d5db9a986aa4cebb8ff372040b319f07"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\native_build_execution.log",
+      "bytes": 618,
+      "sha256": "bf1f5f12d03d3f7aa79455e2971dee49defa4638875b895ee33d38d6d71375ac"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\native_build_fix_execution.log",
+      "bytes": 13381,
+      "sha256": "e01b7272ad8ee7d9c6c36cc85c4d76b6e60a896d2e26825b5853d5682b0eba67"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\native_build_verified_execution.log",
+      "bytes": 316,
+      "sha256": "9ac437e92f2261b4ffb8ff9f5e1a8d0e91a08b88c91a0546d7524b136d18eeb3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NATIVE_VALIDATION.json",
+      "bytes": 1852,
+      "sha256": "6f2f5f7cf32dfc5d22f66a41848329d635b349700b2fa38df0c1c11b5baad212"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\ncu_help.log",
+      "bytes": 33532,
+      "sha256": "42be422878ba967d716425c546809585eb5668164b07705d22211128b89bbdf6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\ncu_metric_query.log",
+      "bytes": 101950,
+      "sha256": "af5ade04ee3f5121c6a4be61f37d0d6032781b9924f1e9e7109ab222e326bd28"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NCU_QUERY_CHECK_PLAN.json",
+      "bytes": 2912,
+      "sha256": "9b8cb091bcd7d57b063e1ef629a412c6c33899794cc2f0b7239dc2a6bab78287"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NEW_EE_SASS.log",
+      "bytes": 1242438,
+      "sha256": "b443c091edfbc6d650f8862a129a6e09e48df488a52491dae548020a3a07c367"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NEW_EE_SASS_ANALYSIS.json",
+      "bytes": 846819,
+      "sha256": "7ce8ee205e9d6e9850acf528aa7acccf010c63769be852ea8cf8285b824982fc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NEW_EE_SASS_ANALYSIS.md",
+      "bytes": 2384,
+      "sha256": "77af67f34b1558b4e0dc2169545816b11444cdb5a5235aa234cc432dc624755e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\NSIGHT_SEAL_VALIDATION.json",
+      "bytes": 2564,
+      "sha256": "3fea529f2afd9e043e767b069c558f7a3ad23e8a5692bbb413115a8803714b91"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\OLD_EVIDENCE_VALIDATION.json",
+      "bytes": 279,
+      "sha256": "a7ec0d97bab3b20761a9535494edca30e1a2a699703268d34fccaa334fc92f28"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\PLAN.md",
+      "bytes": 3272,
+      "sha256": "ec85c2f6c833cab3866a6cb2fabc1410b90a4994e485d4ad9e4a77d70e1fa007"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\probe_execution.log",
+      "bytes": 394,
+      "sha256": "29264e88ab5796e4cd24da21811e19f1b09efb5ee002a33698c81769a7dfef35"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\PROBE_PROGRAM_IDENTITY.json",
+      "bytes": 290266,
+      "sha256": "7750c8f6ea70ab2fa83885dd9486796ae69a2e1e58ed7b7fd8c1581cd01f1fbe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\PROFILE_COST_ANALYSIS.json",
+      "bytes": 453404,
+      "sha256": "24528591ad49a421d3970c627a341349cc7aad27f5e6a35aad057ba95946cb0c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\PROFILE_COST_ANALYSIS.md",
+      "bytes": 15475,
+      "sha256": "4d03016a602077ce1f3323e9c0e6e227707070c1f3e54de058088ff246dcebda"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profile_fixed_export.log",
+      "bytes": 8202,
+      "sha256": "d3f65250282b5abda2a6bdaf1d3d8d88804bbc18f12b8679871675988a29a2c3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profile_fixed_launch.log",
+      "bytes": 217,
+      "sha256": "c412f39c14af1f0d8deb0d7b9a690d465987d07c4a1573a283d9023f4dce1aed"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profile_sphere_export.log",
+      "bytes": 8202,
+      "sha256": "caf2694c17acae13728c1114018a925a59314cfde9a4c5fdcb3fd9c0d99b3d94"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\PROFILE_SPHERE_F49.json",
+      "bytes": 75909,
+      "sha256": "381cb32026965145ef44b39ad42c3e3de102b7adaf2d679d6608944daee730c8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profile_sphere_launch.log",
+      "bytes": 217,
+      "sha256": "463a9ca71d333178603026c9de43c633bae8fdfd10f502a2e84050e75884bbbc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\profiler_contracts_final.log",
+      "bytes": 121,
+      "sha256": "fefd3ff50a959aa92201b02d0184c6e669d32d9e33a2d4a6bc40a6433b4c33c4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\query_branch_analysis_final.log",
+      "bytes": 287,
+      "sha256": "dc48a12ee248e7cd5fa09450295fa3461afaf72e104611866b95ee5d335e88bd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\QUERY_BRANCH_DECISION.json",
+      "bytes": 775051,
+      "sha256": "9724d0513aff85ac9052764a6db1331080ff15e73e3a4fa09d69ad9c603cc520"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\QUERY_BRANCH_DECISION.md",
+      "bytes": 15133,
+      "sha256": "4b40762998895e54a7509754c9007f7524fa9cb0b8768a1fe16d76336192db0a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\QUERY_COUNTER_ANALYSIS.json",
+      "bytes": 5064,
+      "sha256": "b3e0681d2d9036428fb0663c34f5c539a813e23277f99bcc0729894965b012e4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\query_counter_analysis.log",
+      "bytes": 170,
+      "sha256": "56ed1b3a80109d94e2bae34c862c59a4876e8a98a21bf39d36c1b585de535d55"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\QUERY_COUNTER_ANALYSIS.md",
+      "bytes": 2036,
+      "sha256": "1f0f6e2a95be1304bbec4f1d7c12d77fe1e52f0a0a5f5c353c7ebc880a223316"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\query_counter_capture_source_v1.py",
+      "bytes": 10432,
+      "sha256": "4294f3b407fb6245764877489dd4451bef5791ed02e3d95340bc532bbd8d028c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\query_counters_execution.log",
+      "bytes": 192,
+      "sha256": "afab9dc16fcac31571cc5fabae1a8e35dd969108594c75b77624e47f03ba58ac"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\REFERENCE_COST_ANALYSIS.json",
+      "bytes": 2137023,
+      "sha256": "53df828f7e5916d5f87c33b32ab6c580077e798442c96cb418493ee7556ecd36"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\REFERENCE_COST_ANALYSIS.md",
+      "bytes": 7447,
+      "sha256": "4f458612ac706940ffb194a595e8253c8354dd3f1265c6d01e8fe2c15a572bad"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\reference_execution.log",
+      "bytes": 1997,
+      "sha256": "fc11a905b9af5925d0734f1b6f50aa25fe6bc7f609288dec5f837fd6729757d4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\REFERENCE_RESULTS.json",
+      "bytes": 2826,
+      "sha256": "ceb6b70b91c7885941d3d1d373ec2d59561448fab36a17189b9c7e42f6e10526"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\ROUND_RESULT.md",
+      "bytes": 11622,
+      "sha256": "db77cedbbf7639198ff149b498bd51148fcab16995bf97d91884ec46ae47a694"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_baseline_review.py",
+      "bytes": 4104,
+      "sha256": "5c347a170738ebf0f31a739996534da3f794620683f74402890c6ac4dd4500d1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_probe_round.py",
+      "bytes": 2317,
+      "sha256": "1fc67a13c60f5aab12df75b09be3773ad92f8315bd093cc07f1e0a09c99c3f43"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_query_counters.py",
+      "bytes": 11030,
+      "sha256": "68e1536b87e1b6b9c5723ad350a5f60f2559fb88a18abf3ed22ba9496b0ea40f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_stage1.py",
+      "bytes": 8809,
+      "sha256": "5285e1e41b82246b671a7985a8e9e17a15b3638ace29b3c8c6036ce5f37c4841"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\seal_execution_v1.log",
+      "bytes": 749,
+      "sha256": "657a399c900964fe255d3198f43c7a8f0e6fec24556a688174ceed2238b34399"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\seal_round.py",
+      "bytes": 4466,
+      "sha256": "d9762c5cb0dc2d0f9dfd4bbebd2404b63bced16b1710f991bb93cabb626d5080"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\structure_analysis_final.log",
+      "bytes": 167,
+      "sha256": "a0fc4d53ed637c06c3e98c5bf55729e961b9897e6749719eb4ad6757fbdcb47e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\structure_analyzer_self_test.log",
+      "bytes": 199,
+      "sha256": "0ecab70dc7e45826b9f87e3149e3089b2bba0a82e453ee2d5c80c74a8f6f164e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\structure_analyzer_self_test_final.log",
+      "bytes": 270,
+      "sha256": "1985ee066acea7271171a27a5e5f54d3e685346619eb22c975c20a96bdf32461"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\STRUCTURE_QUERY_ANALYSIS.json",
+      "bytes": 15576272,
+      "sha256": "286af167e17639a1351a0626c429f227092e4d90c6bf825260a3fed8faa857a1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\STRUCTURE_QUERY_ANALYSIS.md",
+      "bytes": 13277,
+      "sha256": "0394af42f00d43720d75e034eb47310c739741c461c1f699c26107ded6ab1af3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\STRUCTURE_QUERY_VALIDATION.json",
+      "bytes": 2203,
+      "sha256": "22db6c2bfae445c0740949e9e3d76c1ee404c89215da39f15bd49ac4c918fd34"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\TOOLS_VALIDATION.json",
+      "bytes": 3687,
+      "sha256": "b086df94da222b3d99a0cbac4e7a91c2ce04d33754b3f0f3fcf338454c7c0dd9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\validation_full_execution.log",
+      "bytes": 175,
+      "sha256": "12cd3d4f6f015a0b67c38b960f07ad119d87d91ff9593dd980ca3f09b61bd9e2"
+    }
+  ],
+  "original_sealed_artifacts_unchanged": 16,
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "diagnostic_neutrality_certified": false,
+  "target_2x_achieved": false
+}

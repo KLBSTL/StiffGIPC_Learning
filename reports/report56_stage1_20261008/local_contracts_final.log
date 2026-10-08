@@ -1,0 +1,6 @@
+{"run": "cpu_only", "status": "launcher_or_monitor_failed", "frames": 0}
+................
+----------------------------------------------------------------------
+Ran 16 tests in 3.932s
+
+OK

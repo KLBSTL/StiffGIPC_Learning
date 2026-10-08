@@ -1,0 +1,192 @@
+{
+  "status": "completed",
+  "protocol": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\BASELINE_MATERIAL_PROTOCOL.json",
+    "bytes": 4720,
+    "sha256": "9e0d06d085cb8f947e8046dfd4109ae3484be6ea2cdbcc0577f69bffa3dab249"
+  },
+  "quality_certified": false,
+  "performance_certified": false,
+  "baseline_ranges_reproduced": false,
+  "decision": "Protocol cannot certify. Frozen bounds retained; review/candidate data do not expand them.",
+  "local_raw_evidence": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\BASELINE_REVIEW.json",
+    "sha256": "438ff1ed154e796cc7ac475a72fb771e444ea229bb54e4afc4a84f8d29638a01",
+    "bytes": 1428395
+  },
+  "rows": [
+    {
+      "name": "cloth_sphere7_l_base_r4",
+      "scene": "cloth_sphere7_l",
+      "material": {
+        "max_stretch": 1.0190952732609002,
+        "p99_stretch": 1.0141778502891936,
+        "fixed_drift_m": 0.0,
+        "finite": true,
+        "pcg_reported_failures": 0,
+        "evidence": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\evidence.json",
+          "bytes": 22002,
+          "sha256": "1bc3e1cdc8192e0835646a9f27ddb10a08d1e7edb1f105c240b4c74ea6b02359"
+        }
+      },
+      "checks": {
+        "max_stretch": {
+          "actual": 1.0190952732609002,
+          "upper": 1.047040999241993,
+          "excess": -0.027945725981092684,
+          "numerical_tolerance": 2.0470409992419928e-10,
+          "passed": true
+        },
+        "p99_stretch": {
+          "actual": 1.0141778502891936,
+          "upper": 1.0141777739367674,
+          "excess": 7.63524261593318e-08,
+          "numerical_tolerance": 2.0141777739367675e-10,
+          "passed": false
+        },
+        "fixed_drift_m": {
+          "actual": 0.0,
+          "upper": 6.162975822039155e-33,
+          "excess": -6.162975822039155e-33,
+          "numerical_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": false,
+      "run_status": "completed",
+      "recorded_frames": 120,
+      "timeout_seconds": 180
+    },
+    {
+      "name": "cloth_fixed_bunny_l_base_r4",
+      "scene": "cloth_fixed_bunny_l",
+      "material": {
+        "max_stretch": 1.0360128059424591,
+        "p99_stretch": 1.013439356145563,
+        "fixed_drift_m": 3.925231146709438e-17,
+        "finite": true,
+        "pcg_reported_failures": 0,
+        "evidence": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\evidence.json",
+          "bytes": 22127,
+          "sha256": "d0ea13a17d3d70e00f142c3e66353aaed84787e5a14f413628cbb8b137101cd3"
+        }
+      },
+      "checks": {
+        "max_stretch": {
+          "actual": 1.0360128059424591,
+          "upper": 1.0360013469672853,
+          "excess": 1.1458975173850305e-05,
+          "numerical_tolerance": 2.0360013469672853e-10,
+          "passed": false
+        },
+        "p99_stretch": {
+          "actual": 1.013439356145563,
+          "upper": 1.0136801044009351,
+          "excess": -0.00024074825537212519,
+          "numerical_tolerance": 2.013680104400935e-10,
+          "passed": true
+        },
+        "fixed_drift_m": {
+          "actual": 3.925231146709438e-17,
+          "upper": 3.925231146709438e-17,
+          "excess": 0.0,
+          "numerical_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": false,
+      "run_status": "completed",
+      "recorded_frames": 120,
+      "timeout_seconds": 180
+    },
+    {
+      "name": "cloth_sphere7_l_base_r5",
+      "scene": "cloth_sphere7_l",
+      "material": {
+        "max_stretch": 1.0190485736529404,
+        "p99_stretch": 1.0141779931354995,
+        "fixed_drift_m": 0.0,
+        "finite": true,
+        "pcg_reported_failures": 0,
+        "evidence": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\evidence.json",
+          "bytes": 22002,
+          "sha256": "24dd9ea0701211bbfc7f337505696c4a2193913b0877971f955fa64ee3f4a6cd"
+        }
+      },
+      "checks": {
+        "max_stretch": {
+          "actual": 1.0190485736529404,
+          "upper": 1.047040999241993,
+          "excess": -0.02799242558905246,
+          "numerical_tolerance": 2.0470409992419928e-10,
+          "passed": true
+        },
+        "p99_stretch": {
+          "actual": 1.0141779931354995,
+          "upper": 1.0141777739367674,
+          "excess": 2.191987320543376e-07,
+          "numerical_tolerance": 2.0141777739367675e-10,
+          "passed": false
+        },
+        "fixed_drift_m": {
+          "actual": 0.0,
+          "upper": 6.162975822039155e-33,
+          "excess": -6.162975822039155e-33,
+          "numerical_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": false,
+      "run_status": "completed",
+      "recorded_frames": 120,
+      "timeout_seconds": 180
+    },
+    {
+      "name": "cloth_fixed_bunny_l_base_r5",
+      "scene": "cloth_fixed_bunny_l",
+      "material": {
+        "max_stretch": 1.0370368842409194,
+        "p99_stretch": 1.0139236622989238,
+        "fixed_drift_m": 5.721958498152797e-17,
+        "finite": true,
+        "pcg_reported_failures": 0,
+        "evidence": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\evidence.json",
+          "bytes": 22127,
+          "sha256": "344d50aabc01d435c5fe88c7b8953844be7970d4ac54bfb755812edb919a3cf9"
+        }
+      },
+      "checks": {
+        "max_stretch": {
+          "actual": 1.0370368842409194,
+          "upper": 1.0360013469672853,
+          "excess": 0.0010355372736341462,
+          "numerical_tolerance": 2.0360013469672853e-10,
+          "passed": false
+        },
+        "p99_stretch": {
+          "actual": 1.0139236622989238,
+          "upper": 1.0136801044009351,
+          "excess": 0.00024355789798868877,
+          "numerical_tolerance": 2.013680104400935e-10,
+          "passed": false
+        },
+        "fixed_drift_m": {
+          "actual": 5.721958498152797e-17,
+          "upper": 3.925231146709438e-17,
+          "excess": 1.796727351443359e-17,
+          "numerical_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": false,
+      "run_status": "completed",
+      "recorded_frames": 120,
+      "timeout_seconds": 180
+    }
+  ],
+  "publication_scope": "Material statistics and run status only; original process telemetry and raw evidence retained locally"
+}

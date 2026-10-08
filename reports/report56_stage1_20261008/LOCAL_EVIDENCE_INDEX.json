@@ -1,0 +1,1720 @@
+{
+  "schema": "report56.closed_local_evidence.v1",
+  "registries": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\BASELINE_REVIEW_LEDGER.json",
+      "bytes": 1428395,
+      "sha256": "438ff1ed154e796cc7ac475a72fb771e444ea229bb54e4afc4a84f8d29638a01"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\PROBE_IDENTITY.json",
+      "bytes": 290264,
+      "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\PROBE_LEDGER.json",
+      "bytes": 1232789,
+      "sha256": "19a0fcb49f396ebe6175a79e815c590c94acccc4e7d7bc70267fee463a4d3a0d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\PROFILE_SEAL.json",
+      "bytes": 657838,
+      "sha256": "36f6eb28534f399f28f2d705933c6d9a7034c78f065dfe84fa0f823a3ff8a17f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\REFERENCE_IDENTITY.json",
+      "bytes": 803980,
+      "sha256": "8c1f26f99a90f035c69c22024ac4ab76e8b83951106f56bd7b2763b55662c06a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\REFERENCE_LEDGER.json",
+      "bytes": 6994942,
+      "sha256": "04cf31ace185cb6e395aeff8d5a2e8061301677890d0ea817ef061f7a5a537ba"
+    }
+  ],
+  "runs": [
+    {
+      "run": "reference\\cloth_fixed_bunny_l_all_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\requested.json",
+          "bytes": 17192,
+          "sha256": "da451bdc22cea6459affc367ba35667b4af3871ad4a59684eb974a98ba56bbd6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\result.json",
+          "bytes": 256840,
+          "sha256": "f21e8023973ed0bcd7c353375a608d84dc29b338683e77167cd289dc271477c1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\evidence.json",
+          "bytes": 42254,
+          "sha256": "b86acb2ebb54b50dea013b9a24fa7607147bd7ca2db3160da1d39faa2d741a57"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\config_validation.json",
+          "bytes": 7235,
+          "sha256": "b7bdf0577597c714c9eb17f714810b608db5074bbc932f7f0ecd80f534b7e556"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\trace\\frames.csv",
+          "bytes": 3000,
+          "sha256": "cb61a40857c2ee46e5f8eb1bad5e8f1652ee7d5e774f146e4fcc65342e2aac4e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r1\\output\\stats.json",
+          "bytes": 2315411,
+          "sha256": "c01e39e0c010b8276480a70f843b4a11a9a54879cdf5f3be15074ef595120aef"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_all_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\requested.json",
+          "bytes": 17191,
+          "sha256": "227f50027087378e697aaa82bd98f23205e48e4b6c12e619f2692fff6c7347ee"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\result.json",
+          "bytes": 246941,
+          "sha256": "f283e1d851470f7744bfb8e3f2230f9115ad785ee581ef02ed14bf4452e5bcdd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\evidence.json",
+          "bytes": 42254,
+          "sha256": "6dafaef853df53ba637fbd6775d48c0cd45bcc95d4020c2adb0495a47cf556c6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\config_validation.json",
+          "bytes": 7235,
+          "sha256": "686e8761cfb2cb0a6ed526c01d96bf3c87377149293a5dbd69d27a719a7ea25d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\trace\\frames.csv",
+          "bytes": 3007,
+          "sha256": "d5f4f68a6832c00174340be525a80b19e3ac1ea62dcfc08c39f4e22689b8a43f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r2\\output\\stats.json",
+          "bytes": 2281027,
+          "sha256": "658ae81c0728ed65b45dcd8a7b7f86c110a10e12dc0eed5a67431a76e47a25bf"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_all_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\requested.json",
+          "bytes": 17189,
+          "sha256": "d018ccead81f6b19fc861ba32de3ee56cc1bb2a01acff60b4b0b054282811357"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\result.json",
+          "bytes": 246933,
+          "sha256": "4fa44eff6bfeeeb7b0b07c3cc93d04f5342bc74797502554d72d143331f6832b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\evidence.json",
+          "bytes": 42254,
+          "sha256": "ccf22cc6412eb61cf950540cdf36efcdbe992f3e7fad9027888ba1f8d61043ed"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\config_validation.json",
+          "bytes": 7235,
+          "sha256": "0efdf2e65f852471b97dad69ced5b3fbf005de091d20ac7dcdfdfea686331ddc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\trace\\frames.csv",
+          "bytes": 2970,
+          "sha256": "1c9b007a1360b0dafad49f6de9ff97d346fa49b43cd8e55a1433cde8fdbcae65"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_all_r3\\output\\stats.json",
+          "bytes": 2277321,
+          "sha256": "7cdba57185810b1950c0f33660a7108c2a9d44c1079dc4648112415c3943de29"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_base_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\requested.json",
+          "bytes": 14982,
+          "sha256": "ab9185dc741dd88692b53af7aa15380f3a8f349ed0c6871db5dab7b570635a30"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\result.json",
+          "bytes": 318912,
+          "sha256": "e4b0d84f897294e5639c2ae1e7c7bd889fde52edba3b73236185ded251f29e7a"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\evidence.json",
+          "bytes": 22127,
+          "sha256": "527943152efdcae8c4e2bb65d96061da13b9f664d980be665804285f958caba9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\trace\\frames.csv",
+          "bytes": 3132,
+          "sha256": "94f78699b5970fe9ac005292028831bfd39696a40d08c557920692ff2e8e3204"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\output\\stats.json",
+          "bytes": 314455,
+          "sha256": "4bea1887b313d835cfc9fbbafce3fbd74b936f2ddec560906740900c5499458b"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_base_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\requested.json",
+          "bytes": 14980,
+          "sha256": "d268d7ceca6cfb1ae91fcc13ca5773f51258e800977933fd212e5ee2a6099686"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\result.json",
+          "bytes": 328832,
+          "sha256": "40fac0df62c1d4d65f3abd6d20356b7baa57ec15e95dbbb42dc9d4f6358ca623"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\evidence.json",
+          "bytes": 22127,
+          "sha256": "90c5054c34426a9b90da7abd37417d0fc8aa9c7d24016533ec9cd4f89b958679"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\trace\\frames.csv",
+          "bytes": 3116,
+          "sha256": "6ed913234a1b581c8d6f70f34412f893d9f5b437fb2bb495686f057c11cabd88"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\output\\stats.json",
+          "bytes": 316578,
+          "sha256": "9cbe7603512c7f33dbc0f4688130dee6a5f7bda6c15097db896e58f5ce169e8f"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_base_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\requested.json",
+          "bytes": 14980,
+          "sha256": "ffe7f4539c4d3879a44bc3278e57cc3bc39bda8511c828ccb83ecf69cf5c3889"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\result.json",
+          "bytes": 318897,
+          "sha256": "efbf6a5e45fc8fb5e5a23a44b495aa18f28d175a9dab180bf47737037b29ab57"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\evidence.json",
+          "bytes": 22127,
+          "sha256": "2e731423fc59a4b824040e6670312067d3f57d1e66379de0013158eed1121efc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\trace\\frames.csv",
+          "bytes": 3175,
+          "sha256": "6a31dea5f7f1ed2f314eff95f8c719130fe56c29a33cea638aab1402001525b2"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\output\\stats.json",
+          "bytes": 316230,
+          "sha256": "13de63c16d7cbb596d85007a86d062b1f490d8d500065ad48d5899404710dc75"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_graph_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\requested.json",
+          "bytes": 17208,
+          "sha256": "5bb2a6eb51b40b242bee0f4bec72ecfcf390633ff1d157907cb112113a2db8dd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\result.json",
+          "bytes": 267583,
+          "sha256": "27f6befa0a061b33e45809d64a7be70c0aef94ad96911f7d9f6ee77d861a2468"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\evidence.json",
+          "bytes": 42254,
+          "sha256": "90d5c5b935d089f641963bd064403a24d5ac579ba29397876ef9e4ddd0d32ecb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\config_validation.json",
+          "bytes": 7245,
+          "sha256": "8db9383b3f9136ae44dc4343c2587a250e7f3bb4a7b4fcf4448bec72e5c92df3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\trace\\frames.csv",
+          "bytes": 2984,
+          "sha256": "403824ab7d550071623a0e0fa1655ebac21b6644cdc5ef945ce9c154cb0bfd51"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r1\\output\\stats.json",
+          "bytes": 2287130,
+          "sha256": "bdeb919541c8cb8fb25939047fe328d532f84cabb95944d0d9f9f43200f75057"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_graph_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\requested.json",
+          "bytes": 17207,
+          "sha256": "5e9ef146e7490d17c2cbcf19a5c4501e19c7146df4845704bf98cab2c7b9ab0f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\result.json",
+          "bytes": 267557,
+          "sha256": "fe1f3fd0d75237d07f33c5139c96e895c10979c73ad42879bc8eb607bc020477"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\evidence.json",
+          "bytes": 42254,
+          "sha256": "db32896e32cc7832f0950c2f000c58748a96a77aadd79944e2efafebb19945f5"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\config_validation.json",
+          "bytes": 7245,
+          "sha256": "23d348c58336df1f463fe7b5d112ce2b2d1670a3b1cdccb48488c0e20de5908c"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\trace\\frames.csv",
+          "bytes": 2931,
+          "sha256": "f57e5359b080b9bf16b68ef745bda6cbbef3896266153b018e50e7a0b54b13dd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r2\\output\\stats.json",
+          "bytes": 2284237,
+          "sha256": "10d2e0033346d0213404177db203f15c9c98a040ab1eac8420b14bfc4ba65e60"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_graph_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\requested.json",
+          "bytes": 17205,
+          "sha256": "5e82f8b360c6ce40f84189bcc655d49dff129e3719318c29b128cfade7f3587f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\result.json",
+          "bytes": 267567,
+          "sha256": "701526a68005c9213c505aeebf2e6b273af32f811dcb991c5c777778d37bf9dc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\evidence.json",
+          "bytes": 42254,
+          "sha256": "03550a89263bcae3ede5834535b2655a278cca5a4a5cf21c21bdea43105bb846"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\config_validation.json",
+          "bytes": 7245,
+          "sha256": "357940dbad73b6a58e14e7bba75beebd679d75e832ac0ffec41dced89aa7eeac"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\trace\\frames.csv",
+          "bytes": 2988,
+          "sha256": "5236f0bd223c2b24fade36d14df47af36c0107f975ca8ccf65eea70a79899bb6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_graph_r3\\output\\stats.json",
+          "bytes": 2305490,
+          "sha256": "05edd2cbe25bd3b6085ee26be963a01a7851dbd41e4b07aa949982707b1e442c"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_host_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\requested.json",
+          "bytes": 17165,
+          "sha256": "cd0b871f2c8defbad0ed27a11ba0408d2664be4274b47d945a61b0f0244e9b7d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\result.json",
+          "bytes": 339859,
+          "sha256": "d4212a9df33b2674ddda115c8d04f7d99b032640ff1b5ecca20eb48cb1d02a72"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\evidence.json",
+          "bytes": 42254,
+          "sha256": "d143fb4e6f30e26f33f9a83d9b01bc2699d9905cc1e8aea5a2916e3a8c598b01"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\config_validation.json",
+          "bytes": 7063,
+          "sha256": "3055f26853a90e9c0d94106f6b586255de1a3747333ed6c003e786389f3e0821"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\trace\\frames.csv",
+          "bytes": 3031,
+          "sha256": "ad563174fd1a2d520ce3ed7e3341bab45ff211b0337a3c885b617436a6115d7f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r1\\output\\stats.json",
+          "bytes": 1984003,
+          "sha256": "6fbd0ff16a88d0e2e1e6fdbdb64bc76035dd80b99a39d4e6f283e5abc60e72d5"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_host_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\requested.json",
+          "bytes": 17163,
+          "sha256": "78da1c2dee08ee6f5cdc5b5db8b438269f7c4263070f53fd136abc4f90089eeb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\result.json",
+          "bytes": 339447,
+          "sha256": "1d87a26a9f6ffdea238e084228290f2f462b8c4ffbe37736d40782026501b6ce"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\evidence.json",
+          "bytes": 42254,
+          "sha256": "f0201785ce92fb182fb175330c8c284ea149ab215e2a5a477f2daebfcb5f2a69"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\config_validation.json",
+          "bytes": 7063,
+          "sha256": "bdcb626c926d15cc78dd56a12cd29ae10751850e60d674f098e41d0bd4d90f97"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\trace\\frames.csv",
+          "bytes": 3082,
+          "sha256": "f492c9b8d863b047df8585c0d1075759c5e4afaa990d9a653da49db5761cc3bb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r2\\output\\stats.json",
+          "bytes": 1957180,
+          "sha256": "da1ae24ef25e2100a51150b5fa29c0b0445794cc99bca84ed14ce5e4f2b7f398"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_fixed_bunny_l_host_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\requested.json",
+          "bytes": 17163,
+          "sha256": "7a37a6faba66aafb0ef578a3d8e17272288f5e6224b16aa045fc046810d8a2fa"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\result.json",
+          "bytes": 339435,
+          "sha256": "b4399c8d3682e82b7c1c729c2f4a4bd32e1f9c1bf86b93225d56b7d318d56491"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\evidence.json",
+          "bytes": 42254,
+          "sha256": "9d9dab8cffe8088cb47a7320aa9d7ba193a1528a181b1f1d2eee23ab4651d5d1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\config_validation.json",
+          "bytes": 7063,
+          "sha256": "bf4ef223438b8879a13b29639dee53b9ae9ed4e3ea96b0f87e726b501cad89f6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\trace\\frames.csv",
+          "bytes": 3228,
+          "sha256": "055ec59a6995461633718ea6a6bc2c6978d45e8dd36a8c9e403e9a0782923bcc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_host_r3\\output\\stats.json",
+          "bytes": 1966808,
+          "sha256": "10a79282db759ba2147e061e1c78a0165c561908a6991c2e76a578a93a61353d"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_all_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\requested.json",
+          "bytes": 17162,
+          "sha256": "fc1413e58afbc23be727003d81d648e863465f77385864bfc0c795f836bf3be8"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\result.json",
+          "bytes": 174628,
+          "sha256": "f47504d39b74ee7c27d870f47f0e347adf25be825906817036b41409e862b2c1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\evidence.json",
+          "bytes": 42008,
+          "sha256": "aef52fce00680604d2595b0d89e9bfd3518a511f214acc512b9111f236b8d527"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\config_validation.json",
+          "bytes": 7231,
+          "sha256": "3ee1d2381a01d5ad4e32489fa29b56c3d0e5fc20d75bc22d59c0a0426d0139f4"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\trace\\frames.csv",
+          "bytes": 3307,
+          "sha256": "13b825e32a2353f51b6d7e5fd3337ba3d34ff0679d0279946160a31029fd2708"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r1\\output\\stats.json",
+          "bytes": 2263324,
+          "sha256": "82e1a6518fe58e0ca14ade32310e6844f56a5bae985e2c434deb76ae96a3bd4d"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_all_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\requested.json",
+          "bytes": 17162,
+          "sha256": "c245ba69595b2db0570e373f0e0546b97d0f2a0ca6b5f7a7c9472768df4467fc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\result.json",
+          "bytes": 184567,
+          "sha256": "c039ab30ca902947099eb58220410f166d82c6c767a31171d4d7b0ad13391347"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\evidence.json",
+          "bytes": 42008,
+          "sha256": "8ac33dfdb189bf4cc73728b29f566b6c843c5e40b8b9f54c01744bc726747a21"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\config_validation.json",
+          "bytes": 7231,
+          "sha256": "4c20a1170a415565d960035b9d3a381ca8a9e918ff215084a75e58c550efe208"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\trace\\frames.csv",
+          "bytes": 3279,
+          "sha256": "b8252832fb34a4b91b35c06a9b9dec3659e2f4c18a1b38e62de9f620239b60b2"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r2\\output\\stats.json",
+          "bytes": 2261271,
+          "sha256": "3e16eb5538e6dec275d439f233ea498cee21fe2d631a99bd2e88459a45adb26b"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_all_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\requested.json",
+          "bytes": 17162,
+          "sha256": "ca9931a75b3d1d97fd235b0933b11062ead6681363d76bcc09fe60720e38888a"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\resolved_config.json",
+          "bytes": 3092,
+          "sha256": "973a6ff17267bc9020769f54493fcf3179752de237031b7a90c51a730beb6ec7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\result.json",
+          "bytes": 174646,
+          "sha256": "58e9a5090c12d8aeacd98372811fec4f6d6ba83267a19aabb55e94299109f5e6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\evidence.json",
+          "bytes": 42008,
+          "sha256": "b6c5005384a796694044b1a79b7ea814f3848ccc2114391b6b99a5beacd2b331"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\config_validation.json",
+          "bytes": 7231,
+          "sha256": "0cf2c6e774f05d8783633c44f04ccee7278e195321fc5e4bfe2f5f7fb9be5a06"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\trace\\frames.csv",
+          "bytes": 3269,
+          "sha256": "759fa4fad69ab0f7a2e475e0380f5b32d21264942bc8407ec28f3f6a26efd4d9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_all_r3\\output\\stats.json",
+          "bytes": 2254702,
+          "sha256": "d6fba9f64daace5da1409f40102f9179e57c415ab3ac9a4e5f6d1ab0bef7b55a"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_base_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\requested.json",
+          "bytes": 14958,
+          "sha256": "c14c45b25ee2c46227978eae4055f82de3d72c55557104fa43c3d0a4c62fce3c"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\result.json",
+          "bytes": 235980,
+          "sha256": "e9e16dffb28ec3a14b862243567d220c2d86777c845982c64900a0861774daa7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\evidence.json",
+          "bytes": 22002,
+          "sha256": "cba31499edb9f1061244df0648d85bb5a61bb3f0f2ee89721425ef7a455175cc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\trace\\frames.csv",
+          "bytes": 3057,
+          "sha256": "7c3f2d8692a763b6824fe8848f0c7d704b05d840bb61790c014f2317675abb38"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\output\\stats.json",
+          "bytes": 307421,
+          "sha256": "674002f7238c5090bc17df726302c1f7177a5f503d25d9c2ebae61b0ae556e14"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_base_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\requested.json",
+          "bytes": 14956,
+          "sha256": "7db82562d4624e8d366c3553daa57f5b356866890f9eb364c7cfdfdf078be149"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\result.json",
+          "bytes": 226075,
+          "sha256": "30d330d924a0a9ef9b0749947507bb73c5197ff525e91bb47be367101d258ead"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\evidence.json",
+          "bytes": 22002,
+          "sha256": "3987c644da0ffbe3696ee2cb75df9cd11d17fbe465de6622fc4c6e00c62e02a0"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\trace\\frames.csv",
+          "bytes": 2995,
+          "sha256": "e498ebd436ed0dd48d9a85fb444fa74b4d53272111d771f2998b35f42f8d3f1b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\output\\stats.json",
+          "bytes": 306564,
+          "sha256": "2fc20443e8993b46afe8c8cb8df59c41f68963f402bb475117a9e1f794f78cb0"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_base_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\requested.json",
+          "bytes": 14956,
+          "sha256": "d8f4038464ecf5943232dbb3f5f048e7a06470ba96b46e892b96fc5d162e0937"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\result.json",
+          "bytes": 236373,
+          "sha256": "21cd0e8e2fe2ff86701d1a48aaf33d09fca489fe0ef73de558f983b246c6f757"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\evidence.json",
+          "bytes": 22002,
+          "sha256": "566146d6434d051a0b01ef7e99532bbd82009ced592e4b9f18987f06d00d026e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\trace\\frames.csv",
+          "bytes": 2884,
+          "sha256": "1a2a941d4c31e70af9feee5f2096e6b333517bb392aecf0a99f407554a42a588"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\output\\stats.json",
+          "bytes": 314542,
+          "sha256": "04bb6890c455dcd2205ab44e8bffc1aa3cd5d884bdf76afc437b18b36f33b3e5"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_graph_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\requested.json",
+          "bytes": 17178,
+          "sha256": "7c1c3c98dd74461fe57d8aa44a070f09e15f6ae19696257fd09cfda95a1ba833"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\result.json",
+          "bytes": 195288,
+          "sha256": "601b97bfd4eb116cb2411a20a473457bdf06faf077230a3ed6b69655dae5804e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\evidence.json",
+          "bytes": 42008,
+          "sha256": "06ba72ad3f1cd34cab3cd3da37f55cab5cc4e6992efd0e193bb8766b95495b5b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\config_validation.json",
+          "bytes": 7241,
+          "sha256": "dfa5d875ad9840bcb08f649c9823a5e644994ac4c83642c87ff2cda11723933e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\trace\\frames.csv",
+          "bytes": 3290,
+          "sha256": "5d4131aaa66d9e3b9a865bda6dd22d962b45a9417d6691ff372f090a01d70636"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r1\\output\\stats.json",
+          "bytes": 2280120,
+          "sha256": "dd8bcd0e35ad88650e0081b58460e62fea13ce069e5b758ce36e29ffe02e30c8"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_graph_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\requested.json",
+          "bytes": 17177,
+          "sha256": "61391b93b9a2d80e31d09fdd9c20776147782e25e8edabd3d3edae4146f51060"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\result.json",
+          "bytes": 195280,
+          "sha256": "9ab8ce7ddb5bf3bf160e134e0d6b042e8853f2db4397233e0e3ee4096a7a859b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\evidence.json",
+          "bytes": 42008,
+          "sha256": "d2915d408c4c08159e0e1d1c7fb62fd84c5ba4d312915fed55ad28a5026ba3eb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\config_validation.json",
+          "bytes": 7241,
+          "sha256": "3041cfbd3007557cd22043363014ad5447b9a470df25083de8fde97f0792776d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\trace\\frames.csv",
+          "bytes": 3321,
+          "sha256": "b5e090d66b08d262ad9b469097fe3c73a53473b5d04119c0e66a8476b6e2a43f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r2\\output\\stats.json",
+          "bytes": 2271018,
+          "sha256": "3a1a8aca8db4ebce04ac869537c86f6d1bb98e60414aff8cd48f305f5252905f"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_graph_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\requested.json",
+          "bytes": 17178,
+          "sha256": "93f3f803f51a1e5e5f19d3269241e96ccb55541ad6abbd2ac973ce310c97c8f0"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\resolved_config.json",
+          "bytes": 3096,
+          "sha256": "ebf60afa0f640458ac863cafe37944a5dc7e84666f39f5c8d082ac80ca38cc90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\result.json",
+          "bytes": 184974,
+          "sha256": "fdcc326bfe0d6b0fad356ea86386e10dadda4f9ee541352d6af7f325822ce9aa"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\evidence.json",
+          "bytes": 42008,
+          "sha256": "995a6e9545bc3c8f51d5080bc3e0db4345fc569021423aa55e8a0a68d44578b3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\config_validation.json",
+          "bytes": 7241,
+          "sha256": "a427dddbd70ad1d19a85e5deebccfd7c4fdd9403b0bb303e481a30e02794a064"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\trace\\frames.csv",
+          "bytes": 3287,
+          "sha256": "a51089a02404915e2e3ff30d9c0145c5ff3f4ef1b2e9e8e02ee884ba67d15cc9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_graph_r3\\output\\stats.json",
+          "bytes": 2251053,
+          "sha256": "a41dff5406d13baadb21a002abae1a7a584b405ba933cd291eb2eb7c7af86ecb"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_host_r1",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\requested.json",
+          "bytes": 17135,
+          "sha256": "fd81196e600ccf7b6c06d4438cc3203f5fa66dd5644155cb9ccef2021cb43f96"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\result.json",
+          "bytes": 246930,
+          "sha256": "52bd435ad086b1947c4e1c6c7c19c177361f242cb3a786f9161bf4488ad315c3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\evidence.json",
+          "bytes": 42008,
+          "sha256": "8e2d7519d4285a9d09760e46d7773472b25a24615d087a1601bffba48eda6b45"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\config_validation.json",
+          "bytes": 7059,
+          "sha256": "fe353b285a6380a6787508eb4cb9a2afbd52cf5db3625917facc557fce2701f1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\trace\\frames.csv",
+          "bytes": 2993,
+          "sha256": "b61ac7271e6b02f35fc0accd9b3b0210f2742e0bf6e9f1d6189095fa506737a9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r1\\output\\stats.json",
+          "bytes": 1940465,
+          "sha256": "deee39e4cf2108193f1b328b6398ac1445a63a9c8b95fed1041fd6a346000a20"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_host_r2",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\requested.json",
+          "bytes": 17134,
+          "sha256": "7d2013a37f1e508910d2f91a003cc85a44f0e1fa802569bf7cfd80b2c4df075f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\result.json",
+          "bytes": 246516,
+          "sha256": "96d400aaf8bec906b05754d6d25837d23aa6f446b6b9b500dca7f9a30ec07fc8"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\evidence.json",
+          "bytes": 42008,
+          "sha256": "abe129a9454dafa570db92b68983925ee5f04d396e0b1b7be59dded9daf75607"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\config_validation.json",
+          "bytes": 7059,
+          "sha256": "cb787d104ec87f11388335283300e9ab1149874093b41dbd17f50d7fe8c8b7a3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\trace\\frames.csv",
+          "bytes": 2949,
+          "sha256": "8e83829f1fc86bbb15b81d9900026a988c6b3fcded536bb1fd39bc2744b26473"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r2\\output\\stats.json",
+          "bytes": 1933623,
+          "sha256": "e5245639abdc2135eede26745f374c8d6d2e60712f60a3eca8ea7b4741d4c749"
+        }
+      ]
+    },
+    {
+      "run": "reference\\cloth_sphere7_l_host_r3",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\requested.json",
+          "bytes": 17135,
+          "sha256": "ac5e8c6da75bd5edc066a239345fb88640044cc079701b833d86ddd150fc7596"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\resolved_config.json",
+          "bytes": 3083,
+          "sha256": "0d0f8186269514aadf293dde779aa8a32741933fff9267ec769d9f5cef01342d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\result.json",
+          "bytes": 236582,
+          "sha256": "d79c2a49c93a97535ee0524eb7917efdb631370f0f5197b3399466c5b56e9e19"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\evidence.json",
+          "bytes": 42008,
+          "sha256": "b5c145336bcd44f44c0dea957cf49e87761f362eba48f68a9d498d19b049577c"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\config_validation.json",
+          "bytes": 7059,
+          "sha256": "089e480bbe3083e15ff03effaa56b9c545e2e343851f8e962272234ba725b812"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\trace\\frames.csv",
+          "bytes": 3056,
+          "sha256": "dd531a1778b0a06c131932043e8b48606cae81b6e051e8002820e69ab2ef3480"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_host_r3\\output\\stats.json",
+          "bytes": 1936647,
+          "sha256": "874f5431a6a55f0214a569cf89c177939a60673eb0fbf3d381b19a3c30d00bc2"
+        }
+      ]
+    },
+    {
+      "run": "baseline_review\\cloth_fixed_bunny_l_base_r4",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\requested.json",
+          "bytes": 15380,
+          "sha256": "b93a905f6826724cbd786ec8e5f0f2bf0073031324601fe665431be7c043a29d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\result.json",
+          "bytes": 363966,
+          "sha256": "fcad65da550b8990ed7558282e4b07d250efe546b1d03694b98f523bd4598c7e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\evidence.json",
+          "bytes": 22127,
+          "sha256": "d0ea13a17d3d70e00f142c3e66353aaed84787e5a14f413628cbb8b137101cd3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\trace\\frames.csv",
+          "bytes": 3105,
+          "sha256": "7b9aebe3891204d68fbba68874fddd1f50fe3ae9e3440a193cd5a984540cb14f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r4\\output\\stats.json",
+          "bytes": 315823,
+          "sha256": "1df63f4766801a8d1db1caa52779c5dfecd6de6f69a112b8d19b98482812b966"
+        }
+      ]
+    },
+    {
+      "run": "baseline_review\\cloth_fixed_bunny_l_base_r5",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\requested.json",
+          "bytes": 15380,
+          "sha256": "3fb49358d122da10f6f18393838a2cec7ae3b0c33da53acd632198e185e4c8d1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\result.json",
+          "bytes": 363571,
+          "sha256": "1108c4ddddc82a8a46e8ffca124ccbe9bfa7d019f3c08249ee1807f45bc420fc"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\evidence.json",
+          "bytes": 22127,
+          "sha256": "344d50aabc01d435c5fe88c7b8953844be7970d4ac54bfb755812edb919a3cf9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\trace\\frames.csv",
+          "bytes": 3216,
+          "sha256": "a1a8b2835b63e5bb32413f65d7dff9c3c8a5975ffc47c0feb08fd85c2c14c174"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_fixed_bunny_l_base_r5\\output\\stats.json",
+          "bytes": 322044,
+          "sha256": "177ecd7b2d70eca322be444d883430ee5a453bcb659f73576f1c91f8e0ea7e50"
+        }
+      ]
+    },
+    {
+      "run": "baseline_review\\cloth_sphere7_l_base_r4",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\requested.json",
+          "bytes": 15354,
+          "sha256": "f43132f2a80293f00312e0c6b17dc69f7c657db9150ad553a2bbb9f5acfba7b3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\result.json",
+          "bytes": 245894,
+          "sha256": "acdc22c4ee90f8a68e4c2aa2f12f73e18aa517160f918c833e865c40d5127651"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\evidence.json",
+          "bytes": 22002,
+          "sha256": "1bc3e1cdc8192e0835646a9f27ddb10a08d1e7edb1f105c240b4c74ea6b02359"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\trace\\frames.csv",
+          "bytes": 2865,
+          "sha256": "879a5f78cb48385ff50a45858ae78780b22dfe6629c60ff1b2c9f5db860188a7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r4\\output\\stats.json",
+          "bytes": 307741,
+          "sha256": "6dbc4f71b62199283e4a08175b46544d5e62ea0a860ab30b7f5cdd050272c966"
+        }
+      ]
+    },
+    {
+      "run": "baseline_review\\cloth_sphere7_l_base_r5",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\requested.json",
+          "bytes": 15356,
+          "sha256": "1fa38a447e9517af222d105bb3ba5c64ab400338a64e8ad90a8cde77268fb6bb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\result.json",
+          "bytes": 266977,
+          "sha256": "c88372f56b0ae592d0c38c9814f58302dfd5039329923a9d2da4263660a1f220"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\evidence.json",
+          "bytes": 22002,
+          "sha256": "24dd9ea0701211bbfc7f337505696c4a2193913b0877971f955fa64ee3f4a6cd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\config_validation.json",
+          "bytes": 1022,
+          "sha256": "74c683c65c1b2831d593cb992195db09b2678fc4570b955a73c2f52acce5efca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\build_manifest.json",
+          "bytes": 90248,
+          "sha256": "5090dbdd1f97b23a9e1ec9875247591f70950ee34053759dde17e9eb5ce4e88d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\trace\\frames.csv",
+          "bytes": 2948,
+          "sha256": "25de02c0ddef76b6b62514960ed792f04fc4d973cb0945a2c602588bb9ff3c0d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\baseline_review\\cloth_sphere7_l_base_r5\\output\\stats.json",
+          "bytes": 311084,
+          "sha256": "5ee1bcd78d4090ac56f16fa253e4357f8cdd9c9e7ef5a3b92eb56c50f7329299"
+        }
+      ]
+    },
+    {
+      "run": "observer_off\\cloth_fixed_bunny_l",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\requested.json",
+          "bytes": 17855,
+          "sha256": "cc48099cc9c87d4e549658c549fa581191e9efc5ee862517612a1075cd6ed334"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\resolved_config.json",
+          "bytes": 3633,
+          "sha256": "c90cb0174a3a1af887dbbdb04f414022a6b0110a0ad9d7de9c73b774f1494a36"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\result.json",
+          "bytes": 253803,
+          "sha256": "13a39948e09e6a58099a6e2a877cea14f35fa740899bfd95ca316f9ac8ad09c0"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\evidence.json",
+          "bytes": 42254,
+          "sha256": "ef1ecf4e9808be6fe6b13b02892d3390bf60b07742fabd96317efcafeac8a459"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\config_validation.json",
+          "bytes": 8392,
+          "sha256": "0ed22a7d377376f656861199666fec3f3cbb15132ec5afb9d262da54ada337c9"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\build_manifest.json",
+          "bytes": 290264,
+          "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\trace\\frames.csv",
+          "bytes": 3149,
+          "sha256": "7e23dd3cb052b1fb437fad9b322165cc3598f94e76c734abb0ae09849909bd74"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_fixed_bunny_l\\output\\stats.json",
+          "bytes": 2302174,
+          "sha256": "8e6860db5ea82d156eb6130e95c3a0a3ddde88496068afa0f126e69a4cb3f94c"
+        }
+      ]
+    },
+    {
+      "run": "observer_off\\cloth_sphere7_l",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\requested.json",
+          "bytes": 17825,
+          "sha256": "587a6873d58a8b8e1f13e7fa8390888dd98994c32660580148da98ddbd0d8f92"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\resolved_config.json",
+          "bytes": 3633,
+          "sha256": "c90cb0174a3a1af887dbbdb04f414022a6b0110a0ad9d7de9c73b774f1494a36"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\result.json",
+          "bytes": 176271,
+          "sha256": "d8c950d0831a1347acc33008429c7e93ed90cb74639c71ae4b9f3fc3d1214044"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\evidence.json",
+          "bytes": 42008,
+          "sha256": "0260406152b192aa9b23d34432594cbaf09178a73dd36a75f0e9acac2b452e78"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\config_validation.json",
+          "bytes": 8388,
+          "sha256": "d6ab0b79b0994292f3cd779273edc0b2b71afd335a07e5e29e96fe6c132c35ee"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\build_manifest.json",
+          "bytes": 290264,
+          "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\trace\\frames.csv",
+          "bytes": 3307,
+          "sha256": "19fc42c1541899b7edfe2cc86b1b7367b47381e93912f40796563303fa48662f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\observer_off\\cloth_sphere7_l\\output\\stats.json",
+          "bytes": 2231130,
+          "sha256": "869f1e8e4ad7d6f1e17343d77647a53cc51ccadbf55333368c0c105398bfffa8"
+        }
+      ]
+    },
+    {
+      "run": "probe\\cloth_fixed_bunny_l",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\requested.json",
+          "bytes": 18888,
+          "sha256": "a4fa55c0cea0ea903c566d5ed4d5b1ec62dcf252960ddb3b30ab4a01bc60a3c3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\resolved_config.json",
+          "bytes": 5123,
+          "sha256": "f718836ff86b38b0efcb2fb08e683d4b2fb14be05a057853d051fe678a78bae2"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\result.json",
+          "bytes": 386318,
+          "sha256": "aa369aaa920bbc478bf7e4c888a23d52c098b085e40bb41f5c4a68f464a4a54b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\evidence.json",
+          "bytes": 42573,
+          "sha256": "44c3653051ddf7d4573e36f76d1b529c02c4f4492f887935117519b6211cbf3d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\config_validation.json",
+          "bytes": 11952,
+          "sha256": "17dc0d9bb57e4960a4179a566d3b57aa4aacf58a9ca09da600025eb3ed3f5962"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\build_manifest.json",
+          "bytes": 290264,
+          "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\trace\\frames.csv",
+          "bytes": 3199,
+          "sha256": "07a44a35fd5d6eeb7b92af5051b5554c91f822da2535608c65e3b55a0ca960ea"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\output\\stats.json",
+          "bytes": 5213130,
+          "sha256": "f8e365abb01da78f42253c09a1cae76652f93cfa3da1aeeeb9b7d614baf05c0b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\cost.jsonl",
+          "bytes": 22489637,
+          "sha256": "2dc599c1fab64de46c77ebfcae1163a14587b0965443f62bda4b6a86ba0bb28a"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_fixed_bunny_l\\bvh_query_probe.jsonl",
+          "bytes": 1182358,
+          "sha256": "88eccaded6be3d00ee5676cb3b606f5585f538d01975a8f21ee40d6cd09031bb"
+        }
+      ]
+    },
+    {
+      "run": "probe\\cloth_sphere7_l",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\requested.json",
+          "bytes": 18852,
+          "sha256": "43d32483ab2f2f5bcdfa3396a97e932822328a7167bd2a90e3d9dc2f2937ebef"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\resolved_config.json",
+          "bytes": 5119,
+          "sha256": "dcf2bc009c0d2eb3e83c5f78729f9652be2f3d784e5179a87766dcce42f1e77b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\result.json",
+          "bytes": 253810,
+          "sha256": "bed038a34af8f2c523960fc512184f566ce0a827ae5084e15b016e41783d11ce"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\evidence.json",
+          "bytes": 42327,
+          "sha256": "00b7bb34074ff509d2a04f4b5b2880d4e070f5bddbc05fcc27a21646d7fa192e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\config_validation.json",
+          "bytes": 11940,
+          "sha256": "7fe08a90f0392e1af4a18d52bb76d3d87c3cb45959ee5712d30fd48e201fded4"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\build_manifest.json",
+          "bytes": 290264,
+          "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\trace\\frames.csv",
+          "bytes": 3154,
+          "sha256": "2a64e4138a380d2177c2fa0fc2f6ee17a1b05383fd24c760295f3f8779e47c37"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\output\\stats.json",
+          "bytes": 5113567,
+          "sha256": "ec3238fb3c836d7b7c79514a1412486b0be96ab212717bfef44a607b77a23721"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\cost.jsonl",
+          "bytes": 21228193,
+          "sha256": "f07d9a3b1e9dbfe72b598e10ebecad46117eade6daf6366b4fdd3d920e33c6e6"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\probe\\cloth_sphere7_l\\bvh_query_probe.jsonl",
+          "bytes": 1155666,
+          "sha256": "ed8c9c3da23d2a8f66623f7262f8f9a1dbe2fdab27a4a533ea645a1dd52a224d"
+        }
+      ]
+    },
+    {
+      "run": "profile_fixed_f40_graph",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\requested.json",
+          "bytes": 11589,
+          "sha256": "626a959f50646fdbca816b447037c156f398abfe477eb523131cbcb844ac65ab"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\resolved_config.json",
+          "bytes": 3101,
+          "sha256": "ce9684c81098f33356f840f41a7a033a310384aa236816cedc3175c10745c185"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\result.json",
+          "bytes": 396561,
+          "sha256": "8fc04749289034339d26688062a52660523e79245a99a937dbbf8def5505f7eb"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\evidence.json",
+          "bytes": 42880,
+          "sha256": "311bbb0ae001a8d9c5f8715ae52a00f7b65c17e2db56d1bc289499c8a7994cab"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\config_validation.json",
+          "bytes": 7229,
+          "sha256": "6bc3e39f609a6615dc3a4054b64a5965a79b143992323dd9da54145282fe6c2f"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\capture_validation.json",
+          "bytes": 829,
+          "sha256": "493e37412c328bc0578c2fae0918ae8b5f6b3cc5158ce3acc7dd06e1f847b6af"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\trace\\frames.csv",
+          "bytes": 3107,
+          "sha256": "8d813f912b7f0c55dfd5edf36a6a06e1448d586a84dd3c3015631c0988347c7c"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\output\\stats.json",
+          "bytes": 2295343,
+          "sha256": "bd4cce6e499f1227062dcbb53745d52c00b4d9e6cb46c036e46c55938a6499e3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\cost.jsonl",
+          "bytes": 230321,
+          "sha256": "33fc4c977371d6ff37c9c5b8cf90d17318c537e8cb61fcb7de1e17b6b7d05eee"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\nsight.nsys-rep",
+          "bytes": 273121,
+          "sha256": "ff15db13fefac58c1b29087d254cf945d7edba3f091ec15168a262f68939bc7b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_fixed_f40_graph\\nsight.sqlite",
+          "bytes": 790528,
+          "sha256": "523576930f6656e8c211786c06ac88586fbd6cae50b494d3862d7f0b02f6c601"
+        }
+      ]
+    },
+    {
+      "run": "profile_sphere_f49_node",
+      "status": "completed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\requested.json",
+          "bytes": 11553,
+          "sha256": "81ad6d6476ce1cefc12a1feeb099f1be1bb2062cdc937dcdd5203b8a84b996e7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\resolved_config.json",
+          "bytes": 3101,
+          "sha256": "ce9684c81098f33356f840f41a7a033a310384aa236816cedc3175c10745c185"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\result.json",
+          "bytes": 353962,
+          "sha256": "92f6d80c6cf1e1d0fef0305c80e4e96029d734d76b4e16932c0e4bbf551e7ffd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\evidence.json",
+          "bytes": 42634,
+          "sha256": "982723401704b0a923656761acd3f95b7cac16f5e36b79b9c977fd41235889cf"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\config_validation.json",
+          "bytes": 7229,
+          "sha256": "72d48b0a1a514331c2b5f69945fe25baa5da42bbb607eed224a63794814e9f2a"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\build_manifest.json",
+          "bytes": 618204,
+          "sha256": "658066c7223158adc5e6474dfe6c528ff4c6d8521e4cd9b651aa6549727d0787"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\capture_validation.json",
+          "bytes": 829,
+          "sha256": "5c047b80a7399a2546d2e4a27dfb5fa59913b603432a4758a4dc4fc407287ad8"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\trace\\frames.csv",
+          "bytes": 3176,
+          "sha256": "b99c4f4fb023f30e5cbe09d10ba34ea8777bcf81fadf4e3402b2e265356e3f17"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\output\\stats.json",
+          "bytes": 2266331,
+          "sha256": "49082e726e6a722cb1a78b802ab7436b01dca45e997e436d1f99fab35d8cc47d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\cost.jsonl",
+          "bytes": 517758,
+          "sha256": "cfc99cf08821acd2ccd97c813247b2e68411dae8919325a85c840cbe34020539"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\nsight.nsys-rep",
+          "bytes": 897595,
+          "sha256": "f47cf668a5088c7866ccbb72325c74708d3ab7d2bd0a990d0af146b1c7b6e850"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\profile_sphere_f49_node\\nsight.sqlite",
+          "bytes": 2625536,
+          "sha256": "f3b4c96d8baf0dfb7184d16d4e21d83f97c6f514b9ff7a0dc8711d7c2bb0ded8"
+        }
+      ]
+    },
+    {
+      "run": "query_counters_f49",
+      "status": "counter_check_failed",
+      "recorded_frames": 120,
+      "records": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\requested.json",
+          "bytes": 10399,
+          "sha256": "cbb2f890f2d0e30b2fecb00a1677f0a91648750df16df65881f1a6e35604ebb7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\resolved_config.json",
+          "bytes": 3638,
+          "sha256": "04992a71aaa701c7035d84f0b96c698a1a9ca6a080c8ff4e3225ac497349aa59"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\result.json",
+          "bytes": 11403,
+          "sha256": "491c91cddb3742a513304d76b2ddc112389b18cbadaa3788ccd93a70b8b52050"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\evidence.json",
+          "bytes": 42632,
+          "sha256": "4afad3389a6a57071eb6e336b8cc55b0c51e5683be8d4f1a58a496362962b0ac"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\config_validation.json",
+          "bytes": 8377,
+          "sha256": "46d5d4ceabfb2d70e466ecd0e8faa74a7e268c9e6acca2753615069a935d57a1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\build_manifest.json",
+          "bytes": 290264,
+          "sha256": "20332808f14965483cb466c2c1cf8d431d73b644110952be26627563790f6d90"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\capture_validation.json",
+          "bytes": 1421,
+          "sha256": "351264fe4e43003879590d1b41eab49dd6ec4fe10a0298911c9cd25f20a5d64e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\trace\\frames.csv",
+          "bytes": 2984,
+          "sha256": "10810167ff07f42f1d428c0ad9ae48c77a6c7a75b2c07663bdbb980767101ac8"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\output\\stats.json",
+          "bytes": 2260297,
+          "sha256": "da6f5def0efdf011ce0c64529418b5dbba394ec2f37e6dd965d242e34e4db2ca"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\cost.jsonl",
+          "bytes": 613402,
+          "sha256": "6dbccbd448666ec0ced17617826d1a7d5e95b5e81fd04b76e108570e59ded5c7"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\counter.csv",
+          "bytes": 13581,
+          "sha256": "6825e5d32eba6f8571938fdaee18cee48e9c23325711b42efc136e626207e5f2"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\query.ncu-rep",
+          "bytes": 22093292,
+          "sha256": "836a0831bf376541640b313b035bd79f55c020f873cbe9d05bdf54b91809cfec"
+        }
+      ]
+    }
+  ],
+  "solver_runs": 35,
+  "scope": "Hashes/paths of closed local evidence only. No raw trajectories, binaries or process telemetry published.",
+  "ncu_parser_failure_preserved": true,
+  "ncu_offline_analysis": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\QUERY_COUNTER_ANALYSIS.json",
+    "bytes": 5064,
+    "sha256": "b3e0681d2d9036428fb0663c34f5c539a813e23277f99bcc0729894965b012e4"
+  }
+}

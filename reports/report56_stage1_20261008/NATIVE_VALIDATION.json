@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "tests": 17,
+  "commands": [
+    {
+      "name": "ctest",
+      "argv": [
+        "D:\\computer\\cmake\\bin\\ctest.exe",
+        "--test-dir",
+        "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report56_stage1_verified_20261008",
+        "-C",
+        "Release",
+        "--output-on-failure"
+      ],
+      "timeout_seconds": 120,
+      "status": "passed",
+      "exit_code": 0,
+      "wall_seconds": 21.17200000000048
+    }
+  ],
+  "binaries": {
+    "bvh_query_probe_contract_test.exe": "d81ac429d1a8018e53a0125bc604f08b72f548e2e2c7a62f2ca1eb59a918116d",
+    "diag_fused_update_tests.exe": "fb3c3537ed9ce88bd0e626fbf274c6ea6df37d539b3074425289836ccc432a45",
+    "gipc.exe": "d4da6bd5ec8544b87d0f7b77f67c6bb02a95c2afa19a24a8a6013f69d89f3902",
+    "ipc_budget_test.exe": "fc16d0047713233c04f8f0efbd7b454e1741c731f0c5b9808180e018c669340d",
+    "ipc_residual_controller_test.exe": "0861fbe8b4abd50beaaeb4cf081d228ca05f8df1fa3e24c338d12d4f013f363a",
+    "linear_structure_probe_contract_test.exe": "bc2377969d64b745c865f71b5bc65c1152f0154d837970221e3e565ac278995d",
+    "linear_structure_probe_gpu_test.exe": "b72805f31fb814aaa4bed513abbab8411fe658d9c2f3746d0389b3441958c7d5",
+    "line_search_acceptance_test.exe": "6fd0d03001ea6a14542625d6424c682ec997ae816f724aa4fd607049f03a9855",
+    "sym_spmv_tests.exe": "87364a7e3ef76e62d9cb7bd50871752111a6a19eeeff27430d1dc45fa58d1854"
+  },
+  "local_raw_receipt": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\validation_full\\RESULT.json",
+    "bytes": 21471,
+    "sha256": "96c1589a052354551b09799344b5e38efea558f87cc4a1b3869d0d882327a498"
+  },
+  "scope": "Correctness checks only; no diagnostic neutrality, physical quality or speed certification"
+}

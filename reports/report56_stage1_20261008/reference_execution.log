@@ -1,0 +1,25 @@
+{"run": "cloth_sphere7_l_base_r1", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_host_r1", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_graph_r1", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_all_r1", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_base_r1", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_host_r1", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_graph_r1", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_all_r1", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_host_r2", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_graph_r2", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_all_r2", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_base_r2", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_host_r2", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_graph_r2", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_all_r2", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_base_r2", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_graph_r3", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_all_r3", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_base_r3", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_host_r3", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_graph_r3", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_all_r3", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_base_r3", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_host_r3", "status": "completed", "frames": 120}
+{"reference_status": "completed", "summary": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\REFERENCE_RESULTS.json"}

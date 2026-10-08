@@ -1,0 +1,5 @@
+{"run": "cloth_sphere7_l_base_r4", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_base_r4", "status": "completed", "frames": 120}
+{"run": "cloth_sphere7_l_base_r5", "status": "completed", "frames": 120}
+{"run": "cloth_fixed_bunny_l_base_r5", "status": "completed", "frames": 120}
+{"status": "completed", "baseline_ranges_reproduced": false}

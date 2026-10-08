@@ -1,0 +1,14 @@
+{
+  "schema": "gipc.counter_capture_source_snapshot.v1",
+  "original_script_record": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_query_counters.py",
+    "bytes": 10432,
+    "sha256": "4294f3b407fb6245764877489dd4451bef5791ed02e3d95340bc532bbd8d028c"
+  },
+  "immutable_capture_source_snapshot": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\query_counter_capture_source_v1.py",
+    "sha256": "4294f3b407fb6245764877489dd4451bef5791ed02e3d95340bc532bbd8d028c",
+    "bytes": 10432
+  },
+  "purpose": "Retain exact source used by closed single GPU attempt before repairing CSV parser; no capture/result/evidence modified"
+}

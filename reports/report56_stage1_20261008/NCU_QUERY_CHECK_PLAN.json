@@ -1,0 +1,75 @@
+{
+  "schema": "gipc.one_query_counter_check.v1",
+  "max_attempts": 1,
+  "purpose": "Test dynamic local-memory traffic/occupancy on one actual DCD EE query; not speed certification",
+  "selected_frame": 49,
+  "max_profiled_kernels": 1,
+  "timeout_seconds": 180,
+  "reference": [
+    {
+      "path": "config_validation.json",
+      "bytes": 8388,
+      "sha256": "d6ab0b79b0994292f3cd779273edc0b2b71afd335a07e5e29e96fe6c132c35ee"
+    },
+    {
+      "path": "evidence.json",
+      "bytes": 42008,
+      "sha256": "0260406152b192aa9b23d34432594cbaf09178a73dd36a75f0e9acac2b452e78"
+    },
+    {
+      "path": "requested.json",
+      "bytes": 17825,
+      "sha256": "587a6873d58a8b8e1f13e7fa8390888dd98994c32660580148da98ddbd0d8f92"
+    },
+    {
+      "path": "result.json",
+      "bytes": 176271,
+      "sha256": "d8c950d0831a1347acc33008429c7e93ed90cb74639c71ae4b9f3fc3d1214044"
+    }
+  ],
+  "program_sha256": "d4da6bd5ec8544b87d0f7b77f67c6bb02a95c2afa19a24a8a6013f69d89f3902",
+  "metrics": [
+    "gpu__time_duration.sum",
+    "l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum",
+    "l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum",
+    "sm__warps_active.avg.pct_of_peak_sustained_active",
+    "smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct"
+  ],
+  "command": [
+    "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2025.3.1\\target\\windows-desktop-win7-x64\\ncu.exe",
+    "--target-processes",
+    "all",
+    "--replay-mode",
+    "kernel",
+    "--nvtx",
+    "--nvtx-include",
+    "ipc.physical_frame/",
+    "--kernel-name-base",
+    "function",
+    "--kernel-name",
+    "regex:^_selfQuery_ee$",
+    "--launch-count",
+    "1",
+    "--metrics",
+    "gpu__time_duration.sum,l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum,l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum,sm__warps_active.avg.pct_of_peak_sustained_active,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct",
+    "--cache-control",
+    "none",
+    "--clock-control",
+    "none",
+    "--export",
+    "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\query",
+    "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\build\\report56_stage1_verified_20261008\\Release\\gipc.exe"
+  ],
+  "script": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\run_query_counters.py",
+    "bytes": 10432,
+    "sha256": "4294f3b407fb6245764877489dd4451bef5791ed02e3d95340bc532bbd8d028c"
+  },
+  "profiler": {
+    "path": "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2025.3.1\\target\\windows-desktop-win7-x64\\ncu.exe",
+    "bytes": 29191320,
+    "sha256": "4a19c0404681aa6566e28717e5f5c55887e64901c9c545b07955ddede65a0465"
+  },
+  "no_driver_or_clock_settings_changed": true,
+  "nsight_systems_budget_unchanged": true
+}

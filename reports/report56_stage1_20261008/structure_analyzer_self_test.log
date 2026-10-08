@@ -1,0 +1,1 @@
+{"cpu_self_test": "passed", "checks": ["adjacent_denominator", "first_shape_gap_exclusions", "canonical_not_mapping_partition", "nonfinite_rejection", "empty_distribution", "missing_gpu_not_zero"]}

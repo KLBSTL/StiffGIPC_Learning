@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "old_index_sha256": "9798ad57d4cb493f78b6f141666e49494195d81885cdebd40d570ca8f17b2f00",
+  "unchanged_artifacts": 16,
+  "scope": "Original sealed report artifacts unchanged; active source and tools intentionally changed in new component commits"
+}

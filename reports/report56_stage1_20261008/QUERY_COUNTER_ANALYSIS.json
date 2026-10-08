@@ -1,0 +1,122 @@
+{
+  "schema": "gipc.one_query_counter_analysis.v1",
+  "status": "validated_offline",
+  "producer_result_status_unchanged": "counter_check_failed",
+  "producer_analysis_error": "KeyError: 'Metric Name'",
+  "gpu_capture_exit_code": 0,
+  "recorded_frames": 120,
+  "selected_frame": 49,
+  "profiled_kernels": 1,
+  "kernel": "_selfQuery_ee(const int *, const int *, const double3 *, const double3 *, const uint2 *, const AABB *, const Node *, int4 *, int4 *, unsigned int *, int *, double, unsigned int, int)",
+  "metrics": {
+    "gpu__time_duration.sum": {
+      "value": 1189248.0,
+      "unit": "ns"
+    },
+    "l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum": {
+      "value": 1213799.0,
+      "unit": "sector"
+    },
+    "l1tex__t_sectors_pipe_lsu_mem_local_op_st.sum": {
+      "value": 615043.0,
+      "unit": "sector"
+    },
+    "sm__warps_active.avg.pct_of_peak_sustained_active": {
+      "value": 12.57,
+      "unit": "%"
+    },
+    "smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct": {
+      "value": 21.98,
+      "unit": "%"
+    }
+  },
+  "launch": {
+    "launch__registers_per_thread": {
+      "value": 138.0,
+      "unit": "register/thread"
+    },
+    "launch__registers_per_thread_allocated": {
+      "value": 144.0,
+      "unit": "register/thread"
+    },
+    "launch__waves_per_multiprocessor": {
+      "value": 0.9,
+      "unit": ""
+    },
+    "launch__sm_count": {
+      "value": 40.0,
+      "unit": "SM"
+    },
+    "launch__grid_size": {
+      "value": 36.0,
+      "unit": ""
+    },
+    "launch__block_size": {
+      "value": 256.0,
+      "unit": ""
+    },
+    "profiler__replayer_passes": {
+      "value": 1.0,
+      "unit": "pass"
+    }
+  },
+  "program_sha256": "d4da6bd5ec8544b87d0f7b77f67c6bb02a95c2afa19a24a8a6013f69d89f3902",
+  "source_digest": "a40ee52ec07cf59fe81d2c3c876e079aa44da7f8039b3a7b0bcde3d0ba60b584",
+  "inputs": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\counter.csv",
+      "bytes": 13581,
+      "sha256": "6825e5d32eba6f8571938fdaee18cee48e9c23325711b42efc136e626207e5f2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\query.ncu-rep",
+      "bytes": 22093292,
+      "sha256": "836a0831bf376541640b313b035bd79f55c020f873cbe9d05bdf54b91809cfec"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\requested.json",
+      "bytes": 10399,
+      "sha256": "cbb2f890f2d0e30b2fecb00a1677f0a91648750df16df65881f1a6e35604ebb7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\result.json",
+      "bytes": 11403,
+      "sha256": "491c91cddb3742a513304d76b2ddc112389b18cbadaa3788ccd93a70b8b52050"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\evidence.json",
+      "bytes": 42632,
+      "sha256": "4afad3389a6a57071eb6e336b8cc55b0c51e5683be8d4f1a58a496362962b0ac"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\capture_validation.json",
+      "bytes": 1421,
+      "sha256": "351264fe4e43003879590d1b41eab49dd6ec4fe10a0298911c9cd25f20a5d64e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\config_validation.json",
+      "bytes": 8377,
+      "sha256": "46d5d4ceabfb2d70e466ecd0e8faa74a7e268c9e6acca2753615069a935d57a1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\query_counters_f49\\cost.jsonl",
+      "bytes": 613402,
+      "sha256": "6dbccbd448666ec0ced17617826d1a7d5e95b5e81fd04b76e108570e59ded5c7"
+    }
+  ],
+  "analyzer": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\reports\\report56_stage1_20261008\\analyze_query_counters.py",
+    "bytes": 5986,
+    "sha256": "ee97ae03944126195d87441c4625c245a1b3bc6cfd0f87ca8543f2aeb416fda4"
+  },
+  "new_gpu_launches": 0,
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "limits": [
+    "Dynamic local-memory traffic includes stack, calls and compiler temporaries; no attribution solely to traversal stack.",
+    "One EE kernel does not measure all VF/EE queries, narrow-phase share or whole-run removable cost.",
+    "Occupancy also depends on 36 blocks over 40 SMs; fewer registers alone cannot fill an underpopulated grid.",
+    "Local-sector counts and long scoreboard stalls do not prove a stackless speedup or >2x result.",
+    "Original producer parser failure is preserved. This is offline format repair, with no GPU retry."
+  ]
+}

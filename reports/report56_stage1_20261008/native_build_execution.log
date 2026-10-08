@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\build_windows.py", line 123, in <module>
+    main()
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\build_windows.py", line 89, in main
+    checked(command, build / 'build.log')
+  File "E:\university_class\ComputerGraphics\GIPC\StiffGIPC_Learning\tools\build_windows.py", line 37, in checked
+    print('\n'.join(log.read_text(errors='replace').splitlines()[-45:]))
+UnicodeEncodeError: 'gbk' codec can't encode character '\ufffd' in position 149: illegal multibyte sequence

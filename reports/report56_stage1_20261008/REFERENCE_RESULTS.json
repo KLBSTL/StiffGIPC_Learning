@@ -1,0 +1,94 @@
+{
+  "status": "completed",
+  "scenes": [
+    {
+      "scene": "cloth_sphere7_l",
+      "runs_per_arm": {
+        "base": 3,
+        "host": 3,
+        "graph": 3,
+        "all": 3
+      },
+      "median_seconds": {
+        "base": 11.8512322,
+        "host": 12.1379705,
+        "graph": 9.202858399999998,
+        "all": 8.1070887
+      },
+      "paired_ratios": [
+        {
+          "repeat": 1,
+          "stiff_over_graph": 1.2877773062334634,
+          "host_over_graph": 1.331479575954358,
+          "graph_over_all": 1.1351619231697807,
+          "stiff_over_all": 1.4618357635583783
+        },
+        {
+          "repeat": 2,
+          "stiff_over_graph": 1.2835762938487758,
+          "host_over_graph": 1.3150273989083772,
+          "graph_over_all": 1.1051610469708113,
+          "stiff_over_all": 1.4185585207768268
+        },
+        {
+          "repeat": 3,
+          "stiff_over_graph": 1.3821547265792804,
+          "host_over_graph": 1.3394181513577492,
+          "graph_over_all": 1.0977331506267143,
+          "stiff_over_all": 1.5172370626614784
+        }
+      ],
+      "paired_medians": {
+        "stiff_over_graph": 1.2877773062334634,
+        "host_over_graph": 1.331479575954358,
+        "graph_over_all": 1.1051610469708113,
+        "stiff_over_all": 1.4618357635583783
+      }
+    },
+    {
+      "scene": "cloth_fixed_bunny_l",
+      "runs_per_arm": {
+        "base": 3,
+        "host": 3,
+        "graph": 3,
+        "all": 3
+      },
+      "median_seconds": {
+        "base": 17.2939082,
+        "host": 17.5137456,
+        "graph": 13.0889275,
+        "all": 11.995537
+      },
+      "paired_ratios": [
+        {
+          "repeat": 1,
+          "stiff_over_graph": 1.3193746317259376,
+          "host_over_graph": 1.3617556518668164,
+          "graph_over_all": 1.0712937717987576,
+          "stiff_over_all": 1.4134378256372764
+        },
+        {
+          "repeat": 2,
+          "stiff_over_graph": 1.3308960919840498,
+          "host_over_graph": 1.3468911372229917,
+          "graph_over_all": 1.0937540937690833,
+          "stiff_over_all": 1.4556730489888285
+        },
+        {
+          "repeat": 3,
+          "stiff_over_graph": 1.306811893275505,
+          "host_over_graph": 1.3127338893245204,
+          "graph_over_all": 1.103215554251552,
+          "stiff_over_all": 1.4416952071424565
+        }
+      ],
+      "paired_medians": {
+        "stiff_over_graph": 1.3193746317259376,
+        "host_over_graph": 1.3468911372229917,
+        "graph_over_all": 1.0937540937690833,
+        "stiff_over_all": 1.4416952071424565
+      }
+    }
+  ],
+  "scope": "Solver-time sums, three interleaved pairs on shared WDDM; diagnostic only. Separate host/Graph isolates Graph on corrected source."
+}

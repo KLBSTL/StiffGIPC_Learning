@@ -1,0 +1,122 @@
+{
+  "steps": 120,
+  "dt": 0.01,
+  "absolute_numerical_tolerance": 1e-10,
+  "relative_numerical_tolerance": 1e-10,
+  "scenes": {
+    "cloth_sphere7_l": {
+      "calibration": [
+        {
+          "max_stretch": 1.047040999241993,
+          "p99_stretch": 1.0141768740971333,
+          "fixed_drift_m": 6.162975822039155e-33,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r1\\evidence.json",
+            "bytes": 22002,
+            "sha256": "cba31499edb9f1061244df0648d85bb5a61bb3f0f2ee89721425ef7a455175cc"
+          }
+        },
+        {
+          "max_stretch": 1.021281487973804,
+          "p99_stretch": 1.0141769544527797,
+          "fixed_drift_m": 3.0814879110195774e-33,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r2\\evidence.json",
+            "bytes": 22002,
+            "sha256": "3987c644da0ffbe3696ee2cb75df9cd11d17fbe465de6622fc4c6e00c62e02a0"
+          }
+        },
+        {
+          "max_stretch": 1.019555981603355,
+          "p99_stretch": 1.0141777739367674,
+          "fixed_drift_m": 0.0,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_sphere7_l_base_r3\\evidence.json",
+            "bytes": 22002,
+            "sha256": "566146d6434d051a0b01ef7e99532bbd82009ced592e4b9f18987f06d00d026e"
+          }
+        }
+      ],
+      "ranges": {
+        "max_stretch": [
+          1.019555981603355,
+          1.047040999241993
+        ],
+        "p99_stretch": [
+          1.0141768740971333,
+          1.0141777739367674
+        ],
+        "fixed_drift_m": [
+          0.0,
+          6.162975822039155e-33
+        ]
+      }
+    },
+    "cloth_fixed_bunny_l": {
+      "calibration": [
+        {
+          "max_stretch": 1.0360013469672853,
+          "p99_stretch": 1.0136801044009351,
+          "fixed_drift_m": 3.1031676915590914e-17,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r1\\evidence.json",
+            "bytes": 22127,
+            "sha256": "527943152efdcae8c4e2bb65d96061da13b9f664d980be665804285f958caba9"
+          }
+        },
+        {
+          "max_stretch": 1.035621087803895,
+          "p99_stretch": 1.0135192156574666,
+          "fixed_drift_m": 3.925231146709438e-17,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r2\\evidence.json",
+            "bytes": 22127,
+            "sha256": "90c5054c34426a9b90da7abd37417d0fc8aa9c7d24016533ec9cd4f89b958679"
+          }
+        },
+        {
+          "max_stretch": 1.0353137681466231,
+          "p99_stretch": 1.0134846519463216,
+          "fixed_drift_m": 3.925231146709438e-17,
+          "finite": true,
+          "pcg_reported_failures": 0,
+          "evidence": {
+            "path": "E:\\university_class\\ComputerGraphics\\GIPC\\StiffGIPC_Learning\\runs\\report56_stage1_20261008\\reference\\cloth_fixed_bunny_l_base_r3\\evidence.json",
+            "bytes": 22127,
+            "sha256": "2e731423fc59a4b824040e6670312067d3f57d1e66379de0013158eed1121efc"
+          }
+        }
+      ],
+      "ranges": {
+        "max_stretch": [
+          1.0353137681466231,
+          1.0360013469672853
+        ],
+        "p99_stretch": [
+          1.0134846519463216,
+          1.0136801044009351
+        ],
+        "fixed_drift_m": [
+          3.1031676915590914e-17,
+          3.925231146709438e-17
+        ]
+      }
+    }
+  },
+  "program": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_toi_cudagraph_20260929\\builds\\local-base\\Release\\gipc.exe",
+    "bytes": 9167872,
+    "sha256": "1c175da5a664bbc98657ddb6690a9902d821732c19e9b18f1f3ce0e868e05205"
+  },
+  "scope": "Freeze whole-segment material ranges before review. Numerical tolerance is not deformation budget. No statistical, actual-velocity, or accepted-path CCD certification."
+}

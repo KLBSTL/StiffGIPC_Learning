@@ -1,0 +1,54 @@
+{
+  "schema": "report56_nsight_observation_seal_validation.v1",
+  "date": "2026-10-08",
+  "scope": "CPU-only observation seal contracts and existing profiler/Windows CPU Job regressions. No GPU query/capture, native build, baseline edit, reference receipt rewrite, or Git commit.",
+  "observation_schema": "windows_execution_observation.v1",
+  "interface": "create_execution_observation_seal(root, identity, plan_path, prior_guard, out)",
+  "tests": [
+    {
+      "command": "& 'E:/Anaconda/envs/DL/python.exe' tools/local/contracts_test.py -v",
+      "exit_code": 0,
+      "passed": 16,
+      "seconds": 3.788
+    },
+    {
+      "command": "& 'E:/Anaconda/envs/DL/python.exe' tools/local/profiler_windows_contracts_test.py -v",
+      "exit_code": 0,
+      "passed": 17,
+      "seconds": 1.037
+    }
+  ],
+  "total_passed": 33,
+  "verified_contracts": [
+    "Exact observation wrapper fields and active-only program mapping; no fabricated historical 13-run plan.",
+    "Actual plan raw bytes and complete prior failed quality guard record are hashed and rechecked.",
+    "Original tool inventory plus profiler, profiler contracts and OwnedJob is sealed and rechecked.",
+    "Fresh or frozen source inventory, original build input/compiled inventories, source-object mapping, actual object/link/executable/DLL/compiler identities remain checked.",
+    "Tool, plan, guard, source and object drift; altered capture budget or certification flag; extra wrapper fields are rejected.",
+    "Legacy seal schema remains in its original validation branch.",
+    "Two immutable launch attempts per executable and existing VRAM/disk/load gates remain unchanged."
+  ],
+  "profile_candidates_from_complete_graph_reference": {
+    "cloth_fixed_bunny_l": {
+      "frame": 40,
+      "from_zero_steps": 120,
+      "timeout_seconds": 180,
+      "median_pcg_phase_ms": 82.02470302581787,
+      "directions": [10, 10, 10],
+      "pcg_iterations": [699, 695, 697],
+      "scope": "Heavy post-contact linear frame with stable direction counts across the three reference runs."
+    },
+    "cloth_sphere7_l": {
+      "frame": 49,
+      "from_zero_steps": 120,
+      "timeout_seconds": 180,
+      "median_pcg_phase_ms": 74.52393436431885,
+      "median_ccd_plus_line_search_phase_ms": 157.62771022319794,
+      "directions": [16, 18, 12],
+      "pcg_iterations": [722, 869, 489],
+      "scope": "High-cost post-contact CCD/line-search diagnostic peak; repeat workload varies and this is not a whole-scene average."
+    }
+  },
+  "performance_certified": false,
+  "quality_certified": false
+}
