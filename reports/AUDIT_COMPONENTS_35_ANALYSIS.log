@@ -1,0 +1,632 @@
+[
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.0599350131540604
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.229640807876524
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.0883909715238438
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.2799306172516187
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.1601096223979506
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.0268468896834595
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.2075557476329752
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.8619875059160328
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.8851291893958809
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.0408979671567185
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.197254377496236
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.280957316342231
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.1827337262636486
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.3194339859662205
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.0699124099433563
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 0.9878717075455978
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.1020498323217602
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.9346559500631854
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.9233201693565719
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.030037433045669
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.157943261190286
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.2583407500591464
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.2108911761063303
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.3027287669178214
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.0867032886962515
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.0457258284500206
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.1250367877081524
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.9202143863940341
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.9622919515635286
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.0352750372715727
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.6294806065768843
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.656627737436127
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.6231736933744336
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.7090783989825151
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.0166599901524889
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 0.9961294947745957
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.0488485668895717
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.9836130168258219
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.9798059375044219
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.0316611030716916
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.4214349259714862
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.4143014721753548
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.504091478431872
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.5932789832059087
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 0.9949815122269802
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.0581500784525144
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.1208947761832817
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 1.0050438000217585
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 1.063487175841237
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.1265483452797842
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.446935412582913
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.654739701797005
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.4847766267237457
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.4792180707871954
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.1436168383239318
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.0261526629397248
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.0223110568194989
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.8744187445382366
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.8972871232323224
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 0.893927950831664
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 2.0443903383647046
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 2.0286954777615347
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 2.0636221686075995
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 2.1116131275537704
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 0.9923229628370657
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.0094071224472125
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.0328815823121318
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 1.007736430023735
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 1.017216330015485
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.0408723983964943
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 1.7189434798033587
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 1.8983697303806706
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 1.97359237858232
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.9909462515038692
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.104381704625819
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 1.148142682857782
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 1.1582383451791136
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.9054840331122788
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 1.0396248670624164
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 1.0487663280980752
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "all",
+    "speedup": 2.106824473091582
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "direct",
+    "speedup": 2.1171575955840978
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "pivot",
+    "speedup": 2.0034708882219503
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 2.10667652166862
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "direct",
+    "speedup": 1.0049045958144547
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "pivot",
+    "speedup": 0.9509434287527668
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "all",
+    "candidate": "best",
+    "speedup": 0.9999297751545744
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "all",
+    "speedup": 0.995119341841123
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "pivot",
+    "speedup": 0.9463021989485942
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "direct",
+    "candidate": "best",
+    "speedup": 0.9950494597391623
+  }
+]

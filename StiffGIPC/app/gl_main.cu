@@ -38,6 +38,7 @@
 #include <limits>
 #include <solver/toi_options.h>
 #include <solver/toi_observer.h>
+#include <solver/mas_pivot_sync.h>
 extern int total_Frames;
 
 auto        assets_dir = std::string{gipc::assets_dir()};
@@ -1845,6 +1846,8 @@ int main(int argc, char** argv) try
         return gipc::PCGSolver::chunk_guard_fixture(output);
     if(const char* output=std::getenv("GIPC_PCG_GUARD_FIXTURE"))
         return gipc::PCGSolver::guard_fixture(output);
+    if(const char* output=std::getenv("GIPC_MAS_PIVOT_SYNC_FIXTURE"))
+        return gipc::run_mas_pivot_sync_fixture(output);
     if(const char* prefix=std::getenv("GIPC_MAS_REPLAY_FIXTURE"))
         return MASPreconditioner::replay_fixture(prefix,std::getenv("GIPC_MAS_FIXTURE_OUTPUT"));
     if(const char* prefix=std::getenv("GIPC_MAS_CHOLESKY_FIXTURE"))

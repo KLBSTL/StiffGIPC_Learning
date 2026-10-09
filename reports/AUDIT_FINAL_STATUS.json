@@ -1,0 +1,397 @@
+{
+  "schema": "stiff_speed_audit.final.v1",
+  "target_all_scenes_speedup": 2,
+  "all_scene_2x_achieved": false,
+  "quality_certified": false,
+  "performance_certified": false,
+  "power_mode": "unchanged quiet mode",
+  "program_identity": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\build\\audit_corrected_frozen\\snapshot_identity.json",
+    "bytes": 636761,
+    "sha256": "d236306e193cc1648b9707b9ecb84dafd488d1a4eac0870469a89a1fa4051c93"
+  },
+  "observations": [
+    {
+      "scene": "cloth_fixed_bunny_l",
+      "arms": {
+        "base": {
+          "median_solver_seconds": 35.9376175,
+          "paired_speedups": [],
+          "paired_speedup_median": null,
+          "directions": [
+            686,
+            729,
+            697
+          ],
+          "pcg": [
+            43853,
+            46682,
+            44900
+          ],
+          "observation_violations": [
+            {
+              "run": "cloth_fixed_bunny_l_base_r1",
+              "failed_observation_fields": [
+                "max_stretch"
+              ]
+            },
+            {
+              "run": "cloth_fixed_bunny_l_base_r2",
+              "failed_observation_fields": [
+                "max_stretch"
+              ]
+            },
+            {
+              "run": "cloth_fixed_bunny_l_base_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        },
+        "best": {
+          "median_solver_seconds": 19.4107924,
+          "paired_speedups": [
+            1.7856571490554698,
+            1.9813954839847527,
+            1.851424545656364
+          ],
+          "paired_speedup_median": 1.851424545656364,
+          "directions": [
+            714,
+            700,
+            705
+          ],
+          "pcg": [
+            45630,
+            44716,
+            44344
+          ],
+          "observation_violations": [
+            {
+              "run": "cloth_fixed_bunny_l_best_r1",
+              "failed_observation_fields": [
+                "max_stretch",
+                "p99_stretch"
+              ]
+            },
+            {
+              "run": "cloth_fixed_bunny_l_best_r2",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "cloth_fixed_bunny_l_best_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        }
+      },
+      "ledger": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_cloth_paired_120\\ledger.json",
+        "bytes": 5322586,
+        "sha256": "24a0c5225c6c79ec35acd9c8a3bf18e9f9d227d47436e6cf948a07e1b16c813d"
+      },
+      "comparisons": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_cloth_paired_120\\comparisons.json",
+        "bytes": 17532,
+        "sha256": "2f72ea6c4ce734a121724940dd320e12162d869fb190f9996c98307c119c4a28"
+      }
+    },
+    {
+      "scene": "cloth_hang_l",
+      "arms": {
+        "base": {
+          "median_solver_seconds": 11.2925898,
+          "paired_speedups": [],
+          "paired_speedup_median": null,
+          "directions": [
+            489,
+            483,
+            483
+          ],
+          "pcg": [
+            15358,
+            15181,
+            15186
+          ],
+          "observation_violations": [
+            {
+              "run": "cloth_hang_l_base_r1",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "cloth_hang_l_base_r2",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "cloth_hang_l_base_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        },
+        "best": {
+          "median_solver_seconds": 5.4178844,
+          "paired_speedups": [
+            2.109740278337536,
+            2.08431722906454,
+            1.9671215330098581
+          ],
+          "paired_speedup_median": 2.08431722906454,
+          "directions": [
+            483,
+            483,
+            489
+          ],
+          "pcg": [
+            15181,
+            15180,
+            15358
+          ],
+          "observation_violations": [
+            {
+              "run": "cloth_hang_l_best_r1",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "cloth_hang_l_best_r2",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "cloth_hang_l_best_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        }
+      },
+      "ledger": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_cloth_paired_120\\ledger.json",
+        "bytes": 5322586,
+        "sha256": "24a0c5225c6c79ec35acd9c8a3bf18e9f9d227d47436e6cf948a07e1b16c813d"
+      },
+      "comparisons": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_cloth_paired_120\\comparisons.json",
+        "bytes": 17532,
+        "sha256": "2f72ea6c4ce734a121724940dd320e12162d869fb190f9996c98307c119c4a28"
+      }
+    },
+    {
+      "scene": "bunny_cloth_bunny_l",
+      "arms": {
+        "base": {
+          "median_solver_seconds": 47.314752,
+          "paired_speedups": [],
+          "paired_speedup_median": null,
+          "directions": [
+            741,
+            724,
+            728
+          ],
+          "pcg": [
+            24075,
+            23471,
+            23663
+          ],
+          "observation_violations": [
+            {
+              "run": "bunny_cloth_bunny_l_base_r1",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "bunny_cloth_bunny_l_base_r2",
+              "failed_observation_fields": [
+                "max_stretch",
+                "fem_nonpositive"
+              ]
+            },
+            {
+              "run": "bunny_cloth_bunny_l_base_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        },
+        "best": {
+          "median_solver_seconds": 41.902083,
+          "paired_speedups": [
+            1.3315776991423431,
+            1.1074520996963326,
+            1.834353238821459
+          ],
+          "paired_speedup_median": 1.3315776991423431,
+          "directions": [
+            726,
+            728,
+            736
+          ],
+          "pcg": [
+            23603,
+            23578,
+            23831
+          ],
+          "observation_violations": [
+            {
+              "run": "bunny_cloth_bunny_l_best_r1",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "bunny_cloth_bunny_l_best_r2",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "bunny_cloth_bunny_l_best_r3",
+              "failed_observation_fields": []
+            }
+          ]
+        },
+        "pool": {
+          "median_solver_seconds": 36.7190363,
+          "paired_speedups": [
+            1.4418476263345867,
+            1.291091688361859,
+            1.2885619223073128
+          ],
+          "paired_speedup_median": 1.291091688361859,
+          "directions": [
+            734,
+            736,
+            745
+          ],
+          "pcg": [
+            23926,
+            24005,
+            24300
+          ],
+          "observation_violations": [
+            {
+              "run": "bunny_cloth_bunny_l_pool_r1",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "bunny_cloth_bunny_l_pool_r2",
+              "failed_observation_fields": []
+            },
+            {
+              "run": "bunny_cloth_bunny_l_pool_r3",
+              "failed_observation_fields": [
+                "max_stretch",
+                "fem_nonpositive"
+              ]
+            }
+          ]
+        }
+      },
+      "ledger": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_mixed_paired_120\\ledger.json",
+        "bytes": 8628618,
+        "sha256": "e0a10785c21e74f54101d38eb94accc691d7f6482bb55ebbf648b96cbdf1b53c"
+      },
+      "comparisons": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_mixed_paired_120\\comparisons.json",
+        "bytes": 29970,
+        "sha256": "43930b13d7c6adbb2eddecce5891de831cd3d57dca956c862d2f42f494cc55db"
+      }
+    }
+  ],
+  "toi": [
+    {
+      "scope": "one complete paired algorithm comparison",
+      "base": {
+        "directions": 750,
+        "pcg": 24404,
+        "max_stretch": 1.3070261049855831,
+        "p99_stretch": 1.0925196739581613,
+        "fixed_drift_m": 0,
+        "phase_ms": {
+          "assembly": 7121.362366199493,
+          "pcg": 11815.622066497803,
+          "ccd": 3397.5597743988037,
+          "line_search": 8301.928859710693,
+          "state_update": 33.406016029417515
+        },
+        "solver_seconds": 31.4913697,
+        "frames": 120,
+        "pcg_per_direction": 32.538666666666664,
+        "fem_min_J": -1.1203965984922497,
+        "fem_nonpositive": 39,
+        "graph_captures": 0,
+        "graph_capture_ms": 0,
+        "toi_outer": 0,
+        "hard_checks_passed": true,
+        "quality_certified": false,
+        "performance_certified": false
+      },
+      "candidate": {
+        "directions": 2064,
+        "pcg": 116736,
+        "max_stretch": 1.2679477941826347,
+        "p99_stretch": 1.1235919514250927,
+        "fixed_drift_m": 0,
+        "phase_ms": {
+          "assembly": 0.0,
+          "pcg": 0.0,
+          "ccd": 0.0,
+          "line_search": 0.0,
+          "state_update": 0.0
+        },
+        "solver_seconds": 64.07130120000001,
+        "frames": 120,
+        "pcg_per_direction": 56.55813953488372,
+        "fem_min_J": -0.7393533416624797,
+        "fem_nonpositive": 11,
+        "graph_captures": 711,
+        "graph_capture_ms": 60.0921,
+        "toi_outer": 775,
+        "hard_checks_passed": true,
+        "quality_certified": false,
+        "performance_certified": false
+      },
+      "speedup": 0.4915050749741913,
+      "direction_ratio": 2.752,
+      "pcg_per_direction_ratio": 1.7381824557926076,
+      "pcg_ratio": 4.783478118341256,
+      "phase_telemetry_available": false,
+      "ledger": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_toi_120\\ledger.json",
+        "bytes": 2008423,
+        "sha256": "c6809481cf8de6046f19b0a8168f495b4657c926a5562613ebdbce3cd5a44139"
+      }
+    },
+    {
+      "scope": "stricter nonlinear tolerance .005 instead of .05; not execution equivalence",
+      "summary": {
+        "directions": 2522,
+        "pcg": 135599,
+        "max_stretch": 1.3123378031248913,
+        "p99_stretch": 1.1213602171423667,
+        "fixed_drift_m": 0,
+        "phase_ms": {
+          "assembly": 0.0,
+          "pcg": 0.0,
+          "ccd": 0.0,
+          "line_search": 0.0,
+          "state_update": 0.0
+        },
+        "solver_seconds": 72.29208899999999,
+        "frames": 120,
+        "pcg_per_direction": 53.766455194290245,
+        "fem_min_J": -0.5657970149705754,
+        "fem_nonpositive": 9,
+        "graph_captures": 712,
+        "graph_capture_ms": 59.5368,
+        "toi_outer": 762,
+        "hard_checks_passed": true,
+        "quality_certified": false,
+        "performance_certified": false
+      },
+      "analysis": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v4_toi_tol005_120\\analysis.json",
+        "bytes": 1372405,
+        "sha256": "88689be67cb5b470d25d2437b35233f864279784b64a80500a0f8f623bc8a6b5"
+      },
+      "phase_telemetry_available": false
+    }
+  ],
+  "notes": [
+    "Paired-ratio median is reported separately from time medians.",
+    "Unstable shared WDDM timing; no claim of absence of external load.",
+    "Baseline actual velocity unavailable; accepted-path CCD certificate not established.",
+    "Baseline observation bounds are retained without post-fitting."
+  ]
+}

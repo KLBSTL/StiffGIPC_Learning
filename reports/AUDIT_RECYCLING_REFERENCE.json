@@ -1,0 +1,894 @@
+{
+  "scope": "CPU surrogate: test previous-solve subspaces on adjacent captured systems.\n\nNever use the current system's saved solution as its own initial guess. Legacy\nfloat restriction/reduction order differs from CUDA, so this is an iteration\nhypothesis screen, not equivalence, timing, or physical-quality certification.\n",
+  "cases": [
+    {
+      "case": "fixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_meta.json",
+          "bytes": 6032,
+          "sha256": "59368c4435d109c5ae0904fe6a40ce9778e89e553b7cdf725ac6b14cc6f27621"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_rows.bin",
+          "bytes": 165124,
+          "sha256": "edfd692e019f66d25294b4a2c550ea71076aeea50a231afc784fac6b75f1d476"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_cols.bin",
+          "bytes": 165124,
+          "sha256": "b20cafb7d1ae79dd10668a5a5026effd9f196d252952e7d0778fb5553dbf5ee7"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_values.bin",
+          "bytes": 2972232,
+          "sha256": "2fafddce97a4567a597745a0c1140443f9c7e6b625dc40ea9106da3fab15cab2"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_rhs.bin",
+          "bytes": 138720,
+          "sha256": "5632473b5d2886874bbc1a121ed422ececf9787fa1a48b191058246846f70171"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "049ebaa8c08f8da855c90cb881e3c1a35203174a093f9c2be26ff8a78262b925"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_mas_d_partId_map_real.bin",
+          "bytes": 24704,
+          "sha256": "9396345147f99a210a7f884bdfb1f4c513189c7f13362623ef1c7520d5380633"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_mas_d_real_map_partId.bin",
+          "bytes": 23104,
+          "sha256": "df19d4afcda0c0fcd2aa402cbd8cafad315ec496b35a66341186f2215c46dff1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_mas_d_coarseTable.bin",
+          "bytes": 138624,
+          "sha256": "24c201e56bc73f8a78596e47f2fe0d4bd73bcd6f18286ab1387ab5839ad0302e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n1_mas_d_precondMatMas.bin",
+          "bytes": 2036736,
+          "sha256": "e96daff39e6261d51f3b03f51d153f261e46391247f065bedd2c6c4a4920364e"
+        }
+      ],
+      "matrix": {
+        "dofs": 17340,
+        "blocks": 41281,
+        "scalar_nnz": 463758,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 17340,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 4.440892098500626e-16,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 107,
+        "true_relative_residual": 0.04764107809650341,
+        "rho_reference": 1.1013826128019454e-06,
+        "rho_stop": 1.0809714948562922e-10
+      },
+      "recycled": {
+        "iterations": 107,
+        "true_relative_residual": 0.04764107809650341,
+        "rho_reference": 1.1013826128019454e-06,
+        "rho_stop": 1.0809714948562922e-10
+      },
+      "projection_rank": 0,
+      "additional_projection_spmv": 0,
+      "additional_projection_dots": 0,
+      "native_default_iterations": [
+        108,
+        108
+      ]
+    },
+    {
+      "case": "fixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_meta.json",
+          "bytes": 6033,
+          "sha256": "2f7da1661bc94848c8928ec39bf2c48062cc27d46e20b924fec4488f47961e44"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_rows.bin",
+          "bytes": 165524,
+          "sha256": "f2ea7224f4e50095d3182e853e5d8b40b804529ee1103094f3f6643439bf1746"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_cols.bin",
+          "bytes": 165524,
+          "sha256": "f64fa38117f180c2fbf6661fb33105246e1ef8f917acdc23ddf9fdff84654f6b"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_values.bin",
+          "bytes": 2979432,
+          "sha256": "5f635c0720a4fe76d54e307b5a1876f667f8ba5577971739aecccc8c5dba5a90"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_rhs.bin",
+          "bytes": 138720,
+          "sha256": "b3fb5b3f1c267f87de4a72e77610b0d6d8d2677882ab587421a31d414c646bed"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "049ebaa8c08f8da855c90cb881e3c1a35203174a093f9c2be26ff8a78262b925"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_mas_d_partId_map_real.bin",
+          "bytes": 24704,
+          "sha256": "9396345147f99a210a7f884bdfb1f4c513189c7f13362623ef1c7520d5380633"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_mas_d_real_map_partId.bin",
+          "bytes": 23104,
+          "sha256": "df19d4afcda0c0fcd2aa402cbd8cafad315ec496b35a66341186f2215c46dff1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_mas_d_coarseTable.bin",
+          "bytes": 138624,
+          "sha256": "9f09c031a694937c0797e7493525a76fd674c9d7ba27704d286a2528a982adef"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n2_mas_d_precondMatMas.bin",
+          "bytes": 2036736,
+          "sha256": "91f03e0e7c8e216eb3d12527387ea91276db704357586ab3c771d172a4ff58be"
+        }
+      ],
+      "matrix": {
+        "dofs": 17340,
+        "blocks": 41381,
+        "scalar_nnz": 465162,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 17340,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 4.440892098500626e-16,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 86,
+        "true_relative_residual": 0.005876938942544117,
+        "rho_reference": 2.6882262712351737e-06,
+        "rho_stop": 2.622178094949308e-10
+      },
+      "recycled": {
+        "iterations": 85,
+        "true_relative_residual": 0.006048486895909195,
+        "rho_reference": 2.6882262712351737e-06,
+        "rho_stop": 2.5832860851531527e-10
+      },
+      "projection_rank": 1,
+      "additional_projection_spmv": 1,
+      "additional_projection_dots": 2,
+      "native_default_iterations": [
+        85,
+        85
+      ]
+    },
+    {
+      "case": "fixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_meta.json",
+          "bytes": 6032,
+          "sha256": "6ff41d384212a6016fa1d80548e3f35dd6d2cb462d81aa3df37884bffcc8b5ae"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_rows.bin",
+          "bytes": 165848,
+          "sha256": "d67aab3986873140caed0b4ec61c3d0554833213585fdf40bdc7bd6d6ad78b72"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_cols.bin",
+          "bytes": 165848,
+          "sha256": "d1fbb26f9cf7bf8adcaa4e44a77e993ac66e44c95ff9f90f5422f6f4eecd3d23"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_values.bin",
+          "bytes": 2985264,
+          "sha256": "62f02d9973d146cfc1960c41d27bac8122de4811bf42d80ca524afaaf453399e"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_rhs.bin",
+          "bytes": 138720,
+          "sha256": "1c41e1220daf9b9e2d61a1032a446d49b38d320cf808981da28e836c34142ddb"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "049ebaa8c08f8da855c90cb881e3c1a35203174a093f9c2be26ff8a78262b925"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_mas_d_partId_map_real.bin",
+          "bytes": 24704,
+          "sha256": "9396345147f99a210a7f884bdfb1f4c513189c7f13362623ef1c7520d5380633"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_mas_d_real_map_partId.bin",
+          "bytes": 23104,
+          "sha256": "df19d4afcda0c0fcd2aa402cbd8cafad315ec496b35a66341186f2215c46dff1"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_mas_d_coarseTable.bin",
+          "bytes": 138624,
+          "sha256": "a3261d9f417452c23db0bb505e92bf7a107fd19abcbf83d2279cc1336b6a3967"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\fixed_ipc\\fixed\\f57_n3_mas_d_precondMatMas.bin",
+          "bytes": 2036736,
+          "sha256": "a9ac0b0d8572980ddddcae62168651d17e3a5066da33dd5562a5d6e88af15da5"
+        }
+      ],
+      "matrix": {
+        "dofs": 17340,
+        "blocks": 41462,
+        "scalar_nnz": 466056,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 17340,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 4.440892098500626e-16,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 66,
+        "true_relative_residual": 0.003611291606245638,
+        "rho_reference": 9.753286764296536e-06,
+        "rho_stop": 9.32839494528628e-10
+      },
+      "recycled": {
+        "iterations": 67,
+        "true_relative_residual": 0.003630851094431454,
+        "rho_reference": 9.753286764296536e-06,
+        "rho_stop": 9.078866111996219e-10
+      },
+      "projection_rank": 2,
+      "additional_projection_spmv": 2,
+      "additional_projection_dots": 5,
+      "native_default_iterations": [
+        66,
+        66
+      ]
+    },
+    {
+      "case": "mixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_meta.json",
+          "bytes": 6066,
+          "sha256": "aace355d54e8355182d7737f8f49055eb8e5dd446f7bbe5a653efdb034171d54"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_rows.bin",
+          "bytes": 553376,
+          "sha256": "8f8b69f8808e700a5b04fbdfc049315a6669b43269062d73fdb42b208564bdc3"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_cols.bin",
+          "bytes": 553376,
+          "sha256": "29c7fa0d9339b80a887506d6add34bcfc3b8fc6464587f9e40149d8f3e8d7965"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_values.bin",
+          "bytes": 9960768,
+          "sha256": "795e9902ddcf56fddeb262dec718f57727c0a2323e7580ee0fdff5bb0c9fe413"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_rhs.bin",
+          "bytes": 486864,
+          "sha256": "0df9d7f7e1f250e1168e6af5384e95de0b8ef5d3cfdf2a7f7240a5ee720c403a"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "2ae71a3aaf728780d79086bcf411c9dd1dd0e511f29037181316e3d96b1b18cf"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "9a1ffa4abe093017dbc4deb36647a4363d20b85aec8f8a4a81eb859b7c72e7ab"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n1_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "522430ee095f8a5aab12061905157b1a56362e87026250870bbc929f5a7c8e92"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 138344,
+        "scalar_nnz": 2271480,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 1.137180627441836e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 18,
+        "true_relative_residual": 0.0007851357760060476,
+        "rho_reference": 0.059844381120646536,
+        "rho_stop": 5.973441213200752e-06
+      },
+      "recycled": {
+        "iterations": 18,
+        "true_relative_residual": 0.0007851357760060476,
+        "rho_reference": 0.059844381120646536,
+        "rho_stop": 5.973441213200752e-06
+      },
+      "projection_rank": 0,
+      "additional_projection_spmv": 0,
+      "additional_projection_dots": 0,
+      "native_default_iterations": [
+        18,
+        18
+      ]
+    },
+    {
+      "case": "mixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_meta.json",
+          "bytes": 6064,
+          "sha256": "44367ab2efd933713f6eb88b32e02813da5d2eac6165fd01d248d8817fbe3e44"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_rows.bin",
+          "bytes": 553644,
+          "sha256": "d19761ddda422e9e3e9b974a84d96f87dac8f8c1344df20328cb56388a2b3149"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_cols.bin",
+          "bytes": 553644,
+          "sha256": "b297944de64d3243d40434bf1bab525ce000d717b396007c6e2fb0b1bcf52db0"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_values.bin",
+          "bytes": 9965592,
+          "sha256": "87da057576b7c8311c860f7518cabdce977739cb047c1a8587a09c30889f39f2"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_rhs.bin",
+          "bytes": 486864,
+          "sha256": "3b855dd321efbb192bf35f6c53a8cc4566533f8ffa2a38b6b03c4d437abaa689"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "01a1c0f7d952ce19aa395ea9421520a7217ca8bc1d23f82311dc1407db1d6c28"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "a44def4e9a996f1e512a7722dacccc84e0f731d073f547ea814fb8e82dc62662"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n2_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "6c3df0b4a56ba6afa59650cd568d5fbc67c7012fadaf1b77a90a0b9c15992dd8"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 138411,
+        "scalar_nnz": 2272682,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 2.282618538629322e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 19,
+        "true_relative_residual": 0.0008658634865382411,
+        "rho_reference": 0.04275944215929689,
+        "rho_stop": 4.21504030598223e-06
+      },
+      "recycled": {
+        "iterations": 10,
+        "true_relative_residual": 0.0014586873286694675,
+        "rho_reference": 0.04275944215929689,
+        "rho_stop": 2.913045771695548e-06
+      },
+      "projection_rank": 1,
+      "additional_projection_spmv": 1,
+      "additional_projection_dots": 2,
+      "native_default_iterations": [
+        19,
+        19
+      ]
+    },
+    {
+      "case": "mixed_ipc",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_meta.json",
+          "bytes": 6068,
+          "sha256": "57025dc9b8858d392a032c249ee0aac4ad6ec5a50541ab7c69bf9a7c0ae466ec"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_rows.bin",
+          "bytes": 553956,
+          "sha256": "f0f7ff49bfa55b812f56c074b65c65b9a30827169ccd16d904caa426b24b1c45"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_cols.bin",
+          "bytes": 553956,
+          "sha256": "7b1eff05f18f78a4e11381af8a4fdff1be8da3d62cb400b44baeb1249b278781"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_values.bin",
+          "bytes": 9971208,
+          "sha256": "4d3fec688f4c46f8127971be23d97517e16cc51e6b385cf6b35a8c9463da003a"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_rhs.bin",
+          "bytes": 486864,
+          "sha256": "46eca4bea13f5bd6fd61d653aaab088ee6b4b65de5c8a94609356459b55c3932"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "8ad0bae00fba945cc437073cd5fd27e6c12c69d22ff53ad5d0fa8a531d0947e3"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "6bba59912a27ca1489699f2422e6bbce8a25fd1751af21ab377647ccf984a057"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_ipc\\fixed\\f34_n3_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "8206100e3724deddf822e7fa5d45b7890ff7167eac03d4489528e88b56a397d5"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 138489,
+        "scalar_nnz": 2274090,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 5.773159728050814e-14,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 21,
+        "true_relative_residual": 0.0007126250981088053,
+        "rho_reference": 0.02261999087424814,
+        "rho_stop": 1.974334623668212e-06
+      },
+      "recycled": {
+        "iterations": 7,
+        "true_relative_residual": 0.0016277058485351813,
+        "rho_reference": 0.02261999087424814,
+        "rho_stop": 2.1118664396691285e-06
+      },
+      "projection_rank": 2,
+      "additional_projection_spmv": 2,
+      "additional_projection_dots": 5,
+      "native_default_iterations": [
+        21,
+        21
+      ]
+    },
+    {
+      "case": "mixed_toi",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_meta.json",
+          "bytes": 6064,
+          "sha256": "e396bdc714dd9b98d4997ed1d012bece1b886e5d4e059f48cf91d3a90401c68a"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_rows.bin",
+          "bytes": 549188,
+          "sha256": "763629669c4a428d62ce8a9d2a1efd16976785ea4e5bf2afac84552fc62e958a"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_cols.bin",
+          "bytes": 549188,
+          "sha256": "d314d39b773e81c999b5456fee732b8a0a50ec7310b766078b6edba97cfa3d35"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_values.bin",
+          "bytes": 9885384,
+          "sha256": "7d41bf66796844aae32247afeb5f9e1e3337f8ac584e369525f7c6f9fe4e66f8"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_rhs.bin",
+          "bytes": 486864,
+          "sha256": "5eedfdeade7a13631a096bae7a9e08b465e0ccc19846862ec9b1566399e21e91"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "2f8f03082fd52d4a568932ab28ad19753041e0d7bbc76ce584afd448d8810d1c"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "f12868b181a7e7d18bcacbbc7fe0dec6e26f66a8d2469ccaeff239beb33c3e2b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n1_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "01f4279a38cf49db0404d021bbb9bb2222d206514a46774a548da35e3474d827"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 137297,
+        "scalar_nnz": 2247924,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 1.1369030716856798e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 19,
+        "true_relative_residual": 0.0016824883167647108,
+        "rho_reference": 0.05647372484283733,
+        "rho_stop": 5.2074043944923285e-06
+      },
+      "recycled": {
+        "iterations": 19,
+        "true_relative_residual": 0.0016824883167647108,
+        "rho_reference": 0.05647372484283733,
+        "rho_stop": 5.2074043944923285e-06
+      },
+      "projection_rank": 0,
+      "additional_projection_spmv": 0,
+      "additional_projection_dots": 0,
+      "native_default_iterations": [
+        19,
+        19
+      ]
+    },
+    {
+      "case": "mixed_toi",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_meta.json",
+          "bytes": 6068,
+          "sha256": "3c7e984d8d718685985e14196f2a1df871e9967ecf95ec0812924374aecba715"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_rows.bin",
+          "bytes": 549188,
+          "sha256": "763629669c4a428d62ce8a9d2a1efd16976785ea4e5bf2afac84552fc62e958a"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_cols.bin",
+          "bytes": 549188,
+          "sha256": "d314d39b773e81c999b5456fee732b8a0a50ec7310b766078b6edba97cfa3d35"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_values.bin",
+          "bytes": 9885384,
+          "sha256": "c81a66834ccc38f374f3d8ef2d92106c1721b23d3f2b99e2cc734601ae769ec7"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_rhs.bin",
+          "bytes": 486864,
+          "sha256": "d930699d3a8c32b82cd159b4e5beb50d2df692f63f18a82b8de0a61f69b037ae"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "ad18f757f2c8bc73db8a296656757a360082fab5ee1d20dd95dcd4daaedb0225"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "6efc2bc4ce536c41263502b3f39f78f3a887a15cfa99b12133e317a47ad52f23"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n2_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "98962a32b7179f42989ffb3c8a3c961d359958d97412b185bc74663632226452"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 137297,
+        "scalar_nnz": 2247922,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 1.1369030716856798e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 74,
+        "true_relative_residual": 0.020040439064864923,
+        "rho_reference": 2.2824532422843474e-05,
+        "rho_stop": 2.245497371968161e-09
+      },
+      "recycled": {
+        "iterations": 74,
+        "true_relative_residual": 0.017088636427319972,
+        "rho_reference": 2.2824532422843474e-05,
+        "rho_stop": 2.2020760258168552e-09
+      },
+      "projection_rank": 1,
+      "additional_projection_spmv": 1,
+      "additional_projection_dots": 2,
+      "native_default_iterations": [
+        74,
+        75
+      ]
+    },
+    {
+      "case": "mixed_toi",
+      "prefix": "runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3",
+      "source": {
+        "meta": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_meta.json",
+          "bytes": 6067,
+          "sha256": "98a4f5220aa6f19e447632e04a21119435a2c0eee4e997224e2a181931d31d5a"
+        },
+        "rows": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_rows.bin",
+          "bytes": 549188,
+          "sha256": "763629669c4a428d62ce8a9d2a1efd16976785ea4e5bf2afac84552fc62e958a"
+        },
+        "cols": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_cols.bin",
+          "bytes": 549188,
+          "sha256": "d314d39b773e81c999b5456fee732b8a0a50ec7310b766078b6edba97cfa3d35"
+        },
+        "values": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_values.bin",
+          "bytes": 9885384,
+          "sha256": "7e432633373ec10141a84b6016a06a86c4b0bdcf248daa8798341dfd7ddaba5f"
+        },
+        "rhs": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_rhs.bin",
+          "bytes": 486864,
+          "sha256": "3866f11c65a16314c00eb6b243e7f9d4afffa7c1a22eb0a1d0f5b5042f3e2970"
+        }
+      },
+      "preconditioner_inputs": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_abd_inverse_0.bin",
+          "bytes": 1152,
+          "sha256": "04fdd8b7bad243443acae81059beb86bf6826be86387b30a75c105392cfa713d"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_mas_d_partId_map_real.bin",
+          "bytes": 86336,
+          "sha256": "1a5db7e289aa20dbd8222f38179eec5363de9932279aeba4c3ae6756614a741e"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_mas_d_real_map_partId.bin",
+          "bytes": 81128,
+          "sha256": "ee7f7150dd8dc8482d7eec67e72551e1d238ac6b2feb4e3ca907a8cb8087a01b"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_mas_d_coarseTable.bin",
+          "bytes": 486768,
+          "sha256": "6eca44b258306b39852a0627af2d180c5796e40788ce115576102dff09795cdd"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_v3_adjacent_systems\\mixed_toi\\fixed\\f34_n3_mas_d_precondMatMas.bin",
+          "bytes": 7079616,
+          "sha256": "8ec3cf30dd80af92d74827d76a9a48fb75d1a047eb436fc4c71565993d4ef1a0"
+        }
+      ],
+      "matrix": {
+        "dofs": 60858,
+        "blocks": 137297,
+        "scalar_nnz": 2247924,
+        "lower_blocks": 0,
+        "exact_zero_rows": [],
+        "active_dofs": 60858,
+        "diagonal_blocks_not_symmetrized": true,
+        "max_absolute_asymmetry": 2.27377144890184e-13,
+        "preconditioners": [
+          {
+            "kind": "abd",
+            "offset": 0,
+            "count": 1
+          },
+          {
+            "kind": "MAS_full_owned_buffers",
+            "offset": 4
+          }
+        ]
+      },
+      "zero": {
+        "iterations": 62,
+        "true_relative_residual": 0.012445895959364297,
+        "rho_reference": 2.9843049051358622e-06,
+        "rho_stop": 2.8373363843628034e-10
+      },
+      "recycled": {
+        "iterations": 50,
+        "true_relative_residual": 0.01174948546413137,
+        "rho_reference": 2.9843049051358622e-06,
+        "rho_stop": 2.7203682324871967e-10
+      },
+      "projection_rank": 2,
+      "additional_projection_spmv": 2,
+      "additional_projection_dots": 5,
+      "native_default_iterations": [
+        62,
+        62
+      ]
+    }
+  ],
+  "controller": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\tools\\local\\audit_recycling_reference.py",
+    "bytes": 8483,
+    "sha256": "31b171f57f760ee8b4d8e2b6a00ad86a16d1fce5fae854894434c67403bcc0b4"
+  },
+  "performance_certified": false,
+  "quality_certified": false
+}

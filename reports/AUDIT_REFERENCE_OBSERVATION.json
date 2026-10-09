@@ -1,0 +1,893 @@
+{
+  "schema": "audit_reference_observation.v1",
+  "ledger": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_quality_reference_120\\ledger.json",
+    "bytes": 4032268,
+    "sha256": "fb1948d9c414abf70918990e83278fd561b40eb0ee406d2d833db6b751f9c5f9"
+  },
+  "identity": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\audit_quality_reference_120\\identity.json",
+    "bytes": 776825,
+    "sha256": "d2f80c7e0da05c912a55acfb8611a3314594764eec6a33f1a35a3edb56d7c6f3"
+  },
+  "scenes": {
+    "bunny_cloth_bunny_l": {
+      "bounds": {
+        "max_stretch": 1.2864832340477113,
+        "p99_stretch": 1.0927199956686082,
+        "fixed_drift_m": 1e-10,
+        "fem_min_J": -1.0340473200461566,
+        "fem_nonpositive": 40
+      },
+      "runs": [
+        {
+          "name": "bunny_cloth_bunny_l_base_r1",
+          "directions": 732,
+          "pcg": 23702,
+          "max_stretch": 1.249131392161835,
+          "p99_stretch": 1.0925232653072983,
+          "fixed_drift_m": 0,
+          "phase_ms": {
+            "assembly": 7176.434593200684,
+            "pcg": 12231.396028518677,
+            "ccd": 3437.6903958320618,
+            "line_search": 8414.71333694458,
+            "state_update": 36.34137600660324
+          },
+          "solver_seconds": 32.1559665,
+          "frames": 120,
+          "pcg_per_direction": 32.37978142076503,
+          "fem_min_J": -0.8830279798085537,
+          "fem_nonpositive": 39,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "bunny_cloth_bunny_l_base_r2",
+          "directions": 722,
+          "pcg": 23463,
+          "max_stretch": 1.26592744058451,
+          "p99_stretch": 1.0927189956686083,
+          "fixed_drift_m": 0,
+          "phase_ms": {
+            "assembly": 7451.806562423706,
+            "pcg": 15237.080367088318,
+            "ccd": 3825.1612491607666,
+            "line_search": 9201.14736366272,
+            "state_update": 62.59318402595818
+          },
+          "solver_seconds": 36.7859602,
+          "frames": 120,
+          "pcg_per_direction": 32.49722991689751,
+          "fem_min_J": -1.0157826387913413,
+          "fem_nonpositive": 40,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "bunny_cloth_bunny_l_base_r3",
+          "directions": 728,
+          "pcg": 23595,
+          "max_stretch": 1.2864822340477113,
+          "p99_stretch": 1.0925214657340112,
+          "fixed_drift_m": 0,
+          "phase_ms": {
+            "assembly": 7679.879302024841,
+            "pcg": 15331.970546722412,
+            "ccd": 3843.0336310863495,
+            "line_search": 9375.801207065582,
+            "state_update": 62.45916808396578
+          },
+          "solver_seconds": 37.3436593,
+          "frames": 120,
+          "pcg_per_direction": 32.410714285714285,
+          "fem_min_J": -1.0340463200461567,
+          "fem_nonpositive": 34,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        }
+      ],
+      "baseline_pair_comparisons": [
+        {
+          "left": "bunny_cloth_bunny_l_base_r1",
+          "right": "bunny_cloth_bunny_l_base_r2",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "right_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "right_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "right_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "right_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "right_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "right_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.009566140771369882,
+                "max_vertex": 0.0716525049264328,
+                "frames": 121
+              },
+              "FEM": {
+                "max_frame_rms": 0.004600670798955218,
+                "max_vertex": 0.03179219580902184,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 0.0021201120816944333,
+                "max_vertex": 0.00430363100144787,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "bunny_cloth_bunny_l_base_r1",
+          "right": "bunny_cloth_bunny_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "right_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "right_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "right_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "right_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "right_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "right_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.012202911052158556,
+                "max_vertex": 0.08327156215317325,
+                "frames": 121
+              },
+              "FEM": {
+                "max_frame_rms": 0.00286781311777889,
+                "max_vertex": 0.03304707061128615,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 0.0017881503737017105,
+                "max_vertex": 0.0030915390092154838,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "bunny_cloth_bunny_l_base_r2",
+          "right": "bunny_cloth_bunny_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "right_sha256": "c5c71bfa3042223437acacb50e438eed0c6b0bd0ef85af96af8445f271d4b3fa",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "right_sha256": "c254bb1462e15b8762617b80b464af15bed93822ab01a3434c342d71e454f9cb",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "right_sha256": "3b72d4782cafee57b7f5e2d3dacbb6548e8d99ab013f797cdc50312c727dd8f9",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "right_sha256": "507a93be4a04c8ca6ab498476cbf9c9f0fa5941d31075b2bed6ed6c3d290da82",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "right_sha256": "1a6eeb2c5868496b3e3d4550fff20fe302b83df424a50d8cac287b0f0e46b808",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "right_sha256": "4c70805c1e866a1443472e41e6ca95a7b4e440559164015eaa55746fe88f9e95",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.011687967734672802,
+                "max_vertex": 0.07832548128740253,
+                "frames": 121
+              },
+              "FEM": {
+                "max_frame_rms": 0.004295598633566456,
+                "max_vertex": 0.04077462945455426,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 0.0021049890227543737,
+                "max_vertex": 0.0042502802863762686,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ]
+    },
+    "cloth_fixed_bunny_l": {
+      "bounds": {
+        "max_stretch": 1.0357557780767628,
+        "p99_stretch": 1.0135419935503596,
+        "fixed_drift_m": 1.0000005721958499e-10,
+        "fem_min_J": null,
+        "fem_nonpositive": 0
+      },
+      "runs": [
+        {
+          "name": "cloth_fixed_bunny_l_base_r1",
+          "directions": 691,
+          "pcg": 43963,
+          "max_stretch": 1.0357547780767629,
+          "p99_stretch": 1.0135409935503596,
+          "fixed_drift_m": 3.1031676915590914e-17,
+          "phase_ms": {
+            "assembly": 1716.988288640976,
+            "pcg": 9814.052531003952,
+            "ccd": 1497.0334706306458,
+            "line_search": 3812.359079360962,
+            "state_update": 29.329536015167832
+          },
+          "solver_seconds": 17.2647068,
+          "frames": 120,
+          "pcg_per_direction": 63.62228654124457,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "cloth_fixed_bunny_l_base_r2",
+          "directions": 705,
+          "pcg": 45110,
+          "max_stretch": 1.0355908300135581,
+          "p99_stretch": 1.013404846679804,
+          "fixed_drift_m": 5.721958498152797e-17,
+          "phase_ms": {
+            "assembly": 1996.2384692430496,
+            "pcg": 13530.460933685303,
+            "ccd": 1709.7380822896957,
+            "line_search": 4329.610243797302,
+            "state_update": 48.02080004476011
+          },
+          "solver_seconds": 22.0949491,
+          "frames": 120,
+          "pcg_per_direction": 63.98581560283688,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "cloth_fixed_bunny_l_base_r3",
+          "directions": 696,
+          "pcg": 44495,
+          "max_stretch": 1.0354674437758895,
+          "p99_stretch": 1.0133984688862723,
+          "fixed_drift_m": 3.1031676915590914e-17,
+          "phase_ms": {
+            "assembly": 1978.5631037950516,
+            "pcg": 13392.779856681824,
+            "ccd": 1712.051199913025,
+            "line_search": 4290.92905664444,
+            "state_update": 47.48031998798251
+          },
+          "solver_seconds": 21.9006937,
+          "frames": 120,
+          "pcg_per_direction": 63.929597701149426,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        }
+      ],
+      "baseline_pair_comparisons": [
+        {
+          "left": "cloth_fixed_bunny_l_base_r1",
+          "right": "cloth_fixed_bunny_l_base_r2",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.014335634782501942,
+                "max_vertex": 0.057762945731823126,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 1.2829912410676436e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "cloth_fixed_bunny_l_base_r1",
+          "right": "cloth_fixed_bunny_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.021541957968951163,
+                "max_vertex": 0.1465490991030703,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 1.250753908698209e-17,
+                "max_vertex": 6.206335383118183e-17,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "cloth_fixed_bunny_l_base_r2",
+          "right": "cloth_fixed_bunny_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "right_sha256": "33640f21acba865d8932bd58897fbddd2f2375cb88289b1258b1988fe2f16e4f",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "right_sha256": "ecf5bd3acb7a8535e3bf1c979c4eb532f856593621dc184018ad84e7c40ec2c7",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "right_sha256": "69414937ab67562e1b620fef9406846156128f282fe9e67c8c7167e540ed2140",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "right_sha256": "25a334a35007ad8bfd808d453d5ceb8c749ea11a2729106a88a02e72eae97f6a",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "right_sha256": "4754d971e94186b4661dc995957def79d344ae22db7dd5301679c1ae088f23c2",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "right_sha256": "d50446374ae24f5baec8dafb00098ee013395d0cecefcdb99a1aaf1ef53bdc6e",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "right_sha256": "eac88f389a90ee63bab5b0fc29c98d4b1a8df23ddfee47e4216f66bcedf956cb",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 0.02020641984242351,
+                "max_vertex": 0.109271990281397,
+                "frames": 121
+              },
+              "ABD": {
+                "max_frame_rms": 1.3764891986256899e-17,
+                "max_vertex": 5.551115123125783e-17,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ]
+    },
+    "cloth_hang_l": {
+      "bounds": {
+        "max_stretch": 1.128877221658095,
+        "p99_stretch": 1.03241034099894,
+        "fixed_drift_m": 1e-10,
+        "fem_min_J": null,
+        "fem_nonpositive": 0
+      },
+      "runs": [
+        {
+          "name": "cloth_hang_l_base_r1",
+          "directions": 483,
+          "pcg": 15176,
+          "max_stretch": 1.1288762038503948,
+          "p99_stretch": 1.0324093354373876,
+          "fixed_drift_m": 0.0,
+          "phase_ms": {
+            "assembly": 380.95894262194633,
+            "pcg": 2939.1227564811707,
+            "ccd": 565.0049272179604,
+            "line_search": 989.669762134552,
+            "state_update": 13.741536006331444
+          },
+          "solver_seconds": 5.0550064,
+          "frames": 120,
+          "pcg_per_direction": 31.420289855072465,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "cloth_hang_l_base_r2",
+          "directions": 483,
+          "pcg": 15184,
+          "max_stretch": 1.128876221658095,
+          "p99_stretch": 1.0324093388612,
+          "fixed_drift_m": 0.0,
+          "phase_ms": {
+            "assembly": 440.89446499943733,
+            "pcg": 4295.122309684753,
+            "ccd": 718.0787827968597,
+            "line_search": 1205.499967455864,
+            "state_update": 24.67596797645092
+          },
+          "solver_seconds": 6.9272095,
+          "frames": 120,
+          "pcg_per_direction": 31.436853002070393,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        },
+        {
+          "name": "cloth_hang_l_base_r3",
+          "directions": 483,
+          "pcg": 15180,
+          "max_stretch": 1.1288762214754227,
+          "p99_stretch": 1.03240934099894,
+          "fixed_drift_m": 0.0,
+          "phase_ms": {
+            "assembly": 464.5321596264839,
+            "pcg": 4303.35945391655,
+            "ccd": 728.2051533460617,
+            "line_search": 1229.2867850065231,
+            "state_update": 23.23913600295782
+          },
+          "solver_seconds": 7.015899800000001,
+          "frames": 120,
+          "pcg_per_direction": 31.428571428571427,
+          "fem_min_J": null,
+          "fem_nonpositive": 0,
+          "graph_captures": 0,
+          "graph_capture_ms": 0,
+          "toi_outer": 0,
+          "hard_checks_passed": true,
+          "quality_certified": false,
+          "performance_certified": false
+        }
+      ],
+      "baseline_pair_comparisons": [
+        {
+          "left": "cloth_hang_l_base_r1",
+          "right": "cloth_hang_l_base_r2",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "right_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "right_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "right_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "right_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "right_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "right_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 9.122595525008677e-06,
+                "max_vertex": 3.6004629273483456e-05,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "cloth_hang_l_base_r1",
+          "right": "cloth_hang_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "right_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "right_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "right_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "right_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "right_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "right_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 2.1375181936281284e-06,
+                "max_vertex": 1.9551585534474093e-05,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        },
+        {
+          "left": "cloth_hang_l_base_r2",
+          "right": "cloth_hang_l_base_r3",
+          "initial_input": {
+            "passed": true,
+            "files": {
+              "trace/topology.bin": {
+                "left_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "right_sha256": "58354095d941ab4463d5f9773d07ae40625a0e056dc6f000e88b806dd52d4edc",
+                "equal": true
+              },
+              "trace/masses.bin": {
+                "left_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "right_sha256": "3f87e140384e10bb0fe87090e4c26f7f8387ec076e426c643647fb8c5fbd9a54",
+                "equal": true
+              },
+              "trace/boundary_types.bin": {
+                "left_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "right_sha256": "db6afe5d2163b6d295cf3785d55db593f3dda30e0d93aa7a1b81e7ec4c4eaabf",
+                "equal": true
+              },
+              "trace/body_ids.bin": {
+                "left_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "right_sha256": "fe4648e22868bdb64e7511256a5635cf56c0d7455cb6fbcb1ca2818b513c8d6c",
+                "equal": true
+              },
+              "trace/state_0000.bin": {
+                "left_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "right_sha256": "2414b2e089aaccdb7a6ecb6cdec50c0c57671762a0e9e4585cf96520b98875d6",
+                "equal": true
+              },
+              "trace/metadata.json": {
+                "left_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "right_sha256": "f71a8eb77d6db55dfc9dad4433dc0e05314d00e6ee6e3ee3d6102fad77017dc1",
+                "equal": true
+              },
+              "output/scene.json": {
+                "left_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "right_sha256": "6167468f14be7ba2d371815c8ebdbc3ed07ac2e4024db65d5a1c41871966284c",
+                "equal": true
+              }
+            },
+            "initial_actual_velocity_comparable": false,
+            "missing_velocity_reason": "Baseline does not export actual velocity; no reconstruction from positions."
+          },
+          "trajectory": {
+            "position": {
+              "cloth": {
+                "max_frame_rms": 1.000838836856438e-05,
+                "max_vertex": 5.239146127565559e-05,
+                "frames": 121
+              }
+            },
+            "velocity": {
+              "available": false,
+              "reason": "Actual export absent in one or both programs",
+              "run_exported_frames": 0,
+              "reference_exported_frames": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "numerical_stretch_floor": 1e-06,
+  "numerical_J_floor": 1e-06,
+  "fixed_drift_floor_m": 1e-10,
+  "performance_certified": false,
+  "quality_certified": false,
+  "physical_budget": "No extra material deformation budget. Floors only for numerical comparison.",
+  "limitations": [
+    "Original Stiff has no actual velocity export.",
+    "Observed baseline inversions are recorded; passing these bounds does not establish physical safety.",
+    "No independent accepted-path CCD certificate. Shared WDDM timing is diagnostic."
+  ]
+}

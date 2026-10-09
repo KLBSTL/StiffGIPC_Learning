@@ -151,6 +151,26 @@ target_compile_options(diag_fused_update_tests PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:-Xcompiler=/Zc:preprocessor>)
 set_target_properties(diag_fused_update_tests PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 enable_testing()
+add_executable(fem_direct_pullback_tests
+    tests/fem_direct_pullback_tests.cu
+    StiffGIPC/fem/femEnergy.cu
+    StiffGIPC/math/gpu_eigen_libs.cu)
+target_compile_features(fem_direct_pullback_tests PRIVATE cuda_std_17)
+target_compile_definitions(fem_direct_pullback_tests PRIVATE USE_SNK1)
+target_include_directories(fem_direct_pullback_tests PRIVATE StiffGIPC/)
+target_link_libraries(fem_direct_pullback_tests PRIVATE Eigen3::Eigen CUDA::cudart)
+foreach(_eigen_include IN LISTS _eigen_includes)
+    get_filename_component(_eigen_parent "${_eigen_include}" DIRECTORY)
+    target_include_directories(fem_direct_pullback_tests PRIVATE "${_eigen_parent}")
+endforeach()
+target_compile_options(fem_direct_pullback_tests PRIVATE
+    --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr
+    $<$<CXX_COMPILER_ID:MSVC>:-Xcompiler=/Zc:preprocessor>)
+set_target_properties(fem_direct_pullback_tests PROPERTIES
+    CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES}
+    CUDA_SEPARABLE_COMPILATION ON CUDA_RESOLVE_DEVICE_SYMBOLS ON)
+add_test(NAME fem_direct_pullback_equivalence COMMAND fem_direct_pullback_tests)
+set_tests_properties(fem_direct_pullback_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 add_test(NAME diag_fused_update_equivalence COMMAND diag_fused_update_tests)
 add_executable(sym_spmv_tests
     tests/sym_spmv_tests.cu
@@ -173,6 +193,9 @@ add_test(NAME sym_spmv_equivalence COMMAND sym_spmv_tests)
 set_tests_properties(sym_spmv_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 add_test(NAME pcg_guard_boundaries COMMAND ${CMAKE_COMMAND} -E env
     "GIPC_PCG_GUARD_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/pcg_guard_fixture.json" $<TARGET_FILE:gipc>)
+add_test(NAME mas_pivot_sync_equivalence COMMAND ${CMAKE_COMMAND} -E env
+    "GIPC_MAS_PIVOT_SYNC_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/mas_pivot_sync_fixture.json" $<TARGET_FILE:gipc>)
+set_tests_properties(mas_pivot_sync_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 
 # Small invariant tests accompany the active IPC termination module. The
 # official baseline is built separately from baseline/CMakeLists.txt.

@@ -1,0 +1,65 @@
+[
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.3315776991423431
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "pool",
+    "speedup": 1.4418476263345867
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 1.0828114854005646
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.1074520996963326
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "pool",
+    "speedup": 1.291091688361859
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 1.1658216989392869
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.834353238821459
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "pool",
+    "speedup": 1.2885619223073128
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 0.702461169984464
+  }
+]

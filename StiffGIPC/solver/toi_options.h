@@ -200,6 +200,9 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
             {"inverse64_overridden_by_cholesky",cholesky&&toi_flag_one("GIPC_MAS_INVERSE64")}}}};
     result["configured_pcg_execution"]=std::getenv("GIPC_PCG_EXECUTION")?Json(std::getenv("GIPC_PCG_EXECUTION")):Json("host");
     result["configured_pcg_graph_chunk"]=pcg_graph_chunk_iterations();
+    result["fem_direct_pullback"]=toi_flag_one("GIPC_FEM_DIRECT_PULLBACK");
+    result["mas"]["pivot_only_sync_requested"]=toi_flag_one("GIPC_MAS_PIVOT_ONLY_SYNC");
+    result["mas"]["pivot_only_sync_effective"]=toi_flag_one("GIPC_MAS_PIVOT_ONLY_SYNC")&&!cholesky&&!inverse64;
     result["ipc_stopping"]=IpcOptions::read(newton_tol).json();
     result["requested_preconditioner"]=std::getenv("GIPC_PCG_PRECONDITIONER")?Json(std::getenv("GIPC_PCG_PRECONDITIONER")):Json(nullptr);
     result["execution_observed_per_linear_system"]=true;

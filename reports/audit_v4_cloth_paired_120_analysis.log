@@ -1,0 +1,44 @@
+[
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.7856571490554698
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.9813954839847527
+  },
+  {
+    "scene": "cloth_fixed_bunny_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.851424545656364
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 2.109740278337536
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 2,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 2.08431722906454
+  },
+  {
+    "scene": "cloth_hang_l",
+    "repeat": 3,
+    "reference": "base",
+    "candidate": "best",
+    "speedup": 1.9671215330098581
+  }
+]

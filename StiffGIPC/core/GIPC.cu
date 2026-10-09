@@ -17,6 +17,8 @@
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
 #include <fem/femEnergy.cuh>
+#include <fem/direct_pullback.cuh>
+#include <type_traits>
 #include <collision/FrictionUtils.cuh>
 #include <cstdlib>
 #include <fstream>
@@ -9493,7 +9495,8 @@ void calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInverses,
         return;
     const unsigned int threadNum = default_threads;
     int                blockNum  = (numbers + threadNum - 1) / threadNum;
-    _calculate_fem_gradient_hessian<<<blockNum, threadNum>>>(
+    auto launch = [&](auto mode) {
+    _calculate_fem_gradient_hessian<decltype(mode)::value><<<blockNum, threadNum>>>(
         DmInverses + tetrahedraNum_ABD,
         vertexes,
         tetrahedras + tetrahedraNum_ABD,
@@ -9509,6 +9512,9 @@ void calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInverses,
         col_ids,
         IPC_dt,
         global_hessian_fem_offset);
+    };
+    if(gipc::fem::direct_pullback_requested()) launch(std::true_type{});
+    else launch(std::false_type{});
 }
 
 void calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d* triDmInverses,
@@ -9532,7 +9538,8 @@ void calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d* triDmInvers
         return;
     const unsigned int threadNum = default_threads;
     int                blockNum  = (numbers + threadNum - 1) / threadNum;
-    _calculate_triangle_fem_gradient_hessian<<<blockNum, threadNum>>>(triDmInverses,
+    auto launch = [&](auto mode) {
+    _calculate_triangle_fem_gradient_hessian<decltype(mode)::value><<<blockNum, threadNum>>>(triDmInverses,
                                                                       vertexes,
                                                                       triangles,
                                                                       area,
@@ -9547,6 +9554,9 @@ void calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d* triDmInvers
                                                                       col_ids,
                                                                       strainRate,
                                                                       global_hessian_fem_offset);
+    };
+    if(gipc::fem::direct_pullback_requested()) launch(std::true_type{});
+    else launch(std::false_type{});
 }
 
 

@@ -1,0 +1,23 @@
+[
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 1.0816239372954597
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 2,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 1.0830052055128803
+  },
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 3,
+    "reference": "best",
+    "candidate": "pool",
+    "speedup": 1.106786267864801
+  }
+]

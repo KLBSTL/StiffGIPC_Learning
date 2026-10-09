@@ -35,6 +35,8 @@ DEFAULT = {
     'bounded_ccd':False, 'bounded_ccd_validate':False,
     'contact_pool':False, 'contact_pool_validate':False,
     'edge_query_order':'raw', 'edge_order_probe_frames':None,
+    'fem_direct_pullback':False,
+    'mas_pivot_only_sync':False,
 }
 PRESETS = {
     'base': {}, 'host': {}, 'graph': {'execution': 'conditional_graph'},
@@ -86,7 +88,7 @@ def expand(data):
         raise ValueError('Edge order diagnostic requires explicit probe frames')
     if c['backend']!='ipc' and (c['edge_query_order']!='raw' or probe is not None):
         raise ValueError('Edge query order and probe are IPC-only')
-    for key in ('mas_fused_dot','fixed_mas_dot_study','discrete_bvh_refit','discrete_bvh_validate',
+    for key in ('fem_direct_pullback','mas_pivot_only_sync','mas_fused_dot','fixed_mas_dot_study','discrete_bvh_refit','discrete_bvh_validate',
                 'spmv_fused_quadratic','fixed_spmv_quadratic_study','bvh_eligibility','bvh_eligibility_validate',
                 'bounded_ccd','bounded_ccd_validate',
                 'contact_pool','contact_pool_validate',
@@ -113,6 +115,8 @@ def expand(data):
         raise ValueError('New execution components are scoped to the IPC experiments')
     if (c['mas_fused_dot'] or c['fixed_mas_dot_study']) and c['mas']!='legacy':
         raise ValueError('MAS fused dot experiments require the legacy MAS path')
+    if c['mas_pivot_only_sync'] and c['mas']!='legacy':
+        raise ValueError('MAS pivot-only synchronization requires legacy factorization')
     if (c['spmv_fused_quadratic'] or c['fixed_spmv_quadratic_study']) and c['backend']!='ipc':
         raise ValueError('SpMV quadratic experiments are scoped to IPC')
     if preset=='toi_compensated' and (c['backend']!='ipc' or c['ipc_termination']!='compensated'):
@@ -250,6 +254,8 @@ def environment(c, out):
         'GIPC_SCENE': c['scene'], 'GIPC_STEPS': str(c['steps']), 'GIPC_DT': str(c['dt']),
         'GIPC_LEGACY_RESTRICT':c['legacy_restrict'],
         'GIPC_MAS_FUSED_DOT':str(int(c['mas_fused_dot'])),
+        'GIPC_FEM_DIRECT_PULLBACK':str(int(c['fem_direct_pullback'])),
+        'GIPC_MAS_PIVOT_ONLY_SYNC':str(int(c['mas_pivot_only_sync'])),
         'GIPC_SPMV_FUSED_QUADRATIC':str(int(c['spmv_fused_quadratic'])),
         'GIPC_DISCRETE_BVH_REFIT':str(int(c['discrete_bvh_refit'])),
         'GIPC_DISCRETE_BVH_REBUILD_INTERVAL':str(c['discrete_bvh_rebuild_interval']),

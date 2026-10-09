@@ -70,6 +70,15 @@ def validate(run):
                           ('pcg_rho_tol','pcg_rho_tol'),('execution','configured_pcg_execution')]:
         check(source,r[target],c[source])
     check('mas.cholesky',r['mas']['cholesky'],c['mas']=='cholesky')
+    if 'fem_direct_pullback' in r:
+        check('fem_direct_pullback',r['fem_direct_pullback'],c.get('fem_direct_pullback',False))
+    elif c.get('fem_direct_pullback',False):
+        check('fem_direct_pullback_supported',False,True)
+    if 'pivot_only_sync_effective' in r['mas']:
+        check('mas.pivot_only_sync_requested',r['mas']['pivot_only_sync_requested'],c.get('mas_pivot_only_sync',False))
+        check('mas.pivot_only_sync_effective',r['mas']['pivot_only_sync_effective'],c.get('mas_pivot_only_sync',False))
+    elif c.get('mas_pivot_only_sync',False):
+        check('mas.pivot_only_sync_supported',False,True)
     check('mas.inverse64',r['mas']['inverse64'],False)
     check('mas.wide_apply',r['mas']['wide_apply'],c['mas']=='cholesky')
     if 'restriction_mode' in r['mas']:

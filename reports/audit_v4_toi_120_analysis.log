@@ -1,0 +1,9 @@
+[
+  {
+    "scene": "bunny_cloth_bunny_l",
+    "repeat": 1,
+    "reference": "base",
+    "candidate": "toi",
+    "speedup": 0.4915050749741913
+  }
+]
