@@ -1,0 +1,547 @@
+{
+  "passed": true,
+  "exact_initial_runs": 36,
+  "runs": [
+    {
+      "run": "performance_bunny_original_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_pure_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_ours_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_strict_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_original_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_pure_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_ours_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_strict_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_original_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_pure_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_ours_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_strict_r1",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_pure_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_ours_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_strict_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_original_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_pure_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_ours_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_strict_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_original_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_pure_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_ours_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_strict_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_original_r2",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_ours_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_strict_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_original_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_bunny_pure_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_bunny_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_ours_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_strict_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_original_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_mixed_pure_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_mixed_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_ours_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_strict_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_original_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    },
+    {
+      "run": "performance_boxes_pure_r3",
+      "anchor": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/performance_boxes_original_r1",
+      "passed": true,
+      "checks": {
+        "topology.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "metadata.json": true,
+        "frozen_scene": true,
+        "initial_actual_velocity": true
+      }
+    }
+  ],
+  "scope": "Same physical initial positions, actual velocities, topology, masses, boundaries and frozen scene; solver rule/tolerances deliberately differ"
+}

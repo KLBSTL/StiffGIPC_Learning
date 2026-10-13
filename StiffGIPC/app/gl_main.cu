@@ -28,6 +28,7 @@
 #include <gipc/type_define.h>
 #include <filesystem>
 #include <gipc/statistics.h>
+#include <gipc/frame_recording.h>
 #include <gipc/utils/simple_scene_importer.h>
 #include <Eigen/Geometry>
 #include <core/GIPC.cuh>
@@ -1814,6 +1815,8 @@ void SpecialKey(GLint key, GLint x, GLint y)
 // Batch trace export is outside the solver timing window.
 int main(int argc, char** argv) try
 {
+    const auto native_start=std::chrono::steady_clock::now();
+    const bool detailed_recording=gipc::frame_recording_enabled();
     gipc::reject_retired_components();
     if(const char* mode=std::getenv("GIPC_LINE_SEARCH_FAILURE_FIXTURE"))
     {
@@ -1876,9 +1879,12 @@ int main(int argc, char** argv) try
 
     if(batch_steps > 0)
     {
+        const double initialization_ms=gipc::recording_elapsed_ms(native_start);
         glutHideWindow();
+        const auto restore_start=std::chrono::steady_clock::now();
         if(const char* checkpoint=std::getenv("GIPC_CHECKPOINT_LOAD"))
             ipc.frame_checkpoint(d_tetMesh,checkpoint,true);
+        const double restore_ms=gipc::recording_elapsed_ms(restore_start);
         auto save_checkpoint=[&]()
         {
             const char* directory=std::getenv("GIPC_CHECKPOINT_DIR");
@@ -1890,11 +1896,23 @@ int main(int argc, char** argv) try
         const char* trace_dir = std::getenv("GIPC_TRACE_DIR");
         std::ofstream frame_log;
         std::ofstream physical_log;
+        std::ofstream recording_log;
+        double stats_write_total_ms=0,trace_export_total_ms=0,checkpoint_total_ms=0;
         if(trace_dir)
         {
             std::filesystem::create_directories(trace_dir);
+            std::ofstream context(std::string(trace_dir)+"/frame_context.json");
+            context << gipc::Json({{"completed_physical_frames_at_start",total_Frames},
+                {"local_trace_frame_zero_is_restored_state",total_Frames>0},
+                {"trace_frame_numbering","local; add completed_physical_frames_at_start"}}).dump(2);
+            if(!context)throw std::runtime_error("Failed to write trace frame context");
             frame_log.open(std::string(trace_dir) + "/frames.csv");
             frame_log << "frame,solver_ms,candidate_pairs,ground_candidates\n";
+            if(detailed_recording) {
+                recording_log.open(std::string(trace_dir)+"/recording_costs.csv");
+                recording_log << "local_frame,physical_frame,solver_ms,trace_export_host_ms,checkpoint_host_ms,stats_write_host_ms\n";
+                recording_log << std::setprecision(17);
+            }
             if(const char* value=std::getenv("GIPC_TRACE_PHYSICS");value && value[0]=='1')
             {
                 physical_log.open(std::string(trace_dir)+"/physical_energy.csv");
@@ -1949,7 +1967,10 @@ int main(int argc, char** argv) try
                 if(!velocity_output) throw std::runtime_error("Failed to write velocity trace");
             }
         };
+        const auto initial_trace_start=std::chrono::steady_clock::now();
         dump_frame(0);
+        const double initial_trace_ms=gipc::recording_elapsed_ms(initial_trace_start);
+        trace_export_total_ms+=initial_trace_ms;
         for(int i = 0; i < batch_steps; ++i)
         {
             auto start = std::chrono::steady_clock::now();
@@ -1964,14 +1985,42 @@ int main(int argc, char** argv) try
                 physical_log << i+1 << "," << std::setprecision(17) << fem << "," << cloth << "," << bending << "\n";
                 physical_log.flush();
             }
-            if(const char* value=std::getenv("GIPC_DEFER_STATS");value && value[0]=='1')
+            const auto stats_write_start=std::chrono::steady_clock::now();
+            if(const char* value=std::getenv("GIPC_DEFER_STATS");!detailed_recording && value && value[0]=='1')
                 gipc::Statistics::instance().write_to_file(std::string(gipc::output_dir())+"/stats.json");
+            const double stats_write_ms=detailed_recording?0:gipc::recording_elapsed_ms(stats_write_start);
+            stats_write_total_ms+=stats_write_ms;
             if(trace_dir) frame_log << i+1 << "," << std::setprecision(17)
                 << std::chrono::duration<double,std::milli>(stop-start).count()
                 << "," << ipc.h_cpNum[0] << "," << ipc.h_gpNum << "\n";
+            const auto trace_export_start=std::chrono::steady_clock::now();
             dump_frame(i+1);
+            const double trace_export_ms=gipc::recording_elapsed_ms(trace_export_start);
+            trace_export_total_ms+=trace_export_ms;
             if(trace_dir)frame_log.flush();
+            const auto checkpoint_start=std::chrono::steady_clock::now();
             save_checkpoint();
+            const double checkpoint_ms=gipc::recording_elapsed_ms(checkpoint_start);
+            checkpoint_total_ms+=checkpoint_ms;
+            if(detailed_recording)recording_log << i+1 << ',' << total_Frames << ','
+                << std::chrono::duration<double,std::milli>(stop-start).count() << ','
+                << trace_export_ms << ',' << checkpoint_ms << ',' << stats_write_ms << '\n';
+        }
+        if(detailed_recording) {
+            const auto stats_final_start=std::chrono::steady_clock::now();
+            gipc::Statistics::instance().write_to_file(std::string(gipc::output_dir())+"/stats.json");
+            stats_write_total_ms+=gipc::recording_elapsed_ms(stats_final_start);
+            recording_log.close();
+            if(trace_dir) {
+                std::ofstream summary(std::string(trace_dir)+"/recording_summary.json");
+                summary << gipc::Json({{"enabled",true},{"stats_mode","one_final_write"},
+                    {"initialization_host_ms",initialization_ms},{"checkpoint_restore_host_ms",restore_ms},
+                    {"initial_trace_export_host_ms",initial_trace_ms},{"trace_export_host_ms",trace_export_total_ms},
+                    {"checkpoint_save_host_ms",checkpoint_total_ms},{"stats_write_host_ms",stats_write_total_ms},
+                    {"native_elapsed_to_stats_final_ms",gipc::recording_elapsed_ms(native_start)},
+                    {"scope","Host elapsed; trace export includes GPU copies and file writes; sums are not pure disk service time"}}).dump(2);
+                if(!summary)throw std::runtime_error("Failed to write recording summary");
+            }
         }
         checkCudaErrors(cudaDeviceSynchronize());
         std::vector<double3> vertices(ipc.vertexNum);

@@ -35,8 +35,8 @@ std::string checkpoint_env(const char* key)
 void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,bool restore)
 {
     namespace fs=std::filesystem;
-    if(!use_toi || isUpdateBoundary || animation)
-        throw std::runtime_error("Frame checkpoint supports static-topology TOI batch scenes without animated boundaries");
+    if(isUpdateBoundary || animation)
+        throw std::runtime_error("Frame checkpoint requires static topology without animated boundaries");
     const std::string binary_id=checkpoint_env("GIPC_BINARY_ID");
     if(binary_id.empty())throw std::runtime_error("Checkpoint requires the verified binary identity from its runner");
     CUDA_SAFE_CALL(cudaDeviceSynchronize());
@@ -47,7 +47,7 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         std::ifstream input(folder/"checkpoint.json");
         if(!input)throw std::runtime_error("Checkpoint has no committed metadata");
         input>>meta;
-        if(meta.at("schema")!="gipc-v45-frame-boundary-1" || meta.at("binary_id")!=binary_id
+        if(meta.at("schema")!="gipc-frame-boundary-2" || meta.at("binary_id")!=binary_id
            || meta.at("contact_bytes")!=sizeof(ToiContact))
             throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
     }
@@ -55,12 +55,13 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     {
         if(fs::exists(folder))throw std::runtime_error("Refusing to overwrite an existing checkpoint");
         fs::create_directories(folder);
-        meta={{"schema","gipc-v45-frame-boundary-1"},{"binary_id",binary_id},{"contact_bytes",sizeof(ToiContact)},
+        meta={{"schema","gipc-frame-boundary-2"},{"binary_id",binary_id},{"contact_bytes",sizeof(ToiContact)},
             {"completed_physical_frames",total_Frames},{"next_physical_frame",total_Frames+1},
-            {"scope","Same-binary static-topology TOI frame boundary; no mid-Newton restart"},
+            {"scope","Same-binary static-topology physical frame boundary; no mid-Newton restart"},
             {"derived_caches","BVH rebuilt; matrices, preconditioner and CUDA graphs regenerated on next solve"}};
     }
     gipc::Json context={{"scene",checkpoint_env("GIPC_SCENE")},{"case",checkpoint_env("GIPC_CASE")},
+        {"contact_backend",use_toi?"toi_al":"ipc"},
         {"vertices",vertexNum},{"faces",surface_Num},{"tets",tetrahedraNum},{"edges",edge_Num},
         {"dt",IPC_dt},{"newton_tol",Newton_solver_threshold},{"friction",frictionRate},{"ground_friction",gd_frictionRate},
         {"stretch",stretchStiff},{"shear",shearStiff},{"bend",bendStiff},{"strain",strainRate},
@@ -169,11 +170,15 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     DEVICE("friction_lambda",lambda_lastH_scalar);DEVICE("friction_coord",distCoord);DEVICE("friction_basis",tanBasis);
     DEVICE("friction_pairs",_collisonPairs_lastH);DEVICE("friction_index",_MatIndex_last);
     DEVICE("ground_friction_lambda",lambda_lastH_scalar_gd);DEVICE("ground_friction_pairs",_collisonPairs_lastH_gd);
-    DEVICE("safe",toi.safe);DEVICE("trial",toi.trial);DEVICE("previous_trial",toi.previous_trial);
-    DEVICE("safe_q",toi.safe_q);DEVICE("trial_q",toi.trial_q);DEVICE("contacts",toi.contacts);
-    DEVICE("frame_friction_contacts",toi.frame_friction_contacts);
+    if(use_toi)
+    {
+        DEVICE("safe",toi.safe);DEVICE("trial",toi.trial);DEVICE("previous_trial",toi.previous_trial);
+        DEVICE("safe_q",toi.safe_q);DEVICE("trial_q",toi.trial_q);DEVICE("contacts",toi.contacts);
+        DEVICE("frame_friction_contacts",toi.frame_friction_contacts);
+    }
 #undef DEVICE
-    transfer("host_contacts",toi.host_contacts,false);transfer("host_vertex_mu",toi.host_vertex_mu,false);
+    if(use_toi)
+    {transfer("host_contacts",toi.host_contacts,false);transfer("host_vertex_mu",toi.host_vertex_mu,false);}
     transfer("host_targets",mesh.host_target_vertices,false);
     auto scalar=[&](const char* name,auto& value)
     {
@@ -182,8 +187,11 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     };
 #define SCALAR(value) scalar(#value,value)
     SCALAR(Kappa);SCALAR(dHat);SCALAR(fDhat);SCALAR(dTol);SCALAR(Step);SCALAR(animation_subRate);SCALAR(animation_fullRate);
-    SCALAR(toi.mu);SCALAR(toi.initial_mu);SCALAR(toi.delta);SCALAR(toi.self_count);SCALAR(toi.ground_count);
-    SCALAR(toi.robust_port);SCALAR(toi.independent_friction_history);SCALAR(toi.frame_friction_frame_id);
+    if(use_toi)
+    {
+        SCALAR(toi.mu);SCALAR(toi.initial_mu);SCALAR(toi.delta);SCALAR(toi.self_count);SCALAR(toi.ground_count);
+        SCALAR(toi.robust_port);SCALAR(toi.independent_friction_history);SCALAR(toi.frame_friction_frame_id);
+    }
     SCALAR(h_gpNum);SCALAR(h_gpNum_last);SCALAR(h_close_cpNum);SCALAR(h_close_gpNum);
 #undef SCALAR
     for(int i=0;i<5;++i)

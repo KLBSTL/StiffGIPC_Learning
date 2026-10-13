@@ -1,0 +1,1262 @@
+{
+  "passed": true,
+  "exact_input_runs": 63,
+  "runs": [
+    {
+      "run": "matched_bunny_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_strict_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_strict_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_strict_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_strict_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_strict_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_strict_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_bunny_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_bunny_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "overhead_bunny_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_bunny_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "95e3f95ec8d0316c5a4e3f90472cc4983b62b29adabbca8cf6c661923b43e740"
+      }
+    },
+    {
+      "run": "matched_mixed_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_strict_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_strict_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_strict_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_strict_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_strict_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_strict_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_mixed_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_mixed_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "overhead_mixed_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_mixed_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "ead2a6942bc738b0eee7d51dbccf9363ca7ab85494bd6f8a8cf0e528300a8fb7"
+      }
+    },
+    {
+      "run": "matched_boxes_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_original_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_original_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_pure_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_pure_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_ours_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_ours_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_strict_r1",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_strict_r1/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_pure_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_pure_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_ours_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_ours_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_strict_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_strict_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_original_r2",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_original_r2/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_ours_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_ours_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_strict_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_strict_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_original_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_original_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "matched_boxes_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/matched_boxes_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    },
+    {
+      "run": "overhead_boxes_pure_r3",
+      "checks": {
+        "vertices": true,
+        "velocities": true,
+        "device_bytes": true,
+        "context": true,
+        "binary": true,
+        "physical_frame": true,
+        "all_buffers": true
+      },
+      "restore": {
+        "path": "/root/autodl-tmp/codex_recording105_20261013/payload/runs/autodl_recording105_20261013_v2/overhead_boxes_pure_r3/output/checkpoint_restore.json",
+        "bytes": 446,
+        "sha256": "0e545e68b8d41cde7c731488ed206a60b1127a3e155b4c019d25c9257eb462ad"
+      }
+    }
+  ],
+  "hot_cold": [
+    {
+      "scene": "Bunny",
+      "repeat": 1,
+      "position": {
+        "rms_mm": 0.00014455785972066095,
+        "max_mm": 0.0020364861782179657
+      },
+      "actual_velocity": {
+        "rms_mm": 0.003613946493016523,
+        "max_mm": 0.05091215445544913
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Bunny",
+      "repeat": 2,
+      "position": {
+        "rms_mm": 7.230420410335794e-05,
+        "max_mm": 0.0010915409962108942
+      },
+      "actual_velocity": {
+        "rms_mm": 0.0018076051025839486,
+        "max_mm": 0.02728852490527236
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Bunny",
+      "repeat": 3,
+      "position": {
+        "rms_mm": 2.4739267707848536e-05,
+        "max_mm": 0.0003646365699110201
+      },
+      "actual_velocity": {
+        "rms_mm": 0.0006184816926962133,
+        "max_mm": 0.009115914247775503
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Mixed",
+      "repeat": 1,
+      "position": {
+        "rms_mm": 1.775868015980216e-05,
+        "max_mm": 0.0006759346867537363
+      },
+      "actual_velocity": {
+        "rms_mm": 0.0004439670039950537,
+        "max_mm": 0.016898367168843405
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Mixed",
+      "repeat": 2,
+      "position": {
+        "rms_mm": 1.9395014449467386e-05,
+        "max_mm": 0.0007270899892929814
+      },
+      "actual_velocity": {
+        "rms_mm": 0.0004848753612366846,
+        "max_mm": 0.018177249732324537
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Mixed",
+      "repeat": 3,
+      "position": {
+        "rms_mm": 4.149947489401425e-05,
+        "max_mm": 0.001077799313252971
+      },
+      "actual_velocity": {
+        "rms_mm": 0.0010374868723503558,
+        "max_mm": 0.026944982831324276
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Boxes",
+      "repeat": 1,
+      "position": {
+        "rms_mm": 9.974592635582835e-08,
+        "max_mm": 1.0718344264738967e-06
+      },
+      "actual_velocity": {
+        "rms_mm": 2.493648158925911e-06,
+        "max_mm": 2.6795860661847414e-05
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Boxes",
+      "repeat": 2,
+      "position": {
+        "rms_mm": 8.608750950461583e-08,
+        "max_mm": 1.2982246030099456e-06
+      },
+      "actual_velocity": {
+        "rms_mm": 2.152187737593666e-06,
+        "max_mm": 3.2455615075248634e-05
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    },
+    {
+      "scene": "Boxes",
+      "repeat": 3,
+      "position": {
+        "rms_mm": 1.4694032750986345e-07,
+        "max_mm": 2.285162474532584e-06
+      },
+      "actual_velocity": {
+        "rms_mm": 3.673508187750491e-06,
+        "max_mm": 5.7129061863314596e-05
+      },
+      "velocity_scope": "rms_mm/max_mm keys represent velocity multiplied by 1000; units mm/s"
+    }
+  ],
+  "reference_repeat_dispersion": [
+    {
+      "scene": "Bunny",
+      "reference_left": 1,
+      "reference_right": 2,
+      "rms_mm": 6.771366194326366e-06,
+      "max_mm": 6.282555807309401e-05
+    },
+    {
+      "scene": "Bunny",
+      "reference_left": 1,
+      "reference_right": 3,
+      "rms_mm": 7.1511908113109865e-06,
+      "max_mm": 6.653041442631103e-05
+    },
+    {
+      "scene": "Bunny",
+      "reference_left": 2,
+      "reference_right": 3,
+      "rms_mm": 4.0858628184671646e-07,
+      "max_mm": 3.7344811869022008e-06
+    },
+    {
+      "scene": "Mixed",
+      "reference_left": 1,
+      "reference_right": 2,
+      "rms_mm": 1.550156865518787e-07,
+      "max_mm": 1.8679217571920787e-06
+    },
+    {
+      "scene": "Mixed",
+      "reference_left": 1,
+      "reference_right": 3,
+      "rms_mm": 2.583397274655307e-06,
+      "max_mm": 8.270799660149375e-05
+    },
+    {
+      "scene": "Mixed",
+      "reference_left": 2,
+      "reference_right": 3,
+      "rms_mm": 2.640055521137405e-06,
+      "max_mm": 8.321030581529145e-05
+    },
+    {
+      "scene": "Boxes",
+      "reference_left": 1,
+      "reference_right": 2,
+      "rms_mm": 5.785729505589638e-05,
+      "max_mm": 0.0018159331349736439
+    },
+    {
+      "scene": "Boxes",
+      "reference_left": 1,
+      "reference_right": 3,
+      "rms_mm": 5.1685465287611544e-05,
+      "max_mm": 0.0017834369186351452
+    },
+    {
+      "scene": "Boxes",
+      "reference_left": 2,
+      "reference_right": 3,
+      "rms_mm": 2.8178752851045418e-05,
+      "max_mm": 0.0013637810883342742
+    }
+  ],
+  "scope": "All rule rows use cold reconstruction; hot/cold differences retained; not physical-quality certification"
+}

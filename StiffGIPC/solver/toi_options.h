@@ -4,6 +4,7 @@
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/ipc_options.h>
+#include <solver/ipc_pcg_forcing.h>
 #include <collision/discrete_bvh.h>
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
@@ -204,6 +205,21 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     result["mas"]["pivot_only_sync_requested"]=toi_flag_one("GIPC_MAS_PIVOT_ONLY_SYNC");
     result["mas"]["pivot_only_sync_effective"]=toi_flag_one("GIPC_MAS_PIVOT_ONLY_SYNC")&&!cholesky&&!inverse64;
     result["ipc_stopping"]=IpcOptions::read(newton_tol).json();
+    const auto forcing=IpcPcgForcingOptions::read();
+    if(forcing.enabled()&&std::string(backend)!="ipc")
+        throw std::runtime_error("IPC PCG forcing requires the IPC backend");
+    // Assign fields explicitly: nested initializer lists with these constexpr
+    // members were serialized as numeric arrays by the Windows CUDA build.
+    auto& forcing_json=result["ipc_pcg_forcing"];forcing_json=Json::object();
+    forcing_json["mode"]=forcing.mode;forcing_json["fixed_eta"]=forcing.fixed_eta;
+    forcing_json["eta_min"]=double(forcing.baseline_eta);
+    forcing_json["eta_max"]=double(forcing.maximum_eta);
+    forcing_json["near_reference_ratio"]=double(forcing.near_reference_ratio);
+    forcing_json["previous_rho_timing_retained"]=true;
+    forcing_json["graph_tolerance_from_device"]=true;
+    forcing_json["legacy_outer_stopping_retained"]=true;
+    forcing_json["residual_units"]="max J M_free^-1 g / dt";
+    forcing_json["physical_error_certified"]=false;
     result["requested_preconditioner"]=std::getenv("GIPC_PCG_PRECONDITIONER")?Json(std::getenv("GIPC_PCG_PRECONDITIONER")):Json(nullptr);
     result["execution_observed_per_linear_system"]=true;
     result["edge_query_order"]=edge_query_order_options().json(std::string(backend)=="ipc");

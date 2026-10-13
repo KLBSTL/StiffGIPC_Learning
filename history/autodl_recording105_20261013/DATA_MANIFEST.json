@@ -1,0 +1,152 @@
+{
+  "csv_count": 18,
+  "files": [
+    {
+      "source_path": "data/checkpoint_frame100_table.csv",
+      "source_bytes": 867,
+      "source_sha256": "751d238802542a7bb03e535174130fca7d4eec6bb509eeae67d3963909b4a73f",
+      "stored_path": "data/checkpoint_frame100_table.csv",
+      "stored_bytes": 867,
+      "stored_sha256": "751d238802542a7bb03e535174130fca7d4eec6bb509eeae67d3963909b4a73f"
+    },
+    {
+      "source_path": "data/checkpoint_gpu_samples.csv",
+      "source_bytes": 7813,
+      "source_sha256": "3c3ac9288ce31a20d12e133da73035efb96d6cb58b6379f751ada041d7e880c9",
+      "stored_path": "data/checkpoint_gpu_samples.csv",
+      "stored_bytes": 7813,
+      "stored_sha256": "3c3ac9288ce31a20d12e133da73035efb96d6cb58b6379f751ada041d7e880c9"
+    },
+    {
+      "source_path": "data/checkpoint_per_frame.csv",
+      "source_bytes": 25620,
+      "source_sha256": "d16c9cec6ade2b3be19f882b8c68e730603cf725d9c3e791f4071393fa44233e",
+      "stored_path": "data/checkpoint_per_frame.csv",
+      "stored_bytes": 25620,
+      "stored_sha256": "d16c9cec6ade2b3be19f882b8c68e730603cf725d9c3e791f4071393fa44233e"
+    },
+    {
+      "source_path": "data/checkpoint_per_newton.csv",
+      "source_bytes": 473737,
+      "source_sha256": "ecdc9eb76123e9aa2d7498159af7ad3347c983ac2de251b9d0238fe3c4d2eddd",
+      "stored_path": "data/checkpoint_per_newton.csv",
+      "stored_bytes": 473737,
+      "stored_sha256": "ecdc9eb76123e9aa2d7498159af7ad3347c983ac2de251b9d0238fe3c4d2eddd"
+    },
+    {
+      "source_path": "data/checkpoint_run_costs.csv",
+      "source_bytes": 5572,
+      "source_sha256": "772f8f570f795f14fdaa1d296035230561d0f2734e51fa974a61cf3ba3325e87",
+      "stored_path": "data/checkpoint_run_costs.csv",
+      "stored_bytes": 5572,
+      "stored_sha256": "772f8f570f795f14fdaa1d296035230561d0f2734e51fa974a61cf3ba3325e87"
+    },
+    {
+      "source_path": "data/cost_diagnostics.csv",
+      "source_bytes": 2334709,
+      "source_sha256": "d4f005161bd73f298b96c939cf6d588d8208014afed4964a1bf3f61a25bdf876",
+      "stored_path": "data/cost_diagnostics.csv",
+      "stored_bytes": 2334709,
+      "stored_sha256": "d4f005161bd73f298b96c939cf6d588d8208014afed4964a1bf3f61a25bdf876"
+    },
+    {
+      "source_path": "data/frame100_actual.csv",
+      "source_bytes": 25795,
+      "source_sha256": "716279b06a2bcd725a458f5fbd2e5c2f9bf17cbd558eae236993e059ee1a2968",
+      "stored_path": "data/frame100_actual.csv",
+      "stored_bytes": 25795,
+      "stored_sha256": "716279b06a2bcd725a458f5fbd2e5c2f9bf17cbd558eae236993e059ee1a2968"
+    },
+    {
+      "source_path": "data/gpu_samples.csv",
+      "source_bytes": 168312,
+      "source_sha256": "d6fd348d921eb452a2a9cf1c2c8aa1aa4560d2f3a2ed9beb48dad4c58e9f33b7",
+      "stored_path": "data/gpu_samples.csv",
+      "stored_bytes": 168312,
+      "stored_sha256": "d6fd348d921eb452a2a9cf1c2c8aa1aa4560d2f3a2ed9beb48dad4c58e9f33b7"
+    },
+    {
+      "source_path": "data/per_frame.csv",
+      "source_bytes": 2643930,
+      "source_sha256": "91ae804d499eb2d82eae958344f6f64571b778da67250443b3317a570ee4e01b",
+      "stored_path": "data/per_frame.csv",
+      "stored_bytes": 2643930,
+      "stored_sha256": "91ae804d499eb2d82eae958344f6f64571b778da67250443b3317a570ee4e01b"
+    },
+    {
+      "source_path": "data/per_frame_quality.csv",
+      "source_bytes": 318619,
+      "source_sha256": "7e97153a790ad7006b8fcaad2a965f54eb221adaa5b3a3b39946c731ba523d7b",
+      "stored_path": "data/per_frame_quality.csv",
+      "stored_bytes": 318619,
+      "stored_sha256": "7e97153a790ad7006b8fcaad2a965f54eb221adaa5b3a3b39946c731ba523d7b"
+    },
+    {
+      "source_path": "data/per_newton.csv",
+      "source_bytes": 142106434,
+      "source_sha256": "942ce695087ef134cef2648728e69db81e5f42b7c8f1368ae2354918eeb7b79e",
+      "stored_path": "data/per_newton.csv.gz",
+      "stored_bytes": 13509152,
+      "stored_sha256": "567760e70103e24151a8a9ef9a7886ed3b29610837a0ae1fd9b5a5c11b91ebfa"
+    },
+    {
+      "source_path": "data/phase_table_first100.csv",
+      "source_bytes": 2200,
+      "source_sha256": "2d8102af4bc1ecfbcf822252ad2d0d5c05bcc22ef558514201820ac0444c2210",
+      "stored_path": "data/phase_table_first100.csv",
+      "stored_bytes": 2200,
+      "stored_sha256": "2d8102af4bc1ecfbcf822252ad2d0d5c05bcc22ef558514201820ac0444c2210"
+    },
+    {
+      "source_path": "data/recording_overhead.csv",
+      "source_bytes": 14046,
+      "source_sha256": "b7f9893f0506fb27acb5f6ee3d9da07f6c849ee60dd2ca8eb58554564d09cf62",
+      "stored_path": "data/recording_overhead.csv",
+      "stored_bytes": 14046,
+      "stored_sha256": "b7f9893f0506fb27acb5f6ee3d9da07f6c849ee60dd2ca8eb58554564d09cf62"
+    },
+    {
+      "source_path": "data/recording_overhead_summary.csv",
+      "source_bytes": 881,
+      "source_sha256": "e4e6f6a2b4eb8ae7d82dff437b6fa15644d7c8a82f47fb4edbc89317c9e94ef6",
+      "stored_path": "data/recording_overhead_summary.csv",
+      "stored_bytes": 881,
+      "stored_sha256": "e4e6f6a2b4eb8ae7d82dff437b6fa15644d7c8a82f47fb4edbc89317c9e94ef6"
+    },
+    {
+      "source_path": "data/reference_repeat_dispersion.csv",
+      "source_bytes": 304286,
+      "source_sha256": "d83aeeca98abc2802810271404f3e73dd02e3dfc77da84fd1f40aeab6431bb1a",
+      "stored_path": "data/reference_repeat_dispersion.csv",
+      "stored_bytes": 304286,
+      "stored_sha256": "d83aeeca98abc2802810271404f3e73dd02e3dfc77da84fd1f40aeab6431bb1a"
+    },
+    {
+      "source_path": "data/run_costs.csv",
+      "source_bytes": 6402,
+      "source_sha256": "15d96756e57357429d2541e2028caf95223c78921e0b414f4349636b5b7987b1",
+      "stored_path": "data/run_costs.csv",
+      "stored_bytes": 6402,
+      "stored_sha256": "15d96756e57357429d2541e2028caf95223c78921e0b414f4349636b5b7987b1"
+    },
+    {
+      "source_path": "data/trajectory_errors.csv",
+      "source_bytes": 2886627,
+      "source_sha256": "222e2ece1f28492e8c3efcb10f3a78a464eddc98e451d3ea5c82459b785d70cc",
+      "stored_path": "data/trajectory_errors.csv",
+      "stored_bytes": 2886627,
+      "stored_sha256": "222e2ece1f28492e8c3efcb10f3a78a464eddc98e451d3ea5c82459b785d70cc"
+    },
+    {
+      "source_path": "data/trajectory_frame100_table.csv",
+      "source_bytes": 838,
+      "source_sha256": "e684c274627ba82f82b8438de4ebd7497c3ae4c9bea345a5d36ddd56da85d429",
+      "stored_path": "data/trajectory_frame100_table.csv",
+      "stored_bytes": 838,
+      "stored_sha256": "e684c274627ba82f82b8438de4ebd7497c3ae4c9bea345a5d36ddd56da85d429"
+    }
+  ],
+  "compression": "per_newton.csv.gz is lossless gzip; all other CSVs are unchanged",
+  "full_raw_archive_bytes": 4570828245,
+  "full_raw_archive_sha256": "b13b4f11cbeac3225d096c21079874515de7360cd31171d87904a70789534d49"
+}

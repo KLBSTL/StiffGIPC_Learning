@@ -1,0 +1,755 @@
+[0/2] Re-checking globbed directories...
+[1/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_sim_data.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[2/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/details/abd_energy.inl(324): warning #177-D: variable "nums" was declared but never referenced
+      const int nums = cols * rows;
+                ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu(320): warning #177-D: variable "abd_sep_point_count" was declared but never referenced
+      auto abd_sep_point_count = 4 * abd_tet_count;
+           ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu(575): warning #177-D: variable "a" was declared but never referenced
+      double a = 0;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu(576): warning #177-D: variable "b" was declared but never referenced
+      double b = -2 * i1;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu(577): warning #177-D: variable "c" was declared but never referenced
+      double c = -8 * J;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu(578): warning #177-D: variable "d" was declared but never referenced
+      double d = i1 * i1 - 2 * (i1 * i1 - i2);
+             ^
+
+[3/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/details/abd_energy.inl(324): warning #177-D: variable "nums" was declared but never referenced
+      const int nums = cols * rows;
+                ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[4/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu(38): warning #177-D: variable "kappa" was declared but never referenced
+      auto kappa = parms.kappa;
+           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[5/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[6/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/step_forward.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[7/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/update_velocity.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[8/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(66): warning #174-D: expression has no effect
+                  triplet_value[offset + kk] = input.block<3, 3>(ii * 3, jj * 3);
+                                                                 ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/details/abd_energy.inl(324): warning #177-D: variable "nums" was declared but never referenced
+      const int nums = cols * rows;
+                ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(381): warning #177-D: variable "local_abd_body_id" was declared but never referenced
+          auto local_abd_body_id = body_id;
+               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(392): warning #177-D: variable "offset" was declared but never referenced
+          auto offset = 4 * I;
+               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(629): warning #177-D: variable "number" was declared but never referenced
+      int number = body_hessian_size;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(742): warning #177-D: variable "abd" was declared but never referenced
+      auto& abd = sim_data.device;
+            ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu(66): warning #174-D: expression has no effect
+                  triplet_value[offset + kk] = input.block<3, 3>(ii * 3, jj * 3);
+                                                                 ^
+
+[9/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/collision/ACCD.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/ACCD.cu(731): warning #550-D: variable "coeffs" was set but never used
+      double coeffs[4];
+             ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[10/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/app/gl_main.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/app/gl_main.cu(698): warning #177-D: variable "tempEnum" was declared but never referenced
+          int tempEnum;
+              ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[11/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/collision/mlbvh.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(2031): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(2138): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(1329): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(1517): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(1665): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu(1848): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+[12/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/core/frame_checkpoint.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[13/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/core/GIPC.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10915): warning #2361-D: invalid narrowing conversion from "unsigned long" to "int"
+          const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+                               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10915): warning #2361-D: invalid narrowing conversion from "unsigned long" to "int"
+          const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+                                                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                       ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                                                    ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10918): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              h_cpNum_last[0],h_gpNum_last
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10918): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              h_cpNum_last[0],h_gpNum_last
+                              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(1026): warning #177-D: variable "_3Fii0" was declared but never referenced
+      int _3Fii0 = v0 * 3;
+          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(1027): warning #177-D: variable "_3Fii1" was declared but never referenced
+      int _3Fii1 = v1 * 3;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(1028): warning #177-D: variable "_3Fii2" was declared but never referenced
+      int _3Fii2 = v2 * 3;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(1029): warning #177-D: variable "_3Fii3" was declared but never referenced
+      int _3Fii3 = v3 * 3;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(4911): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6526): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6650): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6720): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6790): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6863): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(6936): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7043): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7103): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7160): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7216): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7281): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7351): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7420): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7497): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7564): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7634): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7698): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7764): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7824): warning #177-D: variable "nextTp" was declared but never referenced
+      double nextTp;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(7945): warning #177-D: variable "massSum" was declared but never referenced
+      double massSum = 0;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(8208): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10915): warning #2361-D: invalid narrowing conversion from "unsigned long" to "int"
+          const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+                               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10915): warning #2361-D: invalid narrowing conversion from "unsigned long" to "int"
+          const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+                                                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                       ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10916): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              triangleNum,tri_edge_num,softNum,use_toi?0:h_cpNum[0],use_toi?0:h_gpNum,
+                                                                    ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10918): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              h_cpNum_last[0],h_gpNum_last
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(10918): warning #2361-D: invalid narrowing conversion from "unsigned int" to "int"
+              h_cpNum_last[0],h_gpNum_last
+                              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(11198): warning #177-D: variable "alpha_SL" was declared but never referenced
+      double alpha_SL = alpha;
+             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(11263): warning #177-D: variable "rehash" was declared but never referenced
+      bool rehash = true;
+           ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(12002): warning #177-D: variable "rehash" was declared but never referenced
+          bool rehash = true;
+               ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(12048): warning #177-D: variable "k" was declared but never referenced
+      int k = 0;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu(8351): warning #177-D: variable "num_found" was declared but never referenced
+      unsigned int num_found = 0;
+                   ^
+          detected during instantiation of "void <unnamed>::edge_order_launch<PerFace>(__nv_bool, const lbvh_f &, const lbvh_e &, const double3 *, int *, int *, double) [with PerFace=true]" at line 120 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/edge_query_order.inl
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu: In member function ‘double GIPC::computeEnergy(device_TetraData&)’:
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:45: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::abd_fem_count_info.gipc::ABDFEMCountInfo::fem_point_num’ from ‘size_t’ {aka ‘long unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                        ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:81: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::abd_fem_count_info.gipc::ABDFEMCountInfo::fem_tet_num’ from ‘size_t’ {aka ‘long unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                            ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:94: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::triangleNum’ from ‘uint32_t’ {aka ‘unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                              ^          
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:107: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::tri_edge_num’ from ‘uint32_t’ {aka ‘unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                           ^           
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:121: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::softNum’ from ‘uint32_t’ {aka ‘unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                                         ^      
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:140: warning: narrowing conversion of ‘(((GIPC*)this)->GIPC::use_toi ? 0 : ((GIPC*)this)->GIPC::h_cpNum[0])’ from ‘unsigned int’ to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                                                            ^                   
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:172: warning: narrowing conversion of ‘(((GIPC*)this)->GIPC::use_toi ? 0 : ((GIPC*)this)->GIPC::h_gpNum)’ from ‘unsigned int’ to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                                                                                            ^              
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:205: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::h_cpNum_last[0]’ from ‘uint32_t’ {aka ‘unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                                                                                                                             ^
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu:10915:208: warning: narrowing conversion of ‘((GIPC*)this)->GIPC::h_gpNum_last’ from ‘uint32_t’ {aka ‘unsigned int’} to ‘int’ [-Wnarrowing]
+10915 |         const int counts[9]={abd_fem_count_info.fem_point_num,abd_fem_count_info.fem_tet_num,
+      |                                                                                                                                                                                                                ^           
+[14/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/fem/device_fem_data.cu.o
+[15/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/core/gipc_system.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[16/107] Building CXX object CMakeFiles/gipc.dir/StiffGIPC/gipc/statistics.cpp.o
+[17/107] Building CXX object CMakeFiles/gipc.dir/StiffGIPC/gipc/utils/simple_scene_importer.cpp.o
+[18/107] Building CXX object CMakeFiles/gipc.dir/StiffGIPC/gipc/utils/timer.cpp.o
+[19/107] Building CXX object CMakeFiles/gipc.dir/StiffGIPC/io/load_mesh.cpp.o
+[20/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/global_linear_system.cu.o
+[21/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/global_matrix.cu.o
+[22/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu.o
+[23/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/fem/femEnergy.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2048): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          dU_div_dF.block<3, 1>(i * 3, Fij) * V3x2.col(i).transpose()
+                                                ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2048): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          dU_div_dF.block<3, 1>(i * 3, Fij) * V3x2.col(i).transpose()
+                                                                       ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2049): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          + U3x2.col(i) * dV_div_dF.block<2, 1>(i * 2, Fij).transpose();
+                                     ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2049): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          + U3x2.col(i) * dV_div_dF.block<2, 1>(i * 2, Fij).transpose();
+                                                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2460): warning #68-D: integer conversion resulted in a change of sign
+      if(adj.y == -1)
+                  ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2914): warning #68-D: integer conversion resulted in a change of sign
+      if(adj.y == -1)
+                  ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(514): warning #177-D: variable "V9_temp" was declared but never referenced
+      __GEIGEN__::Vector9 V9_temp;
+                          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(635): warning #550-D: variable "H" was set but never used
+      __GEIGEN__::Matrix6x6d H;
+                             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(1064): warning #550-D: variable "S" was set but never used
+      __GEIGEN__::Matrix3x3d U, V, sigma, S, R;
+                                          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(1065): warning #177-D: variable "M_Temp0" was declared but never referenced
+      __GEIGEN__::Matrix3x3d M_Temp0, M_Temp1;
+                             ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(1065): warning #177-D: variable "M_Temp1" was declared but never referenced
+      __GEIGEN__::Matrix3x3d M_Temp0, M_Temp1;
+                                      ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(1924): warning #550-D: variable "triggered" was set but never used
+      bool triggered = false;
+           ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2048): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          dU_div_dF.block<3, 1>(i * 3, Fij) * V3x2.col(i).transpose()
+                                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2048): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          dU_div_dF.block<3, 1>(i * 3, Fij) * V3x2.col(i).transpose()
+                                                                       ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2049): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          + U3x2.col(i) * dV_div_dF.block<2, 1>(i * 2, Fij).transpose();
+                                     ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2049): warning #780-D: reference is to variable "i" (declared at line 2024) -- under old for-init scoping rules it would have been variable "i" (declared at line 2033)
+                          + U3x2.col(i) * dV_div_dF.block<2, 1>(i * 2, Fij).transpose();
+                                                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2460): warning #68-D: integer conversion resulted in a change of sign
+      if(adj.y == -1)
+                  ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2462): warning #177-D: variable "default_index" was declared but never referenced
+          int default_index[4] = {0, 1, 2, 3};
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2914): warning #68-D: integer conversion resulted in a change of sign
+      if(adj.y == -1)
+                  ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2952): warning #177-D: variable "id0" was declared but never referenced
+      int id0 = 0;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2953): warning #177-D: variable "id1" was declared but never referenced
+      int id1 = 1;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2954): warning #177-D: variable "id2" was declared but never referenced
+      int id2 = 2;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(2955): warning #177-D: variable "id3" was declared but never referenced
+      int id3 = 3;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu(97): warning #177-D: function "LibShell::adjugate" was declared but never referenced
+                     static Eigen::Matrix2d adjugate(Eigen::Matrix2d M)
+                                            ^
+
+[24/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/i_preconditioner.cu.o
+[25/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/linear_subsystem.cu.o
+[26/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu.o
+[27/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[28/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu.o
+[29/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/solver/pcg_solver.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/solver/pcg_solver.cu(469): warning #20208-D: 'long double' is treated as 'double' in device code
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[30/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[31/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu.o
+[32/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/utils/spmv.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/spmv.cu(100): warning #177-D: variable "N" was declared but never referenced
+      constexpr int N = 3;
+                    ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[33/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/linear_system/utils/converter.cu.o
+[34/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/math/gpu_eigen_libs.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu:9:9: warning: #pragma once in main file
+    9 | #pragma once
+      |         ^~~~
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu:9:9: warning: #pragma once in main file
+    9 | #pragma once
+      |         ^~~~
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu(1513): warning #177-D: variable "result" was declared but never referenced
+      double result[3];
+             ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+[35/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/solver/PCG_SOLVER.cu.o
+[36/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/solver/MASPreconditioner.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(393): warning #177-D: variable "warpId" was declared but never referenced
+      int warpId = idx / 16;
+          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(473): warning #177-D: variable "warpId" was declared but never referenced
+      int warpId = tdx / 16;
+          ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(994): warning #20054-D: dynamic initialization is not supported for a function-scope static __shared__ variable within a __device__/__global__ function
+                Eigen::Vector3f smR[16];
+                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1065): warning #20054-D: dynamic initialization is not supported for a function-scope static __shared__ variable within a __device__/__global__ function
+                Eigen::Vector3f smR[16];
+                                ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1255): warning #177-D: variable "cpVertNum" was declared but never referenced
+          int cpVertNum = 4;
+              ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1327): warning #177-D: variable "cpVertNum" was declared but never referenced
+                  int cpVertNum = 4;
+                      ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1387): warning #177-D: variable "cpVertNum" was declared but never referenced
+                  int cpVertNum = 2;
+                      ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1457): warning #177-D: variable "cpVertNum" was declared but never referenced
+                  int cpVertNum = 4;
+                      ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1517): warning #177-D: variable "cpVertNum" was declared but never referenced
+                  int cpVertNum = 3;
+                      ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu(1580): warning #177-D: variable "cpVertNum" was declared but never referenced
+              int cpVertNum = 4;
+                  ^
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/mas_wide_kernels.inl(187): warning #20054-D: dynamic initialization is not supported for a function-scope static __shared__ variable within a __device__/__global__ function
+                Eigen::Matrix<C,3,1> smR[16];
+                                     ^
+          detected during instantiation of "void _schwarzLocalXSym6_wide<Mat,R,C,Z>(const Mat *, const Eigen::Matrix<R, 3, 1, 0, 3, 1> *, Z *, int) [with Mat=__GEIGEN__::MasMatrixSymT, R=double, C=double, Z=double3]" at line 2593 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/mas_wide_kernels.inl(187): warning #20054-D: dynamic initialization is not supported for a function-scope static __shared__ variable within a __device__/__global__ function
+                Eigen::Matrix<C,3,1> smR[16];
+                                     ^
+          detected during instantiation of "void _schwarzLocalXSym6_wide<Mat,R,C,Z>(const Mat *, const Eigen::Matrix<R, 3, 1, 0, 3, 1> *, Z *, int) [with Mat=__GEIGEN__::MasMatrixSymf, R=double, C=double, Z=double3]" at line 2596 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/mas_wide_fixture.inl(49): warning #20208-D: 'long double' is treated as 'double' in device code
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/mas_wide_fixture.inl(49): warning #20208-D: 'long double' is treated as 'double' in device code
+
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/mas_wide_fixture.inl(49): warning #20208-D: 'long double' is treated as 'double' in device code
+
+[37/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/b64.c.o
+[38/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/blas.c.o
+[39/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/cache.c.o
+[40/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/csr.c.o
+[41/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/error.c.o
+[42/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/evaluate.c.o
+[43/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/fkvkselect.c.o
+[44/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/fs.c.o
+[45/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/getopt.c.o
+[46/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/gk_util.c.o
+[47/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/gkregex.c.o
+[48/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/graph.c.o
+[49/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/htable.c.o
+[50/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/io.c.o
+[51/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/itemsets.c.o
+[52/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/mcore.c.o
+[53/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/memory.c.o
+[54/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/pqueue.c.o
+[55/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/random.c.o
+[56/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/rw.c.o
+[57/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/seq.c.o
+[58/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/sort.c.o
+[59/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/string.c.o
+[60/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/timers.c.o
+[61/107] Building C object MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/tokenizer.c.o
+[62/107] Linking C static library MeshProcess/External/GKlib/libGKlib.a
+[63/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/auxapi.c.o
+[64/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/balance.c.o
+[65/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/bucketsort.c.o
+[66/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/checkgraph.c.o
+[67/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/coarsen.c.o
+[68/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/compress.c.o
+[69/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/contig.c.o
+[70/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/debug.c.o
+[71/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/fm.c.o
+[72/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/fortran.c.o
+[73/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/frename.c.o
+[74/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/gklib.c.o
+[75/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/graph.c.o
+[76/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/initpart.c.o
+[77/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kmetis.c.o
+[78/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kwayfm.c.o
+[79/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kwayrefine.c.o
+[80/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mcutil.c.o
+[81/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mesh.c.o
+[82/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/meshpart.c.o
+[83/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/minconn.c.o
+[84/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mincover.c.o
+[85/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mmd.c.o
+[86/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/ometis.c.o
+[87/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/options.c.o
+[88/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/parmetis.c.o
+[89/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/pmetis.c.o
+[90/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/refine.c.o
+[91/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/separator.c.o
+[92/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/sfm.c.o
+[93/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/srefine.c.o
+[94/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/stat.c.o
+[95/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/timing.c.o
+[96/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/util.c.o
+[97/107] Building C object MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/wspace.c.o
+[98/107] Building CXX object MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/metis_sort.cpp.o
+[99/107] Linking C static library MeshProcess/External/METIS/libmetis/libmetis.a
+[100/107] Building CXX object MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/main.cpp.o
+[101/107] Building CXX object MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/mesh.cpp.o
+/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp: In member function ‘void gipc::TetMesh::_build_boundary_vertices()’:
+/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp:681:39: warning: narrowing conversion of ‘(int)((const Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>*)(& triI4))->Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>::x()’ from ‘int’ to ‘uint64_t’ {aka ‘long unsigned int’} [-Wnarrowing]
+  681 |         uint64_t    triI[4] = {triI4.x(), triI4.y(), triI4.z(), triI4.w()};
+      |                                ~~~~~~~^~
+/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp:681:50: warning: narrowing conversion of ‘(int)((const Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>*)(& triI4))->Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>::y()’ from ‘int’ to ‘uint64_t’ {aka ‘long unsigned int’} [-Wnarrowing]
+  681 |         uint64_t    triI[4] = {triI4.x(), triI4.y(), triI4.z(), triI4.w()};
+      |                                           ~~~~~~~^~
+/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp:681:61: warning: narrowing conversion of ‘(int)((const Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>*)(& triI4))->Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>::z()’ from ‘int’ to ‘uint64_t’ {aka ‘long unsigned int’} [-Wnarrowing]
+  681 |         uint64_t    triI[4] = {triI4.x(), triI4.y(), triI4.z(), triI4.w()};
+      |                                                      ~~~~~~~^~
+/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp:681:72: warning: narrowing conversion of ‘(int)((const Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>*)(& triI4))->Eigen::DenseCoeffsBase<Eigen::Matrix<int, 4, 1>, 0>::w()’ from ‘int’ to ‘uint64_t’ {aka ‘long unsigned int’} [-Wnarrowing]
+  681 |         uint64_t    triI[4] = {triI4.x(), triI4.y(), triI4.z(), triI4.w()};
+      |                                                                 ~~~~~~~^~
+[102/107] Building CXX object MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/node_edge_model.cpp.o
+[103/107] Linking CXX static library CMakeFiles/metis_partition.dir/cmake_device_link.o
+[104/107] Linking CXX static library MeshProcess/metis_partition/libmetis_partition.a
+[105/107] Building CUDA object CMakeFiles/gipc.dir/StiffGIPC/solver/toi_solver.cu.o
+/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_jacobi_matrix.h(220): warning #174-D: expression has no effect
+          ret.block<3, 12>(3 * i, 0) = m_jacobis[i]->to_mat();
+                           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+Warning #20014-D: calling a __host__ function from a __host__ __device__ function is not allowed
+          detected during:
+            instantiation of "void Eigen::internal::triangular_solver_selector<Lhs, Rhs, Side, Mode, 0, -1>::run(const Lhs &, Rhs &) [with Lhs=const Eigen::Transpose<const Eigen::Block<Eigen::Matrix<double, 12, 12, 0, 12, 12>, -1, -1, false>>, Rhs=Eigen::Block<Eigen::Matrix<double, 12, 12, 0, 12, 12>, -1, -1, false>, Side=2, Mode=2]" at line 181 of /usr/include/eigen3/Eigen/src/Core/SolveTriangular.h
+            instantiation of "void Eigen::TriangularViewImpl<_MatrixType, _Mode, Eigen::Dense>::solveInPlace<Side,OtherDerived>(const Eigen::MatrixBase<OtherDerived> &) const [with _MatrixType=const Eigen::Transpose<const Eigen::Block<Eigen::Matrix<double, 12, 12, 0, 12, 12>, -1, -1, false>>, _Mode=2U, Side=2, OtherDerived=Eigen::Block<Eigen::Matrix<double, 12, 12, 0, 12, 12>, -1, -1, false>]" at line 364 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "Eigen::Index Eigen::internal::llt_inplace<Scalar, 1>::blocked(MatrixType &) [with Scalar=double, MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 408 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "__nv_bool Eigen::internal::LLT_Traits<MatrixType, 1>::inplace_decomposition(MatrixType &) [with MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 456 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "Eigen::LLT<_MatrixType, _UpLo> &Eigen::LLT<_MatrixType, _UpLo>::compute(const Eigen::EigenBase<InputType> &) [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, InputType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 109 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "Eigen::LLT<_MatrixType, _UpLo>::LLT(const Eigen::EigenBase<InputType> &) [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, InputType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 18 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/toi_penalty_scale.h
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+Warning #20014-D: calling a __host__ function from a __host__ __device__ function is not allowed
+          detected during:
+            instantiation of "void Eigen::internal::triangular_solver_selector<Lhs, Rhs, Side, Mode, 0, -1>::run(const Lhs &, Rhs &) [with Lhs=const Eigen::Matrix<double, 12, 12, 0, 12, 12>, Rhs=Eigen::Matrix<double, 12, 12, 0, 12, 12>, Side=1, Mode=1]" at line 181 of /usr/include/eigen3/Eigen/src/Core/SolveTriangular.h
+            instantiation of "void Eigen::TriangularViewImpl<_MatrixType, _Mode, Eigen::Dense>::solveInPlace<Side,OtherDerived>(const Eigen::MatrixBase<OtherDerived> &) const [with _MatrixType=const Eigen::Matrix<double, 12, 12, 0, 12, 12>, _Mode=1U, Side=1, OtherDerived=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 522 of /usr/include/eigen3/Eigen/src/Core/TriangularMatrix.h
+            instantiation of "void Eigen::TriangularViewImpl<_MatrixType, _Mode, Eigen::Dense>::solveInPlace(const Eigen::MatrixBase<OtherDerived> &) const [with _MatrixType=const Eigen::Matrix<double, 12, 12, 0, 12, 12>, _Mode=1U, OtherDerived=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 496 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "void Eigen::LLT<_MatrixType, _UpLo>::_solve_impl_transposed<Conjugate,RhsType,DstType>(const RhsType &, DstType &) const [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, Conjugate=true, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, DstType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 487 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "void Eigen::LLT<_MatrixType, _UpLo>::_solve_impl(const RhsType &, DstType &) const [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, DstType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 147 of /usr/include/eigen3/Eigen/src/Core/Solve.h
+            instantiation of "void Eigen::internal::Assignment<DstXprType, Eigen::Solve<DecType, RhsType>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, void>::run(DstXprType &, const Eigen::internal::Assignment<DstXprType, Eigen::Solve<DecType, RhsType>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, void>::SrcXprType &, const Eigen::internal::assign_op<Scalar, Scalar> &) [with DstXprType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, DecType=Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, Scalar=double]" at line 890 of /usr/include/eigen3/Eigen/src/Core/AssignEvaluator.h
+            instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<double, 12, 12, 0, 12, 12>, Src=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>, Func=Eigen::internal::assign_op<double, double>]" at line 797 of /usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h
+            instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<double, 12, 12, 0, 12, 12>, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 594 of /usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h
+            instantiation of "Eigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<double, 12, 12, 0, 12, 12>, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 424 of /usr/include/eigen3/Eigen/src/Core/Matrix.h
+            instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived> &) [with _Scalar=double, _Rows=12, _Cols=12, _Options=0, _MaxRows=12, _MaxCols=12, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 21 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/toi_penalty_scale.h
+
+Warning #20014-D: calling a __host__ function from a __host__ __device__ function is not allowed
+          detected during:
+            instantiation of "void Eigen::internal::triangular_solver_selector<Lhs, Rhs, Side, Mode, 0, -1>::run(const Lhs &, Rhs &) [with Lhs=const Eigen::Transpose<const Eigen::Matrix<double, 12, 12, 0, 12, 12>>, Rhs=Eigen::Matrix<double, 12, 12, 0, 12, 12>, Side=1, Mode=2]" at line 181 of /usr/include/eigen3/Eigen/src/Core/SolveTriangular.h
+            instantiation of "void Eigen::TriangularViewImpl<_MatrixType, _Mode, Eigen::Dense>::solveInPlace<Side,OtherDerived>(const Eigen::MatrixBase<OtherDerived> &) const [with _MatrixType=const Eigen::Transpose<const Eigen::Matrix<double, 12, 12, 0, 12, 12>>, _Mode=2U, Side=1, OtherDerived=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 522 of /usr/include/eigen3/Eigen/src/Core/TriangularMatrix.h
+            instantiation of "void Eigen::TriangularViewImpl<_MatrixType, _Mode, Eigen::Dense>::solveInPlace(const Eigen::MatrixBase<OtherDerived> &) const [with _MatrixType=const Eigen::Transpose<const Eigen::Matrix<double, 12, 12, 0, 12, 12>>, _Mode=2U, OtherDerived=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 497 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "void Eigen::LLT<_MatrixType, _UpLo>::_solve_impl_transposed<Conjugate,RhsType,DstType>(const RhsType &, DstType &) const [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, Conjugate=true, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, DstType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 487 of /usr/include/eigen3/Eigen/src/Cholesky/LLT.h
+            instantiation of "void Eigen::LLT<_MatrixType, _UpLo>::_solve_impl(const RhsType &, DstType &) const [with _MatrixType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, _UpLo=1, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, DstType=Eigen::Matrix<double, 12, 12, 0, 12, 12>]" at line 147 of /usr/include/eigen3/Eigen/src/Core/Solve.h
+            instantiation of "void Eigen::internal::Assignment<DstXprType, Eigen::Solve<DecType, RhsType>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, void>::run(DstXprType &, const Eigen::internal::Assignment<DstXprType, Eigen::Solve<DecType, RhsType>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, void>::SrcXprType &, const Eigen::internal::assign_op<Scalar, Scalar> &) [with DstXprType=Eigen::Matrix<double, 12, 12, 0, 12, 12>, DecType=Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, RhsType=Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>, Scalar=double]" at line 890 of /usr/include/eigen3/Eigen/src/Core/AssignEvaluator.h
+            instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<double, 12, 12, 0, 12, 12>, Src=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>, Func=Eigen::internal::assign_op<double, double>]" at line 797 of /usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h
+            instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<double, 12, 12, 0, 12, 12>, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 594 of /usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h
+            instantiation of "Eigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<double, 12, 12, 0, 12, 12>, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 424 of /usr/include/eigen3/Eigen/src/Core/Matrix.h
+            instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived> &) [with _Scalar=double, _Rows=12, _Cols=12, _Options=0, _MaxRows=12, _MaxCols=12, OtherDerived=Eigen::Solve<Eigen::LLT<Eigen::Matrix<double, 12, 12, 0, 12, 12>, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_identity_op<double>, Eigen::Matrix<double, 12, 12, 0, 12, 12>>>]" at line 21 of /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/toi_penalty_scale.h
+
+[106/107] Linking CXX executable CMakeFiles/gipc.dir/cmake_device_link.o
+[107/107] Linking CXX executable gipc

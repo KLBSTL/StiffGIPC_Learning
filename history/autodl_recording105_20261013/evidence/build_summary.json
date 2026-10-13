@@ -1,0 +1,23 @@
+{
+  "translation_units": 37,
+  "exe": {
+    "path": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer/gipc",
+    "bytes": 21031000,
+    "sha256": "c41e6562cce39da94158574fb38ed68671d5a9e45370eee2af22c0132380c982"
+  },
+  "compilers": [
+    {
+      "path": "/usr/local/cuda-12.8/bin/nvcc",
+      "bytes": 24828456,
+      "sha256": "59e4e55f9a38b78c590df1e28a69dad91052958f18a03868ca4a547c043fbba7"
+    },
+    {
+      "path": "/usr/bin/x86_64-linux-gnu-g++-11",
+      "bytes": 932680,
+      "sha256": "d7122fd9a7a8fe12d12c00c54d3a6fbebcb3e9285cf675709674e751d900fc63"
+    }
+  ],
+  "source_files": 466,
+  "original_full_identity": "Full raw archive: build/program_identity.json",
+  "source_snapshot": "../../../LOCAL_SOURCE_COMPARISON.json"
+}

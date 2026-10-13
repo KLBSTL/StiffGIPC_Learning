@@ -1,0 +1,21 @@
+{
+  "pid": 22494,
+  "status": "completed",
+  "stage": "completed",
+  "review": {
+    "path": "/root/autodl-tmp/codex_recording105_20261013/autodl_recording105_20261013_review.tar.gz",
+    "bytes": 783853669,
+    "sha256": "c1e9a930784d9f9498f6088db73b431f54618543ac2b4e0be859c113d0eaad07",
+    "files": 3931,
+    "review_package": true,
+    "omitted": "Non-keyframe raw positions/velocities only; all numeric logs retained"
+  },
+  "full": {
+    "path": "/root/autodl-tmp/codex_recording105_20261013/autodl_recording105_20261013_full.tar.gz",
+    "bytes": 4570828245,
+    "sha256": "b13b4f11cbeac3225d096c21079874515de7360cd31171d87904a70789534d49",
+    "files": 11323,
+    "review_package": false,
+    "omitted": "None"
+  }
+}

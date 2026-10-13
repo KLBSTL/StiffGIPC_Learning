@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "full_archive_sha256": "b13b4f11cbeac3225d096c21079874515de7360cd31171d87904a70789534d49",
+  "full_archive_bytes": 4570828245,
+  "files": 11323,
+  "existing_files_verified": 3931,
+  "missing_raw_files_added": 7392,
+  "all_raw_position_and_velocity_frames_local": true,
+  "root": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\runs\\autodl_recording105_review_20261013"
+}

@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "actual_frames": 3780,
+  "frame100_rows": 36,
+  "checkpoint_inputs": 63,
+  "initial_inputs": 36,
+  "lossless_obj_meshes": 162,
+  "local_native_and_input_files_identical": 355,
+  "native_translation_units": 37,
+  "native_binary_sha256": "c41e6562cce39da94158574fb38ed68671d5a9e45370eee2af22c0132380c982",
+  "phase_rows_independently_recomputed": 9,
+  "cross_platform_initial_inputs": [
+    {
+      "scene": "Bunny",
+      "bitwise_equal": {
+        "topology.bin": false,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "velocity_0000.bin": true
+      },
+      "position_rms_mm": 0.0,
+      "position_max_mm": 0.0
+    },
+    {
+      "scene": "Mixed",
+      "bitwise_equal": {
+        "topology.bin": false,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "velocity_0000.bin": true
+      },
+      "position_rms_mm": 0.0,
+      "position_max_mm": 0.0
+    },
+    {
+      "scene": "Boxes",
+      "bitwise_equal": {
+        "topology.bin": false,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true,
+        "state_0000.bin": true,
+        "velocity_0000.bin": true
+      },
+      "position_rms_mm": 0.0,
+      "position_max_mm": 0.0
+    }
+  ],
+  "system_compilers": "Hashes retained in cloud identity; system compiler binaries are outside the downloaded payload",
+  "verifier_sha256": "ad2367ffd155551cfc3714d0cfbfa1dcfee9e17e762110c91efe11d57defcb61"
+}

@@ -7,6 +7,7 @@
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/mas_stage_probe_options.h>
+#include <solver/ipc_pcg_forcing.h>
 #include <cuda_tools/cuda_tools.h>
 #include <cuda_tools/cuda_cub_wrappers.h>
 #include <cub/block/block_reduce.cuh>
@@ -23,6 +24,23 @@
 #include <sstream>
 
 extern int total_Frames;
+
+namespace {
+struct PcgDirectionSum {
+    __host__ __device__ double3 operator()(double3 a,double3 b)const {
+        return make_double3(a.x+b.x,a.y+b.y,a.z+b.z);
+    }
+};
+__global__ void pcg_direction_partials(const double* x,const double* b,const double* ax,
+    int count,double3* partials) {
+    const int i=blockIdx.x*blockDim.x+threadIdx.x;double3 value=make_double3(0,0,0);
+    if(i<count){const double residual=b[i]-ax[i];value=make_double3(b[i]*x[i],residual*residual,b[i]*b[i]);}
+    using Reduce=cub::BlockReduce<double3,256>;
+    __shared__ typename Reduce::TempStorage storage;
+    const double3 sum=Reduce(storage).Reduce(value,PcgDirectionSum{});
+    if(threadIdx.x==0)partials[blockIdx.x]=sum;
+}
+}
 
 namespace gipc
 {
@@ -113,8 +131,35 @@ PCGSolver::PCGSolver(const PCGSolverConfig& cfg)
     : m_config(cfg)
 {
 }
+void PCGSolver::check_forcing_direction(cudatool::DenseVectorView<Float> x,
+                                      cudatool::CDenseVectorView<Float> b)
+{
+    if(b.size()==0)return;
+    CostScope cost("pcg.forcing_true_residual_and_descent");
+    static thread_local cudatool::DeviceBuffer<double3> partials,result;
+    static thread_local cudatool::DeviceBuffer<unsigned char> scratch;
+    const int count=static_cast<int>(b.size()),blocks=(count+255)/256;
+    partials.resize(blocks);result.resize(1);
+    spmv(cudatool::CDenseVectorView<Float>{x.data(),static_cast<int>(x.size())},Ap.view());
+    pcg_direction_partials<<<blocks,256>>>(x.data(),b.data(),Ap.data(),count,partials.data());
+    size_t bytes=0;
+    CUDA_SAFE_CALL(cub::DeviceReduce::Reduce(nullptr,bytes,partials.data(),result.data(),blocks,
+        PcgDirectionSum{},make_double3(0,0,0),cudaStreamPerThread));
+    scratch.resize(bytes);
+    CUDA_SAFE_CALL(cub::DeviceReduce::Reduce(scratch.data(),bytes,partials.data(),result.data(),blocks,
+        PcgDirectionSum{},make_double3(0,0,0),cudaStreamPerThread));
+    double3 values;CUDA_SAFE_CALL(cudaMemcpy(&values,result.data(),sizeof(values),cudaMemcpyDeviceToHost));
+    const bool passed=std::isfinite(values.x)&&std::isfinite(values.y)&&std::isfinite(values.z)
+        &&(values.z==0?values.y==0:values.x>0);
+    auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
+    info["forcing_direction_check"]={{"passed",passed},{"rhs_dot_solution",values.x},
+        {"true_relative_residual",values.z>0?std::sqrt(values.y/values.z):std::sqrt(values.y)},
+        {"update_sign","state -= alpha * solution"}};
+    if(!passed)throw IpcPcgDirectionFailure("Nonfinite or non-descent IPC PCG direction");
+}
 SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b)
 {
+    const auto forcing=IpcPcgForcingOptions::read();
     CostScope cost_entry("pcg.entry_including_diagnostics");
     attach_solve_context(Statistics::instance().at_current_frame()["newton"].back()["pcg"]);
     Timer timer{"pcg"};
@@ -133,6 +178,7 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     auto max_iter = static_cast<SizeT>(m_config.max_iter_ratio * b.size());
     // Retired candidates remain explicit in the historical output schema.
     auto& component_info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
+    component_info["rho_tolerance"]=m_config.global_tol_rate;
     for(const char* prefix:{"mas_fused_dot","spmv_fused_quadratic"})
     {
         const std::string name=prefix;
@@ -149,14 +195,26 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
         CostScope cost_loop("pcg.production_loop");
         iter=m_config.conditional_graph ? pcg_graph(x,b,max_iter) : pcg(x,b,max_iter);
     }
-    catch(const std::exception&)
+    catch(const std::exception& error)
     {
         Statistics::instance().at_current_frame()["newton"].back()["pcg"]["iteration_limit"]=false;
         if(const char* prefix=std::getenv("GIPC_MAS_AUDIT"))operator_audit(x,b,std::string(prefix)+"_failure");
+        if(forcing.changes_precision()&&m_config.global_tol_rate>1e-4)
+            throw IpcPcgDirectionFailure(error.what());
         throw;
     }
     linear_stage("pcg_loop_end");
     cost_trace_iteration(-1);
+    if(forcing.enabled()) {
+        if(iter>=max_iter)throw IpcPcgDirectionFailure("IPC PCG forcing hit iteration limit");
+        static thread_local bool injected=false;
+        if(const char* fixture=std::getenv("GIPC_IPC_PCG_FAILURE_FIXTURE");fixture&&
+            std::string(fixture)=="direction"&&!injected&&m_config.global_tol_rate>1e-4) {
+            injected=true;const double invalid=std::numeric_limits<double>::quiet_NaN();
+            CUDA_SAFE_CALL(cudaMemcpy(x.data(),&invalid,sizeof(invalid),cudaMemcpyHostToDevice));
+        }
+        check_forcing_direction(x,b);
+    }
     if(cost_trace_selected() && cost_trace_config().operator_probe)
     {
         CostSampleGuard probe_kind("frozen_operator_probe");

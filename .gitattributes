@@ -4,3 +4,7 @@
 # This audit's generated Windows reports only; historical and native bytes stay exact.
 reports/AUDIT_* text eol=crlf
 reports/audit_v4_* text eol=crlf
+
+# Historical report artifacts are binary; preserve their exact exported bytes.
+*.pdf binary
+*.gz binary

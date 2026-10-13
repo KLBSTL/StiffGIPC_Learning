@@ -1,0 +1,889 @@
+{
+  "complete": true,
+  "inputs": {
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/summary.json": {
+      "bytes": 15270,
+      "sha256": "be115eedca6aa8c9c0b168e4dd05a2c903ebdbc0fe126df30dea6e520896b655"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/delivery_verification_local.json": {
+      "bytes": 1637,
+      "sha256": "c8804dae641d4b878c01203e0115a6a2c6b6d3b3fc315fd85f60ae3e9bd85e9c"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/cross_platform_topology.json": {
+      "bytes": 1110,
+      "sha256": "9811a93f3c8dac3a4c5b3effc1bd4f5322e2e8c1c72c1195e87dc2371a272215"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/phase_table_first100.csv": {
+      "bytes": 2200,
+      "sha256": "2d8102af4bc1ecfbcf822252ad2d0d5c05bcc22ef558514201820ac0444c2210"
+    },
+    "reports/local_recording105_dt0p04_20261011/phase_table_first100.csv": {
+      "bytes": 4188,
+      "sha256": "a1cbc802920ca4c5619c58a7e16a8945384af983acee63e6f8cd59cc40fafea2"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/checkpoint_frame100_table.csv": {
+      "bytes": 867,
+      "sha256": "751d238802542a7bb03e535174130fca7d4eec6bb509eeae67d3963909b4a73f"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/trajectory_frame100_table.csv": {
+      "bytes": 838,
+      "sha256": "e684c274627ba82f82b8438de4ebd7497c3ae4c9bea345a5d36ddd56da85d429"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/reference_repeat_dispersion.csv": {
+      "bytes": 304286,
+      "sha256": "d83aeeca98abc2802810271404f3e73dd02e3dfc77da84fd1f40aeab6431bb1a"
+    },
+    "runs/autodl_recording105_review_20261013/runs/autodl_recording105_20261013_v2/identities.json": {
+      "bytes": 521489,
+      "sha256": "a2c474ef1b0f0b0f185be4963a54ef24112255355bc5d1e0f658a2c290e197b9"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/all_scenes_frame100_r1.png": {
+      "bytes": 208686,
+      "sha256": "605245428939fc1167dc3b4beaaaf6eddcc0356f184967785cddaa52986ff638"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/recording_overhead_summary.csv": {
+      "bytes": 881,
+      "sha256": "e4e6f6a2b4eb8ae7d82dff437b6fa15644d7c8a82f47fb4edbc89317c9e94ef6"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/plots/bunny_performance.png": {
+      "bytes": 463469,
+      "sha256": "5b43fa7f2a495435b1898434fcff351c856f46d8edc64afa36a624932c15484c"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/plots/mixed_performance.png": {
+      "bytes": 544920,
+      "sha256": "e7ad015096db5dca985c9f8d1020d6d99a14092e9b5e1f285033120a5042480a"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/plots/boxes_performance.png": {
+      "bytes": 490750,
+      "sha256": "57346e64ac51cde6a13d28a7bad3c479f2ebc19825193e53ef6f58bc50d8c0f5"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/bunny_timeline_r1.png": {
+      "bytes": 314787,
+      "sha256": "7dff98fc546c4ca9b2c3bce07614bcbbacba2e4ea9ded183e019906857bb6843"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/mixed_timeline_r1.png": {
+      "bytes": 253155,
+      "sha256": "721bb9b3a5b8ca7341027ca077af61b1a9064230ab2c482b85d6abacb65edd4f"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/boxes_timeline_r1.png": {
+      "bytes": 197578,
+      "sha256": "21e7bebcb5e72171fec131cac5ed13d3209ccf7390a3cfa6658664db90010bef"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/bunny_timeline_r2.png": {
+      "bytes": 313558,
+      "sha256": "9469f702c2e4036a6e61524a5e3f17a33cea536d0d3c56a4e8d1c858253b7fde"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/mixed_timeline_r2.png": {
+      "bytes": 252809,
+      "sha256": "1ec6ac96c549f5d2107b53b85f7b01f83d5514888a7c215d4c25b68a8081906e"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/boxes_timeline_r2.png": {
+      "bytes": 182630,
+      "sha256": "ca8ae4eade3464ef0db3a11eb186b9690a0011b87f3d9106e11048d191ab5cd3"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/bunny_timeline_r3.png": {
+      "bytes": 315549,
+      "sha256": "999a33ec103e769b4b8a50eb2710907264495420bca0c77d17c743d2f3a169f0"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/mixed_timeline_r3.png": {
+      "bytes": 245575,
+      "sha256": "fec5e6b9dad76d03dcea8628f36d297949f7d34c0898d7e704424f2ba6b1a8c2"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/boxes_timeline_r3.png": {
+      "bytes": 204919,
+      "sha256": "f79779885b84af203a8aa4cc9e4be5e6701c06499679cb8e7af0e001a2c12312"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/all_scenes_frame100_r2.png": {
+      "bytes": 203732,
+      "sha256": "a6e5563851b4308b8f8c5bbe8f99d7874e8b72165c3ff605f6ee44d732dc3b6f"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/visuals/all_scenes_frame100_r3.png": {
+      "bytes": 207466,
+      "sha256": "6fc34a2c2576517a5274177d541ffdd7001cefb9e184333f7d042073a87f346c"
+    },
+    "runs/autodl_recording105_review_20261013/reports/autodl_recording105_20261013_v2/run_costs.csv": {
+      "bytes": 6402,
+      "sha256": "15d96756e57357429d2541e2028caf95223c78921e0b414f4349636b5b7987b1"
+    }
+  },
+  "display_rows": {
+    "platform_comparison": [
+      [
+        "Bunny",
+        "MOV",
+        "24.622",
+        "9.217",
+        "2.671",
+        "1.000",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "14.642",
+        "5.194",
+        "2.819",
+        "1.682",
+        "1.775"
+      ],
+      [
+        "",
+        "GATE",
+        "23.604",
+        "8.092",
+        "2.917",
+        "1.043",
+        "1.139"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "75.525",
+        "24.738",
+        "3.053",
+        "1.000",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "30.859",
+        "10.338",
+        "2.985",
+        "2.447",
+        "2.393"
+      ],
+      [
+        "",
+        "GATE",
+        "45.694",
+        "14.362",
+        "3.182",
+        "1.653",
+        "1.723"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "185.180",
+        "64.664",
+        "2.864",
+        "1.000",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "62.873",
+        "22.648",
+        "2.776",
+        "2.945",
+        "2.855"
+      ],
+      [
+        "",
+        "GATE",
+        "216.189",
+        "59.749",
+        "3.618",
+        "0.857",
+        "1.082"
+      ]
+    ],
+    "cloud_phases": [
+      [
+        "Bunny",
+        "MOV",
+        "0.949",
+        "6.111",
+        "0.564",
+        "1.449",
+        "0.153",
+        "9.217",
+        "179.70",
+        "8.51",
+        "152924",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "0.521",
+        "3.466",
+        "0.314",
+        "0.779",
+        "0.139",
+        "5.194",
+        "189.46",
+        "4.61",
+        "87341",
+        "1.775"
+      ],
+      [
+        "",
+        "GATE",
+        "0.884",
+        "5.276",
+        "0.498",
+        "1.267",
+        "0.167",
+        "8.092",
+        "177.79",
+        "7.39",
+        "131388",
+        "1.139"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "3.743",
+        "8.085",
+        "6.246",
+        "5.958",
+        "0.261",
+        "24.738",
+        "57.29",
+        "14.03",
+        "81172",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "1.535",
+        "3.416",
+        "2.806",
+        "2.363",
+        "0.218",
+        "10.338",
+        "63.35",
+        "5.54",
+        "35096",
+        "2.393"
+      ],
+      [
+        "",
+        "GATE",
+        "2.458",
+        "4.703",
+        "3.252",
+        "3.699",
+        "0.249",
+        "14.362",
+        "51.24",
+        "8.53",
+        "43711",
+        "1.723"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "17.842",
+        "14.281",
+        "15.157",
+        "17.110",
+        "0.310",
+        "64.664",
+        "41.43",
+        "41.77",
+        "175261",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "6.174",
+        "5.508",
+        "5.456",
+        "5.438",
+        "0.168",
+        "22.648",
+        "51.62",
+        "14.83",
+        "74172",
+        "2.855"
+      ],
+      [
+        "",
+        "GATE",
+        "16.900",
+        "13.357",
+        "14.019",
+        "16.552",
+        "0.407",
+        "59.749",
+        "42.88",
+        "38.68",
+        "166695",
+        "1.082"
+      ]
+    ],
+    "cold": [
+      [
+        "Bunny",
+        "MOV",
+        "1",
+        "269.0",
+        "0.054355",
+        "0.001723",
+        "0.025620"
+      ],
+      [
+        "",
+        "TOI",
+        "1",
+        "268.0",
+        "0.049479",
+        "0.001722",
+        "0.025601"
+      ],
+      [
+        "",
+        "GATE",
+        "1",
+        "270.0",
+        "0.049571",
+        "0.001644",
+        "0.023703"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "3",
+        "238.0",
+        "0.086943",
+        "0.000741",
+        "0.007082"
+      ],
+      [
+        "",
+        "TOI",
+        "3",
+        "238.0",
+        "0.087457",
+        "0.000741",
+        "0.006898"
+      ],
+      [
+        "",
+        "GATE",
+        "3",
+        "237.0",
+        "0.086891",
+        "0.000737",
+        "0.006883"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "15",
+        "311.0",
+        "0.296684",
+        "0.015503",
+        "0.288911"
+      ],
+      [
+        "",
+        "TOI",
+        "8",
+        "192.0",
+        "0.203721",
+        "1.966769",
+        "14.033194"
+      ],
+      [
+        "",
+        "GATE",
+        "15",
+        "311.0",
+        "0.297273",
+        "0.015503",
+        "0.288912"
+      ]
+    ],
+    "trajectory": [
+      [
+        "Bunny",
+        "MOV",
+        "1",
+        "268.0",
+        "0.015980",
+        "36.280214",
+        "387.873459"
+      ],
+      [
+        "",
+        "TOI",
+        "1",
+        "255.0",
+        "0.015763",
+        "22.937250",
+        "321.775300"
+      ],
+      [
+        "",
+        "GATE",
+        "2",
+        "498.0",
+        "0.028361",
+        "22.541166",
+        "232.543091"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "3",
+        "237.0",
+        "0.047371",
+        "20.001486",
+        "124.916819"
+      ],
+      [
+        "",
+        "TOI",
+        "1",
+        "60.0",
+        "0.017061",
+        "386.822868",
+        "1013.697017"
+      ],
+      [
+        "",
+        "GATE",
+        "1",
+        "65.0",
+        "0.017502",
+        "323.805806",
+        "987.688646"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "12",
+        "264.0",
+        "0.210513",
+        "1858.937085",
+        "8020.439416"
+      ],
+      [
+        "",
+        "TOI",
+        "8",
+        "203.0",
+        "0.147997",
+        "1838.745893",
+        "7312.323829"
+      ],
+      [
+        "",
+        "GATE",
+        "10",
+        "221.0",
+        "0.182190",
+        "1762.360144",
+        "7081.985281"
+      ]
+    ],
+    "pcg_work": [
+      [
+        "Bunny",
+        "MOV",
+        "851",
+        "152924",
+        "6.111",
+        "39.92",
+        "9.217",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "461",
+        "87341",
+        "3.466",
+        "39.65",
+        "5.194",
+        "1.775"
+      ],
+      [
+        "",
+        "GATE",
+        "739",
+        "131388",
+        "5.276",
+        "40.20",
+        "8.092",
+        "1.139"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "1403",
+        "81172",
+        "8.085",
+        "100.49",
+        "24.738",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "554",
+        "35096",
+        "3.416",
+        "96.78",
+        "10.338",
+        "2.393"
+      ],
+      [
+        "",
+        "GATE",
+        "853",
+        "43711",
+        "4.703",
+        "106.78",
+        "14.362",
+        "1.723"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "4177",
+        "175261",
+        "14.281",
+        "81.06",
+        "64.664",
+        "1.000"
+      ],
+      [
+        "",
+        "TOI",
+        "1483",
+        "74172",
+        "5.508",
+        "74.26",
+        "22.648",
+        "2.855"
+      ],
+      [
+        "",
+        "GATE",
+        "3868",
+        "166695",
+        "13.357",
+        "81.07",
+        "59.749",
+        "1.082"
+      ]
+    ],
+    "reference_noise": [
+      [
+        "Bunny",
+        "16.493641",
+        "166.189515"
+      ],
+      [
+        "Mixed",
+        "16.950260",
+        "136.456332"
+      ],
+      [
+        "Boxes",
+        "1811.379776",
+        "7269.846460"
+      ]
+    ],
+    "overhead": [
+      [
+        "Bunny",
+        "MOV",
+        "3",
+        "1",
+        "1.0933",
+        "1.0933"
+      ],
+      [
+        "",
+        "TOI",
+        "3",
+        "1",
+        "1.0235",
+        "1.0299"
+      ],
+      [
+        "",
+        "GATE",
+        "3",
+        "0",
+        "0.9711",
+        "--"
+      ],
+      [
+        "Mixed",
+        "MOV",
+        "3",
+        "0",
+        "0.9771",
+        "--"
+      ],
+      [
+        "",
+        "TOI",
+        "3",
+        "0",
+        "1.0245",
+        "--"
+      ],
+      [
+        "",
+        "GATE",
+        "3",
+        "1",
+        "1.0019",
+        "1.0341"
+      ],
+      [
+        "Boxes",
+        "MOV",
+        "3",
+        "3",
+        "0.9941",
+        "0.9941"
+      ],
+      [
+        "",
+        "TOI",
+        "3",
+        "3",
+        "1.0046",
+        "1.0046"
+      ],
+      [
+        "",
+        "GATE",
+        "3",
+        "3",
+        "1.0002",
+        "1.0002"
+      ]
+    ],
+    "checkpoint_Bunny": [
+      [
+        "Bunny",
+        "Movement only",
+        "1",
+        "269.0",
+        "0.054355",
+        "0.001723",
+        "0.025620"
+      ],
+      [
+        "",
+        "Cumulative TOI .01",
+        "1",
+        "268.0",
+        "0.049479",
+        "0.001722",
+        "0.025601"
+      ],
+      [
+        "",
+        "Compensated + residual gate",
+        "1",
+        "270.0",
+        "0.049571",
+        "0.001644",
+        "0.023703"
+      ]
+    ],
+    "checkpoint_Mixed": [
+      [
+        "Mixed",
+        "Movement only",
+        "3",
+        "238.0",
+        "0.086943",
+        "0.000741",
+        "0.007082"
+      ],
+      [
+        "",
+        "Cumulative TOI .01",
+        "3",
+        "238.0",
+        "0.087457",
+        "0.000741",
+        "0.006898"
+      ],
+      [
+        "",
+        "Compensated + residual gate",
+        "3",
+        "237.0",
+        "0.086891",
+        "0.000737",
+        "0.006883"
+      ]
+    ],
+    "checkpoint_Boxes": [
+      [
+        "Boxes",
+        "Movement only",
+        "15",
+        "311.0",
+        "0.296684",
+        "0.015503",
+        "0.288911"
+      ],
+      [
+        "",
+        "Cumulative TOI .01",
+        "8",
+        "192.0",
+        "0.203721",
+        "1.966769",
+        "14.033194"
+      ],
+      [
+        "",
+        "Compensated + residual gate",
+        "15",
+        "311.0",
+        "0.297273",
+        "0.015503",
+        "0.288912"
+      ]
+    ]
+  },
+  "pdfs": {
+    "AutoDL_3Scene_Appendix.pdf": {
+      "pages": 15,
+      "sha256": "2e1112736de970066c448c50ec7aa5a543e88466089879dd4adc4a17b34910dd"
+    },
+    "AutoDL_3Scene_Main.pdf": {
+      "pages": 6,
+      "sha256": "317148ff2c3a510d2e25ee0800f7918ee478aacd2af7ffbc4feaae713ac2a222"
+    },
+    "checkpoints/Checkpoint100_Boxes.pdf": {
+      "pages": 1,
+      "sha256": "698982bda2db26a58a4e20d098e8a1d5848452523654f3f03ffca7b335e5e0e4"
+    },
+    "checkpoints/Checkpoint100_Bunny.pdf": {
+      "pages": 1,
+      "sha256": "b6ee05da340740e0dc7c3d3bde8f186886a1801695994de4aa27b9e97a4a7c37"
+    },
+    "checkpoints/Checkpoint100_Mixed.pdf": {
+      "pages": 1,
+      "sha256": "89334bc4ead73cd81007dabd8639726888427c438fce9fc3835c50411c5f14a7"
+    }
+  },
+  "weighted_speedups": {
+    "original": 1.0,
+    "pure": 2.582969524324709,
+    "ours": 1.199708271099461
+  },
+  "solver_seconds_sum_of_scene_medians": {
+    "original": 98.618968381,
+    "pure": 38.180461462,
+    "ours": 82.202457678
+  },
+  "native_program_sha256": "c41e6562cce39da94158574fb38ed68671d5a9e45370eee2af22c0132380c982",
+  "source_proof": {
+    "passed": true,
+    "actual_frames": 3780,
+    "frame100_rows": 36,
+    "checkpoint_inputs": 63,
+    "initial_inputs": 36,
+    "lossless_obj_meshes": 162,
+    "local_native_and_input_files_identical": 355,
+    "native_translation_units": 37,
+    "native_binary_sha256": "c41e6562cce39da94158574fb38ed68671d5a9e45370eee2af22c0132380c982",
+    "phase_rows_independently_recomputed": 9,
+    "cross_platform_initial_inputs": [
+      {
+        "scene": "Bunny",
+        "bitwise_equal": {
+          "topology.bin": false,
+          "masses.bin": true,
+          "boundary_types.bin": true,
+          "body_ids.bin": true,
+          "state_0000.bin": true,
+          "velocity_0000.bin": true
+        },
+        "position_rms_mm": 0.0,
+        "position_max_mm": 0.0
+      },
+      {
+        "scene": "Mixed",
+        "bitwise_equal": {
+          "topology.bin": false,
+          "masses.bin": true,
+          "boundary_types.bin": true,
+          "body_ids.bin": true,
+          "state_0000.bin": true,
+          "velocity_0000.bin": true
+        },
+        "position_rms_mm": 0.0,
+        "position_max_mm": 0.0
+      },
+      {
+        "scene": "Boxes",
+        "bitwise_equal": {
+          "topology.bin": false,
+          "masses.bin": true,
+          "boundary_types.bin": true,
+          "body_ids.bin": true,
+          "state_0000.bin": true,
+          "velocity_0000.bin": true
+        },
+        "position_rms_mm": 0.0,
+        "position_max_mm": 0.0
+      }
+    ],
+    "system_compilers": "Hashes retained in cloud identity; system compiler binaries are outside the downloaded payload",
+    "verifier_sha256": "ad2367ffd155551cfc3714d0cfbfa1dcfee9e17e762110c91efe11d57defcb61"
+  },
+  "topology_comparison": {
+    "passed": true,
+    "scenes": [
+      {
+        "scene": "bunny",
+        "header": {
+          "vertices": 24969,
+          "faces": 32082,
+          "tetrahedra": 79935
+        },
+        "same_face_order": false,
+        "same_unoriented_faces": true,
+        "same_oriented_faces": true,
+        "same_tetrahedra_in_order": true
+      },
+      {
+        "scene": "mixed",
+        "header": {
+          "vertices": 39475,
+          "faces": 43712,
+          "tetrahedra": 159870
+        },
+        "same_face_order": false,
+        "same_unoriented_faces": true,
+        "same_oriented_faces": true,
+        "same_tetrahedra_in_order": true
+      },
+      {
+        "scene": "boxes",
+        "header": {
+          "vertices": 16449,
+          "faces": 25088,
+          "tetrahedra": 9600
+        },
+        "same_face_order": false,
+        "same_unoriented_faces": true,
+        "same_oriented_faces": true,
+        "same_tetrahedra_in_order": true
+      }
+    ],
+    "scope": "Triangle enumeration differs across platforms; connectivity and orientation, tetrahedra and all initial state/mass/boundary/body/velocity arrays are unchanged"
+  },
+  "rendered_pdf_review": "passed_all_24_pages"
+}

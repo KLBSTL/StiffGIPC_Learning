@@ -115,13 +115,16 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
     const int fixed=std::max(1,std::min(64,static_cast<int>(primary_iter)));
     const bool compact=std::getenv("GIPC_FIXED_STUDY_COMPACT") && std::string(std::getenv("GIPC_FIXED_STUDY_COMPACT"))=="1";
     study["compact_default_strict_comparison"]=compact;
+    const bool eta_study=std::getenv("GIPC_FIXED_PCG_ETA_STUDY")&&std::string(std::getenv("GIPC_FIXED_PCG_ETA_STUDY"))=="1";
+    study["eta_study"]=eta_study;
     // Separate equal-work timing from native stopping and tighter residual probes.
     for(int phase=0;phase<4;++phase)
     {
-        if(compact && phase!=1 && phase!=3)continue;
+        if(compact && !eta_study && phase!=1 && phase!=3)continue;
         const double tolerances[]={1e-4,1e-4,1e-8,compact?1e-16:1e-12};
-        m_config.global_tol_rate=tolerances[phase];
-        diagnostic_fixed_iterations=phase==0?fixed:0;
+        const double eta_tolerances[]={1e-4,9e-4,1e-2,1e-4};
+        m_config.global_tol_rate=eta_study?eta_tolerances[phase]:tolerances[phase];
+        diagnostic_fixed_iterations=!eta_study&&phase==0?fixed:0;
         std::vector<Float> first_host;
         for(int mode=0;mode<(fused_diag_update_available()?3:2);++mode)
         {
@@ -140,7 +143,7 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
                 auto values=download();if(repeat==0)first=values;
                 if(mode==0 && repeat==0)first_host=values;
                 const double true_residual=residual();
-                Json record={{"phase",phase==0?"fixed_iterations":"rho_tolerance"},
+                Json record={{"phase",!eta_study&&phase==0?"fixed_iterations":"rho_tolerance"},
                     {"rho_tolerance",m_config.global_tol_rate},{"fixed_iterations",diagnostic_fixed_iterations},
                     {"mode",mode==0?"host":mode==1?"graph":"graph_fused"},{"repeat",repeat+1},
                     {"iterations",iterations},{"limit",iterations>=max_iter},{"error",error},{"solve_ms",ms},

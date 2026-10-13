@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\transfers\\autodl_recording105_20261013_full.tar.gz",
+  "bytes": 4570828245,
+  "sha256": "b13b4f11cbeac3225d096c21079874515de7360cd31171d87904a70789534d49",
+  "parts": [
+    {
+      "part": 0,
+      "start": 0,
+      "bytes": 571353531
+    },
+    {
+      "part": 1,
+      "start": 571353531,
+      "bytes": 571353531
+    },
+    {
+      "part": 2,
+      "start": 1142707062,
+      "bytes": 571353531
+    },
+    {
+      "part": 3,
+      "start": 1714060593,
+      "bytes": 571353531
+    },
+    {
+      "part": 4,
+      "start": 2285414124,
+      "bytes": 571353531
+    },
+    {
+      "part": 5,
+      "start": 2856767655,
+      "bytes": 571353531
+    },
+    {
+      "part": 6,
+      "start": 3428121186,
+      "bytes": 571353531
+    },
+    {
+      "part": 7,
+      "start": 3999474717,
+      "bytes": 571353528
+    }
+  ],
+  "elapsed_seconds": 1642.625
+}

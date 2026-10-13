@@ -1,5 +1,12 @@
 # StiffGIPC Learning
 
+This history branch preserves the exact native observer source used for the
+2026-10-13 AutoDL Bunny/Mixed/Boxes experiment: dt=0.04, PCG rho=1e-4,
+105 frames, three repetitions. See [snapshot and reproduction instructions](HISTORY_SNAPSHOT.md),
+[six-page report](history/autodl_recording105_20261013/AutoDL_3Scene_Main.pdf),
+and [visual appendix](history/autodl_recording105_20261013/AutoDL_3Scene_Appendix.pdf).
+The older results below describe earlier milestones.
+
 IPC + CUDA Graph research code for contact cloth and mixed ABD/FEM scenes.
 
 The latest AutoDL RTX 4090 diagnostic completed 16 more 100-frame runs:

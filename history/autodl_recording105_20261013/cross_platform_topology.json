@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "scenes": [
+    {
+      "scene": "bunny",
+      "header": {
+        "vertices": 24969,
+        "faces": 32082,
+        "tetrahedra": 79935
+      },
+      "same_face_order": false,
+      "same_unoriented_faces": true,
+      "same_oriented_faces": true,
+      "same_tetrahedra_in_order": true
+    },
+    {
+      "scene": "mixed",
+      "header": {
+        "vertices": 39475,
+        "faces": 43712,
+        "tetrahedra": 159870
+      },
+      "same_face_order": false,
+      "same_unoriented_faces": true,
+      "same_oriented_faces": true,
+      "same_tetrahedra_in_order": true
+    },
+    {
+      "scene": "boxes",
+      "header": {
+        "vertices": 16449,
+        "faces": 25088,
+        "tetrahedra": 9600
+      },
+      "same_face_order": false,
+      "same_unoriented_faces": true,
+      "same_oriented_faces": true,
+      "same_tetrahedra_in_order": true
+    }
+  ],
+  "scope": "Triangle enumeration differs across platforms; connectivity and orientation, tetrahedra and all initial state/mass/boundary/body/velocity arrays are unchanged"
+}

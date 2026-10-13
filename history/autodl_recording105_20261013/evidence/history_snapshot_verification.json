@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "exact_native_asset_files": 355,
+  "exact_transfer_index_blobs": 466,
+  "translation_units": 37,
+  "python_sources_compiled": 124,
+  "numerical_datasets": 18,
+  "staged_changed_files": 124,
+  "largest_changed_file_bytes": 13509152,
+  "private_key_token_pattern_scan": "passed",
+  "note": "Verification only; native source and measurements were not modified"
+}

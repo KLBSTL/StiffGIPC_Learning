@@ -151,6 +151,26 @@ target_compile_options(diag_fused_update_tests PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:-Xcompiler=/Zc:preprocessor>)
 set_target_properties(diag_fused_update_tests PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 enable_testing()
+add_executable(ipc_pcg_forcing_test tests/ipc_pcg_forcing_test.cpp)
+target_compile_features(ipc_pcg_forcing_test PRIVATE cxx_std_17)
+target_include_directories(ipc_pcg_forcing_test PRIVATE StiffGIPC/)
+add_test(NAME ipc_pcg_forcing_policy COMMAND ipc_pcg_forcing_test)
+add_executable(ipc_physical_residual_test tests/ipc_physical_residual_test.cu)
+target_compile_features(ipc_physical_residual_test PRIVATE cuda_std_17)
+target_include_directories(ipc_physical_residual_test PRIVATE StiffGIPC/)
+target_link_libraries(ipc_physical_residual_test PRIVATE Eigen3::Eigen CUDA::cudart)
+foreach(_eigen_include IN LISTS _eigen_includes)
+    get_filename_component(_eigen_parent "${_eigen_include}" DIRECTORY)
+    target_include_directories(ipc_physical_residual_test PRIVATE "${_eigen_parent}")
+endforeach()
+if(CUDAToolkit_VERSION_MAJOR GREATER_EQUAL 13)
+    target_include_directories(ipc_physical_residual_test PRIVATE ${CUDAToolkit_INCLUDE_DIRS}/cccl)
+endif()
+target_compile_options(ipc_physical_residual_test PRIVATE --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr
+    $<$<CXX_COMPILER_ID:MSVC>:-Xcompiler=/Zc:preprocessor>)
+set_target_properties(ipc_physical_residual_test PROPERTIES CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
+add_test(NAME ipc_physical_residual_mapping COMMAND ipc_physical_residual_test)
+set_tests_properties(ipc_physical_residual_mapping PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 add_executable(fem_direct_pullback_tests
     tests/fem_direct_pullback_tests.cu
     StiffGIPC/fem/femEnergy.cu

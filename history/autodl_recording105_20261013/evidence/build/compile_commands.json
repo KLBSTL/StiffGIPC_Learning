@@ -1,0 +1,587 @@
+[
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_sim_data.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_sim_data.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_sim_data.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_abd_energy.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_q_tilde.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/cal_x_from_q.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/setup_abd_system_gradient_and_hessian.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/step_forward.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/step_forward.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/step_forward.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/update_velocity.cu -o CMakeFiles/gipc.dir/StiffGIPC/abd_system/abd_system_function/update_velocity.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/abd_system/abd_system_function/update_velocity.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/app/gl_main.cu -o CMakeFiles/gipc.dir/StiffGIPC/app/gl_main.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/app/gl_main.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/ACCD.cu -o CMakeFiles/gipc.dir/StiffGIPC/collision/ACCD.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/ACCD.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu -o CMakeFiles/gipc.dir/StiffGIPC/collision/mlbvh.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/collision/mlbvh.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu -o CMakeFiles/gipc.dir/StiffGIPC/core/GIPC.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/GIPC.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/frame_checkpoint.cu -o CMakeFiles/gipc.dir/StiffGIPC/core/frame_checkpoint.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/frame_checkpoint.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/gipc_system.cu -o CMakeFiles/gipc.dir/StiffGIPC/core/gipc_system.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/core/gipc_system.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/device_fem_data.cu -o CMakeFiles/gipc.dir/StiffGIPC/fem/device_fem_data.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/device_fem_data.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu -o CMakeFiles/gipc.dir/StiffGIPC/fem/femEnergy.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem /usr/local/cuda-12.8/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -o CMakeFiles/gipc.dir/StiffGIPC/gipc/statistics.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/statistics.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/statistics.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem /usr/local/cuda-12.8/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -o CMakeFiles/gipc.dir/StiffGIPC/gipc/utils/simple_scene_importer.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/simple_scene_importer.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/simple_scene_importer.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem /usr/local/cuda-12.8/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -o CMakeFiles/gipc.dir/StiffGIPC/gipc/utils/timer.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/timer.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/timer.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem /usr/local/cuda-12.8/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -o CMakeFiles/gipc.dir/StiffGIPC/io/load_mesh.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/io/load_mesh.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/io/load_mesh.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/global_linear_system.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/global_linear_system.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/global_linear_system.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/global_matrix.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/global_matrix.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/global_matrix.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/i_linear_system_solver.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/i_preconditioner.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/i_preconditioner.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/i_preconditioner.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/linear_subsystem.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/linear_system/linear_subsystem.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/linear_system/linear_subsystem.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/abd_preconditioner.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/diag_preconditioner.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/preconditioner/fem_mas_preconditioner.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/solver/pcg_solver.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/solver/pcg_solver.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/solver/pcg_solver.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/subsystem/abd_linear_subsystem.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/subsystem/fem_linear_subsystem.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/converter.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/utils/converter.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/converter.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/spmv.cu -o CMakeFiles/gipc.dir/StiffGIPC/linear_system/utils/spmv.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/spmv.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu -o CMakeFiles/gipc.dir/StiffGIPC/math/gpu_eigen_libs.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu -o CMakeFiles/gipc.dir/StiffGIPC/solver/MASPreconditioner.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/MASPreconditioner.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/PCG_SOLVER.cu -o CMakeFiles/gipc.dir/StiffGIPC/solver/PCG_SOLVER.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/PCG_SOLVER.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DADAPTIVE_KAPPA -DCCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING -DGIPC_ASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Assets/\\\" -DGIPC_OUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/Output/\\\" -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -DUSE_FRICTION -DUSE_QUADRATIC_BENDING -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -I/usr/local/cuda-12.8/targets/x86_64-linux/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -isystem=/usr/local/cuda-12.8/include -isystem=/usr/include/eigen3 -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=-fPIC -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/toi_solver.cu -o CMakeFiles/gipc.dir/StiffGIPC/solver/toi_solver.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/solver/toi_solver.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/diag_fused_update_tests.cu -o CMakeFiles/diag_fused_update_tests.dir/tests/diag_fused_update_tests.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/diag_fused_update_tests.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -O3 -O3 -DNDEBUG -o CMakeFiles/ipc_pcg_forcing_test.dir/tests/ipc_pcg_forcing_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_pcg_forcing_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_pcg_forcing_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_physical_residual_test.cu -o CMakeFiles/ipc_physical_residual_test.dir/tests/ipc_physical_residual_test.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_physical_residual_test.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/tests/fem_direct_pullback_tests.cu -o CMakeFiles/fem_direct_pullback_tests.dir/tests/fem_direct_pullback_tests.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/fem_direct_pullback_tests.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu -o CMakeFiles/fem_direct_pullback_tests.dir/StiffGIPC/fem/femEnergy.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/fem/femEnergy.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DUSE_SNK1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -dc /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu -o CMakeFiles/fem_direct_pullback_tests.dir/StiffGIPC/math/gpu_eigen_libs.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/math/gpu_eigen_libs.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/sym_spmv_tests.cu -o CMakeFiles/sym_spmv_tests.dir/tests/sym_spmv_tests.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/sym_spmv_tests.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --use_fast_math --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/spmv.cu -o CMakeFiles/sym_spmv_tests.dir/StiffGIPC/linear_system/utils/spmv.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/spmv.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -O3 -O3 -DNDEBUG -o CMakeFiles/ipc_budget_test.dir/tests/ipc_budget_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_budget_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_budget_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -O3 -O3 -DNDEBUG -o CMakeFiles/ipc_residual_controller_test.dir/tests/ipc_residual_controller_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_residual_controller_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/ipc_residual_controller_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -O3 -O3 -DNDEBUG -o CMakeFiles/line_search_acceptance_test.dir/tests/line_search_acceptance_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/line_search_acceptance_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/line_search_acceptance_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -O3 -O3 -DNDEBUG -o CMakeFiles/linear_structure_probe_contract_test.dir/tests/linear_structure_probe_contract_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/linear_structure_probe_contract_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/linear_structure_probe_contract_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/linear_structure_probe_gpu_test.cu -o CMakeFiles/linear_structure_probe_gpu_test.dir/tests/linear_structure_probe_gpu_test.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/linear_structure_probe_gpu_test.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem=/usr/include/eigen3 -isystem=/usr/local/cuda-12.8/include -O3 -DNDEBUG --generate-code=arch=compute_89,code=[compute_89,sm_89] --default-stream=per-thread --expt-relaxed-constexpr -x cu -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/converter.cu -o CMakeFiles/linear_structure_probe_gpu_test.dir/StiffGIPC/linear_system/utils/converter.cu.o",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/linear_system/utils/converter.cu"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -isystem /usr/include/eigen3 -isystem /usr/local/cuda-12.8/include -O3 -O3 -DNDEBUG -o CMakeFiles/linear_structure_probe_gpu_test.dir/StiffGIPC/gipc/utils/timer.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/timer.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC/gipc/utils/timer.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DJSON_DIAGNOSTICS=0 -DJSON_USE_IMPLICIT_CONVERSIONS=1 -I/root/autodl-tmp/codex_recording105_20261013/payload/StiffGIPC -O3 -O3 -DNDEBUG -o CMakeFiles/bvh_query_probe_contract_test.dir/tests/bvh_query_probe_contract_test.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/tests/bvh_query_probe_contract_test.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/tests/bvh_query_probe_contract_test.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/b64.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/b64.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/b64.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/blas.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/blas.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/blas.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/cache.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/cache.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/cache.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/csr.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/csr.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/csr.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/error.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/error.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/error.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/evaluate.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/evaluate.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/evaluate.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/fkvkselect.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/fkvkselect.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/fkvkselect.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/fs.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/fs.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/fs.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/getopt.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/getopt.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/getopt.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/gk_util.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/gk_util.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/gk_util.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/gkregex.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/gkregex.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/gkregex.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/graph.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/graph.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/graph.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/htable.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/htable.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/htable.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/io.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/io.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/io.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/itemsets.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/itemsets.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/itemsets.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/mcore.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/mcore.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/mcore.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/memory.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/memory.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/memory.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/pqueue.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/pqueue.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/pqueue.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/random.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/random.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/random.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/rw.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/rw.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/rw.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/seq.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/seq.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/seq.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/sort.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/sort.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/sort.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/string.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/string.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/string.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/timers.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/timers.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/timers.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/GKlib/CMakeFiles/GKlib.dir/src/tokenizer.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/tokenizer.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/src/tokenizer.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/auxapi.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/auxapi.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/auxapi.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/balance.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/balance.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/balance.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/bucketsort.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/bucketsort.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/bucketsort.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/checkgraph.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/checkgraph.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/checkgraph.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/coarsen.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/coarsen.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/coarsen.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/compress.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/compress.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/compress.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/contig.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/contig.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/contig.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/debug.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/debug.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/debug.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/fm.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/fm.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/fm.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/fortran.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/fortran.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/fortran.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/frename.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/frename.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/frename.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/gklib.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/gklib.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/gklib.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/graph.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/graph.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/graph.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/initpart.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/initpart.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/initpart.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kmetis.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kmetis.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kmetis.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kwayfm.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kwayfm.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kwayfm.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/kwayrefine.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kwayrefine.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/kwayrefine.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mcutil.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mcutil.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mcutil.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mesh.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mesh.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mesh.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/meshpart.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/meshpart.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/meshpart.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/minconn.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/minconn.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/minconn.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mincover.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mincover.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mincover.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/mmd.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mmd.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/mmd.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/ometis.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/ometis.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/ometis.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/options.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/options.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/options.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/parmetis.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/parmetis.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/parmetis.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/pmetis.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/pmetis.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/pmetis.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/refine.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/refine.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/refine.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/separator.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/separator.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/separator.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/sfm.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/sfm.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/sfm.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/srefine.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/srefine.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/srefine.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/stat.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/stat.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/stat.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/timing.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/timing.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/timing.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/util.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/util.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/util.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/cc -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/. -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -O3 -DNDEBUG -O3 -o MeshProcess/External/METIS/libmetis/CMakeFiles/metis.dir/wspace.c.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/wspace.c",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/wspace.c"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/\\\" -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -DOUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/sorted_mesh/\\\" -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -O3 -o MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/main.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/main.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/main.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/\\\" -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -DOUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/sorted_mesh/\\\" -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -O3 -o MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/mesh.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/mesh.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/\\\" -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -DOUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/sorted_mesh/\\\" -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -O3 -o MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/metis_sort.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/metis_sort.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/metis_sort.cpp"
+},
+{
+  "directory": "/root/autodl-tmp/codex_recording105_20261013/payload/build/observer",
+  "command": "/usr/bin/c++ -DASSETS_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/\\\" -DHAVE_EXEC_INFO_H -DHAVE_GETLINE -DHAVE_REGEX_H -DLINUX -DNDEBUG -DNDEBUG2 -DOUTPUT_DIR=\\\"/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/../../Assets/sorted_mesh/\\\" -D__thread=__thread -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/METIS/libmetis/../include -I/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/External/GKlib/include -isystem /usr/include/eigen3 -O3 -O3 -DNDEBUG -O3 -o MeshProcess/metis_partition/CMakeFiles/metis_partition.dir/src/node_edge_model.cpp.o -c /root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/node_edge_model.cpp",
+  "file": "/root/autodl-tmp/codex_recording105_20261013/payload/MeshProcess/metis_partition/src/node_edge_model.cpp"
+}
+]

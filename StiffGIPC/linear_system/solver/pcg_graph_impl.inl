@@ -3,6 +3,9 @@
 // dynamically sized. The base checks the previous rho AFTER updating x/r.
 namespace
 {
+__device__ double graph_tol_value(double value){return value;}
+__device__ double graph_tol_value(const double* value){return *value;}
+__global__ void graph_set_tolerance(double* control,double tolerance){*control=tolerance;}
 __global__ void graph_init(double* s)
 {
     s[5]=0;s[6] = 0; s[7] = s[0]; s[8] = 0; s[9] = gipc::pcg_rho_error(s[0]);
@@ -27,8 +30,9 @@ __global__ void graph_dx_r(double* x, double* r, const double* p,
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     if(i < n && s[9]==0) { x[i] += s[3]*p[i]; r[i] -= s[3]*ap[i]; }
 }
-__global__ void graph_beta(double* s,double tol,int fixed_iterations)
+template<class T> __global__ void graph_beta(double* s,T control,int fixed_iterations)
 {
+    const double tol=graph_tol_value(control);
     if(s[9]!=0)return;
     // Host checks the previous rho before applying the next preconditioner.
     if(fixed_iterations<=0 && fabs(s[8])<=tol*s[7])return;
@@ -37,10 +41,11 @@ __global__ void graph_beta(double* s,double tol,int fixed_iterations)
     s[0] = s[2];
     if(!isfinite(s[4])) s[9] = 7;
 }
-__global__ void graph_p_continue(double* p, const double* z, double* s,
-                                 int n, int max_iter, double tol, int fixed_iterations,
+template<class T> __global__ void graph_p_continue(double* p, const double* z, double* s,
+                                 int n, int max_iter, T control, int fixed_iterations,
                                  cudaGraphConditionalHandle handle)
 {
+    const double tol=graph_tol_value(control);
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     if(i < n) p[i] = z[i] + s[4]*p[i];
     if(i == 0)
@@ -74,8 +79,9 @@ __global__ void chunk_dx_r(double* x,double* r,const double* p,
     const int i=blockIdx.x*blockDim.x+threadIdx.x;
     if(i<n && s[10]!=0 && s[9]==0){x[i]+=s[3]*p[i];r[i]-=s[3]*ap[i];}
 }
-__global__ void chunk_beta(double* s,double tol,int fixed_iterations)
+template<class T> __global__ void chunk_beta(double* s,T control,int fixed_iterations)
 {
+    const double tol=graph_tol_value(control);
     if(s[10]==0)return;
     s[2]=s[12];
     if(s[9]!=0)return;
@@ -95,8 +101,9 @@ __global__ void chunk_p_update(double* p,const double* z,const double* s,int n)
     const int i=blockIdx.x*blockDim.x+threadIdx.x;
     if(i<n && s[10]!=0)p[i]=z[i]+s[4]*p[i];
 }
-__global__ void chunk_finalize(double* s,int max_iter,double tol,int fixed_iterations)
+template<class T> __global__ void chunk_finalize(double* s,int max_iter,T control,int fixed_iterations)
 {
+    const double tol=graph_tol_value(control);
     if(s[10]==0)return;
     s[6]+=1;
     const bool converged=(fixed_iterations>0?s[6]>=fixed_iterations:fabs(s[8])<=tol*s[7]) || (s[0]==0 && s[9]==0);
@@ -149,6 +156,10 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
                               && fused_diag_update_available();
     if(chunk==4 && fused_update)throw std::runtime_error("K=4 cannot use fused diagonal update");
     graph_scalars.resize(chunk==4?13:10);
+    graph_tolerance.resize(1);
+    const double* tolerance_control=graph_tolerance.data();
+    // Same stream as initialization/replay. Value changes do not change the graph.
+    graph_set_tolerance<<<1,1>>>(graph_tolerance.data(),m_config.global_tol_rate);
     double* s = graph_scalars.data();
     size_t reduce_bytes = 0;
     CUDA_SAFE_CALL(cub::DeviceReduce::Sum(nullptr, reduce_bytes,
@@ -199,15 +210,14 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
             static_cast<const void*>(p.buffer_view().data()),
             static_cast<const void*>(Ap.buffer_view().data()),
             static_cast<const void*>(graph_reduce_storage.data()),
-            static_cast<const void*>(s)})
+            static_cast<const void*>(s),static_cast<const void*>(tolerance_control)})
         key.push_back(reinterpret_cast<std::uintptr_t>(address));
     key.push_back(n); key.push_back(reduce_bytes);
     key.push_back(fused_update);
     key.push_back(chunk);key.push_back(graph_scalars.size());
     key.push_back(diagnostic_fixed_iterations);
     int device = 0; CUDA_SAFE_CALL(cudaGetDevice(&device)); key.push_back(device);
-    if(graph_exec && (key != captured_key || max_iter != captured_max_iter
-                     || m_config.global_tol_rate != captured_tol))
+    if(graph_exec && (key != captured_key || max_iter != captured_max_iter))
     { ++invalidations; release_graph(); }
     }
     const bool cache_hit = graph_exec != nullptr;
@@ -250,10 +260,10 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
             apply_preconditioner(z,r);
         }
         dot(r.buffer_view().data(),z.buffer_view().data(),Ap.buffer_view().data(),s+2);
-        graph_beta<<<1,1>>>(s,m_config.global_tol_rate,diagnostic_fixed_iterations);
+        graph_beta<<<1,1>>>(s,tolerance_control,diagnostic_fixed_iterations);
         graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
         graph_p_continue<<<blocks,256>>>(p.buffer_view().data(),z.buffer_view().data(),
-            s,n,static_cast<int>(max_iter),m_config.global_tol_rate,diagnostic_fixed_iterations,handle);
+            s,n,static_cast<int>(max_iter),tolerance_control,diagnostic_fixed_iterations,handle);
         }
         else
         {
@@ -265,10 +275,10 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
                 chunk_dx_r<<<blocks,256>>>(x.data(),r.data(),p.data(),Ap.data(),s,n);
                 apply_preconditioner(z,r);
                 dot(r.data(),z.data(),Ap.data(),s+12);
-                chunk_beta<<<1,1>>>(s,m_config.global_tol_rate,diagnostic_fixed_iterations);
+                chunk_beta<<<1,1>>>(s,tolerance_control,diagnostic_fixed_iterations);
                 chunk_zero_check<<<blocks,256>>>(r.data(),n,s);
                 chunk_p_update<<<blocks,256>>>(p.data(),z.data(),s,n);
-                chunk_finalize<<<1,1>>>(s,static_cast<int>(max_iter),m_config.global_tol_rate,diagnostic_fixed_iterations);
+                chunk_finalize<<<1,1>>>(s,static_cast<int>(max_iter),tolerance_control,diagnostic_fixed_iterations);
             }
             chunk_continue<<<1,1>>>(s,handle);
         }
@@ -276,7 +286,7 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         }
         CUDA_SAFE_CALL(cudaGraphInstantiate(&graph_exec,graph,nullptr,nullptr,0));
         captured_key = std::move(key);
-        captured_max_iter = max_iter; captured_tol = m_config.global_tol_rate;
+        captured_max_iter = max_iter;
         ++captures;
         capture_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-capture_start).count();
     }

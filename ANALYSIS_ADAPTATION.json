@@ -1,0 +1,40 @@
+{
+  "original_analysis_sha256": "678d90341ef7575829b08b6913f09312470647e89ec38def36c72b2c79b3e36e",
+  "replacements": [
+    [
+      "len(ledger['runs']) == 126",
+      "len(ledger['runs']) == 63"
+    ],
+    [
+      "len(perf['runs']) == 72",
+      "len(perf['runs']) == 36"
+    ],
+    [
+      "len(frames) == 7560",
+      "len(frames) == 3780"
+    ],
+    [
+      "len(cold_frames) == 72",
+      "len(cold_frames) == 36"
+    ],
+    [
+      "len(costs['runs']) == 18",
+      "len(costs['runs']) == 9"
+    ],
+    [
+      "excluded_scenes=['Stack']",
+      "excluded_scenes=['Sphere','Table','Stack','Hang']"
+    ],
+    [
+      "candidate_runs=54, reference_runs=18",
+      "candidate_runs=27, reference_runs=9"
+    ],
+    [
+      "trajectory_frames=7560",
+      "trajectory_frames=3780"
+    ]
+  ],
+  "original_report_sha256": "9317ebb35184b3292e3ad79c138b224114e4a59f5ed6b75df95e8a3b2365489a",
+  "visual_grid": "Only full-scene grid reduced from six columns to three; timestep grid retains six frames",
+  "original_sealed_files_modified": false
+}

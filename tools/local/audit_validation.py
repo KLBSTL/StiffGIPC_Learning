@@ -24,7 +24,8 @@ from windows_owned_job import OwnedJob
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('kind', choices=('ctest', 'racecheck', 'synccheck', 'matrix'))
+    parser.add_argument('kind', choices=('ctest', 'racecheck', 'synccheck', 'matrix',
+        'forcing_memcheck', 'forcing_synccheck'))
     parser.add_argument('--identity', type=Path, required=True)
     parser.add_argument('--matrix-input', type=Path)
     parser.add_argument('--session', required=True)
@@ -52,6 +53,14 @@ def main():
         command = [str(exe)]
         env['GIPC_MAS_PIVOT_SYNC_FIXTURE'] = str(out/'fixture.json')
         env['GIPC_MAS_PIVOT_SYNC_INPUT'] = str(args.matrix_input.resolve())
+        timeout = 120
+    elif args.kind.startswith('forcing_'):
+        sanitizer = Path(r'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\compute-sanitizer\compute-sanitizer.exe')
+        target = exe.parent/'ipc_physical_residual_test.exe'
+        require(sanitizer.is_file() and target.is_file(), 'Forcing sanitizer prerequisites unavailable')
+        evidence.append(record(target))
+        command = [str(sanitizer), '--tool', args.kind.removeprefix('forcing_'),
+            '--error-exitcode', '99', str(target)]
         timeout = 120
     else:
         sanitizer = Path(r'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\compute-sanitizer\compute-sanitizer.exe')
@@ -118,12 +127,14 @@ def main():
             verify(evidence)
             if result['status'] == 'completed':
                 if args.kind != 'ctest':
-                    require(read(out/'fixture.json')['passed'] is True, 'Native fixture failed')
+                    if not args.kind.startswith('forcing_'):
+                        require(read(out/'fixture.json')['passed'] is True, 'Native fixture failed')
                     if args.kind != 'matrix':
                         log = (out/'validation.log').read_text(errors='replace')
                         require('SUMMARY: 0' in log and '========= Warning:' not in log,
                             'Sanitizer did not confirm a clean summary')
-                    result['fixture'] = record(out/'fixture.json')
+                    if not args.kind.startswith('forcing_'):
+                        result['fixture'] = record(out/'fixture.json')
                 result['passed'] = True
     except Exception as error:
         result.update(status='launcher_or_validation_failed', error=type(error).__name__+': '+str(error), passed=False)

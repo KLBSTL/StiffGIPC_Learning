@@ -24,7 +24,7 @@ from linux_runner import require, write_new
 from local_identity import record
 
 
-def preconditioner(prefix, meta):
+def preconditioner(prefix, meta, with_data=False):
     """Reconstruct the stored hierarchy and inverse; no refactorization of A."""
     operators = []
     evidence = []
@@ -86,7 +86,7 @@ def preconditioner(prefix, meta):
                 output[offset:offset+3*nodes] = result.ravel()
         require(np.isfinite(output).all(), 'Nonfinite surrogate preconditioner')
         return output
-    return apply,evidence
+    return (apply,evidence,operators) if with_data else (apply,evidence)
 
 
 def pcg(matrix,rhs,apply,initial):

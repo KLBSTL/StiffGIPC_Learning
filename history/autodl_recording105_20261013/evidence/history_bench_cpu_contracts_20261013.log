@@ -1,0 +1,1450 @@
+EE..EEEE...EEEEE...EEEEEEEEEEEEEEEEE..
+======================================================================
+ERROR: test_analysis_actual_velocity_and_input_gate (__main__.Contracts.test_analysis_actual_velocity_and_input_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpl2hlxjia\\r1_hang_off\\trace'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 79, in test_analysis_actual_velocity_and_input_gate
+    for t in tasks('r1'):make_run(base,t,manifest)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 20, in make_run
+    d=base/t['name'];(d/'trace').mkdir(parents=True);(d/'output').mkdir()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1315, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpl2hlxjia\\r1_hang_off'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpl2hlxjia'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 77, in test_analysis_actual_velocity_and_input_gate
+    with tempfile.TemporaryDirectory() as name,patch.object(analysis,'validate',return_value={'passed':True}):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpl2hlxjia'
+
+======================================================================
+ERROR: test_build_seal_exact_source_coverage (__main__.Contracts.test_build_seal_exact_source_coverage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 110, in test_build_seal_exact_source_coverage
+    for folder in ('StiffGIPC','MeshProcess','Assets','tools/bench','tests','build'):(root/folder).mkdir(parents=True)
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpw_qr43q4\\StiffGIPC'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpw_qr43q4'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 108, in test_build_seal_exact_source_coverage
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpw_qr43q4'
+
+======================================================================
+ERROR: test_mixed_quality_pending_but_hard_failure_blocks (__main__.Contracts.test_mixed_quality_pending_but_hard_failure_blocks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbqn7xp07\\guards_hang_on\\trace'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 90, in test_mixed_quality_pending_but_hard_failure_blocks
+    for t in tasks('guards'):make_run(base,t,manifest)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 20, in make_run
+    d=base/t['name'];(d/'trace').mkdir(parents=True);(d/'output').mkdir()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1315, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbqn7xp07\\guards_hang_on'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbqn7xp07'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 88, in test_mixed_quality_pending_but_hard_failure_blocks
+    with tempfile.TemporaryDirectory() as name,patch.object(analysis,'validate',return_value={'passed':True}):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbqn7xp07'
+
+======================================================================
+ERROR: test_pool_guard_missing_and_mutated_energy (__main__.Contracts.test_pool_guard_missing_and_mutated_energy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1cbg2k82\\guards_hang_on\\trace'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 67, in test_pool_guard_missing_and_mutated_energy
+    d=make_run(Path(name),tasks('guards')[0],manifest)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 20, in make_run
+    d=base/t['name'];(d/'trace').mkdir(parents=True);(d/'output').mkdir()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1315, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1cbg2k82\\guards_hang_on'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1cbg2k82'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 66, in test_pool_guard_missing_and_mutated_energy
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1cbg2k82'
+
+======================================================================
+ERROR: test_prior_gate_ledger_and_payload_tamper (__main__.Contracts.test_prior_gate_ledger_and_payload_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 132, in test_prior_gate_ledger_and_payload_tamper
+    d=root/t['name'];dump(d/'result.json',{'status':'completed'})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpygry0aum\\guards_hang_on'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpygry0aum'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 129, in test_prior_gate_ledger_and_payload_tamper
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpygry0aum'
+
+======================================================================
+ERROR: test_safe_path_and_identity_tamper (__main__.Contracts.test_safe_path_and_identity_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 103, in test_safe_path_and_identity_tamper
+    f=root/'file';f.write_text('first');rows=runner.inventory(root,[f]);runner.verify_files(root,rows)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp0t31t_2q\\file'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp0t31t_2q'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 99, in test_safe_path_and_identity_tamper
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp0t31t_2q'
+
+======================================================================
+ERROR: test_fixed_graph_chunk_study_resolved_flag_is_explicit (__main__.GraphConfigContracts.test_fixed_graph_chunk_study_resolved_flag_is_explicit) (actual=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 293, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps3slh_8l\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps3slh_8l'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 292, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps3slh_8l'
+
+======================================================================
+ERROR: test_fixed_graph_chunk_study_resolved_flag_is_explicit (__main__.GraphConfigContracts.test_fixed_graph_chunk_study_resolved_flag_is_explicit) (actual=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 293, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3jsm30ow\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3jsm30ow'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 292, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3jsm30ow'
+
+======================================================================
+ERROR: test_fixed_graph_chunk_study_resolved_flag_is_explicit (__main__.GraphConfigContracts.test_fixed_graph_chunk_study_resolved_flag_is_explicit) (actual=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 293, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp4mj8h860\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp4mj8h860'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 292, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp4mj8h860'
+
+======================================================================
+ERROR: test_fixed_graph_chunk_study_resolved_flag_is_explicit (__main__.GraphConfigContracts.test_fixed_graph_chunk_study_resolved_flag_is_explicit) (actual='true')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 293, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpp7sz_q6m\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpp7sz_q6m'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 292, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpp7sz_q6m'
+
+======================================================================
+ERROR: test_fixed_graph_chunk_study_resolved_flag_is_explicit (__main__.GraphConfigContracts.test_fixed_graph_chunk_study_resolved_flag_is_explicit) (actual=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 293, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmprlrglha1\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmprlrglha1'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 292, in test_fixed_graph_chunk_study_resolved_flag_is_explicit
+    with self.subTest(actual=actual),tempfile.TemporaryDirectory() as name:
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmprlrglha1'
+
+======================================================================
+ERROR: test_host_pcg_has_no_graph_observation (__main__.GraphConfigContracts.test_host_pcg_has_no_graph_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 203, in test_host_pcg_has_no_graph_observation
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp418mgbsk\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp418mgbsk'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 202, in test_host_pcg_has_no_graph_observation
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp418mgbsk'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 227, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkz7dzq12\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkz7dzq12'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 226, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkz7dzq12'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request) (value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 227, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpeuk2qyzy\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpeuk2qyzy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 226, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpeuk2qyzy'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request) (value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 227, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3_ophtx3\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3_ophtx3'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 226, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp3_ophtx3'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request) (value=4.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 227, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpt_ahtcsm\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpt_ahtcsm'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 226, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpt_ahtcsm'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request) (value='4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 227, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmppkue0zto\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmppkue0zto'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 226, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmppkue0zto'
+
+======================================================================
+ERROR: test_missing_or_mistyped_resolved_chunk_rejected_for_new_request (__main__.GraphConfigContracts.test_missing_or_mistyped_resolved_chunk_rejected_for_new_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 234, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    base=Path(name);make_graph_config_run(base,1)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1soy2fsp\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1soy2fsp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 233, in test_missing_or_mistyped_resolved_chunk_rejected_for_new_request
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp1soy2fsp'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 242, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpq2ilzz81\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpq2ilzz81'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 241, in test_observed_chunk_and_fusion_cannot_silently_change
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpq2ilzz81'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change) (value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 242, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpsnfb2hfv\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpsnfb2hfv'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 241, in test_observed_chunk_and_fusion_cannot_silently_change
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpsnfb2hfv'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change) (value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 242, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwaw0cc_x\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwaw0cc_x'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 241, in test_observed_chunk_and_fusion_cannot_silently_change
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwaw0cc_x'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change) (value=4.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 242, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpvvokfe5e\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpvvokfe5e'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 241, in test_observed_chunk_and_fusion_cannot_silently_change
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpvvokfe5e'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change) (value='4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 242, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpoqf7v64g\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpoqf7v64g'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 241, in test_observed_chunk_and_fusion_cannot_silently_change
+    with self.subTest(value=value),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpoqf7v64g'
+
+======================================================================
+ERROR: test_observed_chunk_and_fusion_cannot_silently_change (__main__.GraphConfigContracts.test_observed_chunk_and_fusion_cannot_silently_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 249, in test_observed_chunk_and_fusion_cannot_silently_change
+    base=Path(name);make_graph_config_run(base,4)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbhucu1iv\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbhucu1iv'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 248, in test_observed_chunk_and_fusion_cannot_silently_change
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpbhucu1iv'
+
+======================================================================
+ERROR: test_old_k1_result_not_rewritten_or_rejected (__main__.GraphConfigContracts.test_old_k1_result_not_rewritten_or_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 257, in test_old_k1_result_not_rewritten_or_rejected
+    base=Path(name);make_graph_config_run(base,1)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps8v3rbzy\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps8v3rbzy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 256, in test_old_k1_result_not_rewritten_or_rejected
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmps8v3rbzy'
+
+======================================================================
+ERROR: test_resolved_and_observed_chunk_agree (__main__.GraphConfigContracts.test_resolved_and_observed_chunk_agree) (chunk=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 198, in test_resolved_and_observed_chunk_agree
+    base=Path(name);make_graph_config_run(base,chunk)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkpk4n811\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkpk4n811'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 197, in test_resolved_and_observed_chunk_agree
+    with self.subTest(chunk=chunk),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpkpk4n811'
+
+======================================================================
+ERROR: test_resolved_and_observed_chunk_agree (__main__.GraphConfigContracts.test_resolved_and_observed_chunk_agree) (chunk=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 198, in test_resolved_and_observed_chunk_agree
+    base=Path(name);make_graph_config_run(base,chunk)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp6s2gjyxy\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp6s2gjyxy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 197, in test_resolved_and_observed_chunk_agree
+    with self.subTest(chunk=chunk),tempfile.TemporaryDirectory() as name:
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmp6s2gjyxy'
+
+======================================================================
+ERROR: test_observer_resolved_contract_and_old_disabled_result (__main__.StructureQueryProbeContracts.test_observer_resolved_contract_and_old_disabled_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 326, in test_observer_resolved_contract_and_old_disabled_result
+    base=Path(name);make_graph_config_run(base)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 147, in make_graph_config_run
+    dump(base/'requested.json',{'binary':'active','expanded_config':c})
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 17, in dump
+    p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),encoding='utf-8')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwbd3lfb5\\requested.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwbd3lfb5'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\university_class\ComputerGraphics\GIPC\stiff_history_autodl_20261013\tools\bench\contracts_test.py", line 325, in test_observer_resolved_contract_and_old_disabled_result
+    with tempfile.TemporaryDirectory() as name:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Anaconda\envs\DL\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "E:\Anaconda\envs\DL\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\86189\\AppData\\Local\\Packages\\sandbox.{6fe50644-f0ce-4622-b425-69cd8932495e}\\AC\\Temp\\tmpwbd3lfb5'
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.116s
+
+FAILED (errors=28)

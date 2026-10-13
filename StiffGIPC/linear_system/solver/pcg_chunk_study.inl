@@ -67,6 +67,7 @@ void PCGSolver::graph_chunk_study(cudatool::DenseVectorView<Float> x,
         };
         add("r",r);add("z",z);add("p",p);add("Ap",Ap);
         add("reduction_result",reduction_result);add("graph_scalars",graph_scalars);
+        add("graph_tolerance",graph_tolerance);
         add("graph_reduce_storage",graph_reduce_storage);
         return result;
     };
@@ -99,13 +100,15 @@ void PCGSolver::graph_chunk_study(cudatool::DenseVectorView<Float> x,
     struct Workspace
     {
         DeviceDenseVector r,z,p,Ap;
-        cudatool::DeviceBuffer<Float> reduction,scalars;
+        cudatool::DeviceBuffer<Float> reduction,scalars,tolerance;
         cudatool::DeviceBuffer<unsigned char> reduce_storage;
     } private_workspace;
     const int n=static_cast<int>(b.size()),blocks=(n+255)/256;
     private_workspace.r.resize(n);private_workspace.z.resize(n);
     private_workspace.p.resize(n);private_workspace.Ap.resize(n);
     private_workspace.reduction.resize(1);
+    private_workspace.tolerance.resize(1);
+    check(cudaMemset(private_workspace.tolerance.data(),0,sizeof(Float)));
     // K1 has 10 scalars; K4 has 13. Preallocate the maximum capacity before
     // either capture. pcg_graph may resize the logical range, not its address.
     private_workspace.scalars.resize(std::max<size_t>(13,graph_scalars.size()));
@@ -119,13 +122,13 @@ void PCGSolver::graph_chunk_study(cudatool::DenseVectorView<Float> x,
     {
         cudaGraph_t graph=nullptr;cudaGraphExec_t exec=nullptr;
         std::vector<std::uintptr_t> key;
-        SizeT max_iter=0;Float tol=0;
+        SizeT max_iter=0;
         std::uint64_t captures=0,hits=0,invalidations=0;
     } production_graph,arms[2];
     auto exchange_graph=[&](GraphState& state) {
         using std::swap;
         swap(graph,state.graph);swap(graph_exec,state.exec);captured_key.swap(state.key);
-        swap(captured_max_iter,state.max_iter);swap(captured_tol,state.tol);
+        swap(captured_max_iter,state.max_iter);
         swap(captures,state.captures);swap(cache_hits,state.hits);swap(invalidations,state.invalidations);
     };
     auto exchange_workspace=[&]() {
@@ -134,12 +137,14 @@ void PCGSolver::graph_chunk_study(cudatool::DenseVectorView<Float> x,
         swap(p,private_workspace.p);swap(Ap,private_workspace.Ap);
         swap(reduction_result,private_workspace.reduction);
         swap(graph_scalars,private_workspace.scalars);
+        swap(graph_tolerance,private_workspace.tolerance);
         swap(graph_reduce_storage,private_workspace.reduce_storage);
     };
     auto graph_identity=[&]() {
         return Json{{"graph",reinterpret_cast<std::uintptr_t>(graph)},
             {"exec",reinterpret_cast<std::uintptr_t>(graph_exec)},
-            {"key",captured_key},{"max_iter",captured_max_iter},{"tol",captured_tol},
+            {"key",captured_key},{"max_iter",captured_max_iter},{"tol",m_config.global_tol_rate},
+            {"tolerance_control",reinterpret_cast<std::uintptr_t>(graph_tolerance.data())},
             {"captures",captures},{"hits",cache_hits},{"invalidations",invalidations}};
     };
     const auto production_graph_identity=graph_identity();
@@ -186,7 +191,7 @@ void PCGSolver::graph_chunk_study(cudatool::DenseVectorView<Float> x,
                 attempt([&]{if(arm.graph)check(cudaGraphDestroy(arm.graph));});arm.graph=nullptr;
             }
             // Clear private metadata before swapping the exact production state.
-            captured_key.clear();captured_max_iter=0;captured_tol=0;captures=cache_hits=invalidations=0;
+            captured_key.clear();captured_max_iter=0;captures=cache_hits=invalidations=0;
             exchange_graph(production_graph);exchange_workspace();installed=false;
         }
         attempt([&]{restore_m();});

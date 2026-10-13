@@ -1,0 +1,8 @@
+{"name": "smoke_sphere_stiff_r1", "status": "memory_budget", "frames": 1}
+{"name": "smoke_bunny_stiff_r1", "status": "completed", "frames": 2}
+................
+----------------------------------------------------------------------
+Ran 16 tests in 1.706s
+
+OK
+{"phase_rows": 0, "graph_rows": 0, "checkpoint_rows": 0, "missing": 1}

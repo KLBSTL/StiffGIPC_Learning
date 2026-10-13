@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+import locale
 import math
 import os
 from pathlib import Path
@@ -65,10 +66,15 @@ def process_rows(stdout,own_pid,driver_model):
                      'classification':'owned' if pid==own_pid else 'foreign_compute_evidence' if blocking else 'unknown_WDDM_desktop_or_compute'})
     return {'rows':rows,'blocking_foreign_pids':foreign,'unknown_load':any(r['classification']=='unknown_WDDM_desktop_or_compute' for r in rows)}
 
+def gpu_process_text(raw,ansi_encoding=None):
+    if isinstance(raw,str):return raw
+    try:return raw.decode('utf-8')
+    except UnicodeDecodeError:return raw.decode(ansi_encoding or locale.getencoding())
+
 def gpu_processes(gpu,own_pid,driver_model,timeout=10,ownership=None):
     result=subprocess.run(['nvidia-smi','-i',str(gpu),'--query-compute-apps=pid,process_name,used_gpu_memory',
-                           '--format=csv,noheader,nounits'],capture_output=True,text=True,check=True,timeout=timeout)
-    rows=process_rows(result.stdout,own_pid,driver_model)
+                           '--format=csv,noheader,nounits'],capture_output=True,check=True,timeout=timeout)
+    rows=process_rows(gpu_process_text(result.stdout),own_pid,driver_model)
     if ownership is not None:
         for row in rows['rows']:
             if ownership(row['pid']):

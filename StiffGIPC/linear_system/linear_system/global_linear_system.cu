@@ -1,5 +1,8 @@
 #include <linear_system/linear_system/global_linear_system.h>
 #include <linear_system/linear_system/i_linear_system_solver.h>
+#include <linear_system/solver/pcg_solver.h>
+#include <cmath>
+#include <stdexcept>
 #include <linear_system/linear_system/i_preconditioner.h>
 #include <linear_system/preconditioner/diag_preconditioner.h>
 #include <cuda_tools/cuda_tools.h>
@@ -239,6 +242,23 @@ void GlobalLinearSystem::snapshot_solution(const std::string& prefix) const
     std::ofstream file(prefix+"_solution.bin",std::ios::binary);
     file.write(reinterpret_cast<const char*>(values.data()),values.size()*sizeof(Float));
     file.close();if(!file)throw std::runtime_error("Failed to export event solution");
+}
+
+void GlobalLinearSystem::set_pcg_tolerance(Float tolerance)
+{
+    if(!std::isfinite(tolerance)||tolerance<=0||tolerance>=1)
+        throw std::runtime_error("Invalid PCG forcing tolerance");
+    auto* pcg=dynamic_cast<PCGSolver*>(m_solver.get());
+    if(!pcg)throw std::runtime_error("PCG forcing requires PCGSolver");
+    auto config=pcg->config();config.global_tol_rate=tolerance;pcg->config(config);
+}
+
+gipc::SizeT GlobalLinearSystem::resolve_linear_system()
+{
+    if(!m_solver||m_b.size()==0)return 0;
+    const auto iterations=m_solver->solve(m_x,m_b);
+    distribute_solution();
+    return iterations;
 }
 
 gipc::SizeT GlobalLinearSystem::solve_linear_system()
