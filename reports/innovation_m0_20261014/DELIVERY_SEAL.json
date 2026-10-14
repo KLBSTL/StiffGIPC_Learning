@@ -1,0 +1,167 @@
+{
+  "schema": "innovation_m0_delivery.v1",
+  "completed_native_runs": 61,
+  "completed_native_frames": 257,
+  "cpu_contract_tests_passed": 18,
+  "final_analysis": "reports/innovation_m0_20261014/analysis_v2",
+  "superseded_analysis": "reports/innovation_m0_20261014/analysis",
+  "documents_and_syntax_checked": true,
+  "fixed_ABD_free_mask_checked": true,
+  "files": [
+    {
+      "path": "docs/research/INNOVATION_TODO_20261014.md",
+      "bytes": 4978,
+      "sha256": "d8fd498e88ddb4f427b2b211fed9fd94b3ba8755fe10dd441f3d3c3ae9a672fa"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/data_validation.json",
+      "bytes": 2200,
+      "sha256": "d98d1bdb3e57c846c45b1596ea5909e921f93b61ac630e832113bde3240f3f5d"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/geometric_quality.csv",
+      "bytes": 20570,
+      "sha256": "d1fb4321f03681c8693fed06e929dbc43fe09afaa9403cf02681e3387082b8c4"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/local_runs.csv",
+      "bytes": 13414,
+      "sha256": "652d121f59d4272ff8f5a772caecc4bc2506da8f1729ff88db6bd287e81bf0c4"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/origin_audit.csv",
+      "bytes": 2762,
+      "sha256": "2eaf8514e45ff6107340f5a92e0eb6830ed2b9e3356d9ef8fc0ac213c0d7f565"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/same_prefix_gate_audit.csv",
+      "bytes": 5254,
+      "sha256": "b7664ae76c13beab330a6d3ae73a561c351e296f9f4bb8ab2e0afe04750ef05e"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis/summary.json",
+      "bytes": 169281,
+      "sha256": "a053d51ea66e80ac8cff3569133cbb640593a0af2cdf108d3e96eaee45cb425e"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/data_validation.json",
+      "bytes": 2259,
+      "sha256": "8689cb2c6412580244dc0821080cee9e9f8e5c4e97bb57f8c4eaefe2c9332d8b"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/geometric_quality.csv",
+      "bytes": 22804,
+      "sha256": "84dcb3d7218b2c577897aafd413838273148b70c652ff1b351893620a22192be"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/local_runs.csv",
+      "bytes": 13414,
+      "sha256": "652d121f59d4272ff8f5a772caecc4bc2506da8f1729ff88db6bd287e81bf0c4"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/origin_audit.csv",
+      "bytes": 2762,
+      "sha256": "2eaf8514e45ff6107340f5a92e0eb6830ed2b9e3356d9ef8fc0ac213c0d7f565"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/same_prefix_gate_audit.csv",
+      "bytes": 5254,
+      "sha256": "b7664ae76c13beab330a6d3ae73a561c351e296f9f4bb8ab2e0afe04750ef05e"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/analysis_v2/summary.json",
+      "bytes": 180863,
+      "sha256": "e65175911cd852eb541adfa30dfbdd5fdc76942f9ce6e8a90c6aa39ae79bd0a7"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/offline/offline_summary.json",
+      "bytes": 111412,
+      "sha256": "7b3e2611c9282be947c7508f91b2f8bf6688b3e8d720b0e17fb1b08fc854eccf"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/quality_protocol.json",
+      "bytes": 3158,
+      "sha256": "83933123f843158a04b6d0fbb45936b1f4eaaeefcb9ac5f11db32ec1d7bc8280"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/REPORT.md",
+      "bytes": 14192,
+      "sha256": "8a78664dd9a8934cdafa4be356b1e593d12261063f380d30479a378327b4327b"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/representative_states.json",
+      "bytes": 2121,
+      "sha256": "75fd70a4a8e1f0a79637ddd9706dba5f412866d15e28b99ed550c50bdd26cd6e"
+    },
+    {
+      "path": "reports/innovation_m0_20261014/SOURCE_AUDIT.md",
+      "bytes": 5934,
+      "sha256": "03658896db62e612d596c140dbd4971ff786957d4e4f9811d2172a9ae9d3f152"
+    },
+    {
+      "path": "tools/bench/m0_analyze.py",
+      "bytes": 18109,
+      "sha256": "b3830086abd9d8f442d1624e140ee299093b4361250d208f45b47c375859e013"
+    },
+    {
+      "path": "tools/bench/m0_base_wrapper/CMakeLists.txt",
+      "bytes": 938,
+      "sha256": "08fb3646df62e42943dd610ff86290dfce836165bd9cef2e7f66ba4ae8a6e1e7"
+    },
+    {
+      "path": "tools/bench/m0_geometry_test.py",
+      "bytes": 1874,
+      "sha256": "c824a2114529dd420545152a3c2ec267c5bac7c699f37d63d711a291c8cfe91b"
+    },
+    {
+      "path": "tools/bench/m0_offline.py",
+      "bytes": 13725,
+      "sha256": "65c97bbe81aee68746506ac5f7e10ed7b367760fac498d1c459cb0bc568d9431"
+    },
+    {
+      "path": "tools/bench/m0_offline_test.py",
+      "bytes": 4495,
+      "sha256": "eea2135dbd84d5e018a3b53a688fdce845122b62c256eb49df5bb7e8cee7fb12"
+    },
+    {
+      "path": "tools/bench/m0_runtime_contracts_test.py",
+      "bytes": 2982,
+      "sha256": "cd3fdac3a82ae5e0d4f991262fda24692c755aeb5899b363945beb99517a6dce"
+    },
+    {
+      "path": "tools/bench/verify_m0.py",
+      "bytes": 6163,
+      "sha256": "8772cda2539b6549545bdc4dc3b51692b18df94082f89ab67b1431b7775698b0"
+    },
+    {
+      "path": "tools/local/build_m0_base.py",
+      "bytes": 5305,
+      "sha256": "ff87260d8d234fa7bd148225807dc6c46368d1b503eb6cfd83e97544b06b0417"
+    },
+    {
+      "path": "tools/local/run_innovation_m0.py",
+      "bytes": 13775,
+      "sha256": "2aae16876b5d4c5cec2d8912ac2927c2aaa216ba7f94e22878d58e02b0b0fc78"
+    },
+    {
+      "path": "tools/local/run_m0_boxes_hard.py",
+      "bytes": 3461,
+      "sha256": "659db7f00d0443c8144e77b93fc9dcee8db75a146c6a3d53d37790f4969c89d4"
+    },
+    {
+      "path": "tools/local/run_m0_fixed_baseline.py",
+      "bytes": 2650,
+      "sha256": "09dbe4da73fb10fbdf3cef2d3d94ea1f94e0b8ccc240b39dc9a5536be55e61fc"
+    },
+    {
+      "path": "tools/local/windows_runner.py",
+      "bytes": 17219,
+      "sha256": "15f5d4da6f840554198f51eb07dd6607095e12551aaf264d24ef6e143ac265b5"
+    }
+  ],
+  "native_modified": false,
+  "physical_quality_certified": false,
+  "performance_certified": false,
+  "github_uploaded": false,
+  "raw_evidence": "Three runs/innovation_m0_* sessions and existing per-run evidence inventories; not copied into this small document seal."
+}

@@ -94,6 +94,10 @@ def prepare_run_output(out,config):
     (out/'output').mkdir(parents=True)
     if 'fixed' in config['diagnostics']:(out/'fixed').mkdir()
 
+def run_origin(env):
+    checkpoint=env.get('GIPC_CHECKPOINT_LOAD','')
+    return {'from_zero':not bool(checkpoint),'checkpoint_load':checkpoint}
+
 def execute(session,t,identity,gpu):
     c=expand(t['config']);out=child(session,t['name']);prepare_run_output(out,c);job=None
     timeout_seconds=c['timeout_seconds']
@@ -115,7 +119,7 @@ def execute(session,t,identity,gpu):
         req={'requested_config':t['config'],'expanded_config':c,'config_sha256':digest(c),'binary':t['binary'],
              'source_digest':identity['source_digest'],'exe_sha256':identity['exe']['sha256'],
              'runner_sha256':sha(__file__),'command':[str(exe)],'gpu_index':gpu,'gpu_before':before,'memory_budget_mib':budget,
-             'environment':{k:v for k,v in env.items() if k.startswith('GIPC_')},'from_zero':True,'capabilities':identity['capabilities'],
+             'environment':{k:v for k,v in env.items() if k.startswith('GIPC_')},**run_origin(env),'capabilities':identity['capabilities'],
              'gpu_driver_model':mode,'gpu_processes_before':process_before,'desktop_load_uncontrolled':mode=='WDDM',
              'resource_policy':{'absolute_timeout_seconds':timeout_seconds,'memory_budget_mib':budget,
                  'memory_budget_formula':'min(.75*free_before,free_before-1536) >=1024 MiB',

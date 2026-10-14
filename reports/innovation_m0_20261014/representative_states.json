@@ -1,0 +1,44 @@
+{
+  "schema": "m0_representative_states.v1",
+  "binary_sha256": "62fa83baa3805eff40e3b1d79b434276fd510f6e8b9de1837a5da744423b8541",
+  "same_binary_only": true,
+  "physical_frame_convention": "checkpoint contains completed frame target-1; solve target next",
+  "outer_tol": 0.01,
+  "dt": 0.04,
+  "states": [
+    {
+      "scene": "Boxes",
+      "role": "cheap no cumulative gate activation",
+      "physical_frame": 20,
+      "checkpoint": "E:/university_class/ComputerGraphics/GIPC/stiff_innovation_20261014/runs/innovation_m0_20261014/prefix_boxes_movement/checkpoint",
+      "metadata_sha256": "1f9f7a1f286c98ddae2c3568f79e9760521a9061b65ae90ba57df1c0a4d48cd8"
+    },
+    {
+      "scene": "Boxes",
+      "role": "hard dense/contact-limited state selected from baseline maximum N",
+      "physical_frame": 17,
+      "checkpoint": "E:/university_class/ComputerGraphics/GIPC/stiff_innovation_20261014/runs/innovation_m0_boxes_hard_20261014/prefix_boxes_hard_movement/checkpoint",
+      "metadata_sha256": "6e74e49ccd694b8a3faf8e823785b9f8e5fd82389d7319e79684a0b53add608f"
+    },
+    {
+      "scene": "Mixed",
+      "role": "coupled ABD/FEM, gate-active state",
+      "physical_frame": 15,
+      "checkpoint": "E:/university_class/ComputerGraphics/GIPC/stiff_innovation_20261014/runs/innovation_m0_20261014/prefix_mixed_movement/checkpoint",
+      "metadata_sha256": "d7ccf5f14ef6cb3b1ed655b0f341bcb42979b6664148c7b191e532260a5cef52"
+    },
+    {
+      "scene": "Bunny",
+      "role": "PCG-heavy state; movement may bypass residual threshold",
+      "physical_frame": 14,
+      "checkpoint": "E:/university_class/ComputerGraphics/GIPC/stiff_innovation_20261014/runs/innovation_m0_20261014/prefix_bunny_movement/checkpoint",
+      "metadata_sha256": "93834da7eee497819c4e35733b9dbb56eb463f2ec01ceb01a25fd39969c3ad26"
+    }
+  ],
+  "natural_missing_categories": [
+    "intersection backtrack",
+    "capacity overflow",
+    "contact release in selected historical prefixes"
+  ],
+  "failure_fixtures": "Existing CPU line-search policy contracts passed; native failure/overflow fixtures are required before P2/P3 substitution."
+}

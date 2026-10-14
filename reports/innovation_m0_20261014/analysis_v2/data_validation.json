@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "native_runs": 61,
+  "native_frames": 257,
+  "matched_restores": 40,
+  "fixed_restore_verified": true,
+  "observed_power_samples": 464,
+  "native_source_and_frozen_baseline_unchanged": true,
+  "release_cuda_flags_and_material_macros_equal": true,
+  "input_problem_equality": true,
+  "explicit_residual_crosscheck": true,
+  "corrected_origin_integration": true,
+  "compile_settings": {
+    "defines": [
+      "%(Defines)",
+      "_WINDOWS",
+      "NDEBUG",
+      "USE_SNK1",
+      "ADAPTIVE_KAPPA",
+      "USE_FRICTION",
+      "USE_QUADRATIC_BENDING",
+      "CCCL_IGNORE_MSVC_TRADITIONAL_PREPROCESSOR_WARNING",
+      "CMAKE_INTDIR=\"Release\""
+    ],
+    "settings": {
+      "Include": "<native_source>/StiffGIPC;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include\\cccl\\cccl;<native_source>/MeshProcess\\metis_partition\\src;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include\\cccl;E:\\university_class\\my_includes\\vcpkg\\installed\\x64-windows\\include;E:\\university_class\\my_includes\\vcpkg\\installed\\x64-windows\\include\\eigen3;E:\\Anaconda\\Library\\include;%(Include)",
+      "AdditionalOptions": "%(AdditionalOptions) -std=c++17 --generate-code=arch=compute_86,code=[compute_86,sm_86] -lineinfo --ptxas-options=-allow-expensive-optimizations=true -Xcudafe \"--display_error_number --diag_suppress=implicit_return_from_non_void_function --diag_suppress=2642\" --extended-lambda --expt-relaxed-constexpr --default-stream=per-thread -Xcompiler=\"-Ob2 /EHsc /Zc:preprocessor\"",
+      "CodeGeneration": null,
+      "CompileOut": "$(IntDir)%(Filename).obj",
+      "CudaRuntime": "Static",
+      "FastMath": "true",
+      "GPUDebugInfo": "false",
+      "GenerateRelocatableDeviceCode": "true",
+      "Optimization": "O2",
+      "Runtime": "MD",
+      "TargetMachinePlatform": "64",
+      "TypeInfo": "true",
+      "UseHostInclude": "false"
+    }
+  },
+  "verification_command": "E:/Anaconda/envs/DL/python.exe -X utf8 -B tools/bench/verify_m0.py --analysis-root reports/innovation_m0_20261014/analysis_v2",
+  "performance_certified": false,
+  "physical_quality_certified": false
+}

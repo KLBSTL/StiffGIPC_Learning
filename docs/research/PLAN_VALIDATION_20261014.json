@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "scope": "branch, immutable tracked files, proposal/evidence hashes, plan links and Markdown fences",
+  "branch": "research/stiff-innovation-20261014",
+  "head": "a4b83c040161eeef6149c93ae6167644fdf19384",
+  "tracked_files_byte_identical_to_clean_history": 1409,
+  "local_links_checked": 3,
+  "plan_files": [
+    {
+      "path": "docs/research/INNOVATION_BASE_MANIFEST_20261014.json",
+      "sha256": "593d1535c8f23bbed2c2646bd1abf08e63b76718c4ba53c752329567a1a63a46",
+      "bytes": 4807
+    },
+    {
+      "path": "docs/research/INNOVATION_IMPLEMENTATION_PLAN_20261014.md",
+      "sha256": "d392dc588757b6bd0fcd5bc1b6e5113cabe604f86b48bd6865e7be4ee5f516b2",
+      "bytes": 26873
+    },
+    {
+      "path": "docs/research/INNOVATION_TODO_20261014.md",
+      "sha256": "a6d98afd728ed5ca57251407b9a6b3ec0bcb40627e8979871de5f1cc72b5e0af",
+      "bytes": 4405
+    }
+  ],
+  "native_modified": false,
+  "gpu_test_run": false,
+  "performance_certified": false,
+  "preserved_audit_workspace_unchanged": true,
+  "preserved_history_workspace_clean": true,
+  "validation_method": "Read-only DL Python inline verification: git refs/diff/status, bytewise SHA256 for every tracked file against the untouched clean history checkout, supplied proposal and evidence hashes, Markdown local links and fences. Original audit status/diff fingerprints independently rechecked with PowerShell 7."
+}

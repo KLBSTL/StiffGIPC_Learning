@@ -1,0 +1,102 @@
+{
+  "schema": "stiff_innovation_plan_identity.v1",
+  "created_date_local": "2026-10-14",
+  "timezone": "Asia/Singapore",
+  "stage": "plan_only",
+  "research_branch": "research/stiff-innovation-20261014",
+  "research_worktree": "E:/university_class/ComputerGraphics/GIPC/stiff_innovation_20261014",
+  "base_commit": "a4b83c040161eeef6149c93ae6167644fdf19384",
+  "base_commit_reason": "User-supplied research proposal is explicitly based on this sealed observer snapshot; preserve the dirty audit branch.",
+  "git_objects_at_base": {
+    "StiffGIPC_tree": "a9997ec2bb466ea8b7c37d89128e0d0015ed07a3",
+    "baseline_tree": "b812d6661dea76dbd494948179d869fc5c90fec9",
+    "Assets_tree": "0046daaffc25a62661612ee475f7f233465a096a",
+    "tests_tree": "a0e417cb756b4bd1d8b975897bd1786a1f4e2a1f",
+    "CMakeLists_blob": "6cbb71adbca9718fc8829015dcc149a880ab434b"
+  },
+  "proposal": {
+    "path": "D:/C_files/StiffGIPC_a4b83c0_加速与创新性提升_研究方向及验证方案.md",
+    "sha256": "20c397ca85e9bed398ca4d8b6cc10c9574b747a8629762d2aef135888460074c",
+    "role": "Design input; embedded design suggestions are hypotheses rather than implemented results."
+  },
+  "preserved_audit_workspace": {
+    "path": "E:/university_class/ComputerGraphics/GIPC/stiff_speed_audit_20261009",
+    "branch": "perf/toi-pcg-audit-20261009",
+    "head": "bab1002cfeca3e48a9aa15f1a05a3a55d3417264",
+    "status_sha256": "349A75F8988EDE2B20DBB83573717D210B16F2CF5A7E312B9A63BA7664DA7BFA",
+    "diff_sha256": "39856819EC3EC92437020DD52B0DA30E3C6C9E6ABE2D23EF8C621643C7E6EC05",
+    "tracked_dirty_count": 16,
+    "status_entries": 2986,
+    "fingerprint_method": "PowerShell: UTF8 SHA256 of git status --porcelain=v1 --untracked-files=all and git diff --binary, joined with LF; neither original workspace was edited by this task.",
+    "note": "The metadata fingerprint covers names/status and tracked dirty diffs. It is not a full content inventory of all untracked artifacts."
+  },
+  "preserved_history_workspace": {
+    "path": "E:/university_class/ComputerGraphics/GIPC/stiff_history_autodl_20261013",
+    "branch": "history/autodl-recording105-dt0p04-20261013",
+    "head": "a4b83c040161eeef6149c93ae6167644fdf19384",
+    "clean_before_branch_creation": true
+  },
+  "existing_evidence": [
+    {
+      "path": "E:/university_class/ComputerGraphics/GIPC/stiff_speed_audit_20261009/reports/five_arm_retest_20261014/REPORT.md",
+      "sha256": "08f43f3d60b618bf0021eb47d628d22c507c13f1b38423c04edad04f2492ef1e",
+      "role": "Existing local report; not measurements of this research branch."
+    },
+    {
+      "path": "E:/university_class/ComputerGraphics/GIPC/stiff_speed_audit_20261009/reports/five_arm_retest_20261014/data_validation.json",
+      "sha256": "f1a478a26cb7bbd45a993d4ee838599656f7a017f5617a0345e8787b914e4ed5"
+    },
+    {
+      "path": "E:/university_class/ComputerGraphics/GIPC/stiff_speed_audit_20261009/reports/five_arm_retest_20261014/delivery_seal.json",
+      "sha256": "b16a6a546f500a846157267122a0c37faf64730a54827cb7fc74de90db8b95a2"
+    }
+  ],
+  "planned_main_configuration": {
+    "backend": "ipc",
+    "dt": 0.04,
+    "pcg_rho_tol": 0.0001,
+    "ipc_newton_tol": 0.01,
+    "ipc_cumulative_tol": 0.01,
+    "ipc_min_updates": 6,
+    "ipc_residual_rel_tol": 0.03,
+    "pcg_graph_chunk": 1,
+    "mas": "legacy",
+    "full_ccd": true,
+    "frames_per_trajectory": 105,
+    "performance_frames": [
+      1,
+      100
+    ],
+    "checkpoint_physical_frame": 100,
+    "screening_pairs": 3,
+    "formal_confirmation_pairs": 7,
+    "scenes": {
+      "Boxes": "boxes1920_cloth_l",
+      "Mixed": "bunny_cloth_bunny_l",
+      "Bunny": "cloth_fixed_bunny_l",
+      "Table": "cloth_table_l",
+      "Hang": "cloth_hang_l"
+    },
+    "note": "B0 native interfaces must first be reconciled without changing frozen solver or materials. P1 precision and reference sweeps are separately declared numerical experiments."
+  },
+  "local_toolchain_observed": {
+    "cmake": "D:/computer/cmake/bin/cmake.exe",
+    "nvcc_on_path": "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/bin/nvcc.exe",
+    "python": "E:/Anaconda/envs/DL/python.exe",
+    "powershell": "E:/university_class/Tools/PowerShell/7/pwsh.exe",
+    "previous_local_build_generator": "Visual Studio 17 2022",
+    "previous_local_cuda_architecture": 86,
+    "previous_vcpkg_toolchain": "E:/university_class/my_includes/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "future_build_seal_status": "pending; new B0/B1/candidate builds required"
+  },
+  "boundaries": {
+    "native_modified": false,
+    "experiment_scripts_modified": false,
+    "gpu_build_run": false,
+    "new_gpu_experiments_run": false,
+    "github_uploaded": false,
+    "performance_certified": false,
+    "physical_quality_certified": false,
+    "novelty_certified": false
+  }
+}

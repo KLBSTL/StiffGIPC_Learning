@@ -1,0 +1,62 @@
+{
+  "schema": "innovation_m0_quality_protocol.v1",
+  "status": "bounded evidence stage completed; numerical and physical certification conditional",
+  "native_base_commit": "a4b83c040161eeef6149c93ae6167644fdf19384",
+  "execution_route": {
+    "physics": "Original compiled SNK1/friction/bending and FullCCD, identical inputs and stopping",
+    "state_restore": "Same verified binary, complete physical context and buffer checks; cold caches declared",
+    "acceptance": "Original candidate sequence and accepted/failed branch. No capacity truncation, invalid barrier evaluation, failure-to-success conversion, or unaccounted retries.",
+    "comparisons": "Same-state component values, typed contributions/MatIndex, alpha/energy branch and complete cost. Natural runs do not replace failure/overflow fixtures.",
+    "status": "Ready for P2-A cost investigation; candidate not yet implemented or accepted"
+  },
+  "linear_numerical_route": {
+    "common_operator": "Same saved full A,b, fixed B_ref from original MAS",
+    "metrics": [
+      "L2 ||b-Ax||/||b||",
+      "sqrt(r^T B_ref r)/sqrt(b^T B_ref b)"
+    ],
+    "baseline_target": "Derive both explicit reference metrics from the original solve on each preregistered operator before candidate results. Do not compare only candidate-specific preconditioned rho.",
+    "required_overhead": "Explicit residual validation, setup, restart and fallback are charged",
+    "physical_accuracy_bound": false,
+    "status": "Fixed baseline operator validated; no P5 candidate tested"
+  },
+  "nonlinear_numerical_route": {
+    "reference": "Converge inner and outer separately; evaluate repeat dispersion and independent quality indicators",
+    "current_results": "Bunny outer .001 versus .0001 still differs by 1.293196 mm dynamic-cloth RMS at frame6; difficult frame14 inner-only reference repeat dispersion is .814061 mm.",
+    "threshold_policy": "Register intended position/actual-velocity/material/CCD budgets before numerical candidates; require reference uncertainty to be smaller than the quantity being distinguished. Never widen to pass a candidate.",
+    "gate_semantics": "Movement exit overrides extra residual gate; res=.03 is not a universal final residual guarantee.",
+    "mixed": "Observed negative FEM J begins at frame13 even in frozen B0; SNK1 finite negative-J energy and no active IPC injective bound. Acceptability pending.",
+    "status": "No full-trajectory physical/numerical certification; P1/P5 production adoption not allowed on current evidence"
+  },
+  "sample_scope": {
+    "scenes": [
+      "Boxes",
+      "Mixed",
+      "Bunny"
+    ],
+    "prefix_frames": {
+      "Boxes": 20,
+      "Mixed": 15,
+      "Bunny": 14
+    },
+    "matched_frames": {
+      "Boxes_easy": 20,
+      "Boxes_hard": 17,
+      "Mixed": 15,
+      "Bunny": 14
+    },
+    "repeats": 2,
+    "formal_speedup_claim": false
+  },
+  "observability": {
+    "missing_native_fields": [
+      "alpha_geometric",
+      "acceptance_margin",
+      "capacity_growth",
+      "PCG kernel breakdown"
+    ],
+    "missing_not_imputed": true,
+    "frozen_B0_actual_velocity": false,
+    "legacy_origin_label_corrected": true
+  }
+}

@@ -1,0 +1,3502 @@
+{
+  "schema": "m0_offline.v1",
+  "controller": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\m0_offline.py",
+    "bytes": 13725,
+    "sha256": "65c97bbe81aee68746506ac5f7e10ed7b367760fac498d1c459cb0bc568d9431"
+  },
+  "datasets": [
+    {
+      "dataset": "AutoDL_a4_snapshot",
+      "input_identity": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\history\\autodl_recording105_20261013\\data\\per_newton.csv.gz",
+          "bytes": 13509152,
+          "sha256": "567760e70103e24151a8a9ef9a7886ed3b29610837a0ae1fd9b5a5c11b91ebfa"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\history\\autodl_recording105_20261013\\data\\per_frame.csv",
+          "bytes": 2643930,
+          "sha256": "91ae804d499eb2d82eae958344f6f64571b778da67250443b3317a570ee4e01b"
+        }
+      ],
+      "first100_summary": [
+        {
+          "scene": "Boxes",
+          "method": "original",
+          "records": 12801,
+          "solves": 12501,
+          "accepted_trials": 12501,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9508839292856571,
+          "energy_backtracks": {
+            "0": 11887,
+            "1": 441,
+            "2": 150,
+            "3": 22,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 12501
+          },
+          "accepted_alpha": {
+            "count": 12501,
+            "min": 0.010604903622692742,
+            "p50": 0.4258248435251668,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 12501,
+            "min": 2,
+            "p50": 40.0,
+            "p90": 61.0,
+            "p99": 79.0,
+            "max": 198
+          },
+          "active_pairs": {
+            "count": 12501,
+            "min": 0,
+            "p50": 29623.0,
+            "p90": 35197.0,
+            "p99": 55123.0,
+            "max": 92752
+          },
+          "parent_phase_seconds": {
+            "assembly": 53.92813298034668,
+            "pcg": 42.59023606204987,
+            "ccd": 45.2692573993504,
+            "line_search": 51.94505428564548,
+            "state_update": 0.252524127883371
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 12801,
+            "acceptance_margin": 12801,
+            "capacity_growth": 12801
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "ours",
+          "records": 11997,
+          "solves": 11697,
+          "accepted_trials": 11697,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9534068564589211,
+          "energy_backtracks": {
+            "0": 11152,
+            "1": 424,
+            "2": 105,
+            "3": 15,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 11697
+          },
+          "accepted_alpha": {
+            "count": 11697,
+            "min": 0.01088046929376244,
+            "p50": 0.44765787563185994,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 11697,
+            "min": 2,
+            "p50": 39.0,
+            "p90": 62.0,
+            "p99": 84.0,
+            "max": 259
+          },
+          "active_pairs": {
+            "count": 11697,
+            "min": 0,
+            "p50": 30140.0,
+            "p90": 35561.6,
+            "p99": 57631.83999999998,
+            "max": 93725
+          },
+          "parent_phase_seconds": {
+            "assembly": 51.473137301921845,
+            "pcg": 40.21616315996647,
+            "ccd": 42.87054337671399,
+            "line_search": 48.94686731469631,
+            "state_update": 0.2512633920214139
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 11997,
+            "acceptance_margin": 11997,
+            "capacity_growth": 11997
+          },
+          "frame_exits": {
+            "movement": 297,
+            "compensated": 3
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "pure",
+          "records": 4499,
+          "solves": 4421,
+          "accepted_trials": 4421,
+          "terminal_records": 78,
+          "first_trial_accepted_fraction": 0.9911784664103144,
+          "energy_backtracks": {
+            "0": 4382,
+            "1": 33,
+            "2": 6
+          },
+          "intersection_backtracks": {
+            "0": 4421
+          },
+          "accepted_alpha": {
+            "count": 4421,
+            "min": 0.010814028069812067,
+            "p50": 0.1443931140492482,
+            "p90": 0.6992601137030406,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4421,
+            "min": 2,
+            "p50": 53.0,
+            "p90": 67.0,
+            "p99": 92.0,
+            "max": 162
+          },
+          "active_pairs": {
+            "count": 4421,
+            "min": 0,
+            "p50": 27030.0,
+            "p90": 50315.0,
+            "p99": 89954.6,
+            "max": 122344
+          },
+          "parent_phase_seconds": {
+            "assembly": 18.31877940964699,
+            "pcg": 16.819574173927307,
+            "ccd": 16.431113333523275,
+            "line_search": 16.304029466867448,
+            "state_update": 0.10229657593974843
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 78,
+            "energy_backtracks": 78,
+            "intersection_backtracks": 78,
+            "initial_energy_reused": 78,
+            "alpha": 78,
+            "beta": 78,
+            "active_pairs": 78,
+            "kappa_before": 78,
+            "kappa_after": 78,
+            "alpha_geometric": 4499,
+            "acceptance_margin": 4499,
+            "capacity_growth": 4499
+          },
+          "frame_exits": {
+            "movement": 78,
+            "cumulative_toi": 222
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "strict",
+          "records": 13836,
+          "solves": 13536,
+          "accepted_trials": 13536,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9510933806146572,
+          "energy_backtracks": {
+            "0": 12874,
+            "1": 504,
+            "2": 139,
+            "3": 18,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 13536
+          },
+          "accepted_alpha": {
+            "count": 13536,
+            "min": 0.010489645351573021,
+            "p50": 0.42977432488254713,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 13536,
+            "min": 2,
+            "p50": 78.0,
+            "p90": 124.0,
+            "p99": 231.64999999999964,
+            "max": 486
+          },
+          "active_pairs": {
+            "count": 13536,
+            "min": 0,
+            "p50": 31750.0,
+            "p90": 37345.0,
+            "p99": 54779.69999999998,
+            "max": 91157
+          },
+          "parent_phase_seconds": {
+            "assembly": 60.82496930968762,
+            "pcg": 75.055381264925,
+            "ccd": 51.42437942710519,
+            "line_search": 56.852891313433645,
+            "state_update": 0.3072768960911781
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 13836,
+            "acceptance_margin": 13836,
+            "capacity_growth": 13836
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "original",
+          "records": 2848,
+          "solves": 2548,
+          "accepted_trials": 2548,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9756671899529042,
+          "energy_backtracks": {
+            "0": 2486,
+            "1": 62
+          },
+          "intersection_backtracks": {
+            "0": 2548
+          },
+          "accepted_alpha": {
+            "count": 2548,
+            "min": 0.025780837588399396,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2548,
+            "min": 6,
+            "p50": 171.5,
+            "p90": 255.30000000000018,
+            "p99": 320.0,
+            "max": 356
+          },
+          "active_pairs": {
+            "count": 2548,
+            "min": 0,
+            "p50": 914.5,
+            "p90": 2237.0,
+            "p99": 2528.53,
+            "max": 2660
+          },
+          "parent_phase_seconds": {
+            "assembly": 2.9000364457368852,
+            "pcg": 18.32951971542835,
+            "ccd": 1.6901598087847234,
+            "line_search": 4.324839934229851,
+            "state_update": 0.0477851520520635
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2848,
+            "acceptance_margin": 2848,
+            "capacity_growth": 2848
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "ours",
+          "records": 2494,
+          "solves": 2194,
+          "accepted_trials": 2194,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9826800364630811,
+          "energy_backtracks": {
+            "0": 2156,
+            "1": 38
+          },
+          "intersection_backtracks": {
+            "0": 2194
+          },
+          "accepted_alpha": {
+            "count": 2194,
+            "min": 0.025780918883963888,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2194,
+            "min": 6,
+            "p50": 176.0,
+            "p90": 255.0,
+            "p99": 290.2100000000005,
+            "max": 338
+          },
+          "active_pairs": {
+            "count": 2194,
+            "min": 0,
+            "p50": 945.0,
+            "p90": 2470.1000000000004,
+            "p99": 3039.2800000000007,
+            "max": 3243
+          },
+          "parent_phase_seconds": {
+            "assembly": 2.653984800964594,
+            "pcg": 15.694794113993645,
+            "ccd": 1.4844759367406368,
+            "line_search": 3.773120192050934,
+            "state_update": 0.03998086400330067
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2494,
+            "acceptance_margin": 2494,
+            "capacity_growth": 2494
+          },
+          "frame_exits": {
+            "movement": 285,
+            "compensated": 15
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "pure",
+          "records": 1553,
+          "solves": 1381,
+          "accepted_trials": 1381,
+          "terminal_records": 172,
+          "first_trial_accepted_fraction": 0.9732078204199855,
+          "energy_backtracks": {
+            "0": 1344,
+            "1": 37
+          },
+          "intersection_backtracks": {
+            "0": 1381
+          },
+          "accepted_alpha": {
+            "count": 1381,
+            "min": 0.025780839837590726,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1381,
+            "min": 6,
+            "p50": 189.0,
+            "p90": 280.0,
+            "p99": 314.0,
+            "max": 330
+          },
+          "active_pairs": {
+            "count": 1381,
+            "min": 0,
+            "p50": 973.0,
+            "p90": 1240.0,
+            "p99": 2171.2000000000007,
+            "max": 2673
+          },
+          "parent_phase_seconds": {
+            "assembly": 1.5575205424129963,
+            "pcg": 10.375506729125977,
+            "ccd": 0.930440032094717,
+            "line_search": 2.321978046655655,
+            "state_update": 0.02532063998794183
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 172,
+            "energy_backtracks": 172,
+            "intersection_backtracks": 172,
+            "initial_energy_reused": 172,
+            "alpha": 172,
+            "beta": 172,
+            "active_pairs": 172,
+            "kappa_before": 172,
+            "kappa_after": 172,
+            "alpha_geometric": 1553,
+            "acceptance_margin": 1553,
+            "capacity_growth": 1553
+          },
+          "frame_exits": {
+            "movement": 172,
+            "cumulative_toi": 128
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "strict",
+          "records": 2792,
+          "solves": 2492,
+          "accepted_trials": 2492,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9819422150882825,
+          "energy_backtracks": {
+            "0": 2447,
+            "1": 45
+          },
+          "intersection_backtracks": {
+            "0": 2492
+          },
+          "accepted_alpha": {
+            "count": 2492,
+            "min": 0.028837212469552696,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2492,
+            "min": 19,
+            "p50": 286.0,
+            "p90": 383.9000000000001,
+            "p99": 459.0,
+            "max": 482
+          },
+          "active_pairs": {
+            "count": 2492,
+            "min": 0,
+            "p50": 966.0,
+            "p90": 2627.0,
+            "p99": 3330.9000000000015,
+            "max": 3536
+          },
+          "parent_phase_seconds": {
+            "assembly": 2.876854943484068,
+            "pcg": 27.182901814460756,
+            "ccd": 1.6703258258104325,
+            "line_search": 4.201435810923576,
+            "state_update": 0.04731177602382377
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2792,
+            "acceptance_margin": 2792,
+            "capacity_growth": 2792
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "original",
+          "records": 4529,
+          "solves": 4229,
+          "accepted_trials": 4229,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9813194608654529,
+          "energy_backtracks": {
+            "0": 4150,
+            "1": 66,
+            "2": 11,
+            "3": 1,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 4229
+          },
+          "accepted_alpha": {
+            "count": 4229,
+            "min": 0.002048722908557909,
+            "p50": 0.7209625470719222,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4229,
+            "min": 2,
+            "p50": 54.0,
+            "p90": 78.0,
+            "p99": 163.4400000000005,
+            "max": 245
+          },
+          "active_pairs": {
+            "count": 4229,
+            "min": 2869,
+            "p50": 9241.0,
+            "p90": 16585.2,
+            "p99": 27737.640000000003,
+            "max": 28457
+          },
+          "parent_phase_seconds": {
+            "assembly": 11.28910025858879,
+            "pcg": 24.35902533364296,
+            "ccd": 18.242537714660166,
+            "line_search": 18.017791667699814,
+            "state_update": 0.08672716800309718
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 4529,
+            "acceptance_margin": 4529,
+            "capacity_growth": 4529
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "ours",
+          "records": 2802,
+          "solves": 2502,
+          "accepted_trials": 2502,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.957234212629896,
+          "energy_backtracks": {
+            "0": 2395,
+            "1": 95,
+            "2": 12
+          },
+          "intersection_backtracks": {
+            "0": 2502
+          },
+          "accepted_alpha": {
+            "count": 2502,
+            "min": 0.001062368982862858,
+            "p50": 0.5858341314231239,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2502,
+            "min": 5,
+            "p50": 46.0,
+            "p90": 80.0,
+            "p99": 186.97999999999956,
+            "max": 228
+          },
+          "active_pairs": {
+            "count": 2502,
+            "min": 2869,
+            "p50": 8709.5,
+            "p90": 16785.0,
+            "p99": 27526.94,
+            "max": 27927
+          },
+          "parent_phase_seconds": {
+            "assembly": 7.170117213010788,
+            "pcg": 13.795455580472947,
+            "ccd": 11.437859845638275,
+            "line_search": 10.845062883973121,
+            "state_update": 0.055200096046552065
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2802,
+            "acceptance_margin": 2802,
+            "capacity_growth": 2802
+          },
+          "frame_exits": {
+            "movement": 218,
+            "compensated": 82
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "pure",
+          "records": 1879,
+          "solves": 1714,
+          "accepted_trials": 1714,
+          "terminal_records": 165,
+          "first_trial_accepted_fraction": 0.9929988331388565,
+          "energy_backtracks": {
+            "0": 1702,
+            "1": 10,
+            "2": 2
+          },
+          "intersection_backtracks": {
+            "0": 1714
+          },
+          "accepted_alpha": {
+            "count": 1714,
+            "min": 0.006354317803154639,
+            "p50": 0.5964636874471483,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1714,
+            "min": 5,
+            "p50": 59.0,
+            "p90": 93.0,
+            "p99": 193.8699999999999,
+            "max": 207
+          },
+          "active_pairs": {
+            "count": 1714,
+            "min": 2869,
+            "p50": 9083.5,
+            "p90": 17009.9,
+            "p99": 27568.61,
+            "max": 28213
+          },
+          "parent_phase_seconds": {
+            "assembly": 4.695165344715118,
+            "pcg": 10.580441271066666,
+            "ccd": 8.726068239450454,
+            "line_search": 7.180150496959686,
+            "state_update": 0.04140607992839068
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 165,
+            "energy_backtracks": 165,
+            "intersection_backtracks": 165,
+            "initial_energy_reused": 165,
+            "alpha": 165,
+            "beta": 165,
+            "active_pairs": 165,
+            "kappa_before": 165,
+            "kappa_after": 165,
+            "alpha_geometric": 1879,
+            "acceptance_margin": 1879,
+            "capacity_growth": 1879
+          },
+          "frame_exits": {
+            "movement": 165,
+            "cumulative_toi": 135
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "strict",
+          "records": 4496,
+          "solves": 4196,
+          "accepted_trials": 4196,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9887988560533841,
+          "energy_backtracks": {
+            "0": 4149,
+            "1": 40,
+            "2": 5,
+            "3": 2
+          },
+          "intersection_backtracks": {
+            "0": 4196
+          },
+          "accepted_alpha": {
+            "count": 4196,
+            "min": 0.00355520296075437,
+            "p50": 0.7214175282648605,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4196,
+            "min": 11,
+            "p50": 93.0,
+            "p90": 120.0,
+            "p99": 216.0,
+            "max": 277
+          },
+          "active_pairs": {
+            "count": 4196,
+            "min": 2865,
+            "p50": 9408.5,
+            "p90": 17108.0,
+            "p99": 27696.0,
+            "max": 28161
+          },
+          "parent_phase_seconds": {
+            "assembly": 11.159867424726487,
+            "pcg": 32.44028562283516,
+            "ccd": 13.964065737068653,
+            "line_search": 17.84540912759304,
+            "state_update": 0.08545628803875298
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 4496,
+            "acceptance_margin": 4496,
+            "capacity_growth": 4496
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        }
+      ],
+      "selected_states": {
+        "Boxes": {
+          "selected": {
+            "ordinary": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 3,
+              "alpha_accepted": 1.0,
+              "active_pairs": 0,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "first_contact": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 16,
+              "record_index_0": 2,
+              "P": 2,
+              "alpha_accepted": 0.08134371313822686,
+              "active_pairs": 2574,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 15,
+              "record_index_0": 1,
+              "P": 120,
+              "alpha_accepted": 0.16524413515362033,
+              "active_pairs": 0,
+              "energy_backtracks": 2,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 19,
+              "record_index_0": 20,
+              "P": 70,
+              "alpha_accepted": 0.040254434357109736,
+              "active_pairs": 81030,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 71,
+              "record_index_0": 1,
+              "P": 41,
+              "alpha_accepted": 0.010604903622692742,
+              "active_pairs": 26645,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_boxes_original_r1",
+              "scene": "Boxes",
+              "method": "original",
+              "physical_frame": 64,
+              "record_index_0": 88,
+              "P": 198,
+              "alpha_accepted": 0.9053579233619918,
+              "active_pairs": 19064,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 6,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        },
+        "Bunny": {
+          "selected": {
+            "ordinary": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 6,
+              "alpha_accepted": 1.0,
+              "active_pairs": 0,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "first_contact": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 6,
+              "record_index_0": 1,
+              "P": 7,
+              "alpha_accepted": 0.029317835644358872,
+              "active_pairs": 19,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 13,
+              "record_index_0": 28,
+              "P": 133,
+              "alpha_accepted": 0.2981086063645161,
+              "active_pairs": 2306,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 14,
+              "record_index_0": 7,
+              "P": 135,
+              "alpha_accepted": 0.6810108781908395,
+              "active_pairs": 2659,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 6,
+              "record_index_0": 4,
+              "P": 41,
+              "alpha_accepted": 0.025780971686327137,
+              "active_pairs": 87,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_bunny_original_r1",
+              "scene": "Bunny",
+              "method": "original",
+              "physical_frame": 69,
+              "record_index_0": 0,
+              "P": 356,
+              "alpha_accepted": 1.0,
+              "active_pairs": 1054,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 6,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        },
+        "Mixed": {
+          "selected": {
+            "ordinary": null,
+            "first_contact": {
+              "run": "performance_mixed_original_r1",
+              "scene": "Mixed",
+              "method": "original",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 5,
+              "alpha_accepted": 1.0,
+              "active_pairs": 2941,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_mixed_original_r1",
+              "scene": "Mixed",
+              "method": "original",
+              "physical_frame": 29,
+              "record_index_0": 33,
+              "P": 37,
+              "alpha_accepted": 0.5,
+              "active_pairs": 10813,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_mixed_original_r1",
+              "scene": "Mixed",
+              "method": "original",
+              "physical_frame": 14,
+              "record_index_0": 7,
+              "P": 143,
+              "alpha_accepted": 0.2525194404481838,
+              "active_pairs": 28190,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_mixed_original_r1",
+              "scene": "Mixed",
+              "method": "original",
+              "physical_frame": 29,
+              "record_index_0": 12,
+              "P": 137,
+              "alpha_accepted": 0.00239511761110131,
+              "active_pairs": 14244,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_mixed_original_r1",
+              "scene": "Mixed",
+              "method": "original",
+              "physical_frame": 13,
+              "record_index_0": 13,
+              "P": 234,
+              "alpha_accepted": 0.5170178837821958,
+              "active_pairs": 26357,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 5,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        }
+      },
+      "validated_frames": 3780,
+      "validated_runs": 36,
+      "ignored_nontrajectory_newton_rows": 0,
+      "row_frame_crosschecks_passed": true,
+      "metric_scope": "Frames1..100; first trial accepted means no energy or intersection backtrack. Initial alpha/CCD reductions unavailable.",
+      "recording_cost_deducted": false,
+      "performance_certified": false
+    },
+    {
+      "dataset": "Windows_five_arm_20261014",
+      "input_identity": [
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\reports\\five_arm_retest_20261014\\per_newton.csv",
+          "bytes": 220905505,
+          "sha256": "01317bf70679dcc926018e6a40172f09624fb46a878136d02b0557d5207ecdae"
+        },
+        {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_speed_audit_20261009\\reports\\five_arm_retest_20261014\\per_frame.csv",
+          "bytes": 6398487,
+          "sha256": "5849cb8bb23c4f518f367ba30cb948442a9efc4bad0427ebbbb57592a5fff0fa"
+        }
+      ],
+      "first100_summary": [
+        {
+          "scene": "Boxes",
+          "method": "graph_mov",
+          "records": 14214,
+          "solves": 13914,
+          "accepted_trials": 13914,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9509846198073882,
+          "energy_backtracks": {
+            "0": 13232,
+            "1": 524,
+            "2": 139,
+            "3": 18,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 13914
+          },
+          "accepted_alpha": {
+            "count": 13914,
+            "min": 0.010269387068291735,
+            "p50": 0.4466365045310749,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 13914,
+            "min": 2,
+            "p50": 38.0,
+            "p90": 59.0,
+            "p99": 79.0,
+            "max": 163
+          },
+          "active_pairs": {
+            "count": 13914,
+            "min": 0,
+            "p50": 29608.0,
+            "p90": 36913.200000000004,
+            "p99": 52929.009999999675,
+            "max": 96392
+          },
+          "parent_phase_seconds": {
+            "assembly": 252.59041424369812,
+            "pcg": 104.3399442152977,
+            "ccd": 140.93479061877727,
+            "line_search": 181.3961861410141,
+            "state_update": 1.0603086402639748
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 14214,
+            "acceptance_margin": 14214,
+            "capacity_growth": 14214
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "graph_res",
+          "records": 13888,
+          "solves": 13588,
+          "accepted_trials": 13588,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9501766264350898,
+          "energy_backtracks": {
+            "0": 12911,
+            "1": 524,
+            "2": 132,
+            "3": 21
+          },
+          "intersection_backtracks": {
+            "0": 13588
+          },
+          "accepted_alpha": {
+            "count": 13588,
+            "min": 0.010598758269863218,
+            "p50": 0.43230200120278534,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 13588,
+            "min": 2,
+            "p50": 39.0,
+            "p90": 60.0,
+            "p99": 81.0,
+            "max": 247
+          },
+          "active_pairs": {
+            "count": 13588,
+            "min": 0,
+            "p50": 31703.0,
+            "p90": 35532.3,
+            "p99": 56052.14999999956,
+            "max": 99085
+          },
+          "parent_phase_seconds": {
+            "assembly": 251.8605359699726,
+            "pcg": 105.97827838516235,
+            "ccd": 153.01512182545662,
+            "line_search": 175.07425375127792,
+            "state_update": 1.069785087896511
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 13888,
+            "acceptance_margin": 13888,
+            "capacity_growth": 13888
+          },
+          "frame_exits": {
+            "movement": 294,
+            "compensated": 6
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "graph_toi",
+          "records": 4295,
+          "solves": 4215,
+          "accepted_trials": 4215,
+          "terminal_records": 80,
+          "first_trial_accepted_fraction": 0.9895610913404508,
+          "energy_backtracks": {
+            "0": 4171,
+            "1": 41,
+            "2": 3
+          },
+          "intersection_backtracks": {
+            "0": 4215
+          },
+          "accepted_alpha": {
+            "count": 4215,
+            "min": 0.010944678917911968,
+            "p50": 0.15417675344498444,
+            "p90": 0.7272328787129652,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4215,
+            "min": 2,
+            "p50": 53.0,
+            "p90": 70.0,
+            "p99": 93.0,
+            "max": 184
+          },
+          "active_pairs": {
+            "count": 4215,
+            "min": 0,
+            "p50": 27207.0,
+            "p90": 49290.2,
+            "p99": 85180.11999999994,
+            "max": 105462
+          },
+          "parent_phase_seconds": {
+            "assembly": 71.203510648489,
+            "pcg": 35.01202491950989,
+            "ccd": 41.186125571131704,
+            "line_search": 49.64397130346298,
+            "state_update": 0.3180262399185449
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 80,
+            "energy_backtracks": 80,
+            "intersection_backtracks": 80,
+            "initial_energy_reused": 80,
+            "alpha": 80,
+            "beta": 80,
+            "active_pairs": 80,
+            "kappa_before": 80,
+            "kappa_after": 80,
+            "alpha_geometric": 4295,
+            "acceptance_margin": 4295,
+            "capacity_growth": 4295
+          },
+          "frame_exits": {
+            "movement": 80,
+            "cumulative_toi": 220
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "host_mov",
+          "records": 14040,
+          "solves": 13740,
+          "accepted_trials": 13740,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9487627365356623,
+          "energy_backtracks": {
+            "0": 13036,
+            "1": 532,
+            "2": 157,
+            "3": 14,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 13740
+          },
+          "accepted_alpha": {
+            "count": 13740,
+            "min": 0.010350648688485885,
+            "p50": 0.4455694365095267,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 13740,
+            "min": 2,
+            "p50": 39.0,
+            "p90": 59.0,
+            "p99": 83.0,
+            "max": 182
+          },
+          "active_pairs": {
+            "count": 13740,
+            "min": 0,
+            "p50": 29577.0,
+            "p90": 34716.0,
+            "p99": 54218.06000000003,
+            "max": 92781
+          },
+          "parent_phase_seconds": {
+            "assembly": 245.4777601761818,
+            "pcg": 158.04508467912675,
+            "ccd": 59.28474366652966,
+            "line_search": 194.0398097321987,
+            "state_update": 0.9004242560490966
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 14040,
+            "acceptance_margin": 14040,
+            "capacity_growth": 14040
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "host_toi",
+          "records": 4103,
+          "solves": 4021,
+          "accepted_trials": 4021,
+          "terminal_records": 82,
+          "first_trial_accepted_fraction": 0.990052225814474,
+          "energy_backtracks": {
+            "0": 3981,
+            "1": 31,
+            "2": 9
+          },
+          "intersection_backtracks": {
+            "0": 4021
+          },
+          "accepted_alpha": {
+            "count": 4021,
+            "min": 0.009190573039793795,
+            "p50": 0.15872754093551697,
+            "p90": 0.8053544219233505,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4021,
+            "min": 2,
+            "p50": 57.0,
+            "p90": 75.0,
+            "p99": 98.0,
+            "max": 168
+          },
+          "active_pairs": {
+            "count": 4021,
+            "min": 0,
+            "p50": 26472.0,
+            "p90": 49338.0,
+            "p99": 90813.80000000002,
+            "max": 112693
+          },
+          "parent_phase_seconds": {
+            "assembly": 68.20081558299064,
+            "pcg": 57.7483482336998,
+            "ccd": 22.34463955450058,
+            "line_search": 53.24950526714325,
+            "state_update": 0.29142960025183856
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 82,
+            "energy_backtracks": 82,
+            "intersection_backtracks": 82,
+            "initial_energy_reused": 82,
+            "alpha": 82,
+            "beta": 82,
+            "active_pairs": 82,
+            "kappa_before": 82,
+            "kappa_after": 82,
+            "alpha_geometric": 4103,
+            "acceptance_margin": 4103,
+            "capacity_growth": 4103
+          },
+          "frame_exits": {
+            "movement": 82,
+            "cumulative_toi": 218
+          }
+        },
+        {
+          "scene": "Boxes",
+          "method": "strict",
+          "records": 15890,
+          "solves": 15590,
+          "accepted_trials": 15590,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9466966003848621,
+          "energy_backtracks": {
+            "0": 14759,
+            "1": 640,
+            "2": 167,
+            "3": 24
+          },
+          "intersection_backtracks": {
+            "0": 15590
+          },
+          "accepted_alpha": {
+            "count": 15590,
+            "min": 0.010480602108823992,
+            "p50": 0.4369358302641215,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 15590,
+            "min": 2,
+            "p50": 75.0,
+            "p90": 109.0,
+            "p99": 184.11000000000058,
+            "max": 519
+          },
+          "active_pairs": {
+            "count": 15590,
+            "min": 0,
+            "p50": 33430.0,
+            "p90": 40594.700000000004,
+            "p99": 56726.29000000002,
+            "max": 100087
+          },
+          "parent_phase_seconds": {
+            "assembly": 301.2381350296736,
+            "pcg": 184.31079421925546,
+            "ccd": 174.99655386185646,
+            "line_search": 215.62163638710976,
+            "state_update": 1.2210489921886474
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 15890,
+            "acceptance_margin": 15890,
+            "capacity_growth": 15890
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "graph_mov",
+          "records": 2658,
+          "solves": 2358,
+          "accepted_trials": 2358,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9749787955894826,
+          "energy_backtracks": {
+            "0": 2299,
+            "1": 59
+          },
+          "intersection_backtracks": {
+            "0": 2358
+          },
+          "accepted_alpha": {
+            "count": 2358,
+            "min": 0.0257808456825378,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2358,
+            "min": 6,
+            "p50": 172.0,
+            "p90": 250.0,
+            "p99": 302.0,
+            "max": 350
+          },
+          "active_pairs": {
+            "count": 2358,
+            "min": 0,
+            "p50": 914.0,
+            "p90": 2207.0,
+            "p99": 2475.7199999999993,
+            "max": 2699
+          },
+          "parent_phase_seconds": {
+            "assembly": 6.966403816521168,
+            "pcg": 36.75606538414955,
+            "ccd": 4.3610813773870465,
+            "line_search": 12.15012222790718,
+            "state_update": 0.13948028788529337
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2658,
+            "acceptance_margin": 2658,
+            "capacity_growth": 2658
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "graph_res",
+          "records": 2743,
+          "solves": 2443,
+          "accepted_trials": 2443,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.981170691772411,
+          "energy_backtracks": {
+            "0": 2397,
+            "1": 46
+          },
+          "intersection_backtracks": {
+            "0": 2443
+          },
+          "accepted_alpha": {
+            "count": 2443,
+            "min": 0.025780899823628793,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2443,
+            "min": 6,
+            "p50": 175.0,
+            "p90": 255.80000000000018,
+            "p99": 310.0,
+            "max": 339
+          },
+          "active_pairs": {
+            "count": 2443,
+            "min": 0,
+            "p50": 955.0,
+            "p90": 2266.8,
+            "p99": 2991.1399999999976,
+            "max": 3186
+          },
+          "parent_phase_seconds": {
+            "assembly": 7.318236025810242,
+            "pcg": 38.24598080348969,
+            "ccd": 4.481240704536438,
+            "line_search": 12.419550892591477,
+            "state_update": 0.14126880010031165
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2743,
+            "acceptance_margin": 2743,
+            "capacity_growth": 2743
+          },
+          "frame_exits": {
+            "movement": 286,
+            "compensated": 14
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "graph_toi",
+          "records": 1556,
+          "solves": 1386,
+          "accepted_trials": 1386,
+          "terminal_records": 170,
+          "first_trial_accepted_fraction": 0.9834054834054834,
+          "energy_backtracks": {
+            "0": 1363,
+            "1": 23
+          },
+          "intersection_backtracks": {
+            "0": 1386
+          },
+          "accepted_alpha": {
+            "count": 1386,
+            "min": 0.02531588365244119,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1386,
+            "min": 6,
+            "p50": 190.0,
+            "p90": 269.0,
+            "p99": 309.1500000000001,
+            "max": 319
+          },
+          "active_pairs": {
+            "count": 1386,
+            "min": 0,
+            "p50": 960.0,
+            "p90": 1192.5,
+            "p99": 2108.800000000003,
+            "max": 2262
+          },
+          "parent_phase_seconds": {
+            "assembly": 4.0505445073246955,
+            "pcg": 22.212236015319824,
+            "ccd": 2.5716771519184114,
+            "line_search": 6.930716792106629,
+            "state_update": 0.07697782398574055
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 170,
+            "energy_backtracks": 170,
+            "intersection_backtracks": 170,
+            "initial_energy_reused": 170,
+            "alpha": 170,
+            "beta": 170,
+            "active_pairs": 170,
+            "kappa_before": 170,
+            "kappa_after": 170,
+            "alpha_geometric": 1556,
+            "acceptance_margin": 1556,
+            "capacity_growth": 1556
+          },
+          "frame_exits": {
+            "movement": 170,
+            "cumulative_toi": 130
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "host_mov",
+          "records": 2730,
+          "solves": 2430,
+          "accepted_trials": 2430,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9765432098765432,
+          "energy_backtracks": {
+            "0": 2373,
+            "1": 57
+          },
+          "intersection_backtracks": {
+            "0": 2430
+          },
+          "accepted_alpha": {
+            "count": 2430,
+            "min": 0.025780785653262164,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2430,
+            "min": 6,
+            "p50": 173.0,
+            "p90": 255.0,
+            "p99": 312.0,
+            "max": 333
+          },
+          "active_pairs": {
+            "count": 2430,
+            "min": 0,
+            "p50": 942.0,
+            "p90": 2257.0,
+            "p99": 2472.13,
+            "max": 2660
+          },
+          "parent_phase_seconds": {
+            "assembly": 7.4743457939624784,
+            "pcg": 84.53533776044846,
+            "ccd": 5.615418110609054,
+            "line_search": 14.90935699892044,
+            "state_update": 0.12471785600110888
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2730,
+            "acceptance_margin": 2730,
+            "capacity_growth": 2730
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "host_toi",
+          "records": 1559,
+          "solves": 1392,
+          "accepted_trials": 1392,
+          "terminal_records": 167,
+          "first_trial_accepted_fraction": 0.9863505747126436,
+          "energy_backtracks": {
+            "0": 1373,
+            "1": 19
+          },
+          "intersection_backtracks": {
+            "0": 1392
+          },
+          "accepted_alpha": {
+            "count": 1392,
+            "min": 0.02578080557980949,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1392,
+            "min": 6,
+            "p50": 189.0,
+            "p90": 274.0,
+            "p99": 305.17999999999984,
+            "max": 325
+          },
+          "active_pairs": {
+            "count": 1392,
+            "min": 0,
+            "p50": 965.0,
+            "p90": 1182.0,
+            "p99": 2033.4499999999996,
+            "max": 2132
+          },
+          "parent_phase_seconds": {
+            "assembly": 4.696360669255257,
+            "pcg": 59.441937242031095,
+            "ccd": 3.4688047976493834,
+            "line_search": 8.72780978679657,
+            "state_update": 0.0867040640283376
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 167,
+            "energy_backtracks": 167,
+            "intersection_backtracks": 167,
+            "initial_energy_reused": 167,
+            "alpha": 167,
+            "beta": 167,
+            "active_pairs": 167,
+            "kappa_before": 167,
+            "kappa_after": 167,
+            "alpha_geometric": 1559,
+            "acceptance_margin": 1559,
+            "capacity_growth": 1559
+          },
+          "frame_exits": {
+            "movement": 167,
+            "cumulative_toi": 133
+          }
+        },
+        {
+          "scene": "Bunny",
+          "method": "strict",
+          "records": 2820,
+          "solves": 2520,
+          "accepted_trials": 2520,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9829365079365079,
+          "energy_backtracks": {
+            "0": 2477,
+            "1": 43
+          },
+          "intersection_backtracks": {
+            "0": 2520
+          },
+          "accepted_alpha": {
+            "count": 2520,
+            "min": 0.028837224448945743,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2520,
+            "min": 19,
+            "p50": 285.0,
+            "p90": 378.0,
+            "p99": 453.0,
+            "max": 482
+          },
+          "active_pairs": {
+            "count": 2520,
+            "min": 0,
+            "p50": 979.0,
+            "p90": 2575.2,
+            "p99": 3327.43,
+            "max": 3483
+          },
+          "parent_phase_seconds": {
+            "assembly": 7.247220190227032,
+            "pcg": 58.04326639509201,
+            "ccd": 4.63122342312336,
+            "line_search": 12.82033372759819,
+            "state_update": 0.14085200002975762
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2820,
+            "acceptance_margin": 2820,
+            "capacity_growth": 2820
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "graph_mov",
+          "records": 1283,
+          "solves": 983,
+          "accepted_trials": 983,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9715157680569685,
+          "energy_backtracks": {
+            "0": 955,
+            "1": 28
+          },
+          "intersection_backtracks": {
+            "0": 983
+          },
+          "accepted_alpha": {
+            "count": 983,
+            "min": 0.023033748669449933,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 983,
+            "min": 2,
+            "p50": 56.0,
+            "p90": 67.0,
+            "p99": 92.17999999999995,
+            "max": 96
+          },
+          "active_pairs": {
+            "count": 983,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 1935.0,
+            "p99": 6776.18,
+            "max": 6923
+          },
+          "parent_phase_seconds": {
+            "assembly": 0.9430068812668323,
+            "pcg": 3.911048033952713,
+            "ccd": 0.7432264643609524,
+            "line_search": 1.5739560353159905,
+            "state_update": 0.044976767901331184
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1283,
+            "acceptance_margin": 1283,
+            "capacity_growth": 1283
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "graph_res",
+          "records": 1279,
+          "solves": 979,
+          "accepted_trials": 979,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9744637385086823,
+          "energy_backtracks": {
+            "0": 954,
+            "1": 25
+          },
+          "intersection_backtracks": {
+            "0": 979
+          },
+          "accepted_alpha": {
+            "count": 979,
+            "min": 0.0234522661014471,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 979,
+            "min": 2,
+            "p50": 56.0,
+            "p90": 67.0,
+            "p99": 93.0,
+            "max": 100
+          },
+          "active_pairs": {
+            "count": 979,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 1298.000000000004,
+            "p99": 6771.32,
+            "max": 6879
+          },
+          "parent_phase_seconds": {
+            "assembly": 1.0003836438059808,
+            "pcg": 3.705447232723236,
+            "ccd": 0.7072535994648933,
+            "line_search": 1.4887688942551613,
+            "state_update": 0.04409788803011179
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1279,
+            "acceptance_margin": 1279,
+            "capacity_growth": 1279
+          },
+          "frame_exits": {
+            "movement": 297,
+            "compensated": 3
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "graph_toi",
+          "records": 994,
+          "solves": 724,
+          "accepted_trials": 724,
+          "terminal_records": 270,
+          "first_trial_accepted_fraction": 0.9709944751381215,
+          "energy_backtracks": {
+            "0": 703,
+            "1": 21
+          },
+          "intersection_backtracks": {
+            "0": 724
+          },
+          "accepted_alpha": {
+            "count": 724,
+            "min": 0.032383758299599476,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 724,
+            "min": 2,
+            "p50": 56.0,
+            "p90": 67.0,
+            "p99": 74.76999999999998,
+            "max": 82
+          },
+          "active_pairs": {
+            "count": 724,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 4767.300000000014,
+            "p99": 7482.059999999999,
+            "max": 7654
+          },
+          "parent_phase_seconds": {
+            "assembly": 0.7992765766680241,
+            "pcg": 2.866733406305313,
+            "ccd": 0.5977714256942273,
+            "line_search": 1.2626303353905677,
+            "state_update": 0.031163712007924914
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 270,
+            "energy_backtracks": 270,
+            "intersection_backtracks": 270,
+            "initial_energy_reused": 270,
+            "alpha": 270,
+            "beta": 270,
+            "active_pairs": 270,
+            "kappa_before": 270,
+            "kappa_after": 270,
+            "alpha_geometric": 994,
+            "acceptance_margin": 994,
+            "capacity_growth": 994
+          },
+          "frame_exits": {
+            "movement": 270,
+            "cumulative_toi": 30
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "host_mov",
+          "records": 1283,
+          "solves": 983,
+          "accepted_trials": 983,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9715157680569685,
+          "energy_backtracks": {
+            "0": 955,
+            "1": 28
+          },
+          "intersection_backtracks": {
+            "0": 983
+          },
+          "accepted_alpha": {
+            "count": 983,
+            "min": 0.023033388619267337,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 983,
+            "min": 2,
+            "p50": 56.0,
+            "p90": 67.0,
+            "p99": 92.0,
+            "max": 96
+          },
+          "active_pairs": {
+            "count": 983,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 1936.2000000000007,
+            "p99": 6768.259999999999,
+            "max": 6922
+          },
+          "parent_phase_seconds": {
+            "assembly": 1.0385924476087094,
+            "pcg": 10.79969756603241,
+            "ccd": 1.278594111919403,
+            "line_search": 2.1805009276866913,
+            "state_update": 0.041998528076335785
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1283,
+            "acceptance_margin": 1283,
+            "capacity_growth": 1283
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "host_toi",
+          "records": 992,
+          "solves": 722,
+          "accepted_trials": 722,
+          "terminal_records": 270,
+          "first_trial_accepted_fraction": 0.9709141274238227,
+          "energy_backtracks": {
+            "0": 701,
+            "1": 21
+          },
+          "intersection_backtracks": {
+            "0": 722
+          },
+          "accepted_alpha": {
+            "count": 722,
+            "min": 0.032387968868087195,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 722,
+            "min": 2,
+            "p50": 56.0,
+            "p90": 67.89999999999998,
+            "p99": 72.57999999999993,
+            "max": 83
+          },
+          "active_pairs": {
+            "count": 722,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 4658.799999999997,
+            "p99": 7417.79,
+            "max": 7624
+          },
+          "parent_phase_seconds": {
+            "assembly": 0.9007690222263336,
+            "pcg": 7.899257596492768,
+            "ccd": 0.9538646407723427,
+            "line_search": 1.7113927018642425,
+            "state_update": 0.03036739202402532
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 270,
+            "energy_backtracks": 270,
+            "intersection_backtracks": 270,
+            "initial_energy_reused": 270,
+            "alpha": 270,
+            "beta": 270,
+            "active_pairs": 270,
+            "kappa_before": 270,
+            "kappa_after": 270,
+            "alpha_geometric": 992,
+            "acceptance_margin": 992,
+            "capacity_growth": 992
+          },
+          "frame_exits": {
+            "movement": 270,
+            "cumulative_toi": 30
+          }
+        },
+        {
+          "scene": "Hang",
+          "method": "strict",
+          "records": 1165,
+          "solves": 865,
+          "accepted_trials": 865,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9699421965317919,
+          "energy_backtracks": {
+            "0": 839,
+            "1": 26
+          },
+          "intersection_backtracks": {
+            "0": 865
+          },
+          "accepted_alpha": {
+            "count": 865,
+            "min": 0.015724812834954326,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 865,
+            "min": 4,
+            "p50": 84.0,
+            "p90": 96.0,
+            "p99": 111.36000000000001,
+            "max": 133
+          },
+          "active_pairs": {
+            "count": 865,
+            "min": 0,
+            "p50": 0.0,
+            "p90": 3010.4000000000005,
+            "p99": 7527.0,
+            "max": 7641
+          },
+          "parent_phase_seconds": {
+            "assembly": 0.8408764798641205,
+            "pcg": 4.208333665132523,
+            "ccd": 0.694784863203764,
+            "line_search": 1.3575097283124924,
+            "state_update": 0.03562640001438558
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1165,
+            "acceptance_margin": 1165,
+            "capacity_growth": 1165
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "graph_mov",
+          "records": 4495,
+          "solves": 4195,
+          "accepted_trials": 4195,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9833134684147795,
+          "energy_backtracks": {
+            "0": 4125,
+            "1": 56,
+            "2": 11,
+            "3": 2,
+            "4": 1
+          },
+          "intersection_backtracks": {
+            "0": 4195
+          },
+          "accepted_alpha": {
+            "count": 4195,
+            "min": 0.0016834362888166962,
+            "p50": 0.7223386018201161,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4195,
+            "min": 5,
+            "p50": 54.0,
+            "p90": 77.0,
+            "p99": 157.0,
+            "max": 245
+          },
+          "active_pairs": {
+            "count": 4195,
+            "min": 2869,
+            "p50": 9826.0,
+            "p90": 17171.0,
+            "p99": 27739.780000000006,
+            "max": 28227
+          },
+          "parent_phase_seconds": {
+            "assembly": 33.03685927391052,
+            "pcg": 71.67688361215592,
+            "ccd": 35.42364663875103,
+            "line_search": 48.721597019672394,
+            "state_update": 0.24139350409805774
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 4495,
+            "acceptance_margin": 4495,
+            "capacity_growth": 4495
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "graph_res",
+          "records": 2845,
+          "solves": 2545,
+          "accepted_trials": 2545,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9607072691552063,
+          "energy_backtracks": {
+            "0": 2445,
+            "1": 93,
+            "2": 7
+          },
+          "intersection_backtracks": {
+            "0": 2545
+          },
+          "accepted_alpha": {
+            "count": 2545,
+            "min": 0.004106400907140403,
+            "p50": 0.6112688203540515,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 2545,
+            "min": 4,
+            "p50": 46.0,
+            "p90": 78.0,
+            "p99": 187.55999999999995,
+            "max": 238
+          },
+          "active_pairs": {
+            "count": 2545,
+            "min": 2869,
+            "p50": 8659.0,
+            "p90": 16945.8,
+            "p99": 27306.76,
+            "max": 27964
+          },
+          "parent_phase_seconds": {
+            "assembly": 21.53669932794571,
+            "pcg": 41.781576367855074,
+            "ccd": 20.397603657603263,
+            "line_search": 30.296916314601898,
+            "state_update": 0.1574604481756687
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 2845,
+            "acceptance_margin": 2845,
+            "capacity_growth": 2845
+          },
+          "frame_exits": {
+            "movement": 222,
+            "compensated": 78
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "graph_toi",
+          "records": 1937,
+          "solves": 1788,
+          "accepted_trials": 1788,
+          "terminal_records": 149,
+          "first_trial_accepted_fraction": 0.993847874720358,
+          "energy_backtracks": {
+            "0": 1777,
+            "1": 9,
+            "2": 2
+          },
+          "intersection_backtracks": {
+            "0": 1788
+          },
+          "accepted_alpha": {
+            "count": 1788,
+            "min": 0.01000102080352837,
+            "p50": 0.6270397414416062,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1788,
+            "min": 4,
+            "p50": 60.0,
+            "p90": 90.0,
+            "p99": 194.0,
+            "max": 209
+          },
+          "active_pairs": {
+            "count": 1788,
+            "min": 2869,
+            "p50": 8464.0,
+            "p90": 16924.2,
+            "p99": 27394.04,
+            "max": 27998
+          },
+          "parent_phase_seconds": {
+            "assembly": 14.22899890089035,
+            "pcg": 32.402093846797946,
+            "ccd": 16.512485409736634,
+            "line_search": 20.187939989089966,
+            "state_update": 0.11861638355068863
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 149,
+            "energy_backtracks": 149,
+            "intersection_backtracks": 149,
+            "initial_energy_reused": 149,
+            "alpha": 149,
+            "beta": 149,
+            "active_pairs": 149,
+            "kappa_before": 149,
+            "kappa_after": 149,
+            "alpha_geometric": 1937,
+            "acceptance_margin": 1937,
+            "capacity_growth": 1937
+          },
+          "frame_exits": {
+            "movement": 149,
+            "cumulative_toi": 151
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "host_mov",
+          "records": 4479,
+          "solves": 4179,
+          "accepted_trials": 4179,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9887532902608279,
+          "energy_backtracks": {
+            "0": 4132,
+            "1": 46,
+            "2": 1
+          },
+          "intersection_backtracks": {
+            "0": 4179
+          },
+          "accepted_alpha": {
+            "count": 4179,
+            "min": 0.0032669743470571653,
+            "p50": 0.7043312064098425,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4179,
+            "min": 5,
+            "p50": 54.0,
+            "p90": 79.0,
+            "p99": 163.0,
+            "max": 253
+          },
+          "active_pairs": {
+            "count": 4179,
+            "min": 2869,
+            "p50": 9442.0,
+            "p90": 17050.2,
+            "p99": 27702.0,
+            "max": 28255
+          },
+          "parent_phase_seconds": {
+            "assembly": 45.550547560214994,
+            "pcg": 99.74127880764007,
+            "ccd": 39.888139073610304,
+            "line_search": 53.95591825246811,
+            "state_update": 0.23425849586725234
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 4479,
+            "acceptance_margin": 4479,
+            "capacity_growth": 4479
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "host_toi",
+          "records": 1866,
+          "solves": 1696,
+          "accepted_trials": 1696,
+          "terminal_records": 170,
+          "first_trial_accepted_fraction": 0.9905660377358491,
+          "energy_backtracks": {
+            "0": 1680,
+            "1": 13,
+            "2": 2,
+            "3": 1
+          },
+          "intersection_backtracks": {
+            "0": 1696
+          },
+          "accepted_alpha": {
+            "count": 1696,
+            "min": 0.008434867301518592,
+            "p50": 0.5875104118693285,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1696,
+            "min": 5,
+            "p50": 58.0,
+            "p90": 92.0,
+            "p99": 198.0,
+            "max": 227
+          },
+          "active_pairs": {
+            "count": 1696,
+            "min": 2869,
+            "p50": 9052.5,
+            "p90": 17100.5,
+            "p99": 27431.0,
+            "max": 28210
+          },
+          "parent_phase_seconds": {
+            "assembly": 18.995631012439727,
+            "pcg": 42.984187503814695,
+            "ccd": 22.27516171860695,
+            "line_search": 21.36148181772232,
+            "state_update": 0.09776646391302347
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 170,
+            "energy_backtracks": 170,
+            "intersection_backtracks": 170,
+            "initial_energy_reused": 170,
+            "alpha": 170,
+            "beta": 170,
+            "active_pairs": 170,
+            "kappa_before": 170,
+            "kappa_after": 170,
+            "alpha_geometric": 1866,
+            "acceptance_margin": 1866,
+            "capacity_growth": 1866
+          },
+          "frame_exits": {
+            "movement": 170,
+            "cumulative_toi": 130
+          }
+        },
+        {
+          "scene": "Mixed",
+          "method": "strict",
+          "records": 4483,
+          "solves": 4183,
+          "accepted_trials": 4183,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9873296677026058,
+          "energy_backtracks": {
+            "0": 4130,
+            "1": 48,
+            "2": 5
+          },
+          "intersection_backtracks": {
+            "0": 4183
+          },
+          "accepted_alpha": {
+            "count": 4183,
+            "min": 0.004490329813119343,
+            "p50": 0.7225579066619614,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 4183,
+            "min": 11,
+            "p50": 94.0,
+            "p90": 121.0,
+            "p99": 217.36000000000058,
+            "max": 276
+          },
+          "active_pairs": {
+            "count": 4183,
+            "min": 2865,
+            "p50": 9242.0,
+            "p90": 17209.4,
+            "p99": 27704.980000000003,
+            "max": 28204
+          },
+          "parent_phase_seconds": {
+            "assembly": 33.09617211818695,
+            "pcg": 95.44025897693633,
+            "ccd": 31.75197281432152,
+            "line_search": 48.60797628307343,
+            "state_update": 0.2573273922242224
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 4483,
+            "acceptance_margin": 4483,
+            "capacity_growth": 4483
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "graph_mov",
+          "records": 1521,
+          "solves": 1221,
+          "accepted_trials": 1221,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9778869778869779,
+          "energy_backtracks": {
+            "0": 1194,
+            "1": 24,
+            "2": 3
+          },
+          "intersection_backtracks": {
+            "0": 1221
+          },
+          "accepted_alpha": {
+            "count": 1221,
+            "min": 0.028398025142420943,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1221,
+            "min": 6,
+            "p50": 113.0,
+            "p90": 144.0,
+            "p99": 181.0,
+            "max": 209
+          },
+          "active_pairs": {
+            "count": 1221,
+            "min": 0,
+            "p50": 18494.0,
+            "p90": 20847.0,
+            "p99": 30054.0,
+            "max": 31578
+          },
+          "parent_phase_seconds": {
+            "assembly": 12.007400512695312,
+            "pcg": 23.170297579288484,
+            "ccd": 2.3436958384513855,
+            "line_search": 6.805825945854187,
+            "state_update": 0.07860166386887431
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1521,
+            "acceptance_margin": 1521,
+            "capacity_growth": 1521
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "graph_res",
+          "records": 1522,
+          "solves": 1222,
+          "accepted_trials": 1222,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9779050736497545,
+          "energy_backtracks": {
+            "0": 1195,
+            "1": 24,
+            "2": 3
+          },
+          "intersection_backtracks": {
+            "0": 1222
+          },
+          "accepted_alpha": {
+            "count": 1222,
+            "min": 0.02839802389536408,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1222,
+            "min": 6,
+            "p50": 113.0,
+            "p90": 144.0,
+            "p99": 181.78999999999996,
+            "max": 209
+          },
+          "active_pairs": {
+            "count": 1222,
+            "min": 0,
+            "p50": 18494.0,
+            "p90": 21647.100000000082,
+            "p99": 30054.0,
+            "max": 31578
+          },
+          "parent_phase_seconds": {
+            "assembly": 12.307320639371872,
+            "pcg": 23.308643381118774,
+            "ccd": 2.3879935358166695,
+            "line_search": 6.89476512169838,
+            "state_update": 0.07904233600199223
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1522,
+            "acceptance_margin": 1522,
+            "capacity_growth": 1522
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "graph_toi",
+          "records": 1197,
+          "solves": 945,
+          "accepted_trials": 945,
+          "terminal_records": 252,
+          "first_trial_accepted_fraction": 0.9809523809523809,
+          "energy_backtracks": {
+            "0": 927,
+            "1": 18
+          },
+          "intersection_backtracks": {
+            "0": 945
+          },
+          "accepted_alpha": {
+            "count": 945,
+            "min": 0.02839804411497697,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 945,
+            "min": 6,
+            "p50": 114.0,
+            "p90": 147.0,
+            "p99": 179.0,
+            "max": 192
+          },
+          "active_pairs": {
+            "count": 945,
+            "min": 0,
+            "p50": 18481.0,
+            "p90": 19609.6,
+            "p99": 31286.0,
+            "max": 31578
+          },
+          "parent_phase_seconds": {
+            "assembly": 9.447723872184753,
+            "pcg": 17.717724972724916,
+            "ccd": 1.7922663037776947,
+            "line_search": 5.230626493215561,
+            "state_update": 0.057739296039566394
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 252,
+            "energy_backtracks": 252,
+            "intersection_backtracks": 252,
+            "initial_energy_reused": 252,
+            "alpha": 252,
+            "beta": 252,
+            "active_pairs": 252,
+            "kappa_before": 252,
+            "kappa_after": 252,
+            "alpha_geometric": 1197,
+            "acceptance_margin": 1197,
+            "capacity_growth": 1197
+          },
+          "frame_exits": {
+            "movement": 252,
+            "cumulative_toi": 48
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "host_mov",
+          "records": 1520,
+          "solves": 1220,
+          "accepted_trials": 1220,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9778688524590164,
+          "energy_backtracks": {
+            "0": 1193,
+            "1": 24,
+            "2": 3
+          },
+          "intersection_backtracks": {
+            "0": 1220
+          },
+          "accepted_alpha": {
+            "count": 1220,
+            "min": 0.02839803106067199,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1220,
+            "min": 6,
+            "p50": 113.0,
+            "p90": 144.10000000000014,
+            "p99": 182.0,
+            "max": 208
+          },
+          "active_pairs": {
+            "count": 1220,
+            "min": 0,
+            "p50": 18492.5,
+            "p90": 20847.3,
+            "p99": 30054.0,
+            "max": 31578
+          },
+          "parent_phase_seconds": {
+            "assembly": 12.878147339344025,
+            "pcg": 39.62711131620407,
+            "ccd": 2.941381792783737,
+            "line_search": 8.01850889658928,
+            "state_update": 0.06868611201643944
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1520,
+            "acceptance_margin": 1520,
+            "capacity_growth": 1520
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "host_toi",
+          "records": 1197,
+          "solves": 945,
+          "accepted_trials": 945,
+          "terminal_records": 252,
+          "first_trial_accepted_fraction": 0.9809523809523809,
+          "energy_backtracks": {
+            "0": 927,
+            "1": 18
+          },
+          "intersection_backtracks": {
+            "0": 945
+          },
+          "accepted_alpha": {
+            "count": 945,
+            "min": 0.02839806106051776,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 945,
+            "min": 6,
+            "p50": 114.0,
+            "p90": 147.0,
+            "p99": 179.1199999999999,
+            "max": 192
+          },
+          "active_pairs": {
+            "count": 945,
+            "min": 0,
+            "p50": 18481.0,
+            "p90": 19609.0,
+            "p99": 31286.56,
+            "max": 31578
+          },
+          "parent_phase_seconds": {
+            "assembly": 10.101276674985886,
+            "pcg": 29.852174258232118,
+            "ccd": 2.2306832005977633,
+            "line_search": 6.062379460811615,
+            "state_update": 0.052368703968822955
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 252,
+            "energy_backtracks": 252,
+            "intersection_backtracks": 252,
+            "initial_energy_reused": 252,
+            "alpha": 252,
+            "beta": 252,
+            "active_pairs": 252,
+            "kappa_before": 252,
+            "kappa_after": 252,
+            "alpha_geometric": 1197,
+            "acceptance_margin": 1197,
+            "capacity_growth": 1197
+          },
+          "frame_exits": {
+            "movement": 252,
+            "cumulative_toi": 48
+          }
+        },
+        {
+          "scene": "Table",
+          "method": "strict",
+          "records": 1518,
+          "solves": 1218,
+          "accepted_trials": 1218,
+          "terminal_records": 300,
+          "first_trial_accepted_fraction": 0.9753694581280788,
+          "energy_backtracks": {
+            "0": 1188,
+            "1": 27,
+            "2": 3
+          },
+          "intersection_backtracks": {
+            "0": 1218
+          },
+          "accepted_alpha": {
+            "count": 1218,
+            "min": 0.014389620679032671,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0
+          },
+          "P_per_solve": {
+            "count": 1218,
+            "min": 19,
+            "p50": 190.0,
+            "p90": 224.0,
+            "p99": 247.0,
+            "max": 300
+          },
+          "active_pairs": {
+            "count": 1218,
+            "min": 0,
+            "p50": 18489.0,
+            "p90": 21762.0,
+            "p99": 27707.0,
+            "max": 28647
+          },
+          "parent_phase_seconds": {
+            "assembly": 12.145698700189591,
+            "pcg": 32.31156205320358,
+            "ccd": 2.3827962871789934,
+            "line_search": 6.886389501571656,
+            "state_update": 0.07684323197603225
+          },
+          "kappa_changes": 0,
+          "pcg_iteration_limits": 0,
+          "missing_native_fields": {
+            "energy_evaluations": 300,
+            "energy_backtracks": 300,
+            "intersection_backtracks": 300,
+            "initial_energy_reused": 300,
+            "alpha": 300,
+            "beta": 300,
+            "active_pairs": 300,
+            "kappa_before": 300,
+            "kappa_after": 300,
+            "alpha_geometric": 1518,
+            "acceptance_margin": 1518,
+            "capacity_growth": 1518
+          },
+          "frame_exits": {
+            "movement": 300
+          }
+        }
+      ],
+      "selected_states": {
+        "Boxes": {
+          "selected": {
+            "ordinary": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 3,
+              "alpha_accepted": 1.0,
+              "active_pairs": 0,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "first_contact": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 16,
+              "record_index_0": 2,
+              "P": 2,
+              "alpha_accepted": 0.08164588659790015,
+              "active_pairs": 2574,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 14,
+              "record_index_0": 11,
+              "P": 163,
+              "alpha_accepted": 0.0786714114224411,
+              "active_pairs": 0,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 19,
+              "record_index_0": 15,
+              "P": 69,
+              "alpha_accepted": 0.1179321033262924,
+              "active_pairs": 96392,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 69,
+              "record_index_0": 2,
+              "P": 40,
+              "alpha_accepted": 0.010269387068291735,
+              "active_pairs": 22952,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_boxes_graph_mov_r1",
+              "scene": "Boxes",
+              "method": "graph_mov",
+              "physical_frame": 14,
+              "record_index_0": 11,
+              "P": 163,
+              "alpha_accepted": 0.0786714114224411,
+              "active_pairs": 0,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 11665.10475190615,
+              "kappa_after": 11665.10475190615,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 5,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        },
+        "Bunny": {
+          "selected": {
+            "ordinary": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 6,
+              "alpha_accepted": 1.0,
+              "active_pairs": 0,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "first_contact": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 6,
+              "record_index_0": 1,
+              "P": 7,
+              "alpha_accepted": 0.02931785711338152,
+              "active_pairs": 19,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 15,
+              "record_index_0": 0,
+              "P": 191,
+              "alpha_accepted": 0.26910553687846966,
+              "active_pairs": 2232,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 12,
+              "record_index_0": 5,
+              "P": 187,
+              "alpha_accepted": 0.43411038453060263,
+              "active_pairs": 2578,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 6,
+              "record_index_0": 4,
+              "P": 41,
+              "alpha_accepted": 0.025780974177737052,
+              "active_pairs": 87,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_bunny_graph_mov_r1",
+              "scene": "Bunny",
+              "method": "graph_mov",
+              "physical_frame": 40,
+              "record_index_0": 0,
+              "P": 350,
+              "alpha_accepted": 0.47857922553200677,
+              "active_pairs": 802,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 2334.0029057850834,
+              "kappa_after": 2334.0029057850834,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 6,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        },
+        "Mixed": {
+          "selected": {
+            "ordinary": null,
+            "first_contact": {
+              "run": "performance_mixed_graph_mov_r1",
+              "scene": "Mixed",
+              "method": "graph_mov",
+              "physical_frame": 1,
+              "record_index_0": 0,
+              "P": 5,
+              "alpha_accepted": 1.0,
+              "active_pairs": 2941,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": true,
+              "contact_release": false
+            },
+            "contact_release": null,
+            "energy_rejection": {
+              "run": "performance_mixed_graph_mov_r1",
+              "scene": "Mixed",
+              "method": "graph_mov",
+              "physical_frame": 20,
+              "record_index_0": 4,
+              "P": 61,
+              "alpha_accepted": 0.5,
+              "active_pairs": 10560,
+              "energy_backtracks": 1,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "intersection_backtrack": null,
+            "dense_contact": {
+              "run": "performance_mixed_graph_mov_r1",
+              "scene": "Mixed",
+              "method": "graph_mov",
+              "physical_frame": 14,
+              "record_index_0": 3,
+              "P": 153,
+              "alpha_accepted": 0.11749554386794121,
+              "active_pairs": 28122,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "small_accepted_alpha": {
+              "run": "performance_mixed_graph_mov_r1",
+              "scene": "Mixed",
+              "method": "graph_mov",
+              "physical_frame": 29,
+              "record_index_0": 12,
+              "P": 138,
+              "alpha_accepted": 0.0016834362888166962,
+              "active_pairs": 14524,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            },
+            "pcg_tail": {
+              "run": "performance_mixed_graph_mov_r1",
+              "scene": "Mixed",
+              "method": "graph_mov",
+              "physical_frame": 13,
+              "record_index_0": 15,
+              "P": 245,
+              "alpha_accepted": 0.7306440759466017,
+              "active_pairs": 26294,
+              "energy_backtracks": 0,
+              "intersection_backtracks": 0,
+              "kappa_before": 554.0728074074383,
+              "kappa_after": 554.0728074074383,
+              "contact_birth": false,
+              "contact_release": false
+            }
+          },
+          "capacity_growth": null,
+          "missing_reason": "Capacity growth and pre-line-search geometric alpha are not recorded; accepted alpha is not a CCD-only limit.",
+          "available_natural_state_count": 5,
+          "scope": "Historical identity-specific event selection, not exact checkpoints of the new binary."
+        }
+      },
+      "validated_frames": 9450,
+      "validated_runs": 90,
+      "ignored_nontrajectory_newton_rows": 0,
+      "row_frame_crosschecks_passed": true,
+      "metric_scope": "Frames1..100; first trial accepted means no energy or intersection backtrack. Initial alpha/CCD reductions unavailable.",
+      "recording_cost_deducted": false,
+      "performance_certified": false
+    }
+  ]
+}

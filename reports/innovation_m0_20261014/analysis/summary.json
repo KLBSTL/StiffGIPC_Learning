@@ -1,0 +1,5654 @@
+{
+  "schema": "innovation_m0_analysis.v1",
+  "controller": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\m0_analyze.py",
+    "bytes": 17514,
+    "sha256": "0f75832d87b3f0a604bf80e6382c5eac7ea398757b38843f0a33bb41c2e8293c"
+  },
+  "input_ledgers": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\smoke_ledger.json",
+      "bytes": 87524,
+      "sha256": "0a029064021bda7916dfe514d70de16b554bdc007f80ae804cf9d58c83d879ec"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\prefix_ledger.json",
+      "bytes": 1575580,
+      "sha256": "0bf164da40364b71b94a07cea4bda9416004eeab96dedede322b35f94b0604da"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\matched_ledger.json",
+      "bytes": 1643377,
+      "sha256": "ae13b068a7d2340d357acbb247f8df03b6b3a49d50e04de4da2840d0d37f3e8e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\reference_ledger.json",
+      "bytes": 1152394,
+      "sha256": "734220604f9830d2cbfb6eb3c1129d3d0181b693660426af8e90c3bbc016c7f9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_boxes_hard_20261014\\smoke_ledger.json",
+      "bytes": 417,
+      "sha256": "73e0be494f39e184bfbc9273c1189021371bde289775ed09eaef4e2fcbc3c4fe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_boxes_hard_20261014\\prefix_ledger.json",
+      "bytes": 63988,
+      "sha256": "7bd74590593d1a40eba66a9a642d810ef0ebcc0e38e3b91eea736e94bcd7a523"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_boxes_hard_20261014\\matched_ledger.json",
+      "bytes": 513775,
+      "sha256": "72dba81157b3a75319cd35fa6b60ac6bcaab27e896b497033ecd8b523b925899"
+    }
+  ],
+  "native_runs": 61,
+  "native_frames": 257,
+  "ordinary_matrix_runs": 60,
+  "ordinary_matrix_frames": 256,
+  "fixed_capture_gate": {
+    "passed": true,
+    "restore": {
+      "passed": true,
+      "checkpoint_metadata": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\prefix_bunny_movement\\checkpoint\\checkpoint.json",
+        "bytes": 9569,
+        "sha256": "93834da7eee497819c4e35733b9dbb56eb463f2ec01ceb01a25fd39969c3ad26"
+      },
+      "report": {
+        "restored_buffers": 40,
+        "device_bytes_verified": true,
+        "context_verified": true,
+        "completed_physical_frames": 13,
+        "checkpoint": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\prefix_bunny_movement\\checkpoint",
+        "binary_id": "62fa83baa3805eff40e3b1d79b434276fd510f6e8b9de1837a5da744423b8541",
+        "scope": "Same-binary static-topology physical frame boundary; no mid-Newton restart"
+      }
+    },
+    "study": {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_study.json",
+      "bytes": 18637,
+      "sha256": "a8c80618c252481f91bf28d87131dced947ee7eceb8e56080699a68e5dc1c97a"
+    },
+    "system_unchanged": true,
+    "primary_restored_bitwise": true
+  },
+  "archived_primary_runner": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_20261014\\windows_runner_at_run.py",
+    "bytes": 17071,
+    "sha256": "215429f8978f9f5664db7c41eb4d01544adee5a09d741b40ff8ab9dde1cd3eb4"
+  },
+  "initial_problem_comparisons": [
+    {
+      "scene": "boxes",
+      "initial_problem_bytes_equal": {
+        "topology.bin": true,
+        "state_0000.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true
+      },
+      "end_state": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 12.460414508211521,
+              "max": 55.27397653265773
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 1.2742237344934049,
+              "max": 3.08428947571512
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 12.890098679343964,
+              "max": 55.27397653265773
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": false,
+          "reason": "No actual velocity export in frozen B0"
+        }
+      },
+      "speedup_certified": false
+    },
+    {
+      "scene": "mixed",
+      "initial_problem_bytes_equal": {
+        "topology.bin": true,
+        "state_0000.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true
+      },
+      "end_state": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 2.0586912616806856,
+              "max": 18.38823991066341
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 1.452477147794278,
+              "max": 10.75287272171769
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 2.778844997023187,
+              "max": 18.38823991066341
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.9355270816380097,
+              "max": 2.0831290620614595
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": false,
+          "reason": "No actual velocity export in frozen B0"
+        }
+      },
+      "speedup_certified": false
+    },
+    {
+      "scene": "bunny",
+      "initial_problem_bytes_equal": {
+        "topology.bin": true,
+        "state_0000.bin": true,
+        "masses.bin": true,
+        "boundary_types.bin": true,
+        "body_ids.bin": true
+      },
+      "end_state": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 4.878053107669773,
+              "max": 68.03808980258924
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 10.142231204368969,
+              "max": 68.03808980258924
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 1.4320473687009814e-14,
+              "max": 6.206335383118183e-14
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": false,
+          "reason": "No actual velocity export in frozen B0"
+        }
+      },
+      "speedup_certified": false
+    }
+  ],
+  "matched_comparisons": [
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_movement_only_r1",
+      "rule": "movement_only",
+      "repeat": 1,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.032352714093492496,
+                "max": 0.14232544725030427
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.027807857888507488,
+                "max": 0.13244921065318713
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03265093017740005,
+                "max": 0.14232544725030427
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008088178523373124,
+                "max": 0.003558136181257607
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006951964472126873,
+                "max": 0.003311230266329678
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008162732544350011,
+                "max": 0.003558136181257607
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.032386188663933745,
+                "max": 0.1446268856690278
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028013861263636027,
+                "max": 0.1446268856690278
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03267397586735593,
+                "max": 0.14056523347877775
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008096547165983436,
+                "max": 0.0036156721417256944
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007003465315909007,
+                "max": 0.0036156721417256944
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008168493966838981,
+                "max": 0.0035141308369694437
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_legacy_r1",
+      "rule": "legacy",
+      "repeat": 1,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03235681644523478,
+                "max": 0.1425065563617431
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.027852713979115717,
+                "max": 0.1338120988948933
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03265257279685937,
+                "max": 0.1425065563617431
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008089204111308694,
+                "max": 0.003562663909043577
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.000696317849477893,
+                "max": 0.003345302472372332
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008163143199214842,
+                "max": 0.003562663909043577
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.032390222107747675,
+                "max": 0.1459897624640203
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028056690925652807,
+                "max": 0.1459897624640203
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.032675651996451754,
+                "max": 0.1407459802185054
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008097555526936918,
+                "max": 0.003649744061600508
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007014172731413201,
+                "max": 0.003649744061600508
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008168912999112939,
+                "max": 0.0035186495054626357
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_gated_r1",
+      "rule": "gated",
+      "repeat": 1,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03227585993830706,
+                "max": 0.142733209790526
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.02778521011656315,
+                "max": 0.13304919470287832
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03257074425904273,
+                "max": 0.142733209790526
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008068964984576764,
+                "max": 0.00356833024476315
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006946302529140787,
+                "max": 0.0033262298675719583
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008142686064760681,
+                "max": 0.00356833024476315
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0323094433114291,
+                "max": 0.1452268360191792
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.02799168125394758,
+                "max": 0.1452268360191792
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.032593859285556435,
+                "max": 0.14097532094498003
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008077360827857274,
+                "max": 0.0036306709004794804
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006997920313486895,
+                "max": 0.0036306709004794804
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008148464821389109,
+                "max": 0.0035243830236245
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_compensated_r1",
+      "rule": "compensated",
+      "repeat": 1,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03234731513462861,
+                "max": 0.14245211563917656
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.02782087821433569,
+                "max": 0.13271987988619938
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.032644414696556004,
+                "max": 0.14245211563917656
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008086828783657153,
+                "max": 0.0035613028909794136
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006955219553583922,
+                "max": 0.0033179969971549846
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008161103674139003,
+                "max": 0.0035613028909794136
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03238084979814798,
+                "max": 0.14489750367357285
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028027517456815566,
+                "max": 0.14489750367357285
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03266747834768711,
+                "max": 0.14069226457759948
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008095212449536995,
+                "max": 0.0036224375918393215
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007006879364203891,
+                "max": 0.0036224375918393215
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008166869586921778,
+                "max": 0.003517306614439987
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_strict_r1",
+      "rule": "strict",
+      "repeat": 1,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.00018210877198575792,
+                "max": 0.012177858323542458
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0004664014871514221,
+                "max": 0.012177858323542458
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0001417472781828573,
+                "max": 0.0019390260633736064
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.552719299643945e-06,
+                "max": 0.00030444645808856143
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.1660037178785553e-05,
+                "max": 0.00030444645808856143
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 3.5436819545714267e-06,
+                "max": 4.847565158434016e-05
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_strict_r2",
+      "rule": "strict",
+      "repeat": 2,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.00018210877198575792,
+                "max": 0.012177858323542458
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0004664014871514221,
+                "max": 0.012177858323542458
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0001417472781828573,
+                "max": 0.0019390260633736064
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.552719299643945e-06,
+                "max": 0.00030444645808856143
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.1660037178785553e-05,
+                "max": 0.00030444645808856143
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 3.5436819545714267e-06,
+                "max": 4.847565158434016e-05
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_compensated_r2",
+      "rule": "compensated",
+      "repeat": 2,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0323365764104764,
+                "max": 0.14241262949387418
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.027837420529152404,
+                "max": 0.13717177666978794
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.032632018989956754,
+                "max": 0.14241262949387418
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008084144102619099,
+                "max": 0.0035603157373468542
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006959355132288101,
+                "max": 0.0034292944167446985
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008158004747489188,
+                "max": 0.0035603157373468542
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03237015854326889,
+                "max": 0.1493494549422515
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028044797161279042,
+                "max": 0.1493494549422515
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03265507765746258,
+                "max": 0.14065306291345733
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008092539635817222,
+                "max": 0.003733736373556288
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.000701119929031976,
+                "max": 0.003733736373556288
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008163769414365645,
+                "max": 0.0035163265728364334
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_gated_r2",
+      "rule": "gated",
+      "repeat": 2,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03236737567488145,
+                "max": 0.1531930622106716
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.027943165640155865,
+                "max": 0.1531930622106716
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03265830047875081,
+                "max": 0.14254902504655037
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008091843918720363,
+                "max": 0.0038298265552667906
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006985791410038966,
+                "max": 0.0038298265552667906
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008164575119687704,
+                "max": 0.0035637256261637595
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.032401423800555114,
+                "max": 0.16537071738296302
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028157633528026877,
+                "max": 0.16537071738296302
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03268138856250841,
+                "max": 0.14078825542785017
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008100355950138777,
+                "max": 0.004134267934574076
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007039408382006719,
+                "max": 0.004134267934574076
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008170347140627102,
+                "max": 0.0035197063856962545
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_legacy_r2",
+      "rule": "legacy",
+      "repeat": 2,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0323415294717941,
+                "max": 0.1480527881208307
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.027981330562557083,
+                "max": 0.1480527881208307
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03262854903462663,
+                "max": 0.14275717821570294
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008085382367948525,
+                "max": 0.0037013197030207677
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0006995332640639271,
+                "max": 0.0037013197030207677
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008157137258656657,
+                "max": 0.0035689294553925737
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03237524984695468,
+                "max": 0.16023036174913682
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.02818910433809968,
+                "max": 0.16023036174913682
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03265167328849127,
+                "max": 0.1409971878843647
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.000809381246173867,
+                "max": 0.00400575904372842
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.000704727608452492,
+                "max": 0.00400575904372842
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008162918322122819,
+                "max": 0.0035249296971091165
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "run": "matched_boxes_movement_only_r2",
+      "rule": "movement_only",
+      "repeat": 2,
+      "target_frame": 20,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03240160190059964,
+                "max": 0.1522361335567957
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028005890843289413,
+                "max": 0.1522361335567957
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.03269082047287245,
+                "max": 0.14241508714172013
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008100400475149909,
+                "max": 0.0038059033389198924
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007001472710822352,
+                "max": 0.0038059033389198924
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008172705118218113,
+                "max": 0.0035603771785430033
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.03243535463014882,
+                "max": 0.16441374047716786
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.028215401521773525,
+                "max": 0.16441374047716786
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.032713884107068276,
+                "max": 0.1406531968880698
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0008108838657537208,
+                "max": 0.004110343511929197
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0007053850380443381,
+                "max": 0.004110343511929197
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0008178471026767069,
+                "max": 0.0035163299222017446
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_movement_only_r1",
+      "rule": "movement_only",
+      "repeat": 1,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.3629252762377261,
+                "max": 4.984517770228517
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.754578103244725,
+                "max": 4.984517770228517
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.009073131905943152,
+                "max": 0.12461294425571293
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.018864452581118123,
+                "max": 0.12461294425571293
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06139498824133116,
+                "max": 1.1580104772004027
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.12764973069974378,
+                "max": 1.1580104772004027
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0015348747060332786,
+                "max": 0.02895026193001007
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0031912432674935935,
+                "max": 0.02895026193001007
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_legacy_r1",
+      "rule": "legacy",
+      "repeat": 1,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 5.235137593942513,
+                "max": 48.18748160975914
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 10.884665396726806,
+                "max": 48.18748160975914
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.13087843984856282,
+                "max": 1.2046870402439782
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.2721166349181701,
+                "max": 1.2046870402439782
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 5.45811251081877,
+                "max": 48.79237588595418
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 11.348264933225959,
+                "max": 48.79237588595418
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.13645281277046925,
+                "max": 1.2198093971488546
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.28370662333064894,
+                "max": 1.2198093971488546
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_gated_r1",
+      "rule": "gated",
+      "repeat": 1,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.36407433595630423,
+                "max": 5.004732736054994
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.7569671771388002,
+                "max": 5.004732736054994
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.009101858398907606,
+                "max": 0.12511831840137486
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.01892417942847001,
+                "max": 0.12511831840137486
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06406151578043687,
+                "max": 1.1738985757731621
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.13319385623866115,
+                "max": 1.1738985757731621
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0016015378945109214,
+                "max": 0.029347464394329045
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0033298464059665273,
+                "max": 0.029347464394329045
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_compensated_r1",
+      "rule": "compensated",
+      "repeat": 1,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.3929606693878621,
+                "max": 5.073760736464693
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.817026357685382,
+                "max": 5.073760736464693
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.009824016734696553,
+                "max": 0.12684401841161733
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.020425658942134547,
+                "max": 0.12684401841161733
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.04757974825129314,
+                "max": 0.9716138970239605
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.09892569776486186,
+                "max": 0.9716138970239605
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0011894937062823282,
+                "max": 0.024290347425599056
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.002473142444121546,
+                "max": 0.024290347425599056
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_strict_r1",
+      "rule": "strict",
+      "repeat": 1,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.39153422122391,
+                "max": 5.06555923560195
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.8140605500648985,
+                "max": 5.06555923560195
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.00978835553059775,
+                "max": 0.12663898089004874
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.020351513751622464,
+                "max": 0.12663898089004874
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_strict_r2",
+      "rule": "strict",
+      "repeat": 2,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.39153422122391,
+                "max": 5.06555923560195
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.8140605500648985,
+                "max": 5.06555923560195
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.00978835553059775,
+                "max": 0.12663898089004874
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.020351513751622464,
+                "max": 0.12663898089004874
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_compensated_r2",
+      "rule": "compensated",
+      "repeat": 2,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.3639534390690228,
+                "max": 4.971024451861104
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.7567158137043247,
+                "max": 4.971024451861104
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.009098835976725568,
+                "max": 0.12427561129652762
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.01891789534260812,
+                "max": 0.12427561129652762
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06455179598403275,
+                "max": 1.2743715242432112
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.13421322504626518,
+                "max": 1.2743715242432112
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0016137948996008185,
+                "max": 0.03185928810608029
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.003355330626156629,
+                "max": 0.03185928810608029
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_gated_r2",
+      "rule": "gated",
+      "repeat": 2,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.09958409111128008,
+                "max": 1.172070192864305
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.207050815978103,
+                "max": 1.172070192864305
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.002489602277782002,
+                "max": 0.02930175482160744
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.005176270399452574,
+                "max": 0.02930175482160744
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.3517893079258886,
+                "max": 4.713709512537771
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.7314246928963216,
+                "max": 4.713709512537771
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.008794732698147215,
+                "max": 0.11784273781344427
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.018285617322408042,
+                "max": 0.11784273781344427
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_legacy_r2",
+      "rule": "legacy",
+      "repeat": 2,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 5.2448597760539135,
+                "max": 48.17277377344732
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 10.904879325646474,
+                "max": 48.17277377344732
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.13112149440134785,
+                "max": 1.2043193443361826
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.27262198314116187,
+                "max": 1.2043193443361826
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 5.467557060282245,
+                "max": 48.777653122294346
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 11.367901620684128,
+                "max": 48.777653122294346
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.13668892650705614,
+                "max": 1.2194413280573586
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.28419754051710316,
+                "max": 1.2194413280573586
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "run": "matched_bunny_movement_only_r2",
+      "rule": "movement_only",
+      "repeat": 2,
+      "target_frame": 14,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.3625123859830491,
+                "max": 5.026715347841322
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.7537196401791257,
+                "max": 5.026715347841322
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.009062809649576226,
+                "max": 0.12566788369603304
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.018842991004478147,
+                "max": 0.12566788369603304
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.05684135559171564,
+                "max": 1.1363362868475508
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.11818202009209403,
+                "max": 1.1363362868475508
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0014210338897928906,
+                "max": 0.028408407171188768
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0029545505023023506,
+                "max": 0.028408407171188768
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_movement_only_r1",
+      "rule": "movement_only",
+      "repeat": 1,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.032256331788068394,
+                "max": 0.5110586567010362
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.06938291512163768,
+                "max": 0.5110586567010362
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.041539380109184,
+                "max": 0.45918415376062904
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.01188757749337136,
+                "max": 0.023984240400514285
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0008064082947017098,
+                "max": 0.012776466417525905
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0017345728780409425,
+                "max": 0.012776466417525905
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0010384845027296,
+                "max": 0.01147960384401542
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.00029718943733428386,
+                "max": 0.0005996060100128832
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.03227787107374466,
+                "max": 0.5108052222734761
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.06940714143503789,
+                "max": 0.5108052222734761
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.04156871276531398,
+                "max": 0.45949931485028717
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.011897262237278095,
+                "max": 0.024008389704559294
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0008069467768436157,
+                "max": 0.012770130556836904
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0017351785358759467,
+                "max": 0.012770130556836904
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.001039217819132848,
+                "max": 0.011487482871257122
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0002974315559319523,
+                "max": 0.0006002097426140082
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_legacy_r1",
+      "rule": "legacy",
+      "repeat": 1,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 1.2790093374876454,
+                "max": 18.85024228294592
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.5913178144987419,
+                "max": 13.0288240587379
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 1.5407552357956609,
+                "max": 18.85024228294592
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.9202935852545804,
+                "max": 2.070167547785651
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.03197523343719114,
+                "max": 0.4712560570736483
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.039782945362468555,
+                "max": 0.3257206014684475
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.03851888089489153,
+                "max": 0.4712560570736483
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.023007339631364507,
+                "max": 0.051754188694641275
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 1.2790288344332281,
+                "max": 18.850553485782733
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.5913378738654003,
+                "max": 13.028954678424418
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 1.540781063866827,
+                "max": 18.850553485782733
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.9203041063911103,
+                "max": 2.070191583565648
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.031975720860830704,
+                "max": 0.47126383714456827
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.039783446846635005,
+                "max": 0.3257238669606105
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.03851952659667066,
+                "max": 0.47126383714456827
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.023007602659777755,
+                "max": 0.0517547895891412
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_gated_r1",
+      "rule": "gated",
+      "repeat": 1,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.3049438240269337,
+                "max": 5.073049678703474
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47562591464768483,
+                "max": 3.4265941389711982
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.4119322083093116,
+                "max": 5.073049678703474
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09345572980363775,
+                "max": 0.20979844268051856
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007623595600673343,
+                "max": 0.1268262419675867
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011890647866192122,
+                "max": 0.08566485347427999
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010298305207732792,
+                "max": 0.1268262419675867
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.002336393245090944,
+                "max": 0.005244961067012912
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.3049651123425707,
+                "max": 5.073364862533257
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47564964484566563,
+                "max": 3.4267363908948814
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.41196070614052976,
+                "max": 5.073364862533257
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09346613294282062,
+                "max": 0.20982322723273525
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007624127808564268,
+                "max": 0.12683412156333151
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011891241121141639,
+                "max": 0.08566840977237204
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010299017653513246,
+                "max": 0.12683412156333151
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0023366533235705156,
+                "max": 0.0052455806808183545
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_compensated_r1",
+      "rule": "compensated",
+      "repeat": 1,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.30494962164207334,
+                "max": 5.074689819645597
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47415054680854424,
+                "max": 3.4252529438798804
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.4120970772456187,
+                "max": 5.074689819645597
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09319279120481747,
+                "max": 0.20914811320494703
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007623740541051834,
+                "max": 0.12686724549113962
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011853763670213607,
+                "max": 0.08563132359699702
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010302426931140472,
+                "max": 0.12686724549113962
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0023298197801204365,
+                "max": 0.0052287028301236495
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.3049709240295246,
+                "max": 5.075005001328383
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47417436197638857,
+                "max": 3.4253952916023644
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.41212559209326544,
+                "max": 5.075005001328383
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09320319225002481,
+                "max": 0.20917289721790963
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007624273100738113,
+                "max": 0.1268751250332095
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011854359049409716,
+                "max": 0.08563488229005908
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010303139802331636,
+                "max": 0.1268751250332095
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.00233007980625062,
+                "max": 0.005229322430447741
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_strict_r1",
+      "rule": "strict",
+      "repeat": 1,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 2.4775980327003608e-05,
+                "max": 0.0003289939250403899
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 4.482645239833733e-05,
+                "max": 0.0003289939250403899
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 3.214652043916624e-05,
+                "max": 0.00031538768304897175
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.0729223906884272e-05,
+                "max": 2.4893202920015826e-05
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 6.193995081742773e-07,
+                "max": 8.22484812602841e-06
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.1206613099575676e-06,
+                "max": 8.22484812602841e-06
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 8.036630109779348e-07,
+                "max": 7.88469207647121e-06
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.6823059767211033e-07,
+                "max": 6.223300730256569e-07
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_strict_r2",
+      "rule": "strict",
+      "repeat": 2,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 2.4775980327003608e-05,
+                "max": 0.0003289939250403899
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 4.482645239833733e-05,
+                "max": 0.0003289939250403899
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 3.214652043916624e-05,
+                "max": 0.00031538768304897175
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.0729223906884272e-05,
+                "max": 2.4893202920015826e-05
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 6.193995081742773e-07,
+                "max": 8.22484812602841e-06
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.1206613099575676e-06,
+                "max": 8.22484812602841e-06
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 8.036630109779348e-07,
+                "max": 7.88469207647121e-06
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.6823059767211033e-07,
+                "max": 6.223300730256569e-07
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_compensated_r2",
+      "rule": "compensated",
+      "repeat": 2,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.3047024678080662,
+                "max": 5.069675237850726
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.4748512141815987,
+                "max": 3.4275661339386945
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.4116327538243308,
+                "max": 5.069675237850726
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0933795496575711,
+                "max": 0.20961055179212
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007617561695201658,
+                "max": 0.12674188094626812
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011871280354539968,
+                "max": 0.08568915334846736
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010290818845608273,
+                "max": 0.12674188094626812
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0023344887414392776,
+                "max": 0.005240263794803
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.30472376050374717,
+                "max": 5.069990422420377
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47487498153573443,
+                "max": 3.427708407987258
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.4116612555524495,
+                "max": 5.069990422420377
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0933899521706715,
+                "max": 0.2096353362105094
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007618094012593679,
+                "max": 0.12674976056050966
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011871874538393362,
+                "max": 0.08569271019968142
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.01029153138881124,
+                "max": 0.12674976056050966
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0023347488042667875,
+                "max": 0.005240883405262761
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_gated_r2",
+      "rule": "gated",
+      "repeat": 2,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.30515697597159624,
+                "max": 5.080352443953211
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.47435512959302306,
+                "max": 3.4267477595081393
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.41257853430324887,
+                "max": 5.080352443953211
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09239607548086233,
+                "max": 0.20744786139731503
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007628924399289906,
+                "max": 0.12700881109882992
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.011858878239825578,
+                "max": 0.08566869398770346
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010314463357581221,
+                "max": 0.12700881109882992
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0023099018870215583,
+                "max": 0.005186196534932823
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.30517827780922197,
+                "max": 5.080667623445612
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.4743788981471196,
+                "max": 3.4268900704604714
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.4126070593968793,
+                "max": 5.080667623445612
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.09240647705035972,
+                "max": 0.20747264698559068
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.007629456945230547,
+                "max": 0.12701669058614018
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.01185947245367799,
+                "max": 0.08567225176151175
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.010315176484921982,
+                "max": 0.12701669058614018
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.002310161926258993,
+                "max": 0.005186816174639741
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_legacy_r2",
+      "rule": "legacy",
+      "repeat": 2,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 1.279657051803685,
+                "max": 18.842551648775704
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.5895207978093784,
+                "max": 13.049824016518606
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 1.540343508035464,
+                "max": 18.842551648775704
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.9230069251152662,
+                "max": 2.0759958654622905
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.03199142629509212,
+                "max": 0.471063791219393
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.03973801994523446,
+                "max": 0.3262456004129652
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.03850858770088659,
+                "max": 0.471063791219393
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.023075173127881654,
+                "max": 0.05189989663655726
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 1.2796765546383964,
+                "max": 18.842862851223252
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 1.5895408804669222,
+                "max": 13.049954630700215
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 1.5403693514588597,
+                "max": 18.842862851223252
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.9230174460965356,
+                "max": 2.0760199002590527
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.031991913865959905,
+                "max": 0.4710715712805814
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.03973852201167306,
+                "max": 0.32624886576750556
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.03850923378647149,
+                "max": 0.4710715712805814
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.023075436152413392,
+                "max": 0.051900497506476316
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "run": "matched_mixed_movement_only_r2",
+      "rule": "movement_only",
+      "repeat": 2,
+      "target_frame": 15,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.03227035231960688,
+                "max": 0.5099831966588042
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.06926239000068433,
+                "max": 0.5099831966588042
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.041528505693425755,
+                "max": 0.45927067479333056
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.012042702022577019,
+                "max": 0.02429725078201352
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0008067588079901733,
+                "max": 0.012749579916470107
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0017315597500171087,
+                "max": 0.012749579916470107
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.001038212642335646,
+                "max": 0.011481766869833241
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.00030106755056442545,
+                "max": 0.000607431269550364
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.03229188054649527,
+                "max": 0.5097297596146368
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.06928674883763024,
+                "max": 0.5097297596146368
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.04155779888498081,
+                "max": 0.4595858353148258
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.012052385772399315,
+                "max": 0.024321400719091366
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 39475,
+                "rms": 0.0008072970136623823,
+                "max": 0.01274324399036592
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0017321687209407557,
+                "max": 0.01274324399036592
+              },
+              "fem": {
+                "count": 19193,
+                "rms": 0.0010389449721245213,
+                "max": 0.011489645882870868
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0003013096443099829,
+                "max": 0.0006080350179773101
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_movement_only_r1",
+      "rule": "movement_only",
+      "repeat": 1,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.282567404979133,
+                "max": 28.632152899394292
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768856549231107,
+                "max": 1.4946262964697052
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.428115206594277,
+                "max": 28.632152899394292
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10706418512447832,
+                "max": 0.7158038224848573
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016922141373077765,
+                "max": 0.03736565741174264
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11070288016485694,
+                "max": 0.7158038224848573
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.276385995138735,
+                "max": 28.600306310829772
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6776773398654159,
+                "max": 1.4728336901948107
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.42170452116853,
+                "max": 28.600306310829772
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10690964987846838,
+                "max": 0.7150076577707444
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0169419334966354,
+                "max": 0.03682084225487027
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11054261302921324,
+                "max": 0.7150076577707444
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_legacy_r1",
+      "rule": "legacy",
+      "repeat": 1,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.144293371635033,
+                "max": 27.73020386377373
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.7806106435331354,
+                "max": 2.2017980779012407
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.28365006966553,
+                "max": 27.73020386377373
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10360733429087583,
+                "max": 0.6932550965943433
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.019515266088328386,
+                "max": 0.05504495194753102
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.10709125174163826,
+                "max": 0.6932550965943433
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.1397596368535945,
+                "max": 27.69936133961135
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.7819150499721992,
+                "max": 2.1794395065160064
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.278935958264499,
+                "max": 27.69936133961135
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10349399092133987,
+                "max": 0.6924840334902839
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.01954787624930498,
+                "max": 0.05448598766290016
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.10697339895661245,
+                "max": 0.6924840334902839
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_gated_r1",
+      "rule": "gated",
+      "repeat": 1,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.282510737172617,
+                "max": 28.63215641694545
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768482556298717,
+                "max": 1.4942998122337858
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.4280569211125655,
+                "max": 28.63215641694545
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10706276842931542,
+                "max": 0.7158039104236362
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016921206390746797,
+                "max": 0.037357495305844646
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11070142302781413,
+                "max": 0.7158039104236362
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.27632660794758,
+                "max": 28.600309777107345
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6776394868678953,
+                "max": 1.4725076570337912
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.421643424948056,
+                "max": 28.600309777107345
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10690816519868952,
+                "max": 0.7150077444276836
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016940987171697383,
+                "max": 0.036812691425844785
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.1105410856237014,
+                "max": 0.7150077444276836
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_compensated_r1",
+      "rule": "compensated",
+      "repeat": 1,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.2824488882933265,
+                "max": 28.63212667253794
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768166188160054,
+                "max": 1.4943383764477698
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.427993207139911,
+                "max": 28.63212667253794
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10706122220733315,
+                "max": 0.7158031668134486
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016920415470400133,
+                "max": 0.03735845941119424
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11069983017849777,
+                "max": 0.7158031668134486
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.2762627284289705,
+                "max": 28.600279973987263
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6776074431894676,
+                "max": 1.472546012602839
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.421577612876609,
+                "max": 28.600279973987263
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10690656821072428,
+                "max": 0.7150069993496816
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016940186079736692,
+                "max": 0.03681365031507097
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11053944032191525,
+                "max": 0.7150069993496816
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_strict_r1",
+      "rule": "strict",
+      "repeat": 1,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.3052028873406598,
+                "max": 5.769238044086485
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0090527111893562,
+                "max": 0.0254109630517457
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.3158276377237747,
+                "max": 5.769238044086485
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.007630072183516494,
+                "max": 0.1442309511021621
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.000226317779733905,
+                "max": 0.0006352740762936424
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.007895690943094369,
+                "max": 0.1442309511021621
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_strict_r2",
+      "rule": "strict",
+      "repeat": 2,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.3052028873406598,
+                "max": 5.769238044086485
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0090527111893562,
+                "max": 0.0254109630517457
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.3158276377237747,
+                "max": 5.769238044086485
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.007630072183516494,
+                "max": 0.1442309511021621
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.000226317779733905,
+                "max": 0.0006352740762936424
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.007895690943094369,
+                "max": 0.1442309511021621
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_compensated_r2",
+      "rule": "compensated",
+      "repeat": 2,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.282544603842219,
+                "max": 28.632156817585063
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768649329974563,
+                "max": 1.4942935358728429
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.428091816051846,
+                "max": 28.632156817585063
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10706361509605547,
+                "max": 0.7158039204396266
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016921623324936404,
+                "max": 0.03735733839682107
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11070229540129617,
+                "max": 0.7158039204396266
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.276361746671036,
+                "max": 28.600310194226207
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6776564606377695,
+                "max": 1.4725014680223163
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.421679633815859,
+                "max": 28.600310194226207
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.1069090436667759,
+                "max": 0.7150077548556552
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016941411515944235,
+                "max": 0.03681253670055791
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11054199084539647,
+                "max": 0.7150077548556552
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_gated_r2",
+      "rule": "gated",
+      "repeat": 2,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.282472825243128,
+                "max": 28.63213834481095
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768393383458595,
+                "max": 1.4943561253160116
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.428017752403497,
+                "max": 28.63213834481095
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.1070618206310782,
+                "max": 0.7158034586202737
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.01692098345864649,
+                "max": 0.03735890313290029
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11070044381008742,
+                "max": 0.7158034586202737
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.276288216667202,
+                "max": 28.600291670393737
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.67763039868594,
+                "max": 1.4725638201569935
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.421603761713373,
+                "max": 28.600291670393737
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10690720541668006,
+                "max": 0.7150072917598433
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.0169407599671485,
+                "max": 0.03681409550392484
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11054009404283435,
+                "max": 0.7150072917598433
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_legacy_r2",
+      "rule": "legacy",
+      "repeat": 2,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.144303243135468,
+                "max": 27.730208463562935
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.7806198617562501,
+                "max": 2.201795681030395
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.283660178031098,
+                "max": 27.730208463562935
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.1036075810783867,
+                "max": 0.6932552115890733
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.019515496543906254,
+                "max": 0.05504489202575986
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.10709150445077742,
+                "max": 0.6932552115890733
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.139769367868041,
+                "max": 27.69936591812726
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.7819241657205311,
+                "max": 2.179437142455773
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.278945922141184,
+                "max": 27.69936591812726
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.10349423419670103,
+                "max": 0.6924841479531815
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.019548104143013282,
+                "max": 0.05448592856139434
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.10697364805352957,
+                "max": 0.6924841479531815
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "run": "boxes_hard_movement_only_r2",
+      "rule": "movement_only",
+      "repeat": 2,
+      "target_frame": 17,
+      "comparisons": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.282428035048364,
+                "max": 28.632117111365936
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6768230054764145,
+                "max": 1.4943209394261632
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.427971540244772,
+                "max": 28.632117111365936
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.1070607008762091,
+                "max": 0.7158029277841484
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.01692057513691036,
+                "max": 0.03735802348565408
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.1106992885061193,
+                "max": 0.7158029277841484
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 4.276242408751949,
+                "max": 28.60027039520321
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.6776137720761674,
+                "max": 1.4725286162060847
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 4.421556498952209,
+                "max": 28.60027039520321
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 16449,
+                "rms": 0.1069060602187987,
+                "max": 0.7150067598800802
+              },
+              "cloth_dynamic": {
+                "count": 1089,
+                "rms": 0.016940344301904182,
+                "max": 0.03681321540515212
+              },
+              "abd": {
+                "count": 15360,
+                "rms": 0.11053891247380522,
+                "max": 0.7150067598800802
+              }
+            }
+          }
+        }
+      ],
+      "reference_scope": "rho1e-6, same outer .01; a numerical reference, not exact physics"
+    }
+  ],
+  "reference_repeat_dispersion": [
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_20261014",
+      "kind": "cold_inner_only_reference",
+      "comparison": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.00018210877198575792,
+              "max": 0.012177858323542458
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0004664014871514221,
+              "max": 0.012177858323542458
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0001417472781828573,
+              "max": 0.0019390260633736064
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 4.552719299643945e-06,
+              "max": 0.00030444645808856143
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 1.1660037178785553e-05,
+              "max": 0.00030444645808856143
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 3.5436819545714267e-06,
+              "max": 4.847565158434016e-05
+            }
+          }
+        }
+      }
+    },
+    {
+      "scene": "Bunny",
+      "session": "innovation_m0_20261014",
+      "kind": "cold_inner_only_reference",
+      "comparison": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.39153422122391,
+              "max": 5.06555923560195
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.8140605500648985,
+              "max": 5.06555923560195
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.00978835553059775,
+              "max": 0.12663898089004874
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.020351513751622464,
+              "max": 0.12663898089004874
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "scene": "Mixed",
+      "session": "innovation_m0_20261014",
+      "kind": "cold_inner_only_reference",
+      "comparison": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 2.4775980327003608e-05,
+              "max": 0.0003289939250403899
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 4.482645239833733e-05,
+              "max": 0.0003289939250403899
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 3.214652043916624e-05,
+              "max": 0.00031538768304897175
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 1.0729223906884272e-05,
+              "max": 2.4893202920015826e-05
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 6.193995081742773e-07,
+              "max": 8.22484812602841e-06
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 1.1206613099575676e-06,
+              "max": 8.22484812602841e-06
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 8.036630109779348e-07,
+              "max": 7.88469207647121e-06
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.6823059767211033e-07,
+              "max": 6.223300730256569e-07
+            }
+          }
+        }
+      }
+    },
+    {
+      "scene": "Boxes",
+      "session": "innovation_m0_boxes_hard_20261014",
+      "kind": "cold_inner_only_reference",
+      "comparison": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.3052028873406598,
+              "max": 5.769238044086485
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0090527111893562,
+              "max": 0.0254109630517457
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.3158276377237747,
+              "max": 5.769238044086485
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.007630072183516494,
+              "max": 0.1442309511021621
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.000226317779733905,
+              "max": 0.0006352740762936424
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.007895690943094369,
+              "max": 0.1442309511021621
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outer_calibration": [
+    {
+      "label": "nominal",
+      "repeat_difference": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.026601445974352288,
+              "max": 0.39366475431141856
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05530854410301665,
+              "max": 0.39366475431141856
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 1.3883661468484526e-14,
+              "max": 6.206335383118183e-14
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.0006649475504419304,
+              "max": 0.009838575164732783
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0013825293916454433,
+              "max": 0.009838575164732783
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      "against_tighter": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.600457504418341,
+                "max": 24.084049798616405
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.406755659440969,
+                "max": 24.084049798616405
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.32646343241145e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0649308601228046,
+                "max": 0.6055596950120491
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.1350013583551593,
+                "max": 0.6055596950120491
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.600613487534162,
+                "max": 24.08888015110729
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.40707997260233,
+                "max": 24.08888015110729
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.1806772592757557e-14,
+                "max": 5.551115123125783e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06493475037458334,
+                "max": 0.6056804614209191
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.13500944679374582,
+                "max": 0.6056804614209191
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.6105526564038533,
+                "max": 24.229040349477366
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.427745050745324,
+                "max": 24.229040349477366
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4908801078036136e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06518297021110964,
+                "max": 0.6091768220594098
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.13552553444510865,
+                "max": 0.6091768220594098
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.6107082128491736,
+                "max": 24.233870615802992
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.428068476792347,
+                "max": 24.233870615802992
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.5842870527810123e-14,
+                "max": 6.206335383118183e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.06518684985880814,
+                "max": 0.6092975862633631
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.13553360083616284,
+                "max": 0.6092975862633631
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "scope": "Same pristine scene, physical time .24s; preliminary reference convergence, no checkpoint context bypass"
+    },
+    {
+      "label": "inner",
+      "repeat_difference": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.16896813004421318,
+              "max": 2.600287738833008
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.3513110257827691,
+              "max": 2.600287738833008
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 1.489601802434294e-14,
+              "max": 6.206335383118183e-14
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.0042242127835202545,
+              "max": 0.0650072292709403
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.00878279546394265,
+              "max": 0.0650072292709403
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      "against_tighter": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.8558172834278106,
+                "max": 25.83559299340275
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.937688361862449,
+                "max": 25.83559299340275
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.427211523505546e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.07138864315217265,
+                "max": 0.6458107978585205
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.14842809379773186,
+                "max": 0.6458107978585205
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.85597851221699,
+                "max": 25.83581779172968
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.938023581594699,
+                "max": 25.83581779172968
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.489601802434294e-14,
+                "max": 6.206335383118183e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.07139267315186333,
+                "max": 0.6458164204097323
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.1484364727939655,
+                "max": 0.6458164204097323
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.8178888950449417,
+                "max": 25.93898292798344
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.858829342557528,
+                "max": 25.93898292798344
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4943975377459334e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.07044051495639395,
+                "max": 0.6483946373564592
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.14645678779496424,
+                "max": 0.6483946373564592
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 2.8180523639127233,
+                "max": 25.93920765701423
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 5.859169219761643,
+                "max": 25.93920765701423
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.07044460094294448,
+                "max": 0.6484002581765682
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.14646528319658836,
+                "max": 0.6484002581765682
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "scope": "Same pristine scene, physical time .24s; preliminary reference convergence, no checkpoint context bypass"
+    },
+    {
+      "label": "inner_outer",
+      "repeat_difference": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.0010519146947453996,
+              "max": 0.011161510598465112
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0021870942783723557,
+              "max": 0.011161510598465112
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 1.4524936130476176e-14,
+              "max": 6.206335383118183e-14
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 2.62972877775217e-05,
+              "max": 0.00027903489115932163
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 5.46761518992275e-05,
+              "max": 0.00027903489115932163
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      "against_tighter": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.6214587920807622,
+                "max": 8.439254778270236
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 1.2921094982259966,
+                "max": 8.439254778270236
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4306662777791547e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.015536346254138994,
+                "max": 0.2109855182180522
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.032302480580389085,
+                "max": 0.2109855182180522
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.621764935824744,
+                "max": 8.446247379764731
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 1.29274601869117,
+                "max": 8.446247379764731
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.4882286293836368e-14,
+                "max": 6.206335383118183e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.015543999837630227,
+                "max": 0.21116033231634562
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.03231839357100166,
+                "max": 0.21116033231634562
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.6216754651009704,
+                "max": 8.436154459791116
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 1.2925599951390467,
+                "max": 8.436154459791116
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4760817191514695e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.015541763761813054,
+                "max": 0.2109080314072398
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.032313744421550494,
+                "max": 0.2109080314072398
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.6219814352885061,
+                "max": 8.443147061797385
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 1.2931961547533715,
+                "max": 8.443147061797385
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 1.8346832285027544e-14,
+                "max": 1.1443916996305594e-13
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.015549413006722489,
+                "max": 0.21108284551847525
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.03232964839157665,
+                "max": 0.21108284551847525
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "scope": "Same pristine scene, physical time .24s; preliminary reference convergence, no checkpoint context bypass"
+    },
+    {
+      "label": "tighter",
+      "repeat_difference": {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 0.0004235511471701941,
+              "max": 0.006999940092652293
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0008806287194211957,
+              "max": 0.006999940092652293
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.4943975377459334e-14,
+              "max": 7.850462293418876e-14
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 24969,
+              "rms": 1.0588838387035683e-05,
+              "max": 0.0001749978160090161
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 2.2015842127293936e-05,
+              "max": 0.0001749978160090161
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      "against_tighter": [
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0004235511471701941,
+                "max": 0.006999940092652293
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0008806287194211957,
+                "max": 0.006999940092652293
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4943975377459334e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 1.0588838387035683e-05,
+                "max": 0.0001749978160090161
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 2.2015842127293936e-05,
+                "max": 0.0001749978160090161
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0004235511471701941,
+                "max": 0.006999940092652293
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0008806287194211957,
+                "max": 0.006999940092652293
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 2.4943975377459334e-14,
+                "max": 7.850462293418876e-14
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 1.0588838387035683e-05,
+                "max": 0.0001749978160090161
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 2.2015842127293936e-05,
+                "max": 0.0001749978160090161
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        {
+          "position": {
+            "available": true,
+            "unit": "mm",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          },
+          "actual_velocity": {
+            "available": true,
+            "unit": "m/s",
+            "partitions": {
+              "free": {
+                "count": 24969,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "cloth_dynamic": {
+                "count": 5776,
+                "rms": 0.0,
+                "max": 0.0
+              },
+              "abd": {
+                "count": 19193,
+                "rms": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "scope": "Same pristine scene, physical time .24s; preliminary reference convergence, no checkpoint context bypass"
+    }
+  ],
+  "fixed_system": {
+    "system": {
+      "dofs": 17340,
+      "blocks": 41864,
+      "scalar_nnz": 464256,
+      "lower_blocks": 0,
+      "exact_zero_rows": [],
+      "active_dofs": 17340,
+      "diagonal_blocks_not_symmetrized": true,
+      "max_absolute_asymmetry": 7.105427357601002e-15,
+      "preconditioners": [
+        {
+          "kind": "abd",
+          "offset": 0,
+          "count": 1
+        },
+        {
+          "kind": "MAS_full_owned_buffers",
+          "offset": 4
+        }
+      ]
+    },
+    "input_evidence": {
+      "meta": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_meta.json",
+        "bytes": 6030,
+        "sha256": "7d2c22e4d61b5aa4a4eb75a1d9dda9981e7387f131e3a08dfeea617bbabb3b34"
+      },
+      "rows": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_rows.bin",
+        "bytes": 167456,
+        "sha256": "681ea84a11583d055d69292ca77b07589330fffdefe283e0883ba197c699f7c5"
+      },
+      "cols": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_cols.bin",
+        "bytes": 167456,
+        "sha256": "216a1722596c8bbdbcf4aada482c5fd25e136b51933e06bef621c5bebff2a063"
+      },
+      "values": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_values.bin",
+        "bytes": 3014208,
+        "sha256": "6dcd46f930b83101fa7f20f4288b6e3bf8730cec16f474d10a8d4f214dd7b0da"
+      },
+      "rhs": {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_rhs.bin",
+        "bytes": 138720,
+        "sha256": "d9ba9d3af02f2635e01d37d5d57735c5ee317e6733676d07869b7666308c1c91"
+      }
+    },
+    "preconditioner_evidence": [
+      {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_abd_inverse_0.bin",
+        "bytes": 1152,
+        "sha256": "b3a86fd994de1b2b3bb491e050c00b9321bba49ae7d51465dbb3e37c380ec0f9"
+      },
+      {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_mas_d_partId_map_real.bin",
+        "bytes": 24704,
+        "sha256": "9396345147f99a210a7f884bdfb1f4c513189c7f13362623ef1c7520d5380633"
+      },
+      {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_mas_d_real_map_partId.bin",
+        "bytes": 23104,
+        "sha256": "df19d4afcda0c0fcd2aa402cbd8cafad315ec496b35a66341186f2215c46dff1"
+      },
+      {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_mas_d_coarseTable.bin",
+        "bytes": 138624,
+        "sha256": "d881d809873dd52db27d0eb166a1f81dfababb51e6f4ab064fd774687fdd85a5"
+      },
+      {
+        "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_mas_d_precondMatMas.bin",
+        "bytes": 2036736,
+        "sha256": "304c9f426c2f6daae8b1aeb9acd1575bf924f9276a075c1314ab2407817c585a"
+      }
+    ],
+    "rows": [
+      {
+        "rho_tolerance": 0.0001,
+        "mode": "host",
+        "iterations": [
+          225,
+          224
+        ],
+        "true_L2_relative": 0.05033947759521503,
+        "true_common_weighted_relative": 0.009741096585595709,
+        "solve_ms": [
+          46.7929,
+          41.4393
+        ],
+        "solution": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_p1_m0_x.bin",
+          "bytes": 138720,
+          "sha256": "07454fb1439485b8f9cf280cc5e385e7761a16bedcaa7e0d7c5cce550c59ab91"
+        }
+      },
+      {
+        "rho_tolerance": 0.0001,
+        "mode": "graph",
+        "iterations": [
+          224,
+          224
+        ],
+        "true_L2_relative": 0.05282743672792939,
+        "true_common_weighted_relative": 0.009655142555280596,
+        "solve_ms": [
+          18.3188,
+          18.0169
+        ],
+        "solution": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_p1_m1_x.bin",
+          "bytes": 138720,
+          "sha256": "faf6e688004a84f80040dab35ef8caea0e264a78b419785d6e8097d3dec481d6"
+        }
+      },
+      {
+        "rho_tolerance": 1e-16,
+        "mode": "host",
+        "iterations": [
+          790,
+          791
+        ],
+        "true_L2_relative": 5.395801229174905e-08,
+        "true_common_weighted_relative": 1.0488234722531915e-08,
+        "solve_ms": [
+          155.596,
+          151.3762
+        ],
+        "solution": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_p3_m0_x.bin",
+          "bytes": 138720,
+          "sha256": "92dd1735a2453a09a6021d90ca49c467c23393c8170e41560a25882170e78396"
+        }
+      },
+      {
+        "rho_tolerance": 1e-16,
+        "mode": "graph",
+        "iterations": [
+          789,
+          791
+        ],
+        "true_L2_relative": 5.184997188665952e-08,
+        "true_common_weighted_relative": 9.711236584304097e-09,
+        "solve_ms": [
+          61.452,
+          61.4319
+        ],
+        "solution": {
+          "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_m0_fixed_20261014\\fixed_bunny_f14\\fixed\\f14_n1_p3_m1_x.bin",
+          "bytes": 138720,
+          "sha256": "58742358d8521558947a0d8b28564f870474f7dbc76cb739f7a7aaeb2deb9673"
+        }
+      }
+    ],
+    "cpu_native_residual_crosscheck_passed": true,
+    "scope": "Full saved A; fixed reference B from saved FP32 MAS coefficients. CPU reduction order differs from GPU. Not an error bound on physical state."
+  },
+  "geometry_rest_scope": "J and stretch use pristine scene rest positions, including for cold restored states",
+  "legacy_origin_metadata_mismatches": 30,
+  "corrected_origin_integration": {
+    "passed": true,
+    "checked_runs": 11,
+    "solver_changed": false,
+    "parent_measurements_rewritten": false
+  },
+  "current_res_scope": "Maximum absolute raw ABD generalized-gradient scalar and free-FEM gradient component, normalized by the frozen reference. Not mass-normalized physical residual or velocity error.",
+  "quality_protocol": {
+    "status": "bounded calibration completed; global numerical/physical certification pending",
+    "execution_candidates": "Require accepted/failed branch agreement, complete typed contributions and preserved full CCD; no added physical deformation.",
+    "numerical_candidates": "Use common explicit L2/B_ref linear residual and independently calibrated outer solution. Reference dispersion must be below the accuracy to be distinguished.",
+    "mixed": "SNK1 has finite polynomial energy for negative J and its native IPC injective step is commented out. Nonpositive J is real geometric inversion; physical acceptability is not certified.",
+    "collision": "Native FullCCD retained; independent path CCD certification still pending"
+  },
+  "performance_certified": false,
+  "physical_quality_certified": false,
+  "all_native_jobs_closed": true
+}
