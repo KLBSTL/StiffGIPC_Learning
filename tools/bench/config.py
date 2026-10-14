@@ -37,6 +37,7 @@ DEFAULT = {
     'edge_query_order':'raw', 'edge_order_probe_frames':None,
     'fem_direct_pullback':False,
     'mas_pivot_only_sync':False,
+    'p2_lazy_scene':False, 'p2_merge_abd_energy':False, 'p2_audit':False,
 }
 PRESETS = {
     'base': {}, 'host': {}, 'graph': {'execution': 'conditional_graph'},
@@ -92,13 +93,16 @@ def expand(data):
                 'spmv_fused_quadratic','fixed_spmv_quadratic_study','bvh_eligibility','bvh_eligibility_validate',
                 'bounded_ccd','bounded_ccd_validate',
                 'contact_pool','contact_pool_validate',
-                'ipc_residual_shadow','ipc_residual_cpu_audit','fixed_graph_chunk_study'):
+                  'ipc_residual_shadow','ipc_residual_cpu_audit','fixed_graph_chunk_study',
+                  'p2_lazy_scene','p2_merge_abd_energy','p2_audit'):
         if not isinstance(c[key],bool):raise ValueError(key+' requires a boolean')
     interval=c['discrete_bvh_rebuild_interval']
     if isinstance(interval,bool) or not isinstance(interval,int) or not 1<=interval<=1024:
         raise ValueError('Discrete BVH rebuild interval must be an integer in [1,1024]')
     if c['discrete_bvh_validate'] and not c['discrete_bvh_refit']:
         raise ValueError('Discrete BVH validation requires the refit candidate')
+    if c['backend']!='ipc' and any(c[k] for k in ('p2_lazy_scene','p2_merge_abd_energy','p2_audit')):
+        raise ValueError('P2-A experiments are IPC-only')
     if c['bvh_eligibility_validate'] and not c['bvh_eligibility']:
         raise ValueError('BVH eligibility validation requires the eligibility candidate')
     if c['bvh_eligibility'] and c['backend']!='ipc':
@@ -244,7 +248,8 @@ def matches_requested(saved, requested):
             elif key=='mu_coordinates':expected.pop(key)
     if 'mu_coordinates' not in saved and requested.get('mu_coordinates')=='generalized':
         expected.pop('mu_coordinates')
-    for key in ('edge_query_order','edge_order_probe_frames','pcg_graph_chunk','fixed_graph_chunk_study'):
+    for key in ('edge_query_order','edge_order_probe_frames','pcg_graph_chunk','fixed_graph_chunk_study',
+                'p2_lazy_scene','p2_merge_abd_energy','p2_audit'):
         if key not in saved and expected[key]==DEFAULT[key]:expected.pop(key)
     return saved==expected
 
@@ -297,6 +302,9 @@ def environment(c, out):
         'GIPC_OUTPUT_PATH': str(out / 'output'), 'GIPC_RESOLVED_CONFIG': str(out / 'resolved_config.json'),
         'GIPC_CCD_BVH_REFIT': str(int(c['refit'])), 'GIPC_BATCHED_ENERGY': str(int(c['batch'])),
         'GIPC_ENERGY_REUSE': str(int(c['reuse'])),
+        'GIPC_P2_LAZY_SCENE':str(int(c['p2_lazy_scene'])),
+        'GIPC_P2_MERGE_ABD_ENERGY':str(int(c['p2_merge_abd_energy'])),
+        'GIPC_P2_AUDIT':str(int(c['p2_audit'])),
     })
     if c['edge_order_probe_frames'] is not None:
         env.update(GIPC_EDGE_ORDER_PROBE_FRAMES=c['edge_order_probe_frames'],

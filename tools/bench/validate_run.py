@@ -14,6 +14,10 @@ def validate(run):
     if req['binary']!='active':
         return {'passed':False,'scope':'configuration only','reason':'Frozen program has no resolved config contract'}
     r=read(run/'resolved_config.json')
+    for key in ('lazy_scene','merge_abd_energy','audit'):
+        wanted=c.get('p2_'+key,False)
+        if 'p2_execution' in r: check('p2_'+key,r['p2_execution'][key],wanted)
+        elif wanted: check('p2_execution_supported',False,True)
     chunk=c.get('pcg_graph_chunk',1)
     # Old saved requests/results predate the field and represent K=1. New
     # requests must receive explicit native confirmation, even at the default.

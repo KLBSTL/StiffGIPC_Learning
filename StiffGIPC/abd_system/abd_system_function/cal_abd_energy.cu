@@ -2,6 +2,11 @@
 #include <cuda_tools/cuda_all.h>
 #include "cuda_tools/cuda_tools.h"
 #include <abd_system/abd_energy.h>
+#include <gipc/cost_trace.h>
+#include <solver/p2_options.h>
+#include <core/GIPC.cuh>
+#include <fem/device_fem_data.cuh>
+#include <cstring>
 namespace gipc
 {
 __global__ void cal_abd_kinetic_energy_kernel(int                                  n,
@@ -116,8 +121,9 @@ __global__ void cal_abd_shape_energy_kernel(int                          n,
     V = kappa * volume * dt * dt * shape_energy(q);
 }
 
-Float ABDSystem::cal_abd_kinetic_energy(ABDSimData& sim_data)
+void ABDSystem::enqueue_kinetic_energy(ABDSimData& sim_data, Float* result)
 {
+    CostScope cost("abd.kinetic_enqueue");
     using namespace cudatool;
     auto& abd       = sim_data.device;
     auto  abd_count = sim_data.abd_fem_count_info().abd_body_num;
@@ -125,7 +131,7 @@ Float ABDSystem::cal_abd_kinetic_energy(ABDSimData& sim_data)
     auto& abd_body_count = sim_data.abd_fem_count_info().abd_body_num;
     auto  boundry_type   = sim_data.body_id_to_boundary_type();
     if(!abd_count)
-        return 0;
+        return;
     LaunchCudaKernal_default((int)abd_count,
                              256,
                              0,
@@ -141,19 +147,19 @@ Float ABDSystem::cal_abd_kinetic_energy(ABDSimData& sim_data)
                              parms.motor_speed,
                              parms.motor_strength);
     cudatool::DeviceReduce().Sum(m_kinetic_energy_per_affine_body.data(),
-                             m_kinetic_energy.data(),
+                             result,
                              abd_count);
-    return m_kinetic_energy;
 }
-Float ABDSystem::cal_abd_shape_energy(ABDSimData& sim_data)
+void ABDSystem::enqueue_shape_energy(ABDSimData& sim_data, Float* result)
 {
+    CostScope cost("abd.shape_enqueue");
     using namespace cudatool;
     auto& abd       = sim_data.device;
     auto  abd_count = sim_data.abd_fem_count_info().abd_body_num;
     auto  kappa     = parms.kappa;
     auto  dt        = parms.dt;
     if(!abd_count)
-        return 0;
+        return;
     m_shape_energy_per_affine_body.resize(abd_count);
 
     LaunchCudaKernal_default((int)abd_count,
@@ -168,8 +174,47 @@ Float ABDSystem::cal_abd_shape_energy(ABDSimData& sim_data)
                              dt);
 
     cudatool::DeviceReduce().Sum(
-        m_shape_energy_per_affine_body.data(), m_shape_energy.data(), abd_count);
+        m_shape_energy_per_affine_body.data(), result, abd_count);
+}
 
+Float ABDSystem::cal_abd_kinetic_energy(ABDSimData& sim_data)
+{
+    if(!sim_data.abd_fem_count_info().abd_body_num) return 0;
+    enqueue_kinetic_energy(sim_data,m_kinetic_energy.data());
+    CostScope cost("abd.kinetic_readback");
+    return m_kinetic_energy;
+}
+
+Float ABDSystem::cal_abd_shape_energy(ABDSimData& sim_data)
+{
+    if(!sim_data.abd_fem_count_info().abd_body_num) return 0;
+    enqueue_shape_energy(sim_data,m_shape_energy.data());
+    CostScope cost("abd.shape_readback");
     return m_shape_energy;
 }
+
+void ABDSystem::enqueue_abd_energies(ABDSimData& sim_data, Float* results)
+{
+    if(!sim_data.abd_fem_count_info().abd_body_num)
+    {
+        CUDA_SAFE_CALL(cudaMemsetAsync(results,0,2*sizeof(Float),cudaStreamPerThread));
+        return;
+    }
+    // Shared CUB scratch is safe: both reductions are serial on the per-thread
+    // default stream. There is no intervening host scalar readback.
+    enqueue_kinetic_energy(sim_data,results);
+    enqueue_shape_energy(sim_data,results+1);
+}
+
+std::array<Float,2> ABDSystem::cal_abd_energies(ABDSimData& sim_data)
+{
+    if(!sim_data.abd_fem_count_info().abd_body_num) return {0,0};
+    m_energy_pair.resize(2);
+    enqueue_abd_energies(sim_data,m_energy_pair.data());
+    std::array<Float,2> result;
+    CostScope cost("abd.pair_readback");
+    CUDA_SAFE_CALL(cudaMemcpy(result.data(),m_energy_pair.data(),sizeof(result),cudaMemcpyDeviceToHost));
+    return result;
+}
+#include <abd_system/abd_system_function/p2_abd_fixture.inl>
 }  // namespace gipc

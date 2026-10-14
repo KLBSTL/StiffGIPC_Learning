@@ -88,6 +88,7 @@ void discrete_prepare_swept_storage(Tree& tree)
         throw std::runtime_error("Swept BVH exceeds the legacy signed element-count range");
     if(n && !discrete_storage_matches(tree))
     {
+        tree.invalidate_scene();
         tree.swept_state = {};
         tree._indices.resize(n);
         tree._MChash.resize(n);
@@ -157,8 +158,8 @@ void discrete_refit(Tree& tree)
     discrete_leaf_bounds(tree);
     sortBvs(tree._indices, tree._bvs, tree._tempLeafBox, discrete_count(tree));
     calcInternalAABB(tree._nodes, tree._bvs, tree._flags, discrete_count(tree));
-    // Keep the public host scene box current, matching Construct's contract.
-    CUDA_SAFE_CALL(cudaMemcpy(&tree.scene, tree._bvs.data(), sizeof(AABB), cudaMemcpyDeviceToHost));
+    tree.mark_scene_changed();
+    if(!gipc::p2_options().lazy_scene) tree.host_scene();
 }
 
 template <typename Tree>

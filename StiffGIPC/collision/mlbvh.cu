@@ -17,6 +17,7 @@
 #include <math/gpu_eigen_libs.cuh>
 #include <limits>
 #include <gipc/cost_trace.h>
+#include <solver/p2_options.h>
 
 __device__ __host__ inline AABB merge(const AABB& lhs, const AABB& rhs) noexcept
 {
@@ -2224,8 +2225,9 @@ __global__ void _selfQuery_ee_ccd_pool(const int*     _bodyID,
 ///////////////////////////////////////host//////////////////////////////////////////////
 
 
-AABB calcMaxBV(AABB* _leafBoxes, AABB* _tempLeafBox, const int& number)
+void calcMaxBVDevice(AABB* _leafBoxes, AABB* _tempLeafBox, const int& number)
 {
+    gipc::CostScope cost("bvh.root_reduce");
     if(number <= 0)
     {
         std::cerr << "Cannot reduce an empty BVH." << std::endl;
@@ -2236,9 +2238,19 @@ AABB calcMaxBV(AABB* _leafBoxes, AABB* _tempLeafBox, const int& number)
     cudatool::DeviceReduce().Reduce(leaves, _tempLeafBox, number, MergeAABB{}, AABB{});
     CUDA_SAFE_CALL(cudaMemcpy(
         _leafBoxes, _tempLeafBox, sizeof(AABB), cudaMemcpyDeviceToDevice));
-    AABB h_bv;
-    CUDA_SAFE_CALL(cudaMemcpy(&h_bv, _tempLeafBox, sizeof(AABB), cudaMemcpyDeviceToHost));
-    return h_bv;
+}
+
+void reduce_scene(lbvh& tree, int number)
+{
+    calcMaxBVDevice(tree._bvs,tree._tempLeafBox,number);
+    if(gipc::p2_options().lazy_scene) tree.mark_scene_changed();
+    else
+    {
+        gipc::CostScope cost("bvh.scene_readback");
+        AABB bounds;
+        CUDA_SAFE_CALL(cudaMemcpy(&bounds,tree._tempLeafBox.data(),sizeof(AABB),cudaMemcpyDeviceToHost));
+        tree.cache_reduced_scene(bounds);
+    }
 }
 
 template <class element_type>
@@ -2486,9 +2498,12 @@ void fullCCDselfQuery_vf(const int*      _bodyID,
 #include <collision/discrete_bvh.inl>
 #include <collision/ipc_contact_pool.inl>
 #include <collision/bvh_query_probe.inl>
+#include <collision/p2_scene_fixture.inl>
 
 void LBVHStorage::release()
 {
+    scene_current=false;
+    scene_source_valid=false;
     indices.release(); morton_codes.release();
     sort_indices.release(); sort_morton_codes.release();
     nodes.release(); bvs.release(); flags.release(); temp_leaf_box.release();
@@ -2516,9 +2531,31 @@ bool lbvh::select_storage(bool swept)
     std::swap(_sort_morton_codes, alternate_storage.sort_morton_codes);
     std::swap(_sort_indices, alternate_storage.sort_indices);
     std::swap(_flags, alternate_storage.flags);
-    std::swap(scene, alternate_storage.scene);
+    std::swap(host_scene_cache, alternate_storage.scene);
+    std::swap(host_scene_current, alternate_storage.scene_current);
+    std::swap(host_scene_source_valid, alternate_storage.scene_source_valid);
     swept_storage_active = swept;
     return true;
+}
+
+const AABB& lbvh::host_scene()
+{
+    if(!_bvs.size() || !host_scene_source_valid)
+        throw std::runtime_error("Host scene requested without current root bounds");
+    if(!host_scene_current)
+    {
+        gipc::CostScope cost("bvh.scene_readback");
+        CUDA_SAFE_CALL(cudaMemcpy(&host_scene_cache,_bvs.data(),sizeof(AABB),cudaMemcpyDeviceToHost));
+        host_scene_current=true;
+    }
+    return host_scene_cache;
+}
+
+void lbvh::mark_scene_changed() { host_scene_current=false;host_scene_source_valid=true; }
+void lbvh::invalidate_scene() { host_scene_current=false;host_scene_source_valid=false; }
+void lbvh::cache_reduced_scene(const AABB& bounds)
+{
+    host_scene_cache=bounds;host_scene_current=true;host_scene_source_valid=true;
 }
 
 size_t lbvh::swept_cache_capacity_bytes() const
@@ -2534,6 +2571,7 @@ void lbvh::FREE_DEVICE_MEM()
 {
     invalidate_discrete_topology();
     select_storage(false);
+    invalidate_scene();
     alternate_storage.release();
     _indices.release();
     _MChash.release();
@@ -2549,6 +2587,7 @@ void lbvh::MALLOC_DEVICE_MEM(const int& number)
 {
     invalidate_discrete_topology();
     select_storage(false);
+    invalidate_scene();
     alternate_storage.release();
     if(number <= 0)
     {
@@ -2636,7 +2675,8 @@ AABB* lbvh_f::getSceneSize()
     }
     calcLeafBvs(_vertexes, _faces, _bvs, face_number, 0);
 
-    calcMaxBV(_bvs, _tempLeafBox, face_number);
+    // The legacy eager readback was discarded here. Keep it with flags off.
+    reduce_scene(*this,face_number);
     return _bvs;
 }
 
@@ -2664,7 +2704,7 @@ double lbvh_f::ConstructRebuild()
     }
     calcLeafBvs(_vertexes, _faces, _bvs, face_number, 0);
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
-    scene = calcMaxBV(_bvs, _tempLeafBox, face_number);
+    reduce_scene(*this,face_number);
     calcMChash(_MChash, _bvs, face_number);
     sort_morton_codes(face_number);
     sortBvs(_indices, _bvs, _tempLeafBox, face_number);
@@ -2698,6 +2738,7 @@ void lbvh_f::RefitFullCCD(const double3* moveDir, const double& alpha)
     calcLeafBvs_fullCCD(_vertexes,moveDir,alpha,_faces,_bvs,face_number,0);
     sortBvs(_indices,_bvs,_tempLeafBox,face_number);
     calcInternalAABB(_nodes,_bvs,_flags,face_number);
+    mark_scene_changed();
 }
 
 double lbvh_f::ConstructFullCCD(const double3* moveDir, const double& alpha)
@@ -2718,7 +2759,7 @@ double lbvh_f::ConstructFullCCD(const double3* moveDir, const double& alpha)
         std::abort();
     }
     calcLeafBvs_fullCCD(_vertexes, moveDir, alpha, _faces, _bvs, face_number, 0);
-    scene = calcMaxBV(_bvs, _tempLeafBox, face_number);
+    reduce_scene(*this,face_number);
     calcMChash(_MChash, _bvs, face_number);
     sort_morton_codes(face_number);
     sortBvs(_indices, _bvs, _tempLeafBox, face_number);
@@ -2763,7 +2804,7 @@ double lbvh_e::ConstructRebuild()
 
     cudaEventRecord(start);*/
     calcLeafBvs(_vertexes, _edges, _bvs, edge_number, 1);
-    scene = calcMaxBV(_bvs, _tempLeafBox, edge_number);
+    reduce_scene(*this,edge_number);
     calcMChash(_MChash, _bvs, edge_number);
     sort_morton_codes(edge_number);
     //cudaEventRecord(end0);
@@ -2815,6 +2856,7 @@ void lbvh_e::RefitFullCCD(const double3* moveDir, const double& alpha)
     calcLeafBvs_fullCCD(_vertexes,moveDir,alpha,_edges,_bvs,edge_number,1);
     sortBvs(_indices,_bvs,_tempLeafBox,edge_number);
     calcInternalAABB(_nodes,_bvs,_flags,edge_number);
+    mark_scene_changed();
 }
 
 double lbvh_e::ConstructFullCCD(const double3* moveDir, const double& alpha)
@@ -2832,7 +2874,7 @@ double lbvh_e::ConstructFullCCD(const double3* moveDir, const double& alpha)
     if(edge_number == 0)
         return 0;
     calcLeafBvs_fullCCD(_vertexes, moveDir, alpha, _edges, _bvs, edge_number, 1);
-    scene = calcMaxBV(_bvs, _tempLeafBox, edge_number);
+    reduce_scene(*this,edge_number);
     calcMChash(_MChash, _bvs, edge_number);
     sort_morton_codes(edge_number);
     sortBvs(_indices, _bvs, _tempLeafBox, edge_number);

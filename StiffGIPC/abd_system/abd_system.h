@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <abd_system/abd_sim_data.h>
 #include <cuda_tools/cuda_all.h>
 #include <cuda_tools/cuda_all.h>
@@ -22,6 +23,9 @@ class ABDSystem
 
     cudatool::DeviceVar<Float>      m_shape_energy;
     cudatool::DeviceBuffer<Float>   m_shape_energy_per_affine_body;
+    cudatool::DeviceBuffer<Float>   m_energy_pair;
+    void enqueue_kinetic_energy(ABDSimData& sim_data, Float* result);
+    void enqueue_shape_energy(ABDSimData& sim_data, Float* result);
     cudatool::DeviceBuffer<Vector3> m_body_centered_positions;
 
     Float                     m_suggest_max_tolerance = 0.0f;
@@ -210,5 +214,9 @@ class ABDSystem
     // when doing line search, we need calculate abd energy from q
     Float cal_abd_kinetic_energy(ABDSimData& sim_data);
     Float cal_abd_shape_energy(ABDSimData& sim_data);
+    // Two original reductions, adjacent outputs. Caller owns the stable device
+    // range and must consume it on the same owner thread/default CUDA stream.
+    void enqueue_abd_energies(ABDSimData& sim_data, Float* results);
+    std::array<Float,2> cal_abd_energies(ABDSimData& sim_data);
 };
 }  // namespace gipc

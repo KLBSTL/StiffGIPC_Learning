@@ -1,6 +1,7 @@
 #pragma once
 #include <gipc/utils/json.h>
 #include <core/accel_features.h>
+#include <solver/p2_options.h>
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/ipc_options.h>
@@ -227,6 +228,10 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     bvh_query_probe_options().require_ipc(std::string(backend)=="ipc");
     result["bvh_query_probe"]=bvh_query_probe_options().json();
     result["acceleration_features"]=Json::object();
+    const auto& p2=p2_options();
+    if(std::string(backend)!="ipc" && (p2.lazy_scene || p2.merge_abd_energy || p2.audit))
+        throw std::runtime_error("P2-A experiments require the IPC backend");
+    result["p2_execution"]=p2.json();
     for(const char* name:{"GIPC_CCD_BVH_REFIT","GIPC_BATCHED_ENERGY","GIPC_ENERGY_REUSE",
         "GIPC_MAS_STATIC_TOPOLOGY"})
         result["acceleration_features"][name]=gipc_accel_feature(name);

@@ -1,0 +1,4091 @@
+{
+  "schema": "innovation_p2a_analysis.v1",
+  "seal": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\seal.json",
+    "bytes": 520210,
+    "sha256": "8d34597324b73e11c988504b68852de81da0783967049ea8331a903bd452617d"
+  },
+  "binary": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\build\\innovation_p2a_20261014\\Release\\gipc.exe",
+    "bytes": 11862528,
+    "sha256": "abd50f5a9ebf03df2b3737a52d88bc67dc73a8b94bfd8d758cb08af17b5bcf18"
+  },
+  "power_guid": "52521609-efc9-4268-b9ba-67dea73f18b2",
+  "completed_runs": 61,
+  "frames": 108,
+  "paired": {
+    "matched": {
+      "Boxes/scene": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 570.1937,
+              "candidate_ms": 532.3345,
+              "speedup": 1.0711191929134782,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 507
+            },
+            {
+              "repeat": 2,
+              "control_ms": 533.2805,
+              "candidate_ms": 537.0424,
+              "speedup": 0.9929951527104749,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 503
+            },
+            {
+              "repeat": 3,
+              "control_ms": 554.9434,
+              "candidate_ms": 552.4616,
+              "speedup": 1.0044922579234468,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 511
+            }
+          ],
+          "geometric_mean": 1.0222972076280616,
+          "median": 1.0044922579234468,
+          "log_t_95_screening_interval": [
+            0.9237401978885295,
+            1.1313696027443494
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 109.1914234161377,
+              "candidate_ms": 98.45446443557739,
+              "speedup": 1.1090550747709964,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 507
+            },
+            {
+              "repeat": 2,
+              "control_ms": 99.0959038734436,
+              "candidate_ms": 99.68694543838501,
+              "speedup": 0.9940710234189418,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 503
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.76783990859985,
+              "candidate_ms": 103.64979124069214,
+              "speedup": 1.0300825368829454,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 511
+            }
+          ],
+          "geometric_mean": 1.0433119557619082,
+          "median": 1.0300825368829454,
+          "log_t_95_screening_interval": [
+            0.9081963342235849,
+            1.1985292122614588
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Boxes/abd": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 570.1937,
+              "candidate_ms": 557.4962,
+              "speedup": 1.0227759399974385,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 504
+            },
+            {
+              "repeat": 2,
+              "control_ms": 533.2805,
+              "candidate_ms": 569.2329,
+              "speedup": 0.9368406147993202,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 508
+            },
+            {
+              "repeat": 3,
+              "control_ms": 554.9434,
+              "candidate_ms": 552.8138,
+              "speedup": 1.0038522916757866,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 507
+            }
+          ],
+          "geometric_mean": 0.9871246781234806,
+          "median": 1.0038522916757866,
+          "log_t_95_screening_interval": [
+            0.8800257593702998,
+            1.1072575089820387
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 109.1914234161377,
+              "candidate_ms": 104.54803133010864,
+              "speedup": 1.0444139600426106,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 504
+            },
+            {
+              "repeat": 2,
+              "control_ms": 99.0959038734436,
+              "candidate_ms": 106.0423674583435,
+              "speedup": 0.9344935071576116,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 508
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.76783990859985,
+              "candidate_ms": 102.65174531936646,
+              "speedup": 1.0400976581199624,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 507
+            }
+          ],
+          "geometric_mean": 1.0050191992102728,
+          "median": 1.0400976581199624,
+          "log_t_95_screening_interval": [
+            0.8593298558742236,
+            1.1754084696076204
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Boxes/both": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 570.1937,
+              "candidate_ms": 573.7397,
+              "speedup": 0.9938194968903147,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 501
+            },
+            {
+              "repeat": 2,
+              "control_ms": 533.2805,
+              "candidate_ms": 533.3804,
+              "speedup": 0.9998127040288693,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 506
+            },
+            {
+              "repeat": 3,
+              "control_ms": 554.9434,
+              "candidate_ms": 537.1155,
+              "speedup": 1.0331919298549381,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 508
+            }
+          ],
+          "geometric_mean": 1.008793765427882,
+          "median": 0.9998127040288693,
+          "log_t_95_screening_interval": [
+            0.9577238077599006,
+            1.0625869931608625
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 109.1914234161377,
+              "candidate_ms": 107.16559982299805,
+              "speedup": 1.0189036742806052,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 508,
+              "candidate_P": 501
+            },
+            {
+              "repeat": 2,
+              "control_ms": 99.0959038734436,
+              "candidate_ms": 97.96544027328491,
+              "speedup": 1.0115394122356327,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 505,
+              "candidate_P": 506
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.76783990859985,
+              "candidate_ms": 98.96691155433655,
+              "speedup": 1.078823601057615,
+              "control_N": 19,
+              "candidate_N": 19,
+              "control_P": 506,
+              "candidate_P": 508
+            }
+          ],
+          "geometric_mean": 1.0359897501437583,
+          "median": 1.0189036742806052,
+          "log_t_95_screening_interval": [
+            0.9490764723294677,
+            1.1308622578838345
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Mixed/scene": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 518.6894,
+              "candidate_ms": 527.3643,
+              "speedup": 0.983550460279545,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 842
+            },
+            {
+              "repeat": 2,
+              "control_ms": 522.9012,
+              "candidate_ms": 517.0251,
+              "speedup": 1.0113652122498502,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 846
+            },
+            {
+              "repeat": 3,
+              "control_ms": 525.5136,
+              "candidate_ms": 537.2225,
+              "speedup": 0.9782047475673488,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 844
+            }
+          ],
+          "geometric_mean": 0.9909341780647144,
+          "median": 0.983550460279545,
+          "log_t_95_screening_interval": [
+            0.9478767396938903,
+            1.0359475068181383
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 111.25094318389893,
+              "candidate_ms": 109.51452922821045,
+              "speedup": 1.0158555578691306,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 842
+            },
+            {
+              "repeat": 2,
+              "control_ms": 106.40527820587158,
+              "candidate_ms": 106.4384651184082,
+              "speedup": 0.9996882056453962,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 846
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.12531185150146,
+              "candidate_ms": 112.96262550354004,
+              "speedup": 0.9394727802973709,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 844
+            }
+          ],
+          "geometric_mean": 0.9844498043302459,
+          "median": 0.9996882056453962,
+          "log_t_95_screening_interval": [
+            0.8884903002737858,
+            1.0907732104078358
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Mixed/abd": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 518.6894,
+              "candidate_ms": 527.6611,
+              "speedup": 0.982997230608813,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 839
+            },
+            {
+              "repeat": 2,
+              "control_ms": 522.9012,
+              "candidate_ms": 537.3181,
+              "speedup": 0.973168780281178,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 846
+            },
+            {
+              "repeat": 3,
+              "control_ms": 525.5136,
+              "candidate_ms": 524.4792,
+              "speedup": 1.0019722421785269,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 845
+            }
+          ],
+          "geometric_mean": 0.9859738216667612,
+          "median": 0.982997230608813,
+          "log_t_95_screening_interval": [
+            0.9503418825663777,
+            1.0229417379637138
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 111.25094318389893,
+              "candidate_ms": 108.44838523864746,
+              "speedup": 1.0258423206494431,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 839
+            },
+            {
+              "repeat": 2,
+              "control_ms": 106.40527820587158,
+              "candidate_ms": 107.39747142791748,
+              "speedup": 0.9907614843361389,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 846
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.12531185150146,
+              "candidate_ms": 110.0252799987793,
+              "speedup": 0.9645538902757521,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 845
+            }
+          ],
+          "geometric_mean": 0.9934028644613407,
+          "median": 0.9907614843361389,
+          "log_t_95_screening_interval": [
+            0.9200299777880495,
+            1.0726272783986837
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Mixed/both": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 518.6894,
+              "candidate_ms": 519.9164,
+              "speedup": 0.9976400052008362,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 842
+            },
+            {
+              "repeat": 2,
+              "control_ms": 522.9012,
+              "candidate_ms": 539.7938,
+              "speedup": 0.9687054575284118,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 844
+            },
+            {
+              "repeat": 3,
+              "control_ms": 525.5136,
+              "candidate_ms": 508.267,
+              "speedup": 1.033932165574393,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 847
+            }
+          ],
+          "geometric_mean": 0.9997372703087414,
+          "median": 0.9976400052008362,
+          "log_t_95_screening_interval": [
+            0.9218924211314072,
+            1.0841553599255673
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 111.25094318389893,
+              "candidate_ms": 104.77452850341797,
+              "speedup": 1.0618128735389125,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 841,
+              "candidate_P": 842
+            },
+            {
+              "repeat": 2,
+              "control_ms": 106.40527820587158,
+              "candidate_ms": 107.1689281463623,
+              "speedup": 0.9928743344391036,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 843,
+              "candidate_P": 844
+            },
+            {
+              "repeat": 3,
+              "control_ms": 106.12531185150146,
+              "candidate_ms": 100.77401638031006,
+              "speedup": 1.0531019370211088,
+              "control_N": 7,
+              "candidate_N": 7,
+              "control_P": 845,
+              "candidate_P": 847
+            }
+          ],
+          "geometric_mean": 1.035470095254386,
+          "median": 1.0531019370211088,
+          "log_t_95_screening_interval": [
+            0.945452179337119,
+            1.1340587515678195
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Bunny/scene": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 312.3421,
+              "candidate_ms": 319.1741,
+              "speedup": 0.9785947543989315,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1417
+            },
+            {
+              "repeat": 2,
+              "control_ms": 329.2153,
+              "candidate_ms": 322.1934,
+              "speedup": 1.0217940528887308,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1423
+            },
+            {
+              "repeat": 3,
+              "control_ms": 333.2992,
+              "candidate_ms": 326.9081,
+              "speedup": 1.0195501426853602,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1428
+            }
+          ],
+          "geometric_mean": 1.0064486336938585,
+          "median": 1.0195501426853602,
+          "log_t_95_screening_interval": [
+            0.9474207080734457,
+            1.0691542243403336
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 47.391071796417236,
+              "candidate_ms": 49.367520809173584,
+              "speedup": 0.9599645884508529,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1417
+            },
+            {
+              "repeat": 2,
+              "control_ms": 51.43788814544678,
+              "candidate_ms": 49.51612901687622,
+              "speedup": 1.038810770686771,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1423
+            },
+            {
+              "repeat": 3,
+              "control_ms": 52.79967975616455,
+              "candidate_ms": 50.635072231292725,
+              "speedup": 1.0427491742281763,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1428
+            }
+          ],
+          "geometric_mean": 1.013111325798503,
+          "median": 1.038810770686771,
+          "log_t_95_screening_interval": [
+            0.9021329774740876,
+            1.1377419782780105
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Bunny/abd": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 312.3421,
+              "candidate_ms": 332.4094,
+              "speedup": 0.9396307685643066,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1425
+            },
+            {
+              "repeat": 2,
+              "control_ms": 329.2153,
+              "candidate_ms": 308.5308,
+              "speedup": 1.0670419290391755,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1429
+            },
+            {
+              "repeat": 3,
+              "control_ms": 333.2992,
+              "candidate_ms": 329.6718,
+              "speedup": 1.0110030642596666,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1424
+            }
+          ],
+          "geometric_mean": 1.0045318909010454,
+          "median": 1.0110030642596666,
+          "log_t_95_screening_interval": [
+            0.8572540087198752,
+            1.1771123955944873
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 47.391071796417236,
+              "candidate_ms": 51.46233558654785,
+              "speedup": 0.920888476130593,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1425
+            },
+            {
+              "repeat": 2,
+              "control_ms": 51.43788814544678,
+              "candidate_ms": 46.5379843711853,
+              "speedup": 1.1052882680775347,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1429
+            },
+            {
+              "repeat": 3,
+              "control_ms": 52.79967975616455,
+              "candidate_ms": 51.3025918006897,
+              "speedup": 1.0291815267597206,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1424
+            }
+          ],
+          "geometric_mean": 1.0156050700884969,
+          "median": 1.0291815267597206,
+          "log_t_95_screening_interval": [
+            0.8081449269466231,
+            1.2763226297621577
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      },
+      "Bunny/both": {
+        "solver_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 312.3421,
+              "candidate_ms": 320.4582,
+              "speedup": 0.9746734519509878,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1432
+            },
+            {
+              "repeat": 2,
+              "control_ms": 329.2153,
+              "candidate_ms": 312.207,
+              "speedup": 1.0544776382336079,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1429
+            },
+            {
+              "repeat": 3,
+              "control_ms": 333.2992,
+              "candidate_ms": 338.6197,
+              "speedup": 0.9842876832033103,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1428
+            }
+          ],
+          "geometric_mean": 1.0038593166691074,
+          "median": 0.9842876832033103,
+          "log_t_95_screening_interval": [
+            0.9024160704616503,
+            1.116706096720817
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        },
+        "line_search_ms": {
+          "pairs": [
+            {
+              "repeat": 1,
+              "control_ms": 47.391071796417236,
+              "candidate_ms": 48.20134353637695,
+              "speedup": 0.9831898515578054,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1425,
+              "candidate_P": 1432
+            },
+            {
+              "repeat": 2,
+              "control_ms": 51.43788814544678,
+              "candidate_ms": 46.54636812210083,
+              "speedup": 1.1050891878505853,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1429,
+              "candidate_P": 1429
+            },
+            {
+              "repeat": 3,
+              "control_ms": 52.79967975616455,
+              "candidate_ms": 51.03446435928345,
+              "speedup": 1.0345886925441983,
+              "control_N": 9,
+              "candidate_N": 9,
+              "control_P": 1422,
+              "candidate_P": 1428
+            }
+          ],
+          "geometric_mean": 1.0397624952255298,
+          "median": 1.0345886925441983,
+          "log_t_95_screening_interval": [
+            0.898907020315415,
+            1.2026895129801893
+          ],
+          "limitations": "Three paired samples, normal-log assumption, WDDM desktop; not formal performance certification"
+        }
+      }
+    }
+  },
+  "costs": [
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.apply",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.1313,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        110,
+        175,
+        241,
+        306,
+        372,
+        437,
+        505,
+        571,
+        637,
+        703,
+        769,
+        835,
+        901,
+        967,
+        1035,
+        1101,
+        1167,
+        1233
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.4403,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.kinetic_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.8433,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.prepare",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.4069,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        95,
+        160,
+        226,
+        291,
+        357,
+        422,
+        490,
+        556,
+        622,
+        688,
+        754,
+        820,
+        886,
+        952,
+        1020,
+        1086,
+        1152,
+        1218
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.shape_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.25229999999999997,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "abd.shape_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.7198,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "bvh.root_reduce",
+      "calls": 6,
+      "cpu_inclusive_ms": 0.1558,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        460,
+        463,
+        990,
+        993
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "bvh.scene_readback",
+      "calls": 40,
+      "cpu_inclusive_ms": 3.5343,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        67,
+        69,
+        132,
+        134,
+        198,
+        200,
+        263,
+        265,
+        329,
+        331,
+        394,
+        396,
+        460,
+        463,
+        528,
+        530,
+        594,
+        596,
+        660,
+        662,
+        726,
+        728,
+        792,
+        794,
+        858,
+        860,
+        924,
+        926,
+        990,
+        993,
+        1058,
+        1060,
+        1124,
+        1126,
+        1190,
+        1192,
+        1256,
+        1258
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 2.7596,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 140,
+      "cpu_inclusive_ms": 0.7676999999999999,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.energy_evaluation",
+      "calls": 20,
+      "cpu_inclusive_ms": 8.1947,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        129,
+        195,
+        260,
+        326,
+        391,
+        457,
+        525,
+        591,
+        657,
+        723,
+        789,
+        855,
+        921,
+        987,
+        1055,
+        1121,
+        1187,
+        1253
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.energy_production",
+      "calls": 140,
+      "cpu_inclusive_ms": 1.5452,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        137,
+        203,
+        268,
+        334,
+        399,
+        467,
+        533,
+        599,
+        665,
+        731,
+        797,
+        863,
+        929,
+        997,
+        1063,
+        1129,
+        1195,
+        1261
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.line_search",
+      "calls": 19,
+      "cpu_inclusive_ms": 100.0467,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        92,
+        157,
+        223,
+        288,
+        354,
+        419,
+        487,
+        553,
+        619,
+        685,
+        751,
+        817,
+        883,
+        949,
+        1017,
+        1083,
+        1149,
+        1215
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "control",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.053,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        129,
+        195,
+        260,
+        326,
+        391,
+        457,
+        525,
+        591,
+        657,
+        723,
+        789,
+        855,
+        921,
+        987,
+        1055,
+        1121,
+        1187,
+        1253
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.apply",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.1182,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        106,
+        169,
+        233,
+        296,
+        360,
+        423,
+        489,
+        553,
+        617,
+        681,
+        745,
+        809,
+        873,
+        937,
+        1003,
+        1067,
+        1131,
+        1195
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.3429,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.kinetic_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.8873,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.prepare",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.3653,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        91,
+        154,
+        218,
+        281,
+        345,
+        408,
+        474,
+        538,
+        602,
+        666,
+        730,
+        794,
+        858,
+        922,
+        988,
+        1052,
+        1116,
+        1180
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.shape_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.23450000000000001,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "abd.shape_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.7681,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "bvh.root_reduce",
+      "calls": 6,
+      "cpu_inclusive_ms": 0.1766,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        446,
+        448,
+        960,
+        962
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 3.3325,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 140,
+      "cpu_inclusive_ms": 0.6789,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.energy_evaluation",
+      "calls": 20,
+      "cpu_inclusive_ms": 7.8749,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        125,
+        189,
+        252,
+        316,
+        379,
+        443,
+        509,
+        573,
+        637,
+        701,
+        765,
+        829,
+        893,
+        957,
+        1023,
+        1087,
+        1151,
+        1215
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.energy_production",
+      "calls": 140,
+      "cpu_inclusive_ms": 0.952,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        131,
+        195,
+        258,
+        322,
+        385,
+        451,
+        515,
+        579,
+        643,
+        707,
+        771,
+        835,
+        899,
+        965,
+        1029,
+        1093,
+        1157,
+        1221
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.line_search",
+      "calls": 19,
+      "cpu_inclusive_ms": 103.5147,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        88,
+        151,
+        215,
+        278,
+        342,
+        405,
+        471,
+        535,
+        599,
+        663,
+        727,
+        791,
+        855,
+        919,
+        985,
+        1049,
+        1113,
+        1177
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "scene",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.0764,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        125,
+        189,
+        252,
+        316,
+        379,
+        443,
+        509,
+        573,
+        637,
+        701,
+        765,
+        829,
+        893,
+        957,
+        1023,
+        1087,
+        1151,
+        1215
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "abd.apply",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.1217,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        106,
+        169,
+        233,
+        296,
+        360,
+        423,
+        489,
+        553,
+        617,
+        681,
+        745,
+        809,
+        873,
+        937,
+        1003,
+        1067,
+        1131,
+        1195
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.3175,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        133,
+        197,
+        260,
+        324,
+        387,
+        453,
+        517,
+        581,
+        645,
+        709,
+        773,
+        837,
+        901,
+        967,
+        1031,
+        1095,
+        1159,
+        1223
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "abd.prepare",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.4671,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        91,
+        154,
+        218,
+        281,
+        345,
+        408,
+        474,
+        538,
+        602,
+        666,
+        730,
+        794,
+        858,
+        922,
+        988,
+        1052,
+        1116,
+        1180
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "abd.shape_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.2552,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        133,
+        197,
+        260,
+        324,
+        387,
+        453,
+        517,
+        581,
+        645,
+        709,
+        773,
+        837,
+        901,
+        967,
+        1031,
+        1095,
+        1159,
+        1223
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "bvh.root_reduce",
+      "calls": 6,
+      "cpu_inclusive_ms": 0.172,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        446,
+        449,
+        960,
+        963
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "bvh.scene_readback",
+      "calls": 40,
+      "cpu_inclusive_ms": 3.9874,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        65,
+        67,
+        128,
+        130,
+        192,
+        194,
+        255,
+        257,
+        319,
+        321,
+        382,
+        384,
+        446,
+        449,
+        512,
+        514,
+        576,
+        578,
+        640,
+        642,
+        704,
+        706,
+        768,
+        770,
+        832,
+        834,
+        896,
+        898,
+        960,
+        963,
+        1026,
+        1028,
+        1090,
+        1092,
+        1154,
+        1156,
+        1218,
+        1220
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 3.2441999999999998,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        133,
+        197,
+        260,
+        324,
+        387,
+        453,
+        517,
+        581,
+        645,
+        709,
+        773,
+        837,
+        901,
+        967,
+        1031,
+        1095,
+        1159,
+        1223
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 140,
+      "cpu_inclusive_ms": 0.917,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        133,
+        197,
+        260,
+        324,
+        387,
+        453,
+        517,
+        581,
+        645,
+        709,
+        773,
+        837,
+        901,
+        967,
+        1031,
+        1095,
+        1159,
+        1223
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.energy_evaluation",
+      "calls": 20,
+      "cpu_inclusive_ms": 6.8391,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        125,
+        189,
+        252,
+        316,
+        379,
+        443,
+        509,
+        573,
+        637,
+        701,
+        765,
+        829,
+        893,
+        957,
+        1023,
+        1087,
+        1151,
+        1215
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.energy_production",
+      "calls": 140,
+      "cpu_inclusive_ms": 1.2622,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        133,
+        197,
+        260,
+        324,
+        387,
+        453,
+        517,
+        581,
+        645,
+        709,
+        773,
+        837,
+        901,
+        967,
+        1031,
+        1095,
+        1159,
+        1223
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.line_search",
+      "calls": 19,
+      "cpu_inclusive_ms": 106.2019,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        88,
+        151,
+        215,
+        278,
+        342,
+        405,
+        471,
+        535,
+        599,
+        663,
+        727,
+        791,
+        855,
+        919,
+        985,
+        1049,
+        1113,
+        1177
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "abd",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.0762,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        125,
+        189,
+        252,
+        316,
+        379,
+        443,
+        509,
+        573,
+        637,
+        701,
+        765,
+        829,
+        893,
+        957,
+        1023,
+        1087,
+        1151,
+        1215
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "abd.apply",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.1311,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        102,
+        163,
+        225,
+        286,
+        348,
+        409,
+        473,
+        535,
+        597,
+        659,
+        721,
+        783,
+        845,
+        907,
+        971,
+        1033,
+        1095,
+        1157
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.3807,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        127,
+        189,
+        250,
+        312,
+        373,
+        437,
+        499,
+        561,
+        623,
+        685,
+        747,
+        809,
+        871,
+        935,
+        997,
+        1059,
+        1121,
+        1183
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "abd.prepare",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.4249,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        87,
+        148,
+        210,
+        271,
+        333,
+        394,
+        458,
+        520,
+        582,
+        644,
+        706,
+        768,
+        830,
+        892,
+        956,
+        1018,
+        1080,
+        1142
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "abd.shape_enqueue",
+      "calls": 20,
+      "cpu_inclusive_ms": 0.2338,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        127,
+        189,
+        250,
+        312,
+        373,
+        437,
+        499,
+        561,
+        623,
+        685,
+        747,
+        809,
+        871,
+        935,
+        997,
+        1059,
+        1121,
+        1183
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "bvh.root_reduce",
+      "calls": 6,
+      "cpu_inclusive_ms": 0.1722,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        432,
+        434,
+        930,
+        932
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 2.9885,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        127,
+        189,
+        250,
+        312,
+        373,
+        437,
+        499,
+        561,
+        623,
+        685,
+        747,
+        809,
+        871,
+        935,
+        997,
+        1059,
+        1121,
+        1183
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 140,
+      "cpu_inclusive_ms": 0.8109,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        127,
+        189,
+        250,
+        312,
+        373,
+        437,
+        499,
+        561,
+        623,
+        685,
+        747,
+        809,
+        871,
+        935,
+        997,
+        1059,
+        1121,
+        1183
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.energy_evaluation",
+      "calls": 20,
+      "cpu_inclusive_ms": 6.4087,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        121,
+        183,
+        244,
+        306,
+        367,
+        429,
+        493,
+        555,
+        617,
+        679,
+        741,
+        803,
+        865,
+        927,
+        991,
+        1053,
+        1115,
+        1177
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.energy_production",
+      "calls": 140,
+      "cpu_inclusive_ms": 1.1708,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        127,
+        189,
+        250,
+        312,
+        373,
+        437,
+        499,
+        561,
+        623,
+        685,
+        747,
+        809,
+        871,
+        935,
+        997,
+        1059,
+        1121,
+        1183
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.line_search",
+      "calls": 19,
+      "cpu_inclusive_ms": 97.2787,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        84,
+        145,
+        207,
+        268,
+        330,
+        391,
+        455,
+        517,
+        579,
+        641,
+        703,
+        765,
+        827,
+        889,
+        953,
+        1015,
+        1077,
+        1139
+      ]
+    },
+    {
+      "scene": "Boxes",
+      "arm": "both",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 19,
+      "cpu_inclusive_ms": 0.0507,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        121,
+        183,
+        244,
+        306,
+        367,
+        429,
+        493,
+        555,
+        617,
+        679,
+        741,
+        803,
+        865,
+        927,
+        991,
+        1053,
+        1115,
+        1177
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.apply",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0636,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        114,
+        182,
+        250,
+        318,
+        386,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.21259999999999998,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.kinetic_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.2465,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.prepare",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.2003,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        99,
+        167,
+        235,
+        303,
+        371,
+        439
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.shape_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.109,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "abd.shape_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.275,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.1223,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        477,
+        480
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "bvh.scene_readback",
+      "calls": 16,
+      "cpu_inclusive_ms": 2.8727,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        69,
+        71,
+        137,
+        139,
+        205,
+        207,
+        273,
+        275,
+        341,
+        343,
+        409,
+        411,
+        477,
+        480
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 2.0784000000000002,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.3647,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.energy_evaluation",
+      "calls": 8,
+      "cpu_inclusive_ms": 4.602,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        134,
+        202,
+        270,
+        338,
+        406,
+        474
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.energy_production",
+      "calls": 64,
+      "cpu_inclusive_ms": 1.0135,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        74,
+        142,
+        210,
+        278,
+        346,
+        414,
+        484
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.line_search",
+      "calls": 7,
+      "cpu_inclusive_ms": 100.5339,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        96,
+        164,
+        232,
+        300,
+        368,
+        436
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "control",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0334,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        134,
+        202,
+        270,
+        338,
+        406,
+        474
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.apply",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0621,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        110,
+        176,
+        242,
+        308,
+        374,
+        440
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.257,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.kinetic_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.2841,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.prepare",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.1752,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        95,
+        161,
+        227,
+        293,
+        359,
+        425
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.shape_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.1291,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "abd.shape_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.361,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.1072,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        463,
+        465
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 2.0493,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.37279999999999996,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.energy_evaluation",
+      "calls": 8,
+      "cpu_inclusive_ms": 4.5116,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.energy_production",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.8419,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        70,
+        136,
+        202,
+        268,
+        334,
+        400,
+        468
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.line_search",
+      "calls": 7,
+      "cpu_inclusive_ms": 106.531,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        92,
+        158,
+        224,
+        290,
+        356,
+        422
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "scene",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0231,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "abd.apply",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.07100000000000001,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        110,
+        176,
+        242,
+        308,
+        374,
+        440
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.2741,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "abd.prepare",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.2098,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        95,
+        161,
+        227,
+        293,
+        359,
+        425
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "abd.shape_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.1223,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.09459999999999999,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        463,
+        466
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "bvh.scene_readback",
+      "calls": 16,
+      "cpu_inclusive_ms": 3.4568,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        67,
+        69,
+        133,
+        135,
+        199,
+        201,
+        265,
+        267,
+        331,
+        333,
+        397,
+        399,
+        463,
+        466
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 2.3755,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.3353,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.energy_evaluation",
+      "calls": 8,
+      "cpu_inclusive_ms": 4.2916,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.energy_production",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.9024,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.line_search",
+      "calls": 7,
+      "cpu_inclusive_ms": 105.62989999999999,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        92,
+        158,
+        224,
+        290,
+        356,
+        422
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "abd",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.024300000000000002,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "abd.apply",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0673,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        106,
+        170,
+        234,
+        298,
+        362,
+        426
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.2379,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "abd.prepare",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.1693,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        91,
+        155,
+        219,
+        283,
+        347,
+        411
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "abd.shape_enqueue",
+      "calls": 8,
+      "cpu_inclusive_ms": 0.1251,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.2316,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        449,
+        451
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 8,
+      "cpu_inclusive_ms": 1.9165999999999999,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.3225,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.energy_evaluation",
+      "calls": 8,
+      "cpu_inclusive_ms": 3.6749,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.energy_production",
+      "calls": 64,
+      "cpu_inclusive_ms": 0.8277,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.line_search",
+      "calls": 7,
+      "cpu_inclusive_ms": 102.8283,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        88,
+        152,
+        216,
+        280,
+        344,
+        408
+      ]
+    },
+    {
+      "scene": "Mixed",
+      "arm": "both",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 7,
+      "cpu_inclusive_ms": 0.0176,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.apply",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0725,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        110,
+        176,
+        242,
+        308,
+        374,
+        440,
+        508,
+        574
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.2052,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.kinetic_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.2886,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.prepare",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.16620000000000001,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        95,
+        161,
+        227,
+        293,
+        359,
+        425,
+        493,
+        559
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.shape_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.1435,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "abd.shape_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.2895,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.09419999999999999,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        463,
+        466
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "bvh.scene_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 2.6928,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        67,
+        69,
+        133,
+        135,
+        199,
+        201,
+        265,
+        267,
+        331,
+        333,
+        397,
+        399,
+        463,
+        466,
+        531,
+        533,
+        597,
+        599
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 1.438,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.3356,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.energy_evaluation",
+      "calls": 10,
+      "cpu_inclusive_ms": 3.4887,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460,
+        528,
+        594
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.energy_production",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.6143,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        72,
+        138,
+        204,
+        270,
+        336,
+        402,
+        470,
+        536,
+        602
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.line_search",
+      "calls": 9,
+      "cpu_inclusive_ms": 46.8306,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        92,
+        158,
+        224,
+        290,
+        356,
+        422,
+        490,
+        556
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "control",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0279,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        130,
+        196,
+        262,
+        328,
+        394,
+        460,
+        528,
+        594
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.apply",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0887,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        106,
+        170,
+        234,
+        298,
+        362,
+        426,
+        492,
+        556
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.2049,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.kinetic_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.2871,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.prepare",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.1839,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        91,
+        155,
+        219,
+        283,
+        347,
+        411,
+        477,
+        541
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.shape_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.1206,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "abd.shape_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.3076,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.107,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        449,
+        451
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 1.5876000000000001,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.3377,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.energy_evaluation",
+      "calls": 10,
+      "cpu_inclusive_ms": 3.7363,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446,
+        512,
+        576
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.energy_production",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.6981,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        68,
+        132,
+        196,
+        260,
+        324,
+        388,
+        454,
+        518,
+        582
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.line_search",
+      "calls": 9,
+      "cpu_inclusive_ms": 49.7099,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        88,
+        152,
+        216,
+        280,
+        344,
+        408,
+        474,
+        538
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "scene",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0254,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446,
+        512,
+        576
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "abd.apply",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0699,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        106,
+        170,
+        234,
+        298,
+        362,
+        426,
+        492,
+        556
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.1795,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        134,
+        198,
+        262,
+        326,
+        390,
+        456,
+        520,
+        584
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "abd.prepare",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.1678,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        91,
+        155,
+        219,
+        283,
+        347,
+        411,
+        477,
+        541
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "abd.shape_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.1242,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        134,
+        198,
+        262,
+        326,
+        390,
+        456,
+        520,
+        584
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.0859,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        449,
+        452
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "bvh.scene_readback",
+      "calls": 20,
+      "cpu_inclusive_ms": 2.8746,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        65,
+        67,
+        129,
+        131,
+        193,
+        195,
+        257,
+        259,
+        321,
+        323,
+        385,
+        387,
+        449,
+        452,
+        515,
+        517,
+        579,
+        581
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 1.6446,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        134,
+        198,
+        262,
+        326,
+        390,
+        456,
+        520,
+        584
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.3709,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        134,
+        198,
+        262,
+        326,
+        390,
+        456,
+        520,
+        584
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.energy_evaluation",
+      "calls": 10,
+      "cpu_inclusive_ms": 3.2687,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446,
+        512,
+        576
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.energy_production",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.7165,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        46,
+        70,
+        134,
+        198,
+        262,
+        326,
+        390,
+        456,
+        520,
+        584
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.line_search",
+      "calls": 9,
+      "cpu_inclusive_ms": 51.3271,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        88,
+        152,
+        216,
+        280,
+        344,
+        408,
+        474,
+        538
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "abd",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.036,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        126,
+        190,
+        254,
+        318,
+        382,
+        446,
+        512,
+        576
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "abd.apply",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0663,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        20,
+        102,
+        164,
+        226,
+        288,
+        350,
+        412,
+        476,
+        538
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "abd.kinetic_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.1896,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        128,
+        190,
+        252,
+        314,
+        376,
+        440,
+        502,
+        564
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "abd.prepare",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.166,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        5,
+        87,
+        149,
+        211,
+        273,
+        335,
+        397,
+        461,
+        523
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "abd.shape_enqueue",
+      "calls": 10,
+      "cpu_inclusive_ms": 0.0962,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        128,
+        190,
+        252,
+        314,
+        376,
+        440,
+        502,
+        564
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "bvh.root_reduce",
+      "calls": 4,
+      "cpu_inclusive_ms": 0.16399999999999998,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        37,
+        435,
+        437
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.energy_batch_readback",
+      "calls": 10,
+      "cpu_inclusive_ms": 1.6721,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        128,
+        190,
+        252,
+        314,
+        376,
+        440,
+        502,
+        564
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.energy_batch_reduce",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.3123,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        128,
+        190,
+        252,
+        314,
+        376,
+        440,
+        502,
+        564
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.energy_evaluation",
+      "calls": 10,
+      "cpu_inclusive_ms": 3.0899,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        122,
+        184,
+        246,
+        308,
+        370,
+        432,
+        496,
+        558
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.energy_production",
+      "calls": 70,
+      "cpu_inclusive_ms": 0.6217,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        44,
+        66,
+        128,
+        190,
+        252,
+        314,
+        376,
+        440,
+        502,
+        564
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.line_search",
+      "calls": 9,
+      "cpu_inclusive_ms": 49.2874,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        2,
+        84,
+        146,
+        208,
+        270,
+        332,
+        394,
+        458,
+        520
+      ]
+    },
+    {
+      "scene": "Bunny",
+      "arm": "both",
+      "scope": "ipc.line_search.entry_wait",
+      "calls": 9,
+      "cpu_inclusive_ms": 0.0295,
+      "gpu_interval_ms": null,
+      "parent_scope_ids": [
+        42,
+        122,
+        184,
+        246,
+        308,
+        370,
+        432,
+        496,
+        558
+      ]
+    }
+  ],
+  "abd_bitwise_audits": 77,
+  "included_whole": false,
+  "formal_performance_certified": false,
+  "physical_quality_certified": false,
+  "diagnostic_only": false,
+  "limitations": [
+    "Short event-selected scenes, three timing pairs",
+    "Shared WDDM desktop load",
+    "Native MAS atomic reduction changes directions across repeats",
+    "M0 Mixed nonpositive tet Jacobians are inherited; this patch does not repair material/injectivity"
+  ]
+}

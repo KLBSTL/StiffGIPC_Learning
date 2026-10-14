@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "verified_runs": 79,
+  "verified_frames": 384,
+  "restores": 54,
+  "buffers_per_restore": 40,
+  "abd_bitwise_pairs": 77,
+  "tree_validations": 140,
+  "power_samples": 512,
+  "independent_N_P_frame_time_and_ratio_recount": true,
+  "physics_kernels_and_line_search_source_verified": true,
+  "inherited_checkpoint_bytes_unchanged": true,
+  "summary": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\summary.json",
+    "bytes": 95236,
+    "sha256": "1f91dfbae5c8b6572c5836e2e73a0292ff33087b201418157a291d04996b555d"
+  },
+  "native_tests": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\build\\innovation_p2a_20261014\\p2_ctest_full.log",
+    "bytes": 3256,
+    "sha256": "b432a4e0c509542039af073f965b1fba9701e4b866851141ef7293bf8ab529ff"
+  },
+  "verifier": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\verify_p2a.py",
+    "bytes": 10352,
+    "sha256": "68f724f3e453efa9a5096d771f8d4bb02bc50f77dcf575b0c75fae3f6685ccd6"
+  },
+  "formal_performance_certified": false,
+  "physical_quality_certified": false
+}

@@ -7,6 +7,8 @@
 //
 
 #include "GIPC.cuh"
+#include <solver/p2_options.h>
+#include <cstring>
 #include <gipc/gipc.h>
 #include "cuda_tools/cuda_tools.h"
 #include "GIPC_PDerivative.cuh"
@@ -8647,7 +8649,7 @@ void GIPC::initBVH(int* _btype, int* _bodyId)
 
 void GIPC::init(double m_meanMass, double m_meanVolumn, double3 minConer, double3 maxConer)
 {
-    SceneSize     = bvh_f.scene;
+    SceneSize     = bvh_f.host_scene();
     bboxDiagSize2 = __GEIGEN__::__squaredNorm(
         __GEIGEN__::__minus(SceneSize.upper, SceneSize.lower));  //(maxConer - minConer).squaredNorm();
     dTol         = 1e-18 * bboxDiagSize2;
@@ -10909,6 +10911,19 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
 {
     gipc::CostScope cost("ipc.energy_evaluation");
     static thread_local bool auditing_energy=false;
+    const bool merge_abd=gipc::p2_options().merge_abd_energy && !auditing_energy;
+    auto audit_abd=[&](double kinetic,double shape) {
+        if(!gipc::p2_options().audit || !merge_abd) return;
+        gipc::CostScope audit_cost("abd.pair_audit");
+        const std::array<double,2> candidate={kinetic,shape};
+        const std::array<double,2> reference={m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data),
+            m_abd_system->cal_abd_shape_energy(*m_abd_sim_data)};
+        const bool equal=std::memcmp(candidate.data(),reference.data(),sizeof(candidate))==0;
+        auto& rows=gipc::Statistics::instance().at_current_frame()["p2_abd_energy_audit"];
+        if(rows.is_null()) rows=gipc::Json::array();
+        rows.push_back({{"kinetic",kinetic},{"shape",shape},{"bitwise_equal",equal}});
+        if(!equal) throw std::runtime_error("P2 ABD energy components differ bitwise");
+    };
     if(gipc_accel_feature("GIPC_BATCHED_ENERGY") && !auditing_energy)
     {
         const int types[9]={0,1,8,10,9,2,4,5,6};
@@ -10926,8 +10941,9 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
         int blocks[9],offsets[9],total=0,largest=0;
         for(int i=0;i<9;++i)
         {offsets[i]=total;blocks[i]=(counts[i]+255)/256;total+=blocks[i];largest=std::max(largest,blocks[i]);}
-        partials.resize(total);results.resize(9);
-        CUDA_SAFE_CALL(cudaMemsetAsync(results.data(),0,9*sizeof(double),cudaStreamPerThread));
+        const int result_count=merge_abd?11:9;
+        partials.resize(total);results.resize(result_count);
+        CUDA_SAFE_CALL(cudaMemsetAsync(results.data(),0,result_count*sizeof(double),cudaStreamPerThread));
         size_t bytes=0;
         if(largest)
         {CUDA_SAFE_CALL(cub::DeviceReduce::Sum(nullptr,bytes,partials.data(),results.data(),largest,cudaStreamPerThread));storage.resize(bytes);}
@@ -10938,14 +10954,19 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
             gipc::CostScope cost_reduce("ipc.energy_batch_reduce",true,types[i]);
             CUDA_SAFE_CALL(cub::DeviceReduce::Sum(storage.data(),required,partials.data()+offsets[i],results.data()+i,blocks[i],cudaStreamPerThread));
         }
-        double c[9];
+        if(merge_abd) m_abd_system->enqueue_abd_energies(*m_abd_sim_data,results.data()+9);
+        double c[11];
         {
             gipc::CostScope cost_readback("ipc.energy_batch_readback");
-            CUDA_SAFE_CALL(cudaMemcpy(c,results.data(),sizeof(c),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(c,results.data(),result_count*sizeof(double),cudaMemcpyDeviceToHost));
         }
         double energy=c[0];
-        energy+=m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
-        energy+=m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
+        if(merge_abd) { energy+=c[9];energy+=c[10];audit_abd(c[9],c[10]); }
+        else
+        {
+            energy+=m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
+            energy+=m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
+        }
         energy+=IPC_dt*IPC_dt*c[1];energy+=IPC_dt*IPC_dt*c[2];energy+=IPC_dt*IPC_dt*c[3];
         energy+=c[4];energy+=use_toi?toiContactEnergy():c[5];energy+=Kappa*c[6];
 #ifdef USE_FRICTION
@@ -10967,11 +10988,13 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
     Energy += fem_kinetic;
 
-    auto abd_kinetic = m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
+    const auto abd_pair=merge_abd?m_abd_system->cal_abd_energies(*m_abd_sim_data):std::array<double,2>{0,0};
+    if(merge_abd) audit_abd(abd_pair[0],abd_pair[1]);
+    auto abd_kinetic = merge_abd?abd_pair[0]:m_abd_system->cal_abd_kinetic_energy(*m_abd_sim_data);
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
     Energy += abd_kinetic;
 
-    auto abd_shape = m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
+    auto abd_shape = merge_abd?abd_pair[1]:m_abd_system->cal_abd_shape_energy(*m_abd_sim_data);
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
     Energy += abd_shape;
 
@@ -11133,7 +11156,7 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
                       const double* cached_energy,double* accepted_energy)
 {
     gipc::CostScope cost("ipc.line_search");
-    wait_device();
+    { gipc::CostScope cost_wait("ipc.line_search.entry_wait",false); wait_device(); }
     int energy_evaluations=cached_energy ? 0 : 1;
     int numOfLineSearch = 0;
     int numOfIntersect = 0;

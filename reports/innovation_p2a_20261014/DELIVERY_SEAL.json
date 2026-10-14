@@ -1,0 +1,2517 @@
+{
+  "schema": "innovation_p2a_delivery.v1",
+  "files": [
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\build\\innovation_p2a_20261014\\p2_ctest_full.log",
+      "bytes": 3256,
+      "sha256": "b432a4e0c509542039af073f965b1fba9701e4b866851141ef7293bf8ab529ff"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\build\\innovation_p2a_native_snapshot_20261014\\snapshot_identity.json",
+      "bytes": 655239,
+      "sha256": "445a7355000c174018055aded1c8aa37ae095023663e1ec868ed14fd8609fa90"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\docs\\research\\INNOVATION_TODO_20261014.md",
+      "bytes": 5510,
+      "sha256": "ed81dcc09fa19342dce660bc847d82a32fd78cd8b8d73f35821993f1b132493c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\costs.csv",
+      "bytes": 6698,
+      "sha256": "d1c2e17b8074d583d31a4ac121b295d572be9c83ba9bb57a625f60d7fa6a5c65"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\data_validation.json",
+      "bytes": 1236,
+      "sha256": "d039d5a93a36fc755d9f679a01a9c17b6dc48b41529b25dd4c82f01e1eed7813"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\geometry.csv",
+      "bytes": 106424,
+      "sha256": "2d802858d60b4954a3af52bda9e2612dc0a9ddeb0198694e1dc4d17f3661ac75"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\runs.csv",
+      "bytes": 10223,
+      "sha256": "c88bbd18b9a676dc48ff47d23b08e8dfa70dbc32fdf36a9ce0e1ec8243a365c0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\state_differences.json",
+      "bytes": 206997,
+      "sha256": "01bf26d9539abab14c00ea9918b2e03f0b038ee942bdcf39a963259f4dfbecfe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\analysis_v2\\summary.json",
+      "bytes": 95236,
+      "sha256": "1f91dfbae5c8b6572c5836e2e73a0292ff33087b201418157a291d04996b555d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\REPORT.md",
+      "bytes": 11815,
+      "sha256": "0415ae25a5d4f15a78ae3dc4c6164db0675919f9408ede3989b684c5d73abc5d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\run_innovation_p2a_before_path_fix.py",
+      "bytes": 9073,
+      "sha256": "00f05e11d551a6b380c8e986b6aa96b7133c8e545557f25b9398df7436f0d242"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\run_p2a_subset_before_path_fix.py",
+      "bytes": 1967,
+      "sha256": "5790d6f8f179ac8cfe1b6508f6b9d376ea10563a76c5cfe62e64c5c23a910c83"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\reports\\innovation_p2a_20261014\\SOURCE_AUDIT.md",
+      "bytes": 6052,
+      "sha256": "fd3f47371587c6b85aa482876ddc39652df1713c360f244f7c95976d05b7667e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\config_validation.json",
+      "bytes": 9116,
+      "sha256": "d7848abb597cab5400f1b04914d554b34a221be392293aa1090056966c369e2a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\evidence.json",
+      "bytes": 4157,
+      "sha256": "210dd76345a687918f7aa724faa1ef4bd505daf6851953a468a7287361f93d3c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\p2_validation.json",
+      "bytes": 36951,
+      "sha256": "59b01267705a356b692a061293bd747518535726d90f8178badc3ecafb71b4e6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\power_samples.json",
+      "bytes": 582,
+      "sha256": "ae30d4880ebb1949fe07f60a4aba796a7f5a53c87115969c06a826944e860a8e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\requested.json",
+      "bytes": 18473,
+      "sha256": "31ab8c59d76d2db149792875b089351b7898b024c30f4f763dda15cc682dc4da"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_both\\result.json",
+      "bytes": 32349,
+      "sha256": "ed366e50aad0eae255dad82e9d4e1c315a7c8bc0ee0d4a83e1e488be47b8c6e3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\config_validation.json",
+      "bytes": 9125,
+      "sha256": "d21468fd9a396c32ccba31c30b284b4fae805d00026c13bd3b405c0de4675c3c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\evidence.json",
+      "bytes": 4157,
+      "sha256": "c3b11617e5d9567c95abfd21e5a551750b3e992685e7a392550d5396fc0d37c7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\p2_validation.json",
+      "bytes": 36934,
+      "sha256": "edb5ab2e6ad4040092d599b1074657f046c04b72b516b37f47c726e247018b25"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\power_samples.json",
+      "bytes": 583,
+      "sha256": "f3dc135b14d5a29b20239aca5b2e755d3e6fda79d8bbe0a2de5c877ad1d51c5f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\requested.json",
+      "bytes": 18491,
+      "sha256": "976f54167bcc70fcd08b42305eca4cf35f68a1c936832560cbe59a34024ec124"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_control\\result.json",
+      "bytes": 32348,
+      "sha256": "3edd39cc0a1cbbfa3cc1d99fe28a659cef9ea73b0b5bf7fc8e53565a89dd02f6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\config_validation.json",
+      "bytes": 9122,
+      "sha256": "383915682be39647b7f03e01b8cb162791e49728e6085e5476f016f8c1ba3cbe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\evidence.json",
+      "bytes": 4145,
+      "sha256": "3d94ed79e16a3ed6b05f61a95e152605400719f20638bd5602a4ec959959a499"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\p2_validation.json",
+      "bytes": 37059,
+      "sha256": "77481f6feaa11cdb8333b1166d78c123ce0a6c80b07a8316e115e4501ddaf770"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\power_samples.json",
+      "bytes": 581,
+      "sha256": "18c9d4ee3ba7e5a81cea2edbeff52de5f13d6ef68a79a8b187d7c84e20ed2b18"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\requested.json",
+      "bytes": 18466,
+      "sha256": "12329ae1ff3c0e27cd77c598c52c6f5a4209b98ac19a10f9a10256f6eb3d64d5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_0\\result.json",
+      "bytes": 32335,
+      "sha256": "887775ba084c0da5d239af65704e8530914c30be36067f3d291dfdad5decbd17"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\config_validation.json",
+      "bytes": 9120,
+      "sha256": "51a79391cc45ed5ac10a2d0efe0b0c33324e5164edf3fe9954ae460174facaa0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\evidence.json",
+      "bytes": 4144,
+      "sha256": "fcf95fffdf40b778a50c003db91341e532e5ddf14fa50d39d9a06c6191a4ffc5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\p2_validation.json",
+      "bytes": 36638,
+      "sha256": "c705ee1d996a75c7d1e44d4b2203a8af173b2e70893b7c467132696aaeb22fe3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\power_samples.json",
+      "bytes": 580,
+      "sha256": "3cc85d3654cf4a24a6cc1a54b5c0ad27fa0525564082fe293613f89cff8f2798"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\requested.json",
+      "bytes": 18464,
+      "sha256": "81142c5bb0b1018ea4d0a808f57976f1415d37d39472dfbce626e2e6df6b392a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_20261014\\smoke_empty_1\\result.json",
+      "bytes": 31945,
+      "sha256": "37dce453e775cbe28cd362b1c2890dc1c294861da8620c7cbbf16578d9da7466"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\config_validation.json",
+      "bytes": 9152,
+      "sha256": "6a4941f487c402a82b61d9f862f0f5cab7c6cd0be06cf4f74f0d87020f4e3e8f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\evidence.json",
+      "bytes": 15899,
+      "sha256": "b701f8527eca62ccf884b5d9e7862ae15e8d9f2b851ca2e31b29432d99c0fb97"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\p2_validation.json",
+      "bytes": 59855,
+      "sha256": "bb41c5318b30a5a75bab2c8d85965d10ca0a73518e383329cbba7d55694d93f0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\power_samples.json",
+      "bytes": 808,
+      "sha256": "1c6eaf606e2b14e3d6cfdcb2dd533c58c5ef21bfa019c88a78fb4ec7c12c7875"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\requested.json",
+      "bytes": 18400,
+      "sha256": "edb515c90438c2b7ac6380efbf0abe191e237d1760d69b18ac31dcfaca58651a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_boxes\\result.json",
+      "bytes": 52651,
+      "sha256": "4422df718cbe2de0121ee9d4f3ff721f3b13d6053566623cb8817ba6713c3c0d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\config_validation.json",
+      "bytes": 9153,
+      "sha256": "edef394ab75bcc47fa71adb271eb27dfd576972d9158e6a5e271d593e20e747c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\evidence.json",
+      "bytes": 14872,
+      "sha256": "698b6276cbf38a5064f6b93a24a2b786d22bb05bc10f3d9b684218498bc77de4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\p2_validation.json",
+      "bytes": 165442,
+      "sha256": "de7acf80c50f18b666504f2037d9a700dd440b714e836029db1ffdfe461e4c55"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\power_samples.json",
+      "bytes": 1817,
+      "sha256": "26d34a3778157bcc361f644d022bc383b3efa527a8790e39634d0c22e419ef9d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\requested.json",
+      "bytes": 18408,
+      "sha256": "96f33615de87e1022ec89a796d2937c2ccf8f52ac5cdbbebf907b53eede47bff"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_bunny\\result.json",
+      "bytes": 149112,
+      "sha256": "e566cdf6fdac5ba6267e9817b3e1f9df5ddbe4cfe6595deb59442bd0c55575b9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\config_validation.json",
+      "bytes": 9153,
+      "sha256": "e65b3b142f53d955e25760edd060725da9774117622c6366097068679eb8110c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\evidence.json",
+      "bytes": 15204,
+      "sha256": "dcba47781517c308a9d8153221d5b3213cef1f83223380958a0ffbb992b513ef"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\p2_validation.json",
+      "bytes": 301222,
+      "sha256": "e4486945fa5f613e84b9216cb6f77ba7b2fb898087eac363930bc455026d3257"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\power_samples.json",
+      "bytes": 3179,
+      "sha256": "b6b37c28d3a77aa7f0b496408220b8937bbe0c3c96f5f86dd198b55bd8f5ead1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\requested.json",
+      "bytes": 18408,
+      "sha256": "145d3cfc233bf8b6a5750886595b22be41eabffe3bcc0362ba594d908d789e2f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_full_retry_20261014\\prefix_mixed\\result.json",
+      "bytes": 277321,
+      "sha256": "9bfd16131293f32126bb6e0dc163fb795474bee17077da5082a1fc5645ce6098"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\config_validation.json",
+      "bytes": 9133,
+      "sha256": "d54a659e8dc248dd5cf1d9e129ab365e8299fbe71a30904e130ed4d78172bc8b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\evidence.json",
+      "bytes": 7499,
+      "sha256": "d695c7c4dc8491a693ad7613ded5af20986892e9dc88f4cd899fc37b8c8f2c20"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\p2_validation.json",
+      "bytes": 59686,
+      "sha256": "f919984f8a4afde707ee9931c204ab4b14898909bfb81de1bc4334990e8394dc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\power_samples.json",
+      "bytes": 809,
+      "sha256": "4960f4812d01e1147f1b347ff480aaac466b30d16693417aecf5d8653f732bae"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\requested.json",
+      "bytes": 18720,
+      "sha256": "35b06a73331a56aa8596351ad4e0ebada65711201800d0a7fc8662ce63670458"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_both_r1\\result.json",
+      "bytes": 52651,
+      "sha256": "d8eabf371f86d79415bdfb66137120b800e60d9d0eb740f48171441f2cdc5773"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "653860e53b3d13530972f2d57b417ca4c50ffea919b92beccb39acb478d974d6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\evidence.json",
+      "bytes": 7499,
+      "sha256": "5588ceef602398a0e7ccf8d514797e20d6c44c1fc0cffffc585ce5435c54f843"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\p2_validation.json",
+      "bytes": 59697,
+      "sha256": "6fc6996454dd0b8185eaea1eb99372b63504d31ee0824fc47f9c903eff9f5e92"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\power_samples.json",
+      "bytes": 806,
+      "sha256": "8793e559554e7e5443e7476780c43b958de412d7363b654debb59aa232298024"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\requested.json",
+      "bytes": 18737,
+      "sha256": "0a4e2a2bc279ed96a5795b92e513be7e505cf6dbed8d7914c84ba196066e83ff"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_boxes_control_r1\\result.json",
+      "bytes": 52651,
+      "sha256": "b8c92d496cc74914446e52184813d0de009d4a3d3072e2f17d8f3e4498fb3ca2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\config_validation.json",
+      "bytes": 9132,
+      "sha256": "440a6c73bd9235007b24eca51bde531e220c209cdb3243c429ba9daae10ab7ff"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\evidence.json",
+      "bytes": 5748,
+      "sha256": "6330a81ecd75d06d29599c1f918e63f5792275681694cd88be1861b668e898a9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\p2_validation.json",
+      "bytes": 48163,
+      "sha256": "0d452f47a035b7f95c6d2e2afba79c4f9f49b6826582ac44ddcd99ebd5b1e997"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "594889a9b89621349356e7058962c8bb0d2cb90df63c55b8f5481c6d410d368c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\requested.json",
+      "bytes": 18726,
+      "sha256": "43abad7d7e5b26942bf2078e47614de19fd2cda98c6cdedfe47fc92d185b49be"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_both_r1\\result.json",
+      "bytes": 41932,
+      "sha256": "59a7d2ef2c19a690050a5e563c8af220029a9448b2093fc00a517b2c2b14beb3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "f69ae9c12c97ebef4b29f8a5be7721ff05a0540276ea1b5f5c0f5a7f9ea48848"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\evidence.json",
+      "bytes": 5748,
+      "sha256": "363bf857e2a8f59bb9d6ec943a49444d461f8771cdda6e4c5fad133c17386a8f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\p2_validation.json",
+      "bytes": 48172,
+      "sha256": "61cd5c8d81914f99e6f7939decd5ae555ee1bfc0e265159eb8f48a104085c322"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "4aa0938f1269eaaa72a816daa3d2c8946824153ed64dbb3e336978b3e19725a3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\requested.json",
+      "bytes": 18745,
+      "sha256": "23842c1d49ad4466db791da906d078fbc8f5ab6b85e3109befe3234bd98f5cf6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_bunny_control_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "5e2d2fc5097d8668e0d0a361683f0402a1a96fae6cb6e15bf3515189958fcce9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_ledger.json",
+      "bytes": 367007,
+      "sha256": "acc9d9a11c9d34d11efc1f09d461f45826a4787137dac5c9044d056ca8ffa3a5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\config_validation.json",
+      "bytes": 9132,
+      "sha256": "186e608bd662b1e24970f92fe0856ae8539a9c519b26b86c8b59efa41eb7bb0b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\evidence.json",
+      "bytes": 5400,
+      "sha256": "74715822f1804d34122308e9fc9d517fe3f8bb973dbafa8eece9c731e5f4f2ce"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\p2_validation.json",
+      "bytes": 59343,
+      "sha256": "8270845c7f7804c1bc75bf0802a4ad40d8b58353f44461cc13ab81ef560ef7df"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\power_samples.json",
+      "bytes": 807,
+      "sha256": "b00237186e5c6323114c7f39c0d65ccbb5b2debaba94249a6bf68f8b87452b41"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\requested.json",
+      "bytes": 18726,
+      "sha256": "1e98f688104cbd525e55a3bbb1a7fecf107a17784c640c7158f6076a0d84062e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_both_r1\\result.json",
+      "bytes": 52650,
+      "sha256": "69a4d8e7319905a603dde6c84306135e5367b55d5ebc773273d26b2219d8be0d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "b2ca2ffa1dc1a224cd0de21661d16e562db65666cfea57805679b4f8ae4a741b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\evidence.json",
+      "bytes": 5400,
+      "sha256": "f836979a9f40ee1f0c3fc2b23d484c06cc7500aad9f398f5b90663b1587b2835"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\p2_validation.json",
+      "bytes": 59353,
+      "sha256": "742c9b159cd36f8f65be44aadead78d52af08299df79be5fa5e5935b4f6f9e9a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\power_samples.json",
+      "bytes": 807,
+      "sha256": "cbdb9c361b3e8ad5b21e98725e24b3e5f009608d275fb2e7e0af75f909eb0289"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\requested.json",
+      "bytes": 18746,
+      "sha256": "928a3337b43ff3172dea8d8a7b2172a11db07922c9cf6393d5f95c149293ec2c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\audit_mixed_control_r1\\result.json",
+      "bytes": 52646,
+      "sha256": "9244bb219b6656c2ad90e466e99a931f9aa435e5472a2d0652847dccd1307c75"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\config_validation.json",
+      "bytes": 9137,
+      "sha256": "8fd2cf3e134aa7383bc4b2f6ec88b9240e22ba9f4bbe472c9be4da5167232590"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\evidence.json",
+      "bytes": 4151,
+      "sha256": "84f8df4e589a80c8f14b7bc7eb7b4186230032299b2028f4e05b395b841c096e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\p2_validation.json",
+      "bytes": 48439,
+      "sha256": "53cad92869a5100092d34f3286f12041825e2782fcda115fae35e1f08d87fb57"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\power_samples.json",
+      "bytes": 694,
+      "sha256": "b105a9628ce74b67433ecfc4771852e491eb3e8f462e73b75d5a74eccfd7cc6b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\requested.json",
+      "bytes": 18774,
+      "sha256": "273d62f29f651b91de4fd36c2f4dbbdac4a0da46ec7b546db13f9255c501510f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_abd_r1\\result.json",
+      "bytes": 41943,
+      "sha256": "fe40cf48a23c2c782cf8d966686239166807055df58cdbc2ba289b744b97c4c9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\config_validation.json",
+      "bytes": 9136,
+      "sha256": "cf6fdd0f42c87bb468cf5714766d203c1113815e57dfa04a9e59f975b43e4a50"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\evidence.json",
+      "bytes": 4151,
+      "sha256": "0fc8e8d6aaa1b03ab06c212463074d0a1c3b52cfdb6920f075192ad3e0cad0d0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\p2_validation.json",
+      "bytes": 48008,
+      "sha256": "2c9977d9a669f8361467a089481f4d1b41784896af4858b2c769dd17cbd68ef9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\power_samples.json",
+      "bytes": 695,
+      "sha256": "5545ce4582a9c384ff9daede848f7b89edf674e299b11785cd81affbd0823f7f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\requested.json",
+      "bytes": 18777,
+      "sha256": "50891a9a0570aaa3f68e24ffa1550579954c717ccf3b87e1f2f76fd0bb404877"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_both_r1\\result.json",
+      "bytes": 41531,
+      "sha256": "8cc0d9ff379e297638f9f93114dccd7deafeb196738e2f0912b890183e355a17"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\config_validation.json",
+      "bytes": 9143,
+      "sha256": "ce45b32ce48095b25983ca4d4648cf16d20b67b8a484a5d5751869668de74faf"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\evidence.json",
+      "bytes": 4151,
+      "sha256": "3401889175b795a71efc11a021732af16d6282c936656687209b546b33e3c393"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\p2_validation.json",
+      "bytes": 48441,
+      "sha256": "f0460c0092dd9e79d66fa9905f8b661afa222c48eacd873019fbce105a6f0682"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\power_samples.json",
+      "bytes": 693,
+      "sha256": "93ec008c5a17d036657a7b4c578209b92f5ffdfd47ddf9f20fe7b8bec35e4e5e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\requested.json",
+      "bytes": 18794,
+      "sha256": "5c8cfa3b03985398f84ac1a4880efde9d3036b439ed0bc1aa28e3caed3abbae8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_control_r1\\result.json",
+      "bytes": 41933,
+      "sha256": "70ee213d130e9bf572fd822f89efdd9ed47ceafd7dd76bf9a27d8015f813fdf6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "f10801a687d583b4f00004de8637bfd20e0fc02e6a61787772b8c617ca199eda"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\evidence.json",
+      "bytes": 4151,
+      "sha256": "52a743f3dafb9b66f19de4854f01404bf65b0a675797ecddf85b1d03f11ebb3a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\p2_validation.json",
+      "bytes": 48442,
+      "sha256": "fa6dbaa65242af16031d79c75692eea4d43fcc6c4798652a059f52f10ad6a79a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\power_samples.json",
+      "bytes": 694,
+      "sha256": "7d69bda533e01e4f4348eef65d32bc6700f91cb524eb4fa79aef15a9b27db919"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\requested.json",
+      "bytes": 18784,
+      "sha256": "0dfd99d0d2298cc09d4418f59528724a70443428105111be0b5ae480bc641337"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_boxes_scene_r1\\result.json",
+      "bytes": 41943,
+      "sha256": "5ae42415b4a40741df880af69542f3e47abb1ae00e12afef2bfe768e435dc048"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\config_validation.json",
+      "bytes": 9136,
+      "sha256": "706917686713ce14456b7ae188b834a90c4cbcf8de755a7c7ba3807b915c97eb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\evidence.json",
+      "bytes": 4150,
+      "sha256": "dcc32cd936e2a0aaa4cd364d9ce22348883a3b1a784868b6b9283aee20bd9fcb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\p2_validation.json",
+      "bytes": 47732,
+      "sha256": "26d2f84a6993573943cf6c9613d2b56319fc23ee21d06150cc487cb2f6e77fa6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "ff596735a6d84cab0d559ae3f9c815f7750dda0bbc2ae8d91f2f206af3aa9a13"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\requested.json",
+      "bytes": 18780,
+      "sha256": "55295e61063a95304016f1f5a854cd52877ae5055603e0c598a7d5093d13f51e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_abd_r1\\result.json",
+      "bytes": 41533,
+      "sha256": "b4a79a195cc8d6b4a183482b7dbc8d237d8b1f93804c013a77fe07bcfec41d16"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\config_validation.json",
+      "bytes": 9135,
+      "sha256": "6fab7edd33808cd37f83df9e1f47fd087e4536840764c02cf9a434619499fddb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\evidence.json",
+      "bytes": 4150,
+      "sha256": "5150ad6aa7520cc32e548dc3bfbf99d99e80fb2690a8eb442e818872af21ebb3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\p2_validation.json",
+      "bytes": 47717,
+      "sha256": "12de6d3cf09cc9fdacddf294ea8e46d9674833e113a5decdb518c510e3696c8f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\power_samples.json",
+      "bytes": 695,
+      "sha256": "34bc16ae55b2d0db09d40528db527e3a09c5226aa7e93418363fb18c2a0276fa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\requested.json",
+      "bytes": 18783,
+      "sha256": "8621b26cb4e4c7d8a75eea488462dff6e51e2c1dbda718f49fb496c316cdc917"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_both_r1\\result.json",
+      "bytes": 41523,
+      "sha256": "f59bf051431dd82f2df8dbc4ce8b3c95c437cd68d6919327bf4bd3ef58064d4a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\config_validation.json",
+      "bytes": 9142,
+      "sha256": "d6fa96cb44595616ae5f8bbedaff819e19baeebe0e1e0b4a009c8979a5d5957c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\evidence.json",
+      "bytes": 4150,
+      "sha256": "3ba87e2d59d653bcfab0161ee889f70b47aa4eb08285e6ad5e9d2b411e53a9b7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\p2_validation.json",
+      "bytes": 36920,
+      "sha256": "e4bfb22d45cf3cff36917bf1c0e34a472aa43b2fa10ef5cc0fd3c51e7ffa3617"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\power_samples.json",
+      "bytes": 578,
+      "sha256": "5259d081c04d306802349ce98ce189a5a25bb89e24b26ebc44e9691d06a325f8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\requested.json",
+      "bytes": 18802,
+      "sha256": "a139dce504060b578123417da45b656c7dc65eb88788aac8087bc1a850ca43aa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_control_r1\\result.json",
+      "bytes": 31218,
+      "sha256": "80a8823950283fef66bf241a307f3a2cd63443a503fa4988e75cdb7b92d2bd50"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "2fc767c924fcbaa18e193a1bdc9a17e0caba069943d8f87bc6ca939274fe388c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\evidence.json",
+      "bytes": 4150,
+      "sha256": "7f41a979c642ddcb87adf67ed7fec536a88b8685c80d974a30cddc5818df6ae6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\p2_validation.json",
+      "bytes": 47724,
+      "sha256": "7d95bbab47b4f514be38a2f21dfb9564c8c2e5ff2744c185287dd276b36c46aa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\power_samples.json",
+      "bytes": 694,
+      "sha256": "52d4721feda09432e0668cf8f1d114644dd195b99318b3466642d54705e81795"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\requested.json",
+      "bytes": 18791,
+      "sha256": "8b230b1b0f40712e0ef3ec5d462c09f8476b7c789d28c88d30f127268152aafd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_bunny_scene_r1\\result.json",
+      "bytes": 41522,
+      "sha256": "bc0a5847655514a36653f03374fc00548b84e2ad4e1a7360d4c9670a220d58df"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_ledger.json",
+      "bytes": 621401,
+      "sha256": "aca427b88a2300559dfb219f9c02ec2697c57a3da6163c5a4af6f61358331b70"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\config_validation.json",
+      "bytes": 9136,
+      "sha256": "cf22834b94e403ced01acfcc8154c6eefae3ef8701affed5d1ec809d80cb05f0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\evidence.json",
+      "bytes": 4152,
+      "sha256": "dc612ad7040afc108ff08cbb7ba58509356e8eaabcd0f66d8b1c741517afb2fa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\p2_validation.json",
+      "bytes": 48094,
+      "sha256": "fcc339df1747e3339a6626ab638f019c2f3314e1156a8a89e23c8b015ff66c63"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "83f5cf5ddba7aaf2cc5a15a043c44d047980ef2f13fe696f3fec52c234c5e93a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\requested.json",
+      "bytes": 18780,
+      "sha256": "72c837c9fd81101f3349fb6b1be0ad61cc6118075e1efde0c471d979b2566476"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_abd_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "e208f04ff6987b1c1469ff4f3de8a560863a1b1c1baff7ad02ba6a44cee8fe73"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\config_validation.json",
+      "bytes": 9135,
+      "sha256": "ed89a67782144c5bc4d483bedd037fb5d7445b523d9a2a1d1230733fcc494c8c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\evidence.json",
+      "bytes": 4152,
+      "sha256": "8c8a7195d18ef7eb4ee4d4b56d918dfe54900a5615890feda3acd31f678930c3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\p2_validation.json",
+      "bytes": 48102,
+      "sha256": "1f82f5373a1e41cbb0f79e428800ba256970f99a58edf0bd9f2f832c68f7a88b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\power_samples.json",
+      "bytes": 694,
+      "sha256": "acd1a526773b5f9f8b70d6c7fc77d762a12ca6d83e89430ff57a8a89ee6ea69a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\requested.json",
+      "bytes": 18783,
+      "sha256": "4512de2db92094e7a4a7808c90c398e5b164bc42edd9c13b34a0db9b3c857de4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_both_r1\\result.json",
+      "bytes": 41942,
+      "sha256": "d1f3eaedf8f1565ff4fdbd595ef62059d4d884af261a5579242627a56ec9ce56"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\config_validation.json",
+      "bytes": 9142,
+      "sha256": "8653fcf8e51582aa57a3fe19b717dbaef01ed971b1138f41c288181e2d3b7ef7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\evidence.json",
+      "bytes": 4152,
+      "sha256": "51de8d5a872e83152f26cde1fde625356d3d84aab9d75a2d0518acfa2706668e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\p2_validation.json",
+      "bytes": 48103,
+      "sha256": "cec0916da6b13397120c2aec004cbfc337ad17e1ea9c70ad03a40a755c630770"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\power_samples.json",
+      "bytes": 693,
+      "sha256": "182b808526b5acb08f3da35fc74a9a32aab7bb9d7bb7f35a4ebc97a282fc518e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\requested.json",
+      "bytes": 18802,
+      "sha256": "fd03c43744fa8b2a4d00c9af98c84d42cae88ab0fbc17e9b38c424d961633e71"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_control_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "b438715dc55c1b8cee7ddcb7a5d3f619bcd8da5b2f809d44043bd783cde4132e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "ea2284ad06955945ce8c0e3f43e761f4c1af2517a640371bfa02f88edaf4f716"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\evidence.json",
+      "bytes": 4152,
+      "sha256": "9e7e81161e371f4fb50b1f2e374fd8dbe4f4ed668cedb604cf1da4d616d4a839"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\p2_validation.json",
+      "bytes": 48097,
+      "sha256": "9985f060ee7885fbf17d245a9dfc4fe1bfaac9be072594f940c5b470bac1ad2e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\power_samples.json",
+      "bytes": 693,
+      "sha256": "36b2b025171015488835353dbaa12a6af4d83f550fad7ab09d8e8de86af2ac57"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\requested.json",
+      "bytes": 18790,
+      "sha256": "6dc737745565837b9125ad0a3392df2e793e64d17381a597b5dda5108c024c4c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\cost_mixed_scene_r1\\result.json",
+      "bytes": 41932,
+      "sha256": "84e866109e8a686841db1acb3122d137e333749086082e4561412eb8d422edb5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "71b382ef64c437de7e97aa125bb7d506dbee97245d4507adcef765c958c24114"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\evidence.json",
+      "bytes": 3999,
+      "sha256": "11b7b8a321881408dca0983708de2ae580f144d7203c34a8fedb99b29c4c834d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\p2_validation.json",
+      "bytes": 48395,
+      "sha256": "dc219daea0642439259a06b57e1af70baa54c35dd26b40463f8c29dee05ab0a6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "e796ae46fb61c5b4dc2d5c11d35baceb8f400b205fe92c70299c534cd14f21aa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\requested.json",
+      "bytes": 18501,
+      "sha256": "50c05537a6f5b11b300278c21f725b03aa435dd5e6f3b3916805cff8ea8e417a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "496796af34c6d0d732fad919d1981fd55c81dcf58d5f6a928db473f9342c4480"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "b96ce385564763f0df71de953a3cce933fafec6a9b13a95fbfa7c9ab9dcc11c0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\evidence.json",
+      "bytes": 3999,
+      "sha256": "c95c350bb923205a14bb8173110819a267a01988d7a2d6531eb138188ae90f55"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\p2_validation.json",
+      "bytes": 48405,
+      "sha256": "02b10307c13880f1801f86bbd4a6ed4a90c54ba0d09bf6d8e3be609f656bf183"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\power_samples.json",
+      "bytes": 694,
+      "sha256": "1efc0b5a4056b62cab2ee20db40f54331500aff41a0c9d553e9726110c7e0a5b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\requested.json",
+      "bytes": 18501,
+      "sha256": "249e1cbd48af5cd4225184a3cb742548efd51be95c06e94836dd3027dbd47ad3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r2\\result.json",
+      "bytes": 41944,
+      "sha256": "26d983b19303087f4035e75ffe0b5ad0d69880ad7bbe9303c1934ebeaa60f93a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "d39b3de3482bb82460248e8c0cb2a86df2c51fecc1adbafd489877590a3757ee"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\evidence.json",
+      "bytes": 3999,
+      "sha256": "793be8c1cff2bb4b63a0dd0b505f3714237f0f7841d49d3c5cdd2fd1f603b84d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\p2_validation.json",
+      "bytes": 47966,
+      "sha256": "692d36310d9f120c7572406d5dcea30673d29452ba2e50d9adf24b0d47708207"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\power_samples.json",
+      "bytes": 693,
+      "sha256": "43a980aec0b2b0e1b443392f890c23e3d98793551575784da0fd2382d0450002"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\requested.json",
+      "bytes": 18501,
+      "sha256": "ea1807efa8b6a1709568ad146893632e5ad54f6c2702904ec6e3d22270a66811"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_abd_r3\\result.json",
+      "bytes": 41523,
+      "sha256": "194f23292efc3b9a37dc1017ece17a705912649484bdf33a26a23e01f489366c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "9460c87101228d4ded56048c3cfaa5c9bba4f07a6cd65d38a4adcdd4a4c9aa31"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\evidence.json",
+      "bytes": 3999,
+      "sha256": "d42d8b486c89279e5b164bc40aa735ffda510ce72c0e477285c221dee2bd23bb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\p2_validation.json",
+      "bytes": 47966,
+      "sha256": "d98b32e512b49200b658d2c652f4ff340ac05053a8a4c263d1988889c8afa60c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\power_samples.json",
+      "bytes": 695,
+      "sha256": "d831ce282b69b53aa2a272cca78942ba5b020b2de89f6bea0cdc92137be5420c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\requested.json",
+      "bytes": 18503,
+      "sha256": "d6675875cb4044859f788babe74812035926c4d43be82bde6f5f5384d55a9fdb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r1\\result.json",
+      "bytes": 41520,
+      "sha256": "e9b454add4e9b34f4d36b02a30469ba9ad2f22ccac7b8b6eb96629d1d337734e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "61bc526082a10d9b4cb0ad142e4c4975de0fb9c7b2a49e92ba6fd658b414bd5e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\evidence.json",
+      "bytes": 3999,
+      "sha256": "f66ca38626d147d0bfa695929f3c07dbbfbdd2e04c6ff3bf803ae4cf69704032"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\p2_validation.json",
+      "bytes": 47952,
+      "sha256": "0badd41044628874a57b782f01f6dd625e6a46945d21a627682c858f42bfb129"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\power_samples.json",
+      "bytes": 695,
+      "sha256": "55a408a69c50ca8552d5437e68a1c53495b855ed42afdaddb4c6af26f145f0ab"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\requested.json",
+      "bytes": 18503,
+      "sha256": "0913848d6d5b3540fef15af300b30faee2d7c383442578fa55fd1b76d6797e2c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r2\\result.json",
+      "bytes": 41509,
+      "sha256": "96901603158bda107d7d5804f224c4dbcdf7b0b017c1902ec3eab7384e7ae82d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "9fbca9b7f135c4933e4bd09e0320ac434a6ccef710887d24a87dd532e8e6fb15"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\evidence.json",
+      "bytes": 3999,
+      "sha256": "58117fb3ec7a0702a994f663e72ec197419f3f99912ed7df905666940c4a60fe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\p2_validation.json",
+      "bytes": 47965,
+      "sha256": "b51e3e9e79e1e50913f06e8003a656b1060995fc07553a58201090ec604e399f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\power_samples.json",
+      "bytes": 695,
+      "sha256": "6a4d53b3d57bb9437cd0bad02a7a2e5f776afdd6268a3baf6fc86e0136ff02e9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\requested.json",
+      "bytes": 18503,
+      "sha256": "504af6cc91dca5f4d7b39dfec23030d06a190cd69e9419ca5b47c9cac28ce868"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_both_r3\\result.json",
+      "bytes": 41521,
+      "sha256": "124b09a3899a062da378c455bc4896cbb24dab4361162059bfb412437808bccd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "c8ecd398b019533230aafa3670f1904c39cc927182b7c2f0161677fbec7d2899"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\evidence.json",
+      "bytes": 3999,
+      "sha256": "c1914a7ebbbd8e04ecbdde1e98eef74ba53e0b76f6761e901bbeb2aa477299f0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\p2_validation.json",
+      "bytes": 48408,
+      "sha256": "b7169d52ff41117870daf9e9bedd7c2851dcca91cfa0c0d8c9582faca6dc17cb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\power_samples.json",
+      "bytes": 692,
+      "sha256": "5ebc0fe6412a66f2960e6b6766b3f1b2f3a3744593f732a262541bb29a83ccba"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\requested.json",
+      "bytes": 18517,
+      "sha256": "ca57c58b74e32723df70bd42b99d2d86389797c8d97c5f50c9e498a6bd8a81f4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r1\\result.json",
+      "bytes": 41936,
+      "sha256": "a7c23b213255d34420cbd5b7ebaf45f6fe8953bc5cb97a1c0941266e80b8eaa6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "5d42fca1a5aa6597370990e5489cc89649b88d2dcbf617e612f2a144e30b3eb7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\evidence.json",
+      "bytes": 3999,
+      "sha256": "9b353854a99591fa191e35023444bfbea4ac854ec26526582b9634fdc12ec12b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\p2_validation.json",
+      "bytes": 47983,
+      "sha256": "8c5308aa49b8bfc1371335c42ef5c96396ca14bec7f7cbc584d7658dc052973a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\power_samples.json",
+      "bytes": 695,
+      "sha256": "68dbc57e6a0babb56bbfbe3f83a212a3ed0cb08d47125e1bec339401ca703a32"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\requested.json",
+      "bytes": 18519,
+      "sha256": "a9ba91136f99a8bdfd5510a1eea908cd9b81c6ce390afe2ab955c4eff8338bb2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r2\\result.json",
+      "bytes": 41532,
+      "sha256": "92380c5fd8949657e6bee202f152c00b401387affc176264d3ed359db537237b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "b2ed3f6ff6216568cffff5367f6a6617ec5c8e813355b77beb6c20be0399f16d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\evidence.json",
+      "bytes": 3999,
+      "sha256": "c976bc2be1debfd76c0bce62a690ff774afe99fe1ce1bd0b8dc689fd1c7e35d6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\p2_validation.json",
+      "bytes": 47970,
+      "sha256": "8887036afccc320c6c7d2900e18b8591f1c15629eabdf7ca885491249b22333e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\power_samples.json",
+      "bytes": 695,
+      "sha256": "0108140cbc14cd07753de7b47887e36589cee701e9f09b371e007855f8f9b1de"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\requested.json",
+      "bytes": 18519,
+      "sha256": "931b85806333d8a745c6c526f6f5f357a7a3b4d697446ccebdfb83e9c98153ae"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_control_r3\\result.json",
+      "bytes": 41522,
+      "sha256": "23972fede17626b90f0810ff347f37a206301ac98a888e319782f834bac72a9b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\config_validation.json",
+      "bytes": 9142,
+      "sha256": "023a524a776654371fa1583e7ab1cfef8c1a1dedf5eb87c9b1c877e064822f53"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\evidence.json",
+      "bytes": 3999,
+      "sha256": "73f16e65530a13826889c583277f253367aad35e7618ff08b746933fc18da10d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\p2_validation.json",
+      "bytes": 47967,
+      "sha256": "5e1c7a66a9c17cab01700bcf3634f51a52f03a61fdc92be47d038ceaf2b637e5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\power_samples.json",
+      "bytes": 694,
+      "sha256": "92e353b80ce427756ae2b26b4adb4037188181029dc81cb22a391697a58b59a5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\requested.json",
+      "bytes": 18509,
+      "sha256": "ad362d2eeff8cd471298e7b99a62ae5eb2525e367e7bfd8d8fa1ff85ed3fa192"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r1\\result.json",
+      "bytes": 41523,
+      "sha256": "f3d9e0a68e1e70df7ac94def0c43d90ebe385c67f91dfe9ab4fc7e3ba39dc6e4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\config_validation.json",
+      "bytes": 9142,
+      "sha256": "2356ad3b2c24fe39dea41518cae3cc7ee6dac9af4364d2a576d6dc0e331cebba"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\evidence.json",
+      "bytes": 3999,
+      "sha256": "463a38cfb80011936e6abfa653ed61a6823524a12b6508881040b350f0787440"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\p2_validation.json",
+      "bytes": 47972,
+      "sha256": "af8ca20ce07cc9ce00802ddb858d47ca32106e21856b848a3dd5af8296885555"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\power_samples.json",
+      "bytes": 695,
+      "sha256": "45e83b8ffbe59e44864077e4f18820340deb1d02e6af2530904d82de5e2f3518"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\requested.json",
+      "bytes": 18509,
+      "sha256": "4b421f231434fbdf600255e9df8642a0fec0ec1cdee43b75bab6969235f78df5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r2\\result.json",
+      "bytes": 41522,
+      "sha256": "ea2ea688c426fef4b3a119c3c46e2b17ed64741378d672d42894742b47d733b2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\config_validation.json",
+      "bytes": 9142,
+      "sha256": "7b265bae4e926c6bb9479663e818ea23f6e295aec4bcd41e34e3bf8ba78f1278"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\evidence.json",
+      "bytes": 3999,
+      "sha256": "6688403507716123d52caaa27de0d3ab85236a6eea106ea89229e99b66d600e9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\p2_validation.json",
+      "bytes": 47972,
+      "sha256": "a590ba71eecb555d44ae82b12c201f3ce75d07d407d704d78b4fe15cb0c57e04"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\power_samples.json",
+      "bytes": 694,
+      "sha256": "ec98581b668ec519c54c2a8c1d5f5550a7d6fe828612820a8fbcf9b5ee741fde"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\requested.json",
+      "bytes": 18509,
+      "sha256": "abad1f1e410b77cae80a332d90fe249761582fefe21f0f926b5d13e1ae805535"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_boxes_scene_r3\\result.json",
+      "bytes": 41522,
+      "sha256": "b90039845edb1de7823df738c8573a83006782edec1d11e427607e31124b24f5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "325960bd78ef1724121f55a07052425e36f5be292e4e686274654248ba2fb29f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\evidence.json",
+      "bytes": 3998,
+      "sha256": "5231f9603735167eed65bb0722a82e10bd5e1fd51fa7b5e3d88c0487453122f8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\p2_validation.json",
+      "bytes": 36875,
+      "sha256": "20119ab6adb64382ced2c91f16f5083a172d9e59215cd116a23a0dc80205bf11"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\power_samples.json",
+      "bytes": 578,
+      "sha256": "d21bc508b8ececfd0aeb83b7f99c8d4d57714ee6b59a115e8d3cf468ad0b6732"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\requested.json",
+      "bytes": 18507,
+      "sha256": "1a676681604294231a061b0ec8742b3a44495fd472aa07e57533a174c89489b0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r1\\result.json",
+      "bytes": 31217,
+      "sha256": "06795005694e6e97dbc9511a8910cfa8dd257773cf5cf7109a10014ec37a066b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "1e1b3bedd4a0aee3d5d447b6d19f79e8e9dd282c29cc2c9ddab80fca42ce0d9b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\evidence.json",
+      "bytes": 3998,
+      "sha256": "746e43cd529b5a616f94d223c0bcb9d144a41d0519ae769120a3974eb5329a33"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\p2_validation.json",
+      "bytes": 47680,
+      "sha256": "f3c1235e1a3e961a1135743f5fc847114be90a0bf8402d7fa0afb01fada42302"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\power_samples.json",
+      "bytes": 696,
+      "sha256": "1ab080d082a9d6caba0adff5d3f4cf3c65843c23cd3c6984826e8a59958f4e88"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\requested.json",
+      "bytes": 18507,
+      "sha256": "9c0d33f92a0ecf4f9e513b15dd8bb969b2c89d70bcbbc8bd42345afab20eccce"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r2\\result.json",
+      "bytes": 41519,
+      "sha256": "a9da9f88b59db9cf4f091d8b9a892070401a2518d0b7ba143c9a425e85ec3424"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "4d532adb289e08a9964e1f4f1b70dccbde7886fe12cdb205e98764127ddf3f06"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\evidence.json",
+      "bytes": 3998,
+      "sha256": "c7b8c945f4aa18f3e0e828e6f5b31ebe01710c45f23982f05c9b62dfaa1c6ccc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\p2_validation.json",
+      "bytes": 47682,
+      "sha256": "268ce4a9ca0c9def1100d7eb620aaa76d92b85ac953e1918a8469d9719d48a6a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\power_samples.json",
+      "bytes": 694,
+      "sha256": "2e66b453d7d91c58d8070cc1299408e8d204ae0f941b671a2b0b6141e9f1f512"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\requested.json",
+      "bytes": 18507,
+      "sha256": "c45545d3e4826bb7b62edc8d0fe9e204adda39498a60eb1520fcf40f75c26044"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_abd_r3\\result.json",
+      "bytes": 41523,
+      "sha256": "ab2a6b6ae8dd0ca9837033f596434f12f51593db4c0ede059033da4e5f86658a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "8a125c9e6f7ac839e17215d70d9d646dfba6e970b619cfe79a8529847684b9c4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\evidence.json",
+      "bytes": 3998,
+      "sha256": "d6e79590b9507515984ca5c7f1054eec7023c6e4e7ad76af0845b1a327905985"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\p2_validation.json",
+      "bytes": 47699,
+      "sha256": "3e43cdc1f05044871f1c2a3ffb08eee6637a3da0948f5335a8a62ae1403b0337"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "bcbfb4fdebb38752e875f11b511cee5a2d9c53c9361e95f57a4f11b56e67c963"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\requested.json",
+      "bytes": 18510,
+      "sha256": "787cf0f81fc160e36f22bbe02078134e5c9f97a18028793dd8e1311a7a0cf9d4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r1\\result.json",
+      "bytes": 41532,
+      "sha256": "89f45622b209a02d2ee69288c2bc0518c323aa966afce75ac3a1eef3db434547"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "e8a6cc9bf278bb6df274a45ca285eb17e5f46657c87c80d9363ce5f5a7b2e8ad"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\evidence.json",
+      "bytes": 3998,
+      "sha256": "6ed35d7c61b936f304ee889888efa02eba00cc1486858f30911ce4536e765734"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\p2_validation.json",
+      "bytes": 47683,
+      "sha256": "65afbe85bfda37475f1baf58ba1102019669c5fae9e13cfe53a9c09468815ba9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\power_samples.json",
+      "bytes": 696,
+      "sha256": "5e69f8a947023c1b8b937e3d44344365dc4325e31fc4461c144aa154b2c7d5bd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\requested.json",
+      "bytes": 18509,
+      "sha256": "e46d0aa8fd87c13b6dc74c04e9d2db536c42c32cdfb47a1e723a9c7ff764fda2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r2\\result.json",
+      "bytes": 41520,
+      "sha256": "bafa14d69891e127fc539c8eadb854b5591cd415e85d3e16fe99096ddb204fb0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "7af8eb54f7363a191e4a920ae2ad90286e2856df94a4b89f1d0688bf7a663a04"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\evidence.json",
+      "bytes": 3998,
+      "sha256": "dfe5cdd7f4730f955f8da5d32a98308deffdbc33f1b16e990b76c2d11bbf809c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\p2_validation.json",
+      "bytes": 47688,
+      "sha256": "c7693a710ee149faa36a514220be404b419da4ee0f9889fd28ba30beb7fafeee"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\power_samples.json",
+      "bytes": 692,
+      "sha256": "fb2639c68a6a1cc09036933dfdb99df80c9a8598d85c6d4bd070facf5e619a70"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\requested.json",
+      "bytes": 18509,
+      "sha256": "78b1b5602253c808c41c79813339cd1f8eae7308fc476c49f50a415ccbf8999e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_both_r3\\result.json",
+      "bytes": 41523,
+      "sha256": "93a36272f830fd7d5f4d6437cf7ddb2f8799c759b1089e218358dcf79c6ab87d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "d2725f8c15182bd80551384e5d61dc494f671ce4a3b8f4e44573a0cd25c34e1f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\evidence.json",
+      "bytes": 3998,
+      "sha256": "c386fa83cc0daead36956899cdfdd3515376d329e1ddb2a2dbfa95aeb30b0404"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\p2_validation.json",
+      "bytes": 47692,
+      "sha256": "3c614a333edad028403527c635d69e1a8d1fa076e2bd8701877458c493e1444f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "0ad193628b7a8d1e822c60f6ba1bb915fd488550d8b627fa9c4778f9605e50f0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\requested.json",
+      "bytes": 18526,
+      "sha256": "40d4f0167e0afe8d4c3aad08bfbc3652ced06062ddcb48dbfd85bc2d27f8dd79"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r1\\result.json",
+      "bytes": 41522,
+      "sha256": "3c0d38907e8591f3e4ef47a40070c21590636abc7fd8aa61832fb4e4abda5487"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "2c1650a2936e5f53e89f75bc14a2ef1532a226e770715b3018d4e479c9138e84"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\evidence.json",
+      "bytes": 3998,
+      "sha256": "2903873ae00c0c5d5b83a81fe0845b889aa3d48b02ac8ef1fe53b60220ee3eca"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\p2_validation.json",
+      "bytes": 47690,
+      "sha256": "6637ef998f6bce9e8a487e656699a914b9ead1771362fe9ba8f113039fa5c60e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\power_samples.json",
+      "bytes": 693,
+      "sha256": "ed12e33bf99e74f15707fb7654474e80a6e95abff46e22feeb77e23bb482e920"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\requested.json",
+      "bytes": 18525,
+      "sha256": "84f64e4a415f23ef3efab8edcc337df9fc2e0038f7bfa7af441b73638216bf5a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r2\\result.json",
+      "bytes": 41520,
+      "sha256": "d4166fb80430e17e6a6f5a3373fd25d043b6f17be24099a1a040fa83efa8d8a8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "646526d389e0c39cca1cede40276467f524f0141c2141c5137e3601707c2d070"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\evidence.json",
+      "bytes": 3998,
+      "sha256": "8bd2d16d5f7d3943fa1cf6ad94a7d6c03beb6d00c39782ddc858acb0a7ba8783"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\p2_validation.json",
+      "bytes": 47703,
+      "sha256": "08e7ad64a6a2bab6077fe542c1b77be45a420a6db86ef5adaf258b43dda34ac6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\power_samples.json",
+      "bytes": 692,
+      "sha256": "e9ee7356dd7eb773a5ea8f08ae83d4055727d4bf223a8274119c541dcc4b79fe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\requested.json",
+      "bytes": 18525,
+      "sha256": "6222590e35ac2e6343dcca65ceeacb8a67c30a6507d645eaaba80cde98f2524d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_control_r3\\result.json",
+      "bytes": 41532,
+      "sha256": "7ee76f9cd466ea3e80ef04a26434d33bffb475a098dc2f9e539fe1f745ca2c07"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "a501e0f8ff934c13629cfb433f1043b728c03fb2399afb53fd61155ebf9f2097"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\evidence.json",
+      "bytes": 3998,
+      "sha256": "aad58f20998db217f35ac7a66947457fadb60fb861f767df9d82d27f2ff1f265"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\p2_validation.json",
+      "bytes": 36880,
+      "sha256": "ef8d3261b3e197b983392f8ceb44513cd4023adf67d0dc8b1fff95c419e754dc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\power_samples.json",
+      "bytes": 582,
+      "sha256": "55ff626dd3696170fc7bd8ca4e8aa2c678e61c4067ad262efbc8cbfea29c693b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\requested.json",
+      "bytes": 18515,
+      "sha256": "5172b4ad4380371c0ebbbecc38e1b118eb749759015b1421e084f2accc9aa177"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r1\\result.json",
+      "bytes": 31216,
+      "sha256": "7c4a7a8980e17cae09a3fcf6d52b3c9eea1a3753802c6b070d51b0f0412578d6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "df68f82ed7dcd4dc7fdc00b28a6aed35da7811bc19dcca08e36159ea8716d133"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\evidence.json",
+      "bytes": 3998,
+      "sha256": "8b8def03ce9afd6929bd69997dc24df7ffb1bd54271346536a341a627a80619e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\p2_validation.json",
+      "bytes": 47687,
+      "sha256": "184fd60e116baadb2783c65c18522cc186c7244ad8f10142bbca870849a67d41"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\power_samples.json",
+      "bytes": 691,
+      "sha256": "b1ba144b5daa557ad507e5359e4e38ab2472e2e847641d2601d68abd4d8d9ec8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\requested.json",
+      "bytes": 18515,
+      "sha256": "3ddeaf017ef8362f59988730da83a633292cc03d9c368399a2da158913e31c59"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r2\\result.json",
+      "bytes": 41520,
+      "sha256": "1bbefe58f4e2123794c377d7ec82b72168759e47dc9fd576086917af85fd921d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "d6bd69f91fbd7ed0999cda3580013d5bff05a44feb27887edf32d986e6852013"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\evidence.json",
+      "bytes": 3998,
+      "sha256": "6d9b9eaad54e3ab265cd24d0628db9e3b9e6fe202962a228dbe401966615660e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\p2_validation.json",
+      "bytes": 47679,
+      "sha256": "08777d32c6e6fd712db33e2f037bbabf9c033ee4c31b297c70f80570c22fccb7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\power_samples.json",
+      "bytes": 695,
+      "sha256": "ff364bf1fe9119cad0d3203a282bfa5630fcb2fcac82c6d692a4473630804129"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\requested.json",
+      "bytes": 18515,
+      "sha256": "511a8cf14eb5799876588b612801e3b74155b8e5a60e4b7dbc89929fdba1f669"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_bunny_scene_r3\\result.json",
+      "bytes": 41510,
+      "sha256": "efa4ac6c275aba85f5feb831bb0690be21bd4a9d5df0933ea1b4bf0fc47d105b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_ledger.json",
+      "bytes": 1894977,
+      "sha256": "8d81b3c91f72957b1c175cd0edadf698a6fad91f5d0c693d6a0cb3dc2cae99eb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "9021e3555742edd3715c2ff0e2fe6594f7e933fb21602f346ee67dd7f1260b98"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\evidence.json",
+      "bytes": 4000,
+      "sha256": "b9111020c9d91b9cf50abe6477ed9c14574f2480ae124d909867fad29ac6c01e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\p2_validation.json",
+      "bytes": 48059,
+      "sha256": "9b3dd4d1fc5a85179e5bc972c05466203bda50bbfcf07c67a3ab2228fc265fb1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\power_samples.json",
+      "bytes": 695,
+      "sha256": "8132e27ccb39beec4bcfdd43f7501c97a98d53e769fe2e6fcc75a3c0a44543df"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\requested.json",
+      "bytes": 18508,
+      "sha256": "4e5969685a847d1b064d173ebaa5593e5fffa0c9949488dd4412f270ee1e9624"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r1\\result.json",
+      "bytes": 41935,
+      "sha256": "19d3716ffb926baf38d3497f33938789013a8039e2e2104df0499bb08c87f1c0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "5ab232ff3e704ec415204ec5bcab206d6d8c4e987446016e5d50b1c2368b0467"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\evidence.json",
+      "bytes": 4000,
+      "sha256": "67ec7860367efa64a6e1bdd1efb283f9dfb41962ea466cf0bbde5e85e6f1e225"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\p2_validation.json",
+      "bytes": 58877,
+      "sha256": "d879472a1555ad7c8ca20862b4429cf77414b533003ad6a30e990459332c6d15"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\power_samples.json",
+      "bytes": 807,
+      "sha256": "285ec2b1a7cae57a6c5fe3dbe291698ec178bc3c0b26e7bfdbee85a2606b6302"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\requested.json",
+      "bytes": 18507,
+      "sha256": "eb218d61c17d6547fa40f64c6313747970a7f42e809abb62eabee93a12c809a6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r2\\result.json",
+      "bytes": 52248,
+      "sha256": "f4eb146ee0435897997baf3279e9d7f14a112fdf3b4235d8f90e61e0c6d03ff8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "89460bc932f716dec17bd6dd587a73bd4a6c52d0533c2fea8771299172fc18e7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\evidence.json",
+      "bytes": 4000,
+      "sha256": "8d3e8c77db53310d53f78714cb41f135aa2ea81a376c1199cfd58c3bfa4866b8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\p2_validation.json",
+      "bytes": 48060,
+      "sha256": "205cc72134c1167db52d002b512f0e1286dc0adbc8a03b9791564c90dacfa012"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\power_samples.json",
+      "bytes": 693,
+      "sha256": "506db30b742890a647a0f5cb4ced78527432a70388559ec0ea44be2cd1354745"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\requested.json",
+      "bytes": 18508,
+      "sha256": "cf198cec3ebf7613ae7487b426c1acb116bf05c56eda7b7ea1af96f4472bf024"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_abd_r3\\result.json",
+      "bytes": 41934,
+      "sha256": "32acb7fd06e97dcf1afef3b7befccb6dd92f1b0db44a7b2cece17442be0cc364"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "0299417a07479179b1b0e7e49901d96a1cfd1f5b97c569d6f61e5823389c17a5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\evidence.json",
+      "bytes": 4000,
+      "sha256": "6a0a8ba8c3ac656a181311026da01aad1eed31a3294fde87301fa72c76bcbb85"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\p2_validation.json",
+      "bytes": 48063,
+      "sha256": "f1280d3b2124bdd9c67ce582efde9e18bbd74c2bce0349635dfd6721a44667b8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "22287d59390f1a422339154a3e41656680dc6aa8bae562a08a41bd3cd8ebffc4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\requested.json",
+      "bytes": 18510,
+      "sha256": "7dbdedd7084e8c57eb1ae16a1149379e0d021e861f47875b1b73f87d18ac7c69"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r1\\result.json",
+      "bytes": 41935,
+      "sha256": "19d30c5aff1c1cfdd698dda1c3b5de624f7e521f00db6de8d4c04c4ae881dc5b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "a112586ea9393029811e0c4b1ee27b7fefbd06d241477af2768657e6d092ed9f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\evidence.json",
+      "bytes": 4000,
+      "sha256": "b85f807def74b576c026564c99ebb4510739813fca83a69e4a154f19ef29fa0e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\p2_validation.json",
+      "bytes": 58864,
+      "sha256": "283d6c36f294abac9d345ababcb296cfd1256b3695f65739ea5d5a9b38ae26af"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\power_samples.json",
+      "bytes": 809,
+      "sha256": "e026ed91f8a0b0a9ac0263603e45ebba6740c55b0e6e8be0e1a3e622e7c6a8c4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\requested.json",
+      "bytes": 18509,
+      "sha256": "229bcb32eb722b0f14ee0c4ac556dfd03acbac7ab12fac62521400b8fd63e0cf"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r2\\result.json",
+      "bytes": 52241,
+      "sha256": "6f95ffbf0657ac0f40acc68d342a3dbcb1856b0f4ef3022713b4f3f6cf16dd06"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\config_validation.json",
+      "bytes": 9138,
+      "sha256": "77c2e77f1a39e058f5492d70003ebe32b8ed6ce5458d50d2674f35e2e4943ab1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\evidence.json",
+      "bytes": 4000,
+      "sha256": "d0613c2abd13f3ea798dfb156c43ead1cba5fd24bc155fba37fe7f9802607b0c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\p2_validation.json",
+      "bytes": 48062,
+      "sha256": "4470e2b5a963e975c5615c59bb4c15cc359bfab2fb391063c95dc85720903d5e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\power_samples.json",
+      "bytes": 695,
+      "sha256": "9f4661d2be402e4aadbc67e23ab3bc409a9743185a42a83490f6f11e493c0b05"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\requested.json",
+      "bytes": 18510,
+      "sha256": "759254e0395fb1e631496c6f2c9afce84b9fc5ba1a4672f13735af9b41105109"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_both_r3\\result.json",
+      "bytes": 41934,
+      "sha256": "69f2dbb9a9e1155b78ade9a9cda0fb93003935908fd04237c41a7413472c1685"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "0be6cd66aae49b54bfeb20e8a24382fefda66ebb4d2199235a8e20ea2900438b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\evidence.json",
+      "bytes": 4000,
+      "sha256": "f011c9fe4c277130cd365adfd08bdae67f521eece0f3578f59fc4a1c8a78d625"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\p2_validation.json",
+      "bytes": 48069,
+      "sha256": "d6eba68b2bd8e6362c7ad6143cead849942a73154b52535adb4fa1fa8dc44b14"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\power_samples.json",
+      "bytes": 696,
+      "sha256": "f21b725e8b2a820edc743fa749298db849a04c9874f4aed4013327c216f84dfa"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\requested.json",
+      "bytes": 18525,
+      "sha256": "8a27fd817d930ce7be24e690756158e6919652c23487060d23aca1342ed7abf4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "9954df68ef7db465498633038b90ce50fb48713b99981775064d5ba65870ac55"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "bbf17b27d28de22c0c9b4cd8048b5fd5e0f4e26b27f7809f93146d1a96b587bb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\evidence.json",
+      "bytes": 4000,
+      "sha256": "7514f1f4499c03dc0536eaec71b2de6eb2ff8244214c192415fa346158d73b7c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\p2_validation.json",
+      "bytes": 48080,
+      "sha256": "8a4f9a8c6c5817d869283dfcf7ca2c4d375890d60b3060bac87f0f41f9cb9409"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\power_samples.json",
+      "bytes": 694,
+      "sha256": "19dfb6437d15c923a735bf964524fa8ed3eee4a19a7eaf35fbc5ed23c1cd15d8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\requested.json",
+      "bytes": 18525,
+      "sha256": "f640b0ecef8c65ddad8920af49e63e6bbbd2ee24871679edf08e0f6cd7221267"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r2\\result.json",
+      "bytes": 41945,
+      "sha256": "09de546d28896996ccccee2cecc862bde171ade170f0424e12f1e53645ed333e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\config_validation.json",
+      "bytes": 9145,
+      "sha256": "fd475f267487f9e8f2ea2ff6a799267f6c66e0c08a8bbfe91f3f024220dececd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\evidence.json",
+      "bytes": 4000,
+      "sha256": "c7c49c768b6e08c005b4982d64a1a50773c9c4abc38514f6638f22abd467fb45"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\p2_validation.json",
+      "bytes": 48076,
+      "sha256": "8adf9c554d246a01fec2df12260f824a2f21b65764989e1eccdfb6a9adf0643e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\power_samples.json",
+      "bytes": 695,
+      "sha256": "870a35a12d494bf74c481ac082866e92e2e16a217f815f8ca1a63b7746131f17"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\requested.json",
+      "bytes": 18525,
+      "sha256": "8da5f9b24b8bbda552420db60fe10e1d344b4705d82749016cd5388a5bf4776e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_control_r3\\result.json",
+      "bytes": 41937,
+      "sha256": "613eb720c6280dbdaa8eee9d3abda23700fcbbae7c4d6c7539e44120b088d15e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "1746ed095c3432073a8351dde269a293b0462167dd7e2ff0b2cd0c7d85a55a0c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\evidence.json",
+      "bytes": 4000,
+      "sha256": "8b57f9ef03b69118587b4c373ca5f4ce81ebfa63c7702f62629d396dc034be2e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\p2_validation.json",
+      "bytes": 48066,
+      "sha256": "00cbc780df9f94080c4cc3d2c88776fb056327e7615d3b361d4bafcb721665c2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\power_samples.json",
+      "bytes": 695,
+      "sha256": "c8e156422e47592d330643f450257d0529cfb35b4ea1abdce8496cf2ccf38566"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\requested.json",
+      "bytes": 18516,
+      "sha256": "433e96678fb30dc902c64fe52383fcfeea1bf4243bfd8c0fb391d95626d4cfbd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r1\\result.json",
+      "bytes": 41934,
+      "sha256": "017407c343bdda4bba0cc0819e4329458611a534c27523177fa262fa140894a6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "2873a0a6254bfbb4f3712dcb0fdeb36aa4708b65ca1e010311da14221153457d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\evidence.json",
+      "bytes": 4000,
+      "sha256": "e843fb834d84ec6f739717583d82bff819ce55ff183e6252da9f0769c2835178"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\p2_validation.json",
+      "bytes": 48071,
+      "sha256": "f0c575455716534ba5cb7c77074ac6e62a983b3918808745715b1dbe4fecfca3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\power_samples.json",
+      "bytes": 693,
+      "sha256": "2de55ae3d55edf742aef8bb5fe820f3eec8d8e92af443f1ccef0dc71fa9642e9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\requested.json",
+      "bytes": 18515,
+      "sha256": "2e9673fc67ea615cc8a0044bf720e39d895fd10725963a748e9e39686b721c67"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r2\\result.json",
+      "bytes": 41943,
+      "sha256": "9f859892723c5ad47769d4caa073d8ca4478a6c126155c7c2b891b6af9e499d0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\config_validation.json",
+      "bytes": 9141,
+      "sha256": "fe59550446a89127dd08eb64883e8d641ee73a249ae7b46d753ea84e6e912d16"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\evidence.json",
+      "bytes": 4000,
+      "sha256": "be9a9c5fec0dc0543ddf479b3981808671cf9a5b55c00506f3541a565e0da8f2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\p2_validation.json",
+      "bytes": 48070,
+      "sha256": "216b378557b4ece008b07af7f824c71c72d17cdb505dcae5c41d2762ba890ea1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\power_samples.json",
+      "bytes": 693,
+      "sha256": "0b54c3dd95d084b46740a39e08bc2d88fe5ea42a9a67e32464793390abf9d203"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\requested.json",
+      "bytes": 18516,
+      "sha256": "81d86d64bbc4ae6a169f1d18aecdfae2144033dcbdd656ee937157df1a8f00ed"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\matched_mixed_scene_r3\\result.json",
+      "bytes": 41943,
+      "sha256": "2099b630fc0e4be13d0da0bc13fb8b113cb4aeb6d64e02a4969b5dc4015a8e87"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\prefix_ledger.json",
+      "bytes": 577867,
+      "sha256": "f4168b2af1faf1738e0692de80e5f5c5589c2b6f5579f97f55c4d15666b2a90c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\resume_inputs.json",
+      "bytes": 87490,
+      "sha256": "5a8e09ff7564afc459f132cf7efae6d07d6f5372453b969cedf99041c0b23ce3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\seal.json",
+      "bytes": 520210,
+      "sha256": "8d34597324b73e11c988504b68852de81da0783967049ea8331a903bd452617d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\smoke_ledger.json",
+      "bytes": 162632,
+      "sha256": "8a50208c1a297859f3f0667fa5f0277ab67de07d1196ccf0c90bf054ffb73b06"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "7849d9f536f623a59440d602f8ddc341eb88edc1a4dabf4385409bef59da2bc0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\evidence.json",
+      "bytes": 9064,
+      "sha256": "be899d3d05ffed625efa6abc958d37ea6532ba29bfa3a8cb09f0096ce1a1b6a2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\p2_validation.json",
+      "bytes": 59813,
+      "sha256": "b067578a801b14b76d6eb0e0adbb1e9706452175fe2de42328e8584c02e2f0c7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\power_samples.json",
+      "bytes": 809,
+      "sha256": "0dcb82a2b33d369c6382389a0a7091b44e99a18075330006c2ead472fd22f091"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\requested.json",
+      "bytes": 18190,
+      "sha256": "3c6404a231e6bcc1acbaebae93899adfa4d44e476d86f290a9d75169726ff6b4"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r1\\result.json",
+      "bytes": 52654,
+      "sha256": "b76f13fd0b70f40f5cb9bd04dbaf23e162f75eadd2ab43e52d2c4d276457d830"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "bdadb56ba8f619ae43f5b7105dcd38e5d4780b57b4a04604b9af260ec458827d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\evidence.json",
+      "bytes": 9064,
+      "sha256": "e6b3a2d7a7e0e10b983e8cf33ea5f3ed2945579739a43419c04e64c6fa4f7912"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\p2_validation.json",
+      "bytes": 59981,
+      "sha256": "49f2a4e7c4227e7d4b8b9e2616848361f6df84f574d237acdef853f57a635e31"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\power_samples.json",
+      "bytes": 806,
+      "sha256": "2accd44eb25d96372fe51096795a86d2683542748cc2b46d12f8565418e4c058"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\requested.json",
+      "bytes": 18190,
+      "sha256": "7dfe64b331546e194271e773eaf962a42c32dc66c3927bb18401f2a6e7560305"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r2\\result.json",
+      "bytes": 52653,
+      "sha256": "57bcddb06d4069113c84fc6ac89159e9115db1b9438a1761423f0d01529aec38"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "eaf06000bee60f96e50b69de26be6c3a7ffe2b522099f517e521f2e330792035"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\evidence.json",
+      "bytes": 9065,
+      "sha256": "0255274803f9af8a4d72cb8c5084e62f21671561a8299529b5aaf490e47c369e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\p2_validation.json",
+      "bytes": 59322,
+      "sha256": "9f958f9faf6adbe12c2013fe681d17c871e7b9438f8a1bff68a1ca6ae0c14827"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\power_samples.json",
+      "bytes": 805,
+      "sha256": "1f851efc0eae89cf8ed43d08efab0934c63f8d0f0f9d448ece9103d3ca7e8c92"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\requested.json",
+      "bytes": 18190,
+      "sha256": "a520e6b457a764c8f72d0aecf996e860c9a8228a4d466c41556b0841a8664371"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_both_r3\\result.json",
+      "bytes": 52246,
+      "sha256": "3541943e6e7e5f495e383d1ca3cd94fc5e7d686f3e9da56d0919051808753f27"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "5551e153ca5cf382749105485e736300eaf17710790af68b3add617f590d18e5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\evidence.json",
+      "bytes": 9065,
+      "sha256": "e293322cdd6273941a61216417bec4bf949c21f8e21135055a7a05867f2ac9ff"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\p2_validation.json",
+      "bytes": 59899,
+      "sha256": "47c582b39666c4c15f627613ac6ca95376fe8de90f062739eed381370beb0258"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\power_samples.json",
+      "bytes": 807,
+      "sha256": "8f86f9afcb40afdc847c4bd9e3f5ff58a8a683d54df4788a79c365922081c451"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\requested.json",
+      "bytes": 18204,
+      "sha256": "0ef60cea6a5dd3c014b6971e584a9b2c03b47d25be776d226573a5dda59ab0f1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r1\\result.json",
+      "bytes": 52649,
+      "sha256": "973388f1a9356afd2b8d9298f57e349590c8f386fe68d0ab2f661c7a9ae0693a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "a41104e1e775b6be9d53f92e946b9cc324251a4aadd46b603acc5512b3ccf02b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\evidence.json",
+      "bytes": 9064,
+      "sha256": "8c26db28f7349f8b042d1e65c72abf709168d724d0aacc4a79aa2083ef93a864"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\p2_validation.json",
+      "bytes": 59718,
+      "sha256": "1f6410d97c7066b6bf5036167e5e5dd9680f8f3d52b992fe034233645ed60669"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\power_samples.json",
+      "bytes": 807,
+      "sha256": "980db53d46e2010dd240690f8d43c4a3c70491e8c12e9c9e1fad929735caf94a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\requested.json",
+      "bytes": 18206,
+      "sha256": "b10be025572a099da97b4ca7a16432d9525de4b80702d5632c86541e625d138b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r2\\result.json",
+      "bytes": 52652,
+      "sha256": "370b45685bce45465c64c1b4cee6ce32075ea73e5a1545c6887c5222618c7ff0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "d536cd04a91ec0d3dcfd50aaf3804aa57c53384eed38723bc609de7163a4956a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\evidence.json",
+      "bytes": 9064,
+      "sha256": "9d5eac1c3f475d2335d32eddc7353006abc36ad39d7a3f2e9e1a6b926f24b32d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\p2_validation.json",
+      "bytes": 59868,
+      "sha256": "05e8430b79a64268cd366db67315188e0ce56696391741612b2b0aa63f284531"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\power_samples.json",
+      "bytes": 807,
+      "sha256": "47b52161ae65d480c9990e639c7c72c4e50a1128a478806bb135369d07fb3213"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\requested.json",
+      "bytes": 18206,
+      "sha256": "a7bebcf883bb0a7e7033c226211b919e69ebb6847419b05f4b46c59a12f42ca6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_boxes_control_r3\\result.json",
+      "bytes": 52663,
+      "sha256": "322e3c3003b9d68141f07c16a551c204f7e32640e1a24b860d095027bff68995"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "cd594b0e9ed2ce8496560663fb75b394b8d3c98a6fa82f02c4752d57b9ba4e4f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\evidence.json",
+      "bytes": 8082,
+      "sha256": "cd9a354b1904be77a747478de512f9c618d0a4782b68e16ff8aecb44543d1d11"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\p2_validation.json",
+      "bytes": 71491,
+      "sha256": "ef0e078d0836f36cabb6a2813f23036b8cbfec88a2b49986d0ff842f779b9168"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\power_samples.json",
+      "bytes": 920,
+      "sha256": "5d7507689a92c9ef526045790e8f25fc1108f69978c0ec9c286444e657448ac0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\requested.json",
+      "bytes": 18196,
+      "sha256": "3b98061322d03fa1a61a7eee9ae9ef2c296736e5a2f7c2652b68793c8371d91d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r1\\result.json",
+      "bytes": 63357,
+      "sha256": "33ed9827e6ca44aa028e9ecf2bcd0de33caad90ac3602c8e15534619419946ca"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "3564628bbf1a348ecae8494109c8b4cc9085cdd81f043a0379b3e59cc947e9a7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\evidence.json",
+      "bytes": 8082,
+      "sha256": "38dcdb446d028af1873090ea03345e021557d9dc3076c6ec6bacc8aa6fafa393"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\p2_validation.json",
+      "bytes": 71596,
+      "sha256": "98ac1e734d3483ecacddc9b85cd13fd89cae02c7dd4b3749ceba639a48936007"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\power_samples.json",
+      "bytes": 919,
+      "sha256": "0aacb81e979577458adfbe0a4e5af4008b120b3f16a91c6745cd990152b36fb1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\requested.json",
+      "bytes": 18196,
+      "sha256": "7f28f4b8f83981902f164bdf94feb4b1239e6721af57154bc5f69abfbf9c8c3f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r2\\result.json",
+      "bytes": 63382,
+      "sha256": "719439932d26a019179b483834aeba1b4fa2b0296bde5949c1b6756c5ee20db0"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\config_validation.json",
+      "bytes": 9139,
+      "sha256": "f2d753024215c59db898af71c259f8a89ff8101b860271f10b8cf1805d46b2b9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\evidence.json",
+      "bytes": 8082,
+      "sha256": "db399a916d497eb3ff344f31b65cfcd81f60dec27f739067fe8f8f9001b758a3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\p2_validation.json",
+      "bytes": 71558,
+      "sha256": "e5059e85d9a215af4cb5ebcc1e9cce250926217b08b7e34bbc00ca6c17d3215e"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\power_samples.json",
+      "bytes": 921,
+      "sha256": "e4542cbdffd9f3135d55e3389dc4b0b0c0311aa73f3dab19ef451e918beddda2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\requested.json",
+      "bytes": 18198,
+      "sha256": "801a5f75f3224fd236681578d88470c78d71943df40e0350a41992895efff654"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_both_r3\\result.json",
+      "bytes": 63371,
+      "sha256": "a23ae2d3b5f02e7a7c70c1c543c97a5c3da4a3219287d4b185f2bc71ee3668bc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "45d8bb6d9956eb8d6e6e08fbfd20039802a312752f996d728cfeb213f4e423b9"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\evidence.json",
+      "bytes": 8082,
+      "sha256": "7c5c91501162ce45cf48f3f9cbd6050a801ea4906502d3f05b3eecf7783c2f70"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\p2_validation.json",
+      "bytes": 71558,
+      "sha256": "8f7f7d7e40280272471c5f43c8321e6c0c7d7af48aec53e339efe60ceb2cde45"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\power_samples.json",
+      "bytes": 922,
+      "sha256": "09e20b37bc623d5dbf6c0e3619d74a05c584ba9e87d22f471e2d383c512a14eb"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\requested.json",
+      "bytes": 18212,
+      "sha256": "6bd3193fc3d369335ec98dbdac4ceb764b691aec7fcee9af55e1ea88f705e3f3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r1\\result.json",
+      "bytes": 63370,
+      "sha256": "9c10bb8afa952e5e6dfaeec8a1907070c0afffa9221d25153072b641e5c02547"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "f222a6c4fa3048e1edcaf0e497a600445702ada6859e84926fa22f02df84b9d2"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\evidence.json",
+      "bytes": 8082,
+      "sha256": "f0d6ad8d99bdd56aae7489dcafe614002de8d98848fa317d42f332c5b54d9270"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\p2_validation.json",
+      "bytes": 71561,
+      "sha256": "a84942b1ad36344843a2a13ce1e0a0ccaf4208908e8be639030832e6dad6f5ec"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\power_samples.json",
+      "bytes": 920,
+      "sha256": "711cb6ae5b7be5e8e0c5d57bab2bfd421e16206291a3f0795e014f25296a4232"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\requested.json",
+      "bytes": 18213,
+      "sha256": "6b2799b1792b15a03ba5b52a58e32358a551c218e3bc24ae0abeed7cfb262ca8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r2\\result.json",
+      "bytes": 63373,
+      "sha256": "ea4d7d7f8ab3ccb3f3cfee96b3a6a26b4e93bb5bdceb26c42f337ebb5a2bf43a"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\config_validation.json",
+      "bytes": 9146,
+      "sha256": "a6e2a5822694e2346f2dc6b32cb0f036d2a16ce7a7b3a44b5d7e7bc408d15f2d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\evidence.json",
+      "bytes": 8082,
+      "sha256": "f3255e608312e625cc73ea3a2f8a25b8dfbc696f33391ef1af6c063dcf400f0c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\p2_validation.json",
+      "bytes": 71482,
+      "sha256": "81848d340977107a1f46b1d70446ec0f2f62f552722fa978b69d9b7648f8bfac"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\power_samples.json",
+      "bytes": 921,
+      "sha256": "ffa290f544bb9fbaf395196698b6bfe623ce945ed3556be985e351873d675a50"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\requested.json",
+      "bytes": 18212,
+      "sha256": "cfb89a2bef0b4ea916045c4207d389156862861c250c2e42af36643513ef1344"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_bunny_control_r3\\result.json",
+      "bytes": 63371,
+      "sha256": "89e893120fbcdb321e88ebaa14cf48c9c2ed7a06c8791c195457dccd6f4ba269"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_ledger.json",
+      "bytes": 2027746,
+      "sha256": "d618a22e73c9f6f8d06ab150c7d2a2d87dd04145e7d375e00ceab7f35b838328"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "80b021c2109e1b8be91c57f1b7210bf1f7a4b62e71097679688b66985f835877"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\evidence.json",
+      "bytes": 8412,
+      "sha256": "e07be60e913f9e8ce1dab0cf712c4d2705b3832b250e43c6b781249dd710b9cd"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\p2_validation.json",
+      "bytes": 174619,
+      "sha256": "fdf31efae074eedcbce7fdda575acdf24883a63ab52b037a55a27a226dac43e3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\power_samples.json",
+      "bytes": 1936,
+      "sha256": "0e89e83cc365f55c04ab29e833d66d6f50144d258290561444ba7f2fc1b02c52"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\requested.json",
+      "bytes": 18196,
+      "sha256": "510cbf8d23103b8abf0f594f34a8c390d56f1b372e7c38d9540fd80969e65af5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r1\\result.json",
+      "bytes": 159418,
+      "sha256": "58d71908c4aa3ebdbd4fff1f5f82e04a646bbcdd76bc9ff717095d2584bfb759"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "71daddcbb879eeb5f60e586ca4976743434bece077523581c768e979d67efd79"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\evidence.json",
+      "bytes": 8412,
+      "sha256": "98c0802b42d1ef6bc9732c6334709dba3286aa77f7847de1f3ec6616fde4ecd5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\p2_validation.json",
+      "bytes": 185963,
+      "sha256": "44e61318512dbb3fbb379af28c39c4df2312edbe49ffeb06a205a54a584412db"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\power_samples.json",
+      "bytes": 2044,
+      "sha256": "7512ae7def88034c0a91e6a7a2cc507cbfad50d7b8265f25d201fd951e3f1f17"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\requested.json",
+      "bytes": 18196,
+      "sha256": "45b006a4005f75f2aaafff14e7fdbf687ce94dc0acf19466a8089b707e1fb2c6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r2\\result.json",
+      "bytes": 170139,
+      "sha256": "bbd21e74a15cecbb72b508786fe3f30b38d16a6f135a832d4e3c185d189639c8"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\config_validation.json",
+      "bytes": 9140,
+      "sha256": "1bc5752399b84631c6b58a74f9e7b0c1cf4dfa7fffb0884605b765f31b58bbb3"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\evidence.json",
+      "bytes": 8412,
+      "sha256": "53ad1c87a7ac79d1946ee5c545503a401e194e897d07c73ca0f9aa44d70cd994"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\p2_validation.json",
+      "bytes": 175027,
+      "sha256": "78a66d576fc2fa859f3d4e0155cfa58c41d54d8276b1cb6e8cd94debc81f0c6b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\power_samples.json",
+      "bytes": 1936,
+      "sha256": "7ac9392fefb36392263617d0ee99e164ccaeba95094e5ef9e1ad36d70cac807d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\requested.json",
+      "bytes": 18196,
+      "sha256": "a21a463426569e95d231b534f36232600e739fbfdc234cdb96adde51e35f95b1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_both_r3\\result.json",
+      "bytes": 159833,
+      "sha256": "2ad1db25f7193901dcf05b889b3e7bffe57ac6d0923d12e1088d5f541c48bbbe"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\config_validation.json",
+      "bytes": 9147,
+      "sha256": "25d79ac6b20b5c21b4e802ab87ad5d692dd835853e99864b72b554afcb592013"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\evidence.json",
+      "bytes": 8412,
+      "sha256": "1a3f5348a8cd19dcc70928f591feda840010836dd96235a69f298e2a7beefdd7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\p2_validation.json",
+      "bytes": 174643,
+      "sha256": "66e20cd7706187b948029bd7661ece162fc89f06b37d2abe8d05de3afb78f090"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\power_samples.json",
+      "bytes": 1935,
+      "sha256": "8506e716486485c0ff1e225c5a7c61c7c25a647047532c57fc8529b84fe7977c"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\requested.json",
+      "bytes": 18212,
+      "sha256": "0d1ad57bb0e55876823588e77da8c3e46eb40ec0cf07f5b946d07a719fdf1d21"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r1\\result.json",
+      "bytes": 159414,
+      "sha256": "4efb88492922ef948b6afb6e70ebeac95e68c0b1d9bcbbe1e58e977db84b5a38"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\config_validation.json",
+      "bytes": 9147,
+      "sha256": "2d8737ea2e360effb53b648f094e53e6ada3be9e73c79201232e77a842dfc3b5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\evidence.json",
+      "bytes": 8412,
+      "sha256": "84eedcc180d8474cdd1ade18ced57c498cd1db23b57c69944129eb3a185ab68f"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\p2_validation.json",
+      "bytes": 175025,
+      "sha256": "0a7ca2cd752186460d9d01bcba4a1232fbdd296bc0d7b1b324706ed50162f7ac"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\power_samples.json",
+      "bytes": 1933,
+      "sha256": "79005355659d8d6e2b8b194181ef86f9318b8cb56783887e350702fd5144f522"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\requested.json",
+      "bytes": 18212,
+      "sha256": "de0702951b82b53e68ce64ac206d2a8d028a570b6c0cd52ac2b7bbbfaae628cc"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r2\\result.json",
+      "bytes": 159832,
+      "sha256": "e51946b50d3d123c1c695cf6ac1ba65d278dd2f51d71fcb4c13ee13413972241"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\config_validation.json",
+      "bytes": 9147,
+      "sha256": "fef8dfe38f9621cc377d7eadfdb2e7613fa5988c86c59fc939851f35927941b1"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\evidence.json",
+      "bytes": 8412,
+      "sha256": "9a77a8ff0b35d89e2da7f8f11ba72c1b4d99b02ce8ddeb22f0ea3871e0da18df"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\p2_validation.json",
+      "bytes": 175117,
+      "sha256": "9df6bda764834a0dbdc804e788b0949f29da3b725ca04bb60ed62210fd58037b"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\power_samples.json",
+      "bytes": 1936,
+      "sha256": "fffd379adfec18ea0cdeddc8f68301c2c129bd09e81b47cb1ee50c77eb6ab781"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\requested.json",
+      "bytes": 18212,
+      "sha256": "c4c0b7e3c8e241438f70992c0d72818be6d90b263f4a024daea711df9cf89402"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\runs\\innovation_p2a_verified_20261014\\whole_mixed_control_r3\\result.json",
+      "bytes": 159834,
+      "sha256": "06899355945028a310332d49c7becd7b5b99ae27259967a1b1819bd4db5afca5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\p2_analyze.py",
+      "bytes": 9825,
+      "sha256": "efe0fd9bbf6924e6f6f6ae85a7cb0733ace8499f41907bb9a9e5b61102d2408d"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\p2_contracts_test.py",
+      "bytes": 2604,
+      "sha256": "35937d8aa7d06e19856f4fb50276dfa60ed9f5a380e1ffaae608a98686ba05b7"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\verify_p2a.py",
+      "bytes": 10352,
+      "sha256": "68f724f3e453efa9a5096d771f8d4bb02bc50f77dcf575b0c75fae3f6685ccd6"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\local\\resume_p2a_captured.py",
+      "bytes": 2818,
+      "sha256": "bcff3976c21e40d091831cf4716a7eb5bd498b73308650d984dc19cc30bc6178"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\local\\run_innovation_p2a.py",
+      "bytes": 9145,
+      "sha256": "706fc7c6854e36ddbbc4b82cc3fdf04ada616f78294d72605bff98c7e6dfdcb5"
+    },
+    {
+      "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\local\\run_p2a_subset.py",
+      "bytes": 2029,
+      "sha256": "b2a40bc72ead53ac2be4a769fd9023322ff4cd3848f3d1462ccbf6a200cbc0ef"
+    }
+  ],
+  "decision": "STOP_P2B_keep_P2A_default_off",
+  "successful_native_runs": 79,
+  "frames": 384,
+  "native_ctest_unique": 24,
+  "python_tests_unique": 14,
+  "formal_performance_certified": false,
+  "physical_quality_certified": false
+}

@@ -1,0 +1,5717 @@
+[
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "scene",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.16653663678793273,
+            "max": 4.118701748983167
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.05249563916600556,
+            "max": 0.3997010114430668
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.17177135763886536,
+            "max": 4.118701748983167
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.0041634159196983185,
+            "max": 0.10296754372457918
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.001312390979150139,
+            "max": 0.00999252528607667
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.004294283940971634,
+            "max": 0.10296754372457918
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "scene",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.6002601142790944,
+            "max": 6.547146100177763
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.031300360345439364,
+            "max": 0.27742187149520936
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.621118601425611,
+            "max": 6.547146100177763
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.015006502856977359,
+            "max": 0.16367865250444408
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.000782509008635984,
+            "max": 0.006935546787380234
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.015527965035640277,
+            "max": 0.16367865250444408
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "scene",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.7445606772956628,
+            "max": 7.0231852980632885
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.04093699922597072,
+            "max": 0.6974733667560746
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.770425724762682,
+            "max": 7.0231852980632885
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.01861401693239157,
+            "max": 0.17557963245158223
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0010234249806492682,
+            "max": 0.017436834168901866
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.01926064311906705,
+            "max": 0.17557963245158223
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "abd",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.121273476889307,
+            "max": 3.503411880119438
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.03962536643691349,
+            "max": 0.429168230550602
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.12505460849249533,
+            "max": 3.503411880119438
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.0030318369222326743,
+            "max": 0.0875852970029859
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0009906341609228371,
+            "max": 0.010729205763765052
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.003126365212312383,
+            "max": 0.0875852970029859
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "abd",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.22374515666120107,
+            "max": 5.383081898951532
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.027299276326491283,
+            "max": 0.3194340856521173
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.2314268095471289,
+            "max": 5.383081898951532
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.005593628916530025,
+            "max": 0.1345770474737883
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.000682481908162282,
+            "max": 0.007985852141302933
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.005785670238678222,
+            "max": 0.1345770474737883
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "abd",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.16315049993475061,
+            "max": 3.913008546712186
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.025561343725673633,
+            "max": 0.2751826521559752
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.1686977845901516,
+            "max": 3.913008546712186
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.004078762498368766,
+            "max": 0.09782521366780465
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0006390335931418408,
+            "max": 0.00687956630389938
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.004217444614753791,
+            "max": 0.09782521366780465
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "both",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.6371389406991449,
+            "max": 6.737377889350386
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.06588968367791118,
+            "max": 1.102175237906447
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.6591048224093669,
+            "max": 6.737377889350386
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.01592847351747862,
+            "max": 0.16843444723375964
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0016472420919477792,
+            "max": 0.02755438094766117
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.01647762056023417,
+            "max": 0.16843444723375964
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "both",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.21020046044733343,
+            "max": 3.8557348656183064
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.01860893966126175,
+            "max": 0.2591423257971918
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.2174678713923469,
+            "max": 3.8557348656183064
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.005255011511183335,
+            "max": 0.09639337164045762
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0004652234915315439,
+            "max": 0.006478558144929796
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.005436696784808672,
+            "max": 0.09639337164045762
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Boxes",
+    "arm": "both",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.1640564609736583,
+            "max": 3.9231442446594125
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.023401621643965535,
+            "max": 0.21560425719137963
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.16965816644417145,
+            "max": 3.9231442446594125
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 16449,
+            "rms": 0.0041014115243414575,
+            "max": 0.09807860611648526
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0005850405410991384,
+            "max": 0.0053901064297844905
+          },
+          "abd": {
+            "count": 15360,
+            "rms": 0.0042414541611042866,
+            "max": 0.09807860611648526
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.24505990468031602,
+              "max": 5.732361524863085
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.044667304574929484,
+              "max": 0.7499699682519818
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.25331928992720665,
+              "max": 5.732361524863085
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.006126497617007901,
+              "max": 0.14330903812157714
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.001116682614373237,
+              "max": 0.018749249206299543
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0063329822481801665,
+              "max": 0.14330903812157714
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.13272883872013805,
+              "max": 3.577383152172434
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02881800344274655,
+              "max": 0.31311247242238777
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.13713890378410565,
+              "max": 3.577383152172434
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.0033182209680034506,
+              "max": 0.08943457880431066
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0007204500860686637,
+              "max": 0.007827811810559695
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.0034284725946026402,
+              "max": 0.08943457880431066
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.20235824843742706,
+              "max": 5.347166269037922
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.033466505330655934,
+              "max": 0.4368751271217196
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.20921917743756452,
+              "max": 5.347166269037922
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 16449,
+              "rms": 0.005058956210935675,
+              "max": 0.13367915672594805
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0008366626332663985,
+              "max": 0.010921878178042988
+            },
+            "abd": {
+              "count": 15360,
+              "rms": 0.005230479435939112,
+              "max": 0.13367915672594805
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "scene",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.001784360814536682,
+            "max": 0.02775522180763584
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.004680306904022988,
+            "max": 0.02775522180763584
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.002185588534211266,
+            "max": 0.02226292698063798
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0007272221994381921,
+            "max": 0.0012915552006337427
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 4.4609020363417555e-05,
+            "max": 0.000693880545190886
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.00011700767260057342,
+            "max": 0.000693880545190886
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 5.463971335528266e-05,
+            "max": 0.0005565731745160606
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 1.8180554985954764e-05,
+            "max": 3.228888001584357e-05
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "scene",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.003142975487658958,
+            "max": 0.07459223438138801
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.010463805623121365,
+            "max": 0.07459223438138801
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0033986761499306055,
+            "max": 0.049516295632012444
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0015980014350896615,
+            "max": 0.003399633450474172
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 7.857438719147358e-05,
+            "max": 0.0018648058595347105
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.00026159514057803385,
+            "max": 0.0018648058595347105
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 8.496690374826454e-05,
+            "max": 0.00123790739079998
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 3.995003587724144e-05,
+            "max": 8.49908362618543e-05
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "scene",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.0021173700457874337,
+            "max": 0.05577269836708113
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.006778183614382742,
+            "max": 0.05577269836708113
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0024361620543532597,
+            "max": 0.02154292474718451
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0008241237127255405,
+            "max": 0.0014097658762950492
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 5.293425114468603e-05,
+            "max": 0.001394317459177038
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.00016945459035956894,
+            "max": 0.001394317459177038
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 6.090405135883175e-05,
+            "max": 0.0005385731186792785
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 2.060309281813855e-05,
+            "max": 3.5244146907376234e-05
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "abd",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.1437417525498741,
+            "max": 3.6611127077300085
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.122425478572883,
+            "max": 0.8635140369146501
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.20224043861937233,
+            "max": 3.6611127077300085
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.027278380026374734,
+            "max": 0.043639089229148637
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.003593543813746852,
+            "max": 0.09152781769325023
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.003060636964322075,
+            "max": 0.021587850922866254
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.005056010965484308,
+            "max": 0.09152781769325023
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0006819595006593683,
+            "max": 0.001090977230728732
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "abd",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.003301015344977267,
+            "max": 0.07493152437817265
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.013584373895353295,
+            "max": 0.07493152437817265
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0030723694727103454,
+            "max": 0.06434171230608456
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0015817076740695939,
+            "max": 0.0034927105524224056
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 8.252538362443147e-05,
+            "max": 0.001873288109454316
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0003396093473838324,
+            "max": 0.001873288109454316
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 7.680923681775826e-05,
+            "max": 0.0016085428076517828
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 3.954269185173971e-05,
+            "max": 8.731776381056013e-05
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "abd",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.0048299292227764416,
+            "max": 0.20663287906443362
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.01912788932616132,
+            "max": 0.20663287906443362
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.004562264359094938,
+            "max": 0.0692022167399593
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.002531047186389823,
+            "max": 0.005168110702183303
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.00012074823056941153,
+            "max": 0.005165821976610866
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.00047819723315403344,
+            "max": 0.005165821976610866
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0001140566089773744,
+            "max": 0.0017300554184992922
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 6.327617965974561e-05,
+            "max": 0.00012920276755458256
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "both",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.0017385078987804804,
+            "max": 0.034587537990845005
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0055646084622611985,
+            "max": 0.034587537990845005
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0020272873708553785,
+            "max": 0.03007593934852237
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0005911734526369329,
+            "max": 0.0008978241172378154
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 4.3462697469512157e-05,
+            "max": 0.000864688449771116
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0001391152115565295,
+            "max": 0.000864688449771116
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 5.0682184271384806e-05,
+            "max": 0.0007518984837131668
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 1.477933631592328e-05,
+            "max": 2.2445602930945384e-05
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "both",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.14544663145922507,
+            "max": 3.6701874796432437
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.11598673242016183,
+            "max": 0.8032041036494274
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.2049902679707525,
+            "max": 3.6701874796432437
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.026933827462027365,
+            "max": 0.042710036683712885
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.003636165786480626,
+            "max": 0.09175468699108107
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0028996683105040467,
+            "max": 0.020080102591235688
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.005124756699268813,
+            "max": 0.09175468699108107
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0006733456865506841,
+            "max": 0.0010677509170928222
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Mixed",
+    "arm": "both",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.005138274473973066,
+            "max": 0.17072486803739562
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.020971285536400736,
+            "max": 0.17072486803739562
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.004890207904021798,
+            "max": 0.09276034019443848
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0023310754429338074,
+            "max": 0.004871664066087693
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 39475,
+            "rms": 0.00012845686184932665,
+            "max": 0.004268121700934905
+          },
+          "cloth_dynamic": {
+            "count": 1089,
+            "rms": 0.0005242821384100191,
+            "max": 0.004268121700934905
+          },
+          "fem": {
+            "count": 19193,
+            "rms": 0.0001222551976005448,
+            "max": 0.0023190085048612813
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 5.8276886073345124e-05,
+            "max": 0.00012179160165219233
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.005978199081544926,
+              "max": 0.16829165663585643
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0258731003621144,
+              "max": 0.16829165663585643
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.005237878532480963,
+              "max": 0.09557975768903385
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.002843905504513901,
+              "max": 0.005730879963262985
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00014945497703862273,
+              "max": 0.004207291415896411
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0006468275090528602,
+              "max": 0.004207291415896411
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00013094696331202306,
+              "max": 0.0023894939422257366
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 7.109763761284744e-05,
+              "max": 0.00014327199908157462
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00232414275279664,
+              "max": 0.06630348459315626
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0072438657306293066,
+              "max": 0.06630348459315626
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.0026683035143119684,
+              "max": 0.029219894495878647
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0010062800070247558,
+              "max": 0.0018233652071562682
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 5.810356881991619e-05,
+              "max": 0.001657587114828916
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0001810966432657323,
+              "max": 0.001657587114828916
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 6.670758785779964e-05,
+              "max": 0.0007304973623969668
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 2.5157000175618803e-05,
+              "max": 4.558413017888664e-05
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.006170294098715463,
+              "max": 0.17379443862455948
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.02298056430470948,
+              "max": 0.17379443862455948
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.006122101058601757,
+              "max": 0.1006932742762615
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0032955568925492184,
+              "max": 0.006922156470065733
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 39475,
+              "rms": 0.00015425735246788643,
+              "max": 0.004344860965613987
+            },
+            "cloth_dynamic": {
+              "count": 1089,
+              "rms": 0.0005745141076177373,
+              "max": 0.004344860965613987
+            },
+            "fem": {
+              "count": 19193,
+              "rms": 0.00015305252646504364,
+              "max": 0.0025173318569066444
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 8.238892231373034e-05,
+              "max": 0.00017305391175164334
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "scene",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.06010310160760688,
+            "max": 0.6096261246392325
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.06010310160760688,
+            "max": 0.6096261246392325
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.001502577540190172,
+            "max": 0.015240653115980832
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.001502577540190172,
+            "max": 0.015240653115980832
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "scene",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.10362471314919247,
+            "max": 0.4025017373529535
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.10362471314919247,
+            "max": 0.4025017373529535
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.002590617828729812,
+            "max": 0.010062543433823757
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.002590617828729812,
+            "max": 0.010062543433823757
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "scene",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.04398069271644353,
+            "max": 0.4243529275533463
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.04398069271644353,
+            "max": 0.4243529275533463
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0010995173179110878,
+            "max": 0.010608823188833704
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0010995173179110878,
+            "max": 0.010608823188833704
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "abd",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.05124580244520816,
+            "max": 0.21786371435663227
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.05124580244520816,
+            "max": 0.21786371435663227
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0012811450611302038,
+            "max": 0.005446592858915713
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0012811450611302038,
+            "max": 0.005446592858915713
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "abd",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.07713458334553022,
+            "max": 0.44533231605899726
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.07713458334553022,
+            "max": 0.44533231605899726
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0019283645836382555,
+            "max": 0.01113330790147494
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0019283645836382555,
+            "max": 0.01113330790147494
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "abd",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.050638781236284576,
+            "max": 0.2971837206164498
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.050638781236284576,
+            "max": 0.2971837206164498
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0012659695309071143,
+            "max": 0.007429593015411301
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0012659695309071143,
+            "max": 0.007429593015411301
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "both",
+    "repeat": 1,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.07758214839206229,
+            "max": 0.3114079576790234
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.07758214839206229,
+            "max": 0.3114079576790234
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0019395537098015573,
+            "max": 0.007785198941975561
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0019395537098015573,
+            "max": 0.007785198941975561
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "both",
+    "repeat": 2,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.10639619578596507,
+            "max": 0.39377291368529743
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.10639619578596507,
+            "max": 0.39377291368529743
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0026599048946491263,
+            "max": 0.009844322842132502
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0026599048946491263,
+            "max": 0.009844322842132502
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  },
+  {
+    "stage": "matched",
+    "scene": "Bunny",
+    "arm": "both",
+    "repeat": 3,
+    "comparison": {
+      "position": {
+        "available": true,
+        "unit": "mm",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.07854345917938803,
+            "max": 0.5686319822811592
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.07854345917938803,
+            "max": 0.5686319822811592
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      },
+      "actual_velocity": {
+        "available": true,
+        "unit": "m/s",
+        "partitions": {
+          "free": {
+            "count": 5776,
+            "rms": 0.0019635864794847,
+            "max": 0.01421579955702898
+          },
+          "cloth_dynamic": {
+            "count": 5776,
+            "rms": 0.0019635864794847,
+            "max": 0.01421579955702898
+          },
+          "abd": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          },
+          "fixed": {
+            "count": 19193,
+            "rms": 0.0,
+            "max": 0.0
+          }
+        }
+      }
+    },
+    "control_repeat_diameter": [
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.06080225763089994,
+              "max": 0.34548186172728435
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001520056440772499,
+              "max": 0.008637046543182134
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.04927934294518722,
+              "max": 0.41629866282225164
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.001231983573629681,
+              "max": 0.010407466570556348
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      },
+      {
+        "position": {
+          "available": true,
+          "unit": "mm",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.05619357831327961,
+              "max": 0.44058890081499663
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        },
+        "actual_velocity": {
+          "available": true,
+          "unit": "m/s",
+          "partitions": {
+            "free": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "cloth_dynamic": {
+              "count": 5776,
+              "rms": 0.0014048394578319912,
+              "max": 0.01101472252037495
+            },
+            "abd": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            },
+            "fixed": {
+              "count": 19193,
+              "rms": 0.0,
+              "max": 0.0
+            }
+          }
+        }
+      }
+    ],
+    "scope": "Actual positions/velocities vs paired control; no certified physical reference"
+  }
+]

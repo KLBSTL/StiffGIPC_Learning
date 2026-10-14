@@ -1818,6 +1818,8 @@ int main(int argc, char** argv) try
     const auto native_start=std::chrono::steady_clock::now();
     const bool detailed_recording=gipc::frame_recording_enabled();
     gipc::reject_retired_components();
+    if(const char* output=std::getenv("GIPC_P2_SCENE_FIXTURE"))return gipc::p2_scene_fixture(output);
+    if(const char* output=std::getenv("GIPC_P2_ABD_FIXTURE"))return gipc::p2_abd_fixture(ipc,output);
     if(const char* mode=std::getenv("GIPC_LINE_SEARCH_FAILURE_FIXTURE"))
     {
         // Exercise the actual lineSearch entry guard and application handler.

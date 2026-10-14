@@ -287,6 +287,16 @@ add_test(NAME pcg_chunk_stop_equivalence COMMAND ${CMAKE_COMMAND} -E env
 set_tests_properties(pcg_chunk_stop_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 120)
 
 # Ensure external C libraries use the same dynamic runtime as the executable
+foreach(_lazy 0 1)
+    add_test(NAME p2_scene_lifecycle_${_lazy} COMMAND ${CMAKE_COMMAND} -E env
+        "GIPC_P2_LAZY_SCENE=${_lazy}" "GIPC_DISCRETE_BVH_REFIT=1"
+        "GIPC_P2_SCENE_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/p2_scene_${_lazy}.json" $<TARGET_FILE:gipc>)
+    set_tests_properties(p2_scene_lifecycle_${_lazy} PROPERTIES RUN_SERIAL TRUE TIMEOUT 60)
+endforeach()
+add_test(NAME p2_abd_energy_equivalence COMMAND ${CMAKE_COMMAND} -E env
+    "GIPC_P2_ABD_FIXTURE=${CMAKE_CURRENT_BINARY_DIR}/p2_abd.json" $<TARGET_FILE:gipc>)
+set_tests_properties(p2_abd_energy_equivalence PROPERTIES RUN_SERIAL TRUE TIMEOUT 60)
+
 # to avoid LIBCMT/MSVCRT conflicts (MSVC only).
 if(MSVC)
     foreach(_tgt GKlib metis metis_partition)

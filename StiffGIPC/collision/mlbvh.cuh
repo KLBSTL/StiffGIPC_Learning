@@ -53,6 +53,8 @@ struct LBVHStorage
     cudatool::DeviceBuffer<uint64_t> morton_codes, sort_morton_codes;
     cudatool::DeviceBuffer<uint32_t> indices, sort_indices, flags;
     AABB scene;
+    bool scene_current = false;
+    bool scene_source_valid = false;
     void release();
     size_t capacity_bytes() const;
 };
@@ -71,7 +73,6 @@ class lbvh
     cudatool::DeviceBuffer<uint64_t> _sort_morton_codes;
     cudatool::DeviceBuffer<uint32_t> _sort_indices;
     cudatool::DeviceBuffer<uint32_t> _flags;
-    AABB                             scene;
     int*                             _btype;   // borrowed from GIPC
     int*                             _bodyId;  // borrowed from GIPC
     // With the ordinary-refit flag enabled, these states belong to independent
@@ -83,6 +84,11 @@ class lbvh
     LBVHStorage                      alternate_storage;
     bool                             swept_storage_active = false;
 
+  private:
+    AABB host_scene_cache;
+    bool host_scene_current = false;
+    bool host_scene_source_valid = false;
+
   public:
     lbvh() {}
     ~lbvh();
@@ -91,6 +97,12 @@ class lbvh
     void sort_morton_codes(int number);
     // Host ownership swaps only: no allocation, copy, launch or synchronization.
     bool select_storage(bool swept);
+    // Root storage belongs to the selected tree. A host consumer must use this
+    // accessor; a direct field read could bypass lazy-refresh validity.
+    const AABB& host_scene();
+    void mark_scene_changed();
+    void invalidate_scene();
+    void cache_reduced_scene(const AABB& bounds);
     size_t swept_cache_capacity_bytes() const;
     // Required after external, in-place topology/index remapping. Pointer/size
     // changes are detected automatically by the enabled ordinary policy.
