@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "source": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\qrfree_audit_export.py",
+    "bytes": 5234,
+    "sha256": "79e3a9ce376d5776683eb9b84ec373a03f3f340a7a361da627b6b0987bef746b"
+  },
+  "solutions_rechecked": 6,
+  "Decimal50_checks": 6,
+  "curve_rows": 492,
+  "GPU_jobs": 5,
+  "successful_GPU_jobs": 4,
+  "failed_sandbox_GPU_jobs": 1,
+  "expected_rejections": 1,
+  "memcheck_errors": 0,
+  "Python_tests": 90,
+  "native_PCG": false,
+  "production_modified": false,
+  "performance_certified": false
+}

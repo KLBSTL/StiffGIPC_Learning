@@ -1,0 +1,192 @@
+{
+  "schema": "p5_only_upload_scope.v1",
+  "scope": "P5 code, necessary numerical dependencies, current QR-free summaries only",
+  "destination": "KLBSTL/StiffGIPC_Learning",
+  "branch": "research/stiff-innovation-20261014",
+  "files_except_this_manifest": [
+    {
+      "path": "tools/bench/m3_numeric.py",
+      "bytes": 13597,
+      "sha256": "8297c478ec0c3924fe83e075927524cdb96876f0e2fa635bd0b7e9cbbdb35cca"
+    },
+    {
+      "path": "tools/bench/m3_numeric_test.py",
+      "bytes": 4142,
+      "sha256": "11fa2a926c1be629e2658cb479608f01bc5f4b71f3a17006c16eba5d68c98d75"
+    },
+    {
+      "path": "tools/bench/cgstats_numeric.py",
+      "bytes": 2696,
+      "sha256": "e421e486f6f14f12736842eb63f8189e9724c85933830f61293289afd7bebbe2"
+    },
+    {
+      "path": "tools/bench/cgstats_numeric_test.py",
+      "bytes": 2289,
+      "sha256": "2b32bfb2f32535bfd440b19898cac85c6b6995ce66ebdc3ad510b5c13f6bbd69"
+    },
+    {
+      "path": "tools/bench/qrfree_numeric.py",
+      "bytes": 1555,
+      "sha256": "75dcf7276c386ae42eaddfd8f2e18a4fb9ebaf56d9d3b1636493f1b3867797a1"
+    },
+    {
+      "path": "tools/bench/qrfree_numeric_test.py",
+      "bytes": 2305,
+      "sha256": "4b86be998331c84b07863249b92bf9e71ce0e89465e4c568757ba3cf47c59c74"
+    },
+    {
+      "path": "tools/bench/run_qrfree_cpu.py",
+      "bytes": 3840,
+      "sha256": "7516cf468914ed2aee88ec5531b8d3b3035f69f298f69a502a1a680f08907985"
+    },
+    {
+      "path": "tools/bench/prepare_qrfree_gpu.py",
+      "bytes": 1723,
+      "sha256": "b77bf3ec0881e03c5aec9704a12960accf92dff60a05671645c30cebbc5f2147"
+    },
+    {
+      "path": "tools/bench/prepare_cgstats_gpu.py",
+      "bytes": 5835,
+      "sha256": "f57db46645be64315a2bab913df19d45463df7e0acb482f80f26c0467551124d"
+    },
+    {
+      "path": "tools/bench/p5_validate.py",
+      "bytes": 6862,
+      "sha256": "5bb74b78125dec7d445233d2f529758f0d56094157f7e152d3aca8bb26be009d"
+    },
+    {
+      "path": "tools/bench/validate_qrfree_gpu.py",
+      "bytes": 5948,
+      "sha256": "fd21c051268b1ec5e3c231de279255f67c9382c2295dd9456fc8d0eefd33c926"
+    },
+    {
+      "path": "tools/bench/qrfree_audit_export.py",
+      "bytes": 5234,
+      "sha256": "79e3a9ce376d5776683eb9b84ec373a03f3f340a7a361da627b6b0987bef746b"
+    },
+    {
+      "path": "tools/bench/qrfree_seal.py",
+      "bytes": 5262,
+      "sha256": "08eb30fbe94fd209c4b35e97b07043dda1e65c1fab2113e3fdbe9377b176a269"
+    },
+    {
+      "path": "tools/local/build_qrfree_probe.py",
+      "bytes": 2077,
+      "sha256": "71b79444c006273a966806a8e986f65de9479b7c71293520981af6621a6f6204"
+    },
+    {
+      "path": "tools/local/run_qrfree_probe.py",
+      "bytes": 5908,
+      "sha256": "560e828073f35d09c26c5d1a5a0aa429f41913189d60db47f87f1627ec6e6a42"
+    },
+    {
+      "path": "tools/bench/qrfree_gpu/CMakeLists.txt",
+      "bytes": 624,
+      "sha256": "9b0da63e612059cedf28c28ac8523e3910b5200258e181b1862bad2ffb09e3ce"
+    },
+    {
+      "path": "tools/bench/qrfree_gpu/frozen_runtime.cuh",
+      "bytes": 10996,
+      "sha256": "21cc248ee0aff999bf703a7a6d440134a4671d37eac6f67cd7f10baf1ad30a21"
+    },
+    {
+      "path": "tools/bench/qrfree_gpu/ORIGIN.json",
+      "bytes": 275,
+      "sha256": "a515fb0f7e448a787d177f1adbee7f6e290f9d94cb7ee692abacd7b5d51a7a7c"
+    },
+    {
+      "path": "tools/bench/qrfree_gpu/qrfree_cost.cu",
+      "bytes": 10978,
+      "sha256": "b353e3c47678f8623276d725eb13eb48aa9e8871bda4839d645d69fb189582b5"
+    },
+    {
+      "path": "tools/bench/cgstats_gpu/cgstats_cost.cu",
+      "bytes": 24947,
+      "sha256": "f2ab228534098304608742898190e116ca1bbe9023f84ffe546f4ca6d84379a9"
+    },
+    {
+      "path": "tools/bench/cgstats_gpu/CMakeLists.txt",
+      "bytes": 636,
+      "sha256": "9803cc670e00e3e998d3b8e34ad733392cb338eb959cd48e8d66eca11876b9da"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/REPORT.md",
+      "bytes": 10697,
+      "sha256": "d31a3f2c7bcfc1825fa9ef7c753a654b8afe6862967c423c745db0dfdc50f2da"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/PLAN.md",
+      "bytes": 2026,
+      "sha256": "72acca205291ecfa40c44211c62a2a9c7c7d49e2de26d5e63358037086ec801f"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/SOURCE_AUDIT.md",
+      "bytes": 3534,
+      "sha256": "3842b9ba4a29827c05c3aa79496b37ece501c7b3d6c969e696cf0bf9141de338"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/AUDIT.json",
+      "bytes": 597,
+      "sha256": "fdb1fec3ee03ffe9a59e8fae2cdc39ba09aca006801c87527ecb1c7a3842a3e4"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/RUNTIME_COPY_CHECK.json",
+      "bytes": 660,
+      "sha256": "116f690092232ae5ab1955a8b0cdfca666dd6b4679b53df550435cb489a477bc"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/apply.csv",
+      "bytes": 1520,
+      "sha256": "d80da360fdac1660584b5cf646375917bf8751ffe7a7e247574a27a8a794a7fd"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/components.csv",
+      "bytes": 493,
+      "sha256": "04eb28510e94b3fc968147efea4b08f249297bc780fe86bf0a3986f4766ca454"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/conditional_budget.csv",
+      "bytes": 718,
+      "sha256": "98a38286df3b54aade7e1e9386109c0258fdfe9a9e372e95ec3826781580c424"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/CPU_curves.csv",
+      "bytes": 58650,
+      "sha256": "49b8bf16bf092c90f9f636490679d8017cd275406fc539e8f43d4b5dcb2c2523"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/CPU_final.csv",
+      "bytes": 837,
+      "sha256": "44184b770cac11d662d060538afb361d520edde3e0a34a52595d0e99c351e4ed"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/GPU_checks.csv",
+      "bytes": 478,
+      "sha256": "1b922334eb6a2c10e1a7a55c1877c2dba677564585f51e059ce0297cb4996521"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/launches.csv",
+      "bytes": 532,
+      "sha256": "af6014055d51d8ebda19222a6a682248de5afea9d5774e70a5669883a28ebe24"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/setup.csv",
+      "bytes": 396,
+      "sha256": "8d8a9931acca770d5d2f12ba0b0f14e1f33e33bfe5ef0659db8bfda282939ac0"
+    },
+    {
+      "path": "reports/innovation_p5_qrfree_20261016/tables_final/setup_pairs.csv",
+      "bytes": 303,
+      "sha256": "69a1ed761dffee3c23453cfa502a0beaeb99563eda8a3f2695a71a7884dc266a"
+    },
+    {
+      "path": "docs/research/P5_QRFREE_ARCHIVE_20261016.md",
+      "bytes": 1359,
+      "sha256": "968a8da31af2f91ac31c4f180439cefe2d32a88be7480ad91e77e3156800a787"
+    }
+  ],
+  "P3_changes_uploaded": false,
+  "other_historical_reports_uploaded": false,
+  "raw_data_uploaded": false,
+  "builds_uploaded": false
+}

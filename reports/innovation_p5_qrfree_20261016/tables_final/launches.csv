@@ -1,0 +1,5 @@
+﻿name,status,exit_code,wall_seconds,power_guid,prelaunch_GPU_utilization,memory_drop_mib,desktop_load_uncontrolled
+fixture_positive,completed,0,1.3289999999999509,52521609-efc9-4268-b9ba-67dea73f18b2,25.0,167.0,True
+fixture_negative,expected_rank_rejection,1,0.5620000000001255,52521609-efc9-4268-b9ba-67dea73f18b2,23.0,0.0,True
+mixed_cost,completed,0,11.594000000000051,52521609-efc9-4268-b9ba-67dea73f18b2,23.0,457.0,True
+fixture_memcheck_v2,completed,0,12.2650000000001,52521609-efc9-4268-b9ba-67dea73f18b2,0.0,441.0,True

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "original": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\cgstats_gpu\\cgstats_cost.cu",
+    "bytes": 24947,
+    "sha256": "f2ab228534098304608742898190e116ca1bbe9023f84ffe546f4ca6d84379a9"
+  },
+  "copy": {
+    "path": "E:\\university_class\\ComputerGraphics\\GIPC\\stiff_innovation_20261014\\tools\\bench\\qrfree_gpu\\frozen_runtime.cuh",
+    "bytes": 10996,
+    "sha256": "21cc248ee0aff999bf703a7a6d440134a4671d37eac6f67cd7f10baf1ad30a21"
+  },
+  "normalized_text_equal": true,
+  "raw_bytes_equal": false,
+  "operation": "LF-to-CRLF line ending normalization only"
+}

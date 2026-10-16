@@ -1,0 +1,5 @@
+{
+  "origin": "tools\\bench\\cgstats_gpu\\cgstats_cost.cu",
+  "sha256": "f2ab228534098304608742898190e116ca1bbe9023f84ffe546f4ca6d84379a9",
+  "operation": "Exact prefix before void run; includes Device, CSR/Product, reference MAS, timing and Replay; no production code"
+}
