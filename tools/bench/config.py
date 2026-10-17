@@ -38,6 +38,7 @@ DEFAULT = {
     'fem_direct_pullback':False,
     'mas_pivot_only_sync':False,
     'p2_lazy_scene':False, 'p2_merge_abd_energy':False, 'p2_audit':False,
+    'p3_ee_mode':'fused', 'p3_ee_queue_capacity':1048576, 'p3_ee_study_frames':None,
 }
 PRESETS = {
     'base': {}, 'host': {}, 'graph': {'execution': 'conditional_graph'},
@@ -71,6 +72,19 @@ def expand(data):
     if unknown:
         raise ValueError('Unknown configuration keys: ' + str(unknown))
     c = DEFAULT | PRESETS[preset] | data
+    if c['p3_ee_mode'] not in ('fused','two_stage'):raise ValueError('P3 EE mode must be fused or two_stage')
+    capacity=c['p3_ee_queue_capacity']
+    if type(capacity) is not int or not 1<=capacity<=8388608:raise ValueError('P3 queue capacity must be integer in [1,8388608]')
+    selected=c['p3_ee_study_frames']
+    if selected is not None:
+        parts=selected.split(',') if isinstance(selected,str) else []
+        if not parts or any(not v.isascii() or not v.isdecimal() or not 1<=int(v)<=1000000 for v in parts) or len(set(map(int,parts)))!=len(parts):
+            raise ValueError('P3 study frames must be unique positive integers <=1000000')
+        if 'p3_ee' not in c['diagnostics']:raise ValueError('P3 study selection requires p3_ee diagnostic')
+    elif 'p3_ee' in c['diagnostics']:raise ValueError('P3 study requires explicit frames')
+    if c['p3_ee_mode']!='fused' or selected is not None:
+        if c['backend']!='ipc' or c['contact_pool'] or any(c[k] for k in ('p2_lazy_scene','p2_merge_abd_energy','p2_audit')):
+            raise ValueError('P3 requires IPC, original DCD, all P2 increments disabled')
     chunk=c['pcg_graph_chunk']
     if type(chunk) is not int or chunk not in (1,4):
         raise ValueError('PCG Graph chunk must be the integer 1 or 4')
@@ -160,7 +174,7 @@ def expand(data):
         raise ValueError('Warp restriction requires stable Cholesky MAS')
     if c['mas_factor_action'] not in ('triangular','factor_inverse') or (c['mas_factor_action']=='factor_inverse' and c['mas']!='cholesky'):
         raise ValueError('Factor inverse action requires stable Cholesky MAS')
-    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe','edge_order','structure_probe','bvh_query_probe'}:
+    if set(c['diagnostics']) - {'cost', 'operator_probe', 'fixed', 'state_window', 'audit', 'physics', 'substeps','outer_probe','edge_order','structure_probe','bvh_query_probe','p3_ee'}:
         raise ValueError('Unknown diagnostic')
     if not isinstance(c['cost_events'],bool) or (not c['cost_events'] and 'cost' not in c['diagnostics']):
         raise ValueError('CPU/NVTX-only cost mode requires cost diagnostics and a boolean flag')
@@ -251,6 +265,8 @@ def matches_requested(saved, requested):
     for key in ('edge_query_order','edge_order_probe_frames','pcg_graph_chunk','fixed_graph_chunk_study',
                 'p2_lazy_scene','p2_merge_abd_energy','p2_audit'):
         if key not in saved and expected[key]==DEFAULT[key]:expected.pop(key)
+    for key in ('p3_ee_mode','p3_ee_queue_capacity','p3_ee_study_frames'):
+        if key not in saved and expected[key]==DEFAULT[key]:expected.pop(key)
     return saved==expected
 
 def environment(c, out):
@@ -305,7 +321,11 @@ def environment(c, out):
         'GIPC_P2_LAZY_SCENE':str(int(c['p2_lazy_scene'])),
         'GIPC_P2_MERGE_ABD_ENERGY':str(int(c['p2_merge_abd_energy'])),
         'GIPC_P2_AUDIT':str(int(c['p2_audit'])),
+        'GIPC_P3_EE_MODE':c['p3_ee_mode'],
+        'GIPC_P3_EE_QUEUE_CAPACITY':str(c['p3_ee_queue_capacity']),
     })
+    if c['p3_ee_study_frames'] is not None:
+        env.update(GIPC_P3_EE_STUDY_FRAMES=c['p3_ee_study_frames'],GIPC_P3_EE_STUDY_FILE=str(out/'p3_ee.jsonl'))
     if c['edge_order_probe_frames'] is not None:
         env.update(GIPC_EDGE_ORDER_PROBE_FRAMES=c['edge_order_probe_frames'],
                    GIPC_EDGE_ORDER_PROBE_FILE=str(out/'edge_order_probe.jsonl'))

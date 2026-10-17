@@ -8,6 +8,7 @@
 
 #include "GIPC.cuh"
 #include <solver/p2_options.h>
+#include <collision/p3_ee.h>
 #include <cstring>
 #include <gipc/gipc.h>
 #include "cuda_tools/cuda_tools.h"
@@ -9076,6 +9077,19 @@ double GIPC::InjectiveStepSize(double slackness, double errorRate, uint4* tets)
 
 void GIPC::buildCP()
 {
+    // Validate actual use, including initialization and direct TOI-AL runs
+    // without GIPC_RESOLVED_CONFIG. Logging must not control module isolation.
+    const auto& p3=gipc::p3_ee_options();
+    if(p3.active())
+    {
+        const auto& p2=gipc::p2_options();
+        // The app's initial buildCP precedes build_gipc_system(), which binds
+        // use_toi. Respect the explicit backend during that initial query too.
+        const char* backend=std::getenv("GIPC_CONTACT_BACKEND");
+        const bool ipc_context=!use_toi&&(!backend||std::string(backend)=="ipc");
+        p3.require_context(ipc_context,p2.lazy_scene||p2.merge_abd_energy||p2.audit,
+            gipc::ipc_contact_pool_config().enabled);
+    }
     gipc::CostScope cost("collision.discrete_query");
     for(;;)
     {
@@ -11986,6 +12000,7 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
     gipc::set_solve_frame(total_Frames+1);
     // Counter reset does not change either tree's topology/interval state.
     gipc::discrete_bvh_reset_stats();
+    gipc::p3_ee_reset_stats();
     gipc::ipc_contact_pool_end();
     gipc::ipc_contact_pool_reset_stats();
     ipc_contact_pool_energy_calls=ipc_contact_pool_energy_failed=0;
@@ -12159,6 +12174,7 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
         frame["recording_phase_scope"]="Existing CUDA intervals; includes terminal assembly omitted by legacy phase_ms; no new GPU events";
     }
     gipc::Statistics::instance().at_current_frame()["discrete_bvh"]=gipc::discrete_bvh_stats_json();
+    gipc::Statistics::instance().at_current_frame()["p3_ee"]=gipc::p3_ee_stats_json();
     gipc::Statistics::instance().at_current_frame()["bvh_eligibility"]={{"requested",false},{"validate",false},{"available",false}};
     gipc::Statistics::instance().at_current_frame()["bounded_ccd"]={{"requested",false},{"validate",false},{"available",false},{"validation_failed",0}};
     gipc::Statistics::instance().at_current_frame()["contact_pool"]=gipc::ipc_contact_pool_stats_json();

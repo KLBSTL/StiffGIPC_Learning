@@ -1,5 +1,7 @@
 #include <linear_system/solver/pcg_solver.h>
 #include <linear_system/solver/pcg_guard.h>
+#include <linear_system/solver/native_history_sink.h>
+#include <linear_system/solver/native_balanced_gpu.cuh>
 #include <gipc/utils/timer.h>
 #include <gipc/statistics.h>
 #include <gipc/linear_stage.h>
@@ -572,6 +574,8 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
             if(int code=pcg_curvature_error(dot_res))fail_pcg(code,rz,dot_res);
             alpha = rz / dot_res;
             if(!std::isfinite(alpha))fail_pcg(6,rz,dot_res);
+            if(diagnostic_history)
+                diagnostic_history->observe(static_cast<int>(k)-1,alpha,rz,dot_res);
         }
 
         {
@@ -635,4 +639,5 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 #include <linear_system/solver/pcg_guard_fixture.inl>
 #include <linear_system/solver/pcg_chunk_fixture.inl>
 #include <linear_system/solver/pcg_chunk_study.inl>
+#include <linear_system/solver/pcg_native_history_study.inl>
 #include <linear_system/solver/pcg_fixed_study.inl>

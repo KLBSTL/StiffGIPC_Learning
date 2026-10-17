@@ -18,6 +18,7 @@
 #include <limits>
 #include <gipc/cost_trace.h>
 #include <solver/p2_options.h>
+#include <collision/p3_ee.h>
 
 __device__ __host__ inline AABB merge(const AABB& lhs, const AABB& rhs) noexcept
 {
@@ -2495,10 +2496,13 @@ void fullCCDselfQuery_vf(const int*      _bodyID,
                                                numbers);
 }
 
+#include <collision/p3_ee_kernels.inl>
+#include <collision/p3_ee.inl>
 #include <collision/discrete_bvh.inl>
 #include <collision/ipc_contact_pool.inl>
 #include <collision/bvh_query_probe.inl>
 #include <collision/p2_scene_fixture.inl>
+#include <collision/p3_ee_study.inl>
 
 void LBVHStorage::release()
 {
@@ -2928,6 +2932,10 @@ void lbvh_e::SelfCollitionDetect(double    dHat,
         return;
     discrete_select_query_storage(*this, false);
     discrete_validate_query(*this, dHat);
+    // Diagnostic-only when cost tracing is selected. GPU intervals include
+    // every EE dispatch in the selected frame, not only the first query.
+    gipc::CostScope ee_cost("collision.discrete_ee");
+    if(p3_dispatch(*this,dHat,collision_pairs,ccd_collision_pairs,pair_counts,matrix_indices,pair_capacity))return;
     selfQuery_ee(_bodyId,
                  _btype,
                  _vertexes,

@@ -10,6 +10,7 @@
 #include <collision/ipc_contact_pool.h>
 #include <collision/edge_query_order.h>
 #include <collision/bvh_query_probe.h>
+#include <collision/p3_ee.h>
 #include <solver/linear_structure_probe_options.h>
 #include <linear_system/solver/pcg_graph_options.h>
 #include <climits>
@@ -232,6 +233,10 @@ inline Json resolved_execution_options(const char* backend,double dt,double newt
     if(std::string(backend)!="ipc" && (p2.lazy_scene || p2.merge_abd_energy || p2.audit))
         throw std::runtime_error("P2-A experiments require the IPC backend");
     result["p2_execution"]=p2.json();
+    const auto& p3=p3_ee_options();
+    p3.require_context(std::string(backend)=="ipc",p2.lazy_scene||p2.merge_abd_energy||p2.audit,
+        ipc_contact_pool_config().enabled);
+    result["p3_ee"]=p3.json();
     for(const char* name:{"GIPC_CCD_BVH_REFIT","GIPC_BATCHED_ENERGY","GIPC_ENERGY_REUSE",
         "GIPC_MAS_STATIC_TOPOLOGY"})
         result["acceleration_features"][name]=gipc_accel_feature(name);

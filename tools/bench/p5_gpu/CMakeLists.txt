@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.24)
+project(P5PodCost LANGUAGES CXX CUDA)
+find_package(CUDAToolkit REQUIRED)
+find_package(nlohmann_json REQUIRED)
+add_executable(p5_pod_cost p5_pod_cost.cu)
+target_compile_features(p5_pod_cost PRIVATE cxx_std_17 cuda_std_17)
+target_link_libraries(p5_pod_cost PRIVATE CUDA::cudart CUDA::cublas CUDA::cusparse CUDA::cusolver nlohmann_json::nlohmann_json)
+# Keep FP64 arithmetic; do not inherit the production --use_fast_math flag.
+target_compile_options(p5_pod_cost PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-lineinfo>)
+set_target_properties(p5_pod_cost PROPERTIES CUDA_ARCHITECTURES 86)

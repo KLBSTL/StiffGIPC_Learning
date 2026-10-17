@@ -3,6 +3,7 @@
 
 namespace gipc
 {
+struct NativePcgHistory;
 class PCGSolverConfig
 {
   public:
@@ -50,6 +51,7 @@ class PCGSolver : public IterativeSolver
     int diagnostic_fixed_iterations = 0;
     int diagnostic_fused_override = -1;
     bool diagnostic_chunk_timing = false;
+    NativePcgHistory* diagnostic_history = nullptr;
     void fail_pcg(int code,Float rho,Float curvature);
     bool check_host_rho(Float rho);
     void check_forcing_direction(cudatool::DenseVectorView<Float> x,
@@ -61,6 +63,9 @@ class PCGSolver : public IterativeSolver
     void graph_chunk_study(cudatool::DenseVectorView<Float> x,
                            cudatool::CDenseVectorView<Float> b, SizeT max_iter,
                            const std::string& prefix);
+    void native_history_study(cudatool::DenseVectorView<Float> x,
+                              cudatool::CDenseVectorView<Float> b, SizeT max_iter,
+                              const std::string& prefix);
     SizeT pcg_graph(cudatool::DenseVectorView<Float> x,
                     cudatool::CDenseVectorView<Float> b, SizeT max_iter);
 

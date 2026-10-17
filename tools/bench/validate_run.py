@@ -14,6 +14,29 @@ def validate(run):
     if req['binary']!='active':
         return {'passed':False,'scope':'configuration only','reason':'Frozen program has no resolved config contract'}
     r=read(run/'resolved_config.json')
+    if 'p3_ee' in r:
+        p3=r['p3_ee'];check('p3_mode',p3['mode'],c.get('p3_ee_mode','fused'))
+        check('p3_capacity',p3['queue_capacity'],c.get('p3_ee_queue_capacity',1048576))
+        frames=c.get('p3_ee_study_frames')
+        check('p3_study_frames',p3['study_frames'],[] if frames is None else list(map(int,frames.split(','))))
+        check('p3_study_file',p3['study_file'],'' if frames is None else str(run/'p3_ee.jsonl'))
+        stats=read(run/'output/stats.json')['frames'];usage=[f.get('p3_ee',{}) for f in stats]
+        check('p3_observed_frame_count',len(stats),c['steps'])
+        check('p3_usage_mode',all(f.get('mode')==c.get('p3_ee_mode','fused') for f in usage),True)
+        if any('dispatch_queries' in f for f in usage):
+            # No eligible EE query is valid for empty/singleton trees or a step
+            # that converges before line search. Require W for EVERY dispatch,
+            # rather than inventing a mandatory dispatch per physical frame.
+            valid=all(type(f.get('dispatch_queries')) is int and type(f.get('w_queries')) is int
+                and 0<=f['w_queries']<=f['dispatch_queries'] for f in usage)
+            check('p3_dispatch_counts_valid',valid,True)
+            if c.get('p3_ee_mode')=='two_stage':
+                check('p3_w_executed',valid and all(f['w_queries']==f['dispatch_queries'] for f in usage),True)
+            else:check('p3_w_disabled',valid and all(f['w_queries']==0 for f in usage),True)
+        elif c.get('p3_ee_mode')=='two_stage':check('p3_w_executed',all(f.get('w_queries',0)>0 for f in usage),True)
+        else:check('p3_w_disabled',all(f.get('w_queries')==0 for f in usage),True)
+    elif c.get('p3_ee_mode','fused')!='fused' or c.get('p3_ee_study_frames') is not None:
+        check('p3_supported',False,True)
     for key in ('lazy_scene','merge_abd_energy','audit'):
         wanted=c.get('p2_'+key,False)
         if 'p2_execution' in r: check('p2_'+key,r['p2_execution'][key],wanted)
