@@ -40,11 +40,11 @@ class PCGSolver : public IterativeSolver
     PCGSolverConfig   m_config;
     cudatool::DeviceBuffer<unsigned char> graph_reduce_storage;
     cudatool::DeviceBuffer<Float> graph_scalars;
+    cudatool::DeviceBuffer<Float> graph_tolerance;
     cudaGraph_t graph = nullptr;
     cudaGraphExec_t graph_exec = nullptr;
     std::vector<std::uintptr_t> captured_key;
     SizeT captured_max_iter = 0;
-    Float captured_tol = 0;
     std::uint64_t captures = 0, cache_hits = 0, invalidations = 0;
     void release_graph();
     int diagnostic_fixed_iterations = 0;
@@ -52,6 +52,8 @@ class PCGSolver : public IterativeSolver
     bool diagnostic_chunk_timing = false;
     void fail_pcg(int code,Float rho,Float curvature);
     bool check_host_rho(Float rho);
+    void check_forcing_direction(cudatool::DenseVectorView<Float> x,
+                                cudatool::CDenseVectorView<Float> b);
     void operator_audit(cudatool::DenseVectorView<Float> x,
                         cudatool::CDenseVectorView<Float> b,const std::string& prefix);
     void fixed_system_study(cudatool::DenseVectorView<Float> x,

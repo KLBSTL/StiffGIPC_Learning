@@ -1,2 +1,2 @@
-# Preserve exact source and protocol bytes on Windows and Linux.
+# Preserve the existing bytes of native source and bundled dependencies.
 * -text

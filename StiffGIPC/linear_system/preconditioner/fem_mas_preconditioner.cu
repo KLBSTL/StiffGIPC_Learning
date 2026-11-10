@@ -3,6 +3,8 @@
 #include <gipc/utils/timer.h>
 #include <fstream>
 #include <solver/mas_factor_action_options.h>
+#include <gipc/statistics.h>
+#include <gipc/cost_trace.h>
 namespace gipc
 {
 Json MAS_Preconditioner::diagnostic_snapshot(const std::string& prefix) const
@@ -82,6 +84,23 @@ void MAS_Preconditioner::assemble()
                                     triplet_number,
                                     collision_num,
                                     collision_pairs.data());
+    if(const char* dir=std::getenv("GIPC_DIAGNOSTIC_DIR");dir&&dir[0])
+    {
+        CostScope observation("diagnostic.mas_topology");
+        Json row={{"dimensions",MAS_Prec.diagnostic_dimensions()},
+                  {"dimension_names",{"nodes","mapped_nodes","levels","collision_offset","clusters","clevel_x","clevel_y","neighbor_list_size"}}};
+        MAS_Prec.diagnostic_buffers([&](const char* name,const void* device,size_t count,size_t item_bytes)
+        {
+            const std::string key(name);
+            if(key!="d_levelSize"&&key!="d_coarseTable"&&key!="d_partId_map_real"&&key!="d_real_map_partId")return;
+            std::vector<unsigned char> host(count*item_bytes);
+            if(!host.empty())CUDA_SAFE_CALL(cudaMemcpy(host.data(),device,host.size(),cudaMemcpyDeviceToHost));
+            uint64_t hash=14695981039346656037ull;
+            for(auto byte:host){hash^=byte;hash*=1099511628211ull;}
+            row[key]={{"count",count},{"item_bytes",item_bytes},{"fnv1a64",hash}};
+        });
+        Statistics::instance().at_current_frame()["newton"].back()["mas_diagnostic"]=row;
+    }
 }
 
 void MAS_Preconditioner::apply(cudatool::CDenseVectorView<Float> r,

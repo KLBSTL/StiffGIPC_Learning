@@ -38,6 +38,7 @@
 #include <limits>
 #include <solver/toi_options.h>
 #include <solver/toi_observer.h>
+#include <solver/mas_pivot_sync.h>
 extern int total_Frames;
 
 auto        assets_dir = std::string{gipc::assets_dir()};
@@ -1845,6 +1846,8 @@ int main(int argc, char** argv) try
         return gipc::PCGSolver::chunk_guard_fixture(output);
     if(const char* output=std::getenv("GIPC_PCG_GUARD_FIXTURE"))
         return gipc::PCGSolver::guard_fixture(output);
+    if(const char* output=std::getenv("GIPC_MAS_PIVOT_SYNC_FIXTURE"))
+        return gipc::run_mas_pivot_sync_fixture(output);
     if(const char* prefix=std::getenv("GIPC_MAS_REPLAY_FIXTURE"))
         return MASPreconditioner::replay_fixture(prefix,std::getenv("GIPC_MAS_FIXTURE_OUTPUT"));
     if(const char* prefix=std::getenv("GIPC_MAS_CHOLESKY_FIXTURE"))
@@ -1890,6 +1893,11 @@ int main(int argc, char** argv) try
         if(trace_dir)
         {
             std::filesystem::create_directories(trace_dir);
+            std::ofstream context(std::string(trace_dir)+"/frame_context.json");
+            context << gipc::Json({{"completed_physical_frames_at_start",total_Frames},
+                {"local_trace_frame_zero_is_restored_state",total_Frames>0},
+                {"trace_frame_numbering","local; add completed_physical_frames_at_start"}}).dump(2);
+            if(!context)throw std::runtime_error("Failed to write trace frame context");
             frame_log.open(std::string(trace_dir) + "/frames.csv");
             frame_log << "frame,solver_ms,candidate_pairs,ground_candidates\n";
             if(const char* value=std::getenv("GIPC_TRACE_PHYSICS");value && value[0]=='1')

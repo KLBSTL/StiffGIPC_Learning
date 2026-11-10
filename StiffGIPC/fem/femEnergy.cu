@@ -8,6 +8,7 @@
 
 #include "femEnergy.cuh"
 #include "math.h"
+#include "direct_pullback.cuh"
 #include <stdio.h>
 
 
@@ -1638,7 +1639,7 @@ __device__ void BuildTwistAndFlipEigenvectors(const Matrix3d& U, const Matrix3d&
     Eigen::Map<M3>(Q.data() + 45) = E + F;
 }
 
-__device__ Matrix<double, 9, 9> __project_StabbleNHK_H_3D1_makePD(
+__device__ void __project_StabbleNHK_H_3D1_makePD(
     Eigen::Matrix<double, 9, 9>&  H,
     double                        I3,
     const double&                 mu,
@@ -1716,6 +1717,7 @@ __device__ Matrix<double, 9, 9> __project_StabbleNHK_H_3D1_makePD(
     H = eigenvectors * eigenvalues.asDiagonal() * eigenvectors.transpose();
 }
 
+template<bool DirectPullback>
 __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInverses,
                                                 const double3* vertexes,
                                                 const uint4*   tetrahedras,
@@ -1735,7 +1737,9 @@ __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInvers
     if(idx >= tetrahedraNum)
         return;
 
-    Eigen::Matrix<double, 9, 12> PFPX = __computePFPX3D_Eigen_double(DmInverses[idx]);
+    Eigen::Matrix<double, 9, 12> PFPX;
+    if constexpr(!DirectPullback)
+        PFPX = __computePFPX3D_Eigen_double(DmInverses[idx]);
 
     __GEIGEN__::Matrix3x3d Ds;
     __calculateDms3D_double(vertexes, tetrahedras[idx], Ds);
@@ -1780,7 +1784,24 @@ __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInvers
 
 
     //__GEIGEN__::Matrix12x9d PFPXTranspose = __GEIGEN__::__Transpose9x12(PFPX);
-    Eigen::Vector<double, 12> f = IPC_dt * IPC_dt * volume[idx] * PFPX.transpose() * pepf;
+    Eigen::Vector<double, 12> f;
+    if constexpr(DirectPullback)
+    {
+        const gipc::fem::PositionMap<3,4> map(DmInverses[idx]);
+#pragma unroll
+        for(int i = 0; i < 4; ++i)
+#pragma unroll
+            for(int r = 0; r < 3; ++r)
+            {
+                double value = 0;
+#pragma unroll
+                for(int a = 0; a < 3; ++a)
+                    value += map.coefficient[i][a] * PEPF.m[r][a];
+                f[3*i+r] = (IPC_dt * IPC_dt * volume[idx]) * value;
+            }
+    }
+    else
+        f = IPC_dt * IPC_dt * volume[idx] * PFPX.transpose() * pepf;
         //__GEIGEN__::__s_vec12_multiply(__GEIGEN__::__M12x9_v9_multiply(PFPXTranspose, pepf),
                                        //IPC_dt * IPC_dt * volume[idx]);
     //printf("%f  %f  %f  %f  %f  %f  %f  %f  %f  %f  %f  %f\n", f.v[0], f.v[1], f.v[2], f.v[3], f.v[4], f.v[5], f.v[6], f.v[7], f.v[8], f.v[9], f.v[10], f.v[11]);
@@ -1815,9 +1836,11 @@ __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInvers
 
     Eigen::Matrix<double, 12, 12> H;
 
-    __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply_Eigen(PFPX, Hq, H);
-
-    H = volume[idx] * IPC_dt * IPC_dt * H;
+    if constexpr(!DirectPullback)
+    {
+        __GEIGEN__::__M12x9_S9x9_MT9x12_Multiply_Eigen(PFPX, Hq, H);
+        H = volume[idx] * IPC_dt * IPC_dt * H;
+    }
     //Hessians[idx + offset] = H;
     //unsigned int* tetra = &(tet_ids[idx].x);
 
@@ -1831,6 +1854,7 @@ __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInvers
 
     int triplet_offset = global_offset + 10 * idx;
     int kk             = 0;
+    const gipc::fem::PositionMap<3,4> map(DmInverses[idx]);
     for(int ii = 0; ii < 4; ii++)
     {
         for(int jj = ii; jj < 4; jj++)
@@ -1841,15 +1865,31 @@ __global__ void _calculate_fem_gradient_hessian(__GEIGEN__::Matrix3x3d* DmInvers
             {
                 row_ids[triplet_offset + kk] = row;
                 col_ids[triplet_offset + kk] = col;
-                triplet_values[triplet_offset + kk] = H.block<3, 3>(ii * 3, jj * 3);
+                if constexpr(DirectPullback)
+                {
+                    for(int r = 0; r < 3; ++r)
+                        for(int c = 0; c < 3; ++c)
+                            triplet_values[triplet_offset+kk](r,c) =
+                                map.entry(Hq,ii,jj,r,c) * (volume[idx]*IPC_dt*IPC_dt);
+                }
+                else
+                    triplet_values[triplet_offset + kk] = H.block<3, 3>(ii * 3, jj * 3);
                 //kk++;
             }
             else
             {
                 row_ids[triplet_offset + kk] = col;
                 col_ids[triplet_offset + kk] = row;
-                triplet_values[triplet_offset + kk] =
-                    H.block<3, 3>(ii * 3, jj * 3).transpose();
+                if constexpr(DirectPullback)
+                {
+                    for(int r = 0; r < 3; ++r)
+                        for(int c = 0; c < 3; ++c)
+                            triplet_values[triplet_offset+kk](c,r) =
+                                map.entry(Hq,ii,jj,r,c) * (volume[idx]*IPC_dt*IPC_dt);
+                }
+                else
+                    triplet_values[triplet_offset + kk] =
+                        H.block<3, 3>(ii * 3, jj * 3).transpose();
             }
             kk++;
         }
@@ -2143,6 +2183,7 @@ __global__ void _calculate_triangle_fem_deformationF(__GEIGEN__::Matrix2x2d* tri
     F3x2[idx] = F;
 }
 
+template<bool DirectPullback>
 __global__ void _calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d* trimInverses,
                                                          const double3* vertexes,
                                                          const uint3* triangles,
@@ -2163,7 +2204,9 @@ __global__ void _calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d*
     if(idx >= triangleNum)
         return;
 
-    __GEIGEN__::Matrix6x9d PFPX = __computePFDsPX3D_6x9_double(trimInverses[idx]);
+    __GEIGEN__::Matrix6x9d PFPX;
+    if constexpr(!DirectPullback)
+        PFPX = __computePFDsPX3D_6x9_double(trimInverses[idx]);
 
     __GEIGEN__::Matrix3x2d Ds;
     __calculateDs2D_double(vertexes, triangles[idx], Ds);
@@ -2176,10 +2219,24 @@ __global__ void _calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d*
     __GEIGEN__::Vector6 pepf = __GEIGEN__::__Mat3x2_to_vec6_double(PEPF);
 
 
-    __GEIGEN__::Matrix9x6d PFPXTranspose = __GEIGEN__::__Transpose6x9(PFPX);
-    __GEIGEN__::Vector9    f =
-        __GEIGEN__::__s_vec9_multiply(__GEIGEN__::__M9x6_v6_multiply(PFPXTranspose, pepf),
+    __GEIGEN__::Matrix9x6d PFPXTranspose;
+    __GEIGEN__::Vector9 f;
+    if constexpr(DirectPullback)
+    {
+        const gipc::fem::PositionMap<2,3> map(trimInverses[idx]);
+#pragma unroll
+        for(int i = 0; i < 3; ++i)
+#pragma unroll
+            for(int r = 0; r < 3; ++r)
+                f.v[3*i+r] = (map.coefficient[i][0]*PEPF.m[r][0]
+                    + map.coefficient[i][1]*PEPF.m[r][1]) * (IPC_dt*IPC_dt*area[idx]);
+    }
+    else
+    {
+        PFPXTranspose = __GEIGEN__::__Transpose6x9(PFPX);
+        f = __GEIGEN__::__s_vec9_multiply(__GEIGEN__::__M9x6_v6_multiply(PFPXTranspose, pepf),
                                       IPC_dt * IPC_dt * area[idx]);
+    }
     //printf("%f  %f  %f  %f  %f  %f  %f  %f  %f  %f  %f  %f\n", f.v[0], f.v[1], f.v[2], f.v[3], f.v[4], f.v[5], f.v[6], f.v[7], f.v[8], f.v[9], f.v[10], f.v[11]);
 
     {
@@ -2200,19 +2257,52 @@ __global__ void _calculate_triangle_fem_gradient_hessian(__GEIGEN__::Matrix2x2d*
     __GEIGEN__::__Mat_add(
         Hq, __GEIGEN__::__s_M6x6_Multiply(__project_BaraffWitkinShear_H(F), shearhStiff), Hq);
 
-    __GEIGEN__::Matrix9x6d M9x6_temp =
-        __GEIGEN__::__M9x6_M6x6_Multiply(PFPXTranspose, Hq);
-    __GEIGEN__::Matrix9x9d H = __GEIGEN__::__M9x6_M6x9_Multiply(M9x6_temp, PFPX);
-    H = __GEIGEN__::__s_M9x9_Multiply(H, area[idx] * IPC_dt * IPC_dt);
     //Hessians[idx + offset] = H;
 
     unsigned int global_fem_offset[3] = {triangles[idx].x + global_hessian_fem_offset,
                                          triangles[idx].y + global_hessian_fem_offset,
                                          triangles[idx].z + global_hessian_fem_offset};
 
-    write_triplet_fem<9, 9>(
-        triplet_values, row_ids, col_ids, global_fem_offset, H.m, global_offset + idx * 6);
+    if constexpr(DirectPullback)
+    {
+        const gipc::fem::PositionMap<2,3> map(trimInverses[idx]);
+        const gipc::fem::ClothHessian q{Hq.m};
+        int k = global_offset + idx * 6;
+        for(int i = 0; i < 3; ++i)
+            for(int j = i; j < 3; ++j, ++k)
+            {
+                const bool transpose = global_fem_offset[i] > global_fem_offset[j];
+                row_ids[k] = transpose ? global_fem_offset[j] : global_fem_offset[i];
+                col_ids[k] = transpose ? global_fem_offset[i] : global_fem_offset[j];
+                for(int r = 0; r < 3; ++r)
+                    for(int c = 0; c < 3; ++c)
+                        triplet_values[k](transpose?c:r,transpose?r:c) =
+                            map.entry(q,i,j,r,c) * (area[idx]*IPC_dt*IPC_dt);
+            }
+    }
+    else
+    {
+        __GEIGEN__::Matrix9x6d M9x6_temp =
+            __GEIGEN__::__M9x6_M6x6_Multiply(PFPXTranspose, Hq);
+        __GEIGEN__::Matrix9x9d H = __GEIGEN__::__M9x6_M6x9_Multiply(M9x6_temp, PFPX);
+        H = __GEIGEN__::__s_M9x9_Multiply(H, area[idx] * IPC_dt * IPC_dt);
+        write_triplet_fem<9, 9>(
+            triplet_values, row_ids, col_ids, global_fem_offset, H.m, global_offset + idx * 6);
+    }
 }
+// These kernels are launched by GIPC.cu and by the independent GPU fixture.
+template __global__ void _calculate_fem_gradient_hessian<false>(
+    __GEIGEN__::Matrix3x3d*, const double3*, const uint4*, const double*, double3*,
+    int, const double*, const double*, int, Eigen::Matrix3d*, int*, int*, double, int);
+template __global__ void _calculate_fem_gradient_hessian<true>(
+    __GEIGEN__::Matrix3x3d*, const double3*, const uint4*, const double*, double3*,
+    int, const double*, const double*, int, Eigen::Matrix3d*, int*, int*, double, int);
+template __global__ void _calculate_triangle_fem_gradient_hessian<false>(
+    __GEIGEN__::Matrix2x2d*, const double3*, const uint3*, const double*, double3*,
+    int, double, double, double, int, Eigen::Matrix3d*, int*, int*, double, int);
+template __global__ void _calculate_triangle_fem_gradient_hessian<true>(
+    __GEIGEN__::Matrix2x2d*, const double3*, const uint3*, const double*, double3*,
+    int, double, double, double, int, Eigen::Matrix3d*, int*, int*, double, int);
 
 __global__ void _calculate_triangle_fem_gradient(__GEIGEN__::Matrix2x2d* trimInverses,
                                                  const double3* vertexes,

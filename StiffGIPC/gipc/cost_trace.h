@@ -85,6 +85,7 @@ struct CostTraceRecord
     const char* sample_kind="production";
     int iteration=-1,index=-1;
     double cpu_submit_ms=0;
+    int64_t cpu_start_ns=0,cpu_end_ns=0;
     cudaEvent_t begin=nullptr,end=nullptr;
 };
 struct CostTraceState
@@ -168,6 +169,7 @@ public:
         nvtxRangePushA(stage); nvtx=true;
 #endif
         cpu_start=std::chrono::steady_clock::now();
+        record.cpu_start_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(cpu_start.time_since_epoch()).count();
     }
     CostScope(const CostScope&)=delete;
     CostScope& operator=(const CostScope&)=delete;
@@ -188,6 +190,7 @@ public:
         }
         record.cpu_submit_ms=std::chrono::duration<double,std::milli>(
             std::chrono::steady_clock::now()-cpu_start).count();
+        record.cpu_end_ns=record.cpu_start_ns+static_cast<int64_t>(record.cpu_submit_ms*1e6);
         const auto status=record.end ? cudaEventRecord(record.end,cudaStreamPerThread) : cudaSuccess;
 #if GIPC_COST_HAS_NVTX
         if(nvtx) nvtxRangePop();
@@ -224,6 +227,7 @@ inline void cost_trace_flush()
             {"linear_system_id",record.context.linear_system_id},
             {"pcg_iteration",record.iteration},{"index",record.index},
             {"cpu_submit_ms",record.cpu_submit_ms},{"inclusive",true},
+            {"cpu_start_ns",record.cpu_start_ns},{"cpu_end_ns",record.cpu_end_ns},
             {"operator_probe_enabled",cost_trace_config().operator_probe},
             {"gpu_events_enabled",cost_trace_config().gpu_events},
             {"measurement_mode",cost_trace_config().gpu_events?"cuda_events_nvtx_cpu":"nvtx_cpu_only"},

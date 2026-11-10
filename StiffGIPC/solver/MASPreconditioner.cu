@@ -12,6 +12,7 @@
 #include <gipc/cost_trace.h>
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_stage_probe_options.h>
+#include <solver/mas_pivot_sync.h>
 #include <fstream>
 #include <cstring>
 #include <cmath>
@@ -696,6 +697,7 @@ __global__ void _aggregationKernel(int*                _denseLevel,
 
 
 
+template<bool PivotOnlySync=false>
 __global__ void __inverse6_P96x96(__GEIGEN__::MasMatrixSymf* _preMatrix,
                                   __GEIGEN__::MasMatrixSymT* _invMatrix,
                                   int                        numbers)
@@ -765,7 +767,11 @@ __global__ void __inverse6_P96x96(__GEIGEN__::MasMatrixSymf* _preMatrix,
             if(k != j)
             {
                 Precision_T rate = -colm[block_matId][k];
-                __syncthreads();
+                // colm and the normalized pivot row are immutable throughout
+                // elimination. Each thread owns its column; different k rows
+                // do not consume one another. The barrier at the next pivot
+                // (or at loop exit) joins all of these independent writes.
+                if constexpr(!PivotOnlySync) __syncthreads();
                 sPMas[block_matId][k][i] += rate * sPMas[block_matId][j][i];
             }
         }
@@ -794,6 +800,8 @@ __global__ void __inverse6_P96x96(__GEIGEN__::MasMatrixSymf* _preMatrix,
     }
 }
 
+
+#include <solver/mas_pivot_sync_fixture.inl>
 
 __global__ void __buildMultiLevelR_optimized_new(const double3*   _R,
                                                  Eigen::Vector3f* _multiLR,
@@ -2293,7 +2301,10 @@ void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
     else
     {
         gipc::CostScope legacy_factor("mas.legacy_factor");
-        __inverse6_P96x96<<<numBlocks2, blockSize2>>>(d_precondMatMas, d_inverseMatMas, number2);
+        if(gipc::mas_pivot_only_sync())
+            __inverse6_P96x96<true><<<numBlocks2, blockSize2>>>(d_precondMatMas, d_inverseMatMas, number2);
+        else
+            __inverse6_P96x96<false><<<numBlocks2, blockSize2>>>(d_precondMatMas, d_inverseMatMas, number2);
     }
 
     //cudaEventRecord(end1);
