@@ -45,6 +45,8 @@
 #include <solver/ipc_pcg_forcing.h>
 #include <solver/ipc_physical_residual.inl>
 #include <solver/ipc_diagnostic.inl>
+#include <solver/ipc_continuation.h>
+#include <solver/ipc_ad_audit.h>
 using namespace Eigen;
 #define RANK 2
 #define NEWF
@@ -11018,6 +11020,13 @@ double GIPC::computeEnergy(device_TetraData& TetMesh)
     Energy += fric_ground;
 #endif
 
+    if(std::getenv("GIPC_AD_FAILURE_DIR")){
+        gipc::ad_energy_parts={{"inertia",fem_kinetic+abd_kinetic},{"elastic",fem+tri_fem+bend+abd_shape},
+            {"constraint",constraint},{"barrier",barrier},{"ground",ground},{"total",Energy}};
+#ifdef USE_FRICTION
+        gipc::ad_energy_parts["friction"]=fric+fric_ground;
+#endif
+    }
     return Energy;
 }
 
@@ -11142,6 +11151,23 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
     double testingE = std::numeric_limits<double>::quiet_NaN();
     bool trial_energy_current = false;
     double lastEnergyVal = cached_energy ? *cached_energy : computeEnergy(TetMesh);
+    const char* ad_dir=std::getenv("GIPC_AD_FAILURE_DIR");
+    const double ad_initial_alpha=alpha;
+    const auto ad_baseline_parts=gipc::ad_energy_parts;
+    std::vector<std::function<void()>> ad_restore;
+    auto ad_hold=[&](auto* ptr,size_t count){
+        using T=std::remove_pointer_t<decltype(ptr)>;std::vector<T> data(count);
+        if(count)CUDA_SAFE_CALL(cudaMemcpy(data.data(),ptr,count*sizeof(T),cudaMemcpyDeviceToHost));
+        ad_restore.push_back([ptr,data](){if(!data.empty())CUDA_SAFE_CALL(cudaMemcpy(ptr,data.data(),data.size()*sizeof(T),cudaMemcpyHostToDevice));});
+    };
+    std::array<uint32_t,5> ad_cp;std::copy(h_cpNum,h_cpNum+5,ad_cp.begin());const auto ad_gp=h_gpNum;
+    if(ad_dir){
+        if(abd_fem_count_info.abd_body_num)throw std::runtime_error("Failure capture currently requires FEM-only input");
+        ad_hold(_vertexes,vertexNum);ad_hold(_collisonPairs.data(),h_cpNum[0]);
+        ad_hold(_MatIndex.data(),_MatIndex.size());ad_hold(_environment_collisionPair.data(),h_gpNum);
+        ad_hold(_cpNum.data(),_cpNum.size());ad_hold(_gpNum.data(),_gpNum.size());
+    }
+    auto ad_restore_origin=[&](){for(auto& f:ad_restore)f();std::copy(ad_cp.begin(),ad_cp.end(),h_cpNum);h_gpNum=ad_gp;buildBVH();};
     auto fail_line_search=[&](const char* reason,double threshold) {
         auto& observation=gipc::Statistics::instance().at_current_frame()["newton"].back();
         observation["line_search_failure"]={
@@ -11151,6 +11177,88 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
             {"alpha",alpha},{"cfl_alpha",cfl_alpha},{"energy_backtracks",numOfLineSearch},
             {"intersection_backtracks",numOfIntersect},{"energy_evaluations",energy_evaluations},
             {"backtrack_budget",gipc::ipc_line_search_backtrack_budget}};
+        if(ad_dir){
+            const auto folder=std::filesystem::path(ad_dir);std::filesystem::create_directories(folder);
+            auto record=observation["line_search_failure"];
+            record["frame"]=total_Frames+1;record["iteration"]=gipc::ad_iteration;
+            record["accepted_updates"]=gipc::ad_accepted;record["baseline_parts"]=ad_baseline_parts;
+            record["original_pcg"]=observation["pcg"];
+            ad_restore_origin();
+            record["derivative_state"]=observation["ad_derivative_state"];
+            record["energy_origin_state"]={{"vertices",gipc::ad_hash_device(_vertexes,vertexNum*sizeof(double3))},{"kappa",Kappa},{"dt",IPC_dt}};
+            record["derivative_energy_state_identical"]=record["derivative_state"]==record["energy_origin_state"];
+            if(!record["derivative_energy_state_identical"].get<bool>())throw std::runtime_error("Derivative/energy origin mismatch");
+            frame_checkpoint(TetMesh,(folder/"pretrial").string(),false,true);
+            std::vector<double3> grad(vertexNum),force(vertexNum),dir(vertexNum);
+            std::vector<int> free_mask(vertexNum);CUDA_SAFE_CALL(cudaMemcpy(free_mask.data(),TetMesh.BoundaryType.data(),vertexNum*sizeof(int),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(grad.data(),TetMesh.shape_grads.data(),vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(force.data(),TetMesh.fb.data(),vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(dir.data(),_moveDir,vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            long double gd=0;for(int i=0;i<vertexNum;++i)if(free_mask[i]==0)gd-=(long double)(grad[i].x+force[i].x)*dir[i].x+(long double)(grad[i].y+force[i].y)*dir[i].y+(long double)(grad[i].z+force[i].z)*dir[i].z;
+            record["gradient_dot_actual_direction"]=double(gd);record["update_sign"]="x = origin - alpha * moveDir";
+            record["gradient_dot_mask"]="BoundaryType == 0, matching physical step kernel";
+            auto contact_identity=[&](){
+                std::vector<int4> raw(h_cpNum[0]);std::vector<uint32_t> ground(h_gpNum);
+                if(!raw.empty())CUDA_SAFE_CALL(cudaMemcpy(raw.data(),_collisonPairs.data(),raw.size()*sizeof(int4),cudaMemcpyDeviceToHost));
+                if(!ground.empty())CUDA_SAFE_CALL(cudaMemcpy(ground.data(),_environment_collisionPair.data(),ground.size()*sizeof(uint32_t),cudaMemcpyDeviceToHost));
+                std::vector<std::array<int,4>> ids;for(auto p:raw)ids.push_back({p.x,p.y,p.z,p.w});for(auto p:ground)ids.push_back({INT_MIN,int(p),0,0});
+                auto hash=[](const auto& values){uint64_t h=14695981039346656037ull;const auto* bytes=reinterpret_cast<const unsigned char*>(values.data());for(size_t i=0;i<values.size()*sizeof(values[0]);++i){h^=bytes[i];h*=1099511628211ull;}return h;};
+                gipc::Json result={{"ordered_hash",hash(ids)}};std::sort(ids.begin(),ids.end());ids.erase(std::unique(ids.begin(),ids.end()),ids.end());
+                result["canonical_hash"]=hash(ids);result["unique_records"]=ids.size();return result;
+            };
+            record["baseline_contacts"]=contact_identity();
+            record["baseline_repeats"]=gipc::Json::array();
+            for(int r=0;r<5;++r){const double e=computeEnergy(TetMesh);record["baseline_repeats"].push_back({{"energy",e},{"parts",gipc::ad_energy_parts}});}
+            record["shadow_backtracks"]=gipc::Json::array();
+            for(int back=0;back<=36;++back){
+                const double trial_alpha=std::ldexp(ad_initial_alpha,-back);
+                step_forward(TetMesh,trial_alpha,false);buildBVH();const bool intersect=isIntersected(TetMesh);buildCP();
+                gipc::Json row={{"backtracks",back},{"alpha",trial_alpha},{"intersected",intersect},{"pairs",h_cpNum[0]},{"ground",h_gpNum},{"energy_repeats",gipc::Json::array()}};
+                row["contacts"]=contact_identity();
+                if(!intersect)for(int r=0;r<5;++r){const double e=computeEnergy(TetMesh);row["energy_repeats"].push_back({{"energy",e},{"delta",e-lastEnergyVal},{"parts",gipc::ad_energy_parts}});}
+                record["shadow_backtracks"].push_back(row);
+            }
+            ad_restore_origin();record["restored_origin_energy"]=computeEnergy(TetMesh);
+            // Reuse the exact prepared operator and factors at this accepted state.
+            const auto primary_pcg=observation["pcg"];
+            record["precision_replays"]=gipc::Json::array();
+            gipc::ad_failure_replay=true;
+            for(double tolerance:{1e-8,1e-10,1e-12})for(int repeat=0;repeat<3;++repeat){
+                ad_restore_origin();m_global_linear_system->set_pcg_tolerance(tolerance);
+                observation["pcg"]=gipc::Json::object();
+                const auto began=std::chrono::steady_clock::now();
+                m_global_linear_system->resolve_linear_system();
+                std::vector<double3> candidate(vertexNum);
+                CUDA_SAFE_CALL(cudaMemcpy(candidate.data(),_moveDir,vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+                long double slope=0,diff=0,norm=0;
+                for(int i=0;i<vertexNum;++i){
+                    if(free_mask[i]==0)slope-=(long double)(grad[i].x+force[i].x)*candidate[i].x+(long double)(grad[i].y+force[i].y)*candidate[i].y+(long double)(grad[i].z+force[i].z)*candidate[i].z;
+                    const double3 q=make_double3(candidate[i].x-dir[i].x,candidate[i].y-dir[i].y,candidate[i].z-dir[i].z);
+                    diff+=(long double)q.x*q.x+(long double)q.y*q.y+(long double)q.z*q.z;
+                    norm+=(long double)dir[i].x*dir[i].x+(long double)dir[i].y*dir[i].y+(long double)dir[i].z*dir[i].z;
+                }
+                // Recompute full CCD for each alternative direction before energy probes.
+                double bound=std::min({1.,ground_largestFeasibleStepSize(.8),self_largestFeasibleStepSize(.8,h_cpNum[0])});
+                buildBVH_FULLCCD(bound);buildFullCP(bound);
+                if(h_ccd_cpNum)bound=std::min(bound,self_largestFeasibleStepSize(.8,h_ccd_cpNum));
+                gipc::Json trial={{"rho_tolerance",tolerance},{"repeat",repeat},{"pcg",observation["pcg"]},
+                    {"gradient_dot_actual_direction",double(slope)},{"relative_direction_difference",std::sqrt(double(diff/std::max(norm,1e-300L)))},
+                    {"ccd_bound",bound},{"energies",gipc::Json::array()}};
+                for(int back=0;back<=36;++back){
+                    const double a=std::ldexp(bound,-back);step_forward(TetMesh,a,false);buildBVH();
+                    const bool intersection=isIntersected(TetMesh);buildCP();
+                    if(!intersection){const double e=computeEnergy(TetMesh);trial["energies"].push_back({{"backtracks",back},{"alpha",a},{"energy",e},{"delta",e-lastEnergyVal}});}
+                }
+                trial["probe_wall_ms"]=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-began).count();
+                record["precision_replays"].push_back(trial);
+            }
+            gipc::ad_failure_replay=false;m_global_linear_system->set_pcg_tolerance(pcg_threshold);
+            observation["pcg"]=primary_pcg;
+            CUDA_SAFE_CALL(cudaMemcpy(_moveDir,dir.data(),vertexNum*sizeof(double3),cudaMemcpyHostToDevice));
+            ad_restore_origin();
+            std::ofstream out(folder/"failure.json");out<<record.dump(2);out.close();
+            if(!out)throw std::runtime_error("Cannot write frozen failure diagnostic");
+        }
         gipc::ipc_contact_pool_end();
         std::cerr << "IPC line search failure: " << reason << ", baseline=" << lastEnergyVal
                   << ", trial=" << testingE << ", threshold=" << threshold
@@ -11355,6 +11463,49 @@ bool GIPC::lineSearch(device_TetraData& TetMesh, double& alpha, const double& cf
 
 void GIPC::postLineSearch(device_TetraData& TetMesh, double alpha)
 {
+    const bool audit=gipc::ad_flag("GIPC_AD_KAPPA_AUDIT");
+    const bool repair=gipc::ad_flag("GIPC_AD_KAPPA_SYNC");
+    static thread_local bool fixture_done=false;
+    if(gipc::ad_flag("GIPC_AD_CLOSE_FIXTURE")&&!fixture_done){
+        fixture_done=true;
+        cudatool::DeviceBuffer<double3> point,normal;point.resize(1);normal.resize(1);
+        cudatool::DeviceBuffer<double> offset,distance;offset.resize(1);distance.resize(1);
+        cudatool::DeviceBuffer<uint32_t> pair,ids,count;pair.resize(1);ids.resize(1);count.resize(1);
+        cudatool::DeviceBuffer<int> changed;changed.resize(1);
+        double3 p=make_double3(0,.5*std::sqrt(dTol),0),n=make_double3(0,1,0);double zero=0;uint32_t index=0;
+        CUDA_SAFE_CALL(cudaMemcpy(point.data(),&p,sizeof(p),cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemcpy(normal.data(),&n,sizeof(n),cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemcpy(offset.data(),&zero,sizeof(zero),cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemcpy(pair.data(),&index,sizeof(index),cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemset(count.data(),0,sizeof(uint32_t)));
+        _computeGroundCloseVal<<<1,32>>>(point.data(),offset.data(),normal.data(),pair.data(),dTol,ids.data(),distance.data(),count.data(),1);
+        uint32_t actual=0;CUDA_SAFE_CALL(cudaMemcpy(&actual,count.data(),sizeof(actual),cudaMemcpyDeviceToHost));
+        p.y*=.5;CUDA_SAFE_CALL(cudaMemcpy(point.data(),&p,sizeof(p),cudaMemcpyHostToDevice));
+        CUDA_SAFE_CALL(cudaMemset(changed.data(),0,sizeof(int)));
+        if(actual)_checkGroundCloseVal<<<1,32>>>(point.data(),offset.data(),normal.data(),changed.data(),ids.data(),distance.data(),actual);
+        int flag=0;CUDA_SAFE_CALL(cudaMemcpy(&flag,changed.data(),sizeof(flag),cudaMemcpyDeviceToHost));
+        gipc::Statistics::instance().at_current_frame()["ad_close_fixture"]={{"isolated_private_buffers",true},
+            {"initial_gap",std::sqrt(dTol)*.5},{"new_gap",p.y},{"host_count_before_sync",0},{"device_count",actual},
+            {"original_host_zero_check",false},{"synced_check",flag==1},{"production_physics_changed",false}};
+        if(actual!=1||flag!=1)throw std::runtime_error("Close-count fixture failed");
+    }
+    auto observe=[&](const char* phase){
+        if(!audit)return;
+        uint32_t cp=0,gp=0;
+        CUDA_SAFE_CALL(cudaMemcpy(&cp,_close_cpNum.data(),sizeof(cp),cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(&gp,_close_gpNum.data(),sizeof(gp),cudaMemcpyDeviceToHost));
+        gipc::Statistics::instance().at_current_frame()["newton"].back()["ad_kappa"].push_back({
+            {"phase",phase},{"iteration",gipc::ad_iteration},{"host_cp",h_close_cpNum},{"host_gp",h_close_gpNum},
+            {"device_cp",cp},{"device_gp",gp},{"cp_capacity",_closeMConstraintID.size()},
+            {"gp_capacity",_closeConstraintID.size()},{"kappa",Kappa},{"sync_repair",repair}});
+    };
+    observe("before_old_set_check");
+    if(repair){
+        CUDA_SAFE_CALL(cudaMemcpy(&h_close_cpNum,_close_cpNum.data(),sizeof(h_close_cpNum),cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(&h_close_gpNum,_close_gpNum.data(),sizeof(h_close_gpNum),cudaMemcpyDeviceToHost));
+        if(h_close_cpNum>_closeMConstraintID.size()||h_close_gpNum>_closeConstraintID.size())
+            throw std::runtime_error("Close count exceeds matching old-set capacity");
+    }
     if(Kappa == 0.0)
     {
         initKappa(TetMesh);
@@ -11367,19 +11518,24 @@ void GIPC::postLineSearch(device_TetraData& TetMesh, double alpha)
         {
             updateKappa = checkSelfCloseVal();
         }
-        if(updateKappa)
+        if(updateKappa && !gipc::continuation_hold_kappa)
         {
             Kappa *= 2.0;
             upperBoundKappa(Kappa);
         }
+        if(audit)gipc::Statistics::instance().at_current_frame()["newton"].back()["ad_kappa_update_requested"]=updateKappa;
+        observe("after_old_set_check");
         tempFree_closeConstraint();
         tempMalloc_closeConstraint();
         CUDA_SAFE_CALL(cudaMemset(_close_cpNum, 0, sizeof(uint32_t)));
         CUDA_SAFE_CALL(cudaMemset(_close_gpNum, 0, sizeof(uint32_t)));
 
+        observe("after_count_reset");
+
         computeCloseGroundVal();
 
         computeSelfCloseVal();
+        observe("after_new_set_generation");
     }
     //printf("------------------------------------------Kappa: %f\n", Kappa);
 }
@@ -11432,7 +11588,13 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     double beta          = 1;
     int    Kmin          = 6;
     bool   semi_implicit = true;
-    const auto stopping=gipc::IpcOptions::read(Newton_solver_threshold);
+    auto stopping=gipc::IpcOptions::read(Newton_solver_threshold);
+    gipc::ContinuationControl continuation;
+    const double continuation_original_newton=Newton_solver_threshold;
+    const auto continuation_frame_start=std::chrono::steady_clock::now();
+    if(continuation.enabled() && (use_toi || stopping.termination!="legacy" ||
+       abd_fem_count_info.abd_body_num!=0))
+        throw std::runtime_error("Continuation v1 requires legacy IPC and FEM-only Table/Hang");
     const auto forcing=gipc::IpcPcgForcingOptions::read();
     if(forcing.enabled()&&(stopping.termination!="legacy"||pcg_threshold!=1e-4))
         throw std::runtime_error("IPC forcing requires legacy exits and baseline rho=1e-4");
@@ -11443,6 +11605,23 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     gipc::IpcPcgForcingController forcing_controller(forcing);
     Kmin=stopping.min_updates;
     int accepted_updates=0;
+    int diagnostic_assemblies=0;
+    gipc::AdFinally ad_counter_guard{[&](){
+        if(!gipc::ad_flag("GIPC_AD_AUDIT"))return;
+        int linear=0,production=0,probe=0,terminal=0,recurrences=0;
+        for(const auto& n:stats_at_current_frame["newton"]){
+            if(n.contains("pcg")&&n["pcg"].contains("iterations")){
+                ++linear;const auto& p=n["pcg"];production+=p["iterations"].get<int>();
+                recurrences+=p.value("recurrence_updates",p["iterations"].get<int>());
+                if(p.contains("graph_audit"))probe+=p["graph_audit"].value("host_iterations",0)+p["graph_audit"].value("host_repeat_iterations",0);
+            }else if(n.contains("exit"))++terminal;
+        }
+        const int initial=continuation.load.empty()?0:continuation.marker.value("accepted_updates",0);
+        stats_at_current_frame["ad_counts"]={{"N_accept_total",accepted_updates},{"N_accept_this_run",accepted_updates-initial},{"N_loop_assembly",stats_at_current_frame["newton"].size()},
+            {"N_linear",linear},{"N_terminal_assembly",terminal},{"N_diagnostic_assembly",diagnostic_assemblies},
+            {"P_production",production},{"P_recurrence_updates",recurrences},{"P_graph_audit",probe},{"P_retry",0},
+            {"retry_count_scope","forcing disabled in A-D"},{"native_return_k",k}};
+    }};
     const bool diagnostic=ipc_diagnostic_enabled();
     auto diagnostic_observe=[&](bool terminal) {
         const auto& abd=m_abd_sim_data->device;
@@ -11467,7 +11646,20 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         abd_fem_count_info.fem_point_offset,abd_fem_count_info.fem_point_num);};
     auto observe_residual=[&](const char* kind){
         const auto start=std::chrono::steady_clock::now();
-        const double2 norm=measure_residual();
+        double2 norm=measure_residual();
+        if(gipc::ad_flag("GIPC_AD_MASS_RESIDUAL")){
+            if(abd_fem_count_info.abd_body_num)throw std::runtime_error("A-D mass residual requires FEM-only input");
+            std::vector<double3> fb(vertexNum),sg(vertexNum);std::vector<double> mass(vertexNum);std::vector<int> mask(vertexNum);
+            CUDA_SAFE_CALL(cudaMemcpy(fb.data(),TetMesh.fb.data(),vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(sg.data(),TetMesh.shape_grads.data(),vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(mass.data(),TetMesh.masses.data(),vertexNum*sizeof(double),cudaMemcpyDeviceToHost));
+            CUDA_SAFE_CALL(cudaMemcpy(mask.data(),TetMesh.BoundaryType.data(),vertexNum*sizeof(int),cudaMemcpyDeviceToHost));
+            norm=make_double2(0,0);
+            for(int i=0;i<vertexNum;++i)if(mask[i]==0){
+                const double v=std::max({std::abs(fb[i].x+sg[i].x),std::abs(fb[i].y+sg[i].y),std::abs(fb[i].z+sg[i].z)})/(mass[i]*IPC_dt);
+                if(!std::isfinite(v))throw std::runtime_error("Nonfinite mass-scaled residual");norm.y=std::max(norm.y,v);
+            }
+        }
         residual_observation=residual_controller->observe(norm.x,norm.y,accepted_updates,Kappa,animation_fullRate);
         const auto& o=residual_observation;
         const auto& budget=residual_controller->budget();
@@ -11599,8 +11791,34 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             if(!restored)throw std::runtime_error("IPC forcing rollback fixture differs");
         }
     };
+    auto continuation_switch=[&]() {
+        continuation.marked=true;
+        gipc::continuation_hold_kappa=continuation.fixed;
+        stopping.termination="movement_only";
+        Newton_solver_threshold=continuation.newton_tolerance();
+        m_global_linear_system->set_pcg_tolerance(continuation.pcg_tolerance());
+        continuation.tail_start=std::chrono::steady_clock::now();
+    };
+    if(!continuation.load.empty())
+    {
+        if(!continuation.continues())throw std::runtime_error("Resume requires a continuation rule");
+        frame_checkpoint(TetMesh,continuation.load,true,true);
+        std::ifstream input(std::filesystem::path(continuation.load)/"continuation.json");
+        input>>continuation.marker;
+        if(!input || continuation.marker.at("physical_frame").get<int>()!=total_Frames+1)
+            throw std::runtime_error("Continuation physical-frame mismatch");
+        k=continuation.marker.at("next_iteration").get<int>();
+        accepted_updates=continuation.marker.at("accepted_updates").get<int>();
+        beta=continuation.marker.at("beta").get<double>();
+        totalTimeStep=continuation.marker.at("total_step").get<double>();
+        if(physics_identity()!=continuation.marker.at("physics"))
+            throw std::runtime_error("Continuation physical problem fingerprint differs");
+        continuation_switch();
+        stats_at_current_frame["continuation_input_verified"]=true;
+    }
     for(; k < iterCap; ++k)
     {
+        gipc::ad_iteration=k;gipc::ad_accepted=accepted_updates;gipc::ad_beta=beta;gipc::ad_total_step=totalTimeStep;
         stats_at_current_frame["newton"].push_back(gipc::Json::object());
         gipc::set_solve_outer(-1);
         gipc::set_solve_inner(k);
@@ -11617,6 +11835,8 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         //printf("\n\n\ncollision num  %d\n\n\n", h_cpNum[0]+h_gpNum);
 
         cudaEventRecord(start);
+        if(std::getenv("GIPC_AD_FAILURE_DIR"))stats_at_current_frame["newton"].back()["ad_derivative_state"]={
+            {"vertices",gipc::ad_hash_device(_vertexes,vertexNum*sizeof(double3))},{"kappa",Kappa},{"dt",IPC_dt}};
         timemakePd += computeGradientAndHessian(TetMesh);
         if(diagnostic)diagnostic_observe(false);
         if(stopping.residual_enabled())observe_residual("normal_assembly");
@@ -11650,6 +11870,16 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
 
         bool gradVanish = (distToOpt_PN < sqrt(Newton_solver_threshold * Newton_solver_threshold
                                                * bboxDiagSize2 * IPC_dt * IPC_dt));
+        if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT"))
+        {
+            auto& row=stats_at_current_frame["newton"].back();
+            row["iteration_index"]=k;row["accepted_before"]=accepted_updates;
+            row["movement_before_solve"]=distToOpt_PN;
+            row["movement_direction_iteration"]=k-1;
+            row["movement_threshold"]=Newton_solver_threshold*std::sqrt(bboxDiagSize2)*IPC_dt;
+            row["movement_would_stop"]=bool(k&&gradVanish);
+            row["continuation_tail"]=continuation.marked;
+        }
 
         //double distToOpt_PN = calcMinMovement(TetMesh.totalForce, pcg_data.squeue, vertexNum);
         //printf("disToopt:  %f        %f\n",
@@ -11664,6 +11894,16 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
 
         const char* selected_exit=gipc::IpcResidualController::exit_reason(
             k&&gradVanish,stopping.termination,residual_observation);
+        if(gipc::ad_flag("GIPC_AD_REQUIRE_RESIDUAL")){
+            if(stopping.termination!="gated"||!residual_controller)throw std::runtime_error("A-D residual veto requires gated policy");
+            const auto& b=residual_controller->budget();
+            const bool pass=b.active&&b.valid&&!b.pending&&b.audits>0&&std::isfinite(residual_observation.relative)
+                &&residual_observation.relative<=stopping.residual_tol;
+            const bool veto=selected_exit&&std::string(selected_exit)=="movement"&&!pass;
+            stats_at_current_frame["newton"].back()["ad_exit"]={{"movement_candidate",bool(k&&gradVanish)},
+                {"residual_pass",pass},{"movement_veto",veto},{"relative",residual_observation.relative}};
+            if(veto)selected_exit=nullptr;
+        }
         if(selected_exit&&std::string(selected_exit)=="movement")
         {
             cudaEventRecord(end0);cudaEventSynchronize(end0);
@@ -11707,6 +11947,27 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             }
         };
         direction_solve(false,"primary");
+        if(const char* file=std::getenv("GIPC_AD_DIRECTION_INJECT");file&&k==0){
+            if(abd_fem_count_info.abd_body_num)throw std::runtime_error("Direction injection requires FEM-only input");
+            std::ifstream input(file,std::ios::binary|std::ios::ate);
+            if(!input||input.tellg()!=std::streamoff(vertexNum*sizeof(double3)))throw std::runtime_error("Injected direction size mismatch");
+            std::vector<double3> injected(vertexNum);input.seekg(0);input.read(reinterpret_cast<char*>(injected.data()),vertexNum*sizeof(double3));
+            if(!input)throw std::runtime_error("Injected direction short read");
+            for(auto p:injected)if(!std::isfinite(p.x)||!std::isfinite(p.y)||!std::isfinite(p.z))throw std::runtime_error("Injected direction nonfinite");
+            CUDA_SAFE_CALL(cudaMemcpy(_moveDir,injected.data(),vertexNum*sizeof(double3),cudaMemcpyHostToDevice));
+            stats_at_current_frame["newton"].back()["ad_direction_injection"]={{"file",file},{"accepted_before",accepted_updates},
+                {"scope","Observed same-operator direction; normal CCD/line search follows"}};
+        }
+        if(continuation.observe)
+        {
+            std::filesystem::create_directories(continuation.output);
+            std::vector<double3> direction(vertexNum);
+            CUDA_SAFE_CALL(cudaMemcpy(direction.data(),_moveDir,vertexNum*sizeof(double3),cudaMemcpyDeviceToHost));
+            char filename[80];std::snprintf(filename,sizeof(filename),"/direction_f%04d_n%04d.bin",total_Frames+1,k);
+            std::ofstream out(continuation.output+filename,std::ios::binary);
+            out.write(reinterpret_cast<const char*>(direction.data()),direction.size()*sizeof(double3));
+            if(!out)throw std::runtime_error("Cannot write continuation direction");
+        }
         if(forcing.enabled()) {
             const double movement=calcMinMovement(_moveDir,pcg_data.prepare_reduction_queue(vertexNum,default_threads),
                 pcg_data.prepare_reduction_scalar(),vertexNum);
@@ -11729,9 +11990,15 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         double alpha_CFL=1;
         auto geometric_limit=[&]() {
         alpha=1;
-        alpha = std::min(alpha, ground_largestFeasibleStepSize(slackness_a));
+        const double ground_limit=ground_largestFeasibleStepSize(slackness_a);
+        alpha = std::min(alpha, ground_limit);
         //alpha = std::min(alpha, InjectiveStepSize(0.2, 1e-6, pcg_data.squeue, TetMesh.tetrahedras));
-        alpha = std::min(alpha, self_largestFeasibleStepSize(slackness_m, h_cpNum[0]));
+        const double self_limit=self_largestFeasibleStepSize(slackness_m, h_cpNum[0]);
+        alpha = std::min(alpha, self_limit);
+        if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT")) {
+            auto& row=stats_at_current_frame["newton"].back();
+            row["alpha_ground"]=ground_limit;row["alpha_self"]=self_limit;
+        }
         double temp_alpha = alpha;
         alpha_CFL  = alpha;
 
@@ -11755,6 +12022,7 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
                 /*buildBVH_FULLCCD(temp_alpha);
                 buildFullCP(temp_alpha);*/
                 const double swept_step=self_largestFeasibleStepSize(slackness_m,h_ccd_cpNum);
+                if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT"))stats_at_current_frame["newton"].back()["alpha_swept"]=swept_step;
                 alpha = std::min(temp_alpha,swept_step*ccd_size);
                 alpha = std::max(alpha, alpha_CFL);
             }
@@ -11763,6 +12031,11 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         };
         if(forcing_eta>.01)save_trial_origin();
         geometric_limit();
+        if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT")) {
+            auto& row=stats_at_current_frame["newton"].back();
+            row["alpha_geometric"]=alpha;row["alpha_cfl"]=alpha_CFL;
+            row["ccd_pair_count"]=h_ccd_cpNum;
+        }
         cudaEventRecord(end2);
         //printf("alpha:  %f\n", alpha);
 
@@ -11854,6 +12127,28 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         stats_at_current_frame["newton"].back()["kappa_before"]=old_kappa;
         stats_at_current_frame["newton"].back()["kappa_after"]=Kappa;
         stats_at_current_frame["newton"].back()["active_pairs"]=h_cpNum[0];
+        if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT"))stats_at_current_frame["newton"].back()["continuation_phase_ms"]={
+            {"assembly",time00},{"pcg",time11},{"ccd",time22},{"line_search",time33},{"post_update",time44}};
+        if(continuation.enabled() && !continuation.marked && semi_implicit && beta<=stopping.cumulative_tol)
+        {
+            CUDA_SAFE_CALL(cudaDeviceSynchronize());
+            const double prefix_ms=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-continuation_frame_start).count();
+            continuation.marker={{"physical_frame",total_Frames+1},{"next_iteration",k+1},
+                {"accepted_updates",accepted_updates},{"beta",beta},{"total_step",totalTimeStep},
+                {"kappa",Kappa},{"prefix_wall_ms",prefix_ms}};
+            if(continuation.observe||!continuation.save.empty())
+                continuation.marker["physics"]=physics_identity();
+            if(!continuation.save.empty()) {
+                frame_checkpoint(TetMesh,continuation.save,false,true);
+                std::ofstream out(std::filesystem::path(continuation.save)/"continuation.json");
+                out<<continuation.marker.dump(2);out.close();
+                if(!out)throw std::runtime_error("Cannot commit continuation metadata");
+            }
+            stats_at_current_frame["newton"].back()["first_toi_eligible"]=true;
+            if(continuation.continues())continuation_switch();
+            else continuation.marked=true;
+        }
         if(stopping.termination=="legacy" && semi_implicit && beta <= stopping.cumulative_tol)
         {
             stats_at_current_frame["newton_exit"]="cumulative_toi";
@@ -11861,6 +12156,7 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             {
                 const auto start=std::chrono::steady_clock::now();
                 computeGradientAndHessian(TetMesh);
+                ++diagnostic_assemblies;
                 observe_residual("terminal_diagnostic_assembly");
                 stats_at_current_frame["ipc_terminal_assembly_host_ms"]=
                     std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();
@@ -11869,17 +12165,33 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         }
     }
     if(k>=iterCap) stats_at_current_frame["newton_exit"]="iteration_limit";
+    if(continuation.enabled()) {
+        CUDA_SAFE_CALL(cudaDeviceSynchronize());
+        auto& report=stats_at_current_frame["continuation"];
+        report={{"mode",continuation.mode},{"fixed_objective",continuation.fixed},
+            {"marker",continuation.marker},{"resumed",!continuation.load.empty()},
+            {"tail_wall_ms",continuation.marked&&continuation.continues()?
+                std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-continuation.tail_start).count():0.},
+            {"exit",stats_at_current_frame.value("newton_exit","unknown")}};
+        if(continuation.marker.contains("physics"))report["final_physics"]=physics_identity();
+        if(continuation.marked&&continuation.fixed && continuation.marker.contains("physics") &&
+           continuation.marker.at("physics")!=report.at("final_physics"))
+            throw std::runtime_error("Frozen continuation changed physical objective");
+    }
     if(diagnostic) {
         // Recompute at the accepted endpoint, including cumulative-TOI exits.
         // This opt-in assembly is charged to diagnosis, never performance.
         const auto begin=std::chrono::steady_clock::now();
         computeGradientAndHessian(TetMesh);
+        ++diagnostic_assemblies;
         diagnostic_observe(true);
         stats_at_current_frame["diagnostic_terminal_ms"]=std::chrono::duration<double,std::milli>(
             std::chrono::steady_clock::now()-begin).count();
     }
     stats_at_current_frame["ipc_stopping"]=stopping.json();
     stats_at_current_frame["ipc_stopping"]["accepted_updates"]=accepted_updates;
+    stats_at_current_frame["ipc_stopping"]["ad_movement_requires_residual"]=gipc::ad_flag("GIPC_AD_REQUIRE_RESIDUAL");
+    stats_at_current_frame["ipc_stopping"]["ad_residual_coordinates"]=gipc::ad_flag("GIPC_AD_MASS_RESIDUAL")?"mass_scaled_component_inf":"native_component_inf";
     stats_at_current_frame["ipc_stopping"]["final_beta"]=beta;
     stats_at_current_frame["ipc_stopping"]["budget_valid"]=!residual_controller||residual_controller->budget().valid;
     if(residual_controller){
@@ -11899,6 +12211,10 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     //}
     //outiter.close();
     printf("\n\n      Kappa: %f                               iteration k:  %d\n", Kappa, k);
+    if(continuation.enabled()) {
+        Newton_solver_threshold=continuation_original_newton;
+        m_global_linear_system->set_pcg_tolerance(pcg_threshold);
+    }
     return k;
 }
 

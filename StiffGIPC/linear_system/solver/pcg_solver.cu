@@ -8,6 +8,7 @@
 #include <solver/mas_factor_action_options.h>
 #include <solver/mas_stage_probe_options.h>
 #include <solver/ipc_pcg_forcing.h>
+#include <solver/ipc_ad_audit.h>
 #include <cuda_tools/cuda_tools.h>
 #include <cuda_tools/cuda_cub_wrappers.h>
 #include <cub/block/block_reduce.cuh>
@@ -24,6 +25,7 @@
 #include <sstream>
 
 extern int total_Frames;
+#include <linear_system/solver/pcg_divergence_probe.inl>
 
 namespace {
 struct PcgDirectionSum {
@@ -279,12 +281,14 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     if(m_config.conditional_graph && std::getenv("GIPC_AUDIT_GRAPH")
        && std::string(std::getenv("GIPC_AUDIT_GRAPH"))=="1")
     {
+        const auto production_info=info;
         // Solve the exact same A/b/preconditioner with the host loop. This is
         // a quality-only run; all duplicate work is included in its timing.
         std::vector<Float> graph_x(x.size()),host_x(x.size());
         CUDA_SAFE_CALL(cudaMemcpy(graph_x.data(),x.buffer_view().data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
         x.buffer_view().fill(0);
         auto host_iter=pcg(x,b,max_iter);
+        const auto first_host_info=info;
         CUDA_SAFE_CALL(cudaMemcpy(host_x.data(),x.buffer_view().data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
         double difference=0,reference=0;
         for(size_t i=0;i<host_x.size();++i){double d=host_x[i]-graph_x[i];difference+=d*d;reference+=host_x[i]*host_x[i];}
@@ -294,6 +298,7 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
         info["same_system_host_solution_norm"]=std::sqrt(reference);
         x.buffer_view().fill(0);
         auto repeat_iter=pcg(x,b,max_iter);
+        const auto repeat_host_info=info;
         std::vector<Float> repeat_x(x.size());
         CUDA_SAFE_CALL(cudaMemcpy(repeat_x.data(),x.buffer_view().data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
         double repeat_difference=0;
@@ -301,6 +306,16 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
         info["same_system_host_repeat_iterations"]=repeat_iter;
         info["same_system_host_repeat_relative_difference"]=reference>0?std::sqrt(repeat_difference/reference):std::sqrt(repeat_difference);
         CUDA_SAFE_CALL(cudaMemcpy(x.buffer_view().data(),graph_x.data(),x.size()*sizeof(Float),cudaMemcpyHostToDevice));
+        std::vector<Float> restored_graph(x.size());
+        CUDA_SAFE_CALL(cudaMemcpy(restored_graph.data(),x.data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+        const bool restored=std::memcmp(restored_graph.data(),graph_x.data(),x.size()*sizeof(Float))==0;
+        info=production_info;
+        info["graph_audit"]={{"host",first_host_info},{"host_repeat",repeat_host_info},
+            {"host_iterations",host_iter},{"host_repeat_iterations",repeat_iter},
+            {"relative_solution_difference",reference>0?std::sqrt(difference/reference):std::sqrt(difference)},
+            {"host_repeat_relative_difference",reference>0?std::sqrt(repeat_difference/reference):std::sqrt(repeat_difference)},
+            {"production_solution_restored",restored},{"production_info_restored",true}};
+        if(!restored)throw std::runtime_error("Graph audit failed to restore production solution");
     }
     if(const char* from=std::getenv("GIPC_PCG_REPLAY_FROM_FRAME"); from
        && total_Frames+1>=std::stoi(from)
@@ -418,6 +433,47 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     }
     linear_stage("pcg_audit_end");
     linear_stage("fixed_study_begin");
+    if(const char* directory=std::getenv("GIPC_AD_DIRECTION_SAMPLES");directory &&
+       Statistics::instance().at_current_frame()["newton"].size()==1){
+        const std::string prefix=std::string(directory)+"/samples";
+        const auto original_info=info;
+        std::vector<Float> original(x.size());
+        CUDA_SAFE_CALL(cudaMemcpy(original.data(),x.data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+        const auto before=snapshot_system(prefix);
+        Json record={{"operator_before",before},{"rho_tolerance",m_config.global_tol_rate},{"samples",Json::array()}};
+        for(int repeat=0;repeat<10;++repeat){
+            x.buffer_view().fill(0);info=Json::object();pcg(x,b,max_iter);
+            const auto pcg_info=info;
+            std::vector<Float> value(x.size());
+            CUDA_SAFE_CALL(cudaMemcpy(value.data(),x.data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+            const auto name=prefix+"_r"+std::to_string(repeat)+".bin";
+            std::ofstream output(name,std::ios::binary);output.write(reinterpret_cast<const char*>(value.data()),value.size()*sizeof(Float));
+            if(!output)throw std::runtime_error("Cannot write same-operator direction sample");
+            record["samples"].push_back({{"file",name},{"pcg",pcg_info}});
+        }
+        record["operator_unchanged"]=snapshot_operator_identity(before)==snapshot_operator_identity(snapshot_system(""));
+        CUDA_SAFE_CALL(cudaMemcpy(x.data(),original.data(),original.size()*sizeof(Float),cudaMemcpyHostToDevice));
+        info=original_info;info["ad_direction_samples"]=prefix+".json";
+        record["primary_restored"]=true;std::ofstream(prefix+".json")<<record.dump(2);
+        if(!record["operator_unchanged"].get<bool>())throw std::runtime_error("Direction replay changed A/b/M");
+    }
+    if(const char* directory=std::getenv("GIPC_AD_LINEAR_DIR")){
+        const std::string prefix=std::string(directory)+"/last";
+        const auto snapshot=snapshot_system(gipc::ad_failure_replay?"":prefix);
+        std::vector<Float> solution(x.size()),rhs(b.size()),ax(b.size());
+        CUDA_SAFE_CALL(cudaMemcpy(solution.data(),x.data(),x.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+        CUDA_SAFE_CALL(cudaMemcpy(rhs.data(),b.data(),b.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+        spmv(cudatool::CDenseVectorView<Float>{x.data(),static_cast<int>(x.size())},Ap.view());
+        CUDA_SAFE_CALL(cudaMemcpy(ax.data(),Ap.data(),b.size()*sizeof(Float),cudaMemcpyDeviceToHost));
+        long double rr=0,bb=0,bx=0,xax=0;
+        for(size_t i=0;i<rhs.size();++i){long double d=rhs[i]-ax[i];rr+=d*d;bb+=(long double)rhs[i]*rhs[i];bx+=(long double)rhs[i]*solution[i];xax+=(long double)solution[i]*ax[i];}
+        Json audit={{"snapshot",snapshot},{"true_relative_residual",std::sqrt(double(rr/std::max(bb,1e-300L)))},{"b_dot_x",double(bx)},{"x_A_x",double(xax)}};
+        info["ad_linear"]=audit;
+        if(!gipc::ad_failure_replay){
+        std::ofstream(prefix+".json")<<audit.dump(2);
+        std::ofstream out(prefix+"_direction.bin",std::ios::binary);out.write(reinterpret_cast<const char*>(solution.data()),solution.size()*sizeof(Float));
+        }
+    }
     if(std::getenv("GIPC_FIXED_STUDY_DIR"))fixed_system_study(x,b,max_iter,iter);
     linear_stage("fixed_study_end");
     if(const char* dir=std::getenv("GIPC_STATE_WINDOW_DIR");dir && total_Frames+1>=21 && total_Frames+1<=25)
@@ -523,6 +579,13 @@ bool PCGSolver::check_host_rho(Float rho)
 }
 SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b, SizeT max_iter)
 {
+    divergence_trace_begin(b.size());
+    auto probe=[&](int stage,int iteration,const double* a,const double* v,const double* c,
+                   double rho,double curvature,double alpha,double beta,double next) {
+        if(divergence_trace_enabled)divergence_record<<<(b.size()+255)/256,256>>>(
+            divergence_trace.data(),b.size(),divergence_trace_steps,stage,iteration,nullptr,0,
+            a,v,c,rho,curvature,alpha,beta,next);
+    };
     cost_trace_iteration(0);
     SizeT k = 0;
 
@@ -546,8 +609,10 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 
     p.copy_from(z);
     rz0 = rz;
+    probe(0,0,r.data(),z.data(),p.data(),rz,0,0,0,0);
     auto& info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
     info["execution"]="host";info["rho_initial"]=rz0;info["iterations"]=0;
+    info["recurrence_updates"]=0;
     if(check_host_rho(rz)){info["zero_residual"]=true;return 0;}
 
     for(k = 1; k < max_iter; ++k)
@@ -572,6 +637,7 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
             if(int code=pcg_curvature_error(dot_res))fail_pcg(code,rz,dot_res);
             alpha = rz / dot_res;
             if(!std::isfinite(alpha))fail_pcg(6,rz,dot_res);
+            probe(1,k,p.data(),Ap.data(),r.data(),rz,dot_res,alpha,0,0);
         }
 
         {
@@ -588,6 +654,8 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
                                      (int)z.size());
         }
 
+        info["recurrence_updates"]=k;
+        probe(2,k,x.data(),r.data(),p.data(),rz,0,alpha,0,0);
         if(diagnostic_fixed_iterations>0 ? k>=diagnostic_fixed_iterations :
            std::abs(rz) <= m_config.global_tol_rate * rz0)
             break;
@@ -596,6 +664,7 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
         {
             // The previous-rho stop above retains its original timing.
             apply_preconditioner(z, r);
+            probe(3,k,r.data(),z.data(),x.data(),rz,0,alpha,0,0);
         }
         {
             //Timer timer{"dot"};
@@ -623,6 +692,7 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
         }
 
         rz = rz_new;
+        probe(4,k,p.data(),z.data(),r.data(),rz,0,alpha,beta,rz_new);
     }
 
     info["rho_stop"]=rz;
@@ -636,3 +706,4 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 #include <linear_system/solver/pcg_chunk_fixture.inl>
 #include <linear_system/solver/pcg_chunk_study.inl>
 #include <linear_system/solver/pcg_fixed_study.inl>
+#include <linear_system/solver/pcg_divergence_study.inl>

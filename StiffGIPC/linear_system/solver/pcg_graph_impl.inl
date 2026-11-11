@@ -150,6 +150,11 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
        || max_iter > std::numeric_limits<int>::max())
         return pcg(x,b,max_iter);
     const int n = static_cast<int>(b.size()), blocks = (n+255)/256;
+    divergence_trace_begin(n);
+    auto probe=[&](int stage,int offset,const double* a,const double* v,const double* c) {
+        if(divergence_trace_enabled)divergence_record<<<blocks,256>>>(divergence_trace.data(),
+            n,divergence_trace_steps,stage,0,graph_scalars.data(),offset,a,v,c,0,0,0,0,0);
+    };
     const char* fused_env = std::getenv("GIPC_PCG_FUSED_DIAG_UPDATE");
     const bool fused_update = (diagnostic_fused_override>=0 ? diagnostic_fused_override==1 :
                               fused_env && std::strcmp(fused_env, "1") == 0)
@@ -180,6 +185,7 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     dot(r.buffer_view().data(), z.buffer_view().data(),p.buffer_view().data(),s);
     p.copy_from(z);
     graph_init<<<1,1>>>(s);
+    probe(0,0,r.data(),z.data(),p.data());
     graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
     if(chunk==4)chunk_init<<<1,1>>>(s);
     timing.mark(1);
@@ -216,6 +222,9 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     key.push_back(fused_update);
     key.push_back(chunk);key.push_back(graph_scalars.size());
     key.push_back(diagnostic_fixed_iterations);
+    key.push_back(divergence_trace_enabled);
+    key.push_back(divergence_trace_steps);
+    key.push_back(reinterpret_cast<std::uintptr_t>(divergence_trace.data()));
     int device = 0; CUDA_SAFE_CALL(cudaGetDevice(&device)); key.push_back(device);
     if(graph_exec && (key != captured_key || max_iter != captured_max_iter))
     { ++invalidations; release_graph(); }
@@ -251,19 +260,23 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
         spmv(p.cview(),Ap.view());
         dot(p.buffer_view().data(),Ap.buffer_view().data(),z.buffer_view().data(),s+1);
         graph_alpha<<<1,1>>>(s);
+        probe(1,1,p.data(),Ap.data(),r.data());
         if(fused_update)
             fused_diag_update(x, r.view(), p.cview(), Ap.cview(), s + 3, z.view());
         else
         {
             graph_dx_r<<<blocks,256>>>(x.buffer_view().data(),r.buffer_view().data(),
                                       p.buffer_view().data(),Ap.buffer_view().data(),s,n);
+            probe(2,1,x.data(),r.data(),p.data());
             apply_preconditioner(z,r);
+            probe(3,1,r.data(),z.data(),x.data());
         }
         dot(r.buffer_view().data(),z.buffer_view().data(),Ap.buffer_view().data(),s+2);
         graph_beta<<<1,1>>>(s,tolerance_control,diagnostic_fixed_iterations);
         graph_check_zero_rho<<<blocks,256>>>(r.buffer_view().data(),n,s);
         graph_p_continue<<<blocks,256>>>(p.buffer_view().data(),z.buffer_view().data(),
             s,n,static_cast<int>(max_iter),tolerance_control,diagnostic_fixed_iterations,handle);
+        probe(4,0,p.data(),z.data(),r.data());
         }
         else
         {
@@ -317,6 +330,7 @@ SizeT PCGSolver::pcg_graph(cudatool::DenseVectorView<Float> x,
     stats["graph_invalidations_total"] = invalidations;
     stats["rho_initial"] = report[7]; stats["rho_stop"] = report[8];
     stats["iterations"]=report[6];
+    stats["recurrence_updates"]=report[6];
     stats["iteration_limit"] = report[5] == 0 && report[9]==0;
     if(report[9] != 0)fail_pcg(static_cast<int>(report[9]),report[0],report[1]);
     return report[5] != 0 ? static_cast<SizeT>(report[6]) : max_iter;

@@ -50,6 +50,14 @@ class PCGSolver : public IterativeSolver
     int diagnostic_fixed_iterations = 0;
     int diagnostic_fused_override = -1;
     bool diagnostic_chunk_timing = false;
+    bool divergence_trace_enabled=false;
+    int divergence_trace_steps=0;
+    cudatool::DeviceBuffer<double> divergence_trace;
+    void divergence_trace_begin(SizeT n);
+    void divergence_trace_save(const std::string& path,SizeT n);
+    void divergence_study(cudatool::DenseVectorView<Float> x,
+                          cudatool::CDenseVectorView<Float> b,SizeT max_iter,
+                          const std::string& prefix);
     void fail_pcg(int code,Float rho,Float curvature);
     bool check_host_rho(Float rho);
     void check_forcing_direction(cudatool::DenseVectorView<Float> x,

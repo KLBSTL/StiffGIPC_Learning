@@ -235,7 +235,8 @@ class GIPC
                      double&           time3,
                      double&           time4);
     void IPC_Solver(device_TetraData& TetMesh);
-    void frame_checkpoint(device_TetraData& mesh,const std::string& directory,bool restore);
+    void frame_checkpoint(device_TetraData& mesh,const std::string& directory,bool restore,
+                          bool accepted_update_boundary=false);
     int solve_subTOI(device_TetraData& TetMesh);
     void toiSelfGradientHessian(double3* gradient);
     void toiGroundGradientHessian(double3* gradient);

@@ -32,7 +32,8 @@ std::string checkpoint_env(const char* key)
 {const char* value=std::getenv(key);return value?value:"";}
 }
 
-void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,bool restore)
+void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,bool restore,
+                           bool accepted_update_boundary)
 {
     namespace fs=std::filesystem;
     if(isUpdateBoundary || animation)
@@ -42,12 +43,13 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     CUDA_SAFE_CALL(cudaDeviceSynchronize());
     const fs::path folder(directory);
     gipc::Json meta;
+    const std::string schema=accepted_update_boundary?"gipc-accepted-update-1":"gipc-frame-boundary-2";
     if(restore)
     {
         std::ifstream input(folder/"checkpoint.json");
         if(!input)throw std::runtime_error("Checkpoint has no committed metadata");
         input>>meta;
-        if(meta.at("schema")!="gipc-frame-boundary-2" || meta.at("binary_id")!=binary_id
+        if(meta.at("schema")!=schema || meta.at("binary_id")!=binary_id
            || meta.at("contact_bytes")!=sizeof(ToiContact))
             throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
     }
@@ -55,9 +57,10 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     {
         if(fs::exists(folder))throw std::runtime_error("Refusing to overwrite an existing checkpoint");
         fs::create_directories(folder);
-        meta={{"schema","gipc-frame-boundary-2"},{"binary_id",binary_id},{"contact_bytes",sizeof(ToiContact)},
+        meta={{"schema",schema},{"binary_id",binary_id},{"contact_bytes",sizeof(ToiContact)},
             {"completed_physical_frames",total_Frames},{"next_physical_frame",total_Frames+1},
-            {"scope","Same-binary static-topology physical frame boundary; no mid-Newton restart"},
+            {"scope",accepted_update_boundary?"Same physical step, accepted-update boundary; no active PCG call":
+                "Same-binary static-topology physical frame boundary; no mid-Newton restart"},
             {"derived_caches","BVH rebuilt; matrices, preconditioner and CUDA graphs regenerated on next solve"}};
     }
     gipc::Json context={{"scene",checkpoint_env("GIPC_SCENE")},{"case",checkpoint_env("GIPC_CASE")},
@@ -170,6 +173,14 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     DEVICE("friction_lambda",lambda_lastH_scalar);DEVICE("friction_coord",distCoord);DEVICE("friction_basis",tanBasis);
     DEVICE("friction_pairs",_collisonPairs_lastH);DEVICE("friction_index",_MatIndex_last);
     DEVICE("ground_friction_lambda",lambda_lastH_scalar_gd);DEVICE("ground_friction_pairs",_collisonPairs_lastH_gd);
+    if(accepted_update_boundary)
+    {
+        DEVICE("ccd_pairs",_ccd_collisonPairs);
+        DEVICE("close_cp_num",_close_cpNum);DEVICE("close_gp_num",_close_gpNum);
+        DEVICE("close_ground_id",_closeConstraintID);DEVICE("close_ground_value",_closeConstraintVal);
+        DEVICE("close_self_id",_closeMConstraintID);DEVICE("close_self_value",_closeMConstraintVal);
+        DEVICE("shape_gradient",mesh.shape_grads);
+    }
     if(use_toi)
     {
         DEVICE("safe",toi.safe);DEVICE("trial",toi.trial);DEVICE("previous_trial",toi.previous_trial);
@@ -193,6 +204,7 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         SCALAR(toi.robust_port);SCALAR(toi.independent_friction_history);SCALAR(toi.frame_friction_frame_id);
     }
     SCALAR(h_gpNum);SCALAR(h_gpNum_last);SCALAR(h_close_cpNum);SCALAR(h_close_gpNum);
+    if(accepted_update_boundary){SCALAR(h_ccd_cpNum);}
 #undef SCALAR
     for(int i=0;i<5;++i)
     {scalar(("cp_"+std::to_string(i)).c_str(),h_cpNum[i]);scalar(("cp_last_"+std::to_string(i)).c_str(),h_cpNum_last[i]);}
@@ -202,12 +214,13 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
             throw std::runtime_error("Checkpoint buffer schema mismatch");
         total_Frames=meta.at("completed_physical_frames").get<int>();
         _vertexes=mesh.vertexes.data();_rest_vertexes=mesh.rest_vertexes.data();targetVert=mesh.targetVert.data();
-        _moveDir=pcg_data.dx.data();h_ccd_cpNum=0;
+        _moveDir=pcg_data.dx.data();if(!accepted_update_boundary)h_ccd_cpNum=0;
         buildBVH();
         gipc::Json report={{"restored_buffers",restored_buffers},{"device_bytes_verified",true},
             {"context_verified",true},{"completed_physical_frames",total_Frames},{"checkpoint",directory},
             {"binary_id",binary_id},{"scope",meta.at("scope")}};
-        std::ofstream out(fs::path(gipc::output_dir())/"checkpoint_restore.json");out<<report.dump(2);out.close();
+        std::ofstream out(fs::path(gipc::output_dir())/
+            (accepted_update_boundary?"continuation_restore.json":"checkpoint_restore.json"));out<<report.dump(2);out.close();
         if(!out)throw std::runtime_error("Checkpoint restore report write failed");
     }
     else

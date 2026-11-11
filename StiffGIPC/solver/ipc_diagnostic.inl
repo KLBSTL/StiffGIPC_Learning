@@ -68,20 +68,29 @@ gipc::Json ipc_diagnostic_observe(int frame,int iteration,bool terminal,int vert
     std::vector<std::array<int,4>> current;
     for(auto p:raw)current.push_back({p.x,p.y,p.z,p.w});
     for(auto p:gp)current.push_back({INT_MIN,static_cast<int>(p),0,0});
+    auto hash_records=[](const auto& values){uint64_t h=14695981039346656037ull;
+        const auto* bytes=reinterpret_cast<const unsigned char*>(values.data());
+        for(size_t i=0;i<values.size()*sizeof(values[0]);++i){h^=bytes[i];h*=1099511628211ull;}return h;};
+    row["ordered_pair_hash"]=hash_records(current);
     std::sort(current.begin(),current.end());current.erase(std::unique(current.begin(),current.end()),current.end());
+    row["canonical_pair_hash"]=hash_records(current);
     std::vector<std::array<int,4>> common;
     std::set_intersection(previous.begin(),previous.end(),current.begin(),current.end(),std::back_inserter(common));
     const size_t united=previous.size()+current.size()-common.size();
     row["pair_record_churn"]=united?1.-double(common.size())/united:0.;
     row["unique_pair_records"]=current.size();previous=std::move(current);
-    if(terminal) {
+    const char* continuation_observe=std::getenv("GIPC_CONTINUATION_OBSERVE");
+    const bool every_accepted=continuation_observe&&std::string(continuation_observe)=="1";
+    if(terminal||every_accepted) {
         const auto directory=std::filesystem::path(std::getenv("GIPC_DIAGNOSTIC_DIR"));
         std::filesystem::create_directories(directory);
-        char name[64];std::snprintf(name,sizeof(name),"field_%04d.bin",frame);
+        char name[80];std::snprintf(name,sizeof(name),"field_%04d.bin",frame);
+        if(every_accepted)std::snprintf(name,sizeof(name),"field_f%04d_n%04d.bin",frame,iteration);
         std::ofstream output(directory/name,std::ios::binary);
         output.write(reinterpret_cast<const char*>(host.data()),host.size()*sizeof(double4));
         if(!output)throw std::runtime_error("Cannot write residual field");
         std::snprintf(name,sizeof(name),"positions_%04d.bin",frame);
+        if(every_accepted)std::snprintf(name,sizeof(name),"positions_f%04d_n%04d.bin",frame,iteration);
         std::vector<double3> x(vertices);CUDA_SAFE_CALL(cudaMemcpy(x.data(),positions,vertices*sizeof(double3),cudaMemcpyDeviceToHost));
         std::ofstream position_output(directory/name,std::ios::binary);
         position_output.write(reinterpret_cast<const char*>(x.data()),x.size()*sizeof(double3));

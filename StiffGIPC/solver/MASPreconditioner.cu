@@ -2531,6 +2531,7 @@ void MASPreconditioner::setPreconditioner_bcoo(Eigen::Matrix3d* triplet_values,
 }
 
 
+// A-D stage diagnostics are compiled explicitly with this translation unit.
 #include <solver/mas_stage_probe.inl>
 
 void MASPreconditioner::preconditioning(const double3* R, double3* Z)
