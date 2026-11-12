@@ -37,6 +37,15 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
     Json study={{"frame",frame},{"direction",direction},{"system",before},
                 {"zero_initial_guess",true},{"runs",Json::array()}};
     attach_solve_context(study);
+    if(const char* flag=std::getenv("GIPC_RESEARCH_SNAPSHOT_ONLY");flag&&std::string(flag)=="1")
+    {
+        std::ofstream values(prefix+"_primary_x.bin",std::ios::binary);
+        values.write(reinterpret_cast<const char*>(primary.data()),primary.size()*sizeof(Float));values.close();
+        study["snapshot_only"]=true;study["system_unchanged"]=before==snapshot_system("");
+        std::ofstream file(prefix+"_study.json");file<<study.dump(2);file.close();
+        if(!values||!file||!study["system_unchanged"].get<bool>())throw std::runtime_error("Snapshot-only export failed");
+        return;
+    }
     if(const char* enabled=std::getenv("GIPC_FIXED_MAS_STAGE_STUDY");enabled&&std::string(enabled)=="1")
     {
         const auto saved_signature=graph_signature();
@@ -91,6 +100,36 @@ void PCGSolver::fixed_system_study(cudatool::DenseVectorView<Float> x,
         for(size_t i=0;i<ax.size();++i){long double d=static_cast<long double>(rhs[i])-ax[i];rr+=d*d;bb+=static_cast<long double>(rhs[i])*rhs[i];}
         return bb>0?std::sqrt(static_cast<double>(rr/bb)):std::sqrt(static_cast<double>(rr));
     };
+    if(const char* flag=std::getenv("GIPC_RESEARCH_FIXED_PRECISION");flag&&std::string(flag)=="1")
+    {
+        struct Reset { ~Reset(){research_restriction_override()=-1;} } reset;
+        for(int count:{32,0})for(int repeat=0;repeat<10;++repeat)for(int order=0;order<3;++order)
+        {
+            const int mode=(order+repeat)%3;
+            research_restriction_override()=mode;diagnostic_fixed_iterations=count;
+            m_config.global_tol_rate=saved_config.global_tol_rate;
+            x.buffer_view().fill(0);CUDA_SAFE_CALL(cudaDeviceSynchronize());
+            const auto start=std::chrono::steady_clock::now();
+            const auto iterations=pcg(x,b,max_iter);CUDA_SAFE_CALL(cudaDeviceSynchronize());
+            const double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();
+            const auto values=download();const double rr=residual();
+            const std::string name=prefix+"_precision_k"+std::to_string(count)+"_m"+std::to_string(mode)+"_r"+std::to_string(repeat+1)+".bin";
+            std::ofstream out(name,std::ios::binary);out.write(reinterpret_cast<const char*>(values.data()),values.size()*sizeof(Float));out.close();
+            if(!out||!std::isfinite(rr)||iterations>=max_iter)throw std::runtime_error("Research precision solve failed");
+            study["runs"].push_back({{"mode",mode},{"count",count},{"repeat",repeat+1},{"iterations",iterations},
+                {"ms",ms},{"true_relative_residual",rr},{"rho_initial",info.value("rho_initial",0.)},
+                {"rho_stop",info.value("rho_stop",0.)},{"solution",name}});
+        }
+        research_restriction_override()=-1;diagnostic_fixed_iterations=0;m_config=saved_config;
+        study["system_unchanged"]=snapshot_operator_identity(before)==snapshot_operator_identity(snapshot_system(""));
+        CUDA_SAFE_CALL(cudaMemcpy(x.data(),primary.data(),primary.size()*sizeof(Float),cudaMemcpyHostToDevice));
+        const auto restored=download();study["primary_restored_bitwise"]=std::memcmp(primary.data(),restored.data(),primary.size()*sizeof(Float))==0;
+        info=saved_info;info["fixed_study_file"]=prefix+"_study.json";
+        std::ofstream file(prefix+"_study.json");file<<study.dump(2);file.close();
+        if(!file||!study["system_unchanged"].get<bool>()||!study["primary_restored_bitwise"].get<bool>())
+            throw std::runtime_error("Research precision restore failed");
+        return;
+    }
     // Batch asynchronous operators with fixed b; include their normal launch costs.
     auto operator_cost=[&](auto operation)
     {

@@ -20,7 +20,8 @@ inline LineSearchCheck check_line_search_acceptance(double baseline,
                                                   double trial,
                                                   double slope,
                                                   double alpha,
-                                                  int backtracks)
+                                                  int backtracks,
+                                                  int budget=ipc_line_search_backtrack_budget)
 {
     if(!std::isfinite(baseline))
         return {LineSearchAction::fail, "nonfinite_baseline_energy", baseline};
@@ -28,7 +29,7 @@ inline LineSearchCheck check_line_search_acceptance(double baseline,
         return {LineSearchAction::fail, "nonfinite_armijo_slope", baseline};
     if(!std::isfinite(alpha) || alpha <= 0)
         return {LineSearchAction::fail, "invalid_alpha", baseline};
-    if(backtracks < 0 || backtracks > ipc_line_search_backtrack_budget)
+    if((budget!=9 && budget!=18) || backtracks < 0 || backtracks > budget)
         return {LineSearchAction::fail, "invalid_backtrack_count", baseline};
     const double increment = slope * alpha;
     const double threshold = baseline + increment;
@@ -38,7 +39,7 @@ inline LineSearchCheck check_line_search_acceptance(double baseline,
         return {LineSearchAction::fail, "nonfinite_trial_energy", threshold};
     if(trial <= threshold)
         return {LineSearchAction::accept, "accepted", threshold};
-    if(backtracks == ipc_line_search_backtrack_budget)
+    if(backtracks == budget)
         return {LineSearchAction::fail, "energy_backtrack_budget_exhausted", threshold};
     return {LineSearchAction::backtrack, "energy_above_threshold", threshold};
 }

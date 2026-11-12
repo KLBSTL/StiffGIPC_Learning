@@ -7,6 +7,7 @@
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_factor_action_options.h>
 #include <solver/mas_stage_probe_options.h>
+#include <solver/mas_research_precision.h>
 #include <solver/ipc_pcg_forcing.h>
 #include <solver/ipc_ad_audit.h>
 #include <cuda_tools/cuda_tools.h>
@@ -162,6 +163,8 @@ void PCGSolver::check_forcing_direction(cudatool::DenseVectorView<Float> x,
 SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b)
 {
     const auto forcing=IpcPcgForcingOptions::read();
+    if(m_config.conditional_graph && research_restriction_mode()!=0)
+        throw std::runtime_error("Research restriction intervention is host-PCG only");
     CostScope cost_entry("pcg.entry_including_diagnostics");
     attach_solve_context(Statistics::instance().at_current_frame()["newton"].back()["pcg"]);
     Timer timer{"pcg"};

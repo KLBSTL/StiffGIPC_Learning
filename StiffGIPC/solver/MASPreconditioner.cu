@@ -12,6 +12,8 @@
 #include <gipc/cost_trace.h>
 #include <solver/mas_restrict_options.h>
 #include <solver/mas_stage_probe_options.h>
+#include <solver/mas_research_precision.h>
+#include <solver/mas_ordered_kernel.inl>
 #include <solver/mas_pivot_sync.h>
 #include <fstream>
 #include <cstring>
@@ -2307,6 +2309,12 @@ void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
             __inverse6_P96x96<false><<<numBlocks2, blockSize2>>>(d_precondMatMas, d_inverseMatMas, number2);
     }
 
+    if(gipc::research_restriction_map_needed())
+    {
+        if(wide_apply || inverse64 || cholesky)
+            throw std::runtime_error("Research precision requires legacy MAS");
+        prepare_restriction_map();
+    }
     //cudaEventRecord(end1);
 
     //CUDA_SAFE_CALL(cudaDeviceSynchronize());
@@ -2330,7 +2338,19 @@ void MASPreconditioner::PrepareHessian_bcoo(Eigen::Matrix3d* triplet_values,
 void MASPreconditioner::BuildMultiLevelR(const double3* R)
 {
     gipc::CostScope cost_restrict("mas.restrict");
-
+    const int mode=gipc::research_restriction_mode();
+    if(mode)
+    {
+        if(d_restriction_starts.size()!=totalNumberClusters+1)
+            throw std::runtime_error("Research restriction CSR not prepared");
+        if(mode==1)ad_ordered_restriction<float><<<(totalNumberClusters*3+255)/256,256>>>(
+            reinterpret_cast<const double*>(R),reinterpret_cast<float*>(d_multiLevelR.data()),
+            d_restriction_starts.data(),d_restriction_nodes.data(),totalNumberClusters);
+        else ad_ordered_restriction<double><<<(totalNumberClusters*3+255)/256,256>>>(
+            reinterpret_cast<const double*>(R),reinterpret_cast<float*>(d_multiLevelR.data()),
+            d_restriction_starts.data(),d_restriction_nodes.data(),totalNumberClusters);
+        return;
+    }
 
 #ifdef GROUP
     int number = totalMapNodes;

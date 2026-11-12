@@ -49,9 +49,17 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         std::ifstream input(folder/"checkpoint.json");
         if(!input)throw std::runtime_error("Checkpoint has no committed metadata");
         input>>meta;
-        if(meta.at("schema")!=schema || meta.at("binary_id")!=binary_id
-           || meta.at("contact_bytes")!=sizeof(ToiContact))
+        if(meta.at("schema")!=schema || meta.at("contact_bytes")!=sizeof(ToiContact))
             throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
+        if(meta.at("binary_id")!=binary_id)
+        {
+            // Explicit research migration of plain FEM frame-boundary data.
+            // Keep the original checkpoint untouched. All physics/context,
+            // byte counts, device roundtrips and scalar checks below still run.
+            if(accepted_update_boundary||use_toi||abd_fem_count_info.abd_body_num||abd_fem_count_info.fem_tet_num||
+               checkpoint_env("GIPC_RESEARCH_MIGRATE_FROM")!=meta.at("binary_id").get<std::string>())
+                throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
+        }
     }
     else
     {
@@ -80,10 +88,24 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         "GIPC_TOI_TRIAL_INJECTIVITY","GIPC_TOI_ROBUST_VELOCITY_TOL","GIPC_TOI_VOLUME_BOUND",
         "GIPC_TOI_FILTER_RATIO","GIPC_TOI_EARLY_TERMINATION","GIPC_TOI_REUSE_INITIAL_ASSEMBLY"})
         context["environment"][key]=checkpoint_env(key);
+    const auto constants_dir=checkpoint_env("GIPC_RESEARCH_CONSTANTS_DIR");
+    gipc::Json constants;
+    auto export_constant=[&](const char* name,const auto& buffer)
+    {
+        if(constants_dir.empty())return;
+        auto bytes=checkpoint_device_bytes(buffer.data(),buffer.size()*sizeof(*buffer.data()));
+        fs::create_directories(constants_dir);
+        std::ofstream file(fs::path(constants_dir)/(std::string(name)+".bin"),std::ios::binary);
+        file.write(reinterpret_cast<const char*>(bytes.data()),bytes.size());file.close();
+        if(!file)throw std::runtime_error("Research constant export failed");
+        constants[name]={{"bytes",bytes.size()},{"fnv1a64",checkpoint_hash(bytes)},
+            {"count",buffer.size()},{"item_bytes",sizeof(*buffer.data())}};
+    };
     auto immutable=[&](const char* name,const auto& buffer)
     {
         auto bytes=checkpoint_device_bytes(buffer.data(),buffer.size()*sizeof(*buffer.data()));
         context["immutable"][name]={{"bytes",bytes.size()},{"fnv1a64",checkpoint_hash(bytes)}};
+        export_constant(name,buffer);
     };
     immutable("rest_vertices",mesh.rest_vertexes);immutable("tetrahedra",mesh.tetrahedras);
     immutable("triangles",mesh.triangles);immutable("faces",_faces);immutable("edges",_edges);
@@ -98,6 +120,16 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     // ABD local coordinates and mass reductions depend on initialization order.
     // Restore them together with q, instead of mixing q with freshly reduced J/M.
     immutable("motor_axis",m_abd_system->body_id_to_motor_rotation_axis);
+    if(!constants_dir.empty())
+    {
+        export_constant("triangle_area",mesh.area);
+        export_constant("triangle_edges",mesh.tri_edges);
+        export_constant("edge_adjacent",mesh.tri_edge_adj_vertex);
+        export_constant("bending_q",mesh.quad_bending_Q);
+        std::ofstream file(fs::path(constants_dir)/"constants.json");
+        file<<gipc::Json{{"binary_id",binary_id},{"context",context},{"buffers",constants}}.dump(2);
+        file.close();if(!file)throw std::runtime_error("Research constant metadata export failed");
+    }
     if(restore && meta.at("context")!=context)throw std::runtime_error("Checkpoint scene/physics context mismatch");
     if(!restore)meta["context"]=context;
 
@@ -219,6 +251,8 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         gipc::Json report={{"restored_buffers",restored_buffers},{"device_bytes_verified",true},
             {"context_verified",true},{"completed_physical_frames",total_Frames},{"checkpoint",directory},
             {"binary_id",binary_id},{"scope",meta.at("scope")}};
+        report["source_binary_id"]=meta.at("binary_id");
+        report["explicit_FEM_frame_migration"]=meta.at("binary_id")!=binary_id;
         std::ofstream out(fs::path(gipc::output_dir())/
             (accepted_update_boundary?"continuation_restore.json":"checkpoint_restore.json"));out<<report.dump(2);out.close();
         if(!out)throw std::runtime_error("Checkpoint restore report write failed");

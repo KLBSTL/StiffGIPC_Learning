@@ -68,6 +68,16 @@ class IpcResidualController {
     int reference_update()const{return reference_update_;}
     int reference_epoch()const{return reference_epoch_;}
 
+    // Preserve the accepted-update audit requirement when an absolute floor
+    // is enabled. The floor is an empirical gate, not a physical error bound.
+    static bool movement_guard(const IpcBudget& b,const IpcResidualObservation& o,
+                               double relative_tol,double absolute_tol=0) {
+        if(!b.active||!b.valid||b.pending||b.audits<=0||!std::isfinite(o.relative))return false;
+        if(absolute_tol==0)return o.relative<=relative_tol; // Exact legacy decision.
+        return std::isfinite(o.absolute)&&o.absolute>=0&&std::isfinite(absolute_tol)&&absolute_tol>0
+            &&o.absolute<=std::max(relative_tol*b.reference,absolute_tol);
+    }
+
     // One production selector and one test entry: movement always has priority
     // and is independent of the additional residual/animation conditions.
     static const char* exit_reason(bool movement,const std::string& mode,
