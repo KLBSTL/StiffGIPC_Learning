@@ -19,9 +19,9 @@ struct IpcResidualObservation {
 class IpcResidualController {
   public:
     IpcResidualController(double cumulative_tol,double residual_tol,double floor,
-                          int min_updates,double initial_kappa)
+                          int min_updates,double initial_kappa,bool entry_reference=false)
         : beta_tol_(cumulative_tol),residual_tol_(residual_tol),floor_(floor),
-          min_updates_(min_updates),last_kappa_(initial_kappa) {
+          min_updates_(min_updates),last_kappa_(initial_kappa),entry_reference_(entry_reference) {
         if(!std::isfinite(beta_tol_)||beta_tol_<=0||beta_tol_>=1||
            !std::isfinite(residual_tol_)||residual_tol_<beta_tol_||
            !std::isfinite(floor_)||floor_<=0||min_updates_<1)
@@ -42,7 +42,7 @@ class IpcResidualController {
         const bool was_active=budget_.active;
         // Freeze before the sixth effective accepted update, never reset on
         // objective/Kappa change or on an unfavourable residual observation.
-        if(accepted_updates+1>=min_updates_)budget_.start(o.absolute,floor_);
+        if(entry_reference_||accepted_updates+1>=min_updates_)budget_.start(o.absolute,floor_);
         o.reference_frozen_now=!was_active&&budget_.active;
         if(o.reference_frozen_now){reference_update_=accepted_updates;reference_epoch_=objective_epoch_;}
         o.had_pending=budget_.pending;
@@ -93,5 +93,6 @@ class IpcResidualController {
     double beta_tol_,residual_tol_,floor_,last_kappa_;
     int min_updates_,objective_epoch_=0,reference_update_=-1,reference_epoch_=-1;
     int last_observed_updates_=0;
+    bool entry_reference_=false;
 };
 } // namespace gipc

@@ -46,6 +46,7 @@
 #include <solver/ipc_physical_residual.inl>
 #include <solver/ipc_diagnostic.inl>
 #include <solver/ipc_continuation.h>
+#include <solver/ipc_stop_study.h>
 #include <solver/ipc_ad_audit.h>
 #include <thread>
 using namespace Eigen;
@@ -11630,7 +11631,8 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     int iterCap = 10000, k = 0;
     trace_ipc_safe_state(_vertexes,vertexNum,0);
 
-    CUDA_SAFE_CALL(cudaMemset(_moveDir, 0, vertexNum * sizeof(double3)));
+    auto stop_study=gipc::IpcStopStudy::read(total_Frames+1);
+    if(stop_study.load.empty())CUDA_SAFE_CALL(cudaMemset(_moveDir, 0, vertexNum * sizeof(double3)));
     double totalTimeStep = 0;
     double beta          = 1;
     int    Kmin          = 6;
@@ -11645,6 +11647,10 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
        abd_fem_count_info.abd_body_num!=0))
         throw std::runtime_error("Continuation v1 requires legacy IPC and FEM-only Table/Hang");
     const auto forcing=gipc::IpcPcgForcingOptions::read();
+    if(stop_study.enabled()&&(use_toi||abd_fem_count_info.abd_body_num||continuation.enabled()||
+       forcing.enabled()||stopping.residual_enabled()||gipc_accel_feature("GIPC_ENERGY_REUSE")||
+       gipc::ipc_contact_pool_config().enabled||animation_fullRate<=.99))
+        throw std::runtime_error("Stopping carrier v1 requires plain full-frame FEM IPC with unchanged controls");
     // E integrates forcing only with a fully specified MOV-and-residual rule.
     // Each relaxed small direction is confirmed on the same A,b,M below;
     // retries do not re-observe/advance the accepted-state forcing history.
@@ -11679,7 +11685,8 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
                 if(p.contains("graph_audit"))probe+=p["graph_audit"].value("host_iterations",0)+p["graph_audit"].value("host_repeat_iterations",0);
             }else if(n.contains("exit"))++terminal;
         }
-        const int initial=continuation.load.empty()?0:continuation.marker.value("accepted_updates",0);
+        const int initial=stop_study.enabled()?stop_study.initial_updates:
+            (continuation.load.empty()?0:continuation.marker.value("accepted_updates",0));
         stats_at_current_frame["ad_counts"]={{"N_accept_total",accepted_updates},{"N_accept_this_run",accepted_updates-initial},{"N_loop_assembly",stats_at_current_frame["newton"].size()},
             {"N_linear",linear},{"N_terminal_assembly",terminal},{"N_diagnostic_assembly",diagnostic_assemblies},
             {"N_pcg_attempts",attempts},{"N_retry",retry_count},
@@ -11703,7 +11710,7 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     };
     std::optional<gipc::IpcResidualController> residual_controller;
     if(stopping.residual_enabled())residual_controller.emplace(
-        stopping.cumulative_tol,stopping.residual_tol,stopping.residual_floor,Kmin,Kappa);
+        stopping.cumulative_tol,stopping.residual_tol,stopping.residual_floor,Kmin,Kappa,stopping.residual_entry_reference);
     gipc::IpcResidualObservation residual_observation;
     auto measure_residual=[&](){return ipc_measure_residual(
         m_abd_system->system_gradient.buffer_view().data(),static_cast<int>(m_abd_system->system_gradient.size()),
@@ -11866,6 +11873,51 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             if(!restored)throw std::runtime_error("IPC forcing rollback fixture differs");
         }
     };
+    auto study_controls=[&]() {return gipc::Json{{"stopping",stopping.json()},
+        {"newton_tol",Newton_solver_threshold},{"pcg_rho_tol",pcg_threshold}};};
+    if(!stop_study.load.empty()) {
+        // Physical buffers have already been restored by IPC_Solver, before
+        // solve-local initialization. No target/Kappa/friction init is replayed.
+        std::ifstream input(std::filesystem::path(stop_study.load)/"stop_study.json");
+        gipc::Json marker;input>>marker;
+        if(!input||marker.at("schema")!="gipc-stop-study-1"||marker.at("physical_frame")!=total_Frames+1||
+           marker.at("controls")!=study_controls()||marker.at("physics")!=physics_identity())
+            throw std::runtime_error("Stopping study resume context differs");
+        k=marker.at("next_iteration");accepted_updates=marker.at("accepted_updates");
+        beta=marker.at("beta");totalTimeStep=marker.at("total_step");
+        stop_study.first_movement=marker.at("first_movement");stop_study.first_toi=marker.at("first_toi");
+        stop_study.initial_updates=accepted_updates;
+        stats_at_current_frame["stop_study_resume_verified"]=true;
+    }
+    auto study_event=[&](const char* phase,bool movement) {
+        if(!stop_study.enabled())return;
+        gipc::Json event={{"phase",phase},{"iteration",k},{"accepted_updates",accepted_updates},
+            {"beta",beta},{"log_beta",beta>0?gipc::Json(std::log(beta)):gipc::Json(nullptr)},
+            {"beta_zero",beta==0},{"movement_candidate",movement},
+            {"toi_candidate",beta<=stopping.cumulative_tol},{"kappa",Kappa},
+            {"animation_rate",animation_fullRate},{"first_movement",stop_study.first_movement},
+            {"first_toi",stop_study.first_toi},
+            {"host_ms_from_solve_entry",std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-continuation_frame_start).count()}};
+        if(!stop_study.directory.empty()) {
+            const auto begin=std::chrono::steady_clock::now();
+            std::filesystem::create_directories(stop_study.directory);
+            const auto stem=std::filesystem::path(stop_study.directory)/
+                (std::string(phase)+"_"+std::to_string(accepted_updates));
+            auto dump=[&](const char* suffix,const void* pointer,size_t bytes) {
+                std::vector<unsigned char> data(bytes);
+                if(bytes)CUDA_SAFE_CALL(cudaMemcpy(data.data(),pointer,bytes,cudaMemcpyDeviceToHost));
+                std::ofstream out(stem.string()+suffix,std::ios::binary);out.write((const char*)data.data(),bytes);
+                if(!out)throw std::runtime_error("Stopping study state export failed");
+                return gipc::ad_hash_device(pointer,bytes);
+            };
+            event["position"]=dump("_x.bin",_vertexes,vertexNum*sizeof(double3));
+            event["direction"]=dump("_p.bin",_moveDir,vertexNum*sizeof(double3));
+            event["physics"]=physics_identity();
+            event["observe_host_ms"]=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();
+        }
+        stats_at_current_frame["stop_study_events"].push_back(event);
+    };
     auto continuation_switch=[&]() {
         continuation.marked=true;
         gipc::continuation_hold_kappa=continuation.fixed;
@@ -11983,12 +12035,19 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         if(research_marker && !continuation.marked)selected_exit=nullptr;
         if(stopping.movement_residual_guard){
             const auto& b=residual_controller->budget();
-            const bool pass=gipc::IpcResidualController::movement_guard(b,residual_observation,
+            const bool lifecycle=!stopping.movement_audit_update||
+                (accepted_updates>=stopping.movement_audit_update&&residual_observation.audited);
+            const bool pass=lifecycle&&gipc::IpcResidualController::movement_guard(b,residual_observation,
                 stopping.residual_tol,stopping.residual_absolute_tol);
             stats_at_current_frame["newton"].back()["forcing_stop_guard"]={
                 {"movement_candidate",bool(k&&gradVanish)},{"residual_pass",pass},
                 {"movement_veto",bool(selected_exit&&!pass)},{"relative",residual_observation.relative},
                 {"absolute",residual_observation.absolute},{"absolute_floor",stopping.residual_absolute_tol},
+                {"lifecycle_pass",lifecycle},{"veto_inactive",!b.active},{"veto_invalid",!b.valid},
+                {"veto_pending",b.pending},{"veto_no_audit",b.audits<=0},
+                {"veto_lifecycle",!lifecycle},
+                {"veto_residual",!std::isfinite(residual_observation.absolute)||
+                    residual_observation.absolute>std::max(stopping.residual_tol*b.reference,stopping.residual_absolute_tol)},
                 {"coordinates",stopping.residual_coordinates},
                 {"rule","MOV and valid audited residual; no cumulative or residual-only exit"}};
             if(!pass)selected_exit=nullptr;
@@ -12002,6 +12061,11 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             stats_at_current_frame["newton"].back()["ad_exit"]={{"movement_candidate",bool(k&&gradVanish)},
                 {"residual_pass",pass},{"movement_veto",veto},{"relative",residual_observation.relative}};
             if(veto)selected_exit=nullptr;
+        }
+        if(stop_study.enabled()) {
+            stop_study.observe_movement(k&&gradVanish,accepted_updates);
+            study_event("post_assembly",k&&gradVanish);
+            if(stop_study.suppress())selected_exit=stop_study.exit("post_assembly",accepted_updates);
         }
         if(selected_exit&&std::string(selected_exit)=="movement")
         {
@@ -12296,6 +12360,19 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         stats_at_current_frame["newton"].back()["kappa_before"]=old_kappa;
         stats_at_current_frame["newton"].back()["kappa_after"]=Kappa;
         stats_at_current_frame["newton"].back()["active_pairs"]=h_cpNum[0];
+        if(stop_study.enabled()) {
+            stop_study.observe_toi(beta<=stopping.cumulative_tol,accepted_updates);
+            study_event("post_accept",false);
+            if(!stop_study.save.empty()&&accepted_updates==stop_study.save_at) {
+                frame_checkpoint(TetMesh,stop_study.save,false,true);
+                gipc::Json marker={{"schema","gipc-stop-study-1"},{"physical_frame",total_Frames+1},
+                    {"next_iteration",k+1},{"accepted_updates",accepted_updates},{"beta",beta},
+                    {"total_step",totalTimeStep},{"first_movement",stop_study.first_movement},
+                    {"first_toi",stop_study.first_toi},{"physics",physics_identity()},{"controls",study_controls()}};
+                std::ofstream out(std::filesystem::path(stop_study.save)/"stop_study.json");out<<marker.dump(2);out.close();
+                if(!out)throw std::runtime_error("Cannot commit stopping study checkpoint");
+            }
+        }
         if(continuation.enabled()||gipc::ad_flag("GIPC_AD_AUDIT"))stats_at_current_frame["newton"].back()["continuation_phase_ms"]={
             {"assembly",time00},{"pcg",time11},{"ccd",time22},{"line_search",time33},{"post_update",time44}};
         if(continuation.enabled() && !continuation.marked &&
@@ -12319,7 +12396,10 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
             if(continuation.continues())continuation_switch();
             else continuation.marked=true;
         }
-        if(stopping.termination=="legacy" && semi_implicit &&
+        if(const char* reason=stop_study.exit("post_accept",accepted_updates)) {
+            stats_at_current_frame["newton_exit"]=reason;break;
+        }
+        if(!stop_study.suppress() && stopping.termination=="legacy" && semi_implicit &&
            (research_marker?continuation.marked:beta<=stopping.cumulative_tol))
         {
             stats_at_current_frame["newton_exit"]="cumulative_toi";
@@ -12336,6 +12416,10 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
         }
     }
     if(k>=iterCap) stats_at_current_frame["newton_exit"]="iteration_limit";
+    if(stop_study.enabled())stats_at_current_frame["stop_study"]={{"mode",stop_study.mode},
+        {"first_movement",stop_study.first_movement},{"first_toi",stop_study.first_toi},
+        {"initial_updates",stop_study.initial_updates},{"final_updates",accepted_updates},
+        {"controls",study_controls()},{"physical_initializations",stop_study.load.empty()?1:0}};
     if(continuation.enabled()) {
         CUDA_SAFE_CALL(cudaDeviceSynchronize());
         auto& report=stats_at_current_frame["continuation"];
@@ -12457,6 +12541,8 @@ double ttime4           = 0;
 bool   isUpdateBoundary = false;
 void   GIPC::IPC_Solver(device_TetraData& TetMesh)
 {
+    const auto frame_stop_study=gipc::IpcStopStudy::read(total_Frames+1);
+    const bool study_resume=!frame_stop_study.load.empty();
     gipc::set_solve_frame(total_Frames+1);
     // Counter reset does not change either tree's topology/interval state.
     gipc::discrete_bvh_reset_stats();
@@ -12475,6 +12561,7 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
     //        isRotate = false;
     //        updateBoundary2(TetMesh);
     //    }
+    if(!study_resume) {
     if(isUpdateBoundary)
     {
         updateBoundaryMoveDir(TetMesh, alpha, total_Frames);
@@ -12542,6 +12629,7 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
     if(!use_toi) buildFrictionSets();
 #endif
     animation_fullRate = animation_subRate;
+    }
     int    k           = 0;
     double time0       = 0;
     double time1       = 0;
@@ -12554,6 +12642,15 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
         tempMalloc_closeConstraint();
         CUDA_SAFE_CALL(cudaMemset(_close_cpNum, 0, sizeof(uint32_t)));
         CUDA_SAFE_CALL(cudaMemset(_close_gpNum, 0, sizeof(uint32_t)));
+
+        if(study_resume) {
+            std::ifstream input(std::filesystem::path(frame_stop_study.load)/"stop_study.json");
+            gipc::Json marker;input>>marker;
+            if(!input||marker.at("physical_frame")!=total_Frames+1)
+                throw std::runtime_error("Stopping study physical-frame mismatch");
+            frame_checkpoint(TetMesh,frame_stop_study.load,true,true);
+            if(animation_fullRate<=.99)throw std::runtime_error("Stopping resume requires a complete animation substep");
+        }
 
         totalNT += use_toi ? solve_subTOI(TetMesh)
                           : solve_subIP(TetMesh, time0, time1, time2, time3, time4);
@@ -12616,6 +12713,7 @@ void   GIPC::IPC_Solver(device_TetraData& TetMesh)
     updateVelocities(TetMesh);
 
     computeXTilta(TetMesh, 1);
+    if(frame_stop_study.enabled())gipc::Statistics::instance().at_current_frame()["stop_study_finalizations"]=1;
     cudaEventRecord(end0);
     CUDA_SAFE_CALL(cudaDeviceSynchronize());
     float tttime;

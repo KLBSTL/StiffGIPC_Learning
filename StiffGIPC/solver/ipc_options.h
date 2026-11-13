@@ -11,6 +11,8 @@ struct IpcOptions {
     double residual_absolute_tol=0;
     std::string residual_coordinates="native";
     int min_updates=6,terminal_frame=0;
+    int movement_audit_update=0;
+    bool residual_entry_reference=false;
     bool shadow=false,cpu_audit=false,movement_residual_guard=false;
     static IpcOptions read(double movement_tol) {
         IpcOptions o;o.cumulative_tol=movement_tol;
@@ -39,6 +41,11 @@ struct IpcOptions {
         o.shadow=flag("GIPC_IPC_RESIDUAL_SHADOW",false);
         o.cpu_audit=flag("GIPC_IPC_RESIDUAL_CPU_AUDIT",false);
         o.movement_residual_guard=flag("GIPC_IPC_MOV_RESIDUAL_GUARD",false);
+        o.movement_audit_update=integer("GIPC_IPC_MOV_AUDIT_UPDATE",0);
+        o.residual_entry_reference=flag("GIPC_IPC_RESIDUAL_ENTRY_REFERENCE",false);
+        if((o.movement_audit_update||o.residual_entry_reference)&&
+           (!o.movement_residual_guard||!o.residual_entry_reference||o.movement_audit_update<1||o.movement_audit_update>10000))
+            throw std::runtime_error("Early MOV audit needs guarded MOV, an entry reference and an explicit audit update");
         if(o.movement_residual_guard&&(o.termination!="movement_only"||!o.shadow))
             throw std::runtime_error("MOV residual guard requires movement_only and residual observation");
         if(o.residual_coordinates!="native"&&o.residual_coordinates!="physical_max")
@@ -54,6 +61,7 @@ struct IpcOptions {
     Json json()const{return {{"termination",termination},{"cumulative_tol",cumulative_tol},{"min_updates",min_updates},
         {"residual_rel_tol",residual_tol},{"residual_floor",residual_floor},{"residual_shadow",shadow},
         {"residual_absolute_tol",residual_absolute_tol},{"residual_coordinates",residual_coordinates},
+        {"movement_audit_update",movement_audit_update},{"residual_entry_reference",residual_entry_reference},
         {"residual_cpu_audit",cpu_audit},
         {"terminal_audit_frame",terminal_frame},{"movement_exit_retained",!movement_residual_guard},
         {"movement_requires_residual",movement_residual_guard},{"legacy_cumulative_retained",termination=="legacy"},
