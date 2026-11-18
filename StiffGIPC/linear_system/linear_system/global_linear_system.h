@@ -65,6 +65,9 @@ class GlobalLinearSystem
     // Retry the already built A,b,M from zero; do not reconvert overwritten raw triplets.
     gipc::SizeT resolve_linear_system();
     void set_pcg_tolerance(Float rho_tolerance);
+    void reuse_begin_frame();
+    void reuse_accept();
+    void reuse_discard();
     // Diagnostic only: rebuild at unchanged physics state without another solve.
     Json audit_reassembly(const std::function<void()>& assemble_derivatives);
     Json snapshot_system(const std::string& prefix) const;

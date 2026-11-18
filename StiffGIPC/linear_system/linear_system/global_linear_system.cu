@@ -20,6 +20,13 @@
 
 namespace gipc
 {
+void GlobalLinearSystem::reuse_begin_frame()
+{if(auto* pcg=dynamic_cast<PCGSolver*>(m_solver.get()))pcg->reuse_begin_frame();}
+void GlobalLinearSystem::reuse_accept()
+{if(auto* pcg=dynamic_cast<PCGSolver*>(m_solver.get()))pcg->reuse_accept();}
+void GlobalLinearSystem::reuse_discard()
+{if(auto* pcg=dynamic_cast<PCGSolver*>(m_solver.get()))pcg->reuse_discard();}
+
 bool GlobalLinearSystem::build_linear_system()
 {
     CostScope cost_build("linear.build");

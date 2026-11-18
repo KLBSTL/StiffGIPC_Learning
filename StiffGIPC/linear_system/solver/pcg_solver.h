@@ -29,6 +29,9 @@ class PCGSolver : public IterativeSolver
     const auto& config() const { return this->m_config; }
     static int guard_fixture(const char* output);
     static int chunk_guard_fixture(const char* output);
+    void reuse_begin_frame();
+    void reuse_accept();
+    void reuse_discard();
 
   private:
 
@@ -38,6 +41,28 @@ class PCGSolver : public IterativeSolver
     DeviceDenseVector Ap;  // A*p
     cudatool::DeviceBuffer<Float> reduction_result;
     PCGSolverConfig   m_config;
+    std::vector<std::unique_ptr<DeviceDenseVector>> reuse_history;
+    std::vector<Json> reuse_history_sources;
+    Json reuse_pending_source;
+    std::unique_ptr<DeviceDenseVector> reuse_pending;
+    cudatool::DeviceBuffer<Float> reuse_partials;
+    int reuse_solve_ordinal=0;
+    double reuse_pending_ms=0;
+    void reuse_stage(cudatool::CDenseVectorView<Float> x,cudatool::CDenseVectorView<Float> b,bool capture_source=true);
+    std::vector<Float> reuse_pending_b,reuse_pending_au,reuse_source_b,reuse_source_au;
+    DeviceDenseVector reuse_source_ax,reuse_metric_z,reuse_trace_ax,reuse_trace_r;
+    cudatool::DeviceBuffer<Float> reuse_diagonal_inverse;
+    bool reuse_metric_active=false;
+    double reuse_metric_b=0;
+    std::string reuse_curve_prefix;
+    int reuse_curve_budget=-1;
+    void reuse_explain_study(cudatool::DenseVectorView<Float> x,
+                            cudatool::CDenseVectorView<Float> b,SizeT max_iter);
+    SizeT pcg_reuse(cudatool::DenseVectorView<Float> x,
+                   cudatool::CDenseVectorView<Float> b,SizeT max_iter,
+                   const std::string& mode,bool audited,double frozen_rho_b=-1,double reference_gamma=-1);
+    void reuse_study(cudatool::DenseVectorView<Float> x,
+                     cudatool::CDenseVectorView<Float> b,SizeT max_iter);
     cudatool::DeviceBuffer<unsigned char> graph_reduce_storage;
     cudatool::DeviceBuffer<Float> graph_scalars;
     cudatool::DeviceBuffer<Float> graph_tolerance;

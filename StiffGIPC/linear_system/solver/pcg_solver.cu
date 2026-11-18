@@ -24,6 +24,10 @@
 #include <cstring>
 #include <fstream>
 #include <sstream>
+#include <filesystem>
+#include <random>
+#include <Eigen/Eigenvalues>
+#include <solver/pcg_reuse_options.h>
 
 extern int total_Frames;
 #include <linear_system/solver/pcg_divergence_probe.inl>
@@ -163,6 +167,17 @@ void PCGSolver::check_forcing_direction(cudatool::DenseVectorView<Float> x,
 SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorView<Float> b)
 {
     const auto forcing=IpcPcgForcingOptions::read();
+    const auto reuse=PcgReuseOptions::read();
+    if(reuse.enabled()) {
+        if(m_config.conditional_graph || forcing.enabled() || std::getenv("GIPC_FIXED_STUDY_DIR") ||
+           std::getenv("GIPC_CONTINUATION_LOAD") || std::getenv("GIPC_IPC_STOP_LOAD"))
+            throw std::runtime_error("Reuse v1 requires isolated host PCG without forcing/continuation/other replays");
+        reuse_discard();
+        if(!reuse_history.empty() && reuse_history.back()->size()!=b.size()) {
+            reuse_history.clear();reuse_history_sources.clear();
+        }
+        ++reuse_solve_ordinal;
+    }
     if(m_config.conditional_graph && research_restriction_mode()!=0)
         throw std::runtime_error("Research restriction intervention is host-PCG only");
     CostScope cost_entry("pcg.entry_including_diagnostics");
@@ -184,6 +199,13 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     // Retired candidates remain explicit in the historical output schema.
     auto& component_info=Statistics::instance().at_current_frame()["newton"].back()["pcg"];
     component_info["rho_tolerance"]=m_config.global_tol_rate;
+    if(std::getenv("GIPC_REUSE_OBSERVE_DIR")) {
+        CostScope observation("diagnostic.reuse_operator_identity");
+        auto identity=snapshot_system("");
+        for(auto& local:identity["local_preconditioners"])local.erase("signature");
+        identity["MAS_structure_location"]="newton.mas_diagnostic";
+        component_info["observation_operator"]=identity;
+    }
     for(const char* prefix:{"mas_fused_dot","spmv_fused_quadratic"})
     {
         const std::string name=prefix;
@@ -198,11 +220,12 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     linear_stage("pcg_loop_begin");
     try {
         CostScope cost_loop("pcg.production_loop");
-        iter=m_config.conditional_graph ? pcg_graph(x,b,max_iter) : pcg(x,b,max_iter);
+        iter=reuse.enabled()?pcg_reuse(x,b,max_iter,reuse.mode=="off"?"b0":reuse.mode,reuse.audit=="A"):
+            (m_config.conditional_graph ? pcg_graph(x,b,max_iter) : pcg(x,b,max_iter));
     }
     catch(const std::exception& error)
     {
-        Statistics::instance().at_current_frame()["newton"].back()["pcg"]["iteration_limit"]=false;
+        if(!reuse.enabled())Statistics::instance().at_current_frame()["newton"].back()["pcg"]["iteration_limit"]=false;
         if(const char* prefix=std::getenv("GIPC_MAS_AUDIT"))operator_audit(x,b,std::string(prefix)+"_failure");
         if(forcing.changes_precision()&&m_config.global_tol_rate>1e-4)
             throw IpcPcgDirectionFailure(error.what());
@@ -491,6 +514,11 @@ SizeT PCGSolver::solve(cudatool::DenseVectorView<Float> x, cudatool::CDenseVecto
     if(const char* prefix=std::getenv("GIPC_MAS_AUDIT");prefix &&
        (iter>=max_iter || (total_Frames==0 && Statistics::instance().at_current_frame()["newton"].size()==1)))
         operator_audit(x,b,std::string(prefix)+(iter>=max_iter?"_failure":"_initial"));
+    if(reuse.enabled()) {
+        if(!reuse.directory.empty())reuse_study(x,b,max_iter);
+        if(reuse.mode!="b0" || !reuse.directory.empty())
+            reuse_stage(cudatool::CDenseVectorView<Float>{x.data(),static_cast<int>(x.size())},b);
+    }
     return iter;
 }
 
@@ -705,6 +733,8 @@ SizeT PCGSolver::pcg(cudatool::DenseVectorView<Float> x, cudatool::CDenseVectorV
 }  // namespace gipc
 
 #include "pcg_graph_impl.inl"
+#include "pcg_reuse.inl"
+#include "pcg_reuse_explain.inl"
 #include <linear_system/solver/pcg_guard_fixture.inl>
 #include <linear_system/solver/pcg_chunk_fixture.inl>
 #include <linear_system/solver/pcg_chunk_study.inl>

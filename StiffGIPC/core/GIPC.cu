@@ -43,6 +43,9 @@
 #include <optional>
 #include <solver/ipc_residual.inl>
 #include <solver/ipc_pcg_forcing.h>
+#include <solver/pcg_reuse_options.h>
+#include <solver/pcg_observation.inl>
+extern bool isUpdateBoundary;
 #include <solver/ipc_physical_residual.inl>
 #include <solver/ipc_diagnostic.inl>
 #include <solver/ipc_continuation.h>
@@ -1280,7 +1283,7 @@ __global__ void _calFrictionHessian_gd(const double3*   _vertexes,
                                        double           eps2,
                                        double*          lastH,
                                        int              global_offset,
-                                       double           coef)
+                                       double           coef,double2* observed_hessian)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
@@ -1348,6 +1351,7 @@ __global__ void _calFrictionHessian_gd(const double3*   _vertexes,
     //D1Index[idx] = gidx;
 
     write_triplet<3, 3>(triplet_values, row_ids, col_ids, &gidx, H_vI.m, global_offset + idx);
+    gipc::reuse_observe_hessian(observed_hessian,idx,H_vI.m);
 }
 
 __global__ void _calFrictionHessian(const double3*          _vertexes,
@@ -1369,7 +1373,7 @@ __global__ void _calFrictionHessian(const double3*          _vertexes,
                                     int                     cd_offset2,
                                     int                     f_offset4,
                                     int                     f_offset3,
-                                    int                     f_offset2)
+                                    int                     f_offset2,double2* observed_hessian)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
@@ -1457,6 +1461,7 @@ __global__ void _calFrictionHessian(const double3*          _vertexes,
 
         write_triplet<12, 12>(
             triplet_values, row_ids, col_ids, &(global_index.x), HessianBlock.m, offset);
+        gipc::reuse_observe_hessian(observed_hessian,idx,HessianBlock.m);
     }
     else
     {
@@ -1542,6 +1547,7 @@ __global__ void _calFrictionHessian(const double3*          _vertexes,
                                 &(global_index.x),
                                 HessianBlock.m,
                                 offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,HessianBlock.m);
         }
         else if(MMCVIDI.w < 0)
         {
@@ -1624,6 +1630,7 @@ __global__ void _calFrictionHessian(const double3*          _vertexes,
                                 &(global_index.x),
                                 HessianBlock.m,
                                 offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,HessianBlock.m);
         }
         else
         {
@@ -1709,6 +1716,7 @@ __global__ void _calFrictionHessian(const double3*          _vertexes,
                                   &(global_index.x),
                                   HessianBlock.m,
                                   offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,HessianBlock.m);
         }
     }
 }
@@ -3031,7 +3039,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
                                               int              offset4,
                                               int              offset3,
                                               int              offset2,
-                                              int              number)
+                                              int              number,double2* observed_hessian)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
@@ -3285,6 +3293,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
             int triplet_id_offset = Hidx * M12_Off;
             write_triplet<12, 12>(
                 triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
         }
         else
         {
@@ -3539,6 +3548,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
             int triplet_id_offset = Hidx * M12_Off;
             write_triplet<12, 12>(
                 triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
         }
     }
     else
@@ -3798,6 +3808,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
                 int triplet_id_offset = Hidx * M12_Off;
                 write_triplet<12, 12>(
                     triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+                gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
             }
             else
             {
@@ -4043,6 +4054,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
                 int triplet_id_offset = Hidx * M6_Off + offset3 * M9_Off + offset4 * M12_Off;
                 write_triplet<6, 6>(
                     triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+                gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
             }
         }
         else if(MMCVIDI.w < 0)
@@ -4301,6 +4313,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
                 int triplet_id_offset = Hidx * M12_Off;
                 write_triplet<12, 12>(
                     triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+                gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
             }
             else
             {
@@ -4599,6 +4612,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
                 int triplet_id_offset = Hidx * M9_Off + offset4 * M12_Off;
                 write_triplet<9, 9>(
                     triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+                gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
             }
         }
         else
@@ -4852,6 +4866,7 @@ __global__ void _calBarrierGradientAndHessian(const double3*   _vertexes,
             int triplet_id_offset = Hidx * M12_Off;
             write_triplet<12, 12>(
                 triplet_values, row_ids, col_ids, &(global_index.x), Hessian.m, triplet_id_offset);
+            gipc::reuse_observe_hessian(observed_hessian,idx,Hessian.m);
         }
     }
 }
@@ -6386,7 +6401,7 @@ __global__ void _computeGroundGradientAndHessian(const double3* vertexes,
                                                  double dHat,
                                                  double Kappa,
                                                  int    global_offset,
-                                                 int    number)
+                                                 int    number,double2* observed_hessian)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= number)
@@ -6423,6 +6438,7 @@ __global__ void _computeGroundGradientAndHessian(const double3* vertexes,
         //D1Index[pidx] = gidx;
 
         write_triplet<3, 3>(triplet_values, row_ids, col_ids, &gidx, Hpg.m, global_offset + idx);
+        gipc::reuse_observe_hessian(observed_hessian,idx,Hpg.m);
     }
     //_environment_collisionPair[atomicAdd(_gpNum, 1)] = surfVertIds[idx];
 }
@@ -8842,7 +8858,7 @@ void GIPC::computeGroundGradientAndHessian(double3* _gradient)
         dHat,
         Kappa,
         gipc_global_triplet.global_triplet_offset,
-        numbers);
+        numbers,gipc::reuse_observation().buffer(2));
 }
 
 void GIPC::computeCloseGroundVal()
@@ -9278,7 +9294,7 @@ void GIPC::calBarrierGradientAndHessian(double3* _gradient, double mKappa)
         h_cpNum[4],
         h_cpNum[3],
         h_cpNum[2],
-        numbers);
+        numbers,gipc::reuse_observation().buffer(0));
 }
 
 
@@ -9335,7 +9351,7 @@ void GIPC::calFrictionHessian(device_TetraData& TetMesh)
             h_cpNum[2],
             h_cpNum_last[4],
             h_cpNum_last[3],
-            h_cpNum_last[2]);
+            h_cpNum_last[2],gipc::reuse_observation().buffer(1));
     }
 
     numbers = h_gpNum_last;
@@ -9359,7 +9375,7 @@ void GIPC::calFrictionHessian(device_TetraData& TetMesh)
         fDhat * IPC_dt * IPC_dt,
         lambda_lastH_scalar_gd,
         global_offset,
-        gd_frictionRate);
+        gd_frictionRate,gipc::reuse_observation().buffer(3));
 }
 
 void GIPC::computeSelfCloseVal()
@@ -10495,6 +10511,7 @@ __global__ void setup_fem_mass_triplets_kernel(int              n,
 
 float GIPC::computeGradientAndHessian(device_TetraData& TetMesh)
 {
+    gipc::reuse_observation().prepare(h_cpNum[0],h_cpNum_last[0],h_gpNum,h_gpNum_last);
     gipc::CostScope cost("ipc.gradient_hessian_assembly");
     gipc::Timer timer{"cal_gradient_hessian"};
 
@@ -11626,6 +11643,8 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
     // another system. Movement termination below overwrites this actual zero.
     stats_at_current_frame["ipc_exit_assembly_ms"] = 0.0;
     gipc::set_solve_frame(total_Frames+1);
+    m_global_linear_system->reuse_begin_frame();
+    gipc::reuse_observation().begin_frame();
     gipc::CostFlushAtExit ipc_cost_flush;
 
     int iterCap = 10000, k = 0;
@@ -11647,6 +11666,9 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
        abd_fem_count_info.abd_body_num!=0))
         throw std::runtime_error("Continuation v1 requires legacy IPC and FEM-only Table/Hang");
     const auto forcing=gipc::IpcPcgForcingOptions::read();
+    if(gipc::PcgReuseOptions::read().enabled() &&
+       (use_toi || isUpdateBoundary || animation || continuation.enabled() || !stop_study.load.empty() || forcing.enabled()))
+        throw std::runtime_error("Reuse study requires static-topology IPC without continuation, forcing, or animated constraints");
     if(stop_study.enabled()&&(use_toi||abd_fem_count_info.abd_body_num||continuation.enabled()||
        forcing.enabled()||stopping.residual_enabled()||gipc_accel_feature("GIPC_ENERGY_REUSE")||
        gipc::ipc_contact_pool_config().enabled||animation_fullRate<=.99))
@@ -12124,7 +12146,14 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
                 forcing_eta=.01;solve_attempt(true,"direction_failure_baseline_retry");
             }
         };
+        gipc::reuse_observation().stage(total_Frames+1,k+1,accepted_updates,Kappa,IPC_dt,_vertexes,vertexNum,
+            m_abd_sim_data->unique_point_id_to_body_id().data(),TetMesh.BoundaryType.data(),abd_fem_count_info.abd_point_num,
+            m_abd_sim_data->body_id_to_boundary_type().data(),abd_fem_count_info.abd_body_num,
+            _collisonPairs.data(),h_cpNum[0],_collisonPairs_lastH.data(),h_cpNum_last[0],
+            _environment_collisionPair.data(),h_gpNum,_collisonPairs_lastH_gd.data(),h_gpNum_last,
+            _groundNormal.data(),_groundOffset.data());
         direction_solve(false,"primary");
+        gipc::reuse_observation().solved();
         bool research_local_proposed=false;
         if(research_local_dir && accepted_updates<research_local_start+3)
         {
@@ -12310,7 +12339,11 @@ int              GIPC::solve_subIP(device_TetraData& TetMesh,
 
         cudaEventRecord(end3);
         postLineSearch(TetMesh, alpha);
-        if(alpha>0&&std::isfinite(alpha))++accepted_updates;
+        gipc::reuse_observation().accept(alpha);
+        if(alpha>0&&std::isfinite(alpha)) {
+            ++accepted_updates;
+            m_global_linear_system->reuse_accept();
+        } else m_global_linear_system->reuse_discard();
         if(gipc::ad_flag("GIPC_RESEARCH_ACCEPTED_AUDIT"))
         {
             buildBVH();const bool intersect=isIntersected(TetMesh);

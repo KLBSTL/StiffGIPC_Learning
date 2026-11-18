@@ -84,7 +84,7 @@ void MAS_Preconditioner::assemble()
                                     triplet_number,
                                     collision_num,
                                     collision_pairs.data());
-    if(const char* dir=std::getenv("GIPC_DIAGNOSTIC_DIR");dir&&dir[0])
+    if(const char* dir=std::getenv("GIPC_DIAGNOSTIC_DIR");(dir&&dir[0])||std::getenv("GIPC_REUSE_OBSERVE_DIR"))
     {
         CostScope observation("diagnostic.mas_topology");
         Json row={{"dimensions",MAS_Prec.diagnostic_dimensions()},

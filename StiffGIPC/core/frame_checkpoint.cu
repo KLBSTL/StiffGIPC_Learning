@@ -43,6 +43,7 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
     CUDA_SAFE_CALL(cudaDeviceSynchronize());
     const fs::path folder(directory);
     gipc::Json meta;
+    bool reuse_compatibility=false;
     const std::string schema=accepted_update_boundary?"gipc-accepted-update-1":"gipc-frame-boundary-2";
     if(restore)
     {
@@ -53,11 +54,26 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
             throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
         if(meta.at("binary_id")!=binary_id)
         {
+            if(const char* compatibility=std::getenv("GIPC_REUSE_CHECKPOINT_COMPAT"))
+            {
+                std::ifstream file(compatibility);gipc::Json contract;file>>contract;
+                if(!file || accepted_update_boundary || use_toi ||
+                   contract.at("schema")!="gipc-reuse-frame-compat-1" ||
+                   contract.at("source_binary_id")!=meta.at("binary_id") ||
+                   contract.at("target_binary_id")!=binary_id ||
+                   contract.at("checkpoint_schema")!=meta.at("schema") ||
+                   contract.at("contact_bytes")!=meta.at("contact_bytes") ||
+                   contract.at("context")!=meta.at("context") ||
+                   contract.at("buffers")!=meta.at("buffers") ||
+                   contract.at("scalars")!=meta.at("scalars"))
+                    throw std::runtime_error("Research reuse compatibility manifest mismatch");
+                reuse_compatibility=true;
+            }
             // Explicit research migration of plain FEM frame-boundary data.
             // Keep the original checkpoint untouched. All physics/context,
             // byte counts, device roundtrips and scalar checks below still run.
-            if(accepted_update_boundary||use_toi||abd_fem_count_info.abd_body_num||abd_fem_count_info.fem_tet_num||
-               checkpoint_env("GIPC_RESEARCH_MIGRATE_FROM")!=meta.at("binary_id").get<std::string>())
+            if(!reuse_compatibility && (accepted_update_boundary||use_toi||abd_fem_count_info.abd_body_num||abd_fem_count_info.fem_tet_num||
+               checkpoint_env("GIPC_RESEARCH_MIGRATE_FROM")!=meta.at("binary_id").get<std::string>()))
                 throw std::runtime_error("Checkpoint schema/binary/ABI mismatch");
         }
     }
@@ -160,6 +176,9 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         if(restore)
         {
             const auto& data=payloads.at(name);
+            if(reuse_compatibility && (meta.at("buffers").at(name).at("item_bytes")!=sizeof(T) ||
+               meta.at("buffers").at(name).at("count").get<size_t>()*sizeof(T)!=data.size()))
+                throw std::runtime_error("Reuse checkpoint element ABI mismatch");
             if(data.size()%sizeof(T))throw std::runtime_error("Checkpoint element size mismatch");
             buffer.resize(data.size()/sizeof(T));
             if(!data.empty())
@@ -251,6 +270,8 @@ void GIPC::frame_checkpoint(device_TetraData& mesh,const std::string& directory,
         gipc::Json report={{"restored_buffers",restored_buffers},{"device_bytes_verified",true},
             {"context_verified",true},{"completed_physical_frames",total_Frames},{"checkpoint",directory},
             {"binary_id",binary_id},{"scope",meta.at("scope")}};
+        report["reuse_compatibility_verified"]=reuse_compatibility;
+        if(reuse_compatibility)report["reuse_source_binary_id"]=meta.at("binary_id");
         report["source_binary_id"]=meta.at("binary_id");
         report["explicit_FEM_frame_migration"]=meta.at("binary_id")!=binary_id;
         std::ofstream out(fs::path(gipc::output_dir())/

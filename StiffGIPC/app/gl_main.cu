@@ -1881,6 +1881,10 @@ int main(int argc, char** argv) try
             ipc.frame_checkpoint(d_tetMesh,checkpoint,true);
         auto save_checkpoint=[&]()
         {
+            if(const char* every=std::getenv("GIPC_CHECKPOINT_EVERY_DIR");every&&every[0]) {
+                char name[40];std::snprintf(name,sizeof(name),"entry_%04d",total_Frames+1);
+                ipc.frame_checkpoint(d_tetMesh,(std::filesystem::path(every)/name).string(),false);
+            }
             const char* directory=std::getenv("GIPC_CHECKPOINT_DIR");
             const char* frame=std::getenv("GIPC_CHECKPOINT_FRAME");
             if(directory && frame && total_Frames+1==std::stoi(frame))
@@ -1957,6 +1961,10 @@ int main(int argc, char** argv) try
         dump_frame(0);
         for(int i = 0; i < batch_steps; ++i)
         {
+            if(std::getenv("GIPC_REUSE_OBSERVE_DIR")) {
+                std::ofstream heart(std::filesystem::path(std::getenv("GIPC_REUSE_OBSERVE_DIR"))/"heartbeat.json");
+                heart<<gipc::Json({{"event","frame_begin"},{"frame",total_Frames+1}}).dump();
+            }
             auto start = std::chrono::steady_clock::now();
             ipc.IPC_Solver(d_tetMesh);
             checkCudaErrors(cudaDeviceSynchronize());
@@ -1977,6 +1985,10 @@ int main(int argc, char** argv) try
             dump_frame(i+1);
             if(trace_dir)frame_log.flush();
             save_checkpoint();
+            if(std::getenv("GIPC_REUSE_OBSERVE_DIR")) {
+                std::ofstream heart(std::filesystem::path(std::getenv("GIPC_REUSE_OBSERVE_DIR"))/"heartbeat.json");
+                heart<<gipc::Json({{"event","frame_end"},{"frame",total_Frames}}).dump();
+            }
         }
         checkCudaErrors(cudaDeviceSynchronize());
         std::vector<double3> vertices(ipc.vertexNum);
